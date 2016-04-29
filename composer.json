@@ -1,0 +1,19 @@
+{
+    "name": "stdtabs/phptabs",
+    "type": "library",
+    "description": "A PHP library for reading tablatures",
+    "keywords": ["tablature"],
+    "homepage": "https://github.com/stdtabs/phptabs",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpTabs\\": "src/PhpTabs/"
+        }
+    }
+}
