@@ -5,7 +5,7 @@ PhpTabs is a PHP library that reads tablature files. It provides direct methods 
 
 PhpTabs is currently compatible with Guitar Pro 3 format. 
 
-[![Build Status](https://travis-ci.org/travis-ci-examples/php.svg?branch=master)](https://travis-ci.org/travis-ci-examples/php)
+[![Build Status](https://travis-ci.org/stdtabs/phptabs.svg?branch=master)](https://travis-ci.org/stdtabs/phptabs)
 
 
 Table of contents
