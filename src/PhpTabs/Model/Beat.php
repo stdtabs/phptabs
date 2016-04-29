@@ -8,28 +8,33 @@ namespace PhpTabs\Model;
 
 class Beat
 {
-	const MAX_VOICES = 2;
-	
-	private $start;
-	private $measure;
-	private $chord;
-	private $text;
-	private $voices;
-	private $stroke;
-	
+  const MAX_VOICES = 2;
+
+  private $start;
+  private $measure;
+  private $chord;
+  private $text;
+  private $voices;
+  private $stroke;
+
 	public function __construct()
   {
-		$this->start = Duration::QUARTER_TIME;
-		$this->stroke = new Stroke();
-		$this->voices = array();
-		for ($i = 0; $i < Beat::MAX_VOICES; $i++)
-			$this->setVoice($i, new Voice($i));
-	}
-	
-	public function getMeasure()
+    $this->start = Duration::QUARTER_TIME;
+    $this->stroke = new Stroke();
+    $this->voices = array();
+    for ($i = 0; $i < Beat::MAX_VOICES; $i++)
+    {
+      $this->setVoice($i, new Voice($i));
+    }
+  }
+
+  /**
+   * @return Measure object
+   */
+  public function getMeasure()
   {
-		return $this->measure;
-	}
+    return $this->measure;
+  }
 	
 	public function setMeasure(Measure $measure)
   {
