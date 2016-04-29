@@ -5,210 +5,210 @@ namespace PhpTabs\Model;
 
 class Channel
 {
-	const DEFAULT_PERCUSSION_CHANNEL = 9;
-	const DEFAULT_PERCUSSION_PROGRAM = 0;
-	const DEFAULT_PERCUSSION_BANK = 128;
-	
-	const DEFAULT_BANK = 0;
-	const DEFAULT_PROGRAM = 25;
-	const DEFAULT_VOLUME = 127;
-	const DEFAULT_BALANCE = 64;
-	const DEFAULT_CHORUS = 0;
-	const DEFAULT_REVERB = 0;
-	const DEFAULT_PHASER = 0;
-	const DEFAULT_TREMOLO = 0;
-	
-	private $channelId;
-	private $bank;
-	private $program;
-	private $volume;
-	private $balance;
-	private $chorus;
-	private $reverb;
-	private $phaser;
-	private $tremolo;
-	private $name;
-	private $parameters = array();
-	
-	public function __construct()
+  const DEFAULT_PERCUSSION_CHANNEL = 9;
+  const DEFAULT_PERCUSSION_PROGRAM = 0;
+  const DEFAULT_PERCUSSION_BANK = 128;
+
+  const DEFAULT_BANK = 0;
+  const DEFAULT_PROGRAM = 25;
+  const DEFAULT_VOLUME = 127;
+  const DEFAULT_BALANCE = 64;
+  const DEFAULT_CHORUS = 0;
+  const DEFAULT_REVERB = 0;
+  const DEFAULT_PHASER = 0;
+  const DEFAULT_TREMOLO = 0;
+
+  private $channelId;
+  private $bank;
+  private $program;
+  private $volume;
+  private $balance;
+  private $chorus;
+  private $reverb;
+  private $phaser;
+  private $tremolo;
+  private $name;
+  private $parameters = array();
+
+  public function __construct()
   {
-		$this->channelId = 0;
-		$this->bank = Channel::DEFAULT_BANK;
-		$this->program = Channel::DEFAULT_PROGRAM;
-		$this->volume = Channel::DEFAULT_VOLUME;
-		$this->balance = Channel::DEFAULT_BALANCE;
-		$this->chorus = Channel::DEFAULT_CHORUS;
-		$this->reverb = Channel::DEFAULT_REVERB;
-		$this->phaser = Channel::DEFAULT_PHASER;
-		$this->tremolo = Channel::DEFAULT_TREMOLO;
-		$this->name = '';
-		$this->parameters = array();
-	}
-	
-	public function getChannelId()
+    $this->channelId = 0;
+    $this->bank = Channel::DEFAULT_BANK;
+    $this->program = Channel::DEFAULT_PROGRAM;
+    $this->volume = Channel::DEFAULT_VOLUME;
+    $this->balance = Channel::DEFAULT_BALANCE;
+    $this->chorus = Channel::DEFAULT_CHORUS;
+    $this->reverb = Channel::DEFAULT_REVERB;
+    $this->phaser = Channel::DEFAULT_PHASER;
+    $this->tremolo = Channel::DEFAULT_TREMOLO;
+    $this->name = '';
+    $this->parameters = array();
+  }
+
+  public function getChannelId()
   {
-		return $this->channelId;
-	}
-	
-	public function setChannelId($channelId)
+    return $this->channelId;
+  }
+
+  public function setChannelId($channelId)
   {
-		$this->channelId = $channelId;
-	}
-	
-	public function getBalance()
+    $this->channelId = $channelId;
+  }
+
+  public function getBalance()
   {
-		return $this->balance;
-	}
-	
-	public function setBalance($balance)
+    return $this->balance;
+  }
+
+  public function setBalance($balance)
   {
-		$this->balance = $balance;
-	}
-	
-	public function getChorus()
+    $this->balance = $balance;
+  }
+
+  public function getChorus()
   {
-		return $this->chorus;
-	}
-	
-	public function setChorus($chorus)
-   {
-		$this->chorus = $chorus;
-	}
-	
-	public function getBank()
+    return $this->chorus;
+  }
+
+  public function setChorus($chorus)
   {
-		return $this->bank;
-	}
-	
-	public function setBank($bank)
+    $this->chorus = $chorus;
+  }
+
+  public function getBank()
   {
-		$this->bank = $bank;
-	}
-	
-	public function getProgram()
+    return $this->bank;
+  }
+
+  public function setBank($bank)
   {
-		return $this->program;
-	}
-	
-	public function setProgram($program)
+    $this->bank = $bank;
+  }
+
+  public function getProgram()
   {
-		$this->program = $program;
-	}
-	
-	public function getPhaser()
+    return $this->program;
+  }
+
+  public function setProgram($program)
   {
-		return $this->phaser;
-	}
-	
-	public function setPhaser($phaser)
+    $this->program = $program;
+  }
+
+  public function getPhaser()
   {
-		$this->phaser = $phaser;
-	}
-	
-	public function getReverb()
+    return $this->phaser;
+  }
+
+  public function setPhaser($phaser)
   {
-		return $this->reverb;
-	}
-	
-	public function setReverb($reverb)
+    $this->phaser = $phaser;
+  }
+
+  public function getReverb()
   {
-		$this->reverb = $reverb;
-	}
-	
-	public function getTremolo()
+    return $this->reverb;
+  }
+
+  public function setReverb($reverb)
   {
-		return $this->tremolo;
-	}
-	
-	public function setTremolo($tremolo)
+    $this->reverb = $reverb;
+  }
+
+  public function getTremolo()
   {
-		$this->tremolo = $tremolo;
-	}
-	
-	public function getVolume()
+    return $this->tremolo;
+  }
+
+  public function setTremolo($tremolo)
   {
-		return $this->volume;
-	}
-	
-	public function setVolume($volume)
+    $this->tremolo = $tremolo;
+  }
+
+  public function getVolume()
   {
-		$this->volume = $volume;
-	}
-	
-	public function getName()
+    return $this->volume;
+  }
+
+  public function setVolume($volume)
   {
-		return $this->name;
-	}
-	
-	public function setName($name)
+    $this->volume = $volume;
+  }
+
+  public function getName()
   {
-		$this->name = $name;
-	}
-	
-	public function getParameters()
+    return $this->name;
+  }
+
+  public function setName($name)
   {
-		return $this->parameters;
-	}
-	
-	public function addParameter(ChannelParameter $parameter)
+    $this->name = $name;
+  }
+
+  public function getParameters()
   {
-		$this->parameters[] = $parameter;
-	}
-	
-	public function setParameter($index, ChannelParameter $parameter)
+    return $this->parameters;
+  }
+
+  public function addParameter(ChannelParameter $parameter)
   {
-		$this->parameters[$index] = $parameter;
-	}
-	
-	public function getParameter($index)
+    $this->parameters[] = $parameter;
+  }
+
+  public function setParameter($index, ChannelParameter $parameter)
   {
-		if($index >= 0 && $index < $this->countParameters())
+    $this->parameters[$index] = $parameter;
+  }
+
+  public function getParameter($index)
+  {
+    if($index >= 0 && $index < $this->countParameters())
     {
-			return $this->parameters[$index];
-		}
-		return null;
-	}
-	
-	public function removeParameter($index)
+      return $this->parameters[$index];
+    }
+    return null;
+  }
+
+  public function removeParameter($index)
   {
-		array_splice($this->parameters, $index, 1);
-	}
-	
-	public function countParameters()
+    array_splice($this->parameters, $index, 1);
+  }
+
+  public function countParameters()
   {
-		return count($this->parameters);
-	}
-	
-	public function isPercussionChannel()
+    return count($this->parameters);
+  }
+
+  public function isPercussionChannel()
   {
-		return ($this->getBank() == Channel::DEFAULT_PERCUSSION_BANK);
-	}
-	
-	public function __clone()
+    return ($this->getBank() == Channel::DEFAULT_PERCUSSION_BANK);
+  }
+
+  public function __clone()
   {
-		$channel = new Channel();
-		$channel->copyFrom($this);
-		return $channel; 
-	}
-	
-	public function copyFrom(Channel $channel)
+    $channel = new Channel();
+    $channel->copyFrom($this);
+    return $channel; 
+  }
+
+  public function copyFrom(Channel $channel)
   {
-		$this->setChannelId($channel->getChannelId());
-		$this->setBank($channel->getBank());
-		$this->setProgram($channel->getProgram());
-		$this->setVolume($channel->getVolume());
-		$this->setBalance($channel->getBalance());
-		$this->setChorus($channel->getChorus());
-		$this->setReverb($channel->getReverb());
-		$this->setPhaser($channel->getPhaser());
-		$this->setTremolo($channel->getTremolo());
-		$this->setName($channel->getName());
+    $this->setChannelId($channel->getChannelId());
+    $this->setBank($channel->getBank());
+    $this->setProgram($channel->getProgram());
+    $this->setVolume($channel->getVolume());
+    $this->setBalance($channel->getBalance());
+    $this->setChorus($channel->getChorus());
+    $this->setReverb($channel->getReverb());
+    $this->setPhaser($channel->getPhaser());
+    $this->setTremolo($channel->getTremolo());
+    $this->setName($channel->getName());
 
     $this->parameters = array(); 
 
     for($i = 0; $i < $channel->countParameters(); $i++)
     {
-			$this->addParameter(clone $channel->getParameter($i));
-		}
-	}
+      $this->addParameter(clone $channel->getParameter($i));
+    }
+  }
 }

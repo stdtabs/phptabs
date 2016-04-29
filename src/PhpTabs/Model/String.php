@@ -8,51 +8,51 @@ namespace PhpTabs\Model;
 
 class String
 {
-	private $number;
-	private $value;
-	
-	public function __construct()
+  private $number;
+  private $value;
+
+  public function __construct()
   {
-		$this->number = 0;
-		$this->value = 0;
-	}
-	
-	public function getNumber()
+    $this->number = 0;
+    $this->value = 0;
+  }
+
+  public function getNumber()
   {
-		return $this->number;
-	}
-	
-	public function getValue() 
+    return $this->number;
+  }
+
+  public function getValue() 
   {
-		return $this->value;
-	}
-	
-	public function setNumber($number)
+    return $this->value;
+  }
+
+  public function setNumber($number)
   {
-		$this->number = $number;
-	}
-	
-	public function setValue($value)
+    $this->number = $number;
+  }
+
+  public function setValue($value)
   {
-		$this->value = $value;
-	}
-	
-	public function isEqual($string)
+    $this->value = $value;
+  }
+
+  public function isEqual($string)
   {
-		return ($this->getNumber() == $string->getNumber() 
+    return ($this->getNumber() == $string->getNumber() 
       && $this->getValue() == $string->getValue());
-	}
-	
-	public function __clone()
+  }
+
+  public function __clone()
   {
-		$string = new String();
-		$string->copyFrom($this);
-		return $string;
-	}
-	
-	public function copyFrom(String $string)
+    $string = new String();
+    $string->copyFrom($this);
+    return $string;
+  }
+
+  public function copyFrom(String $string)
   {
-		$this->setNumber($string->getNumber());
-		$this->setValue($string->getValue());
-	}
+    $this->setNumber($string->getNumber());
+    $this->setValue($string->getValue());
+  }
 }

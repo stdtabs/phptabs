@@ -8,76 +8,77 @@ namespace PhpTabs\Model;
 
 class Stroke
 {
-	const STROKE_NONE = 0;
-	const STROKE_UP = 1;
-	const STROKE_DOWN = -1;
-	
-	private $direction;
-	private $value;
-	
-	public function __construct()
-  {
-		$this->direction = Stroke::STROKE_NONE;
-	}
+  const STROKE_NONE = 0;
+  const STROKE_UP = 1;
+  const STROKE_DOWN = -1;
 
-	public function getDirection()
-  {
-		return $this->direction;
-	}
+  private $direction;
+  private $value;
 
-	public function setDirection($direction)
+  public function __construct()
   {
-		$this->direction = $direction;
-	}
-	
-	public function getValue()
+    $this->direction = Stroke::STROKE_NONE;
+  }
+
+  public function getDirection()
   {
-		return $this->value;
-	}
-	
-	public function setValue($value)
+    return $this->direction;
+  }
+
+  public function setDirection($direction)
   {
-		$this->value = $value;
-	}
-	
-	public function getIncrementTime(Beat $beat)
+    $this->direction = $direction;
+  }
+
+  public function getValue()
   {
-		$duration = 0;
-		if($this->value > 0)
+    return $this->value;
+  }
+
+  public function setValue($value)
+  {
+    $this->value = $value;
+  }
+
+  public function getIncrementTime(Beat $beat)
+  {
+    $duration = 0;
+    if($this->value > 0)
     {
-			for($v=0; $v<$beat->countVoices(); $v++)
+      for($v=0; $v<$beat->countVoices(); $v++)
       {
-				$voice = $beat->getVoice($v);
-        
-				if(!$voice->isEmpty())
-        {
-					$currentDuration = $voice->getDuration()->getTime();
-					if($duration == 0 || $currentDuration < $duration)
-          {
-						$duration = ($currentDuration <= Duration::QUARTER_TIME
-              ? $currentDuration : Duration::QUARTER_TIME);
-					}
-				}
-			}
-			if($duration > 0)
-      {
-				return round((($duration / 8.0) * (4.0 / $this->value)));
-			}
-		}
+        $voice = $beat->getVoice($v);
 
-		return 0;
-	}
-	
-	public function __clone()
+        if(!$voice->isEmpty())
+        {
+          $currentDuration = $voice->getDuration()->getTime();
+        
+          if($duration == 0 || $currentDuration < $duration)
+          {
+            $duration = ($currentDuration <= Duration::QUARTER_TIME
+              ? $currentDuration : Duration::QUARTER_TIME);
+          }
+        }
+      }
+      if($duration > 0)
+      {
+        return round((($duration / 8.0) * (4.0 / $this->value)));
+      }
+    }
+
+    return 0;
+  }
+
+  public function __clone()
   {
-		$stroke = new Stroke();
-		$stroke->copyFrom($this);
-		return $stroke;
-	}
-	
-	public function copyFrom(Stroke $stroke)
+    $stroke = new Stroke();
+    $stroke->copyFrom($this);
+    return $stroke;
+  }
+
+  public function copyFrom(Stroke $stroke)
   {
-		$this->setValue($stroke->getValue());
-		$this->setDirection($stroke->getDirection());
-	}
+    $this->setValue($stroke->getValue());
+    $this->setDirection($stroke->getDirection());
+  }
 }

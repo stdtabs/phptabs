@@ -138,5 +138,4 @@ class ChannelNames
     "Applause",
     "Gunshot"
   );
-
 }

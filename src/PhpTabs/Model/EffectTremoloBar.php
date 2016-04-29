@@ -9,38 +9,39 @@ namespace PhpTabs\Model;
 
 class EffectTremoloBar
 {
-	public static $MAX_POSITION_LENGTH = 12;
-	public static $MAX_VALUE_LENGTH = 12;
+  public static $MAX_POSITION_LENGTH = 12;
+  public static $MAX_VALUE_LENGTH = 12;
 
-	private $points;
+  private $points;
 
-	public function __construct()
+  public function __construct()
   {
-		$this->points = array();
-	}
+    $this->points = array();
+  }
 
-	public function addPoint($position, $value)
+  public function addPoint($position, $value)
   {
-		$this->points[] = new TremoloBarPoint($position, $value);
-	}
+    $this->points[] = new TremoloBarPoint($position, $value);
+  }
 
-	public function getPoints()
+  public function getPoints()
   {
-		return $this->points;
-	}
-	
-	public function __clone()
+    return $this->points;
+  }
+
+  public function __clone()
   {
-		$effect = new EffectTremoloBar();
+    $effect = new EffectTremoloBar();
 
     foreach($this->points as $k=>$point)
     {
-			$effect->addPoint($point->getPosition(), $point->getValue());
-		}
+      $effect->addPoint($point->getPosition(), $point->getValue());
+    }
 
-		return $effect;
-	}
+    return $effect;
+  }
 }
+
 
 /**
  * @package TremoloBarPoint

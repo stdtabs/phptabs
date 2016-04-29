@@ -9,50 +9,50 @@ namespace PhpTabs\Model;
  
 class TimeSignature
 {
-	private $denominator;
-	private $numerator;
-	
-	public function __construct()
+  private $denominator;
+  private $numerator;
+
+  public function __construct()
   {
-		$this->numerator = 4;
-		$this->denominator = new Duration();
-	}
-	
-	public function getNumerator()
+    $this->numerator = 4;
+    $this->denominator = new Duration();
+  }
+
+  public function getNumerator()
   {
-		return $this->numerator;
-	}
-	
-	public function setNumerator($numerator)
+    return $this->numerator;
+  }
+
+  public function setNumerator($numerator)
   {
-		$this->numerator = $numerator;
-	}
-	
-	public function getDenominator()
+    $this->numerator = $numerator;
+  }
+
+  public function getDenominator()
   {
-		return $this->denominator;
-	}
-	
-	public function setDenominator(Duration $denominator)
+    return $this->denominator;
+  }
+
+  public function setDenominator(Duration $denominator)
   {
-		$this->denominator = $denominator;
-	}
-	
-	public function __clone()
+    $this->denominator = $denominator;
+  }
+
+  public function __clone()
   {
-		$timeSignature = new TimeSignature();
-		$timeSignature->copyFrom($this);
-		return $timeSignature;
-	}
-	
-	public function copyFrom(TimeSignature $timeSignature)
+    $timeSignature = new TimeSignature();
+    $timeSignature->copyFrom($this);
+    return $timeSignature;
+  }
+
+  public function copyFrom(TimeSignature $timeSignature)
   {
-		$this->setNumerator($timeSignature->getNumerator());
-		$this->getDenominator()->copyFrom($timeSignature->getDenominator());
-	}
-	
-	public function isEqual(TimeSignature $ts)
+    $this->setNumerator($timeSignature->getNumerator());
+    $this->getDenominator()->copyFrom($timeSignature->getDenominator());
+  }
+
+  public function isEqual(TimeSignature $ts)
   {
-		return ($this->getNumerator() == $ts->getNumerator() && $this->getDenominator()->isEqual($ts->getDenominator()));
-	}
+    return ($this->getNumerator() == $ts->getNumerator() && $this->getDenominator()->isEqual($ts->getDenominator()));
+  }
 }
