@@ -1,6 +1,7 @@
 {
     "name": "stdtabs/phptabs",
     "type": "library",
+    "version": "0.1.0",
     "description": "A PHP library for reading tablatures",
     "keywords": ["tablature"],
     "homepage": "https://github.com/stdtabs/phptabs",
