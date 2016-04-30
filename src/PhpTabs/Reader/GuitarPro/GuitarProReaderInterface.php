@@ -9,12 +9,11 @@ namespace PhpTabs\Reader\GuitarPro;
 
 interface GuitarProReaderInterface
 {
- 	const GP_BEND_SEMITONE = 25;
-	const GP_BEND_POSITION = 60;
+  const GP_BEND_SEMITONE = 25;
+  const GP_BEND_POSITION = 60;
 
   /**
-   * @return array supported versions
+   * @return array of supported versions
    */
   public function getSupportedVersions();
-
 }

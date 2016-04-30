@@ -12,18 +12,18 @@ abstract class GuitarProReaderBase
   /**
    * @var int
    */
-	private $versionIndex;
+  private $versionIndex;
 
   /**
    * @var string
    */
-	private $version;
-  
+  private $version;
+
   /**
    * @var array
    */
-	private $versions;
-  
+  private $versions;
+
   /**
    * @var File
    */
@@ -34,23 +34,16 @@ abstract class GuitarProReaderBase
   {
     $this->file = $file;
   }
-  
-  public function getTablature()
-  {
-    
-  }
 
   public function getVersion()
   {
     return $this->version;
   }
-
-
-
+ 
   /**
    * Read Guitar Pro version
    */
-	protected function readVersion()
+  protected function readVersion()
   {
     if($this->version == null)
     {
@@ -58,10 +51,10 @@ abstract class GuitarProReaderBase
 
       Log::add($this->version);
     }
-	}
+  }
 
 
-	public function isSupportedVersion($version)
+  public function isSupportedVersion($version)
   {
     $versions = $this->getSupportedVersions();
 
@@ -70,26 +63,26 @@ abstract class GuitarProReaderBase
       if($this->version == $v)
       {
         $this->versionIndex = $k;
-        
+
         return true;
       }
     }
-    
+
     return false;
-	}
+  }
 
 
-	protected function readBoolean()
+  protected function readBoolean()
   {
     return $this->file->getStream() == 1; 
   }
 
-	protected function readByte()
+  protected function readByte()
   {
-		return ord($this->file->getStream()) & 0xff;
-	}
+    return ord($this->file->getStream()) & 0xff;
+  }
 
-	protected function readInt()
+  protected function readInt()
   {
     $bytes = array();
 
@@ -98,8 +91,8 @@ abstract class GuitarProReaderBase
       $bytes[$i] = ord($this->file->getStream());
     }
 
-		return (($bytes[3] & 0xff) << 24) | (($bytes[2] & 0xff) << 16) | (($bytes[1] & 0xff) << 8) | ($bytes[0] & 0xff);
-	}
+    return (($bytes[3] & 0xff) << 24) | (($bytes[2] & 0xff) << 16) | (($bytes[1] & 0xff) << 8) | ($bytes[0] & 0xff);
+  }
 
 
   /**
@@ -107,7 +100,7 @@ abstract class GuitarProReaderBase
    * @param int $length Length to return
    * @param string $charset
    */
-	protected function readString($size, $length = null, $charset = null)
+  protected function readString($size, $length = null, $charset = null)
   {
     if (null === $length && null === $charset)
     {
@@ -120,39 +113,37 @@ abstract class GuitarProReaderBase
 
     // Read brut content
     $bytes = $this->file->getStream($size);
-    
 
     if ($length>=0 && $length<=$size)
     {
-      // returns a part
+      // returns a subset
       return substr($bytes, 0, $length);
     }
 
     // returns all
     return $bytes;
-	}
+  }
 
 
   /**
    * @param int $size
    * @param string $charset
    */
-	protected function readStringByte($size, $charset = null)
+  protected function readStringByte($size, $charset = null)
   { 
-		return $this->readString($size, $this->readUnsignedByte(), $charset);
-	}
+    return $this->readString($size, $this->readUnsignedByte(), $charset);
+  }
 
-	protected function readStringByteSizeOfInteger($charset = 'UTF-8')
+  protected function readStringByteSizeOfInteger($charset = 'UTF-8')
   {
-		return $this->readStringByte(($this->readInt() - 1), $charset);
-	}
-
+    return $this->readStringByte(($this->readInt() - 1), $charset);
+  }
 
   protected function readUnsignedByte()
   {
-		return (ord($this->file->getStream()) & 0xff);
-	}
-  
+    return (ord($this->file->getStream()) & 0xff);
+  }
+
   protected function skip($num = 1)
   {
     $this->file->getStream($num); 
