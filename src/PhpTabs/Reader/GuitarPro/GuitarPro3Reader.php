@@ -22,7 +22,7 @@ use PhpTabs\Model\MeasureHeader;
 use PhpTabs\Model\Note;
 use PhpTabs\Model\NoteEffect;
 use PhpTabs\Model\Song;
-use PhpTabs\Model\String as TabString;
+use PhpTabs\Model\TabString as TabString;
 use PhpTabs\Model\Tempo;
 use PhpTabs\Model\Text;
 use PhpTabs\Model\TimeSignature;

@@ -5,7 +5,7 @@ namespace PhpTabs\Model;
 /**
  * @package Track
  * @uses Measure
- * @uses String
+ * @uses TabString
  * @uses Color
  * @uses Lyric
  * @uses Song
@@ -35,7 +35,7 @@ class Track
     $this->channelId = -1;
     $this->solo = false;
     $this->mute = false;
-    $this->name = new String();
+    $this->name = '';
     $this->measures = array();
     $this->strings = array();
     $this->color = new Color();
@@ -87,7 +87,7 @@ class Track
     return $this->strings;
   }
 
-  public function addString(String $string)
+  public function addString(TabString $string)
   {
     $this->strings[] = $string;
   }
