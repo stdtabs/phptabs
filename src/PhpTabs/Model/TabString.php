@@ -3,10 +3,10 @@
 namespace PhpTabs\Model;
 
 /**
- * @package String
+ * @package TabString
  */
 
-class String
+class TabString
 {
   private $number;
   private $value;
@@ -45,12 +45,12 @@ class String
 
   public function __clone()
   {
-    $string = new String();
+    $string = new TabString();
     $string->copyFrom($this);
     return $string;
   }
 
-  public function copyFrom(String $string)
+  public function copyFrom(TabString $string)
   {
     $this->setNumber($string->getNumber());
     $this->setValue($string->getValue());
