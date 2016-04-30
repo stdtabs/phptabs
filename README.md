@@ -45,7 +45,7 @@ Table of contents
   - [Accessing measure headers](#accessing-measure-headers)
     - [countMeasureHeaders()](#countmeasureheaders)
     - [getMeasureHeaders()](#getmeasureheaders)
-    - [getMeasureHeader()](#getmeasureheader)
+    - [getMeasureHeader()](#getmeasureheaderindex)
 
 ________________________________________________________________________
 
