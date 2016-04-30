@@ -109,7 +109,9 @@ Basic Usage
 -----------
 
 ```php
-require_once 'vendor/autoload.php';
+require_once 'PhpTabs.php';
+
+use PhpTabs\PhpTabs;
 
 // Instanciates a tablature
 $tablature = new PhpTabs("mytabs.gp3");
