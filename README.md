@@ -58,7 +58,7 @@ ________________________________________________________________________
 Installation
 ------------
 
-*Installation with Composer is required if you want to run PHPUnit tests.*
+Installation with Composer is required if you want to run PHPUnit tests.
 
 ###From Github
 
@@ -73,19 +73,36 @@ require_once "PhpTabs.php";
 
 ###With Composer
 
+- __Download Composer__
+
+Download it from [https://getcomposer.org/composer.phar](https://getcomposer.org/composer.phar)
+
+[More information about Composer](https://getcomposer.org/)
+
+- __Package configuration__
+
 ```sh
 composer require stdtabs/phptabs:0.*
 ```
 
-If Composer is not installed, you can download it from [https://getcomposer.org/composer.phar](https://getcomposer.org/composer.phar)
-
-Then install the package directly with the archive:
+Or
 
 ```sh
 php composer.phar require stdtabs/phptabs:0.*
 ```
 
-[More informations about Composer](https://getcomposer.org/)
+- __Package installation__
+
+```sh
+composer install
+```
+
+Or
+
+```sh
+php composer.phar install
+```
+
 ________________________________________________________________________
 
 Basic Usage
