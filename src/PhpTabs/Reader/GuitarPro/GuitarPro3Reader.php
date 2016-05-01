@@ -23,6 +23,7 @@ use PhpTabs\Model\MeasureHeader;
 use PhpTabs\Model\Note;
 use PhpTabs\Model\NoteEffect;
 use PhpTabs\Model\Song;
+use PhpTabs\Model\Stroke;
 use PhpTabs\Model\TabString;
 use PhpTabs\Model\Tempo;
 use PhpTabs\Model\Text;
@@ -1035,6 +1036,37 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     return max($value, 0);
   }
 
+	/**
+   * Get stroke value
+   * 
+   * @param integer $value
+   * @return integer stroke value
+   */
+  private function toStrokeValue($value)
+  {
+    if($value == 1 || $value == 2)
+    {
+      return Duration::SIXTY_FOURTH;
+    }
+    if($value == 3)
+    {
+      return Duration::THIRTY_SECOND;
+    }
+    if($value == 4)
+    {
+      return Duration::SIXTEENTH;
+    }
+    if($value == 5)
+    {
+      return Duration::EIGHTH;
+    }
+    if($value == 6)
+    {
+      return Duration::QUARTER;
+    }
+
+    return Duration::SIXTY_FOURTH;
+  }
 
   /********************************************************************/
   // EXTRA Should be implemented differently: maybe under Model\SomeClass
