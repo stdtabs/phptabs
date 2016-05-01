@@ -27,7 +27,7 @@ use PhpTabs\Model\MeasureHeader;
 use PhpTabs\Model\Note;
 use PhpTabs\Model\NoteEffect;
 use PhpTabs\Model\Song;
-use PhpTabs\Model\TabString as TabString;
+use PhpTabs\Model\TabString;
 use PhpTabs\Model\Tempo;
 use PhpTabs\Model\Text;
 use PhpTabs\Model\TimeSignature;
@@ -221,6 +221,8 @@ class GuitarPro4Reader extends GuitarProReaderBase implements ReaderInterface, G
   /**
    * @param Song $song
    * @param integer $channelId
+   * 
+   * @return boolean
    */
   private function isPercussionChannel(Song $song, $channelId)
   {
@@ -754,14 +756,18 @@ class GuitarPro4Reader extends GuitarProReaderBase implements ReaderInterface, G
     for ($i = 0; $i < $numberOfBeats; $i++)
     {
       $nextNoteStart += $this->readBeat($nextNoteStart, $measure, $track, $tempo);
-      if($i>100) throw new \Exception(__METHOD__  . ": Too much beats ($numberOfBeats) in measure " . $measure->getNumber() . ' Track[' . $track->getName() . ']');
+      if($i>256)
+      {
+        $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s]', __METHOD__, $numberOfBeats, $measure->getNumber(), $track->getName());
+        throw new \Exception($message);
+      }
     }
     $measure->setClef( $this->getClef($track) );
     $measure->setKeySignature($this->keySignature);
   }
 
   /**
-   * Read a mesure header
+   * Reads a mesure header
    * 
    * @param integer $number
    * @param Song $song
@@ -1218,7 +1224,6 @@ class GuitarPro4Reader extends GuitarProReaderBase implements ReaderInterface, G
   }
 
   /********************************************************************/
-  // EXTRA Should be implemented differently: maybe in SongManager or Song
-  // @todo move all functions below
+  // End of EXTRA methods
   /********************************************************************/
 }

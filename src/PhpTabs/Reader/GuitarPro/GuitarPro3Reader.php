@@ -723,7 +723,7 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     for ($i = 0; $i < $numberOfBeats; $i++)
     {
       $nextNoteStart += $this->readBeat($nextNoteStart, $measure, $track, $tempo);
-      if($i>100)
+      if($i>256)
       {
         $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s]'
           , __METHOD__, $numberOfBeats, $measure->getNumber(), $track->getName());
