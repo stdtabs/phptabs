@@ -1,11 +1,14 @@
 PhpTabs
 =======
 
+[![Build Status](https://travis-ci.org/stdtabs/phptabs.svg?branch=master)](https://travis-ci.org/stdtabs/phptabs)
+
 PhpTabs is a PHP library that reads tablature files. It provides direct methods to read a song name, get a list of instruments or whatever be your needs.
 
-PhpTabs is currently compatible with Guitar Pro 3 format. 
+PhpTabs currently supports the following file formats:
 
-[![Build Status](https://travis-ci.org/stdtabs/phptabs.svg?branch=master)](https://travis-ci.org/stdtabs/phptabs)
+- Guitar Pro 3 (.gp3)
+- Guitar Pro 4 (.gp4)
 
 
 Table of contents
@@ -57,6 +60,7 @@ PhpTabs requires one of the following:
 - PHP 5.4+
 - PHP 7.0+
 - HHVM
+
 ________________________________________________________________________
 
 Installation
@@ -351,7 +355,7 @@ ________________________________________________________________________
 
 __Type__ *string*
 
-Date when tablature or song has been written
+Date when tablature has been transcribed
 
 __Support__ 
 
