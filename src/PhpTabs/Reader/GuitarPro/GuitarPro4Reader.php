@@ -251,7 +251,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     $measureHeaders = $song->getMeasureHeaders();
 
-    foreach($measureHeaders as $k => $header)
+    foreach($measureHeaders as $header)
     {
       if($header->getNumber() == $measure)
       {

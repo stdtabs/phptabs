@@ -120,7 +120,7 @@ class Duration
       {
         if(abs($tmpTime - $time) < abs($duration->getTime() - $time))
         {
-          $duration = clone $tmpduration;
+          $duration = clone $tmpDuration;
         }
       }
       if($tmpDuration->isDotted())
