@@ -38,12 +38,21 @@ use PhpTabs\Model\Velocities;
 
 class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, GuitarProReaderInterface
 {
+  /**
+   * @var array $supportedVersions
+   */
   private static $supportedVersions = array('FICHIER GUITAR PRO v3.00');
 
-  private $tripletFeel;
-  private $keySignature;
+  /**
+   * @var boolean $tripletFeel
+   * @var integer $keySignature
+   */  
+  private $tripletFeel, $keySignature;
 
-
+  /**
+   * Reader constructor
+   * @param File $file input file to read
+   */
   public function __construct(File $file)
   {
     parent::__construct($file);
@@ -96,17 +105,18 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
       return;
     }
 
-
     $this->readMeasures($this->song, $measures, $tracks, $tempoValue);
 
     $this->closeStream();
   }
 
+  /**
+   * @return array of supported versions
+   */
   public function getSupportedVersions()
   {
     return GuitarPro3Reader::$supportedVersions;
   }
-
 
   /**
    * {@inheritdoc}
@@ -122,6 +132,8 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
   }
 
   /**
+   * Initializes Tablature with read Song
+   *
    * @param Song $song as read from file
    */
   private function setTablature(Song $song)
@@ -138,11 +150,16 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
    * Private methods are below
    * -----------------------------------------------------------------*/
 
+  /**
+   * @param Track $track
+   * @return integer Clef of $track
+   */
   private function getClef(Track $track)
   {
     if(!$this->isPercussionChannel($track->getSong(), $track->getChannelId()))
     {
       $strings = $track->getStrings();
+
       foreach($strings as $k => $string)
       {
         if($string->getValue() <= 34)
@@ -155,21 +172,30 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     return Measure::CLEF_TREBLE;
   }
 
+  /**
+   * @param TabString $string String on which note has started
+   * @param Track $track
+   * @return integer tied note value
+   */
   private function getTiedNoteValue($string, Track $track)
   {
     $measureCount = $track->countMeasures();
+
     if ($measureCount > 0)
     {
       for ($m = $measureCount - 1; $m >= 0; $m--)
       {
         $measure = $track->getMeasure($m);
+
         for ($b = $measure->countBeats() - 1; $b >= 0; $b--)
         {
           $beat = $measure->getBeat($b);
           $voice = $beat->getVoice(0);  
+
           for ($n = 0; $n < $voice->countNotes(); $n++)
           {
             $note = $voice->getNote($n);
+
             if ($note->getString() == $string)
             {
               return $note->getValue();
@@ -182,6 +208,12 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     return -1;
   }
 
+  /**
+   * @param Song $song
+   * @param integer $channelId
+   * 
+   * @return boolean
+   */
   private function isPercussionChannel(Song $song, $channelId)
   {
     $channels = $song->getChannels();
@@ -205,39 +237,50 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
    * @param integer $value
    * @return integer Number of repeat alternatives
    */
-	private function parseRepeatAlternative(Song $song, $measure, $value)
+  private function parseRepeatAlternative(Song $song, $measure, $value)
   {
-		$repeatAlternative = 0;
-		$existentAlternatives = 0;
-		$headers = $song->getMeasureHeaders();
-		foreach($headers as $k => $header)
+    $repeatAlternative = 0;
+    $existentAlternatives = 0;
+    $headers = $song->getMeasureHeaders();
+    foreach($headers as $k => $header)
     {
-			if($header->getNumber() == $measure)
+      if($header->getNumber() == $measure)
       {
-				break;
-			}
-			if($header->isRepeatOpen())
+        break;
+      }
+      if($header->isRepeatOpen())
       {
-				$existentAlternatives = 0;
-			}
+        $existentAlternatives = 0;
+      }
 
-			$existentAlternatives |= $header->getRepeatAlternative();
-		}
-		
-		for($i = 0; $i < 8; $i++)
+      $existentAlternatives |= $header->getRepeatAlternative();
+    }
+
+    for($i = 0; $i < 8; $i++)
     {
-			if($value > $i && ($existentAlternatives & (1 << $i)) == 0)
+      if($value > $i && ($existentAlternatives & (1 << $i)) == 0)
       {
-				$repeatAlternative |= (1 << $i);
-			}
-		}
+        $repeatAlternative |= (1 << $i);
+      }
+    }
 
-		return $repeatAlternative;
-	}
+    return $repeatAlternative;
+  }
 
+  /**
+   * Reads some Beat informations
+   * 
+   * @param integer $start
+   * @param Measure $measure
+   * @param Track $track
+   * @param Tempo $tempo
+   * 
+   * @return integer $time duration time
+   */
   private function readBeat($start, Measure $measure, Track $track, Tempo $tempo)
   {
     $flags = $this->readUnsignedByte();
+
     if(($flags & 0x40) != 0)
     {
       $this->readUnsignedByte();
@@ -264,6 +307,7 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
       $this->readMixChange($tempo);
     }
     $stringFlags = $this->readUnsignedByte();
+
     for ($i = 6; $i >= 0; $i--)
     {
       if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->stringCount())
@@ -281,6 +325,13 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     return $duration->getTime();
   }
 
+  /**
+   * Reads some NoteEffect informations
+   * 
+   * @param Beat $beat
+   * @param NoteEffect $effect
+   * @return void
+   */
   private function readBeatEffects(Beat $beat, NoteEffect $effect)
   {
     $flags = $this->readUnsignedByte();
@@ -331,6 +382,12 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     }
   }
 
+  /**
+   * Reads BendEffect informations
+   *
+   * @param NoteEffect $effect
+   * @return void
+   */
   private function readBend(NoteEffect $effect)
   {
     $bend = new EffectBend();
@@ -352,6 +409,15 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     }
   }
 
+  /**
+   * Reads Channel informations
+   * 
+   * @param Song $song
+   * @param Track $track
+   * @param array $channels
+   * 
+   * @return void
+   */
   private function readChannel(Song $song, Track $track, $channels)
   {
     $gmChannel1 = $this->readInt() - 1;
@@ -371,7 +437,6 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
 
       $channel->copyFrom($channels[$gmChannel1]);
 
-      //------------------------------------------//
       for($i = 0; $i < $song->countChannels(); $i++)
       {
         $channelAux = $song->getChannel($i);
@@ -400,6 +465,11 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     }
   }
 
+  /**
+   * Reads channels informations
+   * 
+   * @return array $channels
+   */
   private function readChannels()
   {
     $channels = array();
@@ -430,6 +500,12 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     return $channels;
   }
 
+  /**
+   * Reads color informations
+   * 
+   * @param Color $color
+   * @return void
+   */
   private function readColor(Color $color)
   {
     $color->setR($this->readUnsignedByte());
@@ -486,7 +562,12 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     }
   }
 
-
+  /**
+   * Reads Duration
+   *
+   * @param byte $flags unsigned bytes
+   * @return Duration
+   */
   private function readDuration($flags)
   {
     $duration = new Duration();
@@ -535,6 +616,12 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     return $duration;
   }
 
+  /**
+   * Reads GraceEffect
+   * 
+   * @param NoteEffect $effect
+   * @return void
+   */
   private function readGrace(NoteEffect $effect)
   {
     $fret = $this->readUnsignedByte();
@@ -564,6 +651,12 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     $effect->setGrace($grace);
   }
 
+  /**
+   * Reads meta informations about tablature
+   * 
+   * @param Song $song
+   * @return void
+   */
   private function readInformations(Song $song)
   {
     $song->setName($this->readStringByteSizeOfInteger());
@@ -583,8 +676,9 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
   }
 
   /**
-   * 0: C 1: G, -1: F
-   * @return int Key signature
+   * Reads the key signature
+   * 
+   * @return integer Key signature 0: C 1: G, -1: F
    */
   private function readKeySignature()
   {
@@ -599,7 +693,10 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
   }
 
   /**
-   * @param int $measure
+   * Reads measure marker
+   * 
+   * @param integer $measure
+   * @return Marker
    */
   private function readMarker($measure)
   {
@@ -610,6 +707,14 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     return $marker;
   }
 
+  /**
+   * Reads a Measure
+   * 
+   * @param Measure $measure
+   * @param Track $track
+   * @param Tempo $tempo
+   * @return void
+   */
   private function readMeasure(Measure $measure, Track $track, Tempo $tempo)
   {
     $nextNoteStart = (double)($measure->getStart());
@@ -629,6 +734,16 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     $measure->setKeySignature($this->keySignature);
   }
 
+  /**
+   * Reads a mesure header
+   * 
+   * @param integer $number
+   * @param Song $song
+   * @param TimeSignature $timeSignature
+   * @param integer $tempoValue
+   * 
+   * @return MeasureHeader
+   */
   private function readMeasureHeader($number, Song $song, TimeSignature $timeSignature, $tempoValue = 120)
   {
     $flags = $this->readUnsignedByte();
@@ -674,7 +789,13 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     return $header;
   }
 
-
+  /**
+   * Loops on mesure headers to read
+   * 
+   * @param Song $song
+   * @param integer $count
+   * @return void
+   */
   private function readMeasureHeaders(Song $song, $count)
   {
     $timeSignature = new TimeSignature();
@@ -685,7 +806,15 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     }
   }
 
-
+  /**
+   * Loops on mesures to read
+   * 
+   * @param Song $song
+   * @param integer $measures
+   * @param integer $tracks
+   * @param integer $tempoValue
+   * @return void
+   */
   private function readMeasures(Song $song, $measures, $tracks, $tempoValue)
   {
     $tempo = new Tempo();
@@ -709,7 +838,12 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     }
   }
 
-
+  /**
+   * Reads mix change informations
+   * 
+   * @param Tempo $tempo
+   * @return void
+   */
   private function readMixChange(Tempo $tempo)
   {
     $this->readByte(); //instrument
@@ -751,6 +885,14 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     }
   }
 
+  /**
+   * Reads a note
+   * 
+   * @param TabString $string
+   * @param track $track
+   * @param NoteEffect $effect
+   * @return Note
+   */
   private function readNote(TabString $string, Track $track, NoteEffect $effect)
   {
     $flags = $this->readUnsignedByte();
@@ -760,9 +902,9 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     $note->getEffect()->setGhostNote((($flags & 0x04) != 0));
     if (($flags & 0x20) != 0)
     {
-    $noteType = $this->readUnsignedByte();
-    $note->setTiedNote($noteType == 0x02);
-    $note->getEffect()->setDeadNote($noteType == 0x03);
+      $noteType = $this->readUnsignedByte();
+      $note->setTiedNote($noteType == 0x02);
+      $note->getEffect()->setDeadNote($noteType == 0x03);
     }
     if (($flags & 0x01) != 0)
     {
@@ -775,7 +917,8 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     if (($flags & 0x20) != 0)
     {
       $fret = $this->readByte();
-      $value = $note->isTiedNote() ? $this->getTiedNoteValue($string->getNumber(), $track) : $fret;
+      $value = $note->isTiedNote()
+        ? $this->getTiedNoteValue($string->getNumber(), $track) : $fret;
       $note->setValue($value >= 0 && $value < 100 ? $value : 0);
     }
     if (($flags & 0x80) != 0)
@@ -790,6 +933,12 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     return $note;
   }
 
+  /**
+   * Reads NoteEffect
+   * 
+   * @param NoteEffect $noteEffect
+   * @return void
+   */
   private function readNoteEffects(NoteEffect $effect)
   {
     $flags = $this->readUnsignedByte();
@@ -806,6 +955,12 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     }
   }
 
+  /**
+   * Reads some text
+   * 
+   * @param Beat $beat
+   * @return void
+   */
   private function readText(Beat $beat)
   {
     $text = new Text();
@@ -813,6 +968,13 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     $beat->setText($text);
   }
 
+  /**
+   * Reads Track informations
+   * @param Song $song
+   * @param integer $number
+   * @param array $channels an array of Channel objects
+   * @return Track
+   */
   private function readTrack(Song $song, $number, $channels)
   {
     $track = new Track();
@@ -842,9 +1004,12 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
   }
 
   /**
+   * Loops on tracks to read
+   * 
    * @param Song $song
    * @param int $count
    * @param array $channels Current array of channels
+   * @return void
    */
   private function readTracks(Song $song, $count, array $channels)
   {
@@ -855,7 +1020,10 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
   }
 
   /**
-   * @return Short int between 0 and 32767
+   * Helper to format an integer
+   * 
+   * @param byte $b
+   * @return integer between 0 and 32767
    */
   private function toChannelShort($b)
   {
@@ -869,10 +1037,17 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
 
 
   /********************************************************************/
-  // EXTRA Should be implemented differently: maybe in SongManager
+  // EXTRA Should be implemented differently: maybe under Model\SomeClass
   // @todo move all functions below
   /********************************************************************/
 
+  /**
+   * Checks if a channel is still defined
+   *
+   * @param Song $song
+   * @param string $name
+   * @return boolean Result of the search
+   */
   public function findChannelsByName($song, $name)
   {
     $channels = $song->getChannels();
@@ -886,6 +1061,13 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     return false;
   }
 
+  /**
+   * Generates a channel name
+   * 
+   * @param Song $song
+   * @param string $prefix
+   * @return string channel name
+   */
   public function createChannelName(Song $song, $prefix)
   {
     $number = 0;
@@ -904,12 +1086,24 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     return $unusedName;
   }
 
+  /**
+   * Creates a channel
+   * 
+   * @param Song $song
+   * @return string a generated channel name
+   */
   public function createDefaultChannelName(Song $song)
   {
     return $this->createChannelName($song, "Unnamed");
   }
 
-
+  /**
+   * Creates a channel name with a program
+   * 
+   * @param Song $song
+   * @param Channel $channel
+   * @return string a new channel name
+   */
   public function createChannelNameFromProgram(Song $song, $channel)
   {
     $names = ChannelNames::$DEFAULT_NAMES;
@@ -923,7 +1117,6 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
   }
 
   /********************************************************************/
-  // EXTRA Should be implemented differently: maybe in SongManager or Song
-  // @todo move all functions below
+  // End of EXTRA methods
   /********************************************************************/
 }
