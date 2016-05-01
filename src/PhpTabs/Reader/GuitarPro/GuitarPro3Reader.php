@@ -16,6 +16,7 @@ use PhpTabs\Model\Color;
 use PhpTabs\Model\Duration;
 use PhpTabs\Model\EffectBend;
 use PhpTabs\Model\EffectGrace;
+use PhpTabs\Model\EffectTremoloBar;
 use PhpTabs\Model\Lyric;
 use PhpTabs\Model\Marker;
 use PhpTabs\Model\Measure;

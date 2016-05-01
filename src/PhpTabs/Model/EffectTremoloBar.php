@@ -9,8 +9,8 @@ namespace PhpTabs\Model;
 
 class EffectTremoloBar
 {
-  public static $MAX_POSITION_LENGTH = 12;
-  public static $MAX_VALUE_LENGTH = 12;
+  const MAX_POSITION_LENGTH = 12;
+  const MAX_VALUE_LENGTH = 12;
 
   private $points;
 
