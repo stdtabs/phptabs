@@ -759,7 +759,8 @@ class GuitarPro4Reader extends GuitarProReaderBase implements ReaderInterface, G
       $nextNoteStart += $this->readBeat($nextNoteStart, $measure, $track, $tempo);
       if($i>256)
       {
-        $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s]', __METHOD__, $numberOfBeats, $measure->getNumber(), $track->getName());
+        $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s], tempo %s'
+          , __METHOD__, $numberOfBeats, $measure->getNumber(), $track->getName(), $tempo->getValue());
         throw new \Exception($message);
       }
     }
@@ -1136,7 +1137,7 @@ class GuitarPro4Reader extends GuitarProReaderBase implements ReaderInterface, G
    * @param NoteEffect $noteEffect
    * @return void
    */
-  private function readTremoloBar(NoteEffect effect)
+  private function readTremoloBar(NoteEffect $effect)
   {
     $tremoloBar = new EffectTremoloBar();
     $this->skip(5);
@@ -1153,7 +1154,7 @@ class GuitarPro4Reader extends GuitarProReaderBase implements ReaderInterface, G
       $tremoloBar->addPoint($pointPosition, $pointValue);
     }
 
-    if(count($tremoloBar->getPoints())
+    if(count($tremoloBar->getPoints()))
     {
       $effect->setTremoloBar($tremoloBar);
     }
