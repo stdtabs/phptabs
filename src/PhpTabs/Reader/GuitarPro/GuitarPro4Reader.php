@@ -1131,6 +1131,35 @@ class GuitarPro4Reader extends GuitarProReaderBase implements ReaderInterface, G
   }
 
   /**
+   * Reads tremolo bar
+   * 
+   * @param NoteEffect $noteEffect
+   * @return void
+   */
+  private function readTremoloBar(NoteEffect effect)
+  {
+    $tremoloBar = new EffectTremoloBar();
+    $this->skip(5);
+    $points = $this->readInt();
+
+    for ($i = 0; $i < $points; $i++)
+    {
+      $position = $this->readInt();
+      $value = $this->readInt();
+      $this->readByte();
+
+      $pointPosition = round($position * EffectTremoloBar::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
+      $pointValue = round($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2));
+      $tremoloBar->addPoint($pointPosition, $pointValue);
+    }
+
+    if(count($tremoloBar->getPoints())
+    {
+      $effect->setTremoloBar($tremoloBar);
+    }
+  }
+
+  /**
    * Helper to format an integer
    * 
    * @param byte $b
