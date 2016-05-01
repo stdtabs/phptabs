@@ -11,6 +11,7 @@ use PhpTabs\Model\Beat;
 use PhpTabs\Model\Channel;
 use PhpTabs\Model\ChannelNames;
 use PhpTabs\Model\ChannelParameter;
+use PhpTabs\Model\Chord;
 use PhpTabs\Model\Color;
 use PhpTabs\Model\Duration;
 use PhpTabs\Model\EffectBend;
@@ -22,14 +23,18 @@ use PhpTabs\Model\MeasureHeader;
 use PhpTabs\Model\Note;
 use PhpTabs\Model\NoteEffect;
 use PhpTabs\Model\Song;
-use PhpTabs\Model\TabString as TabString;
+use PhpTabs\Model\TabString;
 use PhpTabs\Model\Tempo;
 use PhpTabs\Model\Text;
 use PhpTabs\Model\TimeSignature;
 use PhpTabs\Model\Track;
 use PhpTabs\Model\Velocities;
 
-
+/**
+ * Guitar Pro 4 dedicated reader
+ * 
+ * It provides a set of dedicated methods.
+ */
 
 class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, GuitarProReaderInterface
 {
@@ -191,6 +196,44 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
 
     return false;
   }
+
+  /**
+   * Manage repeat alternative
+   * 
+   * @param Song $song
+   * @param integer $measure
+   * @param integer $value
+   * @return integer Number of repeat alternatives
+   */
+	private function parseRepeatAlternative(Song $song, $measure, $value)
+  {
+		$repeatAlternative = 0;
+		$existentAlternatives = 0;
+		$headers = $song->getMeasureHeaders();
+		foreach($headers as $k => $header)
+    {
+			if($header->getNumber() == $measure)
+      {
+				break;
+			}
+			if($header->isRepeatOpen())
+      {
+				$existentAlternatives = 0;
+			}
+
+			$existentAlternatives |= $header->getRepeatAlternative();
+		}
+		
+		for($i = 0; $i < 8; $i++)
+    {
+			if($value > $i && ($existentAlternatives & (1 << $i)) == 0)
+      {
+				$repeatAlternative |= (1 << $i);
+			}
+		}
+
+		return $repeatAlternative;
+	}
 
   private function readBeat($start, Measure $measure, Track $track, Tempo $tempo)
   {
@@ -395,6 +438,55 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     $this->skip();
   }
 
+  /**
+   * Read Chord informations
+   * 
+   * @param integer $strings
+   * @param Beat $beat
+   * @return void
+   */
+  private function readChord($strings, $beat)
+  {
+    $chord = new Chord($strings);
+    $header = $this->readUnsignedByte();
+    if (($header & 0x01) == 0)
+    {
+      $chord->setName($this->readStringByteSizeOfInteger());
+      $chord->setFirstFret($this->readInt());
+      if ($chord->getFirstFret() != 0)
+      {
+        for ($i = 0; $i < 6; $i++)
+        {
+          $fret = $this->readInt();
+          if($i < $chord->countStrings())
+          {
+            $chord->addFretValue($i, $fret);
+          }
+        }
+      }
+    }
+    else
+    {
+      $this->skip(25);
+      $chord->setName($this->readStringByte(34));
+      $chord->setFirstFret($this->readInt());
+      for ($i = 0; $i < 6; $i++)
+      {
+        $fret = $this->readInt();
+        if($i < $chord->countStrings())
+        {
+          $chord->addFretValue($i, $fret);
+        }
+      }
+      $this->skip(36);
+    }
+    if($chord->countNotes() > 0)
+    {
+      $beat->setChord($chord);
+    }
+  }
+
+
   private function readDuration($flags)
   {
     $duration = new Duration();
@@ -526,7 +618,12 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     for ($i = 0; $i < $numberOfBeats; $i++)
     {
       $nextNoteStart += $this->readBeat($nextNoteStart, $measure, $track, $tempo);
-      if($i>100) throw new \Exception(__METHOD__  . ": Too much beats ($numberOfBeats) in measure " . $measure->getNumber());
+      if($i>100)
+      {
+        $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s]'
+          , __METHOD__, $numberOfBeats, $measure->getNumber(), $track->getName());
+        throw new \Exception($message);
+      }
     }
     $measure->setClef( $this->getClef($track) );
     $measure->setKeySignature($this->keySignature);
