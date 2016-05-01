@@ -45,8 +45,10 @@ class Lyric
 
     $str = '';
 
-    foreach($lyrics as $k=>$v)
+    foreach($lyrics as $v)
+    {
       $str .= str_replace(array("\n", "\r"), Lyric::REGEX, $v) . Lyric::REGEX; 
+    }
 
     return explode(Lyric::REGEX, $str);
   }

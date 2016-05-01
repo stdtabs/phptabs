@@ -4,7 +4,6 @@ namespace PhpTabs\Reader\GuitarPro;
 
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
-use PhpTabs\Component\ReaderInterface;
 use PhpTabs\Component\Tablature;
 
 use PhpTabs\Model\Beat;
@@ -39,7 +38,7 @@ use PhpTabs\Model\Velocities;
  * It provides a set of dedicated methods.
  */
 
-class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, GuitarProReaderInterface
+class GuitarPro3Reader extends GuitarProReaderBase
 {
   /**
    * @var array $supportedVersions
@@ -118,7 +117,7 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
    */
   public function getSupportedVersions()
   {
-    return GuitarPro3Reader::$supportedVersions;
+    return self::$supportedVersions;
   }
 
   /**
@@ -163,7 +162,7 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     {
       $strings = $track->getStrings();
 
-      foreach($strings as $k => $string)
+      foreach($strings as $string)
       {
         if($string->getValue() <= 34)
         {
@@ -221,7 +220,7 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
   {
     $channels = $song->getChannels();
 
-    foreach($channels as $k => $channel)
+    foreach($channels as $channel)
     {
       if($channel->getChannelId() == $channelId)
       {
@@ -245,7 +244,7 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     $repeatAlternative = 0;
     $existentAlternatives = 0;
     $headers = $song->getMeasureHeaders();
-    foreach($headers as $k => $header)
+    foreach($headers as $header)
     {
       if($header->getNumber() == $measure)
       {
@@ -1050,7 +1049,7 @@ class GuitarPro3Reader extends GuitarProReaderBase implements ReaderInterface, G
     $value = ($b * 8) - 1;
 
     if($value>32767)
-      $value = 0; #workaround @todo FIXME
+      $value = 0; #@todo workaround fix this workaround
 
     return max($value, 0);
   }

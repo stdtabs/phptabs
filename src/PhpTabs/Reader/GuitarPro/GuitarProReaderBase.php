@@ -7,7 +7,7 @@ use PhpTabs\Component\Log;
 use PhpTabs\Model\Song;
 
 
-abstract class GuitarProReaderBase
+abstract class GuitarProReaderBase implements GuitarProReaderInterface
 {
   /**
    * @var int
@@ -18,11 +18,6 @@ abstract class GuitarProReaderBase
    * @var string
    */
   private $version;
-
-  /**
-   * @var array
-   */
-  private $versions;
 
   /**
    * @var File
@@ -75,7 +70,7 @@ abstract class GuitarProReaderBase
 
     foreach($versions as $k => $v)
     {
-      if($this->version == $v)
+      if($version == $v)
       {
         $this->versionIndex = $k;
 
@@ -196,7 +191,7 @@ abstract class GuitarProReaderBase
    */
   protected function readStringInteger($charset = 'UTF-8')
   {
-    return $this->readString($this->readInt());
+    return $this->readString($this->readInt(), $charset);
   }
 
   /**

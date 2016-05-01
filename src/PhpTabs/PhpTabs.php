@@ -45,8 +45,9 @@ class PhpTabs
           . ' in ' . $e->getFile() 
           . ' on line ' . $e->getLine() . PHP_EOL
           . $e->getTraceAsString() . PHP_EOL;
-
-        exit(1);
+        
+        trigger_error($e->getMessage(), E_USER_ERROR);
+        return;
       }
 
       $this->setTablature(new Tablature());

@@ -189,20 +189,32 @@ class Song
     return count($this->channels);
   }
 
-  public function addChannel(Channel $channel)
+  public function addChannel($index, $channel = null)
   {
-    $this->channels[] = $channel;
+    if($index instanceof Channel)
+    {
+      $this->channels[] = $index;
+    }
+    else
+    {
+      array_splice($this->channels, $index, 0, $channel);
+    }
   }
 
   public function moveChannel($index, Channel $channel)
   {
-    $this->removeChannel($channel);
-    $this->addChannel($channel);
+    $this->addChannel($index, $channel);
   }
 
   public function removeChannel(Channel $channel)
   {
-    $this->removeChannel($channel);
+    foreach($this-channels as $k => $v)
+    {
+      if($v == $channel)
+      {
+        array_splice($this->channels, $k, 1);
+      }
+    }
   }
 
   public function getChannel($index)

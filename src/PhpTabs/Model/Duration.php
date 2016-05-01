@@ -67,7 +67,7 @@ class Duration
   {
     if((double)$this->value==0)
     {
-      $this->value = PHP_INT_MAX; # workaround @todo FIXME when value is not set or 0
+      $this->value = PHP_INT_MAX; # @todo Fix this workaround  when value is not set or 0
 
       \PhpTabs\Component\Log::add(__METHOD__  . ": Value ({$this->value})'"
         , 'ERROR\\MODEL');
@@ -94,14 +94,14 @@ class Duration
   {
     if($minDuration === null && $diff === null)
     {
-    $duration = new Duration();
-    $duration->setValue(Duration::SIXTY_FOURTH);
-    $duration->setDotted(false);
-    $duration->setDoubleDotted(false);
-    $duration->getDivision()->setEnters(3);
-    $duration->getDivision()->setTimes(2);
+      $duration = new Duration();
+      $duration->setValue(Duration::SIXTY_FOURTH);
+      $duration->setDotted(false);
+      $duration->setDoubleDotted(false);
+      $duration->getDivision()->setEnters(3);
+      $duration->getDivision()->setTimes(2);
 
-    return self::fromTime($time, $duration);
+      return self::fromTime($time, $duration);
     }
     else if($diff === null)
     {
@@ -110,12 +110,12 @@ class Duration
 
     $duration = clone $minDuration;
     $tmpDuration = new Duration();
-    $tmpduration->setValue(Duration::WHOLE);
-    $tmpduration->setDotted(true);
+    $tmpDuration->setValue(Duration::WHOLE);
+    $tmpDuration->setDotted(true);
     $finish = false;
     while(!$finish)
     {
-      $tmpTime = $tmpduration->getTime();
+      $tmpTime = $tmpDuration->getTime();
       if($tmpTime - $diff <= $time)
       {
         if(abs($tmpTime - $time) < abs($duration->getTime() - $time))
@@ -123,23 +123,23 @@ class Duration
           $duration = clone $tmpduration;
         }
       }
-      if($tmpduration->isDotted())
+      if($tmpDuration->isDotted())
       {
-        $tmpduration->setDotted(false);
+        $tmpDuration->setDotted(false);
       }
-      else if($tmpduration->getDivision()->isEqual(DivisionType::NORMAL))
+      else if($tmpDuration->getDivision()->isEqual(DivisionType::NORMAL))
       {
-        $tmpduration->getDivision()->setEnters(3);
-        $tmpduration->getDivision()->setTimes(2);
+        $tmpDuration->getDivision()->setEnters(3);
+        $tmpDuration->getDivision()->setTimes(2);
       }
       else
       {
-        $tmpduration->setValue($tmpduration->getValue() * 2);
-        $tmpduration->setDotted(true);
-        $tmpduration->getDivision()->setEnters(1);
-        $tmpduration->getDivision()->setTimes(1);
+        $tmpDuration->setValue($tmpDuration->getValue() * 2);
+        $tmpDuration->setDotted(true);
+        $tmpDuration->getDivision()->setEnters(1);
+        $tmpDuration->getDivision()->setTimes(1);
       }
-      if($tmpduration->getValue() > Duration::SIXTY_FOURTH)
+      if($tmpDuration->getValue() > Duration::SIXTY_FOURTH)
       {
         $finish = true;
       }

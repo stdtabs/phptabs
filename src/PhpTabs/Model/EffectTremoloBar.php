@@ -33,7 +33,7 @@ class EffectTremoloBar
   {
     $effect = new EffectTremoloBar();
 
-    foreach($this->points as $k=>$point)
+    foreach($this->points as $point)
     {
       $effect->addPoint($point->getPosition(), $point->getValue());
     }

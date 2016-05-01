@@ -4,7 +4,6 @@ namespace PhpTabs\Reader\GuitarPro;
 
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
-use PhpTabs\Component\ReaderInterface;
 use PhpTabs\Component\Tablature;
 
 use PhpTabs\Model\Beat;
@@ -41,7 +40,7 @@ use PhpTabs\Model\Velocities;
  * It provides a set of dedicated methods.
  */
  
-class GuitarPro4Reader extends GuitarProReaderBase implements ReaderInterface, GuitarProReaderInterface
+class GuitarPro4Reader extends GuitarProReaderBase
 {
   /**
    * @var array $supportedVersions
@@ -125,7 +124,7 @@ class GuitarPro4Reader extends GuitarProReaderBase implements ReaderInterface, G
    */
   public function getSupportedVersions()
   {
-    return GuitarPro4Reader::$supportedVersions;
+    return self::$supportedVersions;
   }
 
 
@@ -171,7 +170,7 @@ class GuitarPro4Reader extends GuitarProReaderBase implements ReaderInterface, G
     {
       $strings = $track->getStrings();
 
-      foreach($strings as $k => $string)
+      foreach($strings as $string)
       {
         if($string->getValue() <= 34)
         {
@@ -229,7 +228,7 @@ class GuitarPro4Reader extends GuitarProReaderBase implements ReaderInterface, G
   {
     $channels = $song->getChannels();
 
-    foreach($channels as $k => $channel)
+    foreach($channels as $channel)
     {
       if($channel->getChannelId() == $channelId)
       {

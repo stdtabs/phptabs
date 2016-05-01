@@ -8,15 +8,14 @@ namespace PhpTabs\Model;
 
 class Chord
 {
-  private $firstFret;
+  private $firstFret = 0;
   private $strings = array();
   private $name;
   private $beat;
 
   public function __construct($length)
   {
-    $this->strings = array();
-    for($i=0; $i<count($this->strings); $i++)
+    for($i=0; $i<count($length); $i++)
     {
       $this->strings[$i] = -1;
     }

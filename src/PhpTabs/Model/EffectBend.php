@@ -34,7 +34,7 @@ class EffectBend
     $effect = new EffectBend();
     $points = $this->getPoints();
 
-    foreach($points as $k => $point)
+    foreach($points as $point)
     {
       $effect->addPoint($point->getPosition(), $point->getValue());
     }

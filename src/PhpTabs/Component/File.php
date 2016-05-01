@@ -172,7 +172,7 @@ class File
    * 
    * @return a file segment
    */
-  public function getStream($bytes = 1, $offset = null, $length = null)
+  public function getStream($bytes = 1, $offset = null)
   {
     if(!$this->handle)
     {
