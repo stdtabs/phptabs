@@ -31,6 +31,13 @@ class Reader
     'gp3'
   );
 
+  /**
+   * @var array List of gp4 extensions
+   */
+  private $gp4Extensions = array(
+    'gp4'
+  );
+
 
   /**
    * Instanciates tablature container
@@ -53,11 +60,16 @@ class Reader
       return;
     }
 
-    // Load dedicated adapter
+    // Guitar Pro 3
     if(in_array($file->getExtension(), $this->gp3Extensions))
     {
-      # GuitarPro 3
       $this->adapter = new GuitarPro3Reader($file);
+    }
+
+    // Guitar Pro 4
+    if(in_array($file->getExtension(), $this->gp4Extensions))
+    {
+      $this->adapter = new GuitarPro4Reader($file);
     }
 
     // Adapter not found

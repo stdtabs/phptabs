@@ -91,7 +91,7 @@ abstract class GuitarProReaderBase
       $bytes[$i] = ord($this->file->getStream());
     }
 
-    return (($bytes[3] & 0xff) << 24) | (($bytes[2] & 0xff) << 16) | (($bytes[1] & 0xff) << 8) | ($bytes[0] & 0xff);
+    return (($bytes[3] & 0xf) << 24) | (($bytes[2] & 0xf) << 16) | (($bytes[1] & 0xf) << 8) | ($bytes[0] & 0xff);
   }
 
 
@@ -104,7 +104,7 @@ abstract class GuitarProReaderBase
   {
     if (null === $length && null === $charset)
     {
-      return $this->readSequence($size);
+      return $this->readString($size, $size);
     }
     else if (is_string($length))
     {
@@ -138,6 +138,13 @@ abstract class GuitarProReaderBase
   {
     return $this->readStringByte(($this->readInt() - 1), $charset);
   }
+
+  protected function readStringInteger($charset = 'UTF-8')
+  {
+
+    return $this->readString($this->readInt());
+  }
+
 
   protected function readUnsignedByte()
   {

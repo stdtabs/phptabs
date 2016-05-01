@@ -41,7 +41,7 @@ class PhpTabs
       # if debug == true, an exception kills the process
       if(Config::get('debug'))
       {
-        echo 'Exception: ' . $e->getMessage() . PHP_EOL
+        echo PHP_EOL . 'Exception: ' . $e->getMessage() . PHP_EOL
           . ' in ' . $e->getFile() 
           . ' on line ' . $e->getLine() . PHP_EOL
           . $e->getTraceAsString() . PHP_EOL;

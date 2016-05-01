@@ -11,7 +11,7 @@ class Lyric
   const REGEX = " ";
 
   private $from;
-  private $lyrics;
+  private $lyrics = array();
 
   public function __construct()
   {

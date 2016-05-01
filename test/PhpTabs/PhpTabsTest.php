@@ -71,7 +71,6 @@ class PhpTabsTest extends \PHPUnit_Framework_TestCase
       , $tablature->getError());
   }
 
-
   /**
    * Tests read mode with a simple tablature
    * Guitar Pro 3
@@ -95,6 +94,51 @@ class PhpTabsTest extends \PHPUnit_Framework_TestCase
       , $tablature->getComments());
     $this->assertEquals('', $tablature->getDate());       #Not supported by Guitar Pro 3
     $this->assertEquals('', $tablature->getTranscriber());#Not supported by Guitar Pro 3
+
+    # Tracks
+    $this->assertEquals(1, $tablature->countTracks());
+    $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\Track', $tablature->getTracks());
+    $this->assertEquals(null, $tablature->getTrack(42));
+    $this->assertInstanceOf('PhpTabs\\Model\\Track', $tablature->getTrack(0));
+
+    # Channels
+    $this->assertEquals(1, $tablature->countChannels());
+    $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\Channel', $tablature->getChannels());
+    $this->assertEquals(null, $tablature->getChannel(42));
+    $this->assertInstanceOf('PhpTabs\\Model\\Channel', $tablature->getChannel(0));
+
+    # MeasureHeaders
+    $this->assertEquals(3, $tablature->countMeasureHeaders());
+    $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\MeasureHeader', $tablature->getMeasureHeaders());
+    $this->assertEquals(null, $tablature->getMeasureHeader(42));
+    $this->assertInstanceOf('PhpTabs\\Model\\MeasureHeader', $tablature->getMeasureHeader(0));
+    
+    $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $tablature->getTablature());
+  }
+
+  /**
+   * Tests read mode with a simple tablature
+   * Guitar Pro 4
+   */
+  public function testReadModeWithSimpleGuitarPro4Tab()
+  {
+    $tablature = new PhpTabs(__DIR__ . '/samples/testSimpleTab.gp4');
+
+    # Errors
+    $this->assertEquals(false, $tablature->hasError());
+    $this->assertEquals(null, $tablature->getError());
+    
+    # Meta attributes
+    $this->assertEquals('Testing name', $tablature->getName());
+    $this->assertEquals('Testing artist', $tablature->getArtist());
+    $this->assertEquals('Testing album', $tablature->getAlbum());
+    $this->assertEquals('Testing author', $tablature->getAuthor());
+    $this->assertEquals('Testing copyright', $tablature->getCopyright());
+    $this->assertEquals('Testing writer', $tablature->getWriter());
+    $this->assertEquals("Testing comments line 1\nTesting comments line 2"
+      , $tablature->getComments());
+    $this->assertEquals('', $tablature->getDate());       #Not supported by Guitar Pro 4
+    $this->assertEquals('', $tablature->getTranscriber());#Not supported by Guitar Pro 4
 
     # Tracks
     $this->assertEquals(1, $tablature->countTracks());
