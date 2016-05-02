@@ -75,7 +75,7 @@ Download and extract archive from [https://github.com/stdtabs/phptabs/archive/ma
 Then add this PHP line before usage:
 
 ```php
-require_once "PhpTabs.php";
+require_once 'src/PhpTabs/Autoloader.php';
 ```
 
 ###With Composer
@@ -116,7 +116,7 @@ Basic Usage
 -----------
 
 ```php
-require_once 'PhpTabs.php';
+require_once 'src/PhpTabs/Autoloader.php';
 
 use PhpTabs\PhpTabs;
 
