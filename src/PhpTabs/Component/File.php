@@ -176,11 +176,15 @@ class File
   {
     if(!$this->handle)
     {
-      $this->handle = fopen($this->getPath(), "rb");
+      $this->handle = fopen($this->getPath(), "r");
     }
     else if(feof($this->handle))
     {
       return;
+    }
+    else if($this->getStreamPosition() + $bytes > $this->getSize())
+    {
+      throw new \Exception('Pointer');
     }
     
     $message = __METHOD__ . "($bytes): position:" . $this->getStreamPosition();
