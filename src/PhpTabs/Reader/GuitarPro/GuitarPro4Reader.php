@@ -343,33 +343,30 @@ class GuitarPro4Reader extends GuitarProReaderBase
    * @param NoteEffect $effect
    * @return void
    */
-  private function readBeatEffects(Beat $beat, NoteEffect $effect)
+  private function readBeatEffects(Beat $beat, NoteEffect $noteEffect)
   {
-    $flags = $this->readUnsignedByte();
-    $effect->setVibrato((($flags & 0x01) != 0) || (($flags & 0x02) != 0));
-    $effect->setFadeIn((($flags & 0x10) != 0));
-    if (($flags & 0x20) != 0)
+    $flags1 = $this->readUnsignedByte();
+    $flags2 = $this->readUnsignedByte();
+    $noteEffect->setFadeIn((($flags1 & 0x10) != 0));
+    $noteEffect->setVibrato((($flags1  & 0x02) != 0));
+    if (($flags1 & 0x20) != 0)
     {
-      $type = $this->readUnsignedByte();
-      if ($type == 0)
-      {
-        $this->readTremoloBar($effect);
-      }
-      else
-      {
-        $effect->setTapping($type == 1);
-        $effect->setSlapping($type == 2);
-        $effect->setPopping($type == 3);
-        $this->readInt();
-      }
+      $effect = $this->readUnsignedByte();
+      $noteEffect->setTapping($effect == 1);
+      $noteEffect->setSlapping($effect == 2);
+      $noteEffect->setPopping($effect == 3);
     }
-    if (($flags & 0x40) != 0)
+    if (($flags2 & 0x04) != 0)
+    {
+      $this->readTremoloBar($noteEffect);
+    }
+    if (($flags1 & 0x40) != 0)
     {
       $strokeDown = $this->readByte();
       $strokeUp = $this->readByte();
-      if($strokeDown > 0)
+      if($strokeDown > 0 )
       {
-        $beat->getStroke()->setDirection(Stroke::STROKE_DOWN );
+        $beat->getStroke()->setDirection(Stroke::STROKE_DOWN);
         $beat->getStroke()->setValue($this->toStrokeValue($strokeDown));
       }
       else if($strokeUp > 0)
@@ -378,18 +375,9 @@ class GuitarPro4Reader extends GuitarProReaderBase
         $beat->getStroke()->setValue($this->toStrokeValue($strokeUp));
       }
     }
-    if (($flags & 0x04) != 0)
+    if (($flags2 & 0x02) != 0)
     {
-      $harmonic = new EffectHarmonic();
-      $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
-      $effect->setHarmonic($harmonic);
-    }
-    if (($flags & 0x08) != 0)
-    {
-      $harmonic = new EffectHarmonic();
-      $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
-      $harmonic->setData(0);
-      $effect->setHarmonic($harmonic);
+      $this->readByte();
     }
   }
 
@@ -916,6 +904,8 @@ class GuitarPro4Reader extends GuitarProReaderBase
       $tempo->setValue($tempoValue);
       $this->readByte();
     }
+    
+    $this->readByte();
   }
 
   /**
