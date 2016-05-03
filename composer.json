@@ -5,7 +5,7 @@
     "description": "A PHP library for reading tablatures",
     "keywords": ["tablature", "music"],
     "homepage": "https://github.com/stdtabs/phptabs",
-    "license": "LGPL",
+    "license": "LGPL-2.1+",
     "require": {
         "php": ">=5.4.0 || ^7.0"
     },
