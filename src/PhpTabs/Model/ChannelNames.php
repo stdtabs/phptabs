@@ -3,7 +3,7 @@
 namespace PhpTabs\Model;
 
 /**
- * @package ChannelNames
+ * ChannelNames
  */
  
 class ChannelNames

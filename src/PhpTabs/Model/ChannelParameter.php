@@ -3,15 +3,13 @@
 namespace PhpTabs\Model;
 
 /**
- * @package ChannelParameter
+ * ChannelParameter
  */
 
 class ChannelParameter
 {
   private $key;
   private $value;
-
-  public function __construct(){}
 
   public function getKey()
   {
