@@ -964,8 +964,8 @@ class GuitarPro4Reader extends GuitarProReaderBase
    */
   private function readNoteEffects(NoteEffect $noteEffect)
   {
-    $flags1 = $this->readUnsignedByte();
-    $flags2 = $this->readUnsignedByte();
+    $flags1 = intval($this->readUnsignedByte());
+    $flags2 = intval($this->readUnsignedByte());
     $noteEffect->setHammer((($flags1 & 0x02) != 0));
     $noteEffect->setLetRing((($flags1 & 0x08) != 0));
     $noteEffect->setVibrato((($flags2 & 0x40) != 0) || $noteEffect->isVibrato());
@@ -991,7 +991,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
     if (($flags2 & 0x10) != 0)
     {
       $harmonic = new EffectHarmonic();
-      $type = $this->readByte();
+      $type = intval($this->readByte());
       if($type == 1)
       {
         $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
@@ -1146,6 +1146,33 @@ class GuitarPro4Reader extends GuitarProReaderBase
     if(count($tremoloBar->getPoints()))
     {
       $effect->setTremoloBar($tremoloBar);
+    }
+  }
+
+  /**
+   * Reads tremolo picking
+   * 
+   * @param NoteEffect $noteEffect
+   * @return void
+   */
+  public function readTremoloPicking(NoteEffect $noteEffect)
+  {
+    $value = $this->readUnsignedByte();
+    $tremoloPicking = new EffectTremoloPicking();
+    if($value == 1)
+    {
+      $tremoloPicking->getDuration()->setValue(Duration::EIGHTH);
+      $noteEffect->setTremoloPicking($tremoloPicking);
+    }
+    else if($value == 2)
+    {
+      $tremoloPicking->getDuration()->setValue(Duration::SIXTEENTH);
+      $noteEffect->setTremoloPicking($tremoloPicking);
+    }
+    else if($value == 3)
+    {
+      $tremoloPicking->getDuration()->setValue(Duration::THIRTY_SECOND);
+      $noteEffect->setTremoloPicking($tremoloPicking);
     }
   }
 
