@@ -117,7 +117,7 @@ class Color
   }
 
   /**
-   * Copies a color from anoterh one
+   * Copies a color from another one
    * @param Color $color
    * @return void
    */
