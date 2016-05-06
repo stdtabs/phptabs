@@ -2,6 +2,8 @@ PhpTabs
 =======
 
 [![Build Status](https://travis-ci.org/stdtabs/phptabs.svg?branch=master)](https://travis-ci.org/stdtabs/phptabs)
+[![License](https://poser.pugx.org/stdtabs/phptabs/license)](https://packagist.org/packages/stdtabs/phptabs)
+[![Latest Stable Version](https://poser.pugx.org/stdtabs/phptabs/v/stable)](https://packagist.org/packages/stdtabs/phptabs)
 
 PhpTabs is a PHP library that reads tablature files. It provides direct methods to read a song name, get a list of instruments or whatever be your needs.
 
