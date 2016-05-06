@@ -1,4 +1,11 @@
 language: php
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 php:
   - 5.4
   - 5.5
@@ -6,8 +13,7 @@ php:
   - 7.0
   - hhvm
 
-before_script:
-- curl -s http://getcomposer.org/installer | php
-- php composer.phar install
+install:
+  - composer install
 
 script: phpunit -c phpunit.xml.dist
