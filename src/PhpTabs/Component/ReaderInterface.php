@@ -2,9 +2,8 @@
 
 namespace PhpTabs\Component;
 
-
 /**
- * Interface for Reader classes
+ * Interface for the bridge Reader's classes
  */
 
 interface ReaderInterface
