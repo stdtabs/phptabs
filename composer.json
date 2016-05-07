@@ -1,9 +1,9 @@
 {
     "name": "stdtabs/phptabs",
     "type": "library",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "A PHP library for reading tablatures",
-    "keywords": ["tablature", "music"],
+    "keywords": ["tablature", "guitar", "music"],
     "homepage": "https://github.com/stdtabs/phptabs",
     "license": "LGPL-2.1+",
     "require": {
