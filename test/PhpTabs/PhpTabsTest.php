@@ -3,9 +3,6 @@
 namespace PhpTabs\Test;
 
 use PhpTabs\PhpTabs;
-use PhpTabs\Component\Tablature;
-use PhpTabs\Component\File;
-
 
 class PhpTabsTest extends \PHPUnit_Framework_TestCase
 {
