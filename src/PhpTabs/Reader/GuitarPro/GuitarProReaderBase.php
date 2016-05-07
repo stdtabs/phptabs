@@ -6,28 +6,25 @@ use PhpTabs\Component\File;
 use PhpTabs\Component\Log;
 use PhpTabs\Model\Song;
 
-
+/**
+ * Guitar Pro methods for Readers
+ */
 abstract class GuitarProReaderBase implements GuitarProReaderInterface
 {
-  /**
-   * @var int
-   */
+  /** @var int */
   private $versionIndex;
 
-  /**
-   * @var string
-   */
+  /** @var string */
   private $version;
 
-  /**
-   * @var File
-   */
+  /** @var File */
   private $file;
 
   /**
    * Reader constructor
    *
    * @param File $file input file to read
+   * @return void
    */
   public function __construct(File $file)
   {
