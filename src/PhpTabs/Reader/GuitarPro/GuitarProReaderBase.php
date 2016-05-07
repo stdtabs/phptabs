@@ -98,7 +98,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
    */
   protected function readByte()
   {
-    return ord($this->file->getStream()) & 127;
+    return unpack('c', $this->file->getStream())[1];
   }
 
   /**
@@ -112,7 +112,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
 
     for($i=0; $i<=3; $i++)
     {
-      $bytes[$i] = ord($this->file->getStream());
+      $bytes[$i] = unpack('C', $this->file->getStream())[1];
     }
 
     $or24 = $bytes[3];
@@ -201,7 +201,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
    */
   protected function readUnsignedByte()
   {
-    return (ord($this->file->getStream()) & 0xff);
+    return unpack('C', $this->file->getStream())[1];
   }
 
   /**
