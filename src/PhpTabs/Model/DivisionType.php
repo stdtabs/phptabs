@@ -2,6 +2,9 @@
 
 namespace PhpTabs\Model;
 
+/**
+ * Modelizes division between 2 notes
+ */
 
 class DivisionType
 {
@@ -18,15 +21,15 @@ class DivisionType
   public static function ALTERED_DIVISION_TYPES()
   {
     return array(
-      newDivisionType(3,2),
-      newDivisionType(5,4),
-      newDivisionType(6,4),
-      newDivisionType(7,4),
-      newDivisionType(9,8),
-      newDivisionType(10,8),
-      newDivisionType(11,8),
-      newDivisionType(12,8),
-      newDivisionType(13,8),
+      self::newDivisionType(3,2),
+      self::newDivisionType(5,4),
+      self::newDivisionType(6,4),
+      self::newDivisionType(7,4),
+      self::newDivisionType(9,8),
+      self::newDivisionType(10,8),
+      self::newDivisionType(11,8),
+      self::newDivisionType(12,8),
+      self::newDivisionType(13,8),
     );
   }
 

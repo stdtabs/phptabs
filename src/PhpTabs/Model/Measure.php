@@ -80,8 +80,12 @@ class Measure
   public function removeBeat(Beat $beat)
   {
     foreach($this->beats as $k => $v)
+    {
       if($v == $beat)
+      {
         array_splice($this->beats, $k, 1);
+      }
+    }
   }
 
   public function getBeat($index)

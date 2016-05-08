@@ -3,13 +3,15 @@
 namespace PhpTabs\Model;
 
 /**
- * @package Beat
+ * This is a sub-element directly linked to a measure.
  */
 
 class Beat
 {
+  /** @const MAX_VOICES Number of voices to set */
   const MAX_VOICES = 2;
 
+  
   private $start;
   private $measure;
   private $chord;

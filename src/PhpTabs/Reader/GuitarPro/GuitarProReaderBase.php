@@ -21,7 +21,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
   private $file;
 
   /**
-   * Reader constructor
+   * Constructor
    *
    * @param File $file input file to read
    * @return void
@@ -32,7 +32,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
   }
 
   /**
-   * Get read version
+   * Gets version
    * 
    * @return string Version
    */
@@ -40,7 +40,17 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
   {
     return $this->version;
   }
- 
+
+  /**
+   * Gets version index
+   * 
+   * @return integer
+   */
+  public function getVersionIndex()
+  {
+    return $this->versionIndex;
+  }
+
   /**
    * Reads Guitar Pro version
    * 
@@ -144,6 +154,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     }
 
     // Read brut content
+    $size = $size > 0 ? $size : $length;
     $bytes = $this->file->getStream($size);
 
     if ($length>=0 && $length<=$size)
@@ -164,7 +175,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
    * @param string $charset
    * @return string
    */
-  protected function readStringByte($size, $charset = null)
+  protected function readStringByte($size, $charset = 'UTF-8')
   { 
     return $this->readString($size, $this->readUnsignedByte(), $charset);
   }

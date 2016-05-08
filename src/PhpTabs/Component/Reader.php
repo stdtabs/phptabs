@@ -4,6 +4,7 @@ namespace PhpTabs\Component;
 
 use PhpTabs\Reader\GuitarPro\GuitarPro3Reader;
 use PhpTabs\Reader\GuitarPro\GuitarPro4Reader;
+use PhpTabs\Reader\GuitarPro\GuitarPro5Reader;
 
 /**
  * Bridge class which routes to the right tablature parser
@@ -26,6 +27,11 @@ class Reader
   /* @var array List of gp4 extensions */
   private $gp4Extensions = array(
     'gp4'
+  );
+
+  /* @var array List of gp5 extensions */
+  private $gp5Extensions = array(
+    'gp5'
   );
 
   /**
@@ -59,6 +65,12 @@ class Reader
     if(in_array($file->getExtension(), $this->gp4Extensions))
     {
       $this->bridge = new GuitarPro4Reader($file);
+    }
+
+    // Guitar Pro 5
+    if(in_array($file->getExtension(), $this->gp5Extensions))
+    {
+      $this->bridge = new GuitarPro5Reader($file);
     }
 
     // Adapter not found

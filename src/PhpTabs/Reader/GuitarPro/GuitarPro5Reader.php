@@ -17,6 +17,8 @@ use PhpTabs\Model\EffectBend;
 use PhpTabs\Model\EffectGrace;
 use PhpTabs\Model\EffectHarmonic;
 use PhpTabs\Model\EffectTremoloBar;
+use PhpTabs\Model\EffectTremoloPicking;
+use PhpTabs\Model\EffectTrill;
 use PhpTabs\Model\Lyric;
 use PhpTabs\Model\Marker;
 use PhpTabs\Model\Measure;
@@ -33,15 +35,15 @@ use PhpTabs\Model\Track;
 use PhpTabs\Model\Velocities;
 
 /**
- * Guitar Pro 3 reader
+ * Guitar Pro 5 reader
  * 
  * It provides a set of dedicated methods.
  */
-
-class GuitarPro3Reader extends GuitarProReaderBase
+ 
+class GuitarPro5Reader extends GuitarProReaderBase
 {
   /** @var array $supportedVersions */
-  private static $supportedVersions = array('FICHIER GUITAR PRO v3.00');
+  private static $supportedVersions = array('FICHIER GUITAR PRO v5.00', 'FICHIER GUITAR PRO v5.10');
 
   /**
    * @var boolean $tripletFeel
@@ -50,9 +52,8 @@ class GuitarPro3Reader extends GuitarProReaderBase
   private $tripletFeel, $keySignature;
 
   /**
-   * Constructor
+   * Reader constructor
    * @param File $file input file to read
-   * @return void
    */
   public function __construct(File $file)
   {
@@ -73,16 +74,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     $this->readInformations($this->song);
 
-    $this->tripletFeel = $this->readBoolean()
-      ? MeasureHeader::TRIPLET_FEEL_EIGHTH
-      : MeasureHeader::TRIPLET_FEEL_NONE;
-
-    $tempoValue = $this->readInt();
-
-    $this->keySignature = $this->readKeySignature();
-    $this->skip(3);
-
-    # Meta only
+     # Meta only
     if(Config::get('type') == 'meta')
     {
       $this->closeStream();
@@ -90,13 +82,32 @@ class GuitarPro3Reader extends GuitarProReaderBase
       return;
     }
 
+    $lyricTrack = $this->readInt();
+    $lyric = $this->readLyrics();
+
+    $this->readSetup();
+
+    $tempoValue = $this->readInt();
+
+    if($this->getVersionIndex() > 0)
+    {
+      $this->skip(1);
+    }
+
+    $this->keySignature = $this->readKeySignature();
+    $this->skip(3);
+
+    $this->readByte();
+
     $channels = $this->readChannels();
+
+    $this->skip(42);
 
     $measures = $this->readInt();
     $tracks = $this->readInt();
 
     $this->readMeasureHeaders($this->song, $measures);
-    $this->readTracks($this->song, $tracks, $channels);
+    $this->readTracks($this->song, $tracks, $channels, $lyric, $lyricTrack);
 
     # Meta+channels+tracks+measure headers only
     if(Config::get('type') == 'channels')
@@ -118,6 +129,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
   {
     return self::$supportedVersions;
   }
+
 
   /**
    * {@inheritdoc}
@@ -152,6 +164,33 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * -----------------------------------------------------------------*/
 
   /**
+   * Creates a new Beat if necessary
+   * 
+   * @param Measure $mesure
+   * @param integer $start
+   * @return Beat
+   */
+  private function getBeat(Measure $measure, $start)
+  {
+    $count = $measure->countBeats();
+    for($i = 0; $i < $count; $i++)
+    {
+      $beat = $measure->getBeat($i);
+      if($beat->getStart() == $start)
+      {
+        return $beat;
+      }
+    }
+    $beat = new Beat();
+    $beat->setStart($start);
+    $measure->addBeat($beat);
+
+    return $beat;
+  }
+
+  /**
+   * Gets Track key
+   *
    * @param Track $track
    * @return integer Clef of $track
    */
@@ -174,6 +213,8 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
+   * Gets tied note value
+   *
    * @param TabString $string String on which note has started
    * @param Track $track
    * @return integer tied note value
@@ -191,15 +232,22 @@ class GuitarPro3Reader extends GuitarProReaderBase
         for ($b = $measure->countBeats() - 1; $b >= 0; $b--)
         {
           $beat = $measure->getBeat($b);
-          $voice = $beat->getVoice(0);  
-
-          for ($n = 0; $n < $voice->countNotes(); $n++)
+          
+          for($v = 0; $v < $beat->countVoices(); $v++)
           {
-            $note = $voice->getNote($n);
+            $voice = $beat->getVoice($v);  
 
-            if ($note->getString() == $string)
+            if(!$voice->isEmpty())
             {
-              return $note->getValue();
+              for ($n = 0; $n < $voice->countNotes(); $n++)
+              {
+                $note = $voice->getNote($n);
+
+                if ($note->getString() == $string)
+                {
+                  return $note->getValue();
+                }
+              }
             }
           }
         }
@@ -210,9 +258,10 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
+   * Checks if a channel is a percussion channel
+   *
    * @param Song $song
    * @param integer $channelId
-   * 
    * @return boolean
    */
   private function isPercussionChannel(Song $song, $channelId)
@@ -231,41 +280,43 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
-   * Manage repeat alternative
+   * Reads an artificial harmonic
    * 
-   * @param Song $song
-   * @param integer $measure
-   * @param integer $value
-   * @return integer Number of repeat alternatives
+   * @param NoteEffect $effect
+   * @return void
    */
-  private function parseRepeatAlternative(Song $song, $measure, $value)
+  private function readArtificialHarmonic(NoteEffect $effect)
   {
-    $repeatAlternative = 0;
-    $existentAlternatives = 0;
-    $headers = $song->getMeasureHeaders();
-    foreach($headers as $header)
+    $type = $this->readByte();
+    $harmonic = new EffectHarmonic();
+    $harmonic->setData(0);
+    if($type == 1)
     {
-      if($header->getNumber() == $measure)
-      {
-        break;
-      }
-      if($header->isRepeatOpen())
-      {
-        $existentAlternatives = 0;
-      }
-
-      $existentAlternatives |= $header->getRepeatAlternative();
+      $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
+      $effect->setHarmonic($harmonic);
     }
-
-    for($i = 0; $i < 8; $i++)
+    else if($type == 2)
     {
-      if($value > $i && ($existentAlternatives & (1 << $i)) == 0)
-      {
-        $repeatAlternative |= (1 << $i);
-      }
+      $this->skip(3);
+      $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
+      $effect->setHarmonic($harmonic);
     }
-
-    return $repeatAlternative;
+    else if($type == 3)
+    {
+      $this->skip(1);
+      $harmonic->setType(EffectHarmonic::TYPE_TAPPED);
+      $effect->setHarmonic($harmonic);
+    }
+    else if($type == 4)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_PINCH);
+      $effect->setHarmonic($harmonic);
+    }
+    else if($type == 5)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_SEMI);
+      $effect->setHarmonic($harmonic);
+    }
   }
 
   /**
@@ -275,22 +326,26 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param Measure $measure
    * @param Track $track
    * @param Tempo $tempo
+   * @param integer $voiceIndex
    * 
    * @return integer $time duration time
    */
-  private function readBeat($start, Measure $measure, Track $track, Tempo $tempo)
+  private function readBeat($start, Measure $measure, Track $track, Tempo $tempo, $voiceIndex)
   {
     $flags = $this->readUnsignedByte();
 
+    $beat = $this->getBeat($measure, $start);
+    $voice = $beat->getVoice($voiceIndex);
+
     if(($flags & 0x40) != 0)
     {
-      $this->readUnsignedByte();
+      $beatType = $this->readUnsignedByte();
+      $voice->setEmpty($beatType & 0x02 == 0);
     }
 
-    $beat = new Beat();
-    $voice = $beat->getVoice(0);
     $duration = $this->readDuration($flags);
     $effect = new NoteEffect();
+
     if (($flags & 0x02) != 0)
     {
       $this->readChord($track->stringCount(), $beat);
@@ -313,17 +368,22 @@ class GuitarPro3Reader extends GuitarProReaderBase
     {
       if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->stringCount())
       {
-      $string = clone $track->getString( (6 - $i) + 1 );
-      $note = $this->readNote($string, $track, clone $effect);
-      $voice->addNote($note);
+        $string = clone $track->getString( (6 - $i) + 1 );
+        $note = $this->readNote($string, $track, clone $effect);
+        $voice->addNote($note);
       }
-    }
-    $beat->setStart($start);
-    $voice->setEmpty(false);
-    $voice->getDuration()->copyFrom($duration);
-    $measure->addBeat($beat);
 
-    return $duration->getTime();
+      $voice->getDuration()->copyFrom($duration);
+    }
+
+    $this->skip();
+
+    if($this->readByte() & 0x08 != 0)
+    {
+      $this->skip();
+    }
+
+    return !$voice->isEmpty() ? $duration->getTime() : 0;
   }
 
   /**
@@ -333,33 +393,30 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param NoteEffect $effect
    * @return void
    */
-  private function readBeatEffects(Beat $beat, NoteEffect $effect)
+  private function readBeatEffects(Beat $beat, NoteEffect $noteEffect)
   {
-    $flags = $this->readUnsignedByte();
-    $effect->setVibrato((($flags & 0x01) != 0) || (($flags & 0x02) != 0));
-    $effect->setFadeIn((($flags & 0x10) != 0));
-    if (($flags & 0x20) != 0)
+    $flags1 = $this->readUnsignedByte();
+    $flags2 = $this->readUnsignedByte();
+    $noteEffect->setFadeIn((($flags1 & 0x10) != 0));
+    $noteEffect->setVibrato((($flags1  & 0x02) != 0));
+    if (($flags1 & 0x20) != 0)
     {
-      $type = $this->readUnsignedByte();
-      if ($type == 0)
-      {
-        $this->readTremoloBar($effect);
-      }
-      else
-      {
-        $effect->setTapping($type == 1);
-        $effect->setSlapping($type == 2);
-        $effect->setPopping($type == 3);
-        $this->readInt();
-      }
+      $effect = $this->readUnsignedByte();
+      $noteEffect->setTapping($effect == 1);
+      $noteEffect->setSlapping($effect == 2);
+      $noteEffect->setPopping($effect == 3);
     }
-    if (($flags & 0x40) != 0)
+    if (($flags2 & 0x04) != 0)
+    {
+      $this->readTremoloBar($noteEffect);
+    }
+    if (($flags1 & 0x40) != 0)
     {
       $strokeDown = $this->readByte();
       $strokeUp = $this->readByte();
-      if($strokeDown > 0)
+      if($strokeDown > 0 )
       {
-        $beat->getStroke()->setDirection(Stroke::STROKE_DOWN );
+        $beat->getStroke()->setDirection(Stroke::STROKE_DOWN);
         $beat->getStroke()->setValue($this->toStrokeValue($strokeDown));
       }
       else if($strokeUp > 0)
@@ -368,23 +425,14 @@ class GuitarPro3Reader extends GuitarProReaderBase
         $beat->getStroke()->setValue($this->toStrokeValue($strokeUp));
       }
     }
-    if (($flags & 0x04) != 0)
+    if (($flags2 & 0x02) != 0)
     {
-      $harmonic = new EffectHarmonic();
-      $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
-      $effect->setHarmonic($harmonic);
-    }
-    if (($flags & 0x08) != 0)
-    {
-      $harmonic = new EffectHarmonic();
-      $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
-      $harmonic->setData(0);
-      $effect->setHarmonic($harmonic);
+      $this->readByte();
     }
   }
 
   /**
-   * Reads BendEffect informations
+   * Reads EffectBend informations
    *
    * @param NoteEffect $effect
    * @return void
@@ -398,7 +446,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     {
       $bendPosition = $this->readInt();
       $bendValue = $this->readInt();
-      $this->readByte(); //vibrato
+      $this->readByte();
 
       $pointPosition = round($bendPosition * EffectBend::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
       $pointValue = round($bendValue * EffectBend::SEMITONE_LENGTH / GuitarProReaderInterface::GP_BEND_SEMITONE);
@@ -444,6 +492,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
         for($n = 0; $n < $channelAux->countParameters(); $n++)
         {
           $channelParameter = $channelAux->getParameter($n);
+
           if($channelParameter->getKey() == "$gmChannel1")
           {
             if("$gmChannel1" == $channelParameter->getValue())
@@ -453,6 +502,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
           }
         }
       }
+
       if($channel->getChannelId() <= 0)
       {
         $channel->setChannelId($song->countChannels() + 1);
@@ -502,6 +552,37 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
+   * Reads Chord informations
+   * 
+   * @param integer $strings
+   * @param Beat $beat
+   * @return void
+   */
+  private function readChord($strings,Beat $beat)
+  {
+    $chord = new Chord($strings);
+    $this->skip(17);
+    $chord->setName($this->readStringByte(21));
+    $this->skip(4);
+    $chord->setFirstFret($this->readInt());
+
+    for ($i = 0; $i < 7; $i++)
+    {
+      $fret = $this->readInt();
+      if($i < $chord->countStrings())
+      {
+        $chord->addFretValue($i, $fret);
+      }
+    }
+
+    $this->skip(32);
+    if($chord->countNotes() > 0)
+    {
+      $beat->setChord($chord);
+    }
+  }
+
+  /**
    * Reads color informations
    * 
    * @param Color $color
@@ -513,54 +594,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
     $color->setG($this->readUnsignedByte());
     $color->setB($this->readUnsignedByte());
     $this->skip();
-  }
-
-  /**
-   * Read Chord informations
-   * 
-   * @param integer $strings
-   * @param Beat $beat
-   * @return void
-   */
-  private function readChord($strings, $beat)
-  {
-    $chord = new Chord($strings);
-    $header = $this->readUnsignedByte();
-    if (($header & 0x01) == 0)
-    {
-      $chord->setName($this->readStringByteSizeOfInteger());
-      $chord->setFirstFret($this->readInt());
-      if ($chord->getFirstFret() != 0)
-      {
-        for ($i = 0; $i < 6; $i++)
-        {
-          $fret = $this->readInt();
-          if($i < $chord->countStrings())
-          {
-            $chord->addFretValue($i, $fret);
-          }
-        }
-      }
-    }
-    else
-    {
-      $this->skip(25);
-      $chord->setName($this->readStringByte(34));
-      $chord->setFirstFret($this->readInt());
-      for ($i = 0; $i < 6; $i++)
-      {
-        $fret = $this->readInt();
-        if($i < $chord->countStrings())
-        {
-          $chord->addFretValue($i, $fret);
-        }
-      }
-      $this->skip(36);
-    }
-    if($chord->countNotes() > 0)
-    {
-      $beat->setChord($chord);
-    }
   }
 
   /**
@@ -618,7 +651,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads GraceEffect
+   * Reads EffectGrace
    * 
    * @param NoteEffect $effect
    * @return void
@@ -626,12 +659,20 @@ class GuitarPro3Reader extends GuitarProReaderBase
   private function readGrace(NoteEffect $effect)
   {
     $fret = $this->readUnsignedByte();
+    $dynamic = $this->readUnsignedByte();
+    $transition = $this->readByte();
+    $duration = $this->readUnsignedByte();
+    $flags = $this->readUnsignedByte();
+
     $grace = new EffectGrace();
-    $grace->setOnBeat(false);
-    $grace->setDead( ($fret == 255) );
-    $grace->setFret( ((!$grace->isDead()) ? $fret : 0) );
-    $grace->setDynamic( (Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->readUnsignedByte())) - Velocities::VELOCITY_INCREMENT );
-    $transition = $this->readUnsignedByte();
+    $grace->setFret($fret);
+    $grace->setDynamic((Velocities::MIN_VELOCITY 
+      + (Velocities::VELOCITY_INCREMENT * $dynamic))
+      - Velocities::VELOCITY_INCREMENT);
+    $grace->setDuration($duration);
+    $grace->setDead($flags & 0x01 == 0);
+    $grace->setOnBeat($flags & 0x02 == 0);
+
     if($transition == 0)
     {
       $grace->setTransition(EffectGrace::TRANSITION_NONE);
@@ -648,7 +689,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     {
       $grace->setTransition(EffectGrace::TRANSITION_HAMMER);
     }
-    $grace->setDuration($this->readUnsignedByte());
+
     $effect->setGrace($grace);
   }
 
@@ -661,14 +702,14 @@ class GuitarPro3Reader extends GuitarProReaderBase
   private function readInformations(Song $song)
   {
     $song->setName($this->readStringByteSizeOfInteger());
-    $song->setTranscriber($this->readStringByteSizeOfInteger());
+    $this->readStringByteSizeOfInteger();
     $song->setArtist($this->readStringByteSizeOfInteger());
     $song->setAlbum($this->readStringByteSizeOfInteger());
     $song->setAuthor($this->readStringByteSizeOfInteger());
+    $this->readStringByteSizeOfInteger();
     $song->setCopyright($this->readStringByteSizeOfInteger());
     $song->setWriter($this->readStringByteSizeOfInteger());
-
-    $song->setTranscriber($this->readStringByteSizeOfInteger());
+    $this->readStringByteSizeOfInteger();
     $comments = $this->readInt();
     for ($i=0; $i<$comments; $i++)
     {
@@ -679,7 +720,8 @@ class GuitarPro3Reader extends GuitarProReaderBase
   /**
    * Reads the key signature
    * 
-   * @return integer Key signature 0: C 1: G, -1: F
+   * 0: C 1: G, -1: F
+   * @return integer Key signature
    */
   private function readKeySignature()
   {
@@ -687,10 +729,30 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     if ($keySignature < 0)
     {
-      $keySignature = 7 - $keySignature; // -1 to 8 [...]
+      $keySignature = 7 - $keySignature;
     }
 
     return $keySignature;
+  }
+
+  /**
+   * Reads lyrics informations
+   * 
+   * @return Lyric
+   */
+  private function readLyrics()
+  {
+    $lyric = new Lyric();
+    $lyric->setFrom($this->readInt());
+    $lyric->setLyrics($this->readStringInteger());
+
+    for ($i = 0; $i < 4; $i++)
+    {
+      $this->readInt();
+      $this->readStringInteger();
+    }
+
+    return $lyric;
   }
 
   /**
@@ -718,19 +780,45 @@ class GuitarPro3Reader extends GuitarProReaderBase
    */
   private function readMeasure(Measure $measure, Track $track, Tempo $tempo)
   {
-    $nextNoteStart = (double)($measure->getStart());
-    $numberOfBeats = $this->readInt();
-
-    for ($i = 0; $i < $numberOfBeats; $i++)
+    for($voice = 0; $voice < 2; $voice++)
     {
-      $nextNoteStart += $this->readBeat($nextNoteStart, $measure, $track, $tempo);
-      if($i>256)
+      $nextNoteStart = (double)($measure->getStart());
+      $numberOfBeats = $this->readInt();
+      for ($i = 0; $i < $numberOfBeats; $i++)
       {
-        $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s]'
-          , __METHOD__, $numberOfBeats, $measure->getNumber(), $track->getName());
-        throw new \Exception($message);
+        $nextNoteStart += $this->readBeat($nextNoteStart, $measure, $track, $tempo, $voice);
+        if($i>256)
+        {
+          $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s], tempo %s'
+            , __METHOD__, $numberOfBeats, $measure->getNumber(), $track->getName(), $tempo->getValue());
+          throw new \Exception($message);
+        }
       }
     }
+
+    $emptyBeats = array();
+    for($i = 0; $i < $measure->countBeats(); $i++)
+    {
+      $beat = $measure->getBeat($i);
+      $empty = true;
+      for($v = 0; $v < $beat->countVoices(); $v++)
+      {
+        if(!$beat->getVoice($v)->isEmpty())
+        {
+          $empty = false;
+        }
+      }
+      if($empty)
+      {
+        $emptyBeats[] = $beat;
+      }
+    }
+
+    foreach($emptyBeats as $beat)
+    {
+      $measure->remove($beat);
+    }
+
     $measure->setClef( $this->getClef($track) );
     $measure->setKeySignature($this->keySignature);
   }
@@ -745,15 +833,14 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * 
    * @return MeasureHeader
    */
-  private function readMeasureHeader($number, Song $song, TimeSignature $timeSignature, $tempoValue = 120)
+  private function readMeasureHeader($index, TimeSignature $timeSignature, $tempoValue = 120)
   {
     $flags = $this->readUnsignedByte();
     $header = new MeasureHeader();
-    $header->setNumber($number);
+    $header->setNumber($index + 1);
     $header->setStart(0);
     $header->getTempo()->setValue($tempoValue);
-    $header->setTripletFeel($this->tripletFeel);
-    $header->setRepeatOpen( (($flags & 0x04) != 0) );
+    $header->setRepeatOpen(($flags & 0x04) != 0);
 
     if (($flags & 0x01) != 0)
     {
@@ -768,23 +855,47 @@ class GuitarPro3Reader extends GuitarProReaderBase
     $header->getTimeSignature()->copyFrom($timeSignature);
     if (($flags & 0x08) != 0)
     {
-      $header->setRepeatClose($this->readByte());
-    }
-
-    if (($flags & 0x10) != 0)
-    {
-      $header->setRepeatAlternative($this->parseRepeatAlternative($song, $number, $this->readUnsignedByte()));
+      $header->setRepeatClose(($this->readByte() & 0xff) - 1);
     }
 
     if (($flags & 0x20) != 0)
     {
-      $header->setMarker($this->readMarker($number));
+      $header->setMarker($this->readMarker($header->getNumber()));
+    }
+
+    if (($flags & 0x10) != 0)
+    {
+      $header->setRepeatAlternative($this->readUnsignedByte());
     }
 
     if (($flags & 0x40) != 0)
     {
       $this->keySignature = $this->readKeySignature();
       $this->skip(1);
+    }
+
+    if (($flags & 0x01) != 0 || ($flags & 0x02) != 0)
+    {
+      $this->skip(4);
+    }
+    if (($flags & 0x10) == 0)
+    {
+      $this->skip(1);
+    }
+
+    $tripletFeel = $this->readByte();
+
+    if($tripletFeel == 1)
+    {
+      $header->setTripletFeel(MeasureHeader::TRIPLET_FEEL_EIGHTH);
+    }
+    else if($tripletFeel == 2)
+    {
+      $header->setTripletFeel(MeasureHeader::TRIPLET_FEEL_SIXTEENTH);
+    }
+    else
+    {
+      $header->setTripletFeel(MeasureHeader::TRIPLET_FEEL_NONE);
     }
 
     return $header;
@@ -801,9 +912,14 @@ class GuitarPro3Reader extends GuitarProReaderBase
   {
     $timeSignature = new TimeSignature();
 
-    for ($i=0; $i<$count; $i++) 
+    for ($i = 0; $i < $count; $i++) 
     {
-      $song->addMeasureHeader($this->readMeasureHeader(($i + 1), $song, $timeSignature));
+      if($i > 0)
+      {
+        $this->skip();
+      }
+
+      $song->addMeasureHeader($this->readMeasureHeader($i, $timeSignature));
     }
   }
 
@@ -832,6 +948,10 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
         $track->addMeasure($measure);
         $this->readMeasure($measure, $track, $tempo);
+        if($i != $measures - 1 || $j != $tracks - 1)
+        {
+          $this->skip();
+        }
       }
 
       $header->getTempo()->copyFrom($tempo);
@@ -840,20 +960,23 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads mix change informations
+   * Reads mix change
    * 
    * @param Tempo $tempo
    * @return void
    */
   private function readMixChange(Tempo $tempo)
   {
-    $this->readByte(); //instrument
+    $this->readByte();
+    
+    $this->skip(16);
     $volume = $this->readByte();
     $pan = $this->readByte();
     $chorus = $this->readByte();
     $reverb = $this->readByte();
     $phaser = $this->readByte();
     $tremolo = $this->readByte();
+    $this->readStringByteSizeOfInteger();
     $tempoValue = $this->readInt();
     if($volume >= 0)
     {
@@ -883,6 +1006,18 @@ class GuitarPro3Reader extends GuitarProReaderBase
     {
       $tempo->setValue($tempoValue);
       $this->readByte();
+      if($this->getVersionIndex() > 0)
+      {
+        $this->skip();
+      }
+    }
+    
+    $this->skip(2);
+    
+    if($this->getVersionIndex() > 0)
+    {
+      $this->readStringByteSizeOfInteger();
+      $this->readStringByteSizeOfInteger();
     }
   }
 
@@ -900,32 +1035,41 @@ class GuitarPro3Reader extends GuitarProReaderBase
     $note = new Note();
     $note->setString($string->getNumber());
     $note->setEffect($effect);
+    $note->getEffect()->setAccentuatedNote((($flags & 0x40) != 0));
+    $note->getEffect()->setHeavyAccentuatedNote((($flags & 0x02) != 0));
     $note->getEffect()->setGhostNote((($flags & 0x04) != 0));
+
     if (($flags & 0x20) != 0)
     {
       $noteType = $this->readUnsignedByte();
       $note->setTiedNote($noteType == 0x02);
       $note->getEffect()->setDeadNote($noteType == 0x03);
     }
-    if (($flags & 0x01) != 0)
-    {
-      $this->skip(2);
-    }
+
     if (($flags & 0x10) != 0)
     {
       $note->setVelocity( (Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->readByte())) - Velocities::VELOCITY_INCREMENT);
     }
+
     if (($flags & 0x20) != 0)
     {
       $fret = $this->readByte();
-      $value = $note->isTiedNote()
-        ? $this->getTiedNoteValue($string->getNumber(), $track) : $fret;
+      $value = $note->isTiedNote() ? $this->getTiedNoteValue($string->getNumber(), $track) : $fret;
       $note->setValue($value >= 0 && $value < 100 ? $value : 0);
     }
+
     if (($flags & 0x80) != 0)
     {
       $this->skip(2);
     }
+
+    if (($flags & 0x01) != 0)
+    {
+      $this->skip(8);
+    }
+    
+    $this->skip();
+    
     if (($flags & 0x08) != 0)
     {
       $this->readNoteEffects($note->getEffect());
@@ -940,19 +1084,61 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param NoteEffect $noteEffect
    * @return void
    */
-  private function readNoteEffects(NoteEffect $effect)
+  private function readNoteEffects(NoteEffect $noteEffect)
   {
-    $flags = $this->readUnsignedByte();
-    $effect->setHammer( (($flags & 0x02) != 0) );
-    $effect->setSlide( (($flags & 0x04) != 0) );
-    $effect->setLetRing((($flags & 0x08) != 0));
-    if (($flags & 0x01) != 0)
+    $flags1 = intval($this->readUnsignedByte());
+    $flags2 = intval($this->readUnsignedByte());
+
+    if (($flags1 & 0x01) != 0)
     {
-      $this->readBend($effect);
+      $this->readBend($noteEffect);
     }
-    if (($flags & 0x10) != 0)
+
+    if (($flags1 & 0x10) != 0)
     {
-      $this->readGrace($effect);
+      $this->readGrace($noteEffect);
+    }
+
+    if (($flags2 & 0x04) != 0)
+    {
+      $this->readTremoloPicking($noteEffect);
+    }
+
+    if (($flags2 & 0x08) != 0)
+    {
+      $noteEffect->setSlide(true);
+      $this->readByte();
+    }
+
+    if (($flags2 & 0x10) != 0)
+    {
+      $this->readArtificialHarmonic($noteEffect);
+    }
+
+    if (($flags2 & 0x20) != 0)
+    {
+      $this->readTrill($noteEffect);
+    }
+
+    $noteEffect->setHammer((($flags1 & 0x02) != 0));
+    $noteEffect->setLetRing((($flags1 & 0x08) != 0));
+    $noteEffect->setVibrato((($flags2 & 0x40) != 0) || $noteEffect->isVibrato());
+    $noteEffect->setPalmMute((($flags2 & 0x02) != 0));
+    $noteEffect->setStaccato((($flags2 & 0x01) != 0));
+  }
+
+  /**
+   * Reads setup informations
+   * 
+   * @return void
+   */
+  private function readSetup()
+  {
+    $this->skip($this->getVersionIndex() > 0 ? 49 : 30);
+    for ($i = 0; $i < 11; $i++)
+    {
+      $this->skip(4);
+      $this->readStringByte(0);
     }
   }
 
@@ -971,19 +1157,28 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
   /**
    * Reads Track informations
+   * 
    * @param Song $song
    * @param integer $number
    * @param array $channels an array of Channel objects
+   * @param Lyric $lyrics
    * @return Track
    */
-  private function readTrack(Song $song, $number, $channels)
+  private function readTrack(Song $song, $number, $channels, $lyrics)
   {
+    $this->readUnsignedByte();
+    if($number == 1 || $this->getVersionIndex() == 0)
+    {
+      $this->skip();
+    }
+
     $track = new Track();
     $track->setSong($song);
     $track->setNumber($number);
-    $this->readUnsignedByte();
+    $track->setLyrics($lyrics);
     $track->setName($this->readStringByte(40));
     $stringCount = $this->readInt();
+
     for ($i = 0; $i < 7; $i++)
     {
       $tuning = $this->readInt();
@@ -995,11 +1190,20 @@ class GuitarPro3Reader extends GuitarProReaderBase
         $track->addString($string);
       }
     }
+
     $this->readInt();
     $this->readChannel($song, $track, $channels);
     $this->readInt();
     $track->setOffset($this->readInt());
     $this->readColor($track->getColor());
+
+    $this->skip($this->getVersionIndex() > 0 ? 49 : 44);
+
+    if($this->getVersionIndex() > 0)
+    {
+      $this->readStringByteSizeOfInteger();
+      $this->readStringByteSizeOfInteger();
+    }
 
     return $track;
   }
@@ -1009,15 +1213,22 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * 
    * @param Song $song
    * @param int $count
-   * @param array $channels Current array of channels
+   * @param array $channels array of channels
+   * @param Lyric $lyric
+   * @param integer $lyricTrack
    * @return void
    */
-  private function readTracks(Song $song, $count, array $channels)
+  private function readTracks(Song $song, $count, array $channels, Lyric $lyric, $lyricTrack)
   {
     for ($number = 1; $number <= $count; $number++)
     {
-      $song->addTrack($this->readTrack($song, $number, $channels));
+      $song->addTrack(
+        $this->readTrack($song, $number, $channels
+        , $number == $lyricTrack ? $lyric : new Lyric())
+      );
     }
+
+    $this->skip($this->getVersionIndex() == 0 ? 2 : 1);
   }
 
   /**
@@ -1026,15 +1237,83 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param NoteEffect $noteEffect
    * @return void
    */
-  private function readTremoloBar(NoteEffect $noteEffect)
+  private function readTremoloBar(NoteEffect $effect)
   {
-    $value = $this->readInt();
-    $effect = new EffectTremoloBar();
-    $effect->addPoint(0, 0);
-    $effect->addPoint(round(EffectTremoloBar::MAX_POSITION_LENGTH / 2)
-      , round( -($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2))));
-    $effect->addPoint(EffectTremoloBar::MAX_POSITION_LENGTH, 0);
-    $noteEffect->setTremoloBar($effect);
+    $tremoloBar = new EffectTremoloBar();
+    $this->skip(5);
+    $points = $this->readInt();
+
+    for ($i = 0; $i < $points; $i++)
+    {
+      $position = $this->readInt();
+      $value = $this->readInt();
+      $this->readByte();
+
+      $pointPosition = round($position * EffectTremoloBar::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
+      $pointValue = round($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2));
+      $tremoloBar->addPoint($pointPosition, $pointValue);
+    }
+
+    if(count($tremoloBar->getPoints()))
+    {
+      $effect->setTremoloBar($tremoloBar);
+    }
+  }
+
+  /**
+   * Reads tremolo picking
+   * 
+   * @param NoteEffect $noteEffect
+   * @return void
+   */
+  public function readTremoloPicking(NoteEffect $noteEffect)
+  {
+    $value = $this->readUnsignedByte();
+    $tremoloPicking = new EffectTremoloPicking();
+    if($value == 1)
+    {
+      $tremoloPicking->getDuration()->setValue(Duration::EIGHTH);
+      $noteEffect->setTremoloPicking($tremoloPicking);
+    }
+    else if($value == 2)
+    {
+      $tremoloPicking->getDuration()->setValue(Duration::SIXTEENTH);
+      $noteEffect->setTremoloPicking($tremoloPicking);
+    }
+    else if($value == 3)
+    {
+      $tremoloPicking->getDuration()->setValue(Duration::THIRTY_SECOND);
+      $noteEffect->setTremoloPicking($tremoloPicking);
+    }
+  }
+
+  /**
+   * Reads trill effect
+   * 
+   * @param NoteEffect $effect
+   * @return void
+   */
+  private function readTrill(NoteEffect $effect)
+  {
+    $fret = $this->readByte();
+    $period = $this->readByte();
+    $trill = new EffectTrill();
+    $trill->setFret($fret);
+    if($period == 1)
+    {
+      $trill->getDuration()->setValue(Duration::SIXTEENTH);
+      $effect->setTrill($trill);
+    }
+    else if($period == 2)
+    {
+      $trill->getDuration()->setValue(Duration::THIRTY_SECOND);
+      $effect->setTrill($trill);
+    }
+    else if($period == 3)
+    {
+      $trill->getDuration()->setValue(Duration::SIXTY_FOURTH);
+      $effect->setTrill($trill);
+    }
   }
 
   /**
@@ -1046,9 +1325,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
   private function toChannelShort($b)
   {
     $value = ($b * 8) - 1;
-
-    if($value>32767)
-      $value = 0; #@todo workaround fix this workaround
 
     return max($value, 0);
   }
@@ -1097,7 +1373,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param string $name
    * @return boolean Result of the search
    */
-  public function findChannelsByName($song, $name)
+  public function findChannelsByName(Song $song, $name)
   {
     $channels = $song->getChannels();
 

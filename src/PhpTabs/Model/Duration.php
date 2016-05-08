@@ -2,7 +2,6 @@
 
 namespace PhpTabs\Model;
 
-
 class Duration
 {
   const QUARTER_TIME = 960;
@@ -19,7 +18,11 @@ class Duration
   private $doubleDotted;
   private $divisionType;	
 
-
+  /**
+   * Constructor
+   * 
+   * @return void
+   */
   public function __construct()
   {
     $this->value = Duration::QUARTER;
@@ -65,17 +68,6 @@ class Duration
 
   public function getTime()
   {
-    if((double)$this->value==0)
-    {
-      $this->value = PHP_INT_MAX; # @todo Fix this workaround  when value is not set or 0
-
-      \PhpTabs\Component\Log::add(__METHOD__  . ": Value ({$this->value})'"
-        , 'ERROR\\MODEL');
-
-      throw new \Exception("An overflow has been detected ["
-        . __METHOD__ . "({$this->value})]");
-    }
-
     $time = Duration::QUARTER_TIME * (4.0 / $this->value);
 
     if($this->dotted)
@@ -87,7 +79,7 @@ class Duration
       $time += ($time / 4) * 3;
     }
 
-    return intval($this->getDivision()->convertTime($time));
+    return $this->getDivision()->convertTime($time);
   }
 
   public static function fromTime($time, $minDuration = null, $diff = null)

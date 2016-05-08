@@ -11,6 +11,7 @@ PhpTabs currently supports the following file formats:
 
 - Guitar Pro 3 (.gp3)
 - Guitar Pro 4 (.gp4)
+- Guitar Pro 5 (.gp5)
 
 Table of contents
 =================
@@ -128,7 +129,7 @@ use PhpTabs\PhpTabs;
 // Instanciates a tablature
 $tablature = new PhpTabs("mytabs.gp3");
 
-// Reads and prints information
+// Reads information
 echo $tablature->getName();
 ```
 
