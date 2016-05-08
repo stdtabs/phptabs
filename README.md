@@ -1,7 +1,7 @@
 PhpTabs
 =======
 
-[![Latest Stable Version](https://poser.pugx.org/stdtabs/phptabs/version.svg)](https://packagist.org/packages/stdtabs/phptabs)
+[![Latest Stable Version](https://poser.pugx.org/stdtabs/phptabs/version.svg)](https://github.com/stdtabs/phptabs/releases)
 [![Build Status](https://travis-ci.org/stdtabs/phptabs.svg?branch=master)](https://travis-ci.org/stdtabs/phptabs)
 [![License](https://poser.pugx.org/stdtabs/phptabs/license.svg)](https://packagist.org/packages/stdtabs/phptabs)
 
