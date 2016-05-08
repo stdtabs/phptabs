@@ -1,9 +1,10 @@
 PhpTabs
 =======
 
+[![Latest Stable Version](https://poser.pugx.org/stdtabs/phptabs/v/stable)](https://packagist.org/packages/stdtabs/phptabs)
 [![Build Status](https://travis-ci.org/stdtabs/phptabs.svg?branch=master)](https://travis-ci.org/stdtabs/phptabs)
 [![License](https://poser.pugx.org/stdtabs/phptabs/license)](https://packagist.org/packages/stdtabs/phptabs)
-[![Latest Stable Version](https://poser.pugx.org/stdtabs/phptabs/v/stable)](https://packagist.org/packages/stdtabs/phptabs)
+
 
 PhpTabs is a PHP library that reads tablature files. It provides direct methods to read a song name, get a list of instruments or whatever be your needs.
 
@@ -76,7 +77,7 @@ Installation with Composer is required if you want to run PHPUnit tests.
 
 ###From Github
 
-Download and extract archive from [https://github.com/stdtabs/phptabs/archive/master.zip](https://github.com/stdtabs/phptabs/archive/master.zip)
+Download and extract archive from [https://github.com/stdtabs/phptabs/releases](https://github.com/stdtabs/phptabs/releases)
 
 Then add this PHP line before usage:
 
@@ -471,7 +472,7 @@ ________________________________________________________________________
 
 __Type__ *integer*
 
-The number of instrument
+The number of instruments
 
 __Example__
 
@@ -483,12 +484,12 @@ ________________________________________________________________________
 
 __Type__ *array*
 
-A list of instrument array
+A list of instrument arrays
 
 ```php
 array(
-  'id' => <InstrumentId>, 
-  'name' => <InstrumentName>
+  'id' => <integer InstrumentId>, 
+  'name' => <string InstrumentName>
 )
 ```
 
@@ -508,8 +509,8 @@ An instrument array
 
 ```php
 array(
-  'id' => <InstrumentId>, 
-  'name' => <InstrumentName>
+  'id' => <integer InstrumentId>, 
+  'name' => <string InstrumentName>
 )
 ```
 
