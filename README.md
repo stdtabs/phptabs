@@ -1,10 +1,9 @@
 PhpTabs
 =======
 
-[![Latest Stable Version](https://poser.pugx.org/stdtabs/phptabs/v/stable)](https://packagist.org/packages/stdtabs/phptabs)
+[![Latest Stable Version](https://poser.pugx.org/stdtabs/phptabs/version.svg)](https://packagist.org/packages/stdtabs/phptabs)
 [![Build Status](https://travis-ci.org/stdtabs/phptabs.svg?branch=master)](https://travis-ci.org/stdtabs/phptabs)
-[![License](https://poser.pugx.org/stdtabs/phptabs/license)](https://packagist.org/packages/stdtabs/phptabs)
-
+[![License](https://poser.pugx.org/stdtabs/phptabs/license.svg)](https://packagist.org/packages/stdtabs/phptabs)
 
 PhpTabs is a PHP library that reads tablature files. It provides direct methods to read a song name, get a list of instruments or whatever be your needs.
 
@@ -12,7 +11,6 @@ PhpTabs currently supports the following file formats:
 
 - Guitar Pro 3 (.gp3)
 - Guitar Pro 4 (.gp4)
-
 
 Table of contents
 =================
@@ -77,7 +75,7 @@ Installation with Composer is required if you want to run PHPUnit tests.
 
 ###From Github
 
-Download and extract archive from [https://github.com/stdtabs/phptabs/releases](https://github.com/stdtabs/phptabs/releases)
+Download and extract an archive from [https://github.com/stdtabs/phptabs/releases](https://github.com/stdtabs/phptabs/releases)
 
 Then add this PHP line before usage:
 
