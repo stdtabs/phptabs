@@ -42,11 +42,15 @@ Table of contents
   - [Accessing tracks](#accessing-tracks)
     - [countTracks()](#counttracks)
     - [getTracks()](#gettracks)
-    - [getTrack()](#gettrack)
+    - [getTrack()](#gettrackindex)
   - [Accessing channels](#accessing-channels)
     - [countChannels()](#countchannels)
     - [getChannels()](#getchannels)
-    - [getChannel()](#getchannel)
+    - [getChannel()](#getchannelindex)
+  - [Accessing instruments](#accessing-instruments)
+    - [countMeasureHeaders()](#countinstruments)
+    - [getMeasureHeaders()](#getinstruments)
+    - [getMeasureHeader()](#getinstrumentindex)
   - [Accessing measure headers](#accessing-measure-headers)
     - [countMeasureHeaders()](#countmeasureheaders)
     - [getMeasureHeaders()](#getmeasureheaders)
@@ -457,6 +461,63 @@ __Example__
 ```php
 // Get the first channel
 $tablature->getChannel(0);
+```
+________________________________________________________________________
+
+###Accessing instruments
+________________________________________________________________________
+
+####countInstruments()
+
+__Type__ *integer*
+
+The number of instrument
+
+__Example__
+
+```php
+$tablature->countInstruments();
+```
+________________________________________________________________________
+####getInstruments()
+
+__Type__ *array*
+
+A list of instrument array
+
+```php
+array(
+  'id' => <InstrumentId>, 
+  'name' => <InstrumentName>
+)
+```
+
+__Example__
+
+```php
+$tablature->getInstruments();
+```
+________________________________________________________________________
+####getInstrument($index)
+
+__Type__ *array*
+
+__Parameter__ *integer* $index 
+
+An instrument array
+
+```php
+array(
+  'id' => <InstrumentId>, 
+  'name' => <InstrumentName>
+)
+```
+
+__Example__
+
+```php
+// Get the first instrument
+$tablature->getInstrument(0);
 ```
 ________________________________________________________________________
 

@@ -42,6 +42,11 @@ class PhpTabsTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(0, $tablature->countMeasureHeaders());
     $this->assertEquals(array(), $tablature->getMeasureHeaders());
     $this->assertEquals(null, $tablature->getMeasureHeader(42));
+
+    # Instruments
+    $this->assertEquals(0, $tablature->countInstruments());
+    $this->assertEquals(array(), $tablature->getInstruments());
+    $this->assertEquals(null, $tablature->getInstrument(42));
     
     $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $tablature->getTablature());
   }
@@ -109,6 +114,18 @@ class PhpTabsTest extends \PHPUnit_Framework_TestCase
     $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\MeasureHeader', $tablature->getMeasureHeaders());
     $this->assertEquals(null, $tablature->getMeasureHeader(42));
     $this->assertInstanceOf('PhpTabs\\Model\\MeasureHeader', $tablature->getMeasureHeader(0));
+
+    # Instruments
+    $this->assertEquals(1, $tablature->countInstruments());
+    $expected = array(
+      0 => array (
+        'id'   => 27,
+        'name' => 'Clean Guitar'
+      )
+    );
+    $this->assertArraySubset($expected, $tablature->getInstruments());
+    $this->assertEquals(null, $tablature->getInstrument(42));
+    $this->assertArraySubset($expected[0], $tablature->getInstrument(0));
     
     $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $tablature->getTablature());
   }
@@ -148,6 +165,18 @@ class PhpTabsTest extends \PHPUnit_Framework_TestCase
     $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\Channel', $tablature->getChannels());
     $this->assertEquals(null, $tablature->getChannel(42));
     $this->assertInstanceOf('PhpTabs\\Model\\Channel', $tablature->getChannel(0));
+
+    # Instruments
+    $this->assertEquals(1, $tablature->countInstruments());
+    $expected = array(
+      0 => array (
+        'id'   => 27,
+        'name' => 'Clean Guitar'
+      )
+    );
+    $this->assertArraySubset($expected, $tablature->getInstruments());
+    $this->assertEquals(null, $tablature->getInstrument(42));
+    $this->assertArraySubset($expected[0], $tablature->getInstrument(0));
 
     # MeasureHeaders
     $this->assertEquals(3, $tablature->countMeasureHeaders());

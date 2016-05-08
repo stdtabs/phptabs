@@ -3,25 +3,25 @@
 namespace PhpTabs\Component;
 
 use PhpTabs\Model\Song;
+use PhpTabs\Model\Channel;
+use PhpTabs\Model\ChannelNames;
 
 class Tablature
 { 
-  /**
-   * @var string Error message
-   */
+  /** @var string error message */
   private $error = '';
 
-  /**
-   * @var object Song
-   */
+  /** @var object Song */
   private $song = '';
 
-
+  /**
+   * Tablature constructor
+   * @return void
+   */
   public function __construct()
   {
     $this->setSong(new Song());
   }
-
 
   /**
    * Sets an error message
@@ -33,7 +33,7 @@ class Tablature
   }
 
   /**
-   * @return string Error set during file read operations
+   * @return string Error set during build operations
    */
   public function getError()
   {
@@ -45,25 +45,75 @@ class Tablature
    */
   public function hasError()
   {
-    return !($this->error == ''); // @todo Should merge all errors
+    return $this->error !== '';
   }
 
-
+  /**
+   * Sets Song wrapper
+   * @param Song $song
+   * @return void
+   */
   public function setSong(Song $song)
   {
     $this->song = $song;
   }
 
+  /**
+   * Gets the list of instruments
+   * @return array
+   */
+  public function getinstruments()
+  {
+    if(!($count = $this->countChannels()))
+    {
+      return array();
+    }
+
+    $instruments = array();
+
+    for($i=0; $i<$count; $i++)
+    {
+      $instruments[$i] = array(
+        'id'    => $this->getChannel($i)->getProgram(),
+        'name'  => ChannelNames::$DEFAULT_NAMES[$this->getChannel($i)->getProgram()]
+      );
+    }
+
+    return $instruments;
+  }
+
+  /**
+   * Counts instruments
+   * @return integer
+   */
+  public function countInstruments()
+  {
+    return $this->countChannels();
+  }
+
+  /**
+   * Gets instrument by channelId
+   *
+   * @param integer $index
+   * @return array
+   */
+  public function getInstrument($index)
+  {
+    return $this->getChannel($index) instanceof Channel
+      ? array(
+        'id'    => $this->getChannel($index)->getProgram(),
+        'name'  => ChannelNames::$DEFAULT_NAMES[$this->getChannel($index)->getProgram()]
+      ) : null;
+  }
 
   /**
    * Overloads with $song methods
    * 
-   * @param string $name method name
-   * @param array $arguments arguments to pass
+   * @param string $name method
+   * @param array $arguments
    */
   public function __call($name, $arguments)
   {
-    # Method is not defined
     if(!method_exists($this->song, $name))
     {
       $message = sprintf(_('Song has no method called "%s"'), $name);
