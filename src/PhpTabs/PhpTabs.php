@@ -4,22 +4,22 @@ namespace PhpTabs;
 
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
-use PhpTabs\Component\Log;
 use PhpTabs\Component\Reader;
 use PhpTabs\Component\Tablature;
 
+/**
+ * High level manager
+ */
 class PhpTabs
 {
-  /**
-   * @var Tablature tablature container
-   */
+  /** @var Tablature tablature container */
   private $tablature;
 
-
   /**
-   * Launch a read and parse events
+   * Initializes read/write modes
    * 
    * @param string $filename the fully qualified filename
+   * @return void
    */
   public function __construct($filename = null)
   {
@@ -45,7 +45,7 @@ class PhpTabs
           . ' in ' . $e->getFile() 
           . ' on line ' . $e->getLine() . PHP_EOL
           . $e->getTraceAsString() . PHP_EOL;
-        
+
         trigger_error($e->getMessage(), E_USER_ERROR);
         return;
       }
@@ -54,7 +54,6 @@ class PhpTabs
       $this->getTablature()->setError($e->getMessage());
     }
   }
-
 
   /**
    * Gets the tablature instance
@@ -75,13 +74,13 @@ class PhpTabs
   {
     $this->tablature = $tablature;
   }
-  
 
   /**
    * Overloads with $tablature methods
    * 
    * @param string $name method name
    * @param array $arguments arguments to pass
+   * @return mixed
    */
   public function __call($name, $arguments)
   {
