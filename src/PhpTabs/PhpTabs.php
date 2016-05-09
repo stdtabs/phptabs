@@ -20,6 +20,7 @@ class PhpTabs
    * 
    * @param string $filename the fully qualified filename
    * @return void
+   * @throws \RuntimeException When read or write failed
    */
   public function __construct($filename = null)
   {
@@ -38,20 +39,22 @@ class PhpTabs
     }
     catch(\Exception $e)
     {
-      # if debug == true, an exception kills the process
-      if(Config::get('debug'))
-      {
-        echo PHP_EOL . 'Exception: ' . $e->getMessage() . PHP_EOL
-          . ' in ' . $e->getFile() 
+      $message = $e->getMessage() . ' in ' . $e->getFile() 
           . ' on line ' . $e->getLine() . PHP_EOL
           . $e->getTraceAsString() . PHP_EOL;
 
-        trigger_error($e->getMessage(), E_USER_ERROR);
+      # if debug == true, an exception kills the process
+      if(Config::get('debug'))
+      {
+        trigger_error($message, E_USER_ERROR);
+
         return;
       }
 
       $this->setTablature(new Tablature());
       $this->getTablature()->setError($e->getMessage());
+
+      throw new \RuntimeException($message);
     }
   }
 
