@@ -53,8 +53,6 @@ class PhpTabs
 
       $this->setTablature(new Tablature());
       $this->getTablature()->setError($e->getMessage());
-
-      throw new \RuntimeException($message);
     }
   }
 
