@@ -176,7 +176,7 @@ class File
   {
     if(!$this->handle)
     {
-      $this->handle = fopen($this->getPath(), "r");
+      $this->handle = fopen($this->getPath(), "rb");
     }
     else if(feof($this->handle))
     {
