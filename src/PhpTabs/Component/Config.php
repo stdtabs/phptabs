@@ -2,14 +2,12 @@
 
 namespace PhpTabs\Component;
 
-
 abstract class Config
 {
   /**
    * @var array config options
    */
   private static $data = array();
-
 
   /**
    * Gets a defined option
@@ -21,7 +19,6 @@ abstract class Config
   {
     return isset(self::$data[$key]) ? self::$data[$key] : $default;
   }
-
 
   /**
    * Sets an option
@@ -35,5 +32,15 @@ abstract class Config
     {
       self::$data[$key] = $value;
     }
+  }
+
+  /**
+   * Gets all defined options
+   * 
+   * @return array All defined options
+   */
+  public static function getAll()
+  {
+    return self::$data;
   }
 }
