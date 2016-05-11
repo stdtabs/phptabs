@@ -3,9 +3,10 @@
 namespace PhpTabs\Model;
 
 /**
- * @package Measure
+ * @uses Beat
+ * @uses MeasureHeader
+ * @uses Track
  */
-
 class Measure
 {
   const CLEF_TREBLE = 1;

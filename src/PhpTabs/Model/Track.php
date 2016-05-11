@@ -3,14 +3,12 @@
 namespace PhpTabs\Model;
 
 /**
- * @package Track
  * @uses Measure
  * @uses TabString
  * @uses Color
  * @uses Lyric
  * @uses Song
  */
-
 class Track
 {
   const MAX_OFFSET = 24;
@@ -198,10 +196,14 @@ class Track
     }
 
     foreach($this->strings as $k=>$v)
+    {
       $this->strings[$k] = null;
+    }
 
     foreach($this->measures as $k=>$v)
+    {
       $this->measures[$k]->clear();
+    }
   }
 
   public function __clone()
@@ -223,7 +225,9 @@ class Track
     $this->getColor()->copyFrom($track->getColor());
     $this->getLyrics()->copyFrom($track->getLyrics());
     for ($i=0; $i<count($track->getStrings()); $i++)
+    {
       $this->strings[$i] = clone $track->getString($i);
+    }
 
     for ($i=0; $i<$track->countMeasures(); $i++)
     {

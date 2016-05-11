@@ -3,9 +3,9 @@
 namespace PhpTabs\Model;
 
 /**
- * @package Stroke
+ * @uses Beat
+ * @uses Duration
  */
-
 class Stroke
 {
   const STROKE_NONE = 0;

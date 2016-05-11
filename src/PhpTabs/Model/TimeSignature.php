@@ -3,10 +3,8 @@
 namespace PhpTabs\Model;
 
 /**
- * @package TimeSignature
  * @uses Duration
- */
- 
+ */ 
 class TimeSignature
 {
   private $denominator;

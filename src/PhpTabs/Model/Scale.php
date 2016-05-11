@@ -2,10 +2,6 @@
 
 namespace PhpTabs\Model;
 
-/**
- * @package Scale
- */
-
 class Scale
 {
   private $notes = array(); // 12

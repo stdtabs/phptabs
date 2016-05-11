@@ -3,9 +3,8 @@
 namespace PhpTabs\Model;
 
 /**
- * @package EffectTremoloPicking
+ * @uses Duration
  */
-
 class EffectTremoloPicking
 {
   private $duration;
@@ -27,7 +26,7 @@ class EffectTremoloPicking
 
   public function __clone()
   {
-    $effect = new effectTremoloPicking();
+    $effect = new EffectTremoloPicking();
 
     $effect->getDuration()->setValue($this->getDuration()->getValue());
     $effect->getDuration()->setDotted($this->getDuration()->isDotted());

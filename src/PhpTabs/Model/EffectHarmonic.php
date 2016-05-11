@@ -2,10 +2,6 @@
 
 namespace PhpTabs\Model;
 
-/**
- * @package EffectHarmonic
- */
-
 class EffectHarmonic
 {
   const KEY_NATURAL = "N.H";

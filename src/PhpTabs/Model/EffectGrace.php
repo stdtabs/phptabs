@@ -3,11 +3,9 @@
 namespace PhpTabs\Model;
 
 /**
- * @package EffectGrace
  * @uses Velocities
  * @uses Duration
  */
-
 class EffectGrace
 {
   const TRANSITION_NONE = 0;

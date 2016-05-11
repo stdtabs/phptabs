@@ -2,10 +2,6 @@
 
 namespace PhpTabs\Model;
 
-/**
- * @package Lyric
- */
-
 class Lyric
 {
   const REGEX = " ";

@@ -3,10 +3,8 @@
 namespace PhpTabs\Model;
 
 /**
- * @package EffectTrill
  * @uses Duration
  */
-
 class EffectTrill
 {
   private $fret;

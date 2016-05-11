@@ -2,10 +2,6 @@
 
 namespace PhpTabs\Model;
 
-/**
- * @package Text
- */
-
 class Text
 {
   private $value;

@@ -3,11 +3,10 @@
 namespace PhpTabs\Model;
 
 /**
- * @package Note
  * @uses NoteEffect
+ * @uses Velocities
  * @uses Voice
  */
-
 class Note
 {
   private $value;

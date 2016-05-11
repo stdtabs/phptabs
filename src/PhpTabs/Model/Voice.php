@@ -3,12 +3,10 @@
 namespace PhpTabs\Model;
 
 /**
- * @package Voice
  * @uses Beat
  * @uses Duration
  * @uses Note
  */
-
 class Voice
 {
   const DIRECTION_NONE = 0;

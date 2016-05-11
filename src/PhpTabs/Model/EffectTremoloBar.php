@@ -3,10 +3,8 @@
 namespace PhpTabs\Model;
 
 /**
- * @package EffectTremoloBar
  * @uses TremoloBarPoint
  */
-
 class EffectTremoloBar
 {
   const MAX_POSITION_LENGTH = 12;
@@ -42,11 +40,9 @@ class EffectTremoloBar
   }
 }
 
-
 /**
- * @package TremoloBarPoint
+ * @uses EffectTremoloBar
  */
-
 class TremoloBarPoint
 {
   private $position;

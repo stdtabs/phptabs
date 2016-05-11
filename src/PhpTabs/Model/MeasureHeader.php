@@ -3,12 +3,10 @@
 namespace PhpTabs\Model;
 
 /**
- * @package MeasureHeader
  * @uses Duration
- * @uses TimeSignature
  * @uses Tempo
+ * @uses TimeSignature
  */
-
 class MeasureHeader
 {
   const TRIPLET_FEEL_NONE = 1;

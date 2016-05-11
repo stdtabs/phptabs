@@ -3,7 +3,6 @@
 namespace PhpTabs\Model;
 
 /**
- * @package NoteEffect
  * @uses EffectBend
  * @uses EffectTremoloBar
  * @uses EffectHarmonic
@@ -11,7 +10,6 @@ namespace PhpTabs\Model;
  * @uses EffectTrill
  * @uses EffectTremoloPicking
  */
-
 class NoteEffect
 {
   private $bend;

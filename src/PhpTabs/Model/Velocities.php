@@ -2,10 +2,6 @@
 
 namespace PhpTabs\Model;
 
-/**
- * @package Velocities
- */
-
 class Velocities
 {
   const MIN_VELOCITY = 15;

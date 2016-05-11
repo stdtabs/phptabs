@@ -3,9 +3,8 @@
 namespace PhpTabs\Model;
 
 /**
- * @package EffectBend
+ * @uses BendPoint
  */
-
 class EffectBend
 {
   const SEMITONE_LENGTH = 1;
@@ -45,9 +44,8 @@ class EffectBend
 
 
 /**
- * @package BendPoint
+ * @uses EffectBend
  */
-
 class BendPoint
 {
   private $position;
