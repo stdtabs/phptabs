@@ -2,53 +2,37 @@
 
 namespace PhpTabs\Component;
 
-
 /**
  * File wrapper class
  */
-
 class File
 {
-  /**
-   * @var string Path to the file
-   */
+  /** @var string Path to the file */
   private $path;
 
-  /**
-   * @var boolean|string error message
-   */
+  /** @var boolean|string error message */
   private $error = false;
 
-  /**
-   * @var string dirname of the file
-   */
+  /** @var string dirname of the file */
   private $dirname;
 
-  /**
-   * @var string extension of the file
-   */
+  /** @var string extension of the file */
   private $extension;
 
-  /**
-   * @var string basename of the file
-   */
+  /** @var string basename of the file */
   private $basename;
 
-  /**
-   * @var int File size in bytes
-   */
+  /** @var int File size in bytes */
   private $size = 0;
 
-  /**
-   * @var A file system pointer resource
-   */
+  /** @var A file system pointer resource */
   private $handle;
-
 
   /**
    * Constructor
    * 
    * @param string $path Path to the file
+   * @return void
    */
   public function __construct($path = null)
   {
@@ -77,9 +61,9 @@ class File
     $this->setSize(filesize($path));
   }
 
-
   /**
    * @param string $path Path to the file passed as a parameter
+   * @return void
    */
   private function setPath($path)
   {
@@ -88,15 +72,16 @@ class File
 
   /**
    * @return string Path to the file as it was passed as a parameter
+   * @return string
    */
   public function getPath()
   {
     return $this->path;
   }
 
-
   /**
    * @param string $name Directory of the path
+   * @return void
    */
   private function setDirname($name)
   {
@@ -111,9 +96,9 @@ class File
     return $this->dirname;
   }
 
-
   /**
    * @param string $name Extension of the path
+   * @return void
    */
   private function setExtension($name)
   {
@@ -128,9 +113,9 @@ class File
     return $this->extension;
   }
 
-
   /**
    * @param string $name Basename of the path
+   * @return void
    */
   private function setBasename($name)
   {
@@ -145,9 +130,9 @@ class File
     return $this->basename;
   }
 
-
   /**
    * @param int $size size of the file (bytes)
+   * @return void
    */
   private function setSize($size)
   {
@@ -162,7 +147,6 @@ class File
     return $this->size;
   }
 
-
   /**
    * Streams a binary file
    * 
@@ -170,7 +154,7 @@ class File
    * @param int $offset
    * @param int $length
    * 
-   * @return a file segment
+   * @return string a file segment
    */
   public function getStream($bytes = 1, $offset = null)
   {
@@ -232,6 +216,7 @@ class File
 
   /**
    * Close stream
+   * @return void
    */
   public function closeStream()
   {
@@ -241,9 +226,9 @@ class File
     }
   }
 
-
   /**
    * @param string $error Error during file read operations
+   * @return void
    */
   private function setError($message)
   {
