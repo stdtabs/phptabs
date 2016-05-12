@@ -39,7 +39,6 @@ use PhpTabs\Model\Velocities;
  * 
  * It provides a set of dedicated methods.
  */
- 
 class GuitarPro4Reader extends GuitarProReaderBase
 {
   /**
@@ -80,7 +79,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
       ? MeasureHeader::TRIPLET_FEEL_EIGHTH
       : MeasureHeader::TRIPLET_FEEL_NONE;
 
-    # Only analyse meta informations
+    # Meta only
     if(Config::get('type') == 'meta')
     {
       $this->closeStream();
@@ -106,7 +105,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
     $this->readMeasureHeaders($this->song, $measures);
     $this->readTracks($this->song, $tracks, $channels, $lyric, $lyricTrack);
 
-    # Only analyse meta informations, measure header, tracks and channels
+    # Meta+channels+tracks+measure headers only
     if(Config::get('type') == 'channels')
     {
       $this->closeStream();

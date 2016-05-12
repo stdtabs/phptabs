@@ -39,7 +39,6 @@ use PhpTabs\Model\Velocities;
  * 
  * It provides a set of dedicated methods.
  */
- 
 class GuitarPro5Reader extends GuitarProReaderBase
 {
   /** @var array $supportedVersions */
@@ -74,7 +73,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     $this->readInformations($this->song);
 
-     # Meta only
+    # Meta only
     if(Config::get('type') == 'meta')
     {
       $this->closeStream();

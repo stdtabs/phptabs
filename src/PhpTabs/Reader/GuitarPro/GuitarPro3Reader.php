@@ -37,7 +37,6 @@ use PhpTabs\Model\Velocities;
  * 
  * It provides a set of dedicated methods.
  */
-
 class GuitarPro3Reader extends GuitarProReaderBase
 {
   /** @var array $supportedVersions */
