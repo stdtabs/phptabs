@@ -5,11 +5,12 @@ namespace PhpTabs\Reader\GuitarPro;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Log;
 use PhpTabs\Model\Song;
+use PhpTabs\Model\Helper;
 
 /**
  * Guitar Pro methods for Readers
  */
-abstract class GuitarProReaderBase implements GuitarProReaderInterface
+abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInterface
 {
   /** @var int */
   private $versionIndex;
