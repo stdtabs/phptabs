@@ -5,13 +5,15 @@ PhpTabs
 [![Build Status](https://travis-ci.org/stdtabs/phptabs.svg?branch=master)](https://travis-ci.org/stdtabs/phptabs)
 [![License](https://poser.pugx.org/stdtabs/phptabs/license.svg)](https://packagist.org/packages/stdtabs/phptabs)
 
-PhpTabs is a PHP library that reads tablature files. It provides direct methods to read a song name, get a list of instruments or whatever be your needs.
+PhpTabs is a PHP library that reads tablature and MIDI files. It provides direct methods to read a song name, get a list of instruments or whatever be your needs.
 
 PhpTabs currently supports the following file formats:
 
 - Guitar Pro 3 (.gp3)
 - Guitar Pro 4 (.gp4)
 - Guitar Pro 5 (.gp5)
+- MIDI (.mid, .midi)
+
 
 Table of contents
 =================
@@ -107,13 +109,13 @@ php composer.phar require stdtabs/phptabs:0.*
 - __Package installation__
 
 ```sh
-composer install
+php composer.phar install
 ```
 
 Or
 
 ```sh
-php composer.phar install
+php composer.phar update
 ```
 
 ________________________________________________________________________
