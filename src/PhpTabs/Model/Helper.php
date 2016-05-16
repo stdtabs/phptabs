@@ -5,9 +5,52 @@ namespace PhpTabs\Model;
 /**
  * @uses ChannelNames
  * @uses Song
+ * @uses TabString
  */
 class Helper
 {
+  public static function createPercussionStrings($stringCount)
+  {
+    return Helper::createStrings($stringCount);
+  }
+
+  /**
+   * Creates a set of strings
+   * 
+   * @param integer $stringCount
+   * @param array $defaultTunings A multidim array of integer
+   * @return array
+   */
+  public static function createStrings($stringCount, $defaultTunings = array())
+  {
+    $strings = array();
+
+    if(count($defaultTunings))
+    {
+      for($i = 0; $i < count($defaultTunings); $i++)
+      {
+        if($stringCount == count($defaultTunings[$i]))
+        {
+          for($n = 0; $n < $stringCount; $n++)
+          {
+            $strings[] = new TabString(($n + 1), $defaultTunings[$i][$n]);
+          }
+          break;
+        }
+      }
+    }
+
+    if(!count($strings))
+    {
+      for($i = 1; $i <= $stringCount; $i++)
+      {
+        $strings[] = new TabString($i, 0);
+      }
+    }
+
+    return $strings;
+  }
+
   /**
    * Checks if a channel is still defined
    *

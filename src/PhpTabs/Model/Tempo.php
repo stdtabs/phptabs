@@ -5,7 +5,6 @@ namespace PhpTabs\Model;
 /**
  * Tempo representations with some helpers
  */
-
 class Tempo
 {
   /** @const SECOND_IN_MILLIS */
@@ -49,11 +48,36 @@ class Tempo
   /**
    * Gets a tick in millisecond
    *
-   * @return double number of misseconds
+   * @return double number of milliseconds
    */
   public function getInMillis()
   {
     return (double)(60.00 / $this->getValue() * Tempo::SECOND_IN_MILLIS);
+  }
+
+  /**
+   * Gets a tick in time per quarter
+   * 
+   * @return integer
+   */
+  public function getInTPQ()
+  {
+    $tpq = ((60.00 / $this->getValue() * Tempo::SECOND_IN_MILLIS) * 1000.00);
+    return $tpq;
+  }
+
+  /**
+   * Creates a tempo from TPQ
+   * 
+   * @param integer $tpq
+   * @return Tempo
+   */
+  public static function fromTPQ($tpq)
+  {
+    $value = ((60.00 * Tempo::SECOND_IN_MILLIS) / ($tpq / 1000.00));
+    $tempo = new Tempo();
+    $tempo->setValue($value);
+    return $tempo;
   }
 
   /**

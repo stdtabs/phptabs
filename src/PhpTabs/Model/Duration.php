@@ -97,7 +97,7 @@ class Duration
     }
     else if($diff === null)
     {
-      return self::fromTime($time, $duration, 10);
+      return self::fromTime($time, $minDuration, 10);
     }
 
     $duration = clone $minDuration;
@@ -119,7 +119,7 @@ class Duration
       {
         $tmpDuration->setDotted(false);
       }
-      else if($tmpDuration->getDivision()->isEqual(DivisionType::NORMAL))
+      else if($tmpDuration->getDivision()->isEqual(DivisionType::NORMAL()))
       {
         $tmpDuration->getDivision()->setEnters(3);
         $tmpDuration->getDivision()->setTimes(2);

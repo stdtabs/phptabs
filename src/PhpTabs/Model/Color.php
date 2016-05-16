@@ -6,7 +6,6 @@ namespace PhpTabs\Model;
  * Color styling of tracks & markers
  * RGB
  */
- 
 class Color
 {
   /** @var array $red RGB red value */

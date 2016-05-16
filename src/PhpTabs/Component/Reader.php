@@ -5,6 +5,7 @@ namespace PhpTabs\Component;
 use PhpTabs\Reader\GuitarPro\GuitarPro3Reader;
 use PhpTabs\Reader\GuitarPro\GuitarPro4Reader;
 use PhpTabs\Reader\GuitarPro\GuitarPro5Reader;
+use PhpTabs\Reader\Midi\MidiReader;
 
 /**
  * Bridge class which routes to the right tablature parser
@@ -32,6 +33,11 @@ class Reader
   /* @var array List of gp5 extensions */
   private $gp5Extensions = array(
     'gp5'
+  );
+
+  /* @var array List of MIDI extensions */
+  private $midiExtensions = array(
+    'mid', 'midi'
   );
 
   /**
@@ -71,6 +77,12 @@ class Reader
     if(in_array($file->getExtension(), $this->gp5Extensions))
     {
       $this->bridge = new GuitarPro5Reader($file);
+    }
+
+    // MIDI
+    if(in_array($file->getExtension(), $this->midiExtensions))
+    {
+      $this->bridge = new MidiReader($file);
     }
 
     // Adapter not found

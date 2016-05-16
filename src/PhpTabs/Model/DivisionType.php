@@ -5,17 +5,16 @@ namespace PhpTabs\Model;
 /**
  * Modelizes division between 2 notes
  */
-
 class DivisionType
 {
   public static function NORMAL()
   {
-    return self::newDivisionType(1,1);
+    return self::newDivisionType(1, 1);
   }
 
   public static function TRIPLET()
   {
-    return self::newDivisionType(3,2);
+    return self::newDivisionType(3, 2);
   }
 
   public static function ALTERED_DIVISION_TYPES()

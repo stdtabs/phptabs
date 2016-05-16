@@ -3,9 +3,8 @@
 namespace PhpTabs\Component;
 
 /**
- * Interface for the bridge Reader's classes
+ * Interface for the bridge readers
  */
-
 interface ReaderInterface
 {
   /**
