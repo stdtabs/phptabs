@@ -11,12 +11,6 @@ use PhpTabs\Model\Song;
  */
 abstract class MidiReaderBase implements MidiReaderInterface
 {
-  /** @var int */
-  private $versionIndex;
-
-  /** @var string */
-  private $version;
-
   /** @var File */
   private $file;
 
@@ -38,12 +32,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
    */
   protected function readInt()
   {
-    $bytes = array();
-
-    for($i=0; $i<=3; $i++)
-    {
-      $bytes[$i] = ord($this->file->getStream());
-    }
+    $bytes = $this->readBytesBigEndian(4);
 
     return ($bytes[3] & 0xff) | (($bytes[2] & 0xff) << 8) 
       | (($bytes[1] & 0xff) << 16) | (($bytes[0] & 0xff) << 24);
@@ -56,12 +45,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
    */
   protected function readShort()
   {
-    $bytes = array();
-
-    for($i=0; $i<=1; $i++)
-    {
-      $bytes[$i] = ord($this->file->getStream());
-    }
+    $bytes = $this->readBytesBigEndian(2);
 
     return (($bytes[0] & 0xff) << 8) | ($bytes[1] & 0xff);
   }
@@ -73,12 +57,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
    */
   protected function readUnsignedShort()
   {
-    $bytes = array();
-
-    for($i=0; $i<=1; $i++)
-    {
-      $bytes[$i] = ord($this->file->getStream());
-    }
+    $bytes = $this->readBytesBigEndian(2);
 
     return (($bytes[0] & 0x7f) << 8) | ($bytes[1] & 0xff);
   }
@@ -125,6 +104,24 @@ abstract class MidiReaderBase implements MidiReaderInterface
   protected function skip($num = 1)
   {
     $this->file->getStream($num); 
+  }
+
+  /**
+   * Reads bytes
+   * 
+   * @param integer $num
+   * @return array An array of bytes
+   */
+  protected function readBytesBigEndian($num = 1)
+  {
+    $bytes = array();
+
+    for($i=0; $i<$num; $i++)
+    {
+      $bytes[$i] = ord($this->file->getStream());
+    }
+
+    return $bytes;
   }
 
   /**

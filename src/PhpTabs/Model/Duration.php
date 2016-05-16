@@ -87,7 +87,7 @@ class Duration
     if($minDuration === null && $diff === null)
     {
       $duration = new Duration();
-      $duration->setValue(Duration::SIXTY_FOURTH);
+      $duration->setValue(self::SIXTY_FOURTH);
       $duration->setDotted(false);
       $duration->setDoubleDotted(false);
       $duration->getDivision()->setEnters(3);
@@ -102,9 +102,10 @@ class Duration
 
     $duration = clone $minDuration;
     $tmpDuration = new Duration();
-    $tmpDuration->setValue(Duration::WHOLE);
+    $tmpDuration->setValue(self::WHOLE);
     $tmpDuration->setDotted(true);
     $finish = false;
+
     while(!$finish)
     {
       $tmpTime = $tmpDuration->getTime();
@@ -115,6 +116,7 @@ class Duration
           $duration = clone $tmpDuration;
         }
       }
+
       if($tmpDuration->isDotted())
       {
         $tmpDuration->setDotted(false);
@@ -131,7 +133,8 @@ class Duration
         $tmpDuration->getDivision()->setEnters(1);
         $tmpDuration->getDivision()->setTimes(1);
       }
-      if($tmpDuration->getValue() > Duration::SIXTY_FOURTH)
+
+      if($tmpDuration->getValue() > self::SIXTY_FOURTH)
       {
         $finish = true;
       }
@@ -150,12 +153,12 @@ class Duration
     return $index;
   }
 
-  public function isEqual(Duration $d)
+  public function isEqual(Duration $duration)
   {
-    return ($this->getValue() == $d->getValue() 
-      && $this->isDotted() == $d->isDotted() 
-      && $this->isDoubleDotted() == $d->isDoubleDotted()
-      && $this->getDivision()->isEqual($d->getDivision()));
+    return ($this->getValue() == $duration->getValue() 
+      && $this->isDotted() == $duration->isDotted() 
+      && $this->isDoubleDotted() == $duration->isDoubleDotted()
+      && $this->getDivision()->isEqual($duration->getDivision()));
   }
 
   public function __clone()

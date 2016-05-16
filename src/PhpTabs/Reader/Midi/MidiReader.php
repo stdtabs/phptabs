@@ -34,12 +34,6 @@ class MidiReader extends MidiReaderBase
   /** @var array $supportedVersions */
   private static $supportedVersions = array("MThd\0\0\0\6");
 
-  /**
-   * @var boolean $tripletFeel
-   * @var integer $keySignature
-   */  
-  private $tripletFeel, $keySignature;
-
   /** @var integer resolution */
   private $resolution;
 
@@ -286,8 +280,6 @@ class MidiReader extends MidiReaderBase
 
   private function getHeader($tick)
   {
-    $countHeaders = count($this->headers);
-
     $realTick = $tick >= Duration::QUARTER_TIME
       ? $tick : Duration::QUARTER_TIME;
 
@@ -336,7 +328,6 @@ class MidiReader extends MidiReaderBase
       ? $tick : Duration::QUARTER_TIME;
 
     $measures = $track->getMeasures();
-    $countMeasures=count($measures);
 
     foreach($measures as $measure)
     {
@@ -495,26 +486,25 @@ class MidiReader extends MidiReaderBase
     if (($division & 0x8000) != 0)
     {
       $frameType = -(($division >> 8) & 0xFF);
-      if($frameType == 24)
+      switch($frameType)
       {
-        $divisionType = MidiReaderInterface::SMPTE_24;
+        case 24:
+          $divisionType = MidiReaderInterface::SMPTE_24;
+          break;
+        case 25:
+          $divisionType = MidiReaderInterface::SMPTE_25;
+          break;
+        case 29:
+          $divisionType = MidiReaderInterface::SMPTE_30DROP;
+          break;
+        case 30:
+          $divisionType = MidiReaderInterface::SMPTE_30;
+          break;
+        default:
+          throw new \Exception("corrupt MIDI file: illegal frame division type");
+          break;
       }
-      else if($frameType == 25)
-      {
-        $divisionType = MidiReaderInterface::SMPTE_25;
-      }
-      else if($frameType == 29)
-      {
-        $divisionType = MidiReaderInterface::SMPTE_30DROP;
-      }
-      else if($frameType == 30)
-      {
-        $divisionType = MidiReaderInterface::SMPTE_30;
-      }
-      else
-      {
-        throw new \Exception("corrupt MIDI file: illegal frame division type");
-      }
+
       $resolution = $division & 0xff;
     }
     else
@@ -674,8 +664,8 @@ class MidiReader extends MidiReaderBase
   private function parseNoteOn($track, $tick, array $data)
   {
     $length = count($data);
-    $channel = $length > 0 ?(($data[0] & 0xFF) & 0x0F) : 0;
-    $value = $length > 1 ?($data[1] & 0xFF) : 0;
+    $channel = $length > 0 ? (($data[0] & 0xFF) & 0x0F) : 0;
+    $value = $length > 1 ? ($data[1] & 0xFF) : 0;
     $velocity = $length > 2 ? ($data[2] & 0xFF) : 0;
     if($velocity == 0)
     {
@@ -761,15 +751,16 @@ class MidiReader extends MidiReaderBase
 
     if ($statusByte < 0x80)
     {
-      if ($helper->runningStatusByte != -1)
+      switch($helper->runningStatusByte)
       {
-        $runningStatusApplies = true;
-        $savedByte = $statusByte;
-        $statusByte = $helper->runningStatusByte;
-      }
-      else
-      {
-        throw new \Exception("corrupt MIDI file: status byte missing");
+        case -1:
+          throw new \Exception("corrupt MIDI file: status byte missing");
+          break;
+        default:
+          $runningStatusApplies = true;
+          $savedByte = $statusByte;
+          $statusByte = $helper->runningStatusByte;
+          break;
       }
     }
 

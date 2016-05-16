@@ -78,22 +78,27 @@ class MidiTrackTuningHelper
       $strings[] = new TabString(4, 28);
       $strings[] = new TabString(5, 23);
     }
-    else
-    {
-      $stringCount = 6;
-      $stringSpacing = (($this->maxValue - ($maxFret - 4) - $this->minValue) / $stringCount);
-      if($stringSpacing > 5)
-      {
-        $stringCount = 7;
-        $stringSpacing = (($this->maxValue - ($maxFret - 4) - $this->minValue) / $stringCount);
-      }
 
-      $maxStringValue = ($this->minValue + ($stringCount * $stringSpacing));
-      while(count($strings) < $stringCount)
-      {
-        $maxStringValue -= $stringSpacing;
-        $strings[] = new TabString(count($strings) + 1, $maxStringValue);
-      }
+    return count($strings) 
+      ? $strings : $this->getDefaultStrings($maxFret);
+  }
+
+  public function getDefaultStrings($maxFret)
+  {
+    $strings = array();
+    $stringCount = 6;
+    $stringSpacing = (($this->maxValue - ($maxFret - 4) - $this->minValue) / $stringCount);
+    if($stringSpacing > 5)
+    {
+      $stringCount = 7;
+      $stringSpacing = (($this->maxValue - ($maxFret - 4) - $this->minValue) / $stringCount);
+    }
+
+    $maxStringValue = ($this->minValue + ($stringCount * $stringSpacing));
+    while(count($strings) < $stringCount)
+    {
+      $maxStringValue -= $stringSpacing;
+      $strings[] = new TabString(count($strings) + 1, $maxStringValue);
     }
 
     return $strings;

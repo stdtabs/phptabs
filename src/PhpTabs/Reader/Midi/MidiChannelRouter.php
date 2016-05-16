@@ -91,7 +91,7 @@ class MidiChannelRouter
     $this->midiChannels[] = $route;
 
     // Reconfigure conflicting routes
-    if($conflictingRoutes != null)
+    if($conflictingRoutes !== null)
     {
       foreach($conflictingRoutes as $conflictingRoute)
       {

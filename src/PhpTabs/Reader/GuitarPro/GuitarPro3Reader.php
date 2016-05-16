@@ -1042,12 +1042,9 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param byte $b
    * @return integer between 0 and 32767
    */
-  private function toChannelShort($b)
+  private function toChannelShort($bytes)
   {
-    $value = ($b * 8) - 1;
-
-    if($value>32767)
-      $value = 0; #@todo workaround fix this workaround
+    $value = ($bytes * 8) - 1;
 
     return max($value, 0);
   }
