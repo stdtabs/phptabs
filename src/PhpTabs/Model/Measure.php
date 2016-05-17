@@ -166,8 +166,7 @@ class Measure
 
   public function clear()
   {
-    for ($i=0; $i<count($this->beats); $i++)
-      $this->beats[$i] = null;
+    $this->beats = array();
   }
 
   public function copyFrom(Measure $measure)

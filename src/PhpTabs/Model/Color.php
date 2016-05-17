@@ -46,12 +46,12 @@ class Color
 
   /**
    * Sets RGB blue value
-   * @param integer $b blue index
+   * @param integer $blue blue index
    * @return void
    */
-  public function setB($b)
+  public function setB($blue)
   {
-    $this->value[2] = $b;
+    $this->value[2] = $blue;
   }
 
   /**
@@ -65,12 +65,12 @@ class Color
 
   /**
    * Sets RGB green value
-   * @param integer $b green index 
+   * @param integer $green green index 
    * @return void
    */
-  public function setG($g)
+  public function setG($green)
   {
-    $this->value[1] = $g;
+    $this->value[1] = $green;
   }
 
   /**
@@ -84,12 +84,12 @@ class Color
 
   /**
    * Sets RGB red value
-   * @param integer $b red index 
+   * @param integer $red red index 
    * @return void
    */
-  public function setR($r)
+  public function setR($red)
   {
-    $this->value[0] = $r;
+    $this->value[0] = $red;
   }
 
   /**
@@ -129,17 +129,17 @@ class Color
 
   /**
    * Transforms a list of RGB codes into an array
-   * @param integer $r red value
-   * @param integer $g green value
-   * @param integer $b blue value
+   * @param integer $red red value
+   * @param integer $green green value
+   * @param integer $blue blue value
    * @return array RGB array
    */
-  public static function toArray($r, $g, $b)
+  public static function toArray($red, $green, $blue)
   {
     $color = new Color();
-    $color->setR($r);
-    $color->setG($g);
-    $color->setB($b);
+    $color->setR($red);
+    $color->setG($green);
+    $color->setB($blue);
 
     return $color->value;
   }

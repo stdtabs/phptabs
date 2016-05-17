@@ -170,7 +170,7 @@ class Track
     return $this->strings[$number - 1];
   }
 
-  public function stringCount()
+  public function countStrings()
   {
     return count($this->strings);
   }
@@ -195,21 +195,14 @@ class Track
       $measure->clear();
     }
 
-    foreach($this->strings as $k=>$v)
-    {
-      $this->strings[$k] = null;
-    }
-
-    foreach($this->measures as $k=>$v)
-    {
-      $this->measures[$k]->clear();
-    }
+    $this->strings = array();
+    $this->measures = array();
   }
 
   public function __clone()
   {
     $track = new Track();
-    $track->copyFrom($this->getSong, $this);
+    $track->copyFrom($this->getSong(), $this);
     return $track;
   }
 
@@ -224,7 +217,8 @@ class Track
     $this->setChannelId($track->getChannelId());
     $this->getColor()->copyFrom($track->getColor());
     $this->getLyrics()->copyFrom($track->getLyrics());
-    for ($i=0; $i<count($track->getStrings()); $i++)
+
+    for ($i=0; $i<$track->countStrings(); $i++)
     {
       $this->strings[$i] = clone $track->getString($i);
     }

@@ -167,8 +167,12 @@ class Song
   public function removeTrack(Track $track)
   {
     foreach($this->tracks as $k => $v)
-      if($v->getNumber()==$track->getNumber())
+    {
+      if($v->getNumber() == $track->getNumber())
+      {
         array_splice($this->tracks, $k, 1);	
+      }
+    }
 
     $track->clear();
   }
@@ -237,15 +241,13 @@ class Song
   {
     $tracks = $this->getTracks();
     foreach($tracks as $k => $v)
-      $this->tracks[$k]->clear();
+    {
+      $tracks[$k]->clear();
+    }
 
-    $channels = $this->getChannels();
-    foreach($channels as $k => $v)
-      $this->channels[$k]->clear();
-
-    $measureHeaders = $this->getMeasureHeaders();
-    foreach($measureHeaders as $k => $v)
-      $this->measureHeaders[$k]->clear();
+    $this->tracks = array();
+    $this->channels = array();
+    $this->measureHeaders = array();
   }
 
   public function __clone()
@@ -269,15 +271,21 @@ class Song
     $this->setComments($song->getComments());
 
     $headers = $song->getMeasureHeaders();
-    foreach($headers as $k => $v)
-      $this->addMeasureHeader(clone $v);
+    foreach($headers as $header)
+    {
+      $this->addMeasureHeader(clone $header);
+    }
 
     $channels = $song->getChannels();
-    foreach($channels as $k => $v)
-      $this->addMeasureChannel(clone $v);
+    foreach($channels as $channel)
+    {
+      $this->addChannel(clone $channel);
+    }
 
     $tracks = $song->getTracks();
-    foreach($tracks as $k => $v)
-      $this->addTrack(clone $v);
+    foreach($tracks as $track)
+    {
+      $this->addTrack(clone $track);
+    }
   }
 }

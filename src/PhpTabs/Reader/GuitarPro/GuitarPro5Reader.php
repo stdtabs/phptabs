@@ -347,7 +347,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     if (($flags & 0x02) != 0)
     {
-      $this->readChord($track->stringCount(), $beat);
+      $this->readChord($track->countStrings(), $beat);
     }
     if (($flags & 0x04) != 0) 
     {
@@ -365,7 +365,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     for ($i = 6; $i >= 0; $i--)
     {
-      if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->stringCount())
+      if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->countStrings())
       {
         $string = clone $track->getString( (6 - $i) + 1 );
         $note = $this->readNote($string, $track, clone $effect);
