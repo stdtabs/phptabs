@@ -1,7 +1,7 @@
 {
     "name": "stdtabs/phptabs",
     "type": "library",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "description": "A PHP library for reading tabs and MIDI files",
     "keywords": ["tablature", "guitar", "tabs", "MIDI", "music"],
     "homepage": "https://github.com/stdtabs/phptabs",
