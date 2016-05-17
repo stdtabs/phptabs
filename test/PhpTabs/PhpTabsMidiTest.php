@@ -7,8 +7,8 @@ use PhpTabs\PhpTabs;
 class PhpTabsMidiTest extends \PHPUnit_Framework_TestCase
 {
   /**
-   * Tests read mode with a simple tablature
-   * Guitar Pro 3
+   * Tests read mode with a simple file
+   * MIDI format
    */
   public function testReadModeWithSimpleMidiFile()
   {
@@ -19,13 +19,13 @@ class PhpTabsMidiTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(null, $tablature->getError());
     
     # Meta attributes
-    $this->assertEquals('', $tablature->getName());
-    $this->assertEquals('', $tablature->getArtist());
-    $this->assertEquals('', $tablature->getAlbum());
-    $this->assertEquals('', $tablature->getAuthor());
-    $this->assertEquals('', $tablature->getCopyright());
-    $this->assertEquals('', $tablature->getWriter());
-    $this->assertEquals('', $tablature->getComments());
+    $this->assertEquals('', $tablature->getName());       #Not supported by Midi
+    $this->assertEquals('', $tablature->getArtist());     #Not supported by Midi
+    $this->assertEquals('', $tablature->getAlbum());      #Not supported by Midi
+    $this->assertEquals('', $tablature->getAuthor());     #Not supported by Midi
+    $this->assertEquals('', $tablature->getCopyright());  #Not supported by Midi
+    $this->assertEquals('', $tablature->getWriter());     #Not supported by Midi
+    $this->assertEquals('', $tablature->getComments());   #Not supported by Midi
     $this->assertEquals('', $tablature->getDate());       #Not supported by Midi
     $this->assertEquals('', $tablature->getTranscriber());#Not supported by Midi
 
