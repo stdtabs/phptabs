@@ -125,7 +125,7 @@ class SongBase
   public function clear()
   {
     $tracks = $this->getTracks();
-    foreach($tracks as $k => $track)
+    foreach($tracks as $track)
     {
       $track->clear();
     }

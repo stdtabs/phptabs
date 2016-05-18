@@ -116,11 +116,11 @@ class Helper
    */
   public function createChannelNameFromProgram(Song $song, $channel)
   {
-    $names = ChannelNames::$DEFAULT_NAMES;
+    $names = ChannelNames::$defaultNames;
 
     if($channel->getProgram() >= 0 && isset($names[$channel->getProgram()]))
     {
-      return $this->createChannelName($song, ChannelNames::$DEFAULT_NAMES[$channel->getProgram()]);
+      return $this->createChannelName($song, $names[$channel->getProgram()]);
     }
 
     return $this->createDefaultChannelName($song);

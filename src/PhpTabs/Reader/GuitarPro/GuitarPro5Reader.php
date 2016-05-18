@@ -18,7 +18,6 @@ use PhpTabs\Model\EffectHarmonic;
 use PhpTabs\Model\EffectTremoloBar;
 use PhpTabs\Model\EffectTremoloPicking;
 use PhpTabs\Model\EffectTrill;
-use PhpTabs\Model\Helper;
 use PhpTabs\Model\Lyric;
 use PhpTabs\Model\Marker;
 use PhpTabs\Model\Measure;
@@ -45,10 +44,9 @@ class GuitarPro5Reader extends GuitarProReaderBase
   private static $supportedVersions = array('FICHIER GUITAR PRO v5.00', 'FICHIER GUITAR PRO v5.10');
 
   /**
-   * @var boolean $tripletFeel
    * @var integer $keySignature
    */  
-  private $tripletFeel, $keySignature;
+  private $keySignature;
 
   /**
    * Reader constructor

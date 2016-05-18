@@ -18,7 +18,6 @@ use PhpTabs\Model\EffectHarmonic;
 use PhpTabs\Model\EffectTremoloBar;
 use PhpTabs\Model\EffectTremoloPicking;
 use PhpTabs\Model\EffectTrill;
-use PhpTabs\Model\Helper;
 use PhpTabs\Model\Lyric;
 use PhpTabs\Model\Marker;
 use PhpTabs\Model\Measure;

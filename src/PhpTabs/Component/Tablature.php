@@ -62,7 +62,7 @@ class Tablature
    * Gets the list of instruments
    * @return array
    */
-  public function getinstruments()
+  public function getInstruments()
   {
     if(!($count = $this->countChannels()))
     {
@@ -75,7 +75,7 @@ class Tablature
     {
       $instruments[$i] = array(
         'id'    => $this->getChannel($i)->getProgram(),
-        'name'  => ChannelNames::$DEFAULT_NAMES[$this->getChannel($i)->getProgram()]
+        'name'  => ChannelNames::$defaultNames[$this->getChannel($i)->getProgram()]
       );
     }
 
@@ -102,7 +102,7 @@ class Tablature
     return $this->getChannel($index) instanceof Channel
       ? array(
         'id'    => $this->getChannel($index)->getProgram(),
-        'name'  => ChannelNames::$DEFAULT_NAMES[$this->getChannel($index)->getProgram()]
+        'name'  => ChannelNames::$defaultNames[$this->getChannel($index)->getProgram()]
       ) : null;
   }
 

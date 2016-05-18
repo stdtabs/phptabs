@@ -4,6 +4,7 @@ namespace PhpTabs\Reader\GuitarPro;
 
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
+use PhpTabs\Component\ModelFactory;
 use PhpTabs\Component\Tablature;
 
 use PhpTabs\Model\Beat;
@@ -16,7 +17,6 @@ use PhpTabs\Model\EffectBend;
 use PhpTabs\Model\EffectGrace;
 use PhpTabs\Model\EffectHarmonic;
 use PhpTabs\Model\EffectTremoloBar;
-use PhpTabs\Model\Helper;
 use PhpTabs\Model\Lyric;
 use PhpTabs\Model\Marker;
 use PhpTabs\Model\Measure;

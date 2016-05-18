@@ -8,7 +8,7 @@ namespace PhpTabs\Model;
  
 class ChannelNames
 {
-  public static $DEFAULT_NAMES = array(
+  public static $defaultNames = array(
     "Piano",
     "Bright Piano",
     "Electric Grand",
