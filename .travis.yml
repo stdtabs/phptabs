@@ -20,4 +20,4 @@ script: phpunit -c phpunit.xml.dist
 
 after_script:
   ## Code climate
-  - php composer/bin/test-reporter
+  - ./vendor/bin/test-reporter
