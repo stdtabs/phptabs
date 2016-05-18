@@ -359,6 +359,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     {
       $this->readMixChange($tempo);
     }
+
     $stringFlags = $this->readUnsignedByte();
 
     for ($i = 6; $i >= 0; $i--)
@@ -779,8 +780,9 @@ class GuitarPro5Reader extends GuitarProReaderBase
   {
     for($voice = 0; $voice < 2; $voice++)
     {
-      $nextNoteStart = (double)($measure->getStart());
+      $nextNoteStart = intval($measure->getStart());
       $numberOfBeats = $this->readInt();
+
       for ($i = 0; $i < $numberOfBeats; $i++)
       {
         $nextNoteStart += $this->readBeat($nextNoteStart, $measure, $track, $tempo, $voice);
@@ -794,6 +796,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
 
     $emptyBeats = array();
+
     for($i = 0; $i < $measure->countBeats(); $i++)
     {
       $beat = $measure->getBeat($i);

@@ -4,7 +4,6 @@ namespace PhpTabs\Reader\GuitarPro;
 
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
-use PhpTabs\Component\ModelFactory;
 use PhpTabs\Component\Tablature;
 
 use PhpTabs\Model\Beat;
@@ -17,6 +16,7 @@ use PhpTabs\Model\EffectBend;
 use PhpTabs\Model\EffectGrace;
 use PhpTabs\Model\EffectHarmonic;
 use PhpTabs\Model\EffectTremoloBar;
+use PhpTabs\Model\Helper;
 use PhpTabs\Model\Lyric;
 use PhpTabs\Model\Marker;
 use PhpTabs\Model\Measure;
@@ -290,6 +290,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     $voice = $beat->getVoice(0);
     $duration = $this->readDuration($flags);
     $effect = new NoteEffect();
+
     if (($flags & 0x02) != 0)
     {
       $this->readChord($track->countStrings(), $beat);
@@ -306,17 +307,19 @@ class GuitarPro3Reader extends GuitarProReaderBase
     {
       $this->readMixChange($tempo);
     }
+
     $stringFlags = $this->readUnsignedByte();
 
     for ($i = 6; $i >= 0; $i--)
     {
       if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->countStrings())
       {
-      $string = clone $track->getString( (6 - $i) + 1 );
-      $note = $this->readNote($string, $track, clone $effect);
-      $voice->addNote($note);
+        $string = clone $track->getString( (6 - $i) + 1 );
+        $note = $this->readNote($string, $track, clone $effect);
+        $voice->addNote($note);
       }
     }
+
     $beat->setStart($start);
     $voice->setEmpty(false);
     $voice->getDuration()->copyFrom($duration);
@@ -717,7 +720,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
    */
   private function readMeasure(Measure $measure, Track $track, Tempo $tempo)
   {
-    $nextNoteStart = (double)($measure->getStart());
+    $nextNoteStart = intval($measure->getStart());
     $numberOfBeats = $this->readInt();
 
     for ($i = 0; $i < $numberOfBeats; $i++)
@@ -730,6 +733,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
         throw new \Exception($message);
       }
     }
+
     $measure->setClef( $this->getClef($track) );
     $measure->setKeySignature($this->keySignature);
   }

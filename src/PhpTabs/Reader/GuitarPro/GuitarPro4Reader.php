@@ -315,6 +315,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
     {
       $this->readMixChange($tempo);
     }
+
     $stringFlags = $this->readUnsignedByte();
 
     for ($i = 6; $i >= 0; $i--)
@@ -326,6 +327,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
         $voice->addNote($note);
       }
     }
+
     $beat->setStart($start);
     $voice->setEmpty(false);
     $voice->getDuration()->copyFrom($duration);
@@ -736,7 +738,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
    */
   private function readMeasure(Measure $measure, Track $track, Tempo $tempo)
   {
-    $nextNoteStart = (double)($measure->getStart());
+    $nextNoteStart = intval($measure->getStart());
     $numberOfBeats = $this->readInt();
 
     for ($i = 0; $i < $numberOfBeats; $i++)
@@ -749,6 +751,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
         throw new \Exception($message);
       }
     }
+
     $measure->setClef( $this->getClef($track) );
     $measure->setKeySignature($this->keySignature);
   }
