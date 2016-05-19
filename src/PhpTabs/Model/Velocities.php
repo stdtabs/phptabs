@@ -2,7 +2,7 @@
 
 namespace PhpTabs\Model;
 
-class Velocities
+abstract class Velocities
 {
   const MIN_VELOCITY = 15;
   const VELOCITY_INCREMENT = 16;

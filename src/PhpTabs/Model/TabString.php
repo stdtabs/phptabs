@@ -5,7 +5,6 @@ namespace PhpTabs\Model;
 /**
  * Tablature representation of one note
  */
-
 class TabString
 {
   /** @var integer $number */

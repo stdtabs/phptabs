@@ -48,11 +48,11 @@ class Tempo
   /**
    * Gets a tick in millisecond
    *
-   * @return double number of milliseconds
+   * @return integer number of milliseconds
    */
   public function getInMillis()
   {
-    return (double)(60.00 / $this->getValue() * Tempo::SECOND_IN_MILLIS);
+    return intval(60.00 / $this->getValue() * Tempo::SECOND_IN_MILLIS);
   }
 
   /**
@@ -62,8 +62,7 @@ class Tempo
    */
   public function getInTPQ()
   {
-    $tpq = ((60.00 / $this->getValue() * Tempo::SECOND_IN_MILLIS) * 1000.00);
-    return $tpq;
+    return intval((60.00 / $this->getValue() * Tempo::SECOND_IN_MILLIS) * 1000.00);
   }
 
   /**

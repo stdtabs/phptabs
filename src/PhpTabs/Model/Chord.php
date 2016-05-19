@@ -5,18 +5,17 @@ namespace PhpTabs\Model;
 /**
  * Contains one or more component notes of the chord
  */
-
 class Chord
 {
   /** @var integer $firstFret first fret id */
   private $firstFret = 0;
-  
+
   /** @var array $strings list of strings ids */
   private $strings = array();
 
   /** @var string $name of the chord */
   private $name;
-  
+
   /** @var Beat $beat which contains Chord */
   private $beat;
 

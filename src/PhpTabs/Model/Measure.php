@@ -126,7 +126,7 @@ class Measure
 
   public function getStart()
   {
-    return (double)$this->header->getStart();
+    return intval($this->header->getStart());
   }
 
   public function getTempo()
