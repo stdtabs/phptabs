@@ -101,8 +101,17 @@ class Voice
   public function removeNote(Note $note)
   {
     foreach($this->notes as $k => $v)
+    {
       if($v == $note)
+      {
         array_splice($this->notes, $k, 1);
+      }
+    }
+
+    if(!$this->countNotes())
+    {
+      $this->setEmpty(true);
+    }
   }
 
   public function getNote($index)
