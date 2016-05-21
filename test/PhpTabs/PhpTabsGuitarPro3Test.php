@@ -4,11 +4,11 @@ namespace PhpTabs\Test;
 
 use PhpTabs\PhpTabs;
 
-class PhpTabsMidiTest extends \PHPUnit_Framework_TestCase
+class PhpTabsGuitarPro3Test extends \PHPUnit_Framework_TestCase
 {
   public function setUp()
   {
-    $this->filename = 'testSimpleMidi.mid';
+    $this->filename = 'testSimpleTab.gp3';
     $this->tablature = new PhpTabs(__DIR__ . '/samples/' . $this->filename);
   }
 
@@ -18,25 +18,26 @@ class PhpTabsMidiTest extends \PHPUnit_Framework_TestCase
   }
 
   /**
-   * Tests read mode with a simple file
-   * MIDI format
+   * Tests read mode with a simple tablature
+   * Guitar Pro 3
    */
-  public function testReadModeWithSimpleMidiFile()
+  public function testReadModeWithSimpleGuitarPro3Tab()
   {
     # Errors
     $this->assertEquals(false, $this->tablature->hasError());
     $this->assertEquals(null, $this->tablature->getError());
     
     # Meta attributes
-    $this->assertEquals('', $this->tablature->getName());       #Not supported by Midi
-    $this->assertEquals('', $this->tablature->getArtist());     #Not supported by Midi
-    $this->assertEquals('', $this->tablature->getAlbum());      #Not supported by Midi
-    $this->assertEquals('', $this->tablature->getAuthor());     #Not supported by Midi
-    $this->assertEquals('', $this->tablature->getCopyright());  #Not supported by Midi
-    $this->assertEquals('', $this->tablature->getWriter());     #Not supported by Midi
-    $this->assertEquals('', $this->tablature->getComments());   #Not supported by Midi
-    $this->assertEquals('', $this->tablature->getDate());       #Not supported by Midi
-    $this->assertEquals('', $this->tablature->getTranscriber());#Not supported by Midi
+    $this->assertEquals('Testing name', $this->tablature->getName());
+    $this->assertEquals('Testing artist', $this->tablature->getArtist());
+    $this->assertEquals('Testing album', $this->tablature->getAlbum());
+    $this->assertEquals('Testing author', $this->tablature->getAuthor());
+    $this->assertEquals('Testing copyright', $this->tablature->getCopyright());
+    $this->assertEquals('Testing writer', $this->tablature->getWriter());
+    $this->assertEquals("Testing comments line 1\nTesting comments line 2"
+      , $this->tablature->getComments());
+    $this->assertEquals('', $this->tablature->getDate());       #Not supported by Guitar Pro 3
+    $this->assertEquals('', $this->tablature->getTranscriber());#Not supported by Guitar Pro 3
 
     # Tracks
     $this->assertEquals(1, $this->tablature->countTracks());
@@ -51,7 +52,7 @@ class PhpTabsMidiTest extends \PHPUnit_Framework_TestCase
     $this->assertInstanceOf('PhpTabs\\Model\\Channel', $this->tablature->getChannel(0));
 
     # MeasureHeaders
-    $this->assertEquals(1, $this->tablature->countMeasureHeaders());
+    $this->assertEquals(3, $this->tablature->countMeasureHeaders());
     $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeaders());
     $this->assertEquals(null, $this->tablature->getMeasureHeader(42));
     $this->assertInstanceOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeader(0));
@@ -60,8 +61,8 @@ class PhpTabsMidiTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(1, $this->tablature->countInstruments());
     $expected = array(
       0 => array (
-        'id'   => 0,
-        'name' => 'Piano'
+        'id'   => 27,
+        'name' => 'Clean Guitar'
       )
     );
     $this->assertArraySubset($expected, $this->tablature->getInstruments());
@@ -69,12 +70,5 @@ class PhpTabsMidiTest extends \PHPUnit_Framework_TestCase
     $this->assertArraySubset($expected[0], $this->tablature->getInstrument(0));
     
     $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $this->tablature->getTablature());
-    
-    # Dumper/Array
-    # Dumper/XML
-    # Dumper/JSON
-    # Dumper/Serialize
-    # Dumper/Text
-    
   }
 }
