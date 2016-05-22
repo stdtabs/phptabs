@@ -91,7 +91,7 @@ class MidiDumperTest extends XmlTestCaseHelper
         , 'count(/song/measureHeaders/number)'
         , 'Incorrect number of MeasureHeader elements.'],
       [ 0
-        , 'count(/song/measureHeaders/number[42])'
+        , 'count(/song/measureHeaders/number[642])'
         , 'MeasureHeader element should NOT exist.'],
       [ 1
         , 'string(/song/measureHeaders/number[1])'
