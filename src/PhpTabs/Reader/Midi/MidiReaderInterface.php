@@ -19,9 +19,4 @@ interface MidiReaderInterface extends ReaderInterface
   const SMPTE_25 = 25.0;
   const SMPTE_30DROP = 29.97;
   const SMPTE_30 = 30.0;
-
-  /**
-   * @return array of supported versions
-   */
-  public function getSupportedVersions();
 }

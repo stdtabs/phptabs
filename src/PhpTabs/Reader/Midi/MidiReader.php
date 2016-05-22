@@ -31,9 +31,6 @@ class MidiReader extends MidiReaderBase
   const STATUS_SYSEX = 3;
   const STATUS_META = 4;
 
-  /** @var array $supportedVersions */
-  private static $supportedVersions = array("MThd\0\0\0\6");
-
   /** @var integer resolution */
   private $resolution;
 
@@ -58,7 +55,7 @@ class MidiReader extends MidiReaderBase
 
     $this->setTablature($this->song);
 
-    $this->settings = MidiSettings::getDefaults();
+    $this->settings = (new MidiSettings())->getDefaults();
     $this->sequence = $this->getSequence();
     $this->initFields($this->sequence);
 
@@ -94,14 +91,6 @@ class MidiReader extends MidiReaderBase
     }
 
     $this->closeStream();
-  }
-
-  /**
-   * @return array of supported versions
-   */
-  public function getSupportedVersions()
-  {
-    return self::$supportedVersions;
   }
 
   /**
