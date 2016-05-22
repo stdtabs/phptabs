@@ -5,7 +5,7 @@ namespace PhpTabs\Component\Serializer;
 /**
  * Text serializer
  */
-class Text
+class Text extends SerializerBase
 {
   const INDENT_STEP = 2;
   const INDENT_CHAR = ' ';
@@ -14,8 +14,8 @@ class Text
    * @var integer $depth
    * @var string $content
    */
-  private $depth;
-  private $content;
+  protected $depth;
+  protected $content;
 
   /**
    * Serializes a document
@@ -31,29 +31,7 @@ class Text
     return $this->content;
   }
 
-  private function appendNodes(array $nodes)
-  {
-    foreach($nodes as $index => $node)
-    {
-      // List
-      if(is_array($node) && is_int($index))
-      {
-        $this->appendNodes($node);
-      }
-      // Element
-      else if(is_array($node) && !is_int($index))
-      {
-        $this->appendNode($index, $node);
-      }
-      // SubElement
-      else if(!is_array($node))
-      {
-        $this->appendText($index, $node);
-      }
-    }
-  }
-
-  private function appendNode($index, array $element)
+  protected function appendNode($index, array $element)
   {
     $this->content .= sprintf('%s%s:%s', $this->indent(), $index, PHP_EOL);
     $this->depth++;
@@ -61,7 +39,7 @@ class Text
     $this->depth--;
   }
 
-  private function appendText($index, $value)
+  protected function appendText($index, $value)
   {
     $this->content .= sprintf('%s%s:', $this->indent(), $index);
 
@@ -77,7 +55,11 @@ class Text
     {
       $this->writeMultilineString($value);
     }
-    else
+    else if(is_string($value))
+    {
+      $this->content .= sprintf('"%s"', $value);
+    }
+    else if(is_numeric($value))
     {
       $this->content .= $value;
     }
@@ -85,7 +67,7 @@ class Text
     $this->content .= PHP_EOL;
   }
 
-  private function writeMultilineString($value)
+  protected function writeMultilineString($value)
   {
     $this->depth++;
 
@@ -99,7 +81,7 @@ class Text
     $this->depth--;
   }
 
-  private function indent()
+  protected function indent()
   {
     return str_repeat(Text::INDENT_CHAR, $this->depth * Text::INDENT_STEP);
   }

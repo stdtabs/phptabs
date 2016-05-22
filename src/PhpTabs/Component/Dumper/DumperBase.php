@@ -5,7 +5,7 @@ namespace PhpTabs\Component\Dumper;
 /**
  * Helpers for Dumper
  */
-abstract class DumperBase
+abstract class DumperBase extends DumperEffects
 {
   protected function dumpSong()
   {
@@ -274,108 +274,6 @@ abstract class DumperBase
     );
   }
 
-  protected function dumpBend($effect)
-  {
-    if(!is_object($effect))
-    {
-      return null;
-    }
-
-    $content = array();
-
-    $points = $effect->getPoints();
-    foreach($points as $point)
-    {
-      $content[] = array(
-        'position'  => $point->getPosition(), 
-        'value'     => $point->getValue()
-      );
-    }
-
-    return array('points' => $content);
-  }
-
-  protected function dumpGrace($effect)
-  {
-    if(!is_object($effect))
-    {
-      return null;
-    }
-
-    return array(
-        'fret'       => $effect->getFret(), 
-        'duration'   => $effect->getDuration(), 
-        'dynamic'    => $effect->getDynamic(), 
-        'transition' => $effect->getTransition(), 
-        'onBeat'     => $effect->isOnBeat(), 
-        'dead'       => $effect->isDead()
-    );
-  }
-
-  protected function dumpTremoloBar($effect)
-  {
-    if(!is_object($effect))
-    {
-      return null;
-    }
-
-    $content = array();
-
-    $points = $effect->getPoints();
-    foreach($points as $point)
-    {
-      $content[] = array(
-        'position'  => $point->getPosition(), 
-        'value'     => $point->getValue()
-      );
-    }
-
-    return array('points' => $content);
-  }
-
-  protected function dumpHarmonic($effect)
-  {
-    if(!is_object($effect))
-    {
-      return null;
-    }
-
-    return array(
-        'type'         => $effect->getType(), 
-        'data'         => $effect->getData(), 
-        'isNatural'    => $effect->isNatural(), 
-        'isArtificial' => $effect->isArtificial(), 
-        'isTapped'     => $effect->isTapped(), 
-        'isPinch'      => $effect->isPinch(), 
-        'isSemi'       => $effect->isSemi()
-    );
-  }
-
-  protected function dumpTrill($effect)
-  {
-    if(!is_object($effect))
-    {
-      return null;
-    }
-
-    return array(
-        'fret'      => $effect->getFret(), 
-        'duration'  => $this->dumpDuration($effect->getDuration())
-    );
-  }
-
-  protected function dumpTremoloPicking($effect)
-  {
-    if(!is_object($effect))
-    {
-      return null;
-    }
-
-    return array(
-        'duration'  => $this->dumpDuration($effect->getDuration())
-    );
-  }
-
   protected function dumpTimeSignature($timeSignature)
   {
     return array(
@@ -386,31 +284,21 @@ abstract class DumperBase
 
   protected function dumpMarker($marker)
   {
-    if(!is_object($marker))
-    {
-      return null;
-    }
-
-    return array(
-        'measure' => $marker->getMeasure(), 
-        'title'   => $marker->getTitle(),
-        'color'   => array(
-          'R' => $marker->getColor()->getR(),
-          'G' => $marker->getColor()->getG(),
-          'B' => $marker->getColor()->getB()
-        )
-    );
+    return is_object($marker) ? array(
+      'measure' => $marker->getMeasure(), 
+      'title'   => $marker->getTitle(),
+      'color'   => array(
+        'R' => $marker->getColor()->getR(),
+        'G' => $marker->getColor()->getG(),
+        'B' => $marker->getColor()->getB()
+      )
+    ) : null;
   }
 
   protected function dumpText($text)
   {
-    if(!is_object($text))
-    {
-      return null;
-    }
-
-    return array(
-        'value'   => $text->getValue()
-    );
+    return is_object($text) ? array(
+      'value' => $text->getValue()
+    ) : null;
   }
 }

@@ -7,9 +7,9 @@ use XMLWriter;
 /**
  * XML serializer
  */
-class Xml
+class Xml extends SerializerBase
 {
-  private $writer;
+  protected $writer;
 
   public function __construct()
   {
@@ -33,36 +33,14 @@ class Xml
     return $this->writer->outputMemory();
   }
 
-  private function appendNodes(array $nodes)
-  {
-    foreach($nodes as $index => $node)
-    {
-      // List
-      if(is_array($node) && is_int($index))
-      {
-        $this->appendNodes($node);
-      }
-      // Node
-      else if(is_array($node) && !is_int($index))
-      {
-        $this->appendNode($index, $node);
-      }
-      // Text
-      else if(!is_array($node))
-      {
-        $this->appendText($index, $node);
-      }
-    }
-  }
-
-  private function appendNode($index, array $node)
+  protected function appendNode($index, array $node)
   {
     $this->writer->startElement($index);
     $this->appendNodes($node);
     $this->writer->endElement(); 
   }
 
-  private function appendText($index, $value)
+  protected function appendText($index, $value)
   {
     $this->writer->startElement($index);
 
@@ -74,7 +52,7 @@ class Xml
     {
       $this->writer->text('true');
     }
-    else
+    else if(is_numeric($value) || is_string($value))
     {
       $this->writer->text($value);
     }

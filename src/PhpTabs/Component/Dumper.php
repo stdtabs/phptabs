@@ -24,7 +24,7 @@ class Dumper extends DumperBase
    *
    * @return array
    * 
-   * @throws Exception when format is not supported
+   * @throws Exception if format is not supported
    */
   public function dump($format = 'array')
   {
