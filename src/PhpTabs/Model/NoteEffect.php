@@ -24,10 +24,10 @@ class NoteEffect extends NoteEffectBase
     parent::__construct();
 
     $this->bend = null;
-    $this->tremoloBar = null;
     $this->harmonic = null;
     $this->grace = null;
     $this->trill = null;
+    $this->tremoloBar = null;
     $this->tremoloPicking = null;
   }
 
@@ -202,7 +202,7 @@ class NoteEffect extends NoteEffectBase
     }
   }
 
-  public function setHarmonic(/*EffectHarmonic*/ $harmonic)
+  public function setHarmonic(EffectHarmonic $harmonic = null)
   {
     $this->harmonic = $harmonic;
   }
@@ -305,7 +305,7 @@ class NoteEffect extends NoteEffectBase
 
       $effect->$setter(
         in_array($attr, array('bend', 'tremoloBar', 'harmonic', 'grace', 'trill', 'tremoloPicking'))
-          ? ($this->$getter() ? clone $this->$attr : null)
+          ? ($this->$getter() ? clone $value : null)
           : $effect->$setter($this->$getter())
       );
     }
