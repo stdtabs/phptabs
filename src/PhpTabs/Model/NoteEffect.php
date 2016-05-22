@@ -10,56 +10,25 @@ namespace PhpTabs\Model;
  * @uses EffectTrill
  * @uses EffectTremoloPicking
  */
-class NoteEffect
+class NoteEffect extends NoteEffectBase
 {
-  private $bend;
-  private $tremoloBar;
-  private $harmonic;
-  private $grace;
-  private $trill;
-  private $tremoloPicking;
-  private $vibrato;
-  private $deadNote;
-  private $slide;
-  private $hammer;
-  private $ghostNote;
-  private $accentuatedNote;
-  private $heavyAccentuatedNote;
-  private $palmMute;
-  private $staccato;
-  private $tapping;
-  private $slapping;
-  private $popping;
-  private $fadeIn;
-  private $letRing;
+  protected $bend;
+  protected $grace;
+  protected $harmonic;
+  protected $tremoloBar;
+  protected $tremoloPicking;
+  protected $trill;
 
   public function __construct()
   {
+    parent::__construct();
+
     $this->bend = null;
     $this->tremoloBar = null;
     $this->harmonic = null;
     $this->grace = null;
     $this->trill = null;
     $this->tremoloPicking = null;
-    $this->vibrato = false;
-    $this->deadNote = false;
-    $this->slide = false;
-    $this->hammer = false;
-    $this->ghostNote = false;
-    $this->accentuatedNote = false;
-    $this->heavyAccentuatedNote = false;
-    $this->palmMute = false;
-    $this->staccato = false;
-    $this->tapping = false;
-    $this->slapping = false;
-    $this->popping = false;
-    $this->fadeIn = false;
-    $this->letRing = false;
-  }
-
-  public function isDeadNote()
-  {
-    return $this->deadNote;
   }
 
   public function setDeadNote($deadNote)
@@ -75,11 +44,6 @@ class NoteEffect
       $this->tremoloBar = null;
       $this->tremoloPicking = null;
     }
-  }
-
-  public function isVibrato()
-  {
-    return $this->vibrato;
   }
 
   public function setVibrato($vibrato)
@@ -98,7 +62,7 @@ class NoteEffect
     return $this->bend;
   }
 
-  public function setBend(/*EffectBend*/ $bend)
+  public function setBend(EffectBend $bend = null)
   {
     $this->bend = $bend;
 
@@ -113,17 +77,12 @@ class NoteEffect
     }
   }
 
-  public function isBend()
-  {
-    return ($this->bend != null && count($this->bend->getPoints()));
-  }
-
   public function getTremoloBar()
   {
     return $this->tremoloBar;
   }
 
-  public function setTremoloBar(/*EffectTremoloBar*/ $tremoloBar)
+  public function setTremoloBar(EffectTremoloBar $tremoloBar = null)
   {
     $this->tremoloBar = $tremoloBar;
 
@@ -138,18 +97,12 @@ class NoteEffect
     }
   }
 
-  public function isTremoloBar()
-  {
-    return ($this->tremoloBar != null);
-  }
-
-
   public function getTrill()
   {
     return $this->trill;
   }
 
-  public function setTrill(/*EffectTrill*/ $trill)
+  public function setTrill(EffectTrill $trill = null)
   {
     $this->trill = $trill;
 
@@ -165,17 +118,12 @@ class NoteEffect
     }
   }
 
-  public function isTrill()
-  {
-    return ($this->trill != null);
-  }
-
   public function getTremoloPicking()
   {
     return $this->tremoloPicking;
   }
 
-  public function setTremoloPicking(/*EffectTremoloPicking*/ $tremoloPicking)
+  public function setTremoloPicking(EffectTremoloPicking $tremoloPicking = null)
   {
     $this->tremoloPicking = $tremoloPicking;
 
@@ -189,16 +137,6 @@ class NoteEffect
       $this->deadNote = false;
       $this->vibrato = false;
     }
-  }
-
-  public function isTremoloPicking()
-  {
-    return ($this->tremoloPicking != null);
-  }
-
-  public function isHammer()
-  {
-    return $this->hammer;
   }
 
   public function setHammer($hammer)
@@ -216,11 +154,6 @@ class NoteEffect
     }
   }
 
-  public function isSlide()
-  {
-    return $this->slide;
-  }
-
   public function setSlide($slide)
   {
     $this->slide = $slide;
@@ -236,11 +169,6 @@ class NoteEffect
     }
   }
 
-  public function isGhostNote()
-  {
-    return $this->ghostNote;
-  }
-
   public function setGhostNote($ghostNote)
   {
     $this->ghostNote = $ghostNote;
@@ -252,11 +180,6 @@ class NoteEffect
     }
   }
 
-  public function isAccentuatedNote()
-  {
-    return $this->accentuatedNote;
-  }
-
   public function setAccentuatedNote($accentuatedNote)
   {
     $this->accentuatedNote = $accentuatedNote;
@@ -266,11 +189,6 @@ class NoteEffect
       $this->ghostNote = false;
       $this->heavyAccentuatedNote = false;
     }
-  }
-
-  public function isHeavyAccentuatedNote()
-  {
-    return $this->heavyAccentuatedNote;
   }
 
   public function setHeavyAccentuatedNote($heavyAccentuatedNote)
@@ -294,29 +212,14 @@ class NoteEffect
     return $this->harmonic;
   }
 
-  public function isHarmonic()
-  {
-    return ($this->harmonic != null);
-  }
-
   public function getGrace()
   {
     return $this->grace;
   }
 
-  public function setGrace(/*EffectGrace*/ $grace)
+  public function setGrace(EffectGrace $grace = null)
   {
     $this->grace = $grace;
-  }
-
-  public function isGrace()
-  {
-    return ($this->grace != null);
-  }
-
-  public function isPalmMute()
-  {
-    return $this->palmMute;
   }
 
   public function setPalmMute($palmMute)
@@ -330,11 +233,6 @@ class NoteEffect
     }
   }
 
-  public function isStaccato()
-  {
-    return $this->staccato;
-  }
-
   public function setStaccato($staccato)
   {
     $this->staccato = $staccato;
@@ -344,11 +242,6 @@ class NoteEffect
       $this->palmMute = false;
       $this->letRing = false;
     }
-  }
-
-  public function isLetRing()
-  {
-    return $this->letRing;
   }
 
   public function setLetRing($letRing)
@@ -362,11 +255,6 @@ class NoteEffect
     }
   }
 
-  public function isPopping()
-  {
-    return $this->popping;
-  }
-
   public function setPopping($popping)
   {
     $this->popping = $popping;
@@ -376,11 +264,6 @@ class NoteEffect
       $this->tapping = false;
       $this->slapping = false;
     }
-  }
-
-  public function isSlapping()
-  {
-    return $this->slapping;
   }
 
   public function setSlapping($slapping)
@@ -394,11 +277,6 @@ class NoteEffect
     }
   }
 
-  public function isTapping()
-  {
-    return $this->tapping;
-  }
-
   public function setTapping($tapping)
   {
     $this->tapping = $tapping;
@@ -410,63 +288,28 @@ class NoteEffect
     }
   }
 
-  public function isFadeIn()
-  {
-    return $this->fadeIn;
-  }
-
   public function setFadeIn($fadeIn)
   {
     $this->fadeIn = $fadeIn;
   }
 
-  public function hasAnyEffect()
-  {
-    return ($this->isBend() ||
-      $this->isTremoloBar() ||
-      $this->isHarmonic() ||
-      $this->isGrace() ||
-      $this->isTrill() ||
-      $this->isTremoloPicking() ||
-      $this->isVibrato() ||
-      $this->isDeadNote() ||
-      $this->isSlide() ||
-      $this->isHammer() ||
-      $this->isGhostNote() ||
-      $this->isAccentuatedNote() ||
-      $this->isHeavyAccentuatedNote() ||
-      $this->isPalmMute() ||
-      $this->isLetRing() ||
-      $this->isStaccato() ||
-      $this->isTapping() ||
-      $this->isSlapping() ||
-      $this->isPopping() ||
-      $this->isFadeIn());
-  }
-
   public function __clone()
   {
     $effect = new NoteEffect();
-    $effect->setVibrato($this->isVibrato());
-    $effect->setDeadNote($this->isDeadNote());
-    $effect->setSlide($this->isSlide());
-    $effect->setHammer($this->isHammer());
-    $effect->setGhostNote($this->isGhostNote());
-    $effect->setAccentuatedNote($this->isAccentuatedNote());
-    $effect->setHeavyAccentuatedNote($this->isHeavyAccentuatedNote());
-    $effect->setPalmMute($this->isPalmMute());
-    $effect->setLetRing($this->isLetRing());
-    $effect->setStaccato($this->isStaccato());
-    $effect->setTapping($this->isTapping());
-    $effect->setSlapping($this->isSlapping());
-    $effect->setPopping($this->isPopping());
-    $effect->setFadeIn($this->isFadeIn());
-    $effect->setBend($this->isBend() ? clone $this->bend : null);
-    $effect->setTremoloBar($this->isTremoloBar() ? clone $this->tremoloBar : null);
-    $effect->setHarmonic($this->isHarmonic() ? clone $this->harmonic : null);
-    $effect->setGrace($this->isGrace() ? clone $this->grace : null);
-    $effect->setTrill($this->isTrill() ? clone $this->trill : null);
-    $effect->setTremoloPicking($this->isTremoloPicking() ? clone $this->tremoloPicking : null);
+    
+    $attrs = get_object_vars($this);
+    foreach($attrs as $attr => $value)
+    {
+      $setter = sprintf('set%s', ucfirst($attr));
+      $getter = sprintf('is%s', ucfirst($attr));
+
+      $effect->$setter(
+        in_array($attr, array('bend', 'tremoloBar', 'harmonic', 'grace', 'trill', 'tremoloPicking'))
+          ? ($this->$getter() ? clone $this->$attr : null)
+          : $effect->$setter($this->$getter())
+      );
+    }
+
     return $effect;
   }	
 }
