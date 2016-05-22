@@ -5,7 +5,6 @@ namespace PhpTabs\Model;
 /**
  * ChannelParameter
  */
-
 class ChannelParameter
 {
   private $key;

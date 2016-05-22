@@ -12,7 +12,7 @@ class Tablature
   private $error = '';
 
   /** @var object Song */
-  private $song = '';
+  private $song;
 
   /**
    * Tablature constructor
@@ -50,12 +50,23 @@ class Tablature
 
   /**
    * Sets Song wrapper
+   *
    * @param Song $song
    * @return void
    */
   public function setSong(Song $song)
   {
     $this->song = $song;
+  }
+
+  /**
+   * Gets a Song
+   *
+   * @return Song
+   */
+  public function getSong()
+  {
+    return $this->song;
   }
 
   /**
@@ -104,6 +115,19 @@ class Tablature
         'id'    => $this->getChannel($index)->getProgram(),
         'name'  => ChannelNames::$defaultNames[$this->getChannel($index)->getProgram()]
       ) : null;
+  }
+
+  /**
+   * Dumps a song into an array
+   * 
+   * @return array
+   */
+  public function dump($format = null)
+  { 
+    $dumper = new Dumper($this);
+
+    return null === $format
+      ? $dumper->dump() : $dumper->dump($format);
   }
 
   /**
