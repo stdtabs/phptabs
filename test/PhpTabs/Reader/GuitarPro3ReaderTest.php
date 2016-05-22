@@ -1,32 +1,31 @@
 <?php
 
-namespace PhpTabs\Test;
+namespace PhpTabsTest\Reader;
 
+use PHPUnit_Framework_TestCase;
 use PhpTabs\PhpTabs;
 
-class PhpTabsGuitarPro4Test extends \PHPUnit_Framework_TestCase
+/**
+ * Tests with a simple tablature
+ * Guitar Pro 3
+ */
+class GuitarPro3ReaderTest extends PHPUnit_Framework_TestCase
 {
   public function setUp()
   {
-    $this->filename = 'testSimpleTab.gp4';
-    $this->tablature = new PhpTabs(__DIR__ . '/samples/' . $this->filename);
-  }
-
-  public function tearDown()
-  {
-    unset($this->tablature);
+    $this->filename = 'testSimpleTab.gp3';
+    $this->tablature = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/' . $this->filename);
   }
 
   /**
-   * Tests read mode with a simple tablature
-   * Guitar Pro 4
+   * Parser
    */
-  public function testReadModeWithSimpleGuitarPro4Tab()
+  public function testParser()
   {
     # Errors
     $this->assertEquals(false, $this->tablature->hasError());
     $this->assertEquals(null, $this->tablature->getError());
-    
+
     # Meta attributes
     $this->assertEquals('Testing name', $this->tablature->getName());
     $this->assertEquals('Testing artist', $this->tablature->getArtist());
@@ -36,8 +35,8 @@ class PhpTabsGuitarPro4Test extends \PHPUnit_Framework_TestCase
     $this->assertEquals('Testing writer', $this->tablature->getWriter());
     $this->assertEquals("Testing comments line 1\nTesting comments line 2"
       , $this->tablature->getComments());
-    $this->assertEquals('', $this->tablature->getDate());       #Not supported by Guitar Pro 4
-    $this->assertEquals('', $this->tablature->getTranscriber());#Not supported by Guitar Pro 4
+    $this->assertEquals('', $this->tablature->getDate());       #Not supported by Guitar Pro 3
+    $this->assertEquals('', $this->tablature->getTranscriber());#Not supported by Guitar Pro 3
 
     # Tracks
     $this->assertEquals(1, $this->tablature->countTracks());
@@ -51,6 +50,12 @@ class PhpTabsGuitarPro4Test extends \PHPUnit_Framework_TestCase
     $this->assertEquals(null, $this->tablature->getChannel(42));
     $this->assertInstanceOf('PhpTabs\\Model\\Channel', $this->tablature->getChannel(0));
 
+    # MeasureHeaders
+    $this->assertEquals(3, $this->tablature->countMeasureHeaders());
+    $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeaders());
+    $this->assertEquals(null, $this->tablature->getMeasureHeader(42));
+    $this->assertInstanceOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeader(0));
+
     # Instruments
     $this->assertEquals(1, $this->tablature->countInstruments());
     $expected = array(
@@ -63,12 +68,11 @@ class PhpTabsGuitarPro4Test extends \PHPUnit_Framework_TestCase
     $this->assertEquals(null, $this->tablature->getInstrument(42));
     $this->assertArraySubset($expected[0], $this->tablature->getInstrument(0));
 
-    # MeasureHeaders
-    $this->assertEquals(3, $this->tablature->countMeasureHeaders());
-    $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeaders());
-    $this->assertEquals(null, $this->tablature->getMeasureHeader(42));
-    $this->assertInstanceOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeader(0));
-    
     $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $this->tablature->getTablature());
+  }
+
+  public function tearDown()
+  {
+    unset($this->tablature);
   }
 }

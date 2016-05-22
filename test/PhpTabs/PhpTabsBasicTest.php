@@ -1,62 +1,55 @@
 <?php
 
-namespace PhpTabs\Test;
+namespace PhpTabsTest;
 
+use PHPUnit_Framework_TestCase;
 use PhpTabs\PhpTabs;
 
-class PhpTabsBasicTest extends \PHPUnit_Framework_TestCase
+class BasicsTest extends PHPUnit_Framework_TestCase
 {
-  public function setUp()
-  {
-    $this->tablature = new PhpTabs();
-  }
-
-  public function tearDown()
-  {
-    unset($this->tablature);
-  }
-
   /**
    * Tests write mode with empty attributes
    */
   public function testWriteModeWithEmptyAttributes()
   {
+    $tablature = new PhpTabs();
+
     # Errors
-    $this->assertEquals(false, $this->tablature->hasError());
-    $this->assertEquals(null, $this->tablature->getError());
+    $this->assertEquals(false, $tablature->hasError());
+    $this->assertEquals(null, $tablature->getError());
 
     # Meta attributes
-    $this->assertEquals('', $this->tablature->getName());
-    $this->assertEquals('', $this->tablature->getArtist());
-    $this->assertEquals('', $this->tablature->getAlbum());
-    $this->assertEquals('', $this->tablature->getAuthor());
-    $this->assertEquals('', $this->tablature->getCopyright());
-    $this->assertEquals('', $this->tablature->getWriter());
-    $this->assertEquals('', $this->tablature->getComments());
-    $this->assertEquals('', $this->tablature->getDate());
-    $this->assertEquals('', $this->tablature->getTranscriber());
+    $this->assertEquals('', $tablature->getName());
+    $this->assertEquals('', $tablature->getArtist());
+    $this->assertEquals('', $tablature->getAlbum());
+    $this->assertEquals('', $tablature->getAuthor());
+    $this->assertEquals('', $tablature->getCopyright());
+    $this->assertEquals('', $tablature->getWriter());
+    $this->assertEquals('', $tablature->getComments());
+    $this->assertEquals('', $tablature->getDate());
+    $this->assertEquals('', $tablature->getTranscriber());
 
     # Tracks
-    $this->assertEquals(0, $this->tablature->countTracks());
-    $this->assertEquals(array(), $this->tablature->getTracks());
-    $this->assertEquals(null, $this->tablature->getTrack(42));
+    $this->assertEquals(0, $tablature->countTracks());
+    $this->assertEquals(array(), $tablature->getTracks());
+    $this->assertEquals(null, $tablature->getTrack(42));
 
     # Channels
-    $this->assertEquals(0, $this->tablature->countChannels());
-    $this->assertEquals(array(), $this->tablature->getChannels());
-    $this->assertEquals(null, $this->tablature->getChannel(42));
+    $this->assertEquals(0, $tablature->countChannels());
+    $this->assertEquals(array(), $tablature->getChannels());
+    $this->assertEquals(null, $tablature->getChannel(42));
 
     # MeasureHeaders
-    $this->assertEquals(0, $this->tablature->countMeasureHeaders());
-    $this->assertEquals(array(), $this->tablature->getMeasureHeaders());
-    $this->assertEquals(null, $this->tablature->getMeasureHeader(42));
+    $this->assertEquals(0, $tablature->countMeasureHeaders());
+    $this->assertEquals(array(), $tablature->getMeasureHeaders());
+    $this->assertEquals(null, $tablature->getMeasureHeader(42));
 
     # Instruments
-    $this->assertEquals(0, $this->tablature->countInstruments());
-    $this->assertEquals(array(), $this->tablature->getInstruments());
-    $this->assertEquals(null, $this->tablature->getInstrument(42));
+    $this->assertEquals(0, $tablature->countInstruments());
+    $this->assertEquals(array(), $tablature->getInstruments());
+    $this->assertEquals(null, $tablature->getInstrument(42));
     
-    $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $this->tablature->getTablature());
+    $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $tablature->getTablature());
   }
 
   /**
@@ -65,19 +58,19 @@ class PhpTabsBasicTest extends \PHPUnit_Framework_TestCase
   public function testReadModeWithNonReadableFile()
   {
     # Path not reachable
-    $this->tablature = new PhpTabs('thisFileDoesNotExist.gp3');
+    $tablature = new PhpTabs('thisFileDoesNotExist.gp3');
 
     # Errors
-    $this->assertEquals(true, $this->tablature->hasError());
+    $this->assertEquals(true, $tablature->hasError());
     $this->assertEquals('Path thisFileDoesNotExist.gp3 is not readable'
-      , $this->tablature->getError());
+      , $tablature->getError());
 
     # Given path is a directory
-    $this->tablature = new PhpTabs(__DIR__);
+    $tablature = new PhpTabs(__DIR__);
 
     # Errors
-    $this->assertEquals(true, $this->tablature->hasError());
+    $this->assertEquals(true, $tablature->hasError());
     $this->assertEquals('Path must be a file. "' . __DIR__ . '" given'
-      , $this->tablature->getError());
+      , $tablature->getError());
   }
 }

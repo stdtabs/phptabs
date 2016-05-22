@@ -1,20 +1,16 @@
 <?php
 
-namespace PhpTabs\Test;
+namespace PhpTabsTest\Reader;
 
+use PHPUnit_Framework_TestCase;
 use PhpTabs\PhpTabs;
 
-class PhpTabsMidiTest extends \PHPUnit_Framework_TestCase
+class PhpTabsMidiTest extends PHPUnit_Framework_TestCase
 {
   public function setUp()
   {
     $this->filename = 'testSimpleMidi.mid';
-    $this->tablature = new PhpTabs(__DIR__ . '/samples/' . $this->filename);
-  }
-
-  public function tearDown()
-  {
-    unset($this->tablature);
+    $this->tablature = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/' . $this->filename);
   }
 
   /**
@@ -69,12 +65,10 @@ class PhpTabsMidiTest extends \PHPUnit_Framework_TestCase
     $this->assertArraySubset($expected[0], $this->tablature->getInstrument(0));
     
     $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $this->tablature->getTablature());
-    
-    # Dumper/Array
-    # Dumper/XML
-    # Dumper/JSON
-    # Dumper/Serialize
-    # Dumper/Text
-    
+  }
+
+  public function tearDown()
+  {
+    unset($this->tablature);
   }
 }
