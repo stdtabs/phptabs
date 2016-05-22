@@ -211,32 +211,6 @@ abstract class DumperBase extends DumperEffects
     );
   }
 
-  protected function dumpEffect($effect)
-  {
-    return array(
-      'bend'            => $this->dumpBend($effect->getBend()),
-      'tremoloBar'      => $this->dumpTremoloBar($effect->getTremoloBar()),
-      'harmonic'        => $this->dumpHarmonic($effect->getHarmonic()),
-      'grace'           => $this->dumpGrace($effect->getGrace()),
-      'trill'           => $this->dumpTrill($effect->getTrill()),
-      'tremoloPicking'  => $this->dumpTremoloPicking($effect->getTremoloPicking()),
-      'vibrato'         => $effect->isVibrato(),
-      'deadNote'        => $effect->isDeadNote(),
-      'slide'           => $effect->isSlide(),
-      'hammer'          => $effect->isHammer(),
-      'ghostNote'       => $effect->isGhostNote(),
-      'accentuatedNote' => $effect->isAccentuatedNote(),
-      'heavyAccentuatedNote'  => $effect->isHeavyAccentuatedNote(),
-      'palmMute'        => $effect->isPalmMute(),
-      'staccato'        => $effect->isStaccato(),
-      'tapping'         => $effect->isTapping(),
-      'slapping'        => $effect->isSlapping(),
-      'popping'         => $effect->isPopping(),
-      'fadeIn'          => $effect->isFadeIn(),
-      'letRing'         => $effect->isLetRing()
-    );
-  }
-
   protected function dumpString($string)
   {
     return is_object($string) ? array(
