@@ -51,6 +51,7 @@ class TimeSignature
 
   public function isEqual(TimeSignature $ts)
   {
-    return ($this->getNumerator() == $ts->getNumerator() && $this->getDenominator()->isEqual($ts->getDenominator()));
+    return $this->getNumerator() == $timeSignature->getNumerator()
+        && $this->getDenominator()->isEqual($timeSignature->getDenominator());
   }
 }

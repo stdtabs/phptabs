@@ -121,7 +121,7 @@ class Duration
       {
         $tmpDuration->setDotted(false);
       }
-      else if($tmpDuration->getDivision()->isEqual(DivisionType::NORMAL()))
+      else if($tmpDuration->getDivision()->isEqual(DivisionType::normal()))
       {
         $tmpDuration->getDivision()->setEnters(3);
         $tmpDuration->getDivision()->setTimes(2);

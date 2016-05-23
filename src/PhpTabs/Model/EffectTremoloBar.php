@@ -66,7 +66,7 @@ class TremoloBarPoint
 
   public function getTime($duration)
   {
-    return $duration * $this->getPosition() / EffectTremoloBar::$MAX_POSITION_LENGTH;
+    return $duration * $this->getPosition() / EffectTremoloBar::MAX_POSITION_LENGTH;
   }
 
   public function __clone()

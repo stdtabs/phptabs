@@ -7,31 +7,6 @@ namespace PhpTabs\Model;
  */
 class DivisionType
 {
-  public static function NORMAL()
-  {
-    return self::newDivisionType(1, 1);
-  }
-
-  public static function TRIPLET()
-  {
-    return self::newDivisionType(3, 2);
-  }
-
-  public static function ALTERED_DIVISION_TYPES()
-  {
-    return array(
-      self::newDivisionType(3,2),
-      self::newDivisionType(5,4),
-      self::newDivisionType(6,4),
-      self::newDivisionType(7,4),
-      self::newDivisionType(9,8),
-      self::newDivisionType(10,8),
-      self::newDivisionType(11,8),
-      self::newDivisionType(12,8),
-      self::newDivisionType(13,8),
-    );
-  }
-
   private $enters;
   private $times;
 
@@ -82,6 +57,31 @@ class DivisionType
   {
     $this->setEnters($divisionType->getEnters());
     $this->setTimes($divisionType->getTimes());
+  }
+
+  public static function normal()
+  {
+    return self::newDivisionType(1, 1);
+  }
+
+  public static function triplet()
+  {
+    return self::newDivisionType(3, 2);
+  }
+
+  public static function alteredDivisionTypes()
+  {
+    return array(
+      self::newDivisionType(3,2),
+      self::newDivisionType(5,4),
+      self::newDivisionType(6,4),
+      self::newDivisionType(7,4),
+      self::newDivisionType(9,8),
+      self::newDivisionType(10,8),
+      self::newDivisionType(11,8),
+      self::newDivisionType(12,8),
+      self::newDivisionType(13,8),
+    );
   }
 
   private static function newDivisionType($enters, $times)
