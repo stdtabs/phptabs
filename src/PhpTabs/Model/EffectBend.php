@@ -46,27 +46,8 @@ class EffectBend
 /**
  * @uses EffectBend
  */
-class BendPoint
+class BendPoint extends EffectPointsBase
 {
-  private $position;
-  private $value;
-
-  public function __construct($position, $value)
-  {
-    $this->position = $position;
-    $this->value = $value;
-  }
-
-  public function getPosition()
-  {
-    return $this->position;
-  }
-
-  public function getValue()
-  {
-    return $this->value;
-  }
-
   public function getTime($duration)
   {
     return ($duration * $this->getPosition() / EffectBend::MAX_POSITION_LENGTH);

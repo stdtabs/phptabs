@@ -43,27 +43,8 @@ class EffectTremoloBar
 /**
  * @uses EffectTremoloBar
  */
-class TremoloBarPoint
+class TremoloBarPoint extends EffectPointsBase
 {
-  private $position;
-  private $value;
-
-  public function __construct($position, $value)
-  {
-    $this->position = $position;
-    $this->value = $value;
-  }
-
-  public function getPosition()
-  {
-    return $this->position;
-  }
-
-  public function getValue()
-  {
-    return $this->value;
-  }
-
   public function getTime($duration)
   {
     return $duration * $this->getPosition() / EffectTremoloBar::MAX_POSITION_LENGTH;
