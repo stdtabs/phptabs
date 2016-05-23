@@ -49,7 +49,7 @@ class TimeSignature
     $this->getDenominator()->copyFrom($timeSignature->getDenominator());
   }
 
-  public function isEqual(TimeSignature $ts)
+  public function isEqual(TimeSignature $timeSignature)
   {
     return $this->getNumerator() == $timeSignature->getNumerator()
         && $this->getDenominator()->isEqual($timeSignature->getDenominator());
