@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpTabsTest\Dumper;
+namespace PhpTabsTest\Component\Dumper;
 
 use DOMDocument;
 use PhpTabs\PhpTabs;

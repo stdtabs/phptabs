@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpTabsTest\Dumper;
+namespace PhpTabsTest\Component\Dumper;
 
 use DOMXPath;
 use PHPUnit_Framework_TestCase;
