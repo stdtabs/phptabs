@@ -60,6 +60,7 @@ abstract class Log
   public static function tail($count = 50, $type = null)
   {
     $messages = array();
+
     $ptrLogs = self::countLogs($type) - 1;
 
     for($i = $ptrLogs; $i >= 0; $i--)
@@ -76,5 +77,15 @@ abstract class Log
     }
 
     return $messages;
+  }
+
+  /**
+   * Delete all logged messages
+   * 
+   * @return void
+   */
+  public static function clear()
+  {
+    self::$data = array();
   }
 }
