@@ -44,4 +44,14 @@ abstract class Config
   {
     return self::$data;
   }
+
+  /**
+   * Delete all config values
+   * 
+   * @return void
+   */
+  public static function clear()
+  {
+    self::$data = array();
+  }
 }
