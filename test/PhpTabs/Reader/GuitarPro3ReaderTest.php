@@ -51,13 +51,14 @@ class GuitarPro3ReaderTest extends PHPUnit_Framework_TestCase
     $this->assertInstanceOf('PhpTabs\\Model\\Channel', $this->tablature->getChannel(0));
 
     # MeasureHeaders
-    $this->assertEquals(30, $this->tablature->countMeasureHeaders());
+    $this->assertEquals(4, $this->tablature->countMeasureHeaders());
     $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeaders());
     $this->assertEquals(null, $this->tablature->getMeasureHeader(42));
     $this->assertInstanceOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeader(0));
 
     # Instruments
     $this->assertEquals(2, $this->tablature->countInstruments());
+
     $expected = array(
       0 => array (
         'id'   => 27,

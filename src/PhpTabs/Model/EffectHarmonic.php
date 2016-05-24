@@ -79,7 +79,7 @@ class EffectHarmonic
 
   public function isSemi()
   {
-    return ($this->type == TYPE_SEMI);
+    return ($this->type == EffectHarmonic::TYPE_SEMI);
   }
 
   public function  __clone()
