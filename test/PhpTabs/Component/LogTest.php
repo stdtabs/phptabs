@@ -33,6 +33,7 @@ class LogTest extends PHPUnit_Framework_TestCase
       )
     );
     $this->assertEquals($expected, Log::tail(42));
+    $this->assertEquals($expected, Log::tail(1));
 
     # counts an unexisting key
     $this->assertEquals(0, Log::countLogs(42));
