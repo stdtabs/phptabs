@@ -47,21 +47,25 @@ class PhpTabsMidiTest extends PHPUnit_Framework_TestCase
     $this->assertInstanceOf('PhpTabs\\Model\\Channel', $this->tablature->getChannel(0));
 
     # MeasureHeaders
-    $this->assertEquals(60, $this->tablature->countMeasureHeaders());
+    $this->assertEquals(4, $this->tablature->countMeasureHeaders());
     $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeaders());
-    $this->assertEquals(null, $this->tablature->getMeasureHeader(642));
+    $this->assertEquals(null, $this->tablature->getMeasureHeader(42));
     $this->assertInstanceOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeader(0));
 
     # Instruments
     $this->assertEquals(2, $this->tablature->countInstruments());
+
     $expected = array(
-      0 => array(
-        'id' => 0,
-        'name' => 'Piano'),
-      1 => array(
-        'id' => 0,
-        'name' => 'Piano')
+      0 => array (
+        'id'   => 27,
+        'name' => 'Clean Guitar'
+      ),
+      1 => array (
+        'id'   => 54,
+        'name' => 'Syn Choir'
+      )
     );
+
     $this->assertArraySubset($expected, $this->tablature->getInstruments());
     $this->assertEquals(null, $this->tablature->getInstrument(42));
     $this->assertArraySubset($expected[0], $this->tablature->getInstrument(0));

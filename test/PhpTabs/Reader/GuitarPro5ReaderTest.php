@@ -60,6 +60,7 @@ class GuitarPro5ReaderTest extends PHPUnit_Framework_TestCase
         'name' => 'Syn Choir'
       )
     );
+
     $this->assertArraySubset($expected, $this->tablature->getInstruments());
     $this->assertEquals(null, $this->tablature->getInstrument(42));
     $this->assertArraySubset($expected[0], $this->tablature->getInstrument(0));
