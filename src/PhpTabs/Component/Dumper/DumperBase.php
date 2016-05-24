@@ -241,11 +241,21 @@ abstract class DumperBase extends DumperEffects
       return null;
     }
 
-    return array(
+    $content = array(
       'firstFret'  => $chord->getFirstFret(),
-      'name'       => $chord->getValue(),
-      'strings'    => $chord->getStrings()
+      'name'       => $chord->getName(),
+      'strings'    => array()
     );
+
+    $countStrings = $chord->countStrings();
+    $strings = $chord->getStrings();
+
+    for($i=0; $i<$countStrings; $i++)
+    {
+      $content['strings'][] = array('string' => $strings[$i]);
+    }
+
+    return $content;
   }
 
   protected function dumpTimeSignature($timeSignature)
