@@ -16,6 +16,7 @@ class DumperTest extends PHPUnit_Framework_TestCase
    */
   public function testException()
   {
+    # Not a valid dump format
     (new PhpTabs())->dump('exception');
   }
 }
