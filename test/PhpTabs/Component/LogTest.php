@@ -15,12 +15,17 @@ class LogTest extends PHPUnit_Framework_TestCase
   {
     Log::clear();
     
+    Config::set('verbose', true);
+
     # Empty log
     $this->assertEquals(0, Log::countLogs());
     $this->assertEquals(array(), Log::tail(4));
 
     # Adds a default type message
+    $this->expectOutputString("\n[NOTICE] Log with default type");
     Log::add('Log with default type');
+
+
     $expected = array(
       0 => array(
         'type'    =>'NOTICE',
@@ -34,5 +39,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 
     # Counts an existing key
     $this->assertEquals(1, Log::countLogs('NOTICE'));
+
+    Config::set('verbose', false);
   }
 }

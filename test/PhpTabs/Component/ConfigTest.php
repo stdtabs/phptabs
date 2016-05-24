@@ -12,6 +12,8 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 {
   public function testConfig()
   {
+    Config::clear();
+
     # bad key format scenario
     $this->assertEquals(null, Config::get(array(42)));
     
