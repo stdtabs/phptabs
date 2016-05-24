@@ -33,15 +33,15 @@ class Dumper extends DumperBase
       case 'array':
         return $this->dumpSong();
       case 'xml':
-        return (new Xml())->serialize($this->dumpSong());
+        return (new Xml())->serialize($this->dump('array'));
       case 'json':
-        return json_encode($this->dumpSong());
+        return json_encode($this->dump('array'));
       case 'var_export':
-        return var_export($this->dumpSong(), true);
+        return var_export($this->dump('array'), true);
       case 'serialize':
-        return serialize($this->dumpSong());
+        return serialize($this->dump('array'));
       case 'text':
-        return (new Text())->serialize($this->dumpSong());
+        return (new Text())->serialize($this->dump('array'));
       default:
         $message = sprintf('%s does not support "%s" format', __METHOD__, $format);
         throw new \Exception($message);
