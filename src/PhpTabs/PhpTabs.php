@@ -2,6 +2,7 @@
 
 namespace PhpTabs;
 
+use Exception;
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Reader;
@@ -37,7 +38,7 @@ class PhpTabs
         $this->setTablature($reader->getTablature());
       }
     }
-    catch(\Exception $e)
+    catch(Exception $e)
     {
       $message = $e->getMessage() . ' in ' . $e->getFile() 
           . ' on line ' . $e->getLine() . PHP_EOL
