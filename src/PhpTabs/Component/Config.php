@@ -17,7 +17,8 @@ abstract class Config
    */
   public static function get($key, $default = null)
   {
-    return isset(self::$data[$key]) ? self::$data[$key] : $default;
+    return is_string($key) && isset(self::$data[$key])
+      ? self::$data[$key] : $default;
   }
 
   /**
