@@ -2,13 +2,10 @@
 
 namespace PhpTabs\Component;
 
-use PhpTabs\Reader\GuitarPro\GuitarPro3Reader;
-use PhpTabs\Reader\GuitarPro\GuitarPro4Reader;
-use PhpTabs\Reader\GuitarPro\GuitarPro5Reader;
-use PhpTabs\Reader\Midi\MidiReader;
+use Exception;
 
 /**
- * Bridge class which routes to the right tablature parser
+ * Bridger class which routes to the right tablature parser
  * 
  * It also creates a Tablature object for later write operations
  */
@@ -20,31 +17,19 @@ class Reader
   /** @var ReaderInterface bridge */
   private $bridge;
 
-  /** @var array List of gp3 extensions */
-  private $gp3Extensions = array(
-    'gp3'
-  );
-
-  /* @var array List of gp4 extensions */
-  private $gp4Extensions = array(
-    'gp4'
-  );
-
-  /* @var array List of gp5 extensions */
-  private $gp5Extensions = array(
-    'gp5'
-  );
-
-  /* @var array List of MIDI extensions */
-  private $midiExtensions = array(
-    'mid', 'midi'
+  /** @var array List of extensions */
+  private $extensions = array(
+    'gp3'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro3Reader',
+    'gp4'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro4Reader',
+    'gp5'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro5Reader',
+    'mid'   => 'PhpTabs\\Reader\\Midi\\MidiReader',
+    'midi'  => 'PhpTabs\\Reader\\Midi\\MidiReader'
   );
 
   /**
    * Instanciates tablature container
    * Determines which type of file
    * Try to load the right dedicated reader
-   * Then makes the read operations
    * 
    * @param File $file file which should contain a tablature
    */
@@ -54,46 +39,25 @@ class Reader
 
     if ($file->hasError())
     {
-      $this->tablature->setError($file->getError());
-
-      throw new \Exception($file->getError());
-
       return;
     }
 
-    // Guitar Pro 3
-    if(in_array($file->getExtension(), $this->gp3Extensions))
+    if(isset($this->extensions[ $file->getExtension() ]))
     {
-      $this->bridge = new GuitarPro3Reader($file);
+      $name = $this->extensions[ $file->getExtension() ];
+
+      $this->bridge = new $name($file);
     }
 
-    // Guitar Pro 4
-    if(in_array($file->getExtension(), $this->gp4Extensions))
-    {
-      $this->bridge = new GuitarPro4Reader($file);
-    }
-
-    // Guitar Pro 5
-    if(in_array($file->getExtension(), $this->gp5Extensions))
-    {
-      $this->bridge = new GuitarPro5Reader($file);
-    }
-
-    // MIDI
-    if(in_array($file->getExtension(), $this->midiExtensions))
-    {
-      $this->bridge = new MidiReader($file);
-    }
-
-    // Adapter not found
+    // Bridge not found
     if(!($this->bridge instanceof ReaderInterface))
     {
       $message = sprintf('No reader has been found for "%s" type of file'
         , $file->getExtension());
 
       $this->tablature->setError($message);
-      
-      throw new \Exception($message); 
+
+      throw new Exception($message); 
     }
   }
 
