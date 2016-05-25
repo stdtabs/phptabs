@@ -37,6 +37,9 @@ class FileTest extends PHPUnit_Framework_TestCase
     # Reads stream read with offset
     $file = new File($this->filename);
     $this->assertEquals('IER G', $file->getStream(5, 5));
+    
+    # Tests empty error
+    $this->assertEquals(false, $file->getError());
   }
 
   /**
