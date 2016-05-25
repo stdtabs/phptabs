@@ -2,6 +2,8 @@
 
 namespace PhpTabs\Component;
 
+use Exception;
+
 /**
  * File wrapper class
  */
@@ -168,7 +170,7 @@ class File
     }
     else if($this->getStreamPosition() + $bytes > $this->getSize())
     {
-      throw new \Exception('Pointer');
+      throw new Exception('Pointer');
     }
     
     $message = __METHOD__ . "($bytes): position:" . $this->getStreamPosition();
@@ -234,7 +236,7 @@ class File
   {
     $this->error = $message;
     
-    throw new \Exception($message);
+    throw new Exception($message);
   }
 
   /**
