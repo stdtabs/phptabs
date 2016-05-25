@@ -156,7 +156,6 @@ class Tablature
         );
 
         trigger_error($message, E_USER_ERROR);
-        break;
     }
   }
 }
