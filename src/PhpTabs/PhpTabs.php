@@ -97,8 +97,10 @@ class PhpTabs
         break;
 
       default:
-        $message = sprintf(_('%s method does not support %d arguments')
-            , __METHOD__, count($arguments));
+        $message = sprintf('%s method does not support %d arguments',
+            __METHOD__,
+            count($arguments)
+        );
 
         trigger_error($message, E_USER_ERROR);
         break;
