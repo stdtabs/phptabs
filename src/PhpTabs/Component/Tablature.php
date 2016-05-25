@@ -140,7 +140,7 @@ class Tablature
   {
     if(!method_exists($this->song, $name))
     {
-      $message = sprintf(_('Song has no method called "%s"'), $name);
+      $message = sprintf('Song has no method called "%s"', $name);
 
       trigger_error($message, E_USER_ERROR);
     }
@@ -150,8 +150,10 @@ class Tablature
       case 0: return $this->song->$name();
       case 1: return $this->song->$name($arguments[0]);
       default:
-        $message = sprintf(_('%s method does not support %d arguments')
-            , __METHOD__, count($arguments));
+        $message = sprintf('%s method does not support %d arguments',
+            __METHOD__,
+            count($arguments)
+        );
 
         trigger_error($message, E_USER_ERROR);
         break;
