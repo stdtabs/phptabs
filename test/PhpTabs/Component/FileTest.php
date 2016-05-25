@@ -22,8 +22,6 @@ class FileTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($this->filename, $file->getPath());
     $this->assertEquals(dirname($this->filename), $file->getDirname());
     $this->assertEquals('testNotAllowedExtension.xxx', $file->getBasename());
-    
-    
   }
 
   public function testStreamMethods()
@@ -33,11 +31,11 @@ class FileTest extends PHPUnit_Framework_TestCase
     $file->closeStream();
 
     $this->assertEquals(false, $file->getStreamPosition());
-    
+
     # Reads stream read with offset
     $file = new File($this->filename);
     $this->assertEquals('IER G', $file->getStream(5, 5));
-    
+
     # Tests empty error
     $this->assertEquals(false, $file->getError());
   }

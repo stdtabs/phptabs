@@ -261,8 +261,8 @@ abstract class DumperBase extends DumperEffects
   protected function dumpTimeSignature($timeSignature)
   {
     return array(
-        'numerator'   => $timeSignature->getNumerator(), 
-        'denominator' => $this->dumpDuration($timeSignature->getDenominator())
+      'numerator'   => $timeSignature->getNumerator(), 
+      'denominator' => $this->dumpDuration($timeSignature->getDenominator())
     );
   }
 
