@@ -96,7 +96,7 @@ abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInte
    */
   protected function readBoolean()
   {
-    return $this->file->getStream() == 1; 
+    return ord($this->file->getStream()) == 1; 
   }
 
   /**
