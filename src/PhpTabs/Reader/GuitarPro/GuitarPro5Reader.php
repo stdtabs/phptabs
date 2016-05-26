@@ -467,22 +467,22 @@ class GuitarPro5Reader extends GuitarProReaderBase
    */
   private function readChannel(Song $song, Track $track, $channels)
   {
-    $gmChannel1 = $this->readInt() - 1;
-    $gmChannel2 = $this->readInt() - 1;
+    $gChannel1 = $this->readInt() - 1;
+    $gChannel2 = $this->readInt() - 1;
 
-    if($gmChannel1 >= 0 && $gmChannel1 < count($channels))
+    if($gChannel1 >= 0 && $gChannel1 < count($channels))
     {
       $channel = new Channel();
-      $gmChannel1Param = new ChannelParameter();
-      $gmChannel2Param = new ChannelParameter();
+      $gChannel1Param = new ChannelParameter();
+      $gChannel2Param = new ChannelParameter();
 
-      $gmChannel1Param->setKey("gm-channel-1");
-      $gmChannel1Param->setValue("$gmChannel1");
-      $gmChannel2Param->setKey("gm-channel-2");
-      $gmChannel2Param->setValue($gmChannel1 != 9
-        ? "$gmChannel2" : "$gmChannel1");
+      $gChannel1Param->setKey("channel-1");
+      $gChannel1Param->setValue("$gChannel1");
+      $gChannel2Param->setKey("channel-2");
+      $gChannel2Param->setValue($gChannel1 != 9
+        ? "$gChannel2" : "$gChannel1");
 
-      $channel->copyFrom($channels[$gmChannel1]);
+      $channel->copyFrom($channels[$gChannel1]);
 
       for($i = 0; $i < $song->countChannels(); $i++)
       {
@@ -491,9 +491,9 @@ class GuitarPro5Reader extends GuitarProReaderBase
         {
           $channelParameter = $channelAux->getParameter($n);
 
-          if($channelParameter->getKey() == "$gmChannel1")
+          if($channelParameter->getKey() == "$gChannel1")
           {
-            if("$gmChannel1" == $channelParameter->getValue())
+            if("$gChannel1" == $channelParameter->getValue())
             {
               $channel->setChannelId($channelAux->getChannelId());
             }
@@ -505,8 +505,8 @@ class GuitarPro5Reader extends GuitarProReaderBase
       {
         $channel->setChannelId($song->countChannels() + 1);
         $channel->setName($this->createChannelNameFromProgram($song, $channel));
-        $channel->addParameter($gmChannel1Param);
-        $channel->addParameter($gmChannel2Param);
+        $channel->addParameter($gChannel1Param);
+        $channel->addParameter($gChannel2Param);
         $song->addChannel($channel);
       }
 

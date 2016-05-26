@@ -8,6 +8,8 @@ use PhpTabs\Component\Tablature;
 
 use PhpTabs\Model\Beat;
 use PhpTabs\Model\Channel;
+use PhpTabs\Model\ChannelRoute;
+use PhpTabs\Model\ChannelRouter;
 use PhpTabs\Model\Color;
 use PhpTabs\Model\Duration;
 use PhpTabs\Model\Helper;
@@ -187,7 +189,7 @@ class MidiReader extends MidiReaderBase
           $channel->setBank($tempChannel->getChannel() == 9
             ? Channel::DEFAULT_PERCUSSION_BANK : Channel::DEFAULT_BANK);
 
-          $channelRoute = new MidiChannelRoute($channel->getChannelId());
+          $channelRoute = new ChannelRoute($channel->getChannelId());
           $channelRoute->setChannel1($tempChannel->getChannel());
           $channelRoute->setChannel2($tempChannel->getChannel());
 
@@ -575,7 +577,7 @@ class MidiReader extends MidiReaderBase
     $this->tempNotes = array();
     $this->tempChannels = array();
     $this->trackTuningHelpers = array();
-    $this->channelRouter = new MidiChannelRouter();
+    $this->channelRouter = new ChannelRouter();
   }
 
   private function makeNote($tick, $track, $channel, $value)

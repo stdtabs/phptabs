@@ -1,14 +1,11 @@
 <?php
 
-namespace PhpTabs\Reader\Midi;
+namespace PhpTabs\Model;
 
-/**
- * Midi channel route
- */
-class MidiChannelRoute
+class ChannelRoute
 {
-  const PARAMETER_GM_CHANNEL_1 = "gm-channel-1";
-  const PARAMETER_GM_CHANNEL_2 = "gm-channel-2";
+  const PARAMETER_CHANNEL_1 = "channel-1";
+  const PARAMETER_CHANNEL_2 = "channel-2";
 
   const NULL_VALUE = -1;
 

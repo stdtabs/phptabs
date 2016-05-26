@@ -1,11 +1,8 @@
 <?php
 
-namespace PhpTabs\Reader\Midi;
+namespace PhpTabs\Model;
 
-/**
- * Midi channel router
- */
-class MidiChannelRouter
+class ChannelRouter
 {
   const MAX_CHANNELS = 16;
   const PERCUSSION_CHANNEL = 9;
@@ -25,7 +22,7 @@ class MidiChannelRouter
     }
   }
 
-  public function removeRoute(MidiChannelRoute $route)
+  public function removeRoute(ChannelRoute $route)
   {
     foreach($this->midiChannels as $k => $channel)
     {
@@ -49,7 +46,7 @@ class MidiChannelRouter
     return null;
   }
 
-  public function configureRoutes(MidiChannelRoute $route, $percussionChannel)
+  public function configureRoutes(ChannelRoute $route, $percussionChannel)
   {
     $conflictingRoutes = null;
 
@@ -64,8 +61,8 @@ class MidiChannelRouter
     // Always channel 9 for percussions
     if($percussionChannel)
     {
-      $route->setChannel1(MidiChannelRouter::PERCUSSION_CHANNEL);
-      $route->setChannel2(MidiChannelRouter::PERCUSSION_CHANNEL);
+      $route->setChannel1(ChannelRouter::PERCUSSION_CHANNEL);
+      $route->setChannel2(ChannelRouter::PERCUSSION_CHANNEL);
     }
     else
     {
@@ -83,7 +80,7 @@ class MidiChannelRouter
       else
       {
         $freeChannels = $this->getFreeChannels();
-        $route->setChannel1(count($freeChannels) > 0 ? intval($freeChannels[0]) : MidiChannelRoute::NULL_VALUE);
+        $route->setChannel1(count($freeChannels) > 0 ? intval($freeChannels[0]) : ChannelRoute::NULL_VALUE);
         $route->setChannel2(count($freeChannels) > 1 ? intval($freeChannels[1]) : $route->getChannel1());
       }
     }
@@ -95,14 +92,14 @@ class MidiChannelRouter
     {
       foreach($conflictingRoutes as $conflictingRoute)
       {
-        $conflictingRoute->setChannel1(MidiChannelRoute::NULL_VALUE);
-        $conflictingRoute->setChannel2(MidiChannelRoute::NULL_VALUE);
+        $conflictingRoute->setChannel1(ChannelRoute::NULL_VALUE);
+        $conflictingRoute->setChannel2(ChannelRoute::NULL_VALUE);
         $this->configureRoutes($conflictingRoute, false);
       }
     }
   }
 
-  public function findConflictingRoutes(MidiChannelRoute $channelRoute)
+  public function findConflictingRoutes(ChannelRoute $channelRoute)
   {
     $routes = array();
 
@@ -127,9 +124,9 @@ class MidiChannelRouter
   {
     $freeChannels = array();
 
-    for($ch = 0; $ch < MidiChannelRouter::MAX_CHANNELS; $ch++)
+    for($ch = 0; $ch < ChannelRouter::MAX_CHANNELS; $ch++)
     {
-      if($ch != MidiChannelRouter::PERCUSSION_CHANNEL)
+      if($ch != ChannelRouter::PERCUSSION_CHANNEL)
       {
         $isFreeChannel = true;
 
