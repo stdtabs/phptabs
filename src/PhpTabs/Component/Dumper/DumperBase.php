@@ -2,9 +2,6 @@
 
 namespace PhpTabs\Component\Dumper;
 
-/**
- * Helpers for Dumper
- */
 abstract class DumperBase extends DumperEffects
 {
   protected function dumpSong()
@@ -89,7 +86,7 @@ abstract class DumperBase extends DumperEffects
       $content['strings'][$i] = $this->dumpString($track->getString($i+1));
     }
 
-    return $content;
+    return array('track' => $content);
   }
 
   protected function dumpChannel($index)
@@ -120,7 +117,7 @@ abstract class DumperBase extends DumperEffects
       );
     }
 
-    return $content;
+    return array('channel' => $content);
   }
 
   protected function dumpMeasure($measure, $measureHeader)
@@ -141,7 +138,7 @@ abstract class DumperBase extends DumperEffects
       $content['beats'][$i] = $this->dumpBeat($measure->getBeat($i));
     }
 
-    return $content;
+    return array('measure' => $content);
   }
 
   protected function dumpBeat($beat)
@@ -164,7 +161,7 @@ abstract class DumperBase extends DumperEffects
       $content['voices'][$i] = $this->dumpVoice($beat->getVoice($i));
     }
 
-    return $content;
+    return array('beat' => $content);
   }
 
   protected function dumpVoice($voice)
@@ -184,44 +181,46 @@ abstract class DumperBase extends DumperEffects
       $content['notes'][$i] = $this->dumpNote($voice->getNote($i));
     }
 
-    return $content;
+    return array('voice' => $content);
   }
 
   protected function dumpDuration($duration)
   {
     return array(
-      'value'        => $duration->getValue(),
-      'dotted'       => $duration->isDotted(),
-      'doubleDotted' => $duration->isDoubleDotted(),
-      'divisionType' => array(
-        'enters'  => $duration->getDivision()->getEnters(),
-        'times'   => $duration->getDivision()->getTimes()
-      )
+        'value'        => $duration->getValue(),
+        'dotted'       => $duration->isDotted(),
+        'doubleDotted' => $duration->isDoubleDotted(),
+        'divisionType' => array(
+          'enters'  => $duration->getDivision()->getEnters(),
+          'times'   => $duration->getDivision()->getTimes()
+        )
     );
   }
 
   protected function dumpNote($note)
   {
-    return array(
-      'value'     => $note->getValue(),
-      'velocity'  => $note->getVelocity(),
-      'string'    => $note->getString(),
-      'tiedNote'  => $note->isTiedNote(),
-      'effect'    => $this->dumpEffect($note->getEffect())
+    return array('note' => 
+      array(
+        'value'     => $note->getValue(),
+        'velocity'  => $note->getVelocity(),
+        'string'    => $note->getString(),
+        'tiedNote'  => $note->isTiedNote(),
+        'effect'    => $this->dumpEffect($note->getEffect())
+      )
     );
   }
 
   protected function dumpString($string)
   {
-    return is_object($string) ? array(
+    return is_object($string) ? array('string' => array(
       'number'  => $string->getNumber(),
       'value'   => $string->getValue()
-    ) : null;
+    )) : null;
   }
 
   protected function dumpMeasureHeader($header)
   {
-    return array(
+    return array('header' => array(
       'number'        => $header->getNumber(),
       'start'         => $header->getStart(),
       'timeSignature' => $this->dumpTimeSignature($header->getTimeSignature()),
@@ -231,7 +230,7 @@ abstract class DumperBase extends DumperEffects
       'repeatAlternative' => $header->getRepeatAlternative(),
       'repeatClose'   => $header->getRepeatClose(),
       'tripletFeel'   => $header->getTripletFeel()
-    );
+    ));
   }
 
   protected function dumpChord($chord)
@@ -255,7 +254,7 @@ abstract class DumperBase extends DumperEffects
       $content['strings'][] = array('string' => $strings[$i]);
     }
 
-    return $content;
+    return array('chord' => $content);
   }
 
   protected function dumpTimeSignature($timeSignature)

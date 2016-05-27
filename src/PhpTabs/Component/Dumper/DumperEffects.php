@@ -2,9 +2,6 @@
 
 namespace PhpTabs\Component\Dumper;
 
-/**
- * Helpers for Dumper
- */
 abstract class DumperEffects
 {
   protected function dumpEffect($effect)

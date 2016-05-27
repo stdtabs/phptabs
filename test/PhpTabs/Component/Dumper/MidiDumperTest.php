@@ -66,35 +66,35 @@ class MidiDumperTest extends XmlTestCaseHelper
 
       # Tracks
       [ $this->tablature->countTracks()
-        , 'count(/song/tracks/number)'
+        , 'count(/song/tracks/track)'
         , 'Incorrect number of Track elements.'],
       [ 0
-        , 'count(/song/tracks/number[42])'
+        , 'count(/song/tracks/track[42])'
         , 'Track element should NOT exist.'],
       [ 1
-        , 'string(/song/tracks/number[1])'
+        , 'count(/song/tracks/track[1])'
         , 'Track element should exist.'],
 
       # Channels
       [ $this->tablature->countChannels()
-        , 'count(/song/channels/channelId)'
+        , 'count(/song/channels/channel)'
         , 'Incorrect number of Channel elements.'],
       [ 0
-        , 'count(/song/channels/channelId[42])'
+        , 'count(/song/channels/channel[42])'
         , 'Channel element should NOT exist.'],
       [ 1
-        , 'string(/song/channels/channelId[1])'
+        , 'count(/song/channels/channel[1])'
         , 'Channel element should exist.'],
 
       # MeasureHeaders
       [ $this->tablature->countMeasureHeaders()
-        , 'count(/song/measureHeaders/number)'
+        , 'count(/song/measureHeaders/header)'
         , 'Incorrect number of MeasureHeader elements.'],
       [ 0
-        , 'count(/song/measureHeaders/number[642])'
+        , 'count(/song/measureHeaders/header[642])'
         , 'MeasureHeader element should NOT exist.'],
       [ 1
-        , 'string(/song/measureHeaders/number[1])'
+        , 'count(/song/measureHeaders/header[1])'
         , 'MeasureHeader element should exist.']
     );
 
@@ -105,7 +105,7 @@ class MidiDumperTest extends XmlTestCaseHelper
   }
 
   /**
-   * Test Text
+   * Text serialization
    */
   public function testDumperText()
   {
@@ -119,6 +119,7 @@ class MidiDumperTest extends XmlTestCaseHelper
       'writer:',
       'comments:',
       'channels:',
+      'channel:',
       'channelId:',
       'bank:',
       'program:',
@@ -159,6 +160,7 @@ class MidiDumperTest extends XmlTestCaseHelper
       'lyrics:',
       'from:',
       'measures:',
+      'measure:',
       'clef:',
       'keySignature:',
       'header:',
