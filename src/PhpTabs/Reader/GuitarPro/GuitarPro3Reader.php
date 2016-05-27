@@ -16,7 +16,6 @@ use PhpTabs\Model\EffectBend;
 use PhpTabs\Model\EffectGrace;
 use PhpTabs\Model\EffectHarmonic;
 use PhpTabs\Model\EffectTremoloBar;
-use PhpTabs\Model\Helper;
 use PhpTabs\Model\Lyric;
 use PhpTabs\Model\Marker;
 use PhpTabs\Model\Measure;
@@ -32,11 +31,6 @@ use PhpTabs\Model\TimeSignature;
 use PhpTabs\Model\Track;
 use PhpTabs\Model\Velocities;
 
-/**
- * Guitar Pro 3 reader
- * 
- * It provides a set of dedicated methods.
- */
 class GuitarPro3Reader extends GuitarProReaderBase
 {
   /** @var array $supportedVersions */
@@ -206,27 +200,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
     }
 
     return -1;
-  }
-
-  /**
-   * @param Song $song
-   * @param integer $channelId
-   * 
-   * @return boolean
-   */
-  private function isPercussionChannel(Song $song, $channelId)
-  {
-    $channels = $song->getChannels();
-
-    foreach($channels as $channel)
-    {
-      if($channel->getChannelId() == $channelId)
-      {
-        return $channel->isPercussionChannel();
-      }
-    }
-
-    return false;
   }
 
   /**

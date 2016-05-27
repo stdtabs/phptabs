@@ -33,11 +33,6 @@ use PhpTabs\Model\TimeSignature;
 use PhpTabs\Model\Track;
 use PhpTabs\Model\Velocities;
 
-/**
- * Guitar Pro 5 reader
- * 
- * It provides a set of dedicated methods.
- */
 class GuitarPro5Reader extends GuitarProReaderBase
 {
   /** @var array $supportedVersions */
@@ -252,28 +247,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
 
     return -1;
-  }
-
-  /**
-   * Checks if a channel is a percussion channel
-   *
-   * @param Song $song
-   * @param integer $channelId
-   * @return boolean
-   */
-  private function isPercussionChannel(Song $song, $channelId)
-  {
-    $channels = $song->getChannels();
-
-    foreach($channels as $channel)
-    {
-      if($channel->getChannelId() == $channelId)
-      {
-        return $channel->isPercussionChannel();
-      }
-    }
-
-    return false;
   }
 
   /**

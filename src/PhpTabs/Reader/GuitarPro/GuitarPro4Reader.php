@@ -33,16 +33,9 @@ use PhpTabs\Model\TimeSignature;
 use PhpTabs\Model\Track;
 use PhpTabs\Model\Velocities;
 
-/**
- * Guitar Pro 4 dedicated reader
- * 
- * It provides a set of dedicated methods.
- */
 class GuitarPro4Reader extends GuitarProReaderBase
 {
-  /**
-   * @var array $supportedVersions
-   */
+  /** @var array $supportedVersions */
   private static $supportedVersions = array('FICHIER GUITAR PRO v4.00', 'FICHIER GUITAR PRO v4.06', 'FICHIER GUITAR PRO L4.06');
 
   /**
@@ -214,27 +207,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
     }
 
     return -1;
-  }
-
-  /**
-   * @param Song $song
-   * @param integer $channelId
-   * 
-   * @return boolean
-   */
-  private function isPercussionChannel(Song $song, $channelId)
-  {
-    $channels = $song->getChannels();
-
-    foreach($channels as $channel)
-    {
-      if($channel->getChannelId() == $channelId)
-      {
-        return $channel->isPercussionChannel();
-      }
-    }
-
-    return false;
   }
 
   /**
