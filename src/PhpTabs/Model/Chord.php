@@ -27,7 +27,7 @@ class Chord
    */
   public function __construct($length)
   {
-    for($i=0; $i<count($length); $i++)
+    for($i=0; $i<$length; $i++)
     {
       $this->strings[$i] = -1;
     }

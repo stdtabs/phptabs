@@ -479,7 +479,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
    * @param Beat $beat
    * @return void
    */
-  private function readChord($strings,Beat $beat)
+  private function readChord($strings, Beat $beat)
   {
     $chord = new Chord($strings);
     if (($this->readUnsignedByte() & 0x01) == 0)
