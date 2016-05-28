@@ -149,6 +149,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
 
     $this->tablature->setSong($song);
+    $this->tablature->setFormat('gp5');
   }
 
   /*-------------------------------------------------------------------

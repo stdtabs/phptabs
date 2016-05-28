@@ -138,6 +138,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     }
 
     $this->tablature->setSong($song);
+    $this->tablature->setFormat('gp3');
   }
 
   /*-------------------------------------------------------------------

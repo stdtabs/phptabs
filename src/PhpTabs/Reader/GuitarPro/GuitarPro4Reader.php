@@ -145,6 +145,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
     }
 
     $this->tablature->setSong($song);
+    $this->tablature->setFormat('gp4');
   }
 
   /*-------------------------------------------------------------------

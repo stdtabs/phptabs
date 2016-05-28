@@ -121,6 +121,7 @@ class MidiReader extends MidiReaderBase
     }
 
     $this->tablature->setSong($song);
+    $this->tablature->setFormat('mid');
   }
 
   /*-------------------------------------------------------------------
