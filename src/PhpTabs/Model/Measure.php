@@ -75,7 +75,8 @@ class Measure
   public function moveBeat($index, Beat $beat)
   {
     $this->removeBeat($beat);
-    $this->beats[$index] = $beat;
+
+    array_splice($this->beats, $index, 0, array($beat));
   }
 
   public function removeBeat(Beat $beat)
@@ -85,6 +86,7 @@ class Measure
       if($v == $beat)
       {
         array_splice($this->beats, $k, 1);
+        return;
       }
     }
   }
