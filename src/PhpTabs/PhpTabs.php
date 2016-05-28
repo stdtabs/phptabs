@@ -20,8 +20,6 @@ class PhpTabs
    * Initializes read/write modes
    * 
    * @param string $filename the fully qualified filename
-   * @return void
-   * @throws \RuntimeException When read or write failed
    */
   public function __construct($filename = null)
   {
@@ -44,7 +42,7 @@ class PhpTabs
           . ' on line ' . $e->getLine() . PHP_EOL
           . $e->getTraceAsString() . PHP_EOL;
 
-      # if debug == true, an exception kills the process
+      # if debug == true, an error kills the process
       if(Config::get('debug'))
       {
         trigger_error($message, E_USER_ERROR);
@@ -103,7 +101,6 @@ class PhpTabs
         );
 
         trigger_error($message, E_USER_ERROR);
-        break;
     }
   }
 }
