@@ -47,6 +47,6 @@ class EffectTrill
     $effect->getDuration()->getDivision()->setEnters($this->getDuration()->getDivision()->getEnters());
     $effect->getDuration()->getDivision()->setTimes($this->getDuration()->getDivision()->getTimes());
 
-    return effect;
+    return $effect;
   }
 }
