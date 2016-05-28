@@ -73,14 +73,16 @@ class Helper
    * @param string $name
    * @return boolean Result of the search
    */
-  public function findChannelsByName(Song $song, $name)
+  protected function findChannelsByName(Song $song, $name)
   {
     $channels = $song->getChannels();
 
     foreach($channels as $v)
     {
       if($v->getName() == $name)
+      {
         return true;
+      }
     }
 
     return false;
@@ -93,15 +95,15 @@ class Helper
    * @param string $prefix
    * @return string channel name
    */
-  public function createChannelName(Song $song, $prefix)
+  protected function createChannelName(Song $song, $prefix)
   {
     $number = 0;
     $unusedName = null;
 
-    while( $unusedName == null )
+    while($unusedName === null)
     {
       $number ++;
-      $name = $prefix . " " . $number;
+      $name = $prefix . ' ' . $number;
       if(!$this->findChannelsByName($song, $name))
       {
         $unusedName = $name;
@@ -117,7 +119,7 @@ class Helper
    * @param Song $song
    * @return string a generated channel name
    */
-  public function createDefaultChannelName(Song $song)
+  protected function createDefaultChannelName(Song $song)
   {
     return $this->createChannelName($song, "Unnamed");
   }
@@ -129,7 +131,7 @@ class Helper
    * @param Channel $channel
    * @return string a new channel name
    */
-  public function createChannelNameFromProgram(Song $song, $channel)
+  protected function createChannelNameFromProgram(Song $song, $channel)
   {
     $names = ChannelNames::$defaultNames;
 
@@ -141,4 +143,16 @@ class Helper
     return $this->createDefaultChannelName($song);
   }
 
+  /**
+   * Formats an integer
+   * 
+   * @param byte $b
+   * @return integer between 0 and 32767
+   */
+  protected function toChannelShort($bytes)
+  {
+    $value = ($bytes * 8) - 1;
+
+    return max($value, 0);
+  }
 }

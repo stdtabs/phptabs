@@ -1149,19 +1149,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
     }
   }
 
-  /**
-   * Helper to format an integer
-   * 
-   * @param byte $b
-   * @return integer between 0 and 32767
-   */
-  private function toChannelShort($bytes)
-  {
-    $value = ($bytes * 8) - 1;
-
-    return max($value, 0);
-  }
-
 	/**
    * Get stroke value
    * 
