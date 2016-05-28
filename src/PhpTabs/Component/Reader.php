@@ -4,11 +4,6 @@ namespace PhpTabs\Component;
 
 use Exception;
 
-/**
- * Bridger class which routes to the right tablature parser
- * 
- * It also creates a Tablature object for later write operations
- */
 class Reader
 {
   /** @var Tablature object */
@@ -28,7 +23,6 @@ class Reader
 
   /**
    * Instanciates tablature container
-   * Determines which type of file
    * Try to load the right dedicated reader
    * 
    * @param File $file file which should contain a tablature
@@ -45,6 +39,8 @@ class Reader
     if(isset($this->extensions[ $file->getExtension() ]))
     {
       $name = $this->extensions[ $file->getExtension() ];
+
+      $this->tablature->setFormat($file->getExtension());
 
       $this->bridge = new $name($file);
     }

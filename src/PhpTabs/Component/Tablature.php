@@ -7,12 +7,17 @@ use PhpTabs\Model\Channel;
 use PhpTabs\Model\ChannelNames;
 
 class Tablature
-{ 
+{
+  const defaultFileFormat = 'gp3';
+
   /** @var string error message */
   private $error = '';
 
   /** @var object Song */
   private $song;
+
+  /** @var string $format */
+  private $format;
 
   /**
    * Tablature constructor
@@ -21,6 +26,7 @@ class Tablature
   public function __construct()
   {
     $this->setSong(new Song());
+    $this->setFormat(Tablature::defaultFileFormat);
   }
 
   /**
@@ -131,6 +137,42 @@ class Tablature
   }
 
   /**
+   * Writes a song into a file
+   * 
+   * @return array
+   */
+  public function save($filename = null)
+  {
+    if($this->hasError())
+    {
+      $message = sprintf('%s(): %s'
+        , __METHOD__
+        , 'Current data cannot be saved because parsing has encountered an error'
+      );
+
+      throw new Exception($message);
+    }
+
+    return (new Writer($this))->save($filename);
+  }
+
+  /**
+   * Builds a binary starting from Music DOM
+   *
+   * @param string $format
+   * @return string A binary chain
+   */
+  public function convert($format = null)
+  {
+    if(null === $format)
+    {
+      $format = $this->getFormat();
+    }
+
+    return (new Writer($this))->build($format);
+  }
+
+  /**
    * Overloads with $song methods
    * 
    * @param string $name method
@@ -157,5 +199,15 @@ class Tablature
 
         trigger_error($message, E_USER_ERROR);
     }
+  }
+
+  public function setFormat($format)
+  {
+    $this->format = $format;
+  }
+
+  public function getFormat()
+  {
+    return $this->format;
   }
 }
