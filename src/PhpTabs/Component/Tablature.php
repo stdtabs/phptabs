@@ -2,13 +2,14 @@
 
 namespace PhpTabs\Component;
 
-use PhpTabs\Model\Song;
+use Exception;
 use PhpTabs\Model\Channel;
 use PhpTabs\Model\ChannelNames;
+use PhpTabs\Model\Song;
 
 class Tablature
 {
-  const defaultFileFormat = 'gp3';
+  const DEFAULT_FILE_FORMAT = 'gp3';
 
   /** @var string error message */
   private $error = '';
@@ -19,18 +20,15 @@ class Tablature
   /** @var string $format */
   private $format;
 
-  /**
-   * Tablature constructor
-   * @return void
-   */
   public function __construct()
   {
     $this->setSong(new Song());
-    $this->setFormat(Tablature::defaultFileFormat);
+    $this->setFormat(self::DEFAULT_FILE_FORMAT);
   }
 
   /**
    * Sets an error message
+   *
    * @param string $error
    */
   public function setError($message)
@@ -58,7 +56,6 @@ class Tablature
    * Sets Song wrapper
    *
    * @param Song $song
-   * @return void
    */
   public function setSong(Song $song)
   {
