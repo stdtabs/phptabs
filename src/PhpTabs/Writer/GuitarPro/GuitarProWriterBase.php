@@ -39,8 +39,8 @@ abstract class GuitarProWriterBase extends Helper
   {
     $this->channelRouter = new ChannelRouter();
 
-    $channelRouterConfigurator = new ChannelRouterConfigurator($this->channelRouter);
-    $channelRouterConfigurator->configureRouter($song->getChannels());
+    $routerConfigurator = new ChannelRouterConfigurator($this->channelRouter);
+    $routerConfigurator->configureRouter($song->getChannels());
   }
 
   protected function skipBytes($count)
@@ -72,7 +72,7 @@ abstract class GuitarProWriterBase extends Helper
     $this->writeStringByte($string, strlen($string));
   }
 
-	protected function writeString($bytes, $maximumLength)
+  protected function writeString($bytes, $maximumLength)
   {
     $length = $maximumLength == 0 || $maximumLength > strlen($bytes)
       ? strlen($bytes) : $maximumLength;
@@ -81,7 +81,7 @@ abstract class GuitarProWriterBase extends Helper
     {
       $this->content .= $bytes[$i];
     }
-	}
+  }
 
   protected function writeStringInteger($string)
   {

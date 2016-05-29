@@ -31,7 +31,7 @@ use PhpTabs\Model\Velocities;
 class GuitarPro3Writer extends GuitarProWriterBase
 {
   /** @constant version */
-  const version = 'FICHIER GUITAR PRO v3.00';
+  const VERSION = 'FICHIER GUITAR PRO v3.00';
 
   public function __construct(Song $song)
   {
@@ -44,7 +44,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
 
     $this->configureChannelRouter($song);
     $header = $song->getMeasureHeader(0);
-    $this->writeStringByte(GuitarPro3Writer::version, 30);
+    $this->writeStringByte(GuitarPro3Writer::VERSION, 30);
     $this->writeInformations($song);
     $this->writeBoolean(
       $header->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_EIGHTH

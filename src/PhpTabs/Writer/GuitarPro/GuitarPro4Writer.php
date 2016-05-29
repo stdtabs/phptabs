@@ -34,7 +34,7 @@ use PhpTabs\Model\Velocities;
 class GuitarPro4Writer extends GuitarProWriterBase
 {
   /** @constant version */
-  const version = 'FICHIER GUITAR PRO v4.00';
+  const VERSION = 'FICHIER GUITAR PRO v4.00';
 
   public function __construct(Song $song)
   {
@@ -47,7 +47,7 @@ class GuitarPro4Writer extends GuitarProWriterBase
 
     $this->configureChannelRouter($song);
     $header = $song->getMeasureHeader(0);
-    $this->writeStringByte(GuitarPro4Writer::version, 30);
+    $this->writeStringByte(GuitarPro4Writer::VERSION, 30);
     $this->writeInformations($song);
     $this->writeBoolean(
       $header->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_EIGHTH
@@ -277,64 +277,64 @@ class GuitarPro4Writer extends GuitarProWriterBase
 
   private function writeBeatEffects(Beat $beat, NoteEffect $noteEffect)
   {
-		$flags1 = 0;
-		$flags2 = 0;
+    $flags1 = 0;
+    $flags2 = 0;
 
-		if($noteEffect->isFadeIn())
+    if($noteEffect->isFadeIn())
     {
-			$flags1 |= 0x10;
-		}
+      $flags1 |= 0x10;
+    }
 
-		if($noteEffect->isTapping() || $noteEffect->isSlapping() || $noteEffect->isPopping())
+    if($noteEffect->isTapping() || $noteEffect->isSlapping() || $noteEffect->isPopping())
     {
-			$flags1 |= 0x20;
-		}
+      $flags1 |= 0x20;
+    }
 
-		if($noteEffect->isTremoloBar())
+    if($noteEffect->isTremoloBar())
     {
-			$flags2 |= 0x04;
-		}
+      $flags2 |= 0x04;
+    }
 
-		if($beat->getStroke()->getDirection() != Stroke::STROKE_NONE)
+    if($beat->getStroke()->getDirection() != Stroke::STROKE_NONE)
     {
-			$flags1 |= 0x40;
-		}
+      $flags1 |= 0x40;
+    }
 
-		$this->writeUnsignedByte($flags1);
-		$this->writeUnsignedByte($flags2);
-		
-		if (($flags1 & 0x20) != 0)
+    $this->writeUnsignedByte($flags1);
+    $this->writeUnsignedByte($flags2);
+
+    if (($flags1 & 0x20) != 0)
     {
-			if($noteEffect->isTapping())
+      if($noteEffect->isTapping())
       {
-				$this->writeUnsignedByte(1);
-			}
+        $this->writeUnsignedByte(1);
+      }
       else if($noteEffect->isSlapping())
       {
-				$this->writeUnsignedByte(2);
-			}
+        $this->writeUnsignedByte(2);
+      }
       else if($noteEffect->isPopping())
       {
-				$this->writeUnsignedByte(3);
-			}
-		}
+        $this->writeUnsignedByte(3);
+      }
+    }
 
-		if(($flags2 & 0x04) != 0)
+    if(($flags2 & 0x04) != 0)
     {
-			$this->writeTremoloBar($noteEffect->getTremoloBar());
-		}
+      $this->writeTremoloBar($noteEffect->getTremoloBar());
+    }
 
-		if (($flags1 & 0x40) != 0)
+    if (($flags1 & 0x40) != 0)
     {
-			$this->writeUnsignedByte(
-        $beat->getStroke()->getDirection() == Stroke::STROKE_DOWN
-          ? $this->toStrokeValue($beat->getStroke()) : 0
+      $this->writeUnsignedByte(
+      $beat->getStroke()->getDirection() == Stroke::STROKE_DOWN
+        ? $this->toStrokeValue($beat->getStroke()) : 0
       );
-			$this->writeUnsignedByte(
-        $beat->getStroke()->getDirection() == Stroke::STROKE_UP
-          ? $this->toStrokeValue($beat->getStroke()) : 0
+      $this->writeUnsignedByte(
+      $beat->getStroke()->getDirection() == Stroke::STROKE_UP
+        ? $this->toStrokeValue($beat->getStroke()) : 0
       );
-		}
+    }
   }
 
   private function writeBend(EffectBend $bend)
