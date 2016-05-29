@@ -40,7 +40,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
   /**
    * Constructor
    * @param File $file input file to read
-   * @return void
    */
   public function __construct(File $file)
   {
@@ -78,7 +77,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
       return;
     }
 
-    $channels = $this->readChannels();
+    $channels = $this->getHelper('GuitarProChannels')->readChannels($this);
 
     $measures = $this->readInt();
     $tracks = $this->readInt();
@@ -304,7 +303,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param Track $track
    * @param array $channels
    * 
-   * @return void
    */
   private function readChannel(Song $song, Track $track, $channels)
   {
@@ -354,45 +352,9 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads channels informations
-   * 
-   * @return array $channels
-   */
-  private function readChannels()
-  {
-    $channels = array();
-
-    for ($i=0; $i<64; $i++)
-    {
-      $channel = new Channel();
-      $channel->setProgram($this->readInt());
-      $channel->setVolume($this->toChannelShort($this->readByte()));
-      $channel->setBalance($this->toChannelShort($this->readByte()));
-      $channel->setChorus($this->toChannelShort($this->readByte()));
-      $channel->setReverb($this->toChannelShort($this->readByte()));
-      $channel->setPhaser($this->toChannelShort($this->readByte()));
-      $channel->setTremolo($this->toChannelShort($this->readByte()));
-      $channel->setBank($i == 9
-        ? Channel::DEFAULT_PERCUSSION_BANK : Channel::DEFAULT_BANK);
-
-      if ($channel->getProgram() < 0)
-      {
-        $channel->setProgram(0);
-      }
-
-      $channels[] = $channel;
-
-      $this->skip(2);
-    }
-
-    return $channels;
-  }
-
-  /**
    * Reads color informations
    * 
    * @param Color $color
-   * @return void
    */
   private function readColor(Color $color)
   {
@@ -407,7 +369,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * 
    * @param integer $strings
    * @param Beat $beat
-   * @return void
    */
   private function readChord($strings, $beat)
   {
@@ -508,7 +469,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * Reads meta informations about tablature
    * 
    * @param Song $song
-   * @return void
    */
   private function readInformations(Song $song)
   {
@@ -566,7 +526,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param Measure $measure
    * @param Track $track
    * @param Tempo $tempo
-   * @return void
    */
   private function readMeasure(Measure $measure, Track $track, Tempo $tempo)
   {
@@ -648,7 +607,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * 
    * @param Song $song
    * @param integer $count
-   * @return void
    */
   private function readMeasureHeaders(Song $song, $count)
   {
@@ -667,7 +625,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param integer $measures
    * @param integer $tracks
    * @param integer $tempoValue
-   * @return void
    */
   private function readMeasures(Song $song, $measures, $tracks, $tempoValue)
   {
@@ -696,7 +653,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * Reads mix change informations
    * 
    * @param Tempo $tempo
-   * @return void
    */
   private function readMixChange(Tempo $tempo)
   {
@@ -791,7 +747,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * Reads some text
    * 
    * @param Beat $beat
-   * @return void
    */
   private function readText(Beat $beat)
   {
@@ -841,7 +796,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param Song $song
    * @param int $count
    * @param array $channels Current array of channels
-   * @return void
    */
   private function readTracks(Song $song, $count, array $channels)
   {

@@ -91,7 +91,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     $this->readByte();
 
-    $channels = $this->readChannels();
+    $channels = $this->getHelper('GuitarProChannels')->readChannels($this);
 
     $this->skip(42);
 
@@ -254,7 +254,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * Reads an artificial harmonic
    * 
    * @param NoteEffect $effect
-   * @return void
    */
   private function readArtificialHarmonic(NoteEffect $effect)
   {
@@ -363,7 +362,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * 
    * @param Beat $beat
    * @param NoteEffect $effect
-   * @return void
    */
   private function readBeatEffects(Beat $beat, NoteEffect $noteEffect)
   {
@@ -389,12 +387,12 @@ class GuitarPro5Reader extends GuitarProReaderBase
       if($strokeDown > 0 )
       {
         $beat->getStroke()->setDirection(Stroke::STROKE_DOWN);
-        $beat->getStroke()->setValue($this->toStrokeValue($strokeDown));
+        $beat->getStroke()->setValue($this->getHelper('GuitarPro3Effects')->toStrokeValue($strokeDown));
       }
       else if($strokeUp > 0)
       {
         $beat->getStroke()->setDirection(Stroke::STROKE_UP);
-        $beat->getStroke()->setValue($this->toStrokeValue($strokeUp));
+        $beat->getStroke()->setValue($this->getHelper('GuitarPro3Effects')->toStrokeValue($strokeUp));
       }
     }
     if (($flags2 & 0x02) != 0)
@@ -407,7 +405,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * Reads EffectBend informations
    *
    * @param NoteEffect $effect
-   * @return void
    */
   private function readBend(NoteEffect $effect)
   {
@@ -436,8 +433,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * @param Song $song
    * @param Track $track
    * @param array $channels
-   * 
-   * @return void
    */
   private function readChannel(Song $song, Track $track, $channels)
   {
@@ -489,46 +484,10 @@ class GuitarPro5Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads channels informations
-   * 
-   * @return array $channels
-   */
-  private function readChannels()
-  {
-    $channels = array();
-
-    for ($i=0; $i<64; $i++)
-    {
-      $channel = new Channel();
-      $channel->setProgram($this->readInt());
-      $channel->setVolume($this->toChannelShort($this->readByte()));
-      $channel->setBalance($this->toChannelShort($this->readByte()));
-      $channel->setChorus($this->toChannelShort($this->readByte()));
-      $channel->setReverb($this->toChannelShort($this->readByte()));
-      $channel->setPhaser($this->toChannelShort($this->readByte()));
-      $channel->setTremolo($this->toChannelShort($this->readByte()));
-      $channel->setBank($i == 9
-        ? Channel::DEFAULT_PERCUSSION_BANK : Channel::DEFAULT_BANK);
-
-      if ($channel->getProgram() < 0)
-      {
-        $channel->setProgram(0);
-      }
-
-      $channels[] = $channel;
-
-      $this->skip(2);
-    }
-
-    return $channels;
-  }
-
-  /**
    * Reads Chord informations
    * 
    * @param integer $strings
    * @param Beat $beat
-   * @return void
    */
   private function readChord($strings,Beat $beat)
   {
@@ -558,7 +517,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * Reads color informations
    * 
    * @param Color $color
-   * @return void
    */
   private function readColor(Color $color)
   {
@@ -626,7 +584,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * Reads EffectGrace
    * 
    * @param NoteEffect $effect
-   * @return void
    */
   private function readGrace(NoteEffect $effect)
   {
@@ -669,7 +626,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * Reads meta informations about tablature
    * 
    * @param Song $song
-   * @return void
    */
   private function readInformations(Song $song)
   {
@@ -748,7 +704,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * @param Measure $measure
    * @param Track $track
    * @param Tempo $tempo
-   * @return void
    */
   private function readMeasure(Measure $measure, Track $track, Tempo $tempo)
   {
@@ -880,7 +835,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * 
    * @param Song $song
    * @param integer $count
-   * @return void
    */
   private function readMeasureHeaders(Song $song, $count)
   {
@@ -904,7 +858,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * @param integer $measures
    * @param integer $tracks
    * @param integer $tempoValue
-   * @return void
    */
   private function readMeasures(Song $song, $measures, $tracks, $tempoValue)
   {
@@ -937,7 +890,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * Reads mix change
    * 
    * @param Tempo $tempo
-   * @return void
    */
   private function readMixChange(Tempo $tempo)
   {
@@ -1056,7 +1008,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * Reads NoteEffect
    * 
    * @param NoteEffect $noteEffect
-   * @return void
    */
   private function readNoteEffects(NoteEffect $noteEffect)
   {
@@ -1104,7 +1055,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
   /**
    * Reads setup informations
    * 
-   * @return void
    */
   private function readSetup()
   {
@@ -1120,7 +1070,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * Reads some text
    * 
    * @param Beat $beat
-   * @return void
    */
   private function readText(Beat $beat)
   {
@@ -1190,7 +1139,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * @param array $channels array of channels
    * @param Lyric $lyric
    * @param integer $lyricTrack
-   * @return void
    */
   private function readTracks(Song $song, $count, array $channels, Lyric $lyric, $lyricTrack)
   {
@@ -1209,7 +1157,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * Reads tremolo bar
    * 
    * @param NoteEffect $noteEffect
-   * @return void
    */
   private function readTremoloBar(NoteEffect $effect)
   {
@@ -1238,7 +1185,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * Reads tremolo picking
    * 
    * @param NoteEffect $noteEffect
-   * @return void
    */
   public function readTremoloPicking(NoteEffect $noteEffect)
   {
@@ -1265,7 +1211,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * Reads trill effect
    * 
    * @param NoteEffect $effect
-   * @return void
    */
   private function readTrill(NoteEffect $effect)
   {
@@ -1288,37 +1233,5 @@ class GuitarPro5Reader extends GuitarProReaderBase
       $trill->getDuration()->setValue(Duration::SIXTY_FOURTH);
       $effect->setTrill($trill);
     }
-  }
-
-	/**
-   * Get stroke value
-   * 
-   * @param integer $value
-   * @return integer stroke value
-   */
-  private function toStrokeValue($value)
-  {
-    if($value == 1 || $value == 2)
-    {
-      return Duration::SIXTY_FOURTH;
-    }
-    if($value == 3)
-    {
-      return Duration::THIRTY_SECOND;
-    }
-    if($value == 4)
-    {
-      return Duration::SIXTEENTH;
-    }
-    if($value == 5)
-    {
-      return Duration::EIGHTH;
-    }
-    if($value == 6)
-    {
-      return Duration::QUARTER;
-    }
-
-    return Duration::SIXTY_FOURTH;
   }
 }
