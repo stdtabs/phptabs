@@ -4,7 +4,6 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 use PhpTabs\Model\Marker;
-use PhpTabs\Model\Measure;
 
 class GuitarProMarker
 {
@@ -22,7 +21,7 @@ class GuitarProMarker
     $marker->setMeasure($measure);
     $marker->setTitle($reader->readStringByteSizeOfInteger());
 
-    (new GuitarProColor)->readColor($marker->getColor(), $reader);
+    (new GuitarProColor())->readColor($marker->getColor(), $reader);
 
     return $marker;
   }

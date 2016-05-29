@@ -2,6 +2,8 @@
 
 namespace PhpTabs\Reader\GuitarPro;
 
+use Exception;
+
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
@@ -10,10 +12,8 @@ use PhpTabs\Model\Beat;
 use PhpTabs\Model\Channel;
 use PhpTabs\Model\ChannelParameter;
 use PhpTabs\Model\Chord;
-use PhpTabs\Model\Color;
 use PhpTabs\Model\Duration;
 use PhpTabs\Model\Lyric;
-use PhpTabs\Model\Marker;
 use PhpTabs\Model\Measure;
 use PhpTabs\Model\MeasureHeader;
 use PhpTabs\Model\Note;
@@ -51,7 +51,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     {
       $this->closeStream();
 
-      throw new \Exception(sprintf('Version "%s" is not supported', $this->getVersion()));
+      throw new Exception(sprintf('Version "%s" is not supported', $this->getVersion()));
     }
 
     $this->song = new Song();
@@ -66,7 +66,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     $tempoValue = $this->readInt();
 
-    $this->keySignature = $this->readKeySignature();
+    $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature($this);
     $this->skip(3);
 
     # Meta only
@@ -77,7 +77,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
       return;
     }
 
-    $channels = $this->getHelper('GuitarProChannels')->readChannels($this);
+    $channels = $this->factory('GuitarProChannels')->readChannels($this);
 
     $measures = $this->readInt();
     $tracks = $this->readInt();
@@ -269,7 +269,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     }
     if (($flags & 0x08) != 0)
     {
-      $this->getHelper('GuitarPro3Effects')->readBeatEffects($beat, $effect, $this);
+      $this->factory('GuitarPro3Effects')->readBeatEffects($beat, $effect, $this);
     }
     if (($flags & 0x10) != 0)
     {
@@ -476,23 +476,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads the key signature
-   * 
-   * @return integer Key signature 0: C 1: G, -1: F
-   */
-  private function readKeySignature()
-  {
-    $keySignature = $this->readByte();
-
-    if ($keySignature < 0)
-    {
-      $keySignature = 7 - $keySignature; // -1 to 8 [...]
-    }
-
-    return $keySignature;
-  }
-
-  /**
    * Reads a Measure
    * 
    * @param Measure $measure
@@ -511,7 +494,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
       {
         $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s]'
           , __METHOD__, $numberOfBeats, $measure->getNumber(), $track->getName());
-        throw new \Exception($message);
+        throw new Exception($message);
       }
     }
 
@@ -562,7 +545,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     if (($flags & 0x20) != 0)
     {
-      $header->setMarker($this->getHelper('GuitarProMarker')->readMarker($number, $this));
+      $header->setMarker($this->factory('GuitarProMarker')->readMarker($number, $this));
     }
 
     if (($flags & 0x40) != 0)
@@ -709,7 +692,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     }
     if (($flags & 0x08) != 0)
     {
-      $this->getHelper('GuitarPro3Effects')->readNoteEffects($note->getEffect(), $this);
+      $this->factory('GuitarPro3Effects')->readNoteEffects($note->getEffect(), $this);
     }
 
     return $note;
@@ -757,7 +740,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     $this->readChannel($song, $track, $channels);
     $this->readInt();
     $track->setOffset($this->readInt());
-    $this->getHelper('GuitarProColor')->readColor($track->getColor(), $this);
+    $this->factory('GuitarProColor')->readColor($track->getColor(), $this);
 
     return $track;
   }

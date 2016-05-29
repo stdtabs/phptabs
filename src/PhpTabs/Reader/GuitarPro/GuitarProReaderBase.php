@@ -238,8 +238,8 @@ abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInte
     $this->file->closeStream(); 
   }
 
-  protected function getHelper($name)
+  protected function factory($name)
   {
-    return (new Factory)->get($name);
+    return (new Factory())->get($name);
   }
 }
