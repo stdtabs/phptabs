@@ -139,7 +139,7 @@ class Tablature
   /**
    * Writes a song into a file
    * 
-   * @return array
+   * @return mixed boolean|string
    */
   public function save($filename = null)
   {

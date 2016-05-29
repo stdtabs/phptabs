@@ -43,7 +43,8 @@ class DivisionType
 
   public function isEqual(DivisionType $divisionType)
   {
-    return ($divisionType->getEnters() == $this->getEnters() && $divisionType->getTimes() == $this->getTimes());
+    return ($divisionType->getEnters() == $this->getEnters()) 
+      && ($divisionType->getTimes() == $this->getTimes());
   }
 
   public function __clone()

@@ -2,9 +2,6 @@
 
 namespace PhpTabs\Model;
 
-/**
- * Contains one or more component notes of the chord
- */
 class Chord
 {
   /** @var integer $firstFret first fret id */
@@ -42,7 +39,7 @@ class Chord
   }
 
   /**
-   * @param Beat Sets the chord container
+   * @param Beat $beat
    * @return void
    */
   public function setBeat(Beat $beat)
@@ -51,7 +48,8 @@ class Chord
   }
 
   /**
-   * It stacks a fret
+   * Puts  a fret value
+   *
    * @param integer $string
    * @param integer $fret
    * @return void
@@ -66,6 +64,7 @@ class Chord
 
   /**
    * Gets a fret value by string index
+   *
    * @param integer $string Index of the stack
    * @return integer fret id
    */

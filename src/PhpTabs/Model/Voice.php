@@ -130,7 +130,7 @@ class Voice
 
   public function isRestVoice()
   {
-    return count($this->notes) == 0;
+    return (count($this->notes) == 0);
   }
 
   public function __clone()

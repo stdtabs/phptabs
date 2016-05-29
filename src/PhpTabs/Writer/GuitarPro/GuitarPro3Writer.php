@@ -44,7 +44,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
 
     $this->configureChannelRouter($song);
     $header = $song->getMeasureHeader(0);
-    $this->writeStringByte(GuitarPro3Writer::VERSION, 30);
+    $this->writeStringByte(self::VERSION, 30);
     $this->writeInformations($song);
     $this->writeBoolean(
       $header->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_EIGHTH

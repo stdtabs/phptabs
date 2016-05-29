@@ -47,7 +47,7 @@ class GuitarPro4Writer extends GuitarProWriterBase
 
     $this->configureChannelRouter($song);
     $header = $song->getMeasureHeader(0);
-    $this->writeStringByte(GuitarPro4Writer::VERSION, 30);
+    $this->writeStringByte(self::VERSION, 30);
     $this->writeInformations($song);
     $this->writeBoolean(
       $header->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_EIGHTH
@@ -897,17 +897,17 @@ class GuitarPro4Writer extends GuitarProWriterBase
     }
   }
 	
-  public function writeTremoloPicking(EffectTremoloPicking $effect)
+  private function writeTremoloPicking(EffectTremoloPicking $effect)
   {
     if($effect->getDuration()->getValue() == Duration::EIGHTH)
     {
       $this->writeUnsignedByte(1);
     }
-    else if($effect->getDuration()->getValue() == Duration.SIXTEENTH)
+    else if($effect->getDuration()->getValue() == Duration::SIXTEENTH)
     {
       $this->writeUnsignedByte(2);
     }
-    else if($effect->getDuration()->getValue() == Duration.THIRTY_SECOND)
+    else if($effect->getDuration()->getValue() == Duration::THIRTY_SECOND)
     {
       $this->writeUnsignedByte(3);
     }
