@@ -368,7 +368,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     $flags1 = $this->readUnsignedByte();
     $flags2 = $this->readUnsignedByte();
     $noteEffect->setFadeIn((($flags1 & 0x10) != 0));
-    $noteEffect->setVibrato((($flags1  & 0x02) != 0));
+    $noteEffect->setVibrato((($flags1 & 0x02) != 0));
     if (($flags1 & 0x20) != 0)
     {
       $effect = $this->readUnsignedByte();
@@ -378,7 +378,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
     if (($flags2 & 0x04) != 0)
     {
-      $this->readTremoloBar($noteEffect);
+      $this->getHelper('GuitarPro4Effects')->readTremoloBar($noteEffect, $this);
     }
     if (($flags1 & 0x40) != 0)
     {
@@ -398,32 +398,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
     if (($flags2 & 0x02) != 0)
     {
       $this->readByte();
-    }
-  }
-
-  /**
-   * Reads EffectBend informations
-   *
-   * @param NoteEffect $effect
-   */
-  private function readBend(NoteEffect $effect)
-  {
-    $bend = new EffectBend();
-    $this->skip(5);
-    $points = $this->readInt();
-    for ($i = 0; $i < $points; $i++)
-    {
-      $bendPosition = $this->readInt();
-      $bendValue = $this->readInt();
-      $this->readByte();
-
-      $pointPosition = round($bendPosition * EffectBend::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
-      $pointValue = round($bendValue * EffectBend::SEMITONE_LENGTH / GuitarProReaderInterface::GP_BEND_SEMITONE);
-      $bend->addPoint($pointPosition, $pointValue);
-    }
-    if(count($bend->getPoints()))
-    {
-      $effect->setBend($bend);
     }
   }
 
@@ -511,19 +485,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
     {
       $beat->setChord($chord);
     }
-  }
-
-  /**
-   * Reads color informations
-   * 
-   * @param Color $color
-   */
-  private function readColor(Color $color)
-  {
-    $color->setR($this->readUnsignedByte());
-    $color->setG($this->readUnsignedByte());
-    $color->setB($this->readUnsignedByte());
-    $this->skip();
   }
 
   /**
@@ -684,21 +645,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads measure marker
-   * 
-   * @param integer $measure
-   * @return Marker
-   */
-  private function readMarker($measure)
-  {
-    $marker = new Marker();
-    $marker->setMeasure($measure);
-    $marker->setTitle($this->readStringByteSizeOfInteger());
-    $this->readColor($marker->getColor());
-    return $marker;
-  }
-
-  /**
    * Reads a Measure
    * 
    * @param Measure $measure
@@ -789,7 +735,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     if (($flags & 0x20) != 0)
     {
-      $header->setMarker($this->readMarker($header->getNumber()));
+      $header->setMarker($this->getHelper('GuitarProMarker')->readMarker($header->getNumber(), $this));
     }
 
     if (($flags & 0x10) != 0)
@@ -1016,7 +962,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     if (($flags1 & 0x01) != 0)
     {
-      $this->readBend($noteEffect);
+      $this->getHelper('GuitarPro4Effects')->readBend($noteEffect, $this);
     }
 
     if (($flags1 & 0x10) != 0)
@@ -1026,7 +972,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     if (($flags2 & 0x04) != 0)
     {
-      $this->readTremoloPicking($noteEffect);
+      $this->getHelper('GuitarPro4Effects')->readTremoloPicking($noteEffect, $this);
     }
 
     if (($flags2 & 0x08) != 0)
@@ -1118,7 +1064,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     $this->readChannel($song, $track, $channels);
     $this->readInt();
     $track->setOffset($this->readInt());
-    $this->readColor($track->getColor());
+    $this->getHelper('GuitarProColor')->readColor($track->getColor(), $this);
 
     $this->skip($this->getVersionIndex() > 0 ? 49 : 44);
 
@@ -1151,60 +1097,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
 
     $this->skip($this->getVersionIndex() == 0 ? 2 : 1);
-  }
-
-  /**
-   * Reads tremolo bar
-   * 
-   * @param NoteEffect $noteEffect
-   */
-  private function readTremoloBar(NoteEffect $effect)
-  {
-    $tremoloBar = new EffectTremoloBar();
-    $this->skip(5);
-    $points = $this->readInt();
-
-    for ($i = 0; $i < $points; $i++)
-    {
-      $position = $this->readInt();
-      $value = $this->readInt();
-      $this->readByte();
-
-      $pointPosition = round($position * EffectTremoloBar::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
-      $pointValue = round($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2));
-      $tremoloBar->addPoint($pointPosition, $pointValue);
-    }
-
-    if(count($tremoloBar->getPoints()))
-    {
-      $effect->setTremoloBar($tremoloBar);
-    }
-  }
-
-  /**
-   * Reads tremolo picking
-   * 
-   * @param NoteEffect $noteEffect
-   */
-  public function readTremoloPicking(NoteEffect $noteEffect)
-  {
-    $value = $this->readUnsignedByte();
-    $tremoloPicking = new EffectTremoloPicking();
-    if($value == 1)
-    {
-      $tremoloPicking->getDuration()->setValue(Duration::EIGHTH);
-      $noteEffect->setTremoloPicking($tremoloPicking);
-    }
-    else if($value == 2)
-    {
-      $tremoloPicking->getDuration()->setValue(Duration::SIXTEENTH);
-      $noteEffect->setTremoloPicking($tremoloPicking);
-    }
-    else if($value == 3)
-    {
-      $tremoloPicking->getDuration()->setValue(Duration::THIRTY_SECOND);
-      $noteEffect->setTremoloPicking($tremoloPicking);
-    }
   }
 
   /**

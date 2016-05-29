@@ -191,7 +191,7 @@ abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInte
    * @param string charset
    * @return string
    */
-  protected function readStringByteSizeOfInteger($charset = 'UTF-8')
+  public function readStringByteSizeOfInteger($charset = 'UTF-8')
   {
     return $this->readStringByte(($this->readInt() - 1), $charset);
   }

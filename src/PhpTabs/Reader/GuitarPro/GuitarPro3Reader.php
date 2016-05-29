@@ -352,19 +352,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads color informations
-   * 
-   * @param Color $color
-   */
-  private function readColor(Color $color)
-  {
-    $color->setR($this->readUnsignedByte());
-    $color->setG($this->readUnsignedByte());
-    $color->setB($this->readUnsignedByte());
-    $this->skip();
-  }
-
-  /**
    * Read Chord informations
    * 
    * @param integer $strings
@@ -506,21 +493,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads measure marker
-   * 
-   * @param integer $measure
-   * @return Marker
-   */
-  private function readMarker($measure)
-  {
-    $marker = new Marker();
-    $marker->setMeasure($measure);
-    $marker->setTitle($this->readStringByteSizeOfInteger());
-    $this->readColor($marker->getColor());
-    return $marker;
-  }
-
-  /**
    * Reads a Measure
    * 
    * @param Measure $measure
@@ -590,7 +562,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     if (($flags & 0x20) != 0)
     {
-      $header->setMarker($this->readMarker($number));
+      $header->setMarker($this->getHelper('GuitarProMarker')->readMarker($number, $this));
     }
 
     if (($flags & 0x40) != 0)
@@ -785,7 +757,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     $this->readChannel($song, $track, $channels);
     $this->readInt();
     $track->setOffset($this->readInt());
-    $this->readColor($track->getColor());
+    $this->getHelper('GuitarProColor')->readColor($track->getColor(), $this);
 
     return $track;
   }
