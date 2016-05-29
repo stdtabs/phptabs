@@ -175,7 +175,7 @@ class GuitarPro3Effects
    * @param integer $value
    * @return integer stroke value
    */
-  private function toStrokeValue($value)
+  public function toStrokeValue($value)
   {
     if($value == 1 || $value == 2)
     {
