@@ -2,10 +2,14 @@
 
 namespace PhpTabs\Reader\GuitarPro;
 
+
+use PhpTabs\Reader\GuitarPro\Helper\Factory;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Log;
 use PhpTabs\Model\Song;
 use PhpTabs\Model\Helper;
+
+
 
 /**
  * Guitar Pro methods for Readers
@@ -104,7 +108,7 @@ abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInte
    * 
    * @return byte
    */
-  protected function readByte()
+  public function readByte()
   {
     return unpack('c', $this->file->getStream())[1];
   }
@@ -114,7 +118,7 @@ abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInte
    * 
    * @return integer
    */
-  protected function readInt()
+  public function readInt()
   {
     $bytes = array();
 
@@ -208,7 +212,7 @@ abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInte
    * 
    * @return byte
    */
-  protected function readUnsignedByte()
+  public function readUnsignedByte()
   {
     return unpack('C', $this->file->getStream())[1];
   }
@@ -219,7 +223,7 @@ abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInte
    * @param integer $num
    * @return void
    */
-  protected function skip($num = 1)
+  public function skip($num = 1)
   {
     $this->file->getStream($num); 
   }
@@ -232,5 +236,10 @@ abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInte
   protected function closeStream()
   {
     $this->file->closeStream(); 
+  }
+
+  protected function getHelper($name)
+  {
+    return (new Factory)->get($name);
   }
 }

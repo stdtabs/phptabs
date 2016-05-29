@@ -311,7 +311,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     if(($flags & 0x40) != 0)
     {
       $beatType = $this->readUnsignedByte();
-      $voice->setEmpty($beatType & 0x02 == 0);
+      $voice->setEmpty(($beatType & 0x02) == 0);
     }
 
     $duration = $this->readDuration($flags);
@@ -350,12 +350,12 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     $this->skip();
 
-    if($this->readByte() & 0x08 != 0)
+    if(($this->readByte() & 0x08) != 0)
     {
       $this->skip();
     }
 
-    return !$voice->isEmpty() ? $duration->getTime() : 0;
+    return (!$voice->isEmpty() ? $duration->getTime() : 0);
   }
 
   /**
@@ -642,8 +642,8 @@ class GuitarPro5Reader extends GuitarProReaderBase
       + (Velocities::VELOCITY_INCREMENT * $dynamic))
       - Velocities::VELOCITY_INCREMENT);
     $grace->setDuration($duration);
-    $grace->setDead($flags & 0x01 == 0);
-    $grace->setOnBeat($flags & 0x02 == 0);
+    $grace->setDead(($flags & 0x01) == 0);
+    $grace->setOnBeat(($flags & 0x02) == 0);
 
     if($transition == 0)
     {
@@ -790,7 +790,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     foreach($emptyBeats as $beat)
     {
-      $measure->remove($beat);
+      $measure->removeBeat($beat);
     }
 
     $measure->setClef( $this->getClef($track) );
