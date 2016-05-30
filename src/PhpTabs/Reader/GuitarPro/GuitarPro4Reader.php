@@ -23,7 +23,6 @@ use PhpTabs\Model\Song;
 use PhpTabs\Model\Stroke;
 use PhpTabs\Model\TabString;
 use PhpTabs\Model\Tempo;
-use PhpTabs\Model\Text;
 use PhpTabs\Model\TimeSignature;
 use PhpTabs\Model\Track;
 use PhpTabs\Model\Velocities;
@@ -60,7 +59,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     $this->setTablature($this->song);
 
-    $this->readInformations($this->song);
+    $this->factory('GuitarPro3Informations')->readInformations($this->song);
 
     $this->tripletFeel = $this->readBoolean()
       ? MeasureHeader::TRIPLET_FEEL_EIGHTH
@@ -386,28 +385,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
     }
     $grace->setDuration($this->readUnsignedByte());
     $effect->setGrace($grace);
-  }
-
-  /**
-   * Reads meta informations about tablature
-   * 
-   * @param Song $song
-   */
-  private function readInformations(Song $song)
-  {
-    $song->setName($this->readStringByteSizeOfInteger());
-    $this->readStringByteSizeOfInteger();
-    $song->setArtist($this->readStringByteSizeOfInteger());
-    $song->setAlbum($this->readStringByteSizeOfInteger());
-    $song->setAuthor($this->readStringByteSizeOfInteger());
-    $song->setCopyright($this->readStringByteSizeOfInteger());
-    $song->setWriter($this->readStringByteSizeOfInteger());
-    $this->readStringByteSizeOfInteger();
-    $comments = $this->readInt();
-    for ($i=0; $i<$comments; $i++)
-    {
-      $song->setComments($song->getComments() . $this->readStringByteSizeOfInteger());
-    }
   }
 
   /**
