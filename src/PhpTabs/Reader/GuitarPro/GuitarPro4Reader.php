@@ -208,44 +208,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
   }
 
   /**
-   * @param Song $song
-   * @param integer $measure index
-   * @param integer $value
-   */
-  private function parseRepeatAlternative($song, $measure, $value)
-  {
-    $repeatAlternative = 0;
-    $existentAlternatives = 0;
-
-    $measureHeaders = $song->getMeasureHeaders();
-
-    foreach($measureHeaders as $header)
-    {
-      if($header->getNumber() == $measure)
-      {
-        break;
-      }
-
-      if($header->isRepeatOpen())
-      {
-        $existentAlternatives = 0;
-      }
-
-      $existentAlternatives |= $header->getRepeatAlternative();
-    }
-
-    for($i = 0; $i < 8; $i++)
-    {
-      if($value > $i && ($existentAlternatives & (1 << $i)) == 0)
-      {
-        $repeatAlternative |= (1 << $i);
-      }
-    }
-
-    return $repeatAlternative;
-  }
-
-  /**
    * Reads some Beat informations
    * 
    * @param integer $start
@@ -651,7 +613,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     if (($flags & 0x10) != 0)
     {
-      $header->setRepeatAlternative($this->parseRepeatAlternative($song, $number, $this->readUnsignedByte()));
+      $header->setRepeatAlternative($this->factory('GuitarPro3RepeatAlternative')->parseRepeatAlternative($song, $number));
     }
 
     if (($flags & 0x20) != 0)
