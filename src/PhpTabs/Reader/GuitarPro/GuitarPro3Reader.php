@@ -550,7 +550,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     if (($flags & 0x40) != 0)
     {
-      $this->keySignature = $this->readKeySignature();
+      $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature();
       $this->skip(1);
     }
 
