@@ -179,7 +179,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
     }
     if (($flags & 0x04) != 0) 
     {
-      $this->readText($beat);
+      $this->factory('GuitarProText')->readText($beat);
     }
     if (($flags & 0x08) != 0)
     {
@@ -809,18 +809,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
         $noteEffect->setTrill($trill);
       }
     }
-  }
-
-  /**
-   * Reads some text
-   * 
-   * @param Beat $beat
-   */
-  private function readText(Beat $beat)
-  {
-    $text = new Text();
-    $text->setValue($this->readStringByteSizeOfInteger());
-    $beat->setText($text);
   }
 
   /**

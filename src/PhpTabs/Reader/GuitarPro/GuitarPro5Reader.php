@@ -259,7 +259,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
     if (($flags & 0x04) != 0) 
     {
-      $this->readText($beat);
+      $this->factory('GuitarProText')->readText($beat);
     }
     if (($flags & 0x08) != 0)
     {
@@ -933,18 +933,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
       $this->skip(4);
       $this->readStringByte(0);
     }
-  }
-
-  /**
-   * Reads some text
-   * 
-   * @param Beat $beat
-   */
-  private function readText(Beat $beat)
-  {
-    $text = new Text();
-    $text->setValue($this->readStringByteSizeOfInteger());
-    $beat->setText($text);
   }
 
   /**
