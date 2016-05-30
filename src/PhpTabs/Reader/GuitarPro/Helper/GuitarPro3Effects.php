@@ -13,15 +13,8 @@ use PhpTabs\Model\NoteEffect;
 use PhpTabs\Model\Stroke;
 use PhpTabs\Model\Velocities;
 
-class GuitarPro3Effects
+class GuitarPro3Effects extends AbstractReader
 {
-  private $reader;
-
-  public function __construct(GuitarProReaderInterface $reader)
-  {
-    $this->reader = $reader;
-  }
-
   /**
    * Reads beat effects
    * 

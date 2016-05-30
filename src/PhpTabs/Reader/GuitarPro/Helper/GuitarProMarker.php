@@ -2,18 +2,10 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 use PhpTabs\Model\Marker;
 
-class GuitarProMarker
+class GuitarProMarker extends AbstractReader
 {
-  private $reader;
-
-  public function __construct(GuitarProReaderInterface $reader)
-  {
-    $this->reader = $reader;
-  }
-
   /**
    * Reads a measure marker
    * 
@@ -28,7 +20,9 @@ class GuitarProMarker
     $marker->setMeasure($measure);
     $marker->setTitle($this->reader->readStringByteSizeOfInteger());
 
-    (new GuitarProColor($this->reader))->readColor($marker->getColor(), $this->reader);
+    $color = new GuitarProColor();
+    $color->setReader($this->reader);
+    $color->readColor($marker->getColor());
 
     return $marker;
   }

@@ -17,6 +17,10 @@ class Factory
   {
     $name = __NAMESPACE__ . '\\' . $name;
 
-    return new $name($this->reader);
+    $object = new $name();
+
+    $object->setReader($this->reader);
+    
+    return $object;
   }
 }

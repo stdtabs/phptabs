@@ -2,18 +2,10 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 use PhpTabs\Model\Color;
 
-class GuitarProColor
+class GuitarProColor extends AbstractReader
 {
-  private $reader;
-
-  public function __construct(GuitarProReaderInterface $reader)
-  {
-    $this->reader = $reader;
-  }
-
   /**
    * Reads color informations
    * 

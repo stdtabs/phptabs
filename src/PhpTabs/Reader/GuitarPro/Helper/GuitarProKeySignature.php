@@ -2,17 +2,8 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
-
-class GuitarProKeySignature
+class GuitarProKeySignature extends AbstractReader
 {
-  private $reader;
-
-  public function __construct(GuitarProReaderInterface $reader)
-  {
-    $this->reader = $reader;
-  }
-
   /**
    * Reads the key signature
    * 

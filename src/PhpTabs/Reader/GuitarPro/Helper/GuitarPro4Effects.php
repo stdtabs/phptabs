@@ -9,15 +9,8 @@ use PhpTabs\Model\EffectTremoloBar;
 use PhpTabs\Model\EffectTremoloPicking;
 use PhpTabs\Model\NoteEffect;
 
-class GuitarPro4Effects
+class GuitarPro4Effects extends AbstractReader
 {
-  private $reader;
-
-  public function __construct(GuitarProReaderInterface $reader)
-  {
-    $this->reader = $reader;
-  }
-
   /**
    * Reads bend informations
    *
