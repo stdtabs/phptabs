@@ -51,6 +51,21 @@ class Helper
     return $strings;
   }
 
+  protected function isPercussionChannel(Song $song, $channelId)
+  {
+    $channels = $song->getChannels();
+
+    foreach($channels as $channel)
+    {
+      if($channel->getChannelId() == $channelId)
+      {
+        return $channel->isPercussionChannel();
+      }
+    }
+
+    return false;
+  }
+
   /**
    * Checks if a channel is still defined
    *
