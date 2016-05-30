@@ -150,28 +150,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
    * -----------------------------------------------------------------*/
 
   /**
-   * @param Track $track
-   * @return integer Clef of $track
-   */
-  private function getClef(Track $track)
-  {
-    if(!$this->isPercussionChannel($track->getSong(), $track->getChannelId()))
-    {
-      $strings = $track->getStrings();
-
-      foreach($strings as $string)
-      {
-        if($string->getValue() <= 34)
-        {
-          return Measure::CLEF_BASS;
-        }
-      }
-    }
-
-    return Measure::CLEF_TREBLE;
-  }
-
-  /**
    * @param TabString $string String on which note has started
    * @param Track $track
    * @return integer tied note value
@@ -571,7 +549,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
       }
     }
 
-    $measure->setClef( $this->getClef($track) );
+    $measure->setClef( $this->factory('GuitarProClef')->getClef($track) );
     $measure->setKeySignature($this->keySignature);
   }
 
