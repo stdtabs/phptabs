@@ -15,20 +15,27 @@ use PhpTabs\Model\Velocities;
 
 class GuitarPro3Effects
 {
+  private $reader;
+
+  public function __construct(GuitarProReaderInterface $reader)
+  {
+    $this->reader = $reader;
+  }
+
   /**
    * Reads beat effects
    * 
    * @param Beat $beat
    * @param NoteEffect $effect
    */
-  public function readBeatEffects(Beat $beat, NoteEffect $effect, GuitarProReaderInterface $reader)
+  public function readBeatEffects(Beat $beat, NoteEffect $effect)
   {
-    $flags = $reader->readUnsignedByte();
+    $flags = $this->reader->readUnsignedByte();
     $effect->setVibrato((($flags & 0x01) != 0) || (($flags & 0x02) != 0));
     $effect->setFadeIn((($flags & 0x10) != 0));
     if (($flags & 0x20) != 0)
     {
-      $type = $reader->readUnsignedByte();
+      $type = $this->reader->readUnsignedByte();
       if ($type == 0)
       {
         $this->readTremoloBar($effect);
@@ -38,13 +45,13 @@ class GuitarPro3Effects
         $effect->setTapping($type == 1);
         $effect->setSlapping($type == 2);
         $effect->setPopping($type == 3);
-        $reader->readInt();
+        $this->reader->readInt();
       }
     }
     if (($flags & 0x40) != 0)
     {
-      $strokeDown = $reader->readByte();
-      $strokeUp = $reader->readByte();
+      $strokeDown = $this->reader->readByte();
+      $strokeUp = $this->reader->readByte();
       if($strokeDown > 0)
       {
         $beat->getStroke()->setDirection(Stroke::STROKE_DOWN );
@@ -77,19 +84,19 @@ class GuitarPro3Effects
    * @param NoteEffect $noteEffect
    * @return void
    */
-  public function readNoteEffects(NoteEffect $effect, GuitarProReaderInterface $reader)
+  public function readNoteEffects(NoteEffect $effect)
   {
-    $flags = $reader->readUnsignedByte();
+    $flags = $this->reader->readUnsignedByte();
     $effect->setHammer( (($flags & 0x02) != 0) );
     $effect->setSlide( (($flags & 0x04) != 0) );
     $effect->setLetRing((($flags & 0x08) != 0));
     if (($flags & 0x01) != 0)
     {
-      $this->readBend($effect, $reader);
+      $this->readBend($effect, $this->reader);
     }
     if (($flags & 0x10) != 0)
     {
-      $this->readGrace($effect, $reader);
+      $this->readGrace($effect, $this->reader);
     }
   }
 
@@ -98,16 +105,16 @@ class GuitarPro3Effects
    *
    * @param NoteEffect $effect
    */
-  private function readBend(NoteEffect $effect, GuitarProReaderInterface $reader)
+  private function readBend(NoteEffect $effect)
   {
     $bend = new EffectBend();
-    $reader->skip(5);
-    $points = $reader->readInt();
+    $this->reader->skip(5);
+    $points = $this->reader->readInt();
     for ($i = 0; $i < $points; $i++)
     {
-      $bendPosition = $reader->readInt();
-      $bendValue = $reader->readInt();
-      $reader->readByte(); //vibrato
+      $bendPosition = $this->reader->readInt();
+      $bendValue = $this->reader->readInt();
+      $this->reader->readByte(); //vibrato
 
       $pointPosition = round($bendPosition * EffectBend::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
       $pointValue = round($bendValue * EffectBend::SEMITONE_LENGTH / GuitarProReaderInterface::GP_BEND_SEMITONE);
@@ -124,15 +131,15 @@ class GuitarPro3Effects
    * 
    * @param NoteEffect $effect
    */
-  private function readGrace(NoteEffect $effect, GuitarProReaderInterface $reader)
+  private function readGrace(NoteEffect $effect)
   {
-    $fret = $reader->readUnsignedByte();
+    $fret = $this->reader->readUnsignedByte();
     $grace = new EffectGrace();
     $grace->setOnBeat(false);
     $grace->setDead( ($fret == 255) );
     $grace->setFret( ((!$grace->isDead()) ? $fret : 0) );
-    $grace->setDynamic( (Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $reader->readUnsignedByte())) - Velocities::VELOCITY_INCREMENT );
-    $transition = $reader->readUnsignedByte();
+    $grace->setDynamic( (Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->reader->readUnsignedByte())) - Velocities::VELOCITY_INCREMENT );
+    $transition = $this->reader->readUnsignedByte();
     if($transition == 0)
     {
       $grace->setTransition(EffectGrace::TRANSITION_NONE);
@@ -149,7 +156,7 @@ class GuitarPro3Effects
     {
       $grace->setTransition(EffectGrace::TRANSITION_HAMMER);
     }
-    $grace->setDuration($reader->readUnsignedByte());
+    $grace->setDuration($this->reader->readUnsignedByte());
     $effect->setGrace($grace);
   }
 
@@ -158,9 +165,9 @@ class GuitarPro3Effects
    * 
    * @param NoteEffect $noteEffect
    */
-  private function readTremoloBar(NoteEffect $noteEffect, GuitarProReaderInterface $reader)
+  private function readTremoloBar(NoteEffect $noteEffect)
   {
-    $value = $reader->readInt();
+    $value = $this->reader->readInt();
     $effect = new EffectTremoloBar();
     $effect->addPoint(0, 0);
     $effect->addPoint(round(EffectTremoloBar::MAX_POSITION_LENGTH / 2)

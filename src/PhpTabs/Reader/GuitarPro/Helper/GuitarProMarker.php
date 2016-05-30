@@ -7,6 +7,13 @@ use PhpTabs\Model\Marker;
 
 class GuitarProMarker
 {
+  private $reader;
+
+  public function __construct(GuitarProReaderInterface $reader)
+  {
+    $this->reader = $reader;
+  }
+
   /**
    * Reads a measure marker
    * 
@@ -14,14 +21,14 @@ class GuitarProMarker
    *
    * @return Marker
    */
-  public function readMarker($measure, GuitarProReaderInterface $reader)
+  public function readMarker($measure)
   {
     $marker = new Marker();
 
     $marker->setMeasure($measure);
-    $marker->setTitle($reader->readStringByteSizeOfInteger());
+    $marker->setTitle($this->reader->readStringByteSizeOfInteger());
 
-    (new GuitarProColor())->readColor($marker->getColor(), $reader);
+    (new GuitarProColor($this->reader))->readColor($marker->getColor(), $this->reader);
 
     return $marker;
   }

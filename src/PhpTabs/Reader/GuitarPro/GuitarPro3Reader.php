@@ -66,7 +66,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     $tempoValue = $this->readInt();
 
-    $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature($this);
+    $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature();
     $this->skip(3);
 
     # Meta only
@@ -77,7 +77,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
       return;
     }
 
-    $channels = $this->factory('GuitarProChannels')->readChannels($this);
+    $channels = $this->factory('GuitarProChannels')->readChannels();
 
     $measures = $this->readInt();
     $tracks = $this->readInt();
@@ -269,7 +269,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     }
     if (($flags & 0x08) != 0)
     {
-      $this->factory('GuitarPro3Effects')->readBeatEffects($beat, $effect, $this);
+      $this->factory('GuitarPro3Effects')->readBeatEffects($beat, $effect);
     }
     if (($flags & 0x10) != 0)
     {
@@ -545,7 +545,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     if (($flags & 0x20) != 0)
     {
-      $header->setMarker($this->factory('GuitarProMarker')->readMarker($number, $this));
+      $header->setMarker($this->factory('GuitarProMarker')->readMarker($number));
     }
 
     if (($flags & 0x40) != 0)
@@ -692,7 +692,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     }
     if (($flags & 0x08) != 0)
     {
-      $this->factory('GuitarPro3Effects')->readNoteEffects($note->getEffect(), $this);
+      $this->factory('GuitarPro3Effects')->readNoteEffects($note->getEffect());
     }
 
     return $note;
@@ -740,7 +740,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     $this->readChannel($song, $track, $channels);
     $this->readInt();
     $track->setOffset($this->readInt());
-    $this->factory('GuitarProColor')->readColor($track->getColor(), $this);
+    $this->factory('GuitarProColor')->readColor($track->getColor());
 
     return $track;
   }

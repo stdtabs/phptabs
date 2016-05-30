@@ -7,25 +7,32 @@ use PhpTabs\Model\Channel;
 
 class GuitarProChannels
 {
+  private $reader;
+
+  public function __construct(GuitarProReaderInterface $reader)
+  {
+    $this->reader = $reader;
+  }
+
   /**
    * Reads channels informations
    * 
    * @return array $channels
    */
-  public function readChannels(GuitarProReaderInterface $reader)
+  public function readChannels()
   {
     $channels = array();
 
     for ($i=0; $i<64; $i++)
     {
       $channel = new Channel();
-      $channel->setProgram($reader->readInt());
-      $channel->setVolume($this->toChannelShort($reader->readByte()));
-      $channel->setBalance($this->toChannelShort($reader->readByte()));
-      $channel->setChorus($this->toChannelShort($reader->readByte()));
-      $channel->setReverb($this->toChannelShort($reader->readByte()));
-      $channel->setPhaser($this->toChannelShort($reader->readByte()));
-      $channel->setTremolo($this->toChannelShort($reader->readByte()));
+      $channel->setProgram($this->reader->readInt());
+      $channel->setVolume($this->toChannelShort($this->reader->readByte()));
+      $channel->setBalance($this->toChannelShort($this->reader->readByte()));
+      $channel->setChorus($this->toChannelShort($this->reader->readByte()));
+      $channel->setReverb($this->toChannelShort($this->reader->readByte()));
+      $channel->setPhaser($this->toChannelShort($this->reader->readByte()));
+      $channel->setTremolo($this->toChannelShort($this->reader->readByte()));
       $channel->setBank($i == 9
         ? Channel::DEFAULT_PERCUSSION_BANK : Channel::DEFAULT_BANK);
 
@@ -36,7 +43,7 @@ class GuitarProChannels
 
       $channels[] = $channel;
 
-      $reader->skip(2);
+      $this->reader->skip(2);
     }
 
     return $channels;

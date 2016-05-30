@@ -11,24 +11,31 @@ use PhpTabs\Model\NoteEffect;
 
 class GuitarPro4Effects
 {
+  private $reader;
+
+  public function __construct(GuitarProReaderInterface $reader)
+  {
+    $this->reader = $reader;
+  }
+
   /**
    * Reads bend informations
    *
    * @param NoteEffect $effect
    */
-  public function readBend(NoteEffect $effect, $reader)
+  public function readBend(NoteEffect $effect)
   {
     $bend = new EffectBend();
 
-    $reader->skip(5);
+    $this->reader->skip(5);
 
-    $points = $reader->readInt();
+    $points = $this->reader->readInt();
 
     for ($i = 0; $i < $points; $i++)
     {
-      $bendPosition = $reader->readInt();
-      $bendValue = $reader->readInt();
-      $reader->readByte();
+      $bendPosition = $this->reader->readInt();
+      $bendValue = $this->reader->readInt();
+      $this->reader->readByte();
 
       $pointPosition = round($bendPosition * EffectBend::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
       $pointValue = round($bendValue * EffectBend::SEMITONE_LENGTH / GuitarProReaderInterface::GP_BEND_SEMITONE);
@@ -46,19 +53,19 @@ class GuitarPro4Effects
    * 
    * @param NoteEffect $noteEffect
    */
-  public function readTremoloBar(NoteEffect $effect, $reader)
+  public function readTremoloBar(NoteEffect $effect)
   {
     $tremoloBar = new EffectTremoloBar();
 
-    $reader->skip(5);
+    $this->reader->skip(5);
 
-    $points = $reader->readInt();
+    $points = $this->reader->readInt();
 
     for ($i = 0; $i < $points; $i++)
     {
-      $position = $reader->readInt();
-      $value = $reader->readInt();
-      $reader->readByte();
+      $position = $this->reader->readInt();
+      $value = $this->reader->readInt();
+      $this->reader->readByte();
 
       $pointPosition = round($position * EffectTremoloBar::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
       $pointValue = round($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2));
@@ -76,9 +83,9 @@ class GuitarPro4Effects
    * 
    * @param NoteEffect $noteEffect
    */
-  public function readTremoloPicking(NoteEffect $noteEffect, $reader)
+  public function readTremoloPicking(NoteEffect $noteEffect)
   {
-    $value = $reader->readUnsignedByte();
+    $value = $this->reader->readUnsignedByte();
 
     $tremoloPicking = new EffectTremoloPicking();
 

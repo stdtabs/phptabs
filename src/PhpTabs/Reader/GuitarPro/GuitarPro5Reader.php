@@ -83,12 +83,12 @@ class GuitarPro5Reader extends GuitarProReaderBase
       $this->skip(1);
     }
 
-    $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature($this);
+    $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature();
     $this->skip(3);
 
     $this->readByte();
 
-    $channels = $this->factory('GuitarProChannels')->readChannels($this);
+    $channels = $this->factory('GuitarProChannels')->readChannels();
 
     $this->skip(42);
 
@@ -375,7 +375,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
     if (($flags2 & 0x04) != 0)
     {
-      $this->factory('GuitarPro4Effects')->readTremoloBar($noteEffect, $this);
+      $this->factory('GuitarPro4Effects')->readTremoloBar($noteEffect);
     }
     if (($flags1 & 0x40) != 0)
     {
@@ -714,7 +714,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     if (($flags & 0x20) != 0)
     {
-      $header->setMarker($this->factory('GuitarProMarker')->readMarker($header->getNumber(), $this));
+      $header->setMarker($this->factory('GuitarProMarker')->readMarker($header->getNumber()));
     }
 
     if (($flags & 0x10) != 0)
@@ -724,7 +724,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     if (($flags & 0x40) != 0)
     {
-      $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature($this);
+      $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature();
       $this->skip(1);
     }
 
@@ -941,7 +941,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     if (($flags1 & 0x01) != 0)
     {
-      $this->factory('GuitarPro4Effects')->readBend($noteEffect, $this);
+      $this->factory('GuitarPro4Effects')->readBend($noteEffect);
     }
 
     if (($flags1 & 0x10) != 0)
@@ -951,7 +951,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     if (($flags2 & 0x04) != 0)
     {
-      $this->factory('GuitarPro4Effects')->readTremoloPicking($noteEffect, $this);
+      $this->factory('GuitarPro4Effects')->readTremoloPicking($noteEffect);
     }
 
     if (($flags2 & 0x08) != 0)
@@ -1043,7 +1043,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     $this->readChannel($song, $track, $channels);
     $this->readInt();
     $track->setOffset($this->readInt());
-    $this->factory('GuitarProColor')->readColor($track->getColor(), $this);
+    $this->factory('GuitarProColor')->readColor($track->getColor());
 
     $this->skip($this->getVersionIndex() > 0 ? 49 : 44);
 

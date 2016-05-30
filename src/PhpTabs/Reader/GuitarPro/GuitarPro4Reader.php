@@ -81,12 +81,12 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     $tempoValue = $this->readInt();
 
-    $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature($this);
+    $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature();
     $this->skip(3);
 
     $this->readByte();
 
-    $channels = $this->factory('GuitarProChannels')->readChannels($this);
+    $channels = $this->factory('GuitarProChannels')->readChannels();
 
     $measures = $this->readInt();
     $tracks = $this->readInt();
@@ -327,7 +327,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
     }
     if (($flags2 & 0x04) != 0)
     {
-      $this->factory('GuitarPro4Effects')->readTremoloBar($noteEffect, $this);
+      $this->factory('GuitarPro4Effects')->readTremoloBar($noteEffect);
     }
     if (($flags1 & 0x40) != 0)
     {
@@ -656,7 +656,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     if (($flags & 0x20) != 0)
     {
-      $header->setMarker($this->factory('GuitarProMarker')->readMarker($number, $this));
+      $header->setMarker($this->factory('GuitarProMarker')->readMarker($number));
     }
 
     if (($flags & 0x40) != 0)
@@ -827,7 +827,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
     $noteEffect->setStaccato((($flags2 & 0x01) != 0));
     if (($flags1 & 0x01) != 0)
     {
-      $this->factory('GuitarPro4Effects')->readBend($noteEffect, $this);
+      $this->factory('GuitarPro4Effects')->readBend($noteEffect);
     }
     if (($flags1 & 0x10) != 0)
     {
@@ -835,7 +835,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
     }
     if (($flags2 & 0x04) != 0)
     {
-      $this->factory('GuitarPro4Effects')->readTremoloPicking($noteEffect, $this);
+      $this->factory('GuitarPro4Effects')->readTremoloPicking($noteEffect);
     }
     if (($flags2 & 0x08) != 0)
     {
@@ -947,7 +947,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
     $this->readChannel($song, $track, $channels);
     $this->readInt();
     $track->setOffset($this->readInt());
-    $this->factory('GuitarProColor')->readColor($track->getColor(), $this);
+    $this->factory('GuitarProColor')->readColor($track->getColor());
 
     return $track;
   }
