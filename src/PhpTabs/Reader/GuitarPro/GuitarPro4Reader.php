@@ -150,42 +150,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
    * -----------------------------------------------------------------*/
 
   /**
-   * @param TabString $string String on which note has started
-   * @param Track $track
-   * @return integer tied note value
-   */
-  private function getTiedNoteValue($string, Track $track)
-  {
-    $measureCount = $track->countMeasures();
-
-    if ($measureCount > 0)
-    {
-      for ($m = $measureCount - 1; $m >= 0; $m--)
-      {
-        $measure = $track->getMeasure($m);
-
-        for ($b = $measure->countBeats() - 1; $b >= 0; $b--)
-        {
-          $beat = $measure->getBeat($b);
-          $voice = $beat->getVoice(0);  
-
-          for ($n = 0; $n < $voice->countNotes(); $n++)
-          {
-            $note = $voice->getNote($n);
-
-            if ($note->getString() == $string)
-            {
-              return $note->getValue();
-            }
-          }
-        }
-      }
-    }
-
-    return -1;
-  }
-
-  /**
    * Reads some Beat informations
    * 
    * @param integer $start
@@ -736,7 +700,11 @@ class GuitarPro4Reader extends GuitarProReaderBase
     if (($flags & 0x20) != 0)
     {
       $fret = $this->readByte();
-      $value = $note->isTiedNote() ? $this->getTiedNoteValue($string->getNumber(), $track) : $fret;
+
+      $value = $note->isTiedNote() ? 
+        $this->factory('GuitarPro3TiedNote')->getTiedNoteValue($string->getNumber(), $track)
+        : $fret;
+
       $note->setValue($value >= 0 && $value < 100 ? $value : 0);
     }
     if (($flags & 0x80) != 0)

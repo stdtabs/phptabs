@@ -185,43 +185,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * @param Track $track
    * @return integer tied note value
    */
-  private function getTiedNoteValue($string, Track $track)
-  {
-    $measureCount = $track->countMeasures();
-
-    if ($measureCount > 0)
-    {
-      for ($m = $measureCount - 1; $m >= 0; $m--)
-      {
-        $measure = $track->getMeasure($m);
-
-        for ($b = $measure->countBeats() - 1; $b >= 0; $b--)
-        {
-          $beat = $measure->getBeat($b);
-          
-          for($v = 0; $v < $beat->countVoices(); $v++)
-          {
-            $voice = $beat->getVoice($v);  
-
-            if(!$voice->isEmpty())
-            {
-              for ($n = 0; $n < $voice->countNotes(); $n++)
-              {
-                $note = $voice->getNote($n);
-
-                if ($note->getString() == $string)
-                {
-                  return $note->getValue();
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return -1;
-  }
+ 
 
   /**
    * Reads an artificial harmonic
@@ -881,7 +845,11 @@ class GuitarPro5Reader extends GuitarProReaderBase
     if (($flags & 0x20) != 0)
     {
       $fret = $this->readByte();
-      $value = $note->isTiedNote() ? $this->getTiedNoteValue($string->getNumber(), $track) : $fret;
+
+      $value = $note->isTiedNote() ? 
+        $this->factory('GuitarPro5TiedNote')->getTiedNoteValue($string->getNumber(), $track)
+        : $fret;
+
       $note->setValue($value >= 0 && $value < 100 ? $value : 0);
     }
 
