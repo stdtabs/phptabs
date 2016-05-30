@@ -9,8 +9,6 @@ use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
 
 use PhpTabs\Model\Beat;
-use PhpTabs\Model\Channel;
-use PhpTabs\Model\ChannelParameter;
 use PhpTabs\Model\Chord;
 use PhpTabs\Model\Duration;
 use PhpTabs\Model\EffectGrace;
