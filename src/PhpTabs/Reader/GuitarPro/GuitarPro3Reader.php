@@ -201,61 +201,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads Channel informations
-   * 
-   * @param Song $song
-   * @param Track $track
-   * @param array $channels
-   * 
-   */
-  private function readChannel(Song $song, Track $track, $channels)
-  {
-    $gChannel1 = $this->readInt() - 1;
-    $gChannel2 = $this->readInt() - 1;
-
-    if($gChannel1 >= 0 && $gChannel1 < count($channels))
-    {
-      $channel = new Channel();
-      $gChannel1Param = new ChannelParameter();
-      $gChannel2Param = new ChannelParameter();
-
-      $gChannel1Param->setKey("channel-1");
-      $gChannel1Param->setValue("$gChannel1");
-      $gChannel2Param->setKey("channel-2");
-      $gChannel2Param->setValue($gChannel1 != 9
-        ? "$gChannel2" : "$gChannel1");
-
-      $channel->copyFrom($channels[$gChannel1]);
-
-      for($i = 0; $i < $song->countChannels(); $i++)
-      {
-        $channelAux = $song->getChannel($i);
-        for($n = 0; $n < $channelAux->countParameters(); $n++)
-        {
-          $channelParameter = $channelAux->getParameter($n);
-          if($channelParameter->getKey() == "$gChannel1")
-          {
-            if("$gChannel1" == $channelParameter->getValue())
-            {
-              $channel->setChannelId($channelAux->getChannelId());
-            }
-          }
-        }
-      }
-      if($channel->getChannelId() <= 0)
-      {
-        $channel->setChannelId($song->countChannels() + 1);
-        $channel->setName($this->createChannelNameFromProgram($song, $channel));
-        $channel->addParameter($gChannel1Param);
-        $channel->addParameter($gChannel2Param);
-        $song->addChannel($channel);
-      }
-
-      $track->setChannelId($channel->getChannelId());
-    }
-  }
-
-  /**
    * Read Chord informations
    * 
    * @param integer $strings
@@ -632,7 +577,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
       }
     }
     $this->readInt();
-    $this->readChannel($song, $track, $channels);
+    $this->factory('GuitarProChannel')->readChannel($song, $track, $channels);
     $this->readInt();
     $track->setOffset($this->readInt());
     $this->factory('GuitarProColor')->readColor($track->getColor());
