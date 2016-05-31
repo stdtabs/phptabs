@@ -230,7 +230,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     $this->file->closeStream(); 
   }
 
-  protected function factory($name)
+  public function factory($name)
   {
     return (new Factory($this))->get($name);
   }

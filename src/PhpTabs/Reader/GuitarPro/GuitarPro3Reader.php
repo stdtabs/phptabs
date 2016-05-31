@@ -9,7 +9,6 @@ use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
 
 use PhpTabs\Model\Beat;
-use PhpTabs\Model\Duration;
 use PhpTabs\Model\Lyric;
 use PhpTabs\Model\Measure;
 use PhpTabs\Model\MeasureHeader;
@@ -89,7 +88,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
       return;
     }
 
-    $this->readMeasures($this->song, $measures, $tracks, $tempoValue);
+    $this->factory('GuitarPro3Measures')->readMeasures($this->song, $measures, $tracks, $tempoValue);
 
     $this->closeStream();
   }
@@ -203,7 +202,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param Track $track
    * @param Tempo $tempo
    */
-  private function readMeasure(Measure $measure, Track $track, Tempo $tempo)
+  public function readMeasure(Measure $measure, Track $track, Tempo $tempo)
   {
     $nextNoteStart = intval($measure->getStart());
     $numberOfBeats = $this->readInt();
@@ -291,37 +290,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
     for ($i=0; $i<$count; $i++) 
     {
       $song->addMeasureHeader($this->readMeasureHeader(($i + 1), $song, $timeSignature));
-    }
-  }
-
-  /**
-   * Loops on mesures to read
-   * 
-   * @param Song $song
-   * @param integer $measures
-   * @param integer $tracks
-   * @param integer $tempoValue
-   */
-  private function readMeasures(Song $song, $measures, $tracks, $tempoValue)
-  {
-    $tempo = new Tempo();
-    $tempo->setValue($tempoValue);
-    $start = Duration::QUARTER_TIME;
-    for ($i = 0; $i < $measures; $i++)
-    {
-      $header = $song->getMeasureHeader($i);
-      $header->setStart($start);
-      for ($j = 0; $j < $tracks; $j++)
-      {
-        $track = $song->getTrack($j);
-        $measure = new Measure($header);
-
-        $track->addMeasure($measure);
-        $this->readMeasure($measure, $track, $tempo);
-      }
-
-      $header->getTempo()->copyFrom($tempo);
-      $start += $header->getLength();
     }
   }
 
