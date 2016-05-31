@@ -95,6 +95,8 @@ class GuitarPro5Reader extends GuitarProReaderBase
     $this->readMeasureHeaders($this->song, $measures);
     $this->readTracks($this->song, $tracks, $channels, $lyric, $lyricTrack);
 
+    $this->skip($this->getVersionIndex() == 0 ? 2 : 1);
+
     # Meta+channels+tracks+measure headers only
     if(Config::get('type') == 'channels')
     {
@@ -706,59 +708,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads Track informations
-   * 
-   * @param Song $song
-   * @param integer $number
-   * @param array $channels an array of Channel objects
-   * @param Lyric $lyrics
-   * @return Track
-   */
-  private function readTrack(Song $song, $number, $channels, $lyrics)
-  {
-    $this->readUnsignedByte();
-    if($number == 1 || $this->getVersionIndex() == 0)
-    {
-      $this->skip();
-    }
-
-    $track = new Track();
-    $track->setSong($song);
-    $track->setNumber($number);
-    $track->setLyrics($lyrics);
-    $track->setName($this->readStringByte(40));
-    $stringCount = $this->readInt();
-
-    for ($i = 0; $i < 7; $i++)
-    {
-      $tuning = $this->readInt();
-      if ($stringCount > $i)
-      {
-        $string = new TabString();
-        $string->setNumber($i + 1);
-        $string->setValue($tuning);
-        $track->addString($string);
-      }
-    }
-
-    $this->readInt();
-    $this->factory('GuitarProChannel')->readChannel($song, $track, $channels);
-    $this->readInt();
-    $track->setOffset($this->readInt());
-    $this->factory('GuitarProColor')->readColor($track->getColor());
-
-    $this->skip($this->getVersionIndex() > 0 ? 49 : 44);
-
-    if($this->getVersionIndex() > 0)
-    {
-      $this->readStringByteSizeOfInteger();
-      $this->readStringByteSizeOfInteger();
-    }
-
-    return $track;
-  }
-
-  /**
    * Loops on tracks to read
    * 
    * @param Song $song
@@ -771,13 +720,11 @@ class GuitarPro5Reader extends GuitarProReaderBase
   {
     for ($number = 1; $number <= $count; $number++)
     {
-      $song->addTrack(
-        $this->readTrack($song, $number, $channels
-        , $number == $lyricTrack ? $lyric : new Lyric())
-      );
-    }
+      $track = $this->factory('GuitarPro5Track')->readTrack($song, $number, $channels
+        , $number == $lyricTrack ? $lyric : new Lyric());
 
-    $this->skip($this->getVersionIndex() == 0 ? 2 : 1);
+      $song->addTrack($track);
+    }
   }
 
   /**

@@ -345,7 +345,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
    */
   private function readLyrics()
   {
-    
     $lyric = new Lyric();
     $lyric->setFrom($this->readInt());
     $lyric->setLyrics($this->readStringInteger());
@@ -623,43 +622,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads Track informations
-   * @param Song $song
-   * @param integer $number
-   * @param array $channels an array of Channel objects
-   * @param Lyric $lyrics
-   * @return Track
-   */
-  private function readTrack(Song $song, $number, $channels, $lyrics)
-  {
-    $track = new Track();
-    $track->setSong($song);
-    $track->setNumber($number);
-    $track->setLyrics($lyrics);
-    $this->readUnsignedByte();
-    $track->setName($this->readStringByte(40));
-    $stringCount = $this->readInt();
-    for ($i = 0; $i < 7; $i++)
-    {
-      $tuning = $this->readInt();
-      if ($stringCount > $i)
-      {
-        $string = new TabString();
-        $string->setNumber($i + 1);
-        $string->setValue($tuning);
-        $track->addString($string);
-      }
-    }
-    $this->readInt();
-    $this->factory('GuitarProChannel')->readChannel($song, $track, $channels);
-    $this->readInt();
-    $track->setOffset($this->readInt());
-    $this->factory('GuitarProColor')->readColor($track->getColor());
-
-    return $track;
-  }
-
-  /**
    * Loops on tracks to read
    * 
    * @param Song $song
@@ -672,10 +634,10 @@ class GuitarPro4Reader extends GuitarProReaderBase
   {
     for ($number = 1; $number <= $count; $number++)
     {
-      $song->addTrack(
-        $this->readTrack($song, $number, $channels
-        , $number == $lyricTrack ? $lyric : new Lyric())
-      );
+      $track = $this->factory('GuitarPro4Track')->readTrack($song, $number, $channels
+        , $number == $lyricTrack ? $lyric : new Lyric());
+
+      $song->addTrack($track);
     }
   }
 }
