@@ -112,6 +112,10 @@ class GuitarPro4Reader extends GuitarProReaderBase
     return self::$supportedVersions;
   }
 
+  public function getKeySignature()
+  {
+    return $this->keySignature;
+  }
 
   /**
    * {@inheritdoc}
@@ -156,7 +160,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
    * 
    * @return integer $time duration time
    */
-  private function readBeat($start, Measure $measure, Track $track, Tempo $tempo)
+  public function readBeat($start, Measure $measure, Track $track, Tempo $tempo)
   {
     $flags = $this->readUnsignedByte();
 
@@ -353,33 +357,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
     }
 
     return $lyric;
-  }
-
-  /**
-   * Reads a Measure
-   * 
-   * @param Measure $measure
-   * @param Track $track
-   * @param Tempo $tempo
-   */
-  public function readMeasure(Measure $measure, Track $track, Tempo $tempo)
-  {
-    $nextNoteStart = intval($measure->getStart());
-    $numberOfBeats = $this->readInt();
-
-    for ($i = 0; $i < $numberOfBeats; $i++)
-    {
-      $nextNoteStart += $this->readBeat($nextNoteStart, $measure, $track, $tempo);
-      if($i>256)
-      {
-        $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s], tempo %s'
-          , __METHOD__, $numberOfBeats, $measure->getNumber(), $track->getName(), $tempo->getValue());
-        throw new Exception($message);
-      }
-    }
-
-    $measure->setClef( $this->factory('GuitarProClef')->getClef($track) );
-    $measure->setKeySignature($this->keySignature);
   }
 
   /**

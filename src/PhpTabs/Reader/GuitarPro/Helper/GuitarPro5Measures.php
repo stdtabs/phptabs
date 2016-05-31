@@ -33,7 +33,7 @@ class GuitarPro5Measures extends AbstractReader
         $measure = new Measure($header);
 
         $track->addMeasure($measure);
-        $this->reader->readMeasure($measure, $track, $tempo);
+        $this->reader->factory('GuitarPro5Measure')->readMeasure($measure, $track, $tempo);
 
         if($i != $measures - 1 || $j != $tracks - 1)
         {

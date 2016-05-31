@@ -34,7 +34,7 @@ class GuitarPro3Measures extends AbstractReader
         $measure = new Measure($header);
 
         $track->addMeasure($measure);
-        $this->reader->readMeasure($measure, $track, $tempo);
+        $this->reader->factory('GuitarPro3Measure')->readMeasure($measure, $track, $tempo);
       }
 
       $header->getTempo()->copyFrom($tempo);

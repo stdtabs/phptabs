@@ -116,6 +116,10 @@ class GuitarPro5Reader extends GuitarProReaderBase
     return self::$supportedVersions;
   }
 
+  public function getKeySignature()
+  {
+    return $this->keySignature;
+  }
 
   /**
    * {@inheritdoc}
@@ -225,7 +229,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * 
    * @return integer $time duration time
    */
-  private function readBeat($start, Measure $measure, Track $track, Tempo $tempo, $voiceIndex)
+  public function readBeat($start, Measure $measure, Track $track, Tempo $tempo, $voiceIndex)
   {
     $flags = $this->readUnsignedByte();
 
@@ -416,60 +420,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
 
     return $lyric;
-  }
-
-  /**
-   * Reads a Measure
-   * 
-   * @param Measure $measure
-   * @param Track $track
-   * @param Tempo $tempo
-   */
-  public function readMeasure(Measure $measure, Track $track, Tempo $tempo)
-  {
-    for($voice = 0; $voice < 2; $voice++)
-    {
-      $nextNoteStart = intval($measure->getStart());
-      $numberOfBeats = $this->readInt();
-
-      for ($i = 0; $i < $numberOfBeats; $i++)
-      {
-        $nextNoteStart += $this->readBeat($nextNoteStart, $measure, $track, $tempo, $voice);
-        if($i>256)
-        {
-          $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s], tempo %s'
-            , __METHOD__, $numberOfBeats, $measure->getNumber(), $track->getName(), $tempo->getValue());
-          throw new Exception($message);
-        }
-      }
-    }
-
-    $emptyBeats = array();
-
-    for($i = 0; $i < $measure->countBeats(); $i++)
-    {
-      $beat = $measure->getBeat($i);
-      $empty = true;
-      for($v = 0; $v < $beat->countVoices(); $v++)
-      {
-        if(!$beat->getVoice($v)->isEmpty())
-        {
-          $empty = false;
-        }
-      }
-      if($empty)
-      {
-        $emptyBeats[] = $beat;
-      }
-    }
-
-    foreach($emptyBeats as $beat)
-    {
-      $measure->removeBeat($beat);
-    }
-
-    $measure->setClef( $this->factory('GuitarProClef')->getClef($track) );
-    $measure->setKeySignature($this->keySignature);
   }
 
   /**
