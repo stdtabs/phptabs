@@ -36,7 +36,7 @@ class GuitarPro4Beat extends AbstractReader
 
     if (($flags & 0x02) != 0)
     {
-      $this->reader->readChord($track->countStrings(), $beat);
+      $this->reader->factory('GuitarPro4Chord')->readChord($track->countStrings(), $beat);
     }
     if (($flags & 0x04) != 0) 
     {

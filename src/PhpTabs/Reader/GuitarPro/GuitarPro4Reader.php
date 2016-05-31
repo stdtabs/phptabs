@@ -187,55 +187,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads Chord informations
-   * 
-   * @param integer $strings
-   * @param Beat $beat
-   */
-  public function readChord($strings, Beat $beat)
-  {
-    $chord = new Chord($strings);
-    if (($this->readUnsignedByte() & 0x01) == 0)
-    {
-      $chord->setName($this->readStringByteSizeOfInteger());
-      $chord->setFirstFret($this->readInt());
-      if($chord->getFirstFret() != 0)
-      {
-        for ($i = 0; $i < 6; $i++)
-        {
-          $fret = $this->readInt();
-          if($i < $chord->countStrings())
-          {
-            $chord->addFretValue($i, $fret);
-          }
-        }
-      }
-    }
-    else
-    {
-      $this->skip(16);
-      $chord->setName($this->readStringByte(21));
-      $this->skip(4);
-      $chord->setFirstFret($this->readInt());
-      for ($i = 0; $i < 7; $i++)
-      {
-        $fret = $this->readInt();
-        if($i < $chord->countStrings())
-        {
-          $chord->addFretValue($i, $fret);
-        }
-      }
-    
-      $this->skip(32);
-    }
-
-    if($chord->countNotes() > 0)
-    {
-      $beat->setChord($chord);
-    }
-  }
-
-  /**
    * Reads GraceEffect
    * 
    * @param NoteEffect $effect
