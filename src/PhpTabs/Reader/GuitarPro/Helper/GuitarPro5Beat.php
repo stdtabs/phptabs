@@ -78,68 +78,6 @@ class GuitarPro5Beat extends AbstractReader
     return (!$voice->isEmpty() ? $duration->getTime() : 0);
   }
 
-
-  /**
-   * Reads mix change
-   * 
-   * @param Tempo $tempo
-   */
-  private function readMixChange(Tempo $tempo)
-  {
-    $this->readByte();
-    
-    $this->skip(16);
-    $volume = $this->readByte();
-    $pan = $this->readByte();
-    $chorus = $this->readByte();
-    $reverb = $this->readByte();
-    $phaser = $this->readByte();
-    $tremolo = $this->readByte();
-    $this->readStringByteSizeOfInteger();
-    $tempoValue = $this->readInt();
-    if($volume >= 0)
-    {
-      $this->readByte();
-    }
-    if($pan >= 0)
-    {
-      $this->readByte();
-    }
-    if($chorus >= 0)
-    {
-      $this->readByte();
-    }
-    if($reverb >= 0)
-    {
-      $this->readByte();
-    }
-    if($phaser >= 0)
-    {
-      $this->readByte();
-    }
-    if($tremolo >= 0)
-    {
-      $this->readByte();
-    }
-    if($tempoValue >= 0)
-    {
-      $tempo->setValue($tempoValue);
-      $this->readByte();
-      if($this->getVersionIndex() > 0)
-      {
-        $this->skip();
-      }
-    }
-    
-    $this->skip(2);
-    
-    if($this->getVersionIndex() > 0)
-    {
-      $this->readStringByteSizeOfInteger();
-      $this->readStringByteSizeOfInteger();
-    }
-  }
-
   /**
    * Creates a new Beat if necessary
    * 
