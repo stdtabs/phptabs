@@ -36,6 +36,21 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     $this->parserName = $xpt[count($xpt)-1];
   }
 
+  public function getKeySignature()
+  {
+    return $this->keySignature;
+  }
+
+  public function setKeySignature($value)
+  {
+    return $this->keySignature = $value;
+  }
+
+  public function getTripletFeel()
+  {
+    return $this->tripletFeel;
+  }
+
   /**
    * Gets version
    * 
