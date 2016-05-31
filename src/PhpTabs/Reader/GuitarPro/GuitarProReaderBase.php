@@ -6,9 +6,8 @@ use PhpTabs\Reader\GuitarPro\Helper\Factory;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Log;
 use PhpTabs\Model\Song;
-use PhpTabs\Model\Helper;
 
-abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInterface
+abstract class GuitarProReaderBase implements GuitarProReaderInterface
 {
   /** @var int */
   private $versionIndex;
@@ -166,7 +165,6 @@ abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInte
     return $bytes;
   }
 
-
   /**
    * Reads string bytes
    *
@@ -174,7 +172,7 @@ abstract class GuitarProReaderBase extends Helper implements GuitarProReaderInte
    * @param string $charset
    * @return string
    */
-  protected function readStringByte($size, $charset = 'UTF-8')
+  public function readStringByte($size, $charset = 'UTF-8')
   { 
     return $this->readString($size, $this->readUnsignedByte(), $charset);
   }

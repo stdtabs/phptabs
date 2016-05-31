@@ -167,7 +167,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     $beat = new Beat();
     $voice = $beat->getVoice(0);
-    $duration = $this->readDuration($flags);
+    $duration = $this->factory('GuitarProDuration')->readDuration($flags);
     $effect = new NoteEffect();
 
     if (($flags & 0x02) != 0)
@@ -298,59 +298,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
     {
       $beat->setChord($chord);
     }
-  }
-
-  /**
-   * Reads Duration
-   * @param byte $flags unsigned bytes
-   * @return Duration
-   */
-  private function readDuration($flags)
-  {
-    $duration = new Duration();
-    $duration->setValue(pow( 2 , ($this->readByte() + 4) ) / 4);
-    $duration->setDotted(($flags & 0x01) != 0);
-    if (($flags & 0x20) != 0)
-    {
-      $divisionType = $this->readInt();
-      switch ($divisionType)
-      {
-        case 3:
-          $duration->getDivision()->setEnters(3);
-          $duration->getDivision()->setTimes(2);
-          break;
-        case 5:
-          $duration->getDivision()->setEnters(5);
-          $duration->getDivision()->setTimes(4);
-          break;
-        case 6:
-          $duration->getDivision()->setEnters(6);
-          $duration->getDivision()->setTimes(4);
-          break;
-        case 7:
-          $duration->getDivision()->setEnters(7);
-          $duration->getDivision()->setTimes(4);
-          break;
-        case 9:
-          $duration->getDivision()->setEnters(9);
-          $duration->getDivision()->setTimes(8);
-          break;
-        case 10:
-          $duration->getDivision()->setEnters(10);
-          $duration->getDivision()->setTimes(8);
-          break;
-        case 11:
-          $duration->getDivision()->setEnters(11);
-          $duration->getDivision()->setTimes(8);
-          break;
-        case 12:
-          $duration->getDivision()->setEnters(12);
-          $duration->getDivision()->setTimes(8);
-          break;
-      }
-    }
-
-    return $duration;
   }
 
   /**

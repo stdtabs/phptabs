@@ -44,7 +44,7 @@ class GuitarProChannels extends AbstractReader
   /**
    * Formats an integer
    * 
-   * @param byte $b
+   * @param byte $bytes
    * @return integer between 0 and 32767
    */
   protected function toChannelShort($bytes)

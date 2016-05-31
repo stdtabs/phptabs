@@ -9,7 +9,6 @@ use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
 
 use PhpTabs\Model\Beat;
-use PhpTabs\Model\Chord;
 use PhpTabs\Model\Duration;
 use PhpTabs\Model\Lyric;
 use PhpTabs\Model\Measure;
@@ -157,12 +156,12 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     $beat = new Beat();
     $voice = $beat->getVoice(0);
-    $duration = $this->readDuration($flags);
+    $duration = $this->factory('GuitarProDuration')->readDuration($flags);
     $effect = new NoteEffect();
 
     if (($flags & 0x02) != 0)
     {
-      $this->readChord($track->countStrings(), $beat);
+      $this->factory('GuitarPro3Chord')->readChord($track->countStrings(), $beat);
     }
     if (($flags & 0x04) != 0) 
     {
@@ -195,107 +194,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
     $measure->addBeat($beat);
 
     return $duration->getTime();
-  }
-
-  /**
-   * Read Chord informations
-   * 
-   * @param integer $strings
-   * @param Beat $beat
-   */
-  private function readChord($strings, $beat)
-  {
-    $chord = new Chord($strings);
-    $header = $this->readUnsignedByte();
-    if (($header & 0x01) == 0)
-    {
-      $chord->setName($this->readStringByteSizeOfInteger());
-      $chord->setFirstFret($this->readInt());
-      if ($chord->getFirstFret() != 0)
-      {
-        for ($i = 0; $i < 6; $i++)
-        {
-          $fret = $this->readInt();
-          if($i < $chord->countStrings())
-          {
-            $chord->addFretValue($i, $fret);
-          }
-        }
-      }
-    }
-    else
-    {
-      $this->skip(25);
-      $chord->setName($this->readStringByte(34));
-      $chord->setFirstFret($this->readInt());
-      for ($i = 0; $i < 6; $i++)
-      {
-        $fret = $this->readInt();
-        if($i < $chord->countStrings())
-        {
-          $chord->addFretValue($i, $fret);
-        }
-      }
-      $this->skip(36);
-    }
-    if($chord->countNotes() > 0)
-    {
-      $beat->setChord($chord);
-    }
-  }
-
-  /**
-   * Reads Duration
-   *
-   * @param byte $flags unsigned bytes
-   * @return Duration
-   */
-  private function readDuration($flags)
-  {
-    $duration = new Duration();
-    $duration->setValue(pow( 2 , ($this->readByte() + 4) ) / 4);
-    $duration->setDotted(($flags & 0x01) != 0);
-    if (($flags & 0x20) != 0)
-    {
-      $divisionType = $this->readInt();
-      switch ($divisionType)
-      {
-        case 3:
-          $duration->getDivision()->setEnters(3);
-          $duration->getDivision()->setTimes(2);
-          break;
-        case 5:
-          $duration->getDivision()->setEnters(5);
-          $duration->getDivision()->setTimes(4);
-          break;
-        case 6:
-          $duration->getDivision()->setEnters(6);
-          $duration->getDivision()->setTimes(4);
-          break;
-        case 7:
-          $duration->getDivision()->setEnters(7);
-          $duration->getDivision()->setTimes(4);
-          break;
-        case 9:
-          $duration->getDivision()->setEnters(9);
-          $duration->getDivision()->setTimes(8);
-          break;
-        case 10:
-          $duration->getDivision()->setEnters(10);
-          $duration->getDivision()->setTimes(8);
-          break;
-        case 11:
-          $duration->getDivision()->setEnters(11);
-          $duration->getDivision()->setTimes(8);
-          break;
-        case 12:
-          $duration->getDivision()->setEnters(12);
-          $duration->getDivision()->setTimes(8);
-          break;
-      }
-    }
-
-    return $duration;
   }
 
   /**
