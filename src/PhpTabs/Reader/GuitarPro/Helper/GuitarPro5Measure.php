@@ -2,11 +2,7 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use Exception;
-
-use PhpTabs\Model\Duration;
 use PhpTabs\Model\Measure;
-use PhpTabs\Model\Song;
 use PhpTabs\Model\Tempo;
 use PhpTabs\Model\track;
 
@@ -29,12 +25,6 @@ class GuitarPro5Measure extends AbstractReader
       for ($i = 0; $i < $numberOfBeats; $i++)
       {
         $nextNoteStart += $this->reader->factory('GuitarPro5Beat')->readBeat($nextNoteStart, $measure, $track, $tempo, $voice);
-        if($i>256)
-        {
-          $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s], tempo %s'
-            , __METHOD__, $numberOfBeats, $measure->getNumber(), $track->getName(), $tempo->getValue());
-          throw new Exception($message);
-        }
       }
     }
 
