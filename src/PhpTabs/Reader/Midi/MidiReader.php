@@ -2,6 +2,8 @@
 
 namespace PhpTabs\Reader\Midi;
 
+use Exception;
+
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
@@ -21,9 +23,6 @@ use PhpTabs\Model\Tempo;
 use PhpTabs\Model\TimeSignature;
 use PhpTabs\Model\Track;
 
-/**
- * MIDI Reader
- */
 class MidiReader extends MidiReaderBase
 {
   const CANCEL_RUNNING_STATUS_ON_META_AND_SYSEX = true;
@@ -153,7 +152,7 @@ class MidiReader extends MidiReaderBase
 
     if(!count($this->headers) || !count($this->tracks))
     {
-      throw new \Exception("Empty Song");
+      throw new Exception('Empty Song');
     }
   }
 
@@ -186,7 +185,7 @@ class MidiReader extends MidiReaderBase
           $channel->setProgram($tempChannel->getInstrument());
           $channel->setVolume($tempChannel->getVolume());
           $channel->setBalance($tempChannel->getBalance());
-          $channel->setName(("#" + $channel->getChannelId()));
+          $channel->setName(('#' . $channel->getChannelId()));
           $channel->setBank($tempChannel->getChannel() == 9
             ? Channel::DEFAULT_PERCUSSION_BANK : Channel::DEFAULT_BANK);
 
@@ -447,30 +446,30 @@ class MidiReader extends MidiReaderBase
   {
     if ($this->readInt() != MidiReaderInterface::HEADER_MAGIC)
     {
-      throw new \Exception("not a MIDI file: wrong header magic");
+      throw new Exception('not a MIDI file: wrong header magic');
     }
     $headerLength = $this->readInt();
     if ($headerLength < MidiReaderInterface::HEADER_LENGTH)
     {
-      throw new \Exception("corrupt MIDI file: wrong header length");
+      throw new Exception('corrupt MIDI file: wrong header length');
     }
     $type = $this->readShort();
     if ($type < 0 || $type > 2)
     {
-      throw new \Exception("corrupt MIDI file: illegal type");
+      throw new Exception('corrupt MIDI file: illegal type');
     }
     if ($type == 2)
     {
-      throw new \Exception("this implementation doesn't support type 2 MIDI files");
+      throw new Exception('this implementation doesn\'t support type 2 MIDI files');
     }
     $trackCount = $this->readShort();
     if ($trackCount <= 0)
     {
-      throw new \Exception("corrupt MIDI file: number of tracks must be positive");
+      throw new Exception('corrupt MIDI file: number of tracks must be positive');
     }
     if ($type == 0 && $trackCount != 1)
     {
-      throw new \Exception("corrupt MIDI file:  type 0 files must contain exactly one track $trackCount");
+      throw new Exception('corrupt MIDI file:  type 0 files must contain exactly one track $trackCount');
     }
     $divisionType = -1.0;
     $resolution = -1;
@@ -493,7 +492,7 @@ class MidiReader extends MidiReaderBase
           $divisionType = MidiReaderInterface::SMPTE_30;
           break;
         default:
-          throw new \Exception("corrupt MIDI file: illegal frame division type");
+          throw new Exception('corrupt MIDI file: illegal frame division type');
           break;
       }
 
@@ -746,7 +745,7 @@ class MidiReader extends MidiReaderBase
       switch($helper->runningStatusByte)
       {
         case -1:
-          throw new \Exception("corrupt MIDI file: status byte missing");
+          throw new Exception('corrupt MIDI file: status byte missing');
           break;
         default:
           $runningStatusApplies = true;
