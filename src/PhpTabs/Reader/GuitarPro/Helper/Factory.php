@@ -13,13 +13,14 @@ class Factory
     $this->reader = $reader;
   }
 
-  public function get($name)
+  public function get($name, $parserName)
   {
     $name = __NAMESPACE__ . '\\' . $name;
 
     $object = new $name();
 
     $object->setReader($this->reader);
+    $object->setParserName($parserName);
     
     return $object;
   }

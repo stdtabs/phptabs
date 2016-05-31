@@ -8,8 +8,7 @@ use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
 
-use PhpTabs\Model\Beat;
-use PhpTabs\Model\Lyric;
+//use PhpTabs\Model\Beat;
 use PhpTabs\Model\Measure;
 use PhpTabs\Model\MeasureHeader;
 use PhpTabs\Model\Note;
@@ -140,67 +139,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * -----------------------------------------------------------------*/
 
   /**
-   * Reads some Beat informations
-   * 
-   * @param integer $start
-   * @param Measure $measure
-   * @param Track $track
-   * @param Tempo $tempo
-   * 
-   * @return integer $time duration time
-   */
-  public function readBeat($start, Measure $measure, Track $track, Tempo $tempo)
-  {
-    $flags = $this->readUnsignedByte();
-
-    if(($flags & 0x40) != 0)
-    {
-      $this->readUnsignedByte();
-    }
-
-    $beat = new Beat();
-    $voice = $beat->getVoice(0);
-    $duration = $this->factory('GuitarProDuration')->readDuration($flags);
-    $effect = new NoteEffect();
-
-    if (($flags & 0x02) != 0)
-    {
-      $this->factory('GuitarPro3Chord')->readChord($track->countStrings(), $beat);
-    }
-    if (($flags & 0x04) != 0) 
-    {
-      $this->factory('GuitarProText')->readText($beat);
-    }
-    if (($flags & 0x08) != 0)
-    {
-      $this->factory('GuitarPro3Effects')->readBeatEffects($beat, $effect);
-    }
-    if (($flags & 0x10) != 0)
-    {
-      $this->readMixChange($tempo);
-    }
-
-    $stringFlags = $this->readUnsignedByte();
-
-    for ($i = 6; $i >= 0; $i--)
-    {
-      if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->countStrings())
-      {
-        $string = clone $track->getString( (6 - $i) + 1 );
-        $note = $this->readNote($string, $track, clone $effect);
-        $voice->addNote($note);
-      }
-    }
-
-    $beat->setStart($start);
-    $voice->setEmpty(false);
-    $voice->getDuration()->copyFrom($duration);
-    $measure->addBeat($beat);
-
-    return $duration->getTime();
-  }
-
-  /**
    * Reads a mesure header
    * 
    * @param integer $number
@@ -276,7 +214,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * 
    * @param Tempo $tempo
    */
-  private function readMixChange(Tempo $tempo)
+  public function readMixChange(Tempo $tempo)
   {
     $this->readByte(); //instrument
     $volume = $this->readByte();
@@ -325,7 +263,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
    * @param NoteEffect $effect
    * @return Note
    */
-  private function readNote(TabString $string, Track $track, NoteEffect $effect)
+  public function readNote(TabString $string, Track $track, NoteEffect $effect)
   {
     $flags = $this->readUnsignedByte();
     $note = new Note();

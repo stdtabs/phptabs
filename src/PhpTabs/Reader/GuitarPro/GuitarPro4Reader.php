@@ -151,73 +151,12 @@ class GuitarPro4Reader extends GuitarProReaderBase
    * -----------------------------------------------------------------*/
 
   /**
-   * Reads some Beat informations
-   * 
-   * @param integer $start
-   * @param Measure $measure
-   * @param Track $track
-   * @param Tempo $tempo
-   * 
-   * @return integer $time duration time
-   */
-  public function readBeat($start, Measure $measure, Track $track, Tempo $tempo)
-  {
-    $flags = $this->readUnsignedByte();
-
-    if(($flags & 0x40) != 0)
-    {
-      $this->readUnsignedByte();
-    }
-
-    $beat = new Beat();
-    $voice = $beat->getVoice(0);
-    $duration = $this->factory('GuitarProDuration')->readDuration($flags);
-    $effect = new NoteEffect();
-
-    if (($flags & 0x02) != 0)
-    {
-      $this->readChord($track->countStrings(), $beat);
-    }
-    if (($flags & 0x04) != 0) 
-    {
-      $this->factory('GuitarProText')->readText($beat);
-    }
-    if (($flags & 0x08) != 0)
-    {
-      $this->readBeatEffects($beat, $effect);
-    }
-    if (($flags & 0x10) != 0)
-    {
-      $this->readMixChange($tempo);
-    }
-
-    $stringFlags = $this->readUnsignedByte();
-
-    for ($i = 6; $i >= 0; $i--)
-    {
-      if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->countStrings())
-      {
-        $string = clone $track->getString( (6 - $i) + 1 );
-        $note = $this->readNote($string, $track, clone $effect);
-        $voice->addNote($note);
-      }
-    }
-
-    $beat->setStart($start);
-    $voice->setEmpty(false);
-    $voice->getDuration()->copyFrom($duration);
-    $measure->addBeat($beat);
-
-    return $duration->getTime();
-  }
-
-  /**
    * Reads some NoteEffect informations
    * 
    * @param Beat $beat
    * @param NoteEffect $effect
    */
-  private function readBeatEffects(Beat $beat, NoteEffect $noteEffect)
+  public function readBeatEffects(Beat $beat, NoteEffect $noteEffect)
   {
     $flags1 = $this->readUnsignedByte();
     $flags2 = $this->readUnsignedByte();
@@ -261,7 +200,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
    * @param integer $strings
    * @param Beat $beat
    */
-  private function readChord($strings, Beat $beat)
+  public function readChord($strings, Beat $beat)
   {
     $chord = new Chord($strings);
     if (($this->readUnsignedByte() & 0x01) == 0)
@@ -434,7 +373,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
    * 
    * @param Tempo $tempo
    */
-  private function readMixChange(Tempo $tempo)
+  public function readMixChange(Tempo $tempo)
   {
     $this->readByte(); //instrument
     $volume = $this->readByte();
@@ -485,7 +424,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
    * @param NoteEffect $effect
    * @return Note
    */
-  private function readNote(TabString $string, Track $track, NoteEffect $effect)
+  public function readNote(TabString $string, Track $track, NoteEffect $effect)
   {
     $flags = $this->readUnsignedByte();
     $note = new Note();

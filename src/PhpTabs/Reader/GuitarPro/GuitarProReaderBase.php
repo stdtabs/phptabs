@@ -15,6 +15,9 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
   /** @var string */
   private $version;
 
+  /** @var string */
+  private $parserName;
+
   /** @var File */
   private $file;
 
@@ -27,6 +30,10 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
   public function __construct(File $file)
   {
     $this->file = $file;
+
+    $xpt = explode('\\', get_class($this));
+
+    $this->parserName = $xpt[count($xpt)-1];
   }
 
   /**
@@ -232,6 +239,6 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
 
   public function factory($name)
   {
-    return (new Factory($this))->get($name);
+    return (new Factory($this))->get($name, $this->parserName);
   }
 }

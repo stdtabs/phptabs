@@ -26,7 +26,8 @@ class GuitarPro3Measure extends AbstractReader
 
     for ($i = 0; $i < $numberOfBeats; $i++)
     {
-      $nextNoteStart += $this->reader->readBeat($nextNoteStart, $measure, $track, $tempo);
+      $factory = str_replace('Reader', '', $this->getParserName()) . 'Beat';
+      $nextNoteStart += $this->reader->factory($factory)->readBeat($nextNoteStart, $measure, $track, $tempo);
       if($i>256)
       {
         $message = sprintf('%s: Too much beats (%s) in measure %s of Track[%s], tempo %s'

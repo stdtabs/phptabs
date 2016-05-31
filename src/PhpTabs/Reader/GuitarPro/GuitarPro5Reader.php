@@ -157,31 +157,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * -----------------------------------------------------------------*/
 
   /**
-   * Creates a new Beat if necessary
-   * 
-   * @param Measure $mesure
-   * @param integer $start
-   * @return Beat
-   */
-  private function getBeat(Measure $measure, $start)
-  {
-    $count = $measure->countBeats();
-    for($i = 0; $i < $count; $i++)
-    {
-      $beat = $measure->getBeat($i);
-      if($beat->getStart() == $start)
-      {
-        return $beat;
-      }
-    }
-    $beat = new Beat();
-    $beat->setStart($start);
-    $measure->addBeat($beat);
-
-    return $beat;
-  }
-
-  /**
    * Reads an artificial harmonic
    * 
    * @param NoteEffect $effect
@@ -221,80 +196,12 @@ class GuitarPro5Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads some Beat informations
-   * 
-   * @param integer $start
-   * @param Measure $measure
-   * @param Track $track
-   * @param Tempo $tempo
-   * @param integer $voiceIndex
-   * 
-   * @return integer $time duration time
-   */
-  public function readBeat($start, Measure $measure, Track $track, Tempo $tempo, $voiceIndex)
-  {
-    $flags = $this->readUnsignedByte();
-
-    $beat = $this->getBeat($measure, $start);
-    $voice = $beat->getVoice($voiceIndex);
-
-    if(($flags & 0x40) != 0)
-    {
-      $beatType = $this->readUnsignedByte();
-      $voice->setEmpty(($beatType & 0x02) == 0);
-    }
-
-    $duration = $this->factory('GuitarProDuration')->readDuration($flags);
-    $effect = new NoteEffect();
-
-    if (($flags & 0x02) != 0)
-    {
-      $this->readChord($track->countStrings(), $beat);
-    }
-    if (($flags & 0x04) != 0) 
-    {
-      $this->factory('GuitarProText')->readText($beat);
-    }
-    if (($flags & 0x08) != 0)
-    {
-      $this->readBeatEffects($beat, $effect);
-    }
-    if (($flags & 0x10) != 0)
-    {
-      $this->readMixChange($tempo);
-    }
-
-    $stringFlags = $this->readUnsignedByte();
-
-    for ($i = 6; $i >= 0; $i--)
-    {
-      if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->countStrings())
-      {
-        $string = clone $track->getString( (6 - $i) + 1 );
-        $note = $this->readNote($string, $track, clone $effect);
-        $voice->addNote($note);
-      }
-
-      $voice->getDuration()->copyFrom($duration);
-    }
-
-    $this->skip();
-
-    if(($this->readByte() & 0x08) != 0)
-    {
-      $this->skip();
-    }
-
-    return (!$voice->isEmpty() ? $duration->getTime() : 0);
-  }
-
-  /**
    * Reads some NoteEffect informations
    * 
    * @param Beat $beat
    * @param NoteEffect $effect
    */
-  private function readBeatEffects(Beat $beat, NoteEffect $noteEffect)
+  public function readBeatEffects(Beat $beat, NoteEffect $noteEffect)
   {
     $flags1 = $this->readUnsignedByte();
     $flags2 = $this->readUnsignedByte();
@@ -338,7 +245,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * @param integer $strings
    * @param Beat $beat
    */
-  private function readChord($strings,Beat $beat)
+  public function readChord($strings,Beat $beat)
   {
     $chord = new Chord($strings);
     $this->skip(17);
@@ -592,7 +499,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * @param NoteEffect $effect
    * @return Note
    */
-  private function readNote(TabString $string, Track $track, NoteEffect $effect)
+  public function readNote(TabString $string, Track $track, NoteEffect $effect)
   {
     $flags = $this->readUnsignedByte();
     $note = new Note();
