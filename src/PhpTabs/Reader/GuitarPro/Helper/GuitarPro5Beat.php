@@ -61,7 +61,7 @@ class GuitarPro5Beat extends AbstractReader
       if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->countStrings())
       {
         $string = clone $track->getString( (6 - $i) + 1 );
-        $note = $this->reader->readNote($string, $track, clone $effect);
+        $note = $this->reader->factory('GuitarPro5Note')->readNote($string, $track, clone $effect);
         $voice->addNote($note);
       }
 

@@ -15,16 +15,11 @@ use PhpTabs\Model\EffectGrace;
 use PhpTabs\Model\EffectHarmonic;
 use PhpTabs\Model\EffectTrill;
 use PhpTabs\Model\Lyric;
-use PhpTabs\Model\Measure;
-use PhpTabs\Model\MeasureHeader;
-use PhpTabs\Model\Note;
 use PhpTabs\Model\NoteEffect;
 use PhpTabs\Model\Song;
 use PhpTabs\Model\Stroke;
-use PhpTabs\Model\TabString;
 use PhpTabs\Model\Tempo;
 use PhpTabs\Model\TimeSignature;
-use PhpTabs\Model\Track;
 use PhpTabs\Model\Velocities;
 
 class GuitarPro5Reader extends GuitarProReaderBase
@@ -32,13 +27,10 @@ class GuitarPro5Reader extends GuitarProReaderBase
   /** @var array $supportedVersions */
   private static $supportedVersions = array('FICHIER GUITAR PRO v5.00', 'FICHIER GUITAR PRO v5.10');
 
-  /**
-   * @var integer $keySignature
-   */  
+  /** @var integer $keySignature */  
   protected $keySignature;
 
   /**
-   * Reader constructor
    * @param File $file input file to read
    */
   public function __construct(File $file)
@@ -409,72 +401,11 @@ class GuitarPro5Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads a note
-   * 
-   * @param TabString $string
-   * @param track $track
-   * @param NoteEffect $effect
-   * @return Note
-   */
-  public function readNote(TabString $string, Track $track, NoteEffect $effect)
-  {
-    $flags = $this->readUnsignedByte();
-    $note = new Note();
-    $note->setString($string->getNumber());
-    $note->setEffect($effect);
-    $note->getEffect()->setAccentuatedNote((($flags & 0x40) != 0));
-    $note->getEffect()->setHeavyAccentuatedNote((($flags & 0x02) != 0));
-    $note->getEffect()->setGhostNote((($flags & 0x04) != 0));
-
-    if (($flags & 0x20) != 0)
-    {
-      $noteType = $this->readUnsignedByte();
-      $note->setTiedNote($noteType == 0x02);
-      $note->getEffect()->setDeadNote($noteType == 0x03);
-    }
-
-    if (($flags & 0x10) != 0)
-    {
-      $note->setVelocity( (Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->readByte())) - Velocities::VELOCITY_INCREMENT);
-    }
-
-    if (($flags & 0x20) != 0)
-    {
-      $fret = $this->readByte();
-
-      $value = $note->isTiedNote() ? 
-        $this->factory('GuitarPro5TiedNote')->getTiedNoteValue($string->getNumber(), $track)
-        : $fret;
-
-      $note->setValue($value >= 0 && $value < 100 ? $value : 0);
-    }
-
-    if (($flags & 0x80) != 0)
-    {
-      $this->skip(2);
-    }
-
-    if (($flags & 0x01) != 0)
-    {
-      $this->skip(8);
-    }
-    
-    $this->skip();
-    
-    if (($flags & 0x08) != 0)
-    {
-      $this->readNoteEffects($note->getEffect());
-    }
-
-    return $note;
-  }
-
-  /**
    * Reads NoteEffect
    * 
    * @param NoteEffect $noteEffect
    */
-  private function readNoteEffects(NoteEffect $noteEffect)
+  public function readNoteEffects(NoteEffect $noteEffect)
   {
     $flags1 = intval($this->readUnsignedByte());
     $flags2 = intval($this->readUnsignedByte());

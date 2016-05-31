@@ -8,17 +8,10 @@ use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
 
-//use PhpTabs\Model\Beat;
-use PhpTabs\Model\Measure;
 use PhpTabs\Model\MeasureHeader;
-use PhpTabs\Model\Note;
-use PhpTabs\Model\NoteEffect;
 use PhpTabs\Model\Song;
-use PhpTabs\Model\TabString;
 use PhpTabs\Model\Tempo;
 use PhpTabs\Model\TimeSignature;
-use PhpTabs\Model\Track;
-use PhpTabs\Model\Velocities;
 
 class GuitarPro3Reader extends GuitarProReaderBase
 {
@@ -32,7 +25,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
   protected $tripletFeel, $keySignature;
 
   /**
-   * Constructor
    * @param File $file input file to read
    */
   public function __construct(File $file)
@@ -193,57 +185,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
       $tempo->setValue($tempoValue);
       $this->readByte();
     }
-  }
-
-  /**
-   * Reads a note
-   * 
-   * @param TabString $string
-   * @param track $track
-   * @param NoteEffect $effect
-   * @return Note
-   */
-  public function readNote(TabString $string, Track $track, NoteEffect $effect)
-  {
-    $flags = $this->readUnsignedByte();
-    $note = new Note();
-    $note->setString($string->getNumber());
-    $note->setEffect($effect);
-    $note->getEffect()->setGhostNote((($flags & 0x04) != 0));
-    if (($flags & 0x20) != 0)
-    {
-      $noteType = $this->readUnsignedByte();
-      $note->setTiedNote($noteType == 0x02);
-      $note->getEffect()->setDeadNote($noteType == 0x03);
-    }
-    if (($flags & 0x01) != 0)
-    {
-      $this->skip(2);
-    }
-    if (($flags & 0x10) != 0)
-    {
-      $note->setVelocity( (Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->readByte())) - Velocities::VELOCITY_INCREMENT);
-    }
-    if (($flags & 0x20) != 0)
-    {
-      $fret = $this->readByte();
-
-      $value = $note->isTiedNote()
-        ? $this->factory('GuitarPro3TiedNote')->getTiedNoteValue($string->getNumber(), $track)
-        : $fret;
-
-      $note->setValue($value >= 0 && $value < 100 ? $value : 0);
-    }
-    if (($flags & 0x80) != 0)
-    {
-      $this->skip(2);
-    }
-    if (($flags & 0x08) != 0)
-    {
-      $this->factory('GuitarPro3Effects')->readNoteEffects($note->getEffect());
-    }
-
-    return $note;
   }
 
   /**
