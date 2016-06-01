@@ -8,7 +8,6 @@ use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
 
-use PhpTabs\Model\Beat;
 use PhpTabs\Model\Duration;
 use PhpTabs\Model\EffectGrace;
 use PhpTabs\Model\EffectHarmonic;
@@ -18,7 +17,6 @@ use PhpTabs\Model\Measure;
 use PhpTabs\Model\MeasureHeader;
 use PhpTabs\Model\NoteEffect;
 use PhpTabs\Model\Song;
-use PhpTabs\Model\Stroke;
 use PhpTabs\Model\TimeSignature;
 use PhpTabs\Model\Velocities;
 
@@ -50,11 +48,11 @@ class GuitarPro4Reader extends GuitarProReaderBase
       throw new Exception(sprintf('Version "%s" is not supported', $this->getVersion()));
     }
 
-    $this->song = new Song();
+    $song = new Song();
 
-    $this->setTablature($this->song);
+    $this->setTablature($song);
 
-    $this->factory('GuitarPro3Informations')->readInformations($this->song);
+    $this->factory('GuitarPro3Informations')->readInformations($song);
 
     $this->tripletFeel = $this->readBoolean()
       ? MeasureHeader::TRIPLET_FEEL_EIGHTH
@@ -83,8 +81,8 @@ class GuitarPro4Reader extends GuitarProReaderBase
     $measures = $this->readInt();
     $tracks = $this->readInt();
 
-    $this->readMeasureHeaders($this->song, $measures);
-    $this->readTracks($this->song, $tracks, $channels, $lyric, $lyricTrack);
+    $this->readMeasureHeaders($song, $measures);
+    $this->readTracks($song, $tracks, $channels, $lyric, $lyricTrack);
 
     # Meta+channels+tracks+measure headers only
     if(Config::get('type') == 'channels')
@@ -94,7 +92,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
       return;
     }
 
-    $this->factory('GuitarPro3Measures')->readMeasures($this->song, $measures, $tracks, $tempoValue);
+    $this->factory('GuitarPro3Measures')->readMeasures($song, $measures, $tracks, $tempoValue);
 
     $this->closeStream();
   }
@@ -139,50 +137,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
   /*-------------------------------------------------------------------
    * Private methods are below
    * -----------------------------------------------------------------*/
-
-  /**
-   * Reads some NoteEffect informations
-   * 
-   * @param Beat $beat
-   * @param NoteEffect $effect
-   */
-  public function readBeatEffects(Beat $beat, NoteEffect $noteEffect)
-  {
-    $flags1 = $this->readUnsignedByte();
-    $flags2 = $this->readUnsignedByte();
-    $noteEffect->setFadeIn((($flags1 & 0x10) != 0));
-    $noteEffect->setVibrato((($flags1  & 0x02) != 0));
-    if (($flags1 & 0x20) != 0)
-    {
-      $effect = $this->readUnsignedByte();
-      $noteEffect->setTapping($effect == 1);
-      $noteEffect->setSlapping($effect == 2);
-      $noteEffect->setPopping($effect == 3);
-    }
-    if (($flags2 & 0x04) != 0)
-    {
-      $this->factory('GuitarPro4Effects')->readTremoloBar($noteEffect);
-    }
-    if (($flags1 & 0x40) != 0)
-    {
-      $strokeDown = $this->readByte();
-      $strokeUp = $this->readByte();
-      if($strokeDown > 0 )
-      {
-        $beat->getStroke()->setDirection(Stroke::STROKE_DOWN);
-        $beat->getStroke()->setValue($this->factory('GuitarPro3Effects')->toStrokeValue($strokeDown));
-      }
-      else if($strokeUp > 0)
-      {
-        $beat->getStroke()->setDirection(Stroke::STROKE_UP);
-        $beat->getStroke()->setValue($this->factory('GuitarPro3Effects')->toStrokeValue($strokeUp));
-      }
-    }
-    if (($flags2 & 0x02) != 0)
-    {
-      $this->readByte();
-    }
-  }
 
   /**
    * Reads GraceEffect

@@ -44,7 +44,7 @@ class GuitarPro4Beat extends AbstractReader
     }
     if (($flags & 0x08) != 0)
     {
-      $this->reader->readBeatEffects($beat, $effect);
+      $this->reader->factory('GuitarPro4BeatEffects')->readBeatEffects($beat, $effect);
     }
     if (($flags & 0x10) != 0)
     {
