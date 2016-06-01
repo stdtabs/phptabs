@@ -39,11 +39,11 @@ class GuitarPro3Reader extends GuitarProReaderBase
       throw new Exception(sprintf('Version "%s" is not supported', $this->getVersion()));
     }
 
-    $this->song = new Song();
+    $song = new Song();
 
-    $this->setTablature($this->song);
+    $this->setTablature($song);
 
-    $this->factory('GuitarPro3Informations')->readInformations($this->song);
+    $this->factory('GuitarPro3Informations')->readInformations($song);
 
     $this->tripletFeel = $this->readBoolean()
       ? MeasureHeader::TRIPLET_FEEL_EIGHTH
@@ -67,8 +67,8 @@ class GuitarPro3Reader extends GuitarProReaderBase
     $measures = $this->readInt();
     $tracks = $this->readInt();
 
-    $this->readMeasureHeaders($this->song, $measures);
-    $this->readTracks($this->song, $tracks, $channels);
+    $this->readMeasureHeaders($song, $measures);
+    $this->readTracks($song, $tracks, $channels);
 
     # Meta+channels+tracks+measure headers only
     if(Config::get('type') == 'channels')
@@ -78,7 +78,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
       return;
     }
 
-    $this->factory('GuitarPro3Measures')->readMeasures($this->song, $measures, $tracks, $tempoValue);
+    $this->factory('GuitarPro3Measures')->readMeasures($song, $measures, $tracks, $tempoValue);
 
     $this->closeStream();
   }
