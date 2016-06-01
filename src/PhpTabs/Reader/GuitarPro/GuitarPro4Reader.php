@@ -9,7 +9,6 @@ use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
 
 use PhpTabs\Model\Beat;
-use PhpTabs\Model\Chord;
 use PhpTabs\Model\Duration;
 use PhpTabs\Model\EffectGrace;
 use PhpTabs\Model\EffectHarmonic;
