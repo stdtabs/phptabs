@@ -126,7 +126,7 @@ abstract class DumperBase extends DumperEffects
       'channelId'     => $measure->getTrack()->getChannelId(),
       'clef'          => $measure->getClef(),
       'keySignature'  => $measure->getKeySignature(),
-      'header'        => $this->dumpMeasureHeader($measureHeader),
+      'header'        => $this->dumpMeasureHeader($measureHeader)['header'],
       'keySignature'  => $measure->getKeySignature(),
       'beats'         => array()
     );
