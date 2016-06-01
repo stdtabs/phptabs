@@ -5,7 +5,6 @@ namespace PhpTabs\Reader\GuitarPro;
 use PhpTabs\Reader\GuitarPro\Helper\Factory;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Log;
-use PhpTabs\Model\Song;
 
 abstract class GuitarProReaderBase implements GuitarProReaderInterface
 {
@@ -33,7 +32,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
 
     $xpt = explode('\\', get_class($this));
 
-    $this->parserName = $xpt[count($xpt)-1];
+    $this->parserName = str_replace('Reader', '', $xpt[count($xpt)-1]);
   }
 
   public function getKeySignature()

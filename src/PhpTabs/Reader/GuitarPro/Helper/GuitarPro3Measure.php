@@ -20,10 +20,10 @@ class GuitarPro3Measure extends AbstractReader
     $nextNoteStart = intval($measure->getStart());
     $numberOfBeats = $this->reader->readInt();
 
+    $factory = $this->getParserName() . 'Beat';
+
     for ($i = 0; $i < $numberOfBeats; $i++)
     {
-      $factory = str_replace('Reader', '', $this->getParserName()) . 'Beat';
-
       $nextNoteStart += $this->reader->factory($factory)->readBeat($nextNoteStart, $measure, $track, $tempo);
     }
 
