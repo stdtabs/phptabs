@@ -257,54 +257,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads mix change informations
-   * 
-   * @param Tempo $tempo
-   */
-  public function readMixChange(Tempo $tempo)
-  {
-    $this->readByte(); //instrument
-    $volume = $this->readByte();
-    $pan = $this->readByte();
-    $chorus = $this->readByte();
-    $reverb = $this->readByte();
-    $phaser = $this->readByte();
-    $tremolo = $this->readByte();
-    $tempoValue = $this->readInt();
-    if($volume >= 0)
-    {
-      $this->readByte();
-    }
-    if($pan >= 0)
-    {
-      $this->readByte();
-    }
-    if($chorus >= 0)
-    {
-      $this->readByte();
-    }
-    if($reverb >= 0)
-    {
-      $this->readByte();
-    }
-    if($phaser >= 0)
-    {
-      $this->readByte();
-    }
-    if($tremolo >= 0)
-    {
-      $this->readByte();
-    }
-    if($tempoValue >= 0)
-    {
-      $tempo->setValue($tempoValue);
-      $this->readByte();
-    }
-    
-    $this->readByte();
-  }
-
-  /**
    * Reads NoteEffect
    * 
    * @param NoteEffect $noteEffect

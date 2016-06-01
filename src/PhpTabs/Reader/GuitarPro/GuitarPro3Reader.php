@@ -10,7 +10,6 @@ use PhpTabs\Component\Tablature;
 
 use PhpTabs\Model\MeasureHeader;
 use PhpTabs\Model\Song;
-use PhpTabs\Model\Tempo;
 use PhpTabs\Model\TimeSignature;
 
 class GuitarPro3Reader extends GuitarProReaderBase
@@ -138,52 +137,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
     for ($i=0; $i<$count; $i++) 
     {
       $song->addMeasureHeader($this->factory('GuitarPro3MeasureHeader')->readMeasureHeader(($i + 1), $song, $timeSignature));
-    }
-  }
-
-  /**
-   * Reads mix change informations
-   * 
-   * @param Tempo $tempo
-   */
-  public function readMixChange(Tempo $tempo)
-  {
-    $this->readByte(); //instrument
-    $volume = $this->readByte();
-    $pan = $this->readByte();
-    $chorus = $this->readByte();
-    $reverb = $this->readByte();
-    $phaser = $this->readByte();
-    $tremolo = $this->readByte();
-    $tempoValue = $this->readInt();
-    if($volume >= 0)
-    {
-      $this->readByte();
-    }
-    if($pan >= 0)
-    {
-      $this->readByte();
-    }
-    if($chorus >= 0)
-    {
-      $this->readByte();
-    }
-    if($reverb >= 0)
-    {
-      $this->readByte();
-    }
-    if($phaser >= 0)
-    {
-      $this->readByte();
-    }
-    if($tremolo >= 0)
-    {
-      $this->readByte();
-    }
-    if($tempoValue >= 0)
-    {
-      $tempo->setValue($tempoValue);
-      $this->readByte();
     }
   }
 

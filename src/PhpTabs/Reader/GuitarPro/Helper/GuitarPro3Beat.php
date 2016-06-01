@@ -52,7 +52,7 @@ class GuitarPro3Beat extends AbstractReader
 
     if (($flags & 0x10) != 0)
     {
-      $this->reader->readMixChange($tempo);
+      $this->reader->factory('GuitarPro3MixChange')->readMixChange($tempo);
     }
 
     $stringFlags = $this->reader->readUnsignedByte();

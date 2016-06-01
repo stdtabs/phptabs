@@ -25,11 +25,7 @@ class GuitarPro4Chord extends AbstractReader
       {
         for ($i = 0; $i < 6; $i++)
         {
-          $fret = $this->reader->readInt();
-          if($i < $chord->countStrings())
-          {
-            $chord->addFretValue($i, $fret);
-          }
+          $this->readFret($chord, $i);
         }
       }
     }
@@ -41,11 +37,7 @@ class GuitarPro4Chord extends AbstractReader
       $chord->setFirstFret($this->reader->readInt());
       for ($i = 0; $i < 7; $i++)
       {
-        $fret = $this->reader->readInt();
-        if($i < $chord->countStrings())
-        {
-          $chord->addFretValue($i, $fret);
-        }
+        $this->readFret($chord, $i);
       }
     
       $this->reader->skip(32);
@@ -54,6 +46,16 @@ class GuitarPro4Chord extends AbstractReader
     if($chord->countNotes() > 0)
     {
       $beat->setChord($chord);
+    }
+  }
+
+  private function readFret(Chord $chord, $i)
+  {
+    $fret = $this->reader->readInt();
+
+    if($i < $chord->countStrings())
+    {
+      $chord->addFretValue($i, $fret);
     }
   }
 }
