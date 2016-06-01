@@ -4,7 +4,6 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Model\Beat;
 use PhpTabs\Model\NoteEffect;
-use PhpTabs\Model\Stroke;
 
 class GuitarPro4BeatEffects extends AbstractReader
 {
@@ -36,19 +35,7 @@ class GuitarPro4BeatEffects extends AbstractReader
 
     if (($flags1 & 0x40) != 0)
     {
-      $strokeDown = $this->reader->readByte();
-      $strokeUp = $this->reader->readByte();
-
-      if($strokeDown > 0 )
-      {
-        $beat->getStroke()->setDirection(Stroke::STROKE_DOWN);
-        $beat->getStroke()->setValue($this->reader->factory('GuitarPro3Effects')->toStrokeValue($strokeDown));
-      }
-      else if($strokeUp > 0)
-      {
-        $beat->getStroke()->setDirection(Stroke::STROKE_UP);
-        $beat->getStroke()->setValue($this->reader->factory('GuitarPro3Effects')->toStrokeValue($strokeUp));
-      }
+      $this->reader->factory('GuitarProStroke')->readStroke($beat);
     }
 
     if (($flags2 & 0x02) != 0)

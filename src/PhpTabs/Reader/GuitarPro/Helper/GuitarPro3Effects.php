@@ -4,13 +4,11 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 use PhpTabs\Model\Beat;
-use PhpTabs\Model\Duration;
 use PhpTabs\Model\EffectBend;
 use PhpTabs\Model\EffectGrace;
 use PhpTabs\Model\EffectHarmonic;
 use PhpTabs\Model\EffectTremoloBar;
 use PhpTabs\Model\NoteEffect;
-use PhpTabs\Model\Stroke;
 use PhpTabs\Model\Velocities;
 
 class GuitarPro3Effects extends AbstractReader
@@ -26,6 +24,7 @@ class GuitarPro3Effects extends AbstractReader
     $flags = $this->reader->readUnsignedByte();
     $effect->setVibrato((($flags & 0x01) != 0) || (($flags & 0x02) != 0));
     $effect->setFadeIn((($flags & 0x10) != 0));
+
     if (($flags & 0x20) != 0)
     {
       $type = $this->reader->readUnsignedByte();
@@ -41,27 +40,19 @@ class GuitarPro3Effects extends AbstractReader
         $this->reader->readInt();
       }
     }
+
     if (($flags & 0x40) != 0)
     {
-      $strokeDown = $this->reader->readByte();
-      $strokeUp = $this->reader->readByte();
-      if($strokeDown > 0)
-      {
-        $beat->getStroke()->setDirection(Stroke::STROKE_DOWN );
-        $beat->getStroke()->setValue($this->toStrokeValue($strokeDown));
-      }
-      else if($strokeUp > 0)
-      {
-        $beat->getStroke()->setDirection(Stroke::STROKE_UP);
-        $beat->getStroke()->setValue($this->toStrokeValue($strokeUp));
-      }
+      $this->reader->factory('GuitarProStroke')->readStroke($beat);
     }
+
     if (($flags & 0x04) != 0)
     {
       $harmonic = new EffectHarmonic();
       $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
       $effect->setHarmonic($harmonic);
     }
+
     if (($flags & 0x08) != 0)
     {
       $harmonic = new EffectHarmonic();
@@ -167,37 +158,5 @@ class GuitarPro3Effects extends AbstractReader
       , round( -($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2))));
     $effect->addPoint(EffectTremoloBar::MAX_POSITION_LENGTH, 0);
     $noteEffect->setTremoloBar($effect);
-  }
-
-	/**
-   * Get stroke value
-   * 
-   * @param integer $value
-   * @return integer stroke value
-   */
-  public function toStrokeValue($value)
-  {
-    if($value == 1 || $value == 2)
-    {
-      return Duration::SIXTY_FOURTH;
-    }
-    if($value == 3)
-    {
-      return Duration::THIRTY_SECOND;
-    }
-    if($value == 4)
-    {
-      return Duration::SIXTEENTH;
-    }
-    if($value == 5)
-    {
-      return Duration::EIGHTH;
-    }
-    if($value == 6)
-    {
-      return Duration::QUARTER;
-    }
-
-    return Duration::SIXTY_FOURTH;
   }
 }
