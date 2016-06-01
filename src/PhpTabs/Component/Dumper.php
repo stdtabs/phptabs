@@ -2,6 +2,8 @@
 
 namespace PhpTabs\Component;
 
+use Exception;
+
 use PhpTabs\Component\Tablature;
 use PhpTabs\Component\Dumper\DumperBase;
 use PhpTabs\Component\Serializer\Text;
@@ -44,7 +46,7 @@ class Dumper extends DumperBase
         return (new Text())->serialize($this->dump('array'));
       default:
         $message = sprintf('%s does not support "%s" format', __METHOD__, $format);
-        throw new \Exception($message);
+        throw new Exception($message);
         break;
     }
   }

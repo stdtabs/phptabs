@@ -56,7 +56,7 @@ class GuitarPro4Note extends AbstractReader
     }
     if (($flags & 0x08) != 0)
     {
-      $this->reader->readNoteEffects($note->getEffect());
+      $this->reader->factory('GuitarPro4NoteEffects')->readNoteEffects($note->getEffect());
     }
 
     return $note;

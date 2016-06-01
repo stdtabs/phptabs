@@ -145,7 +145,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * 
    * @param NoteEffect $effect
    */
-  private function readArtificialHarmonic(NoteEffect $effect)
+  public function readArtificialHarmonic(NoteEffect $effect)
   {
     $type = $this->readByte();
     $harmonic = new EffectHarmonic();
@@ -184,7 +184,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * 
    * @param NoteEffect $effect
    */
-  private function readGrace(NoteEffect $effect)
+  public function readGrace(NoteEffect $effect)
   {
     $fret = $this->readUnsignedByte();
     $dynamic = $this->readUnsignedByte();
@@ -243,54 +243,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
   }
 
   /**
-   * Reads NoteEffect
-   * 
-   * @param NoteEffect $noteEffect
-   */
-  public function readNoteEffects(NoteEffect $noteEffect)
-  {
-    $flags1 = intval($this->readUnsignedByte());
-    $flags2 = intval($this->readUnsignedByte());
-
-    if (($flags1 & 0x01) != 0)
-    {
-      $this->factory('GuitarPro4Effects')->readBend($noteEffect);
-    }
-
-    if (($flags1 & 0x10) != 0)
-    {
-      $this->readGrace($noteEffect);
-    }
-
-    if (($flags2 & 0x04) != 0)
-    {
-      $this->factory('GuitarPro4Effects')->readTremoloPicking($noteEffect);
-    }
-
-    if (($flags2 & 0x08) != 0)
-    {
-      $noteEffect->setSlide(true);
-      $this->readByte();
-    }
-
-    if (($flags2 & 0x10) != 0)
-    {
-      $this->readArtificialHarmonic($noteEffect);
-    }
-
-    if (($flags2 & 0x20) != 0)
-    {
-      $this->readTrill($noteEffect);
-    }
-
-    $noteEffect->setHammer((($flags1 & 0x02) != 0));
-    $noteEffect->setLetRing((($flags1 & 0x08) != 0));
-    $noteEffect->setVibrato((($flags2 & 0x40) != 0) || $noteEffect->isVibrato());
-    $noteEffect->setPalmMute((($flags2 & 0x02) != 0));
-    $noteEffect->setStaccato((($flags2 & 0x01) != 0));
-  }
-
-  /**
    * Reads setup informations
    * 
    */
@@ -329,7 +281,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * 
    * @param NoteEffect $effect
    */
-  private function readTrill(NoteEffect $effect)
+  public function readTrill(NoteEffect $effect)
   {
     $fret = $this->readByte();
     $period = $this->readByte();
