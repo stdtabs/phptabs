@@ -18,7 +18,6 @@ use PhpTabs\Model\Lyric;
 use PhpTabs\Model\NoteEffect;
 use PhpTabs\Model\Song;
 use PhpTabs\Model\Stroke;
-use PhpTabs\Model\Tempo;
 use PhpTabs\Model\TimeSignature;
 use PhpTabs\Model\Velocities;
 
@@ -61,7 +60,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
 
     $lyricTrack = $this->readInt();
-    $lyric = $this->readLyrics();
+    $lyric = $this->factory('GuitarProLyric')->readLyrics();
 
     $this->readSetup();
 
@@ -266,26 +265,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
 
     $effect->setGrace($grace);
-  }
-
-  /**
-   * Reads lyrics informations
-   * 
-   * @return Lyric
-   */
-  private function readLyrics()
-  {
-    $lyric = new Lyric();
-    $lyric->setFrom($this->readInt());
-    $lyric->setLyrics($this->readStringInteger());
-
-    for ($i = 0; $i < 4; $i++)
-    {
-      $this->readInt();
-      $this->readStringInteger();
-    }
-
-    return $lyric;
   }
 
   /**

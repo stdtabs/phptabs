@@ -215,7 +215,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
    * @param string $charset
    * @return string
    */
-  protected function readStringInteger($charset = 'UTF-8')
+  public function readStringInteger($charset = 'UTF-8')
   {
     return $this->readString($this->readInt(), $charset);
   }
