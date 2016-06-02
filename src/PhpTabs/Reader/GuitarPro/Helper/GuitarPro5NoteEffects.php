@@ -5,7 +5,6 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 use PhpTabs\Model\Duration;
 use PhpTabs\Model\EffectHarmonic;
 use PhpTabs\Model\EffectGrace;
-use PhpTabs\Model\EffectTrill;
 use PhpTabs\Model\NoteEffect;
 use PhpTabs\Model\Velocities;
 
@@ -23,7 +22,7 @@ class GuitarPro5NoteEffects extends AbstractReader
 
     if (($flags1 & 0x01) != 0)
     {
-      $this->reader->factory('GuitarPro4Effects')->readBend($noteEffect);
+      $this->reader->factory('GuitarPro3Effects')->readBend($noteEffect);
     }
 
     if (($flags1 & 0x10) != 0)
@@ -49,7 +48,7 @@ class GuitarPro5NoteEffects extends AbstractReader
 
     if (($flags2 & 0x20) != 0)
     {
-      $this->readTrill($noteEffect);
+      $this->reader->factory('GuitarPro4NoteEffects')->readTrill($noteEffect);
     }
 
     $noteEffect->setHammer((($flags1 & 0x02) != 0));
@@ -138,33 +137,5 @@ class GuitarPro5NoteEffects extends AbstractReader
     }
 
     $effect->setGrace($grace);
-  }
-
-  /**
-   * Reads trill effect
-   * 
-   * @param NoteEffect $effect
-   */
-  private function readTrill(NoteEffect $effect)
-  {
-    $fret = $this->reader->readByte();
-    $period = $this->reader->readByte();
-    $trill = new EffectTrill();
-    $trill->setFret($fret);
-    if($period == 1)
-    {
-      $trill->getDuration()->setValue(Duration::SIXTEENTH);
-      $effect->setTrill($trill);
-    }
-    else if($period == 2)
-    {
-      $trill->getDuration()->setValue(Duration::THIRTY_SECOND);
-      $effect->setTrill($trill);
-    }
-    else if($period == 3)
-    {
-      $trill->getDuration()->setValue(Duration::SIXTY_FOURTH);
-      $effect->setTrill($trill);
-    }
   }
 }

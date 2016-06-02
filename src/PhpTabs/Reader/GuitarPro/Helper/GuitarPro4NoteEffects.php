@@ -23,9 +23,10 @@ class GuitarPro4NoteEffects extends AbstractReader
     $noteEffect->setVibrato((($flags2 & 0x40) != 0) || $noteEffect->isVibrato());
     $noteEffect->setPalmMute((($flags2 & 0x02) != 0));
     $noteEffect->setStaccato((($flags2 & 0x01) != 0));
+
     if (($flags1 & 0x01) != 0)
     {
-      $this->reader->factory('GuitarPro4Effects')->readBend($noteEffect);
+      $this->reader->factory('GuitarPro3Effects')->readBend($noteEffect);
     }
     if (($flags1 & 0x10) != 0)
     {
@@ -42,63 +43,76 @@ class GuitarPro4NoteEffects extends AbstractReader
     }
     if (($flags2 & 0x10) != 0)
     {
-      $harmonic = new EffectHarmonic();
-      $type = intval($this->reader->readByte());
-      if($type == 1)
-      {
-        $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
-      }
-      else if($type == 3)
-      {
-        $harmonic->setType(EffectHarmonic::TYPE_TAPPED);
-      }
-      else if($type == 4)
-      {
-        $harmonic->setType(EffectHarmonic::TYPE_PINCH);
-      }
-      else if($type == 5)
-      {
-        $harmonic->setType(EffectHarmonic::TYPE_SEMI);
-      }
-      else if($type == 15)
-      {
-        $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
-        $harmonic->setData(2);
-      }
-      else if($type == 17)
-      {
-        $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
-        $harmonic->setData(3);
-      }
-      else if($type == 22)
-      {
-        $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
-        $harmonic->setData(0);
-      }
-      $noteEffect->setHarmonic($harmonic);
+      $this->readHarmonic($noteEffect);
     }
     if (($flags2 & 0x20) != 0)
     {
-      $fret = $this->reader->readByte();
-      $period = $this->reader->readByte();
-      $trill = new EffectTrill();
-      $trill->setFret($fret);
-      if($period == 1)
-      {
-        $trill->getDuration()->setValue(Duration::SIXTEENTH);
-        $noteEffect->setTrill($trill);
-      }
-      else if($period == 2)
-      {
-        $trill->getDuration()->setValue(Duration::THIRTY_SECOND);
-        $noteEffect->setTrill($trill);
-      }
-      else if($period == 3)
-      {
-        $trill->getDuration()->setValue(Duration::SIXTY_FOURTH);
-        $noteEffect->setTrill($trill);
-      }
+      $this->readTrill($noteEffect);
     }
   }
 
+  public function readTrill(NoteEffect $noteEffect)
+  {
+    $fret = $this->reader->readByte();
+    $period = $this->reader->readByte();
+
+    $trill = new EffectTrill();
+    $trill->setFret($fret);
+
+    if($period == 1)
+    {
+      $trill->getDuration()->setValue(Duration::SIXTEENTH);
+      $noteEffect->setTrill($trill);
+    }
+    else if($period == 2)
+    {
+      $trill->getDuration()->setValue(Duration::THIRTY_SECOND);
+      $noteEffect->setTrill($trill);
+    }
+    else if($period == 3)
+    {
+      $trill->getDuration()->setValue(Duration::SIXTY_FOURTH);
+      $noteEffect->setTrill($trill);
+    }
+  }
+
+  private function readHarmonic(NoteEffect $noteEffect)
+  {
+    $harmonic = new EffectHarmonic();
+    $type = intval($this->reader->readByte());
+
+    if($type == 1)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
+    }
+    else if($type == 3)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_TAPPED);
+    }
+    else if($type == 4)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_PINCH);
+    }
+    else if($type == 5)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_SEMI);
+    }
+    else if($type == 15)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
+      $harmonic->setData(2);
+    }
+    else if($type == 17)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
+      $harmonic->setData(3);
+    }
+    else if($type == 22)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
+      $harmonic->setData(0);
+    }
+
+    $noteEffect->setHarmonic($harmonic);
+  }
 }

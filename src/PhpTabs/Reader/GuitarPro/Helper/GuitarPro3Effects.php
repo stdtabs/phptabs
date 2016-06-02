@@ -38,7 +38,7 @@ class GuitarPro3Effects extends AbstractReader
    *
    * @param NoteEffect $effect
    */
-  private function readBend(NoteEffect $effect)
+  public function readBend(NoteEffect $effect)
   {
     $bend = new EffectBend();
     $this->reader->skip(5);

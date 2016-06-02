@@ -4,43 +4,12 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 use PhpTabs\Model\Duration;
-use PhpTabs\Model\EffectBend;
 use PhpTabs\Model\EffectTremoloBar;
 use PhpTabs\Model\EffectTremoloPicking;
 use PhpTabs\Model\NoteEffect;
 
 class GuitarPro4Effects extends AbstractReader
 {
-  /**
-   * Reads bend informations
-   *
-   * @param NoteEffect $effect
-   */
-  public function readBend(NoteEffect $effect)
-  {
-    $bend = new EffectBend();
-
-    $this->reader->skip(5);
-
-    $points = $this->reader->readInt();
-
-    for ($i = 0; $i < $points; $i++)
-    {
-      $bendPosition = $this->reader->readInt();
-      $bendValue = $this->reader->readInt();
-      $this->reader->readByte();
-
-      $pointPosition = round($bendPosition * EffectBend::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
-      $pointValue = round($bendValue * EffectBend::SEMITONE_LENGTH / GuitarProReaderInterface::GP_BEND_SEMITONE);
-      $bend->addPoint($pointPosition, $pointValue);
-    }
-
-    if(count($bend->getPoints()))
-    {
-      $effect->setBend($bend);
-    }
-  }
-
   /**
    * Reads tremolo bar
    * 
