@@ -5,7 +5,7 @@ namespace PhpTabsTest\Writer;
 use PHPUnit_Framework_TestCase;
 use PhpTabs\PhpTabs;
 
-class GuitarPro3ReaderTest extends PHPUnit_Framework_TestCase
+class GuitarPro3WriterTest extends PHPUnit_Framework_TestCase
 {
   public function setUp()
   {
