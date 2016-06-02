@@ -17,8 +17,8 @@ class GuitarPro5NoteEffects extends AbstractReader
    */
   public function readNoteEffects(NoteEffect $noteEffect)
   {
-    $flags1 = intval($this->reader->readUnsignedByte());
-    $flags2 = intval($this->reader->readUnsignedByte());
+    $flags1 = $this->reader->readUnsignedByte();
+    $flags2 = $this->reader->readUnsignedByte();
 
     if (($flags1 & 0x01) != 0)
     {
@@ -116,8 +116,8 @@ class GuitarPro5NoteEffects extends AbstractReader
       + (Velocities::VELOCITY_INCREMENT * $dynamic))
       - Velocities::VELOCITY_INCREMENT);
     $grace->setDuration($duration);
-    $grace->setDead(($flags & 0x01) == 0);
-    $grace->setOnBeat(($flags & 0x02) == 0);
+    $grace->setDead(($flags & 0x01) != 0);
+    $grace->setOnBeat(($flags & 0x02) != 0);
 
     if($transition == 0)
     {
