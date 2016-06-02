@@ -37,7 +37,7 @@ class GuitarPro3Beat extends AbstractReader
 
     if (($flags & 0x02) != 0)
     {
-      $this->reader->factory('GuitarPro3Chord')->readChord($track->countStrings(), $beat);
+      $this->reader->factory($this->getParserName() . 'Chord')->readChord($track->countStrings(), $beat);
     }
 
     if (($flags & 0x04) != 0) 
@@ -47,12 +47,12 @@ class GuitarPro3Beat extends AbstractReader
 
     if (($flags & 0x08) != 0)
     {
-      $this->reader->factory('GuitarPro3Effects')->readBeatEffects($beat, $effect);
+      $this->reader->factory($this->getParserName() . 'BeatEffects')->readBeatEffects($beat, $effect);
     }
 
     if (($flags & 0x10) != 0)
     {
-      $this->reader->factory('GuitarPro3MixChange')->readMixChange($tempo);
+      $this->reader->factory($this->getParserName() . 'MixChange')->readMixChange($tempo);
     }
 
     $stringFlags = $this->reader->readUnsignedByte();
@@ -62,7 +62,7 @@ class GuitarPro3Beat extends AbstractReader
       if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->countStrings())
       {
         $string = clone $track->getString( (6 - $i) + 1 );
-        $note = $this->reader->factory('GuitarPro3Note')->readNote($string, $track, clone $effect);
+        $note = $this->reader->factory($this->getParserName() . 'Note')->readNote($string, $track, clone $effect);
         $voice->addNote($note);
       }
     }
