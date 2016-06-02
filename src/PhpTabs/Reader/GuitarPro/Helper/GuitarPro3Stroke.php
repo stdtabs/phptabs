@@ -6,7 +6,7 @@ use PhpTabs\Model\Beat;
 use PhpTabs\Model\Duration;
 use PhpTabs\Model\Stroke;
 
-class GuitarProStroke extends AbstractReader
+class GuitarPro3Stroke extends AbstractReader
 {
   public function readStroke(Beat $beat)
   {
@@ -31,7 +31,7 @@ class GuitarProStroke extends AbstractReader
    * @param integer $value
    * @return integer stroke value
    */
-  private function toStrokeValue($value)
+  public function toStrokeValue($value)
   {
     if($value == 1 || $value == 2)
     {

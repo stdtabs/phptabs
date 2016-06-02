@@ -35,7 +35,9 @@ class GuitarPro4BeatEffects extends AbstractReader
 
     if (($flags1 & 0x40) != 0)
     {
-      $this->reader->factory('GuitarProStroke')->readStroke($beat);
+      $factory = $this->getParserName() == 'GuitarPro5'
+        ? 'GuitarPro5' : 'GuitarPro3';
+      $this->reader->factory($factory . 'Stroke')->readStroke($beat);
     }
 
     if (($flags2 & 0x02) != 0)
