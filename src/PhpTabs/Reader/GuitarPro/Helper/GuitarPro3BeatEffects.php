@@ -25,7 +25,7 @@ class GuitarPro3BeatEffects extends AbstractReader
       $type = $this->reader->readUnsignedByte();
       if ($type == 0)
       {
-        $this->readTremoloBar($effect);
+        $this->reader->factory('GuitarPro3Effects')->readTremoloBar($effect);
       }
       else
       {

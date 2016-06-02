@@ -98,7 +98,7 @@ class GuitarPro3Effects extends AbstractReader
    * 
    * @param NoteEffect $noteEffect
    */
-  private function readTremoloBar(NoteEffect $noteEffect)
+  public function readTremoloBar(NoteEffect $noteEffect)
   {
     $value = $this->reader->readInt();
     $effect = new EffectTremoloBar();
