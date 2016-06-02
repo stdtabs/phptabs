@@ -8,16 +8,9 @@ use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
 
-use PhpTabs\Model\Chord;
-use PhpTabs\Model\Duration;
-use PhpTabs\Model\EffectGrace;
-use PhpTabs\Model\EffectHarmonic;
-use PhpTabs\Model\EffectTrill;
 use PhpTabs\Model\Lyric;
-use PhpTabs\Model\NoteEffect;
 use PhpTabs\Model\Song;
 use PhpTabs\Model\TimeSignature;
-use PhpTabs\Model\Velocities;
 
 class GuitarPro5Reader extends GuitarProReaderBase
 {
@@ -141,87 +134,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
    * -----------------------------------------------------------------*/
 
   /**
-   * Reads an artificial harmonic
-   * 
-   * @param NoteEffect $effect
-   */
-  public function readArtificialHarmonic(NoteEffect $effect)
-  {
-    $type = $this->readByte();
-    $harmonic = new EffectHarmonic();
-    $harmonic->setData(0);
-    if($type == 1)
-    {
-      $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
-      $effect->setHarmonic($harmonic);
-    }
-    else if($type == 2)
-    {
-      $this->skip(3);
-      $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
-      $effect->setHarmonic($harmonic);
-    }
-    else if($type == 3)
-    {
-      $this->skip(1);
-      $harmonic->setType(EffectHarmonic::TYPE_TAPPED);
-      $effect->setHarmonic($harmonic);
-    }
-    else if($type == 4)
-    {
-      $harmonic->setType(EffectHarmonic::TYPE_PINCH);
-      $effect->setHarmonic($harmonic);
-    }
-    else if($type == 5)
-    {
-      $harmonic->setType(EffectHarmonic::TYPE_SEMI);
-      $effect->setHarmonic($harmonic);
-    }
-  }
-
-  /**
-   * Reads EffectGrace
-   * 
-   * @param NoteEffect $effect
-   */
-  public function readGrace(NoteEffect $effect)
-  {
-    $fret = $this->readUnsignedByte();
-    $dynamic = $this->readUnsignedByte();
-    $transition = $this->readByte();
-    $duration = $this->readUnsignedByte();
-    $flags = $this->readUnsignedByte();
-
-    $grace = new EffectGrace();
-    $grace->setFret($fret);
-    $grace->setDynamic((Velocities::MIN_VELOCITY 
-      + (Velocities::VELOCITY_INCREMENT * $dynamic))
-      - Velocities::VELOCITY_INCREMENT);
-    $grace->setDuration($duration);
-    $grace->setDead(($flags & 0x01) == 0);
-    $grace->setOnBeat(($flags & 0x02) == 0);
-
-    if($transition == 0)
-    {
-      $grace->setTransition(EffectGrace::TRANSITION_NONE);
-    }
-    else if($transition == 1)
-    {
-      $grace->setTransition(EffectGrace::TRANSITION_SLIDE);
-    }
-    else if($transition == 2)
-    {
-      $grace->setTransition(EffectGrace::TRANSITION_BEND);
-    }
-    else if($transition == 3)
-    {
-      $grace->setTransition(EffectGrace::TRANSITION_HAMMER);
-    }
-
-    $effect->setGrace($grace);
-  }
-
-  /**
    * Loops on mesure headers to read
    * 
    * @param Song $song
@@ -273,34 +185,6 @@ class GuitarPro5Reader extends GuitarProReaderBase
         , $number == $lyricTrack ? $lyric : new Lyric());
 
       $song->addTrack($track);
-    }
-  }
-
-  /**
-   * Reads trill effect
-   * 
-   * @param NoteEffect $effect
-   */
-  public function readTrill(NoteEffect $effect)
-  {
-    $fret = $this->readByte();
-    $period = $this->readByte();
-    $trill = new EffectTrill();
-    $trill->setFret($fret);
-    if($period == 1)
-    {
-      $trill->getDuration()->setValue(Duration::SIXTEENTH);
-      $effect->setTrill($trill);
-    }
-    else if($period == 2)
-    {
-      $trill->getDuration()->setValue(Duration::THIRTY_SECOND);
-      $effect->setTrill($trill);
-    }
-    else if($period == 3)
-    {
-      $trill->getDuration()->setValue(Duration::SIXTY_FOURTH);
-      $effect->setTrill($trill);
     }
   }
 }

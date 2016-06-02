@@ -2,7 +2,12 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
+use PhpTabs\Model\Duration;
+use PhpTabs\Model\EffectHarmonic;
+use PhpTabs\Model\EffectGrace;
+use PhpTabs\Model\EffectTrill;
 use PhpTabs\Model\NoteEffect;
+use PhpTabs\Model\Velocities;
 
 class GuitarPro5NoteEffects extends AbstractReader
 {
@@ -23,7 +28,7 @@ class GuitarPro5NoteEffects extends AbstractReader
 
     if (($flags1 & 0x10) != 0)
     {
-      $this->reader->readGrace($noteEffect);
+      $this->readGrace($noteEffect);
     }
 
     if (($flags2 & 0x04) != 0)
@@ -39,12 +44,12 @@ class GuitarPro5NoteEffects extends AbstractReader
 
     if (($flags2 & 0x10) != 0)
     {
-      $this->reader->readArtificialHarmonic($noteEffect);
+      $this->readArtificialHarmonic($noteEffect);
     }
 
     if (($flags2 & 0x20) != 0)
     {
-      $this->reader->readTrill($noteEffect);
+      $this->readTrill($noteEffect);
     }
 
     $noteEffect->setHammer((($flags1 & 0x02) != 0));
@@ -52,5 +57,114 @@ class GuitarPro5NoteEffects extends AbstractReader
     $noteEffect->setVibrato((($flags2 & 0x40) != 0) || $noteEffect->isVibrato());
     $noteEffect->setPalmMute((($flags2 & 0x02) != 0));
     $noteEffect->setStaccato((($flags2 & 0x01) != 0));
+  }
+
+  /**
+   * Reads an artificial harmonic
+   * 
+   * @param NoteEffect $effect
+   */
+  private function readArtificialHarmonic(NoteEffect $effect)
+  {
+    $type = $this->reader->readByte();
+    $harmonic = new EffectHarmonic();
+    $harmonic->setData(0);
+    if($type == 1)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
+      $effect->setHarmonic($harmonic);
+    }
+    else if($type == 2)
+    {
+      $this->reader->skip(3);
+      $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
+      $effect->setHarmonic($harmonic);
+    }
+    else if($type == 3)
+    {
+      $this->reader->skip(1);
+      $harmonic->setType(EffectHarmonic::TYPE_TAPPED);
+      $effect->setHarmonic($harmonic);
+    }
+    else if($type == 4)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_PINCH);
+      $effect->setHarmonic($harmonic);
+    }
+    else if($type == 5)
+    {
+      $harmonic->setType(EffectHarmonic::TYPE_SEMI);
+      $effect->setHarmonic($harmonic);
+    }
+  }
+
+  /**
+   * Reads EffectGrace
+   * 
+   * @param NoteEffect $effect
+   */
+  private function readGrace(NoteEffect $effect)
+  {
+    $fret = $this->reader->readUnsignedByte();
+    $dynamic = $this->reader->readUnsignedByte();
+    $transition = $this->reader->readByte();
+    $duration = $this->reader->readUnsignedByte();
+    $flags = $this->reader->readUnsignedByte();
+
+    $grace = new EffectGrace();
+    $grace->setFret($fret);
+    $grace->setDynamic((Velocities::MIN_VELOCITY 
+      + (Velocities::VELOCITY_INCREMENT * $dynamic))
+      - Velocities::VELOCITY_INCREMENT);
+    $grace->setDuration($duration);
+    $grace->setDead(($flags & 0x01) == 0);
+    $grace->setOnBeat(($flags & 0x02) == 0);
+
+    if($transition == 0)
+    {
+      $grace->setTransition(EffectGrace::TRANSITION_NONE);
+    }
+    else if($transition == 1)
+    {
+      $grace->setTransition(EffectGrace::TRANSITION_SLIDE);
+    }
+    else if($transition == 2)
+    {
+      $grace->setTransition(EffectGrace::TRANSITION_BEND);
+    }
+    else if($transition == 3)
+    {
+      $grace->setTransition(EffectGrace::TRANSITION_HAMMER);
+    }
+
+    $effect->setGrace($grace);
+  }
+
+  /**
+   * Reads trill effect
+   * 
+   * @param NoteEffect $effect
+   */
+  private function readTrill(NoteEffect $effect)
+  {
+    $fret = $this->reader->readByte();
+    $period = $this->reader->readByte();
+    $trill = new EffectTrill();
+    $trill->setFret($fret);
+    if($period == 1)
+    {
+      $trill->getDuration()->setValue(Duration::SIXTEENTH);
+      $effect->setTrill($trill);
+    }
+    else if($period == 2)
+    {
+      $trill->getDuration()->setValue(Duration::THIRTY_SECOND);
+      $effect->setTrill($trill);
+    }
+    else if($period == 3)
+    {
+      $trill->getDuration()->setValue(Duration::SIXTY_FOURTH);
+      $effect->setTrill($trill);
+    }
   }
 }
