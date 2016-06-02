@@ -61,6 +61,14 @@ abstract class GuitarProWriterBase extends Helper
     $this->content .= pack('c', $byte);
   }
 
+  protected function writeBytes(array $bytes)
+  {
+    foreach($bytes as $byte)
+    {
+      $this->content .= pack('c', $byte);
+    }
+  }
+
   protected function writeInt($integer)
   {
     $this->content .= pack('V', $integer);

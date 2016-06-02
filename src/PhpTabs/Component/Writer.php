@@ -16,7 +16,8 @@ class Writer
   /** @var array List of supported writers */
   private $writers = array(
     'gp3' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro3Writer',
-    'gp4' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro4Writer'
+    'gp4' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro4Writer',
+    'gp5' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro5Writer'
   );
 
   /**
@@ -70,7 +71,7 @@ class Writer
 
         throw new Exception($message);
       }
-      
+
       $this->path = $path;
 
       return $this->record($this->build($parts['extension']));
@@ -82,7 +83,7 @@ class Writer
   private function record($content)
   {
     $dir = pathinfo($this->path, PATHINFO_DIRNAME);
-    
+
     if(!is_dir($dir) || !is_writable($dir))
     {
       throw new Exception('Save directory error');
