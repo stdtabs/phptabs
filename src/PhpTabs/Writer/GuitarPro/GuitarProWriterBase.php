@@ -2,12 +2,14 @@
 
 namespace PhpTabs\Writer\GuitarPro;
 
+use PhpTabs\Component\WriterInterface;
+
 use PhpTabs\Model\Song;
 use PhpTabs\Model\ChannelRouter;
 use PhpTabs\Model\ChannelRouterConfigurator;
 use PhpTabs\Model\Helper;
 
-abstract class GuitarProWriterBase extends Helper
+abstract class GuitarProWriterBase extends Helper implements WriterInterface
 {
   private $content;
 

@@ -3,6 +3,7 @@
 namespace PhpTabs\Component;
 
 use Exception;
+
 use PhpTabs\Component\Tablature;
 
 class Writer
