@@ -3,6 +3,7 @@
 namespace PhpTabs\Component;
 
 use Exception;
+
 use PhpTabs\Model\Channel;
 use PhpTabs\Model\ChannelNames;
 use PhpTabs\Model\Song;
@@ -98,6 +99,7 @@ class Tablature
 
   /**
    * Counts instruments
+   *
    * @return integer
    */
   public function countInstruments()

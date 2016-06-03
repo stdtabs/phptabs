@@ -3,6 +3,7 @@
 namespace PhpTabs;
 
 use Exception;
+
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Reader;
