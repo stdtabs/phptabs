@@ -52,7 +52,7 @@ class Tempo
    */
   public function getInMillis()
   {
-    return intval(60.00 / $this->getValue() * Tempo::SECOND_IN_MILLIS);
+    return intval(60 / $this->getValue() * Tempo::SECOND_IN_MILLIS);
   }
 
   /**
@@ -62,7 +62,7 @@ class Tempo
    */
   public function getInTPQ()
   {
-    return intval((60.00 / $this->getValue() * Tempo::SECOND_IN_MILLIS) * 1000.00);
+    return intval((60 / $this->getValue() * Tempo::SECOND_IN_MILLIS) * 1000);
   }
 
   /**
@@ -73,7 +73,7 @@ class Tempo
    */
   public static function fromTPQ($tpq)
   {
-    $value = ((60.00 * Tempo::SECOND_IN_MILLIS) / ($tpq / 1000.00));
+    $value = intval((60 * Tempo::SECOND_IN_MILLIS) / ($tpq / 1000));
     $tempo = new Tempo();
     $tempo->setValue($value);
     return $tempo;
