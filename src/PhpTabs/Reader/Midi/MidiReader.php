@@ -135,6 +135,7 @@ class MidiReader extends MidiReaderBase
     for($i = 0; $i < count($this->tracks); $i++)
     {
       $track = $this->tracks[$i];
+      $track->setSong($this->tablature->getSong());
 
       while($track->countMeasures() < $headerCount)
       {
