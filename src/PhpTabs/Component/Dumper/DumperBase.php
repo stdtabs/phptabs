@@ -223,6 +223,7 @@ abstract class DumperBase extends DumperEffects
     return array('header' => array(
       'number'        => $header->getNumber(),
       'start'         => $header->getStart(),
+      'length'        => $header->getLength(),
       'timeSignature' => $this->dumpTimeSignature($header->getTimeSignature()),
       'tempo'         => $header->getTempo()->getValue(),
       'marker'        => $this->dumpMarker($header->getMarker()),
