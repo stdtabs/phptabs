@@ -3,6 +3,7 @@
 namespace PhpTabs\Reader\Midi;
 
 use PhpTabs\Model\Beat;
+use PhpTabs\Model\Duration;
 use PhpTabs\Model\Measure;
 use PhpTabs\Model\Song;
 use PhpTabs\Model\Track;

@@ -173,6 +173,27 @@ class Measure
     $this->beats = array();
   }
 
+  public function getBeatByStart($start)
+  {
+    $beatCount = $this->countBeats();
+
+    for($i = 0; $i < $beatCount; $i++)
+    {
+      $beat = $this->getBeat($i);
+
+      if($beat->getStart() == $start)
+      {
+        return $beat;
+      }
+    }
+
+    $beat = new Beat();
+    $beat->setStart($start);
+    $this->addBeat($beat);
+
+    return $beat;
+  }
+
   public function copyFrom(Measure $measure)
   {
     $this->clef = $measure->getClef();

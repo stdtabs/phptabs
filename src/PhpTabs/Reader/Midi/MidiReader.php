@@ -270,27 +270,6 @@ class MidiReader extends MidiReaderBase
     }
   }
 
-  private function getBeat(Measure $measure, $start)
-  {
-    $beatCount = $measure->countBeats();
-
-    for($i = 0; $i < $beatCount; $i++)
-    {
-      $beat = $measure->getBeat($i);
-
-      if($beat->getStart() == $start)
-      {
-        return $beat;
-      }
-    }
-
-    $beat = new Beat();
-    $beat->setStart($start);
-    $measure->addBeat($beat);
-
-    return $beat;
-  }
-
   private function getHeader($tick)
   {
     $realTick = $tick >= Duration::QUARTER_TIME
@@ -480,7 +459,7 @@ class MidiReader extends MidiReaderBase
     //PITCH BEND
     else if($message->getType() == MidiMessage::TYPE_SHORT && $message->getCommand() == MidiMessage::PITCH_BEND)
     {
-      $this->parsePitchBend($trackNumber, $parsedTick, $message->getData());
+      $this->parsePitchBend($message->getData());
     }
     //TIME SIGNATURE
     else if($message->getType() == MidiMessage::TYPE_META && $message->getCommand() == MidiMessage::TIME_SIGNATURE_CHANGE)
@@ -673,7 +652,7 @@ class MidiReader extends MidiReaderBase
       $nDuration = Duration::fromTime($tick - $tempNote->getTick(), $minDuration);
 
       $measure = $this->getMeasure($this->getTrack($track), $tempNote->getTick());
-      $beat = $this->getBeat($measure, $nStart);
+      $beat = $measure->getBeatByStart($nStart);
       $beat->getVoice(0)->getDuration()->copyFrom($nDuration);
 
       $note = new Note();
@@ -794,7 +773,7 @@ class MidiReader extends MidiReaderBase
     }
   }
 
-  private function parsePitchBend($track, $tick, array $data)
+  private function parsePitchBend(array $data)
   {
     $length = count($data);
 

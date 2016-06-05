@@ -25,7 +25,7 @@ class GuitarPro5Beat extends AbstractReader
   {
     $flags = $this->reader->readUnsignedByte();
 
-    $beat = $this->getBeat($measure, $start);
+    $beat = $measure->getBeatByStart($start);
     $voice = $beat->getVoice($voiceIndex);
 
     if(($flags & 0x40) != 0)
