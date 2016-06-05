@@ -9,17 +9,12 @@ use PhpTabs\Component\File;
 use PhpTabs\Component\Reader;
 use PhpTabs\Component\Tablature;
 
-/**
- * High level manager
- */
 class PhpTabs
 {
-  /** @var Tablature tablature container */
+  /** @var Tablature A tablature container */
   private $tablature;
 
   /**
-   * Initializes read/write modes
-   * 
    * @param string $filename the fully qualified filename
    */
   public function __construct($filename = null)
@@ -39,11 +34,13 @@ class PhpTabs
     }
     catch(Exception $e)
     {
-      $message = $e->getMessage() . ' in ' . $e->getFile() 
-          . ' on line ' . $e->getLine() . PHP_EOL
-          . $e->getTraceAsString() . PHP_EOL;
+      $message = sprintf('%s in %s on line %d%s'
+          , $e->getMessage()
+          , $e->getFile()
+          , $e->getLine()
+          , PHP_EOL . $e->getTraceAsString() . PHP_EOL);
 
-      # if debug == true, an error kills the process
+      # if debug mode, an error kills the process
       if(Config::get('debug'))
       {
         trigger_error($message, E_USER_ERROR);
@@ -57,9 +54,9 @@ class PhpTabs
   }
 
   /**
-   * Gets the tablature instance
+   * Gets tablature instance
    *
-   * @return Tablature a tablature instance
+   * @return Tablature A tablature instance
    */
   public function getTablature()
   {
@@ -81,6 +78,7 @@ class PhpTabs
    * 
    * @param string $name method name
    * @param array $arguments arguments to pass
+   *
    * @return mixed
    */
   public function __call($name, $arguments)
