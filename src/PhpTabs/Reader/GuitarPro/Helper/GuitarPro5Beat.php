@@ -77,29 +77,4 @@ class GuitarPro5Beat extends AbstractReader
 
     return (!$voice->isEmpty() ? $duration->getTime() : 0);
   }
-
-  /**
-   * Creates a new Beat if necessary
-   * 
-   * @param Measure $mesure
-   * @param integer $start
-   * @return Beat
-   */
-  private function getBeat(Measure $measure, $start)
-  {
-    $count = $measure->countBeats();
-    for($i = 0; $i < $count; $i++)
-    {
-      $beat = $measure->getBeat($i);
-      if($beat->getStart() == $start)
-      {
-        return $beat;
-      }
-    }
-    $beat = new Beat();
-    $beat->setStart($start);
-    $measure->addBeat($beat);
-
-    return $beat;
-  }
 }
