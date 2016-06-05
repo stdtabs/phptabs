@@ -2,9 +2,6 @@
 
 namespace PhpTabs\Reader\Midi;
 
-/**
- * Midi message
- */
 class MidiMessage
 {
   const TYPE_SHORT = 1;
@@ -53,7 +50,7 @@ class MidiMessage
   {
     $message = new MidiMessage(self::TYPE_SHORT, $command);
 
-    if($channel === null && $data1 === null && $data2 = null)
+    if($channel === null && $data1 === null && $data2 === null)
     {
       $message->setData(array($command));
     }
@@ -73,6 +70,7 @@ class MidiMessage
   {
     $message = new MidiMessage(self::TYPE_META, $command);
     $message->setData($data);
+
     return $message;
   }
 }

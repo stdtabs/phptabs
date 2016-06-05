@@ -2,9 +2,6 @@
 
 namespace PhpTabs\Reader\Midi;
 
-/**
- * Midi Sequence
- */
 class MidiSequence
 {
   /** Sequence */
@@ -16,13 +13,8 @@ class MidiSequence
 
   protected $divisionType;
   protected $resolution;
-  private $tracks = array();
+  private $tracks;
 
-  /**
-   * MidiSequence contructor
-   * 
-   * @return void
-   */
   public function __construct($divisionType, $resolution)
   {
     $this->divisionType = $divisionType;
@@ -32,7 +24,6 @@ class MidiSequence
 
   /**
    * @param MidiTrack $track
-   * @return void
    */
   public function addTrack(MidiTrack $track)
   {
@@ -41,16 +32,17 @@ class MidiSequence
 
   /**
    * @param integer $index
+   *
    * @return MidiTrack
    */
   public function getTrack($index)
   {
     return isset($this->tracks[$index])
-      ? $this->tracks[$index] : null;
+        ? $this->tracks[$index] : null;
   }
 
   /**
-   * Count MIDI tracks
+   * Counts MIDI tracks
    *
    * @return integer
    */
@@ -75,14 +67,12 @@ class MidiSequence
     return $this->resolution;
   }
 
-  /**
-   * @return void
-   */
   public function finish()
   {
     for($i = 0; $i < count($this->tracks); $i++)
     {
       $track = $this->tracks[$i];
+
       $track->add(new MidiEvent(MidiMessage::metaMessage(47, 1), $track->ticks()));
     }
   }
