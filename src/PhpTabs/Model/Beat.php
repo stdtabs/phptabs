@@ -3,7 +3,12 @@
 namespace PhpTabs\Model;
 
 /**
- * This is a sub-element directly linked to a measure.
+ * @uses Chord
+ * @uses Duration
+ * @uses Measure
+ * @uses Stroke
+ * @uses Text
+ * @uses Voice
  */
 class Beat
 {
@@ -28,9 +33,6 @@ class Beat
     }
   }
 
-  /**
-   * @return Measure object
-   */
   public function getMeasure()
   {
     return $this->measure;
@@ -66,6 +68,7 @@ class Beat
     {
       return $this->voices[$index];
     }
+
     return null;
   }
 
@@ -108,12 +111,12 @@ class Beat
 
   public function isChordBeat()
   {
-    return $this->chord != null;
+    return $this->chord !== null;
   }
 
   public function isTextBeat()
   {
-    return $this->text != null;
+    return $this->text !== null;
   }
 
   public function getStroke()

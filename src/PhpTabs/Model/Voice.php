@@ -105,12 +105,14 @@ class Voice
       if($v == $note)
       {
         array_splice($this->notes, $k, 1);
-      }
-    }
 
-    if(!$this->countNotes())
-    {
-      $this->setEmpty(true);
+        if(!$this->countNotes())
+        {
+          $this->setEmpty(true);
+        }
+
+        return;
+      }
     }
   }
 
@@ -120,6 +122,7 @@ class Voice
     {
       return $this->notes[$index];
     }
+
     return null;
   }
 
@@ -130,7 +133,7 @@ class Voice
 
   public function isRestVoice()
   {
-    return (count($this->notes) == 0);
+    return count($this->notes) == 0;
   }
 
   public function __clone()
@@ -143,6 +146,7 @@ class Voice
     for($i=0; $i<$this->countNotes(); $i++)
     {
       $note = $this->notes[$i];
+
       $voice->addNote(clone $note);
     }
 

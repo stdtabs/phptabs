@@ -2,9 +2,6 @@
 
 namespace PhpTabs\Model;
 
-/**
- * Tablature representation of one note
- */
 class TabString
 {
   /** @var integer $number */
@@ -13,14 +10,10 @@ class TabString
   /** @var integer $value */
   private $value;
 
-  /**
-   * Constructor
-   * @return void
-   */
-  public function __construct()
+  public function __construct($number = 0, $value = 0)
   {
-    $this->number = 0;
-    $this->value = 0;
+    $this->number = $number;
+    $this->value = $value;
   }
 
   /**
@@ -41,7 +34,6 @@ class TabString
 
   /**
    * @param integer $number
-   * @return void
    */
   public function setNumber($number)
   {
@@ -50,7 +42,6 @@ class TabString
 
   /**
    * @param integer $value
-   * @return void
    */
   public function setValue($value)
   {
@@ -59,30 +50,34 @@ class TabString
 
   /**
    * Compares two strings
+   *
    * @param TabString $string the string to compare with current one
+   * 
    * @return boolean Result of the comparison
    */
   public function isEqual($string)
   {
-    return ($this->getNumber() == $string->getNumber() 
-      && $this->getValue() == $string->getValue());
+    return $this->getNumber() == $string->getNumber() 
+        && $this->getValue() == $string->getValue();
   }
 
   /**
    * Clones current string
+   * 
    * @return TabString
    */
   public function __clone()
   {
     $string = new TabString();
     $string->copyFrom($this);
+
     return $string;
   }
 
   /**
    * Copies a string from another one
+   *
    * @param TabString $string
-   * @return void
    */
   public function copyFrom(TabString $string)
   {

@@ -26,8 +26,8 @@ class Measure
   public function __construct(MeasureHeader $header)
   {
     $this->header = $header;
-    $this->clef = Measure::DEFAULT_CLEF;
-    $this->keySignature = Measure::DEFAULT_KEY_SIGNATURE;
+    $this->clef = self::DEFAULT_CLEF;
+    $this->keySignature = self::DEFAULT_KEY_SIGNATURE;
     $this->beats = array();
   }
 
@@ -69,6 +69,7 @@ class Measure
   public function addBeat(Beat $beat)
   {
     $beat->setMeasure($this);
+
     $this->beats[] = $beat;
   }
 
@@ -86,6 +87,7 @@ class Measure
       if($v == $beat)
       {
         array_splice($this->beats, $k, 1);
+
         return;
       }
     }
@@ -176,6 +178,7 @@ class Measure
     $this->clef = $measure->getClef();
     $this->keySignature = $measure->getKeySignature();
     $this->clear();
+
     for($i=0; $i<$measure->countBeats(); $i++)
     {
       $this->addBeat(clone $measure->getBeat($i));
@@ -186,6 +189,7 @@ class Measure
   {
     $measure = new Measure($this->getHeader());
     $measure->copyFrom($this);
+
     return $measure;
   }
 }
