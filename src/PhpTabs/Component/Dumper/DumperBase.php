@@ -255,7 +255,7 @@ abstract class DumperBase extends DumperEffects
       $content['strings'][] = array('string' => $strings[$i]);
     }
 
-    return array('chord' => $content);
+    return $content;
   }
 
   protected function dumpTimeSignature($timeSignature)
