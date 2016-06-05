@@ -5,7 +5,7 @@ namespace PhpTabs\Component;
 /**
  * Log storage
  * 
- * Internal use for debugging during implementations 
+ * Internal use for debugging purpose
  */
 abstract class Log
 {
@@ -17,7 +17,6 @@ abstract class Log
    * 
    * @param string $message Text message to log
    * @param string $type optional type of log NOTICE | WARNING | ERROR
-   * @return void
    */
   public static function add($message, $type = 'NOTICE')
   {
@@ -32,7 +31,8 @@ abstract class Log
   /**
    * Counts log messages
    * 
-   * @param string $type Used to filter count
+   * @param string $type An optional string to filter by type
+   * 
    * @return integer Number of messages
    */
   public static function countLogs($type = null)
@@ -55,13 +55,14 @@ abstract class Log
    * 
    * @param integer $count Number of messages to get
    * @param string $type Used to filter messages
+   *
    * @return array A list of messages
    */
   public static function tail($count = 50, $type = null)
   {
     $messages = array();
 
-    $ptrLogs = self::countLogs($type) - 1;
+    $ptrLogs = self::countLogs() - 1;
 
     for($i = $ptrLogs; $i >= 0; $i--)
     {
@@ -80,9 +81,7 @@ abstract class Log
   }
 
   /**
-   * Delete all logged messages
-   * 
-   * @return void
+   * Drops all logged messages
    */
   public static function clear()
   {

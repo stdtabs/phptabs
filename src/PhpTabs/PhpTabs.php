@@ -15,19 +15,19 @@ class PhpTabs
   private $tablature;
 
   /**
-   * @param string $filename the fully qualified filename
+   * @param string $pathname A complete pathname
    */
-  public function __construct($filename = null)
+  public function __construct($pathname = null)
   {
     try
     {
-      if(null === $filename)
+      if(null === $pathname)
       {
         $this->setTablature(new Tablature());
       }
       else
       {
-        $reader = new Reader(new File($filename));
+        $reader = new Reader(new File($pathname));
 
         $this->setTablature($reader->getTablature());
       }
@@ -38,7 +38,8 @@ class PhpTabs
           , $e->getMessage()
           , $e->getFile()
           , $e->getLine()
-          , PHP_EOL . $e->getTraceAsString() . PHP_EOL);
+          , PHP_EOL . $e->getTraceAsString() . PHP_EOL
+      );
 
       # if debug mode, an error kills the process
       if(Config::get('debug'))
@@ -54,7 +55,7 @@ class PhpTabs
   }
 
   /**
-   * Gets tablature instance
+   * Gets the tablature instance
    *
    * @return Tablature A tablature instance
    */
@@ -76,8 +77,8 @@ class PhpTabs
   /**
    * Overloads with $tablature methods
    * 
-   * @param string $name method name
-   * @param array $arguments arguments to pass
+   * @param string $name A method name
+   * @param array $arguments Some arguments for the method 
    *
    * @return mixed
    */
@@ -94,9 +95,9 @@ class PhpTabs
         break;
 
       default:
-        $message = sprintf('%s method does not support %d arguments',
-            __METHOD__,
-            count($arguments)
+        $message = sprintf('%s method does not support %d arguments'
+          , __METHOD__
+          , count($arguments)
         );
 
         trigger_error($message, E_USER_ERROR);

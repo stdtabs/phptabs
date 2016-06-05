@@ -2,10 +2,10 @@
 
 /**
  * Project specific autoloader
- * Include this file only if you don't use composer
+ *
+ * Include this file only if you do NOT use composer
  * 
- * @param string $class The fully-qualified class name.
- * @return void
+ * @param string $class A fully-qualified class name
  */
 
 spl_autoload_register(function ($class)
@@ -15,6 +15,7 @@ spl_autoload_register(function ($class)
   $baseDir = __DIR__ . '/';
 
   $len = strlen($prefix);
+
   if (strncmp($prefix, $class, $len) !== 0)
   {
     return;
