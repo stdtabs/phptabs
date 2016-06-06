@@ -83,7 +83,7 @@ Download and extract an archive from [https://github.com/stdtabs/phptabs/release
 Then add this PHP line before usage:
 
 ```php
-require_once 'src/PhpTabs/Autoloader.php';
+require_once 'src/PhpTabs/bootstrap.php';
 ```
 
 ###With Composer
@@ -124,7 +124,7 @@ Basic Usage
 -----------
 
 ```php
-require_once 'src/PhpTabs/Autoloader.php';
+require_once 'src/PhpTabs/bootstrap.php';
 
 use PhpTabs\PhpTabs;
 
