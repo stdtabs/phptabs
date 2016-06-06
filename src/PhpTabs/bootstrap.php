@@ -9,6 +9,6 @@ use PhpTabs\Component\Autoloader;
  *
  * Include this file only if you do NOT use composer
  */
-include __DIR__ . '/Component/Autoloader.php';
+include_once __DIR__ . '/Component/Autoloader.php';
 
 Autoloader::register();
