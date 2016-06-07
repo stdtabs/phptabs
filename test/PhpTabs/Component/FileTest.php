@@ -21,7 +21,7 @@ class FileTest extends PHPUnit_Framework_TestCase
 
     $this->assertEquals($this->filename, $file->getPath());
     $this->assertEquals(dirname($this->filename), $file->getDirname());
-    $this->assertEquals('testNotAllowedExtension.xxx', $file->getBasename());
+    $this->assertEquals(basename($this->filename), $file->getBasename());
   }
 
   public function testStreamMethods()
