@@ -198,8 +198,8 @@ class MidiDumperTest extends XmlTestCaseHelper
       'popping:',
       'fadeIn:',
       'letRing:',
-     # 'points:',
-     # 'position:',
+      'points:',
+      'position:',
       'strings:'
     );
 
