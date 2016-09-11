@@ -95,6 +95,21 @@ class Song extends SongBase
       ? $this->channels[$index] : null;
   }
 
+  public function getChannelById($channelId)
+  {
+    $channels = $this->getChannels();
+
+    foreach($channels as $channel)
+    {
+      if($channel->getChannelId() == $channelId)
+      {
+        return $channel;
+      }
+    }
+
+    return null;
+  }
+
   public function getChannels()
   {
     return $this->channels;
