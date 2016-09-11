@@ -2,9 +2,6 @@
 
 namespace PhpTabs\Component;
 
-/**
- * Interface for the bridge writers
- */
 interface WriterInterface
 {
   /**

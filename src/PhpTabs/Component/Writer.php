@@ -14,11 +14,13 @@ class Writer
   /** @var Tablature */
   private $tablature;
 
-  /** @var array List of supported writers */
+  /** @var array A list of supported writers */
   private $writers = array(
     'gp3' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro3Writer',
     'gp4' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro4Writer',
-    'gp5' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro5Writer'
+    'gp5' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro5Writer',
+    'mid' => 'PhpTabs\\Writer\\Midi\\MidiWriter',
+    'midi'=> 'PhpTabs\\Writer\\Midi\\MidiWriter'
   );
 
   /**
@@ -55,7 +57,7 @@ class Writer
     if($path == 'php://output')
     {
       print($this->build($this->tablature->getFormat()));
-      
+
       return true;
     }
     else if(null === $path)
