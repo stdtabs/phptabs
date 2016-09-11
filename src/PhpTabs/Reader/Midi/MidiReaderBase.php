@@ -6,19 +6,13 @@ use PhpTabs\Component\File;
 use PhpTabs\Component\Log;
 use PhpTabs\Model\Song;
 
-/**
- * MIDI methods for Readers
- */
 abstract class MidiReaderBase implements MidiReaderInterface
 {
   /** @var File */
   private $file;
 
   /**
-   * Constructor
-   * 
    * @param File $file input file to read
-   * @return void
    */
   public function __construct(File $file)
   {
@@ -99,7 +93,6 @@ abstract class MidiReaderBase implements MidiReaderInterface
    * Skips a sequence
    * 
    * @param integer $num
-   * @return void
    */
   protected function skip($num = 1)
   {
@@ -127,7 +120,6 @@ abstract class MidiReaderBase implements MidiReaderInterface
   /**
    * Closes the File read
    * 
-   * @return void
    */
   protected function closeStream()
   {
