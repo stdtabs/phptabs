@@ -58,7 +58,7 @@ class MidiSequenceHandler
     }
   }
 
-  public function addNoteOff($tick, $track, $channelId, $note, $velocity, $voice, $bendMode)
+  public function addNoteOff($tick, $track, $channelId, $note, $velocity, $bendMode)
   {
     $channel = $this->router->getRoute($channelId);
 
@@ -68,7 +68,7 @@ class MidiSequenceHandler
     }
   }
 
-  public function addNoteOn($tick, $track, $channelId, $note, $velocity, $voice, $bendMode)
+  public function addNoteOn($tick, $track, $channelId, $note, $velocity, $bendMode)
   {
     $channel = $this->router->getRoute($channelId);
 
@@ -78,7 +78,7 @@ class MidiSequenceHandler
     }
   }
 
-  public function addPitchBend($tick, $track, $channelId, $value, $voice, $bendMode)
+  public function addPitchBend($tick, $track, $channelId, $value, $bendMode)
   {
     $channel = $this->router->getRoute($channelId);
 

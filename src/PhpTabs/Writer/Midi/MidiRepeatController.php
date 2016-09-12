@@ -21,8 +21,8 @@ class MidiRepeatController
   private $repeatAlternative;
   private $sHeader;
   private $eHeader;
-	
-	public function __construct(Song $song, $sHeader, $eHeader)
+
+  public function __construct(Song $song, $sHeader, $eHeader)
   {
     $this->song = $song;
     $this->sHeader = $sHeader;
@@ -38,7 +38,7 @@ class MidiRepeatController
     $this->repeatMove = 0;
     $this->repeatStartIndex = 0;
     $this->repeatNumber = 0;
-	}
+  }
 
   public function process()
   {
