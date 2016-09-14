@@ -35,7 +35,10 @@ class Writer
    * Builds content in $format
    * 
    * @param string $format
+   *
    * @return string A binary chain
+   * 
+   * @throws Exception if output format is not supported
    */
   public function build($format)
   {
@@ -50,7 +53,13 @@ class Writer
   }
 
   /**
-   * @param string $filename
+   * Outputs internal model into buffer or a file
+   *
+   * @param string $path
+   * 
+   * @return mixed boolean|string
+   * 
+   * @throws Exception if an incorrect destination path is supplied
    */
   public function save($path = null)
   {
@@ -83,6 +92,13 @@ class Writer
     throw new Exception('Save path is not allowed');
   }
 
+  /**
+   * Records $content into a file
+   * 
+   * @param string $content binary chain
+   * 
+   * @throws Exception If content can not be written
+   */
   private function record($content)
   {
     $dir = pathinfo($this->path, PATHINFO_DIRNAME);

@@ -3,7 +3,6 @@
 namespace PhpTabs\Component;
 
 use Exception;
-
 use PhpTabs\Model\Channel;
 use PhpTabs\Model\ChannelNames;
 use PhpTabs\Model\Song;
@@ -75,6 +74,7 @@ class Tablature
 
   /**
    * Gets the list of instruments
+   * 
    * @return array
    */
   public function getInstruments()
@@ -111,6 +111,7 @@ class Tablature
    * Gets instrument by channelId
    *
    * @param integer $index
+   * 
    * @return array
    */
   public function getInstrument($index)
@@ -139,6 +140,8 @@ class Tablature
    * Writes a song into a file
    * 
    * @return mixed boolean|string
+   * 
+   * @throws Exception If tablature container contains error
    */
   public function save($filename = null)
   {
@@ -159,6 +162,7 @@ class Tablature
    * Builds a binary starting from Music DOM
    *
    * @param string $format
+   * 
    * @return string A binary chain
    */
   public function convert($format = null)
@@ -200,11 +204,21 @@ class Tablature
     }
   }
 
+  /**
+   * Memorize original format
+   * 
+   * @param string $format
+   */
   public function setFormat($format)
   {
     $this->format = $format;
   }
 
+  /**
+   * Returns orignal format
+   * 
+   * @return string $format
+   */
   public function getFormat()
   {
     return $this->format;

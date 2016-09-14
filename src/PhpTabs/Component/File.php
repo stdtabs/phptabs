@@ -65,7 +65,6 @@ class File
 
   /**
    * @param string $path Path to the file passed as a parameter
-   * @return void
    */
   private function setPath($path)
   {
@@ -74,7 +73,6 @@ class File
 
   /**
    * @return string Path to the file as it was passed as a parameter
-   * @return string
    */
   public function getPath()
   {
@@ -83,7 +81,6 @@ class File
 
   /**
    * @param string $name Directory of the path
-   * @return void
    */
   private function setDirname($name)
   {
@@ -100,7 +97,6 @@ class File
 
   /**
    * @param string $name Extension of the path
-   * @return void
    */
   private function setExtension($name)
   {
@@ -117,7 +113,6 @@ class File
 
   /**
    * @param string $name Basename of the path
-   * @return void
    */
   private function setBasename($name)
   {
@@ -134,7 +129,6 @@ class File
 
   /**
    * @param int $size size of the file (bytes)
-   * @return void
    */
   private function setSize($size)
   {
@@ -157,6 +151,8 @@ class File
    * @param int $length
    * 
    * @return string a file segment
+   * 
+   * @throws Exception If asked position is larger than the file size
    */
   public function getStream($bytes = 1, $offset = null)
   {
@@ -218,7 +214,6 @@ class File
 
   /**
    * Close stream
-   * @return void
    */
   public function closeStream()
   {
@@ -230,7 +225,8 @@ class File
 
   /**
    * @param string $error Error during file read operations
-   * @return void
+   * 
+   * @throws exception when an error occurred
    */
   private function setError($message)
   {

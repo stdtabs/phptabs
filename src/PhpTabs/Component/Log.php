@@ -3,9 +3,7 @@
 namespace PhpTabs\Component;
 
 /**
- * Log storage
- * 
- * Internal use for debugging purpose
+ * Log internal storage
  */
 abstract class Log
 {

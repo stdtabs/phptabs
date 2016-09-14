@@ -26,6 +26,8 @@ class Reader
    * Try to load the right dedicated reader
    * 
    * @param File $file file which should contain a tablature
+   * 
+   * @throws Exception If file format is not supported
    */
   public function __construct(File $file = null)
   {
@@ -58,7 +60,7 @@ class Reader
   }
 
   /**
-   * @return Tablature read from file tablature.
+   * @return Tablature A tablature read from file.
    *  Otherwise, an empty tablature with some error information
    */
   public function getTablature()

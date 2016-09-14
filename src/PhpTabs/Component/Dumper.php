@@ -14,7 +14,7 @@ class Dumper extends DumperBase
   protected $song;
 
   /**
-   * @param Tablature $tablature The tablature to dump
+   * @param Tablature The tablature to dump
    */
   public function __construct(Tablature $tablature)
   {
