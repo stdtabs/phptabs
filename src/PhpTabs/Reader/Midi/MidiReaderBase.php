@@ -2,6 +2,7 @@
 
 namespace PhpTabs\Reader\Midi;
 
+use Exception;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Log;
 use PhpTabs\Model\Song;
@@ -58,12 +59,16 @@ abstract class MidiReaderBase implements MidiReaderInterface
 
   /**
    * @param MidiTrackReaderHelper $helper
+   * 
    * @return integer
+   * 
+   * @throws Exception if variable length is not readable
    */
   public function readVariableLengthQuantity(MidiTrackReaderHelper $helper)
   {
     $count = 0;
     $value = 0;
+
     while ($count < 4)
     {
       $data = $this->readUnsignedByte();
@@ -76,7 +81,8 @@ abstract class MidiReaderBase implements MidiReaderInterface
         return $value;
       }
     }
-    throw new \Exception("not a MIDI file: unterminated variable-length quantity");
+
+    throw new Exception("Not a MIDI file: unterminated variable-length quantity");
   }
 
   /**
@@ -103,6 +109,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
    * Reads bytes
    * 
    * @param integer $num
+   *
    * @return array An array of bytes
    */
   protected function readBytesBigEndian($num = 1)
