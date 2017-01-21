@@ -22,6 +22,7 @@ class Xml extends SerializerBase
    * Serializes a document
    * 
    * @param array $document
+   *
    * @return string
    */
   public function serialize(array $document)
@@ -33,6 +34,10 @@ class Xml extends SerializerBase
     return $this->writer->outputMemory();
   }
 
+  /**
+   * @param int $index
+   * @param array $node
+   */
   protected function appendNode($index, array $node)
   {
     $this->writer->startElement($index);
@@ -40,19 +45,23 @@ class Xml extends SerializerBase
     $this->writer->endElement(); 
   }
 
+  /**
+   * @param int $index
+   * @param int $value
+   */
   protected function appendText($index, $value)
   {
     $this->writer->startElement($index);
 
-    if($value === false)
+    if ($value === false)
     {
       $this->writer->text('false');
     }
-    else if($value === true)
+    elseif ($value === true)
     {
       $this->writer->text('true');
     }
-    else if(is_numeric($value) || is_string($value))
+    elseif (is_numeric($value) || is_string($value))
     {
       $this->writer->text($value);
     }

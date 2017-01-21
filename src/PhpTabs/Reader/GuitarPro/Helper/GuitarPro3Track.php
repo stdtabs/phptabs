@@ -9,15 +9,15 @@ use PhpTabs\Model\TabString;
 class GuitarPro3Track extends AbstractReader
 {
   /**
-   * Reads Track informations
+   * Reads track informations
    * 
-   * @param Song $song
+   * @param \PhpTabs\Model\Song $song
    * @param integer $number
    * @param array $channels An array of Channel objects
    * 
    * @return Track
    */
-  public function readTrack(Song $song, $number, $channels)
+  public function readTrack(Song $song, $number, array $channels = [])
   {
     $track = new Track();
     $track->setSong($song);
@@ -26,10 +26,10 @@ class GuitarPro3Track extends AbstractReader
     $track->setName($this->reader->readStringByte(40));
     $stringCount = $this->reader->readInt();
 
-    for($i = 0; $i < 7; $i++)
+    for ($i = 0; $i < 7; $i++)
     {
       $tuning = $this->reader->readInt();
-      if($stringCount > $i)
+      if ($stringCount > $i)
       {
         $string = new TabString();
         $string->setNumber($i + 1);
@@ -37,6 +37,7 @@ class GuitarPro3Track extends AbstractReader
         $track->addString($string);
       }
     }
+
     $this->reader->readInt();
     $this->reader->factory('GuitarProChannel')->readChannel($song, $track, $channels);
     $this->reader->readInt();

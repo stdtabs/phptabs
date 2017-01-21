@@ -12,11 +12,11 @@ class GuitarPro3MeasureHeader extends AbstractReader
    * Reads a mesure header
    * 
    * @param integer $number
-   * @param Song $song
-   * @param TimeSignature $timeSignature
+   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Model\TimeSignature $timeSignature
    * @param integer $tempoValue
    * 
-   * @return MeasureHeader
+   * @return \PhpTabs\Model\MeasureHeader
    */
   public function readMeasureHeader($number, Song $song, TimeSignature $timeSignature, $tempoValue = 120)
   {
@@ -39,6 +39,7 @@ class GuitarPro3MeasureHeader extends AbstractReader
     }
 
     $header->getTimeSignature()->copyFrom($timeSignature);
+
     if (($flags & 0x08) != 0)
     {
       $header->setRepeatClose($this->reader->readByte());

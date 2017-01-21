@@ -5,7 +5,6 @@ namespace PhpTabs\Model;
 /**
  * ChannelNames
  */
- 
 class ChannelNames
 {
   public static $defaultNames = array(

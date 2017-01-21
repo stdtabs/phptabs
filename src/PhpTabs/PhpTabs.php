@@ -3,7 +3,6 @@
 namespace PhpTabs;
 
 use Exception;
-
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Reader;
@@ -11,7 +10,9 @@ use PhpTabs\Component\Tablature;
 
 class PhpTabs
 {
-  /** @var Tablature A tablature container */
+  /**
+   * @var \PhpTabs\Component\Tablature A tablature container
+   */
   private $tablature;
 
   /**
@@ -21,7 +22,7 @@ class PhpTabs
   {
     try
     {
-      if(null === $pathname)
+      if (null === $pathname)
       {
         $this->setTablature(new Tablature());
       }
@@ -42,7 +43,7 @@ class PhpTabs
       );
 
       # if debug mode, an error kills the process
-      if(Config::get('debug'))
+      if (Config::get('debug'))
       {
         trigger_error($message, E_USER_ERROR);
 
@@ -57,7 +58,7 @@ class PhpTabs
   /**
    * Gets the tablature instance
    *
-   * @return Tablature A tablature instance
+   * @return \PhpTabs\Component\Tablature
    */
   public function getTablature()
   {
@@ -67,7 +68,7 @@ class PhpTabs
   /**
    * Sets the tablature instance
    *
-   * @param Tablature $tablature a tablature instance
+   * @param \PhpTabs\Component\Tablature $tablature a tablature instance
    */
   protected function setTablature(Tablature $tablature)
   {
@@ -82,22 +83,21 @@ class PhpTabs
    *
    * @return mixed
    */
-  public function __call($name, $arguments)
+  public function __call($name, array $arguments = [])
   {
     switch(count($arguments))
     {
       case 0:
         return $this->tablature->$name();
-        break;
 
       case 1:
         return $this->tablature->$name($arguments[0]);
-        break;
 
       default:
-        $message = sprintf('%s method does not support %d arguments'
-          , __METHOD__
-          , count($arguments)
+        $message = sprintf(
+          '%s method does not support %d arguments',
+          __METHOD__,
+          count($arguments)
         );
 
         trigger_error($message, E_USER_ERROR);

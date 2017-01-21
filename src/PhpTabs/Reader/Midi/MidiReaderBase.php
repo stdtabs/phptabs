@@ -116,7 +116,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
   {
     $bytes = array();
 
-    for($i=0; $i<$num; $i++)
+    for ($i = 0; $i < $num; $i++)
     {
       $bytes[$i] = ord($this->file->getStream());
     }
@@ -125,8 +125,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
   }
 
   /**
-   * Closes the File read
-   * 
+   * Closes File read process
    */
   protected function closeStream()
   {

@@ -13,25 +13,22 @@ class Chord
   /** @var string $name of the chord */
   private $name;
 
-  /** @var Beat $beat which contains Chord */
+  /** @var \PhpTabs\Model\Beat $beat */
   private $beat;
 
   /**
-   * Constructor
-   * 
-   * @param integer $length number of strings
-   * @return void
+   * @param int $length Number of strings
    */
   public function __construct($length)
   {
-    for($i=0; $i<$length; $i++)
+    for ($i = 0; $i < $length; $i++)
     {
       $this->strings[$i] = -1;
     }
   }
 
   /**
-   * @return Beat The chord container
+   * @return \PhpTabs\Model\Beat The chord container
    */
   public function getBeat()
   {
@@ -39,8 +36,7 @@ class Chord
   }
 
   /**
-   * @param Beat $beat
-   * @return void
+   * @param \PhpTabs\Model\Beat $beat
    */
   public function setBeat(Beat $beat)
   {
@@ -48,15 +44,14 @@ class Chord
   }
 
   /**
-   * Puts  a fret value
+   * Puts a fret value
    *
-   * @param integer $string
-   * @param integer $fret
-   * @return void
+   * @param int $string
+   * @param int $fret
    */
   public function addFretValue($string, $fret)
   {
-    if($string >= 0 && $string < count($this->strings))
+    if ($string >= 0 && $string < count($this->strings))
     {
       $this->strings[$string] = $fret;
     }
@@ -65,12 +60,13 @@ class Chord
   /**
    * Gets a fret value by string index
    *
-   * @param integer $string Index of the stack
-   * @return integer fret id
+   * @param int $string Index of the stack
+   * 
+   * @return int fret id
    */
   public function getFretValue($string)
   {
-    if($string >= 0 && $string < count($this->strings))
+    if ($string >= 0 && $string < count($this->strings))
     {
       return $this->strings[$string];
     }
@@ -80,7 +76,8 @@ class Chord
 
   /**
    * Gets the first fret id
-   * @return integer first fret id
+   * 
+   * @return int first fret id
    */
   public function getFirstFret()
   {
@@ -89,8 +86,8 @@ class Chord
 
   /**
    * Sets the first fret id
-   * @param integer $firstFret
-   * @return void
+   * 
+   * @param int $firstFret
    */
   public function setFirstFret($firstFret)
   {
@@ -99,7 +96,8 @@ class Chord
 
   /**
    * Gets list of strings ids
-   * @return array of strings
+   * 
+   * @return array An array of strings
    */
   public function getStrings()
   {
@@ -108,7 +106,8 @@ class Chord
 
   /**
    * Gets number of strings
-   * @return integer number of strings
+   * 
+   * @return int number of strings
    */
   public function countStrings()
   {
@@ -117,14 +116,16 @@ class Chord
 
   /**
    * Gets number of notes which compounds the chord
-   * @return integer count
+   * 
+   * @return int
    */
   public function countNotes()
   {
     $count = 0;
-    for($i = 0; $i<count($this->strings); $i++)
+
+    for ($i = 0; $i < count($this->strings); $i++)
     {
-      if($this->strings[$i] >= 0)
+      if ($this->strings[$i] >= 0)
       {
         $count++;
       }
@@ -135,7 +136,8 @@ class Chord
 
   /**
    * Gets the chord name
-   * @return string name
+   *
+   * @return string
    */
   public function getName()
   {
@@ -144,8 +146,8 @@ class Chord
 
   /** 
    * Sets the chord name
+   * 
    * @param string $name
-   * @return void
    */
   public function setName($name)
   {
@@ -154,7 +156,8 @@ class Chord
 
   /**
    * Clone current Chord
-   * @return Chord clone
+   * 
+   * @return \PhpTabs\Model\Chord clone
    */
   public function __clone()
   {
@@ -162,7 +165,7 @@ class Chord
     $chord->setName($this->getName());
     $chord->setFirstFret($this->getFirstFret());
 
-    for($i = 0; $i < count($chord->strings); $i++)
+    for ($i = 0; $i < count($chord->strings); $i++)
     {
       $chord->strings[$i] = $this->strings[$i];
     }

@@ -31,10 +31,7 @@ class File
   private $handle;
 
   /**
-   * Constructor
-   * 
    * @param string $path Path to the file
-   * @return void
    */
   public function __construct($path = null)
   {
@@ -156,23 +153,23 @@ class File
    */
   public function getStream($bytes = 1, $offset = null)
   {
-    if(!$this->handle)
+    if (!$this->handle)
     {
       $this->handle = fopen($this->getPath(), "rb");
     }
-    else if(feof($this->handle))
+    elseif (feof($this->handle))
     {
       return;
     }
-    else if($this->getStreamPosition() + $bytes > $this->getSize())
+    elseif ($this->getStreamPosition() + $bytes > $this->getSize())
     {
       throw new Exception('Pointer');
     }
-    
+
     $message = __METHOD__ . "($bytes): position:" . $this->getStreamPosition();
 
     # Nothing to read
-    if($bytes <= 0)
+    if ($bytes <= 0)
     {
       Log::add($message, 'NOTICE');
 
@@ -180,7 +177,7 @@ class File
     }
 
     # Read $bytes with no offset
-    if(null === $offset)
+    if (null === $offset)
     {
       $this->stream = fread($this->handle, $bytes);
 
@@ -188,12 +185,12 @@ class File
 
       return $this->stream;
     }
-    
+
     Log::add($message, 'NOTICE');
 
     # Moves pointer to $offset
     fread($this->handle, $offset);
-    
+
     return $this->getStream($bytes);
   }
 
@@ -204,11 +201,11 @@ class File
    */
   public function getStreamPosition()
   {
-    if(!$this->handle)
+    if (!$this->handle)
     {
       return false;
     }
-    
+
     return ftell($this->handle);
   }
 
@@ -217,7 +214,7 @@ class File
    */
   public function closeStream()
   {
-    if($this->handle)
+    if ($this->handle)
     {
       fclose($this->handle);
     }
@@ -226,12 +223,12 @@ class File
   /**
    * @param string $error Error during file read operations
    * 
-   * @throws exception when an error occurred
+   * @throws \Exception when an error occurred
    */
   private function setError($message)
   {
     $this->error = $message;
-    
+
     throw new Exception($message);
   }
 

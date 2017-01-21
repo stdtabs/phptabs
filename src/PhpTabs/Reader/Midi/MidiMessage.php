@@ -20,41 +20,65 @@ class MidiMessage
   private $command;
   private $data;
 
+  /**
+   * @param string $message
+   * @param string $command
+   */
   public function __construct($message, $command) 
   {
     $this->message = $message;
     $this->command = $command;
   }
 
+  /**
+   * @param array $data
+   */
   public function setData($data)
   {
     $this->data = $data;
   }
 
+  /**
+   * @return array
+   */
   public function getData()
   {
     return $this->data;
   }
 
+  /**
+   * @return string
+   */
   public function getType()
   {
     return $this->message;
   }
 
+  /**
+   * @return string
+   */
   public function getCommand()
   {
     return $this->command;
   }
 
+  /**
+   * @param string $command
+   * @param int $channel
+   * @param array $data1
+   * @param array $data2
+   * 
+   * @return \PhpTabs\Reader\Midi\MidiMessage
+   */
   public static function shortMessage($command, $channel = null, $data1 = null, $data2 = null)
   {
     $message = new MidiMessage(self::TYPE_SHORT, $command);
 
-    if($channel === null && $data1 === null && $data2 === null)
+    if ($channel === null && $data1 === null && $data2 === null)
     {
       $message->setData(array($command));
     }
-    else if($data2 === null)
+    elseif ($data2 === null)
     {
       $message->setData(array(($command & 0xF0) | ($channel & 0x0F), $data1));
     }
@@ -66,6 +90,12 @@ class MidiMessage
     return $message;
   }
 
+  /**
+   * @param string $command
+   * @param array $data
+   *
+   * @return \PhpTabs\Reader\Midi\MidiMessage
+   */
   public static function metaMessage($command, $data)
   {
     $message = new MidiMessage(self::TYPE_META, $command);

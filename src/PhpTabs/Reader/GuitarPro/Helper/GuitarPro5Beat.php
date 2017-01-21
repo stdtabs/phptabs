@@ -14,9 +14,9 @@ class GuitarPro5Beat extends AbstractReader
    * Reads some Beat informations
    * 
    * @param integer $start
-   * @param Measure $measure
-   * @param Track $track
-   * @param Tempo $tempo
+   * @param \PhpTabs\Model\Measure $measure
+   * @param \PhpTabs\Model\Track $track
+   * @param \PhpTabs\Model\Tempo $tempo
    * @param integer $voiceIndex
    * 
    * @return integer $time A duration time
@@ -28,7 +28,7 @@ class GuitarPro5Beat extends AbstractReader
     $beat = $measure->getBeatByStart($start);
     $voice = $beat->getVoice($voiceIndex);
 
-    if(($flags & 0x40) != 0)
+    if (($flags & 0x40) != 0)
     {
       $beatType = $this->reader->readUnsignedByte();
       $voice->setEmpty(($beatType & 0x02) == 0);
@@ -41,14 +41,17 @@ class GuitarPro5Beat extends AbstractReader
     {
       $this->reader->factory('GuitarPro5Chord')->readChord($track->countStrings(), $beat);
     }
+
     if (($flags & 0x04) != 0) 
     {
       $this->reader->factory('GuitarProText')->readText($beat);
     }
+
     if (($flags & 0x08) != 0)
     {
       $this->reader->factory('GuitarPro4BeatEffects')->readBeatEffects($beat, $effect);
     }
+
     if (($flags & 0x10) != 0)
     {
       $this->reader->factory('GuitarPro5MixChange')->readMixChange($tempo);
@@ -70,11 +73,11 @@ class GuitarPro5Beat extends AbstractReader
 
     $this->reader->skip();
 
-    if(($this->reader->readByte() & 0x08) != 0)
+    if (($this->reader->readByte() & 0x08) != 0)
     {
       $this->reader->skip();
     }
 
-    return (!$voice->isEmpty() ? $duration->getTime() : 0);
+    return !$voice->isEmpty() ? $duration->getTime() : 0;
   }
 }

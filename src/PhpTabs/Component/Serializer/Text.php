@@ -21,6 +21,7 @@ class Text extends SerializerBase
    * Serializes a document
    * 
    * @param array $document
+   *
    * @return string
    */
   public function serialize(array $document)
@@ -31,6 +32,10 @@ class Text extends SerializerBase
     return $this->content;
   }
 
+  /**
+   * @param int $index
+   * @param array $element
+   */
   protected function appendNode($index, array $element)
   {
     $this->content .= sprintf('%s%s:%s', $this->indent(), $index, PHP_EOL);
@@ -39,27 +44,31 @@ class Text extends SerializerBase
     $this->depth--;
   }
 
+  /**
+   * @param int $index
+   * @param int $value
+   */
   protected function appendText($index, $value)
   {
     $this->content .= sprintf('%s%s:', $this->indent(), $index);
 
-    if($value === false)
+    if ($value === false)
     {
       $this->content .= 'false';
     }
-    else if($value === true)
+    elseif ($value === true)
     {
       $this->content .= 'true';
     }
-    else if(strpos($value, PHP_EOL) !== false)
+    elseif (strpos($value, PHP_EOL) !== false)
     {
       $this->writeMultilineString($value);
     }
-    else if(is_string($value))
+    elseif (is_string($value))
     {
       $this->content .= sprintf('"%s"', $value);
     }
-    else if(is_numeric($value))
+    elseif (is_numeric($value))
     {
       $this->content .= $value;
     }
@@ -67,13 +76,16 @@ class Text extends SerializerBase
     $this->content .= PHP_EOL;
   }
 
+  /**
+   * @param int $value
+   */
   protected function writeMultilineString($value)
   {
     $this->depth++;
 
     $strings = explode(PHP_EOL, $value);
 
-    foreach($strings as $string)
+    foreach ($strings as $string)
     {
       $this->content .= sprintf('%s%s%s', PHP_EOL, $this->indent(), $string);
     }
@@ -81,6 +93,9 @@ class Text extends SerializerBase
     $this->depth--;
   }
 
+  /**
+   * @return string
+   */
   protected function indent()
   {
     return str_repeat(Text::INDENT_CHAR, $this->depth * Text::INDENT_STEP);

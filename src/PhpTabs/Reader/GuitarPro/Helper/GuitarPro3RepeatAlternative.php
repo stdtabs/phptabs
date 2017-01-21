@@ -9,7 +9,7 @@ class GuitarPro3RepeatAlternative extends AbstractReader
   /**
    * Parses repeat alternative
    * 
-   * @param Song $song
+   * @param \PhpTabs\Model\Song $song
    * @param integer $measure
    * 
    * @return integer Number of repeat alternatives
@@ -17,19 +17,19 @@ class GuitarPro3RepeatAlternative extends AbstractReader
   public function parseRepeatAlternative(Song $song, $measure)
   {
     $value = $this->reader->readUnsignedByte();
-    
+
     $repeatAlternative = 0;
     $existentAlternatives = 0;
     $headers = $song->getMeasureHeaders();
 
-    foreach($headers as $header)
+    foreach ($headers as $header)
     {
-      if($header->getNumber() == $measure)
+      if ($header->getNumber() == $measure)
       {
         break;
       }
 
-      if($header->isRepeatOpen())
+      if ($header->isRepeatOpen())
       {
         $existentAlternatives = 0;
       }
@@ -37,9 +37,9 @@ class GuitarPro3RepeatAlternative extends AbstractReader
       $existentAlternatives |= $header->getRepeatAlternative();
     }
 
-    for($i = 0; $i < 8; $i++)
+    for ($i = 0; $i < 8; $i++)
     {
-      if($value > $i && ($existentAlternatives & (1 << $i)) == 0)
+      if ($value > $i && ($existentAlternatives & (1 << $i)) == 0)
       {
         $repeatAlternative |= (1 << $i);
       }

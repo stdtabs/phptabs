@@ -13,31 +13,49 @@ class ChannelRoute
   private $channel1;
   private $channel2;
 
+  /**
+   * @param int $channelId
+   */
   public function __construct($channelId)
   {
     $this->channelId = $channelId;
   }
 
+  /**
+   * @return int
+   */
   public function getChannelId()
   {
     return $this->channelId;
   }
 
+  /**
+   * @return \PhpTabs\Model\Channel
+   */
   public function getChannel1()
   {
     return $this->channel1;
   }
 
+  /**
+   * @param \PhpTabs\Model\Channel $channel1
+   */
   public function setChannel1($channel1)
   {
     $this->channel1 = $channel1;
   }
 
+  /**
+   * @return \PhpTabs\Model\Channel
+   */
   public function getChannel2()
   {
     return $this->channel2;
   }
 
+  /**
+   * @param \PhpTabs\Model\Channel $channel2
+   */
   public function setChannel2($channel2)
   {
     $this->channel2 = $channel2;

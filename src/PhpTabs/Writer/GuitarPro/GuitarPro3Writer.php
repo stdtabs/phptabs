@@ -3,9 +3,6 @@
 namespace PhpTabs\Writer\GuitarPro;
 
 use Exception;
-
-use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface as GprInterface;
-
 use PhpTabs\Model\Beat;
 use PhpTabs\Model\Channel;
 use PhpTabs\Model\Color;
@@ -27,17 +24,21 @@ use PhpTabs\Model\Text;
 use PhpTabs\Model\TimeSignature;
 use PhpTabs\Model\Track;
 use PhpTabs\Model\Velocities;
+use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface as GprInterface;
 
 class GuitarPro3Writer extends GuitarProWriterBase
 {
   /** @constant version */
   const VERSION = 'FICHIER GUITAR PRO v3.00';
 
+  /**
+   * @param \PhpTabs\Model\Song $song
+   */
   public function __construct(Song $song)
   {
     parent::__construct();
 
-    if($song->isEmpty())
+    if ($song->isEmpty())
     {
       throw new Exception('Song is empty');
     }
@@ -59,10 +60,15 @@ class GuitarPro3Writer extends GuitarProWriterBase
     $this->writeMeasures($song, clone $header->getTempo());
   }
 
+  /**
+   * @param \PhpTabs\Model\Song $song
+   * 
+   * @return array
+   */
   private function makeChannels(Song $song)
   {
     $channels = array();
-    for($i = 0; $i < 64; $i++)
+    for ($i = 0; $i < 64; $i++)
     {
       $channels[$i] = new Channel();
       $channels[$i]->setProgram(
@@ -79,7 +85,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
 
     $songChannels = $song->getChannels();
 
-    foreach($songChannels as $channel)
+    foreach ($songChannels as $channel)
     {
       $channelRoute = $this->getChannelRoute($channel->getChannelId());
       $channels[$channelRoute->getChannel1()]->setProgram($channel->getProgram());
@@ -94,6 +100,11 @@ class GuitarPro3Writer extends GuitarProWriterBase
     return $channels;
   }
 
+  /**
+   * @param \PhpTabs\Model\Duration $duration
+   * 
+   * @return int
+   */
   private function parseDuration(Duration $duration)
   {
     $value = 0;
@@ -124,43 +135,48 @@ class GuitarPro3Writer extends GuitarProWriterBase
     return $value;
   }
 
+  /**
+   * @param \PhpTabs\Model\Beat $beat
+   * @param \PhpTabs\Model\Measure $measure
+   * @param bool $changeTempo
+   */
   private function writeBeat(Beat $beat, Measure $measure, $changeTempo)
   {
     $voice = $beat->getVoice(0);
     $duration = $voice->getDuration();
     $flags = 0;
 
-    if($duration->isDotted() || $duration->isDoubleDotted()) 
+    if ($duration->isDotted() || $duration->isDoubleDotted()) 
     {
       $flags |= 0x01;
     }
 
-    if(!$duration->getDivision()->isEqual(DivisionType::normal()))
+    if (!$duration->getDivision()->isEqual(DivisionType::normal()))
     {
       $flags |= 0x20;
     }
 
-    if($beat->isTextBeat())
+    if ($beat->isTextBeat())
     {
       $flags |= 0x04;
     }
 
-    if($changeTempo)
+    if ($changeTempo)
     {
       $flags |= 0x10;
     }
 
     $effect = null;
-    if($voice->isRestVoice())
+    if ($voice->isRestVoice())
     {
       $flags |= 0x40;
     }
-    else if($voice->countNotes() > 0)
+    elseif ($voice->countNotes() > 0)
     {
       $note = $voice->getNote(0);
       $effect = $note->getEffect();
 
-      if($effect->isVibrato()
+      if ($effect->isVibrato()
         || $effect->isTremoloBar()
         || $effect->isTapping()
         || $effect->isSlapping()
@@ -175,33 +191,38 @@ class GuitarPro3Writer extends GuitarProWriterBase
 
     $this->writeUnsignedByte($flags);
 
-    if(($flags & 0x40) != 0)
+    if (($flags & 0x40) != 0)
     {
       $this->writeUnsignedByte(2);
     }
 
     $this->writeByte($this->parseDuration($duration));
 
-    if(($flags & 0x20) != 0)
+    if (($flags & 0x20) != 0)
     {
       $this->writeInt($duration->getDivision()->getEnters());
     }
-    if(($flags & 0x04) != 0)
+
+    if (($flags & 0x04) != 0)
     {
       $this->writeText($beat->getText());
     }
-    if(($flags & 0x08) != 0)
+
+    if (($flags & 0x08) != 0)
     {
       $this->writeBeatEffects($beat, $effect);
     }
-    if(($flags & 0x10) != 0)
+
+    if (($flags & 0x10) != 0)
     {
       $this->writeMixChange($measure->getTempo());
     }
+
     $stringFlags = 0;
-    if(!$voice->isRestVoice())
+
+    if (!$voice->isRestVoice())
     {
-      for($i = 0; $i < $voice->countNotes(); $i++)
+      for ($i = 0; $i < $voice->countNotes(); $i++)
       {
         $playedNote = $voice->getNote($i);
         $string = (7 - $playedNote->getString());
@@ -211,14 +232,14 @@ class GuitarPro3Writer extends GuitarProWriterBase
 
     $this->writeUnsignedByte($stringFlags);
 
-    for($i = 6; $i >= 0; $i--)
+    for ($i = 6; $i >= 0; $i--)
     {
-      if(($stringFlags & (1 << $i)) != 0)
+      if (($stringFlags & (1 << $i)) != 0)
       {
-        for($n = 0; $n < $voice->countNotes(); $n++)
+        for ($n = 0; $n < $voice->countNotes(); $n++)
         {
           $playedNote = $voice->getNote( $n );
-          if($playedNote->getString() == (6 - $i + 1))
+          if ($playedNote->getString() == (6 - $i + 1))
           {
             $this->writeNote($playedNote);
             break;
@@ -228,67 +249,71 @@ class GuitarPro3Writer extends GuitarProWriterBase
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\Beat $beat
+   * @param \PhpTabs\Model\NoteEffect $noteEffect
+   */
   private function writeBeatEffects(Beat $beat, NoteEffect $noteEffect)
   {
     $flags = 0;
-    if($noteEffect->isVibrato())
+    if ($noteEffect->isVibrato())
     {
       $flags += 0x01;
     }
 
-    if($noteEffect->isTremoloBar() || $noteEffect->isTapping() 
-      || $noteEffect->isSlapping() || $noteEffect->isPopping())
+    if ($noteEffect->isTremoloBar() || $noteEffect->isTapping() 
+       || $noteEffect->isSlapping() || $noteEffect->isPopping())
     {
       $flags += 0x20;
     }
 
-    if($beat->getStroke()->getDirection() != Stroke::STROKE_NONE)
+    if ($beat->getStroke()->getDirection() != Stroke::STROKE_NONE)
     {
       $flags |= 0x40;
     }
 
-    if($noteEffect->isHarmonic() && $noteEffect->getHarmonic()->getType() == EffectHarmonic::TYPE_NATURAL)
+    if ($noteEffect->isHarmonic() && $noteEffect->getHarmonic()->getType() == EffectHarmonic::TYPE_NATURAL)
     {
       $flags += 0x04;
     }
 
-    if($noteEffect->isHarmonic() && $noteEffect->getHarmonic()->getType() != EffectHarmonic::TYPE_NATURAL)
+    if ($noteEffect->isHarmonic() && $noteEffect->getHarmonic()->getType() != EffectHarmonic::TYPE_NATURAL)
     {
       $flags += 0x08;
     }
 
-    if($noteEffect->isFadeIn())
+    if ($noteEffect->isFadeIn())
     { 
       $flags += 0x10;
     }
 
     $this->writeUnsignedByte($flags);
 
-    if(($flags & 0x20) != 0)
+    if (($flags & 0x20) != 0)
     {
-      if($noteEffect->isTremoloBar())
+      if ($noteEffect->isTremoloBar())
       {
         $this->writeUnsignedByte(0);
         $this->writeInt(100);
       }
-      else if($noteEffect->isTapping())
+      elseif ($noteEffect->isTapping())
       {
         $this->writeUnsignedByte(1);
         $this->writeInt(0);
       }
-      else if($noteEffect->isSlapping())
+      elseif ($noteEffect->isSlapping())
       {
         $this->writeUnsignedByte(2);
         $this->writeInt(0);
       }
-      else if($noteEffect->isPopping())
+      elseif ($noteEffect->isPopping())
       {
         $this->writeUnsignedByte(3);
         $this->writeInt(0);
       }
     }
 
-    if(($flags & 0x40) != 0)
+    if (($flags & 0x40) != 0)
     {
       $this->writeUnsignedByte(
         $beat->getStroke()->getDirection() == Stroke::STROKE_DOWN 
@@ -301,13 +326,16 @@ class GuitarPro3Writer extends GuitarProWriterBase
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectBend $bend
+   */
   private function writeBend(EffectBend $bend)
   {
     $points = count($bend->getPoints());
     $this->writeByte(1);
     $this->writeInt(0);
     $this->writeInt($points);
-    for($i = 0; $i < $points; $i++)
+    for ($i = 0; $i < $points; $i++)
     {
       $point = $bend->getPoints()[$i];
       $this->writeInt(
@@ -320,10 +348,13 @@ class GuitarPro3Writer extends GuitarProWriterBase
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\Song $song
+   */
   private function writeChannels(Song $song)
   {
     $channels = $this->makeChannels($song);
-    for($i = 0; $i < count($channels); $i++)
+    for ($i = 0; $i < count($channels); $i++)
     {
       $this->writeInt($channels[$i]->getProgram());
       $this->writeByte($this->toChannelByte($channels[$i]->getVolume()));
@@ -336,6 +367,9 @@ class GuitarPro3Writer extends GuitarProWriterBase
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\Color $color
+   */
   private function writeColor(Color $color)
   {
     $this->writeUnsignedByte($color->getR());
@@ -344,9 +378,12 @@ class GuitarPro3Writer extends GuitarProWriterBase
     $this->writeByte(0);
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectGrace $grace
+   */
   private function writeGrace(EffectGrace $grace)
   {
-    if($grace->isDead())
+    if ($grace->isDead())
     {
       $this->writeUnsignedByte(255);
     }
@@ -359,19 +396,19 @@ class GuitarPro3Writer extends GuitarProWriterBase
       intval((($grace->getDynamic() - Velocities::MIN_VELOCITY) / Velocities::VELOCITY_INCREMENT) + 1)
     );
 
-    if($grace->getTransition() == EffectGrace::TRANSITION_NONE)
+    if ($grace->getTransition() == EffectGrace::TRANSITION_NONE)
     {
       $this->writeUnsignedByte(0);
     }
-    else if($grace->getTransition() == EffectGrace::TRANSITION_SLIDE)
+    elseif ($grace->getTransition() == EffectGrace::TRANSITION_SLIDE)
     {
       $this->writeUnsignedByte(1);
     }
-    else if($grace->getTransition() == EffectGrace::TRANSITION_BEND)
+    elseif ($grace->getTransition() == EffectGrace::TRANSITION_BEND)
     {
       $this->writeUnsignedByte(2);
     }
-    else if($grace->getTransition() == EffectGrace::TRANSITION_HAMMER)
+    elseif ($grace->getTransition() == EffectGrace::TRANSITION_HAMMER)
     {
       $this->writeUnsignedByte(3);
     }
@@ -379,6 +416,9 @@ class GuitarPro3Writer extends GuitarProWriterBase
     $this->writeUnsignedByte($grace->getDuration());
   }
 
+  /**
+   * @param \PhpTabs\Model\Song $song
+   */
   private function writeInformations(Song $song)
   {
     $this->writeStringByteSizeOfInteger($song->getName());
@@ -392,19 +432,25 @@ class GuitarPro3Writer extends GuitarProWriterBase
 
     $comments = $this->toCommentLines($song->getComments());
     $this->writeInt(count($comments));
-    for($i = 0; $i < count($comments); $i++)
+    for ($i = 0; $i < count($comments); $i++)
     {
       $this->writeStringByteSizeOfInteger($comments[$i]);
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\Marker $marker
+   */
   private function writeMarker(Marker $marker)
   {
     $this->writeStringByteSizeOfInteger($marker->getTitle());
     $this->writeColor($marker->getColor());
   }
 
-	
+  /**
+   * @param \PhpTabs\Model\Measure $measure
+   * @param bool $changeTempo
+   */
   private function writeMeasure(Measure $srcMeasure, $changeTempo)
   {
     $measure = (new MeasureVoiceJoiner($srcMeasure))->process();
@@ -412,44 +458,49 @@ class GuitarPro3Writer extends GuitarProWriterBase
     $beatCount = $measure->countBeats();
     $this->writeInt($beatCount);
 
-    for($i = 0; $i < $beatCount; $i++)
+    for ($i = 0; $i < $beatCount; $i++)
     {
       $beat = $measure->getBeat($i);
       $this->writeBeat($beat, $measure, ($changeTempo && $i == 0) );
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\MeasureHeader $measure
+   * @param \PhpTabs\Model\TimeSignature $timeSignature
+   */
   private function writeMeasureHeader(MeasureHeader $measure, TimeSignature $timeSignature)
   {
     $flags = 0;
-    if($measure->getNumber() == 1 || $measure->getTimeSignature()->getNumerator() != $timeSignature->getNumerator())
+
+    if ($measure->getNumber() == 1 || $measure->getTimeSignature()->getNumerator() != $timeSignature->getNumerator())
     {
       $flags |= 0x01;
     }
 
-    if($measure->getNumber() == 1 || $measure->getTimeSignature()->getDenominator()->getValue() != $timeSignature->getDenominator()->getValue())
+    if ($measure->getNumber() == 1 || $measure->getTimeSignature()->getDenominator()->getValue() != $timeSignature->getDenominator()->getValue())
     {
       $flags |= 0x02;
     }
 
-    if($measure->isRepeatOpen())
+    if ($measure->isRepeatOpen())
     {
       $flags |= 0x04;
     }
 
-    if($measure->getRepeatClose() > 0)
+    if ($measure->getRepeatClose() > 0)
     {
       $flags |= 0x08;
     }
 
-    if($measure->hasMarker())
+    if ($measure->hasMarker())
     {
       $flags |= 0x20;
     }
 
     $this->writeUnsignedByte($flags);
 
-    if(($flags & 0x01) != 0)
+    if (($flags & 0x01) != 0)
     {
       $this->writeByte($measure->getTimeSignature()->getNumerator());
     }
@@ -459,23 +510,26 @@ class GuitarPro3Writer extends GuitarProWriterBase
       $this->writeByte($measure->getTimeSignature()->getDenominator()->getValue());
     }
 
-    if(($flags & 0x08) != 0)
+    if (($flags & 0x08) != 0)
     {
       $this->writeByte($measure->getRepeatClose());
     }
 
-    if(($flags & 0x20) != 0)
+    if (($flags & 0x20) != 0)
     {
       $this->writeMarker($measure->getMarker());
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\Song $song
+   */
   private function writeMeasureHeaders(Song $song)
   {
     $timeSignature = new TimeSignature();
-    if($song->countMeasureHeaders() > 0)
+    if ($song->countMeasureHeaders() > 0)
     {
-      for($i = 0; $i < $song->countMeasureHeaders(); $i++)
+      for ($i = 0; $i < $song->countMeasureHeaders(); $i++)
       {
         $header = $song->getMeasureHeader($i);
         $this->writeMeasureHeader($header, $timeSignature);
@@ -487,13 +541,17 @@ class GuitarPro3Writer extends GuitarProWriterBase
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Model\Tempo $tempo
+   */
   private function writeMeasures(Song $song, Tempo $tempo)
   {
-    for($i = 0; $i < $song->countMeasureHeaders(); $i++)
+    for ($i = 0; $i < $song->countMeasureHeaders(); $i++)
     {
       $header = $song->getMeasureHeader($i);
 
-      for($j = 0; $j < $song->countTracks(); $j++)
+      for ($j = 0; $j < $song->countTracks(); $j++)
       {
         $track = $song->getTrack($j);
         $measure = $track->getMeasure($i);
@@ -504,16 +562,19 @@ class GuitarPro3Writer extends GuitarProWriterBase
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\Note $note
+   */
   private function writeNote(Note $note)
   {
     $flags = 0x20 | 0x10;
 
-    if($note->getEffect()->isGhostNote())
+    if ($note->getEffect()->isGhostNote())
     {
       $flags |= 0x04;
     }
 
-    if($note->getEffect()->isBend()
+    if ($note->getEffect()->isBend()
         || $note->getEffect()->isGrace() 
         || $note->getEffect()->isSlide()
         || $note->getEffect()->isHammer()
@@ -523,89 +584,102 @@ class GuitarPro3Writer extends GuitarProWriterBase
     }
     $this->writeUnsignedByte($flags);
 
-    if(($flags & 0x20) != 0)
+    if (($flags & 0x20) != 0)
     {
       $typeHeader = 0x01;
-      if($note->isTiedNote())
+      if ($note->isTiedNote())
       {
         $typeHeader = 0x02;
       }
-      else if($note->getEffect()->isDeadNote())
+      elseif ($note->getEffect()->isDeadNote())
       {
         $typeHeader = 0x03;
       }
       $this->writeUnsignedByte($typeHeader);
     }
 
-    if(($flags & 0x10) != 0)
+    if (($flags & 0x10) != 0)
     {
       $this->writeByte(intval((($note->getVelocity() - Velocities::MIN_VELOCITY) / Velocities::VELOCITY_INCREMENT) + 1));
     }
 
-    if(($flags & 0x20) != 0)
+    if (($flags & 0x20) != 0)
     {
       $this->writeByte($note->getValue());
     }
 
-    if(($flags & 0x08) != 0)
+    if (($flags & 0x08) != 0)
     {
       $this->writeNoteEffects($note->getEffect());
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\NoteEffect $effect
+   */
   private function writeNoteEffects(NoteEffect $effect)
   {
     $flags = 0;
-    if($effect->isBend())
+    if ($effect->isBend())
     {
       $flags |= 0x01;
     }
 
-    if($effect->isHammer())
+    if ($effect->isHammer())
     {
       $flags |= 0x02;
     }
 
-    if($effect->isSlide())
+    if ($effect->isSlide())
     {
       $flags |= 0x04;
     }
 
-    if($effect->isLetRing())
+    if ($effect->isLetRing())
     {
       $flags |= 0x08;
     }
 
-    if($effect->isGrace())
+    if ($effect->isGrace())
     {
       $flags |= 0x10;
     }
 
     $this->writeUnsignedByte($flags);
 
-    if(($flags & 0x01) != 0)
+    if (($flags & 0x01) != 0)
     {
       $this->writeBend($effect->getBend());
     }
 
-    if(($flags & 0x10) != 0)
+    if (($flags & 0x10) != 0)
     {
       $this->writeGrace($effect->getGrace());
     }
   }
 
+  /**
+   * @param int $short
+   * 
+   * @return int
+   */
   private function toChannelByte($short)
   {
     return intval(($short + 1) / 8);
   }
 
+  /**
+   * @param string $comments
+   * 
+   * @return array
+   */
   private function toCommentLines($comments)
   {
     $lines = array();
 
     $line = $comments;
 
-    while(strlen($line) > 127)
+    while (strlen($line) > 127)
     {
       $subline = substr($line, 0, 127);
       $lines[] = $subline;
@@ -617,25 +691,34 @@ class GuitarPro3Writer extends GuitarProWriterBase
     return $lines;
   }
 
+  /**
+   * @param \PhpTabs\Model\Stroke $stroke
+   * 
+   * @return int
+   */
   private function toStrokeValue(Stroke $stroke)
   {
-    if($stroke->getValue() == Duration::SIXTY_FOURTH)
+    if ($stroke->getValue() == Duration::SIXTY_FOURTH)
     {
       return 2;
     }
-    if($stroke->getValue() == Duration::THIRTY_SECOND)
+
+    if ($stroke->getValue() == Duration::THIRTY_SECOND)
     {
       return 3;
     }
-    if($stroke->getValue() == Duration::SIXTEENTH)
+
+    if ($stroke->getValue() == Duration::SIXTEENTH)
     {
       return 4;
     }
-    if($stroke->getValue() == Duration::EIGHTH)
+
+    if ($stroke->getValue() == Duration::EIGHTH)
     {
       return 5;
     }
-    if($stroke->getValue() == Duration::QUARTER)
+
+    if ($stroke->getValue() == Duration::QUARTER)
     {
       return 6;
     }
@@ -643,17 +726,23 @@ class GuitarPro3Writer extends GuitarProWriterBase
     return 2;
   }
 
+  /**
+   * @param \PhpTabs\Model\Text $text
+   */
   private function writeText(Text $text)
   {
     $this->writeStringByteSizeOfInteger($text->getValue());
   }
 
+  /**
+   * @param \PhpTabs\Model\Track $track
+   */
   private function writeTrack(Track $track)
   {
     $channel = $this->getChannelRoute($track->getChannelId());
 
     $flags = 0;
-    if($this->isPercussionChannel($track->getSong(), $track->getChannelId()))
+    if ($this->isPercussionChannel($track->getSong(), $track->getChannelId()))
     {
       $flags |= 0x01;
     }
@@ -661,10 +750,10 @@ class GuitarPro3Writer extends GuitarProWriterBase
 
     $this->writeStringByte($track->getName(), 40);
     $this->writeInt(count($track->getStrings()));
-    for($i = 0; $i < 7; $i++)
+    for ($i = 0; $i < 7; $i++)
     {
       $value = 0;
-      if(count($track->getStrings()) > $i)
+      if (count($track->getStrings()) > $i)
       {
         $string = $track->getStrings()[$i];
         $value = $string->getValue();
@@ -679,9 +768,12 @@ class GuitarPro3Writer extends GuitarProWriterBase
     $this->writeColor($track->getColor());
   }
 
+  /**
+   * @param \PhpTabs\Model\Song $song
+   */
   private function writeTracks(Song $song)
   {
-    for($i = 0; $i < $song->countTracks(); $i++)
+    for ($i = 0; $i < $song->countTracks(); $i++)
     {
       $track = $song->getTrack($i);
       $this->writeTrack($track);

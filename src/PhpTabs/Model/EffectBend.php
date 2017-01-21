@@ -18,22 +18,32 @@ class EffectBend
     $this->points = array();
   }
 
+  /**
+   * @param int $position
+   * @param int $value
+   */
   public function addPoint($position, $value)
   {
     $this->points[] = new BendPoint($position, $value);
   }
 
+  /**
+   * @return array
+   */
   public function getPoints()
   {
     return $this->points;
   }
 
+  /**
+   * @return \PhpTabs\Model\EffectBend
+   */
   public function __clone()
   {
     $effect = new EffectBend();
     $points = $this->getPoints();
 
-    foreach($points as $point)
+    foreach ($points as $point)
     {
       $effect->addPoint($point->getPosition(), $point->getValue());
     }
@@ -48,11 +58,19 @@ class EffectBend
  */
 class BendPoint extends EffectPointsBase
 {
+  /**
+   * @param int $duration
+   * 
+   * @return int
+   */
   public function getTime($duration)
   {
     return ($duration * $this->getPosition() / EffectBend::MAX_POSITION_LENGTH);
   }
 
+  /**
+   * @return \PhpTabs\Model\BendPoint
+   */
   public function __clone()
   {
     return new BendPoint($this->getPosition(), $this->getValue());

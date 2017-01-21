@@ -10,7 +10,8 @@ class GuitarProDuration extends AbstractReader
    * Reads Duration
    *
    * @param byte $flags unsigned bytes
-   * @return Duration
+   *
+   * @return \PhpTabs\Model\Duration
    */
   public function readDuration($flags)
   {

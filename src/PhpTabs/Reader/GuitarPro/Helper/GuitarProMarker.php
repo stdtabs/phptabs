@@ -11,7 +11,7 @@ class GuitarProMarker extends AbstractReader
    * 
    * @param integer $measure
    *
-   * @return Marker
+   * @return \PhpTabs\Model\Marker
    */
   public function readMarker($measure)
   {

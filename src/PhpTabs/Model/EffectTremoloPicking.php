@@ -3,7 +3,7 @@
 namespace PhpTabs\Model;
 
 /**
- * @uses Duration
+ * @uses \PhpTabs\Model\Duration
  */
 class EffectTremoloPicking
 {
@@ -14,16 +14,25 @@ class EffectTremoloPicking
     $this->duration = new Duration();
   }
 
+  /**
+   * @return \PhpTabs\Model\Duration
+   */
   public function getDuration()
   {
     return $this->duration;
   }
 
+  /**
+   * @param \PhpTabs\Model\Duration $duration
+   */
   public function setDuration(Duration $duration)
   {
     $this->duration = $duration;
   }
 
+  /**
+   * @return \PhpTabs\Model\EffectTremoloPicking
+   */
   public function __clone()
   {
     $effect = new EffectTremoloPicking();

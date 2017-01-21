@@ -10,7 +10,7 @@ class GuitarProText extends AbstractReader
   /**
    * Reads some text
    * 
-   * @param Beat $beat
+   * @param \PhpTabs\Model\Beat $beat
    */
   public function readText(Beat $beat)
   {

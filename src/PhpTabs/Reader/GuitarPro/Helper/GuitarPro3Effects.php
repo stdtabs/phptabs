@@ -12,10 +12,9 @@ use PhpTabs\Model\Velocities;
 class GuitarPro3Effects extends AbstractReader
 {
   /**
-   * Reads NoteEffect
+   * Reads a note effect
    * 
-   * @param NoteEffect $noteEffect
-   * @return void
+   * @param \PhpTabs\Model\NoteEffect $noteEffect
    */
   public function readNoteEffects(NoteEffect $effect)
   {
@@ -23,10 +22,12 @@ class GuitarPro3Effects extends AbstractReader
     $effect->setHammer( (($flags & 0x02) != 0) );
     $effect->setSlide( (($flags & 0x04) != 0) );
     $effect->setLetRing((($flags & 0x08) != 0));
+
     if (($flags & 0x01) != 0)
     {
       $this->readBend($effect, $this->reader);
     }
+
     if (($flags & 0x10) != 0)
     {
       $this->readGrace($effect, $this->reader);
@@ -36,13 +37,14 @@ class GuitarPro3Effects extends AbstractReader
   /**
    * Reads bend
    *
-   * @param NoteEffect $effect
+   * @param \PhpTabs\Model\NoteEffect $effect
    */
   public function readBend(NoteEffect $effect)
   {
     $bend = new EffectBend();
     $this->reader->skip(5);
     $points = $this->reader->readInt();
+
     for ($i = 0; $i < $points; $i++)
     {
       $bendPosition = $this->reader->readInt();
@@ -53,7 +55,8 @@ class GuitarPro3Effects extends AbstractReader
       $pointValue = round($bendValue * EffectBend::SEMITONE_LENGTH / GuitarProReaderInterface::GP_BEND_SEMITONE);
       $bend->addPoint($pointPosition, $pointValue);
     }
-    if(count($bend->getPoints()))
+
+    if (count($bend->getPoints()))
     {
       $effect->setBend($bend);
     }
@@ -62,7 +65,7 @@ class GuitarPro3Effects extends AbstractReader
   /**
    * Reads grace
    * 
-   * @param NoteEffect $effect
+   * @param \PhpTabs\Model\NoteEffect $effect
    */
   private function readGrace(NoteEffect $effect)
   {
@@ -73,22 +76,24 @@ class GuitarPro3Effects extends AbstractReader
     $grace->setFret( ((!$grace->isDead()) ? $fret : 0) );
     $grace->setDynamic( (Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->reader->readUnsignedByte())) - Velocities::VELOCITY_INCREMENT );
     $transition = $this->reader->readUnsignedByte();
-    if($transition == 0)
+
+    if ($transition == 0)
     {
       $grace->setTransition(EffectGrace::TRANSITION_NONE);
     }
-    else if($transition == 1)
+    elseif ($transition == 1)
     {
       $grace->setTransition(EffectGrace::TRANSITION_SLIDE);
     }
-    else if($transition == 2)
+    elseif ($transition == 2)
     {
       $grace->setTransition(EffectGrace::TRANSITION_BEND);
     }
-    else if($transition == 3)
+    elseif ($transition == 3)
     {
       $grace->setTransition(EffectGrace::TRANSITION_HAMMER);
     }
+
     $grace->setDuration($this->reader->readUnsignedByte());
     $effect->setGrace($grace);
   }
@@ -96,7 +101,7 @@ class GuitarPro3Effects extends AbstractReader
   /**
    * Reads tremolo bar
    * 
-   * @param NoteEffect $noteEffect
+   * @param \PhpTabs\Model\NoteEffect $noteEffect
    */
   public function readTremoloBar(NoteEffect $noteEffect)
   {

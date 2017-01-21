@@ -3,11 +3,9 @@
 namespace PhpTabs\Reader\GuitarPro;
 
 use Exception;
-
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
-
 use PhpTabs\Model\MeasureHeader;
 use PhpTabs\Model\Song;
 use PhpTabs\Model\TimeSignature;
@@ -24,7 +22,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
   protected $tripletFeel, $keySignature;
 
   /**
-   * @param File $file input file to read
+   * @param \PhpTabs\Component\File $file An input file to read
    */
   public function __construct(File $file)
   {
@@ -55,11 +53,9 @@ class GuitarPro3Reader extends GuitarProReaderBase
     $this->skip(3);
 
     # Meta only
-    if(Config::get('type') == 'meta')
+    if (Config::get('type') == 'meta')
     {
-      $this->closeStream();
-
-      return;
+      return $this->closeStream();
     }
 
     $channels = $this->factory('GuitarProChannels')->readChannels();
@@ -71,11 +67,9 @@ class GuitarPro3Reader extends GuitarProReaderBase
     $this->readTracks($song, $tracks, $channels);
 
     # Meta+channels+tracks+measure headers only
-    if(Config::get('type') == 'channels')
+    if (Config::get('type') == 'channels')
     {
-      $this->closeStream();
-
-      return;
+      return $this->closeStream();
     }
 
     $this->factory('GuitarPro3Measures')->readMeasures($song, $measures, $tracks, $tempoValue);
@@ -84,7 +78,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
   }
 
   /**
-   * @return array of supported versions
+   * @return array An array of supported versions
    */
   public function getSupportedVersions()
   {
@@ -96,22 +90,18 @@ class GuitarPro3Reader extends GuitarProReaderBase
    */
   public function getTablature()
   {
-    if(isset($this->tablature))
-    {
-      return $this->tablature;
-    }
-
-    return new Tablature();
+    return isset($this->tablature)
+      ? $this->tablature : new Tablature();
   }
 
   /**
    * Initializes Tablature with read Song
    *
-   * @param Song $song as read from file
+   * @param \PhpTabs\Model\Song $song as read from file
    */
   private function setTablature(Song $song)
   {
-    if(!isset($this->tablature))
+    if (!isset($this->tablature))
     {
       $this->tablature = new Tablature();
     }
@@ -127,23 +117,25 @@ class GuitarPro3Reader extends GuitarProReaderBase
   /**
    * Loops on mesure headers to read
    * 
-   * @param Song $song
+   * @param \PhpTabs\Model\Song $song
    * @param integer $count
    */
   private function readMeasureHeaders(Song $song, $count)
   {
     $timeSignature = new TimeSignature();
 
-    for ($i=0; $i<$count; $i++) 
+    for ($i = 0; $i < $count; $i++) 
     {
-      $song->addMeasureHeader($this->factory('GuitarPro3MeasureHeader')->readMeasureHeader(($i + 1), $song, $timeSignature));
+      $song->addMeasureHeader(
+        $this->factory('GuitarPro3MeasureHeader')->readMeasureHeader(($i + 1), $song, $timeSignature)
+      );
     }
   }
 
   /**
    * Loops on tracks to read
    * 
-   * @param Song $song
+   * @param \PhpTabs\Model\Song $song
    * @param int $count
    * @param array $channels Current array of channels
    */

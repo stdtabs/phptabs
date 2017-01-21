@@ -10,14 +10,11 @@ class Tempo
   /** @const SECOND_IN_MILLIS */
   const SECOND_IN_MILLIS = 1000;
 
-  /** @var integer $value Current value of the tempo */
+  /** @var int $value Current value of the tempo */
   private $value;
 
   /**
-   * Constructor
    * Sets a default value for tempo
-   * 
-   * @return void
    */
   public function __construct()
   {
@@ -27,7 +24,7 @@ class Tempo
   /**
    * Gets tempo value
    *
-   * @return integer
+   * @return int
    */
   public function getValue()
   {
@@ -37,8 +34,7 @@ class Tempo
   /**
    * Sets tempo value
    *
-   * @param integer $value
-   * @return void
+   * @param int $value
    */
   public function setValue($value)
   {
@@ -48,7 +44,7 @@ class Tempo
   /**
    * Gets a tick in millisecond
    *
-   * @return integer number of milliseconds
+   * @return int Number of milliseconds
    */
   public function getInMillis()
   {
@@ -58,7 +54,7 @@ class Tempo
   /**
    * Gets a tick in time per quarter
    * 
-   * @return integer
+   * @return int
    */
   public function getInTPQ()
   {
@@ -68,8 +64,9 @@ class Tempo
   /**
    * Creates a tempo from TPQ
    * 
-   * @param integer $tpq
-   * @return Tempo
+   * @param int $tpq
+   * 
+   * @return \PhpTabs\Model\Tempo
    */
   public static function fromTPQ($tpq)
   {
@@ -82,7 +79,7 @@ class Tempo
   /**
    * Clones current tempo
    *
-   * @return Tempo
+   * @return \PhpTabs\Model\Tempo
    */
   public function __clone()
   {
@@ -94,8 +91,7 @@ class Tempo
   /**
    * Copies a tempo from another one
    *
-   * @param Tempo $ tempo
-   * @return void
+   * @param \PhpTabs\Model\Tempo $tempo
    */
   public function copyFrom(Tempo $tempo)
   {

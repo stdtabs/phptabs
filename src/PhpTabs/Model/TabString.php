@@ -4,12 +4,16 @@ namespace PhpTabs\Model;
 
 class TabString
 {
-  /** @var integer $number */
+  /** @var int $number */
   private $number;
   
-  /** @var integer $value */
+  /** @var int $value */
   private $value;
 
+  /**
+   * @param int $number
+   * @param int $value
+   */
   public function __construct($number = 0, $value = 0)
   {
     $this->number = $number;
@@ -17,7 +21,7 @@ class TabString
   }
 
   /**
-   * @return integer
+   * @return int
    */
   public function getNumber()
   {
@@ -25,7 +29,7 @@ class TabString
   }
 
   /**
-   * @return integer
+   * @return int
    */
   public function getValue() 
   {
@@ -33,7 +37,7 @@ class TabString
   }
 
   /**
-   * @param integer $number
+   * @param int $number
    */
   public function setNumber($number)
   {
@@ -41,7 +45,7 @@ class TabString
   }
 
   /**
-   * @param integer $value
+   * @param int $value
    */
   public function setValue($value)
   {
@@ -51,20 +55,20 @@ class TabString
   /**
    * Compares two strings
    *
-   * @param TabString $string the string to compare with current one
+   * @param \PhpTabs\Model\TabString $string the string to compare with current one
    * 
-   * @return boolean Result of the comparison
+   * @return bool Result of the comparison
    */
   public function isEqual($string)
   {
     return $this->getNumber() == $string->getNumber() 
-        && $this->getValue() == $string->getValue();
+        && $this->getValue()  == $string->getValue();
   }
 
   /**
    * Clones current string
    * 
-   * @return TabString
+   * @return \PhpTabs\Model\TabString
    */
   public function __clone()
   {
@@ -77,7 +81,7 @@ class TabString
   /**
    * Copies a string from another one
    *
-   * @param TabString $string
+   * @param \PhpTabs\Model\TabString $string
    */
   public function copyFrom(TabString $string)
   {

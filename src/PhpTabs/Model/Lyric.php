@@ -15,51 +15,75 @@ class Lyric
     $this->lyrics = array();
   }
 
+  /**
+   * @return int
+   */
   public function getFrom()
   {
     return $this->from;
   }
 
+  /**
+   * @param int $from
+   */
   public function setFrom($from)
   {
     $this->from = $from;
   }
 
+  /**
+   * @return array
+   */
   public function getLyrics()
   {
     return $this->lyrics;
   }
 
+  /**
+   * @param array $lyrics
+   */
   public function setLyrics($lyrics)
   {
     $this->lyrics = $lyrics;
   }
 
+  /**
+   * @return array
+   */
   public function getLyricBeats()
   {
     $lyrics = $this->getLyrics();
 
     $str = '';
 
-    foreach($lyrics as $v)
+    foreach ($lyrics as $value)
     {
-      $str .= str_replace(array("\n", "\r"), Lyric::REGEX, $v) . Lyric::REGEX; 
+      $str .= str_replace(array("\n", "\r"), Lyric::REGEX, $value) . Lyric::REGEX; 
     }
 
     return explode(Lyric::REGEX, $str);
   }
 
+  /**
+   * @return bool
+   */
   public function isEmpty()
   {
     return count($this->getLyrics()) == 0;
   }
 
+  /**
+   * @param \PhpTabs\Model\Lyric $lyric
+   */
   public function copyFrom(Lyric $lyric)
   {
     $this->setFrom($lyric->getFrom());
     $this->setLyrics($lyric->getLyrics());
   }
 
+  /**
+   * @return \PhpTabs\Model\Lyric
+   */
   public function __clone()
   {
     $lyric = new Lyric();

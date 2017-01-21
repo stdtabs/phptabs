@@ -31,11 +31,14 @@ class NoteEffect extends NoteEffectBase
     $this->tremoloPicking = null;
   }
 
+  /**
+   * @param bool $deadNote
+   */
   public function setDeadNote($deadNote)
   {
     $this->deadNote = $deadNote;
 
-    if($this->isDeadNote())
+    if ($this->isDeadNote())
     {
       $this->bend = null;
       $this->trill = null;
@@ -46,27 +49,36 @@ class NoteEffect extends NoteEffectBase
     }
   }
 
+  /**
+   * @param bool $vibrato
+   */
   public function setVibrato($vibrato)
   {
     $this->vibrato = $vibrato;
 
-    if($this->isVibrato())
+    if ($this->isVibrato())
     {
       $this->trill = null;
       $this->tremoloPicking = null;
     }
   }
 
+  /**
+   * @return \PhpTabs\Model\EffectBend
+   */
   public function getBend()
   {
     return $this->bend;
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectBend $bend
+   */
   public function setBend(EffectBend $bend = null)
   {
     $this->bend = $bend;
 
-    if($this->isBend())
+    if ($this->isBend())
     {
       $this->trill = null;
       $this->deadNote = false;
@@ -77,16 +89,22 @@ class NoteEffect extends NoteEffectBase
     }
   }
 
+  /**
+   * @return \PhpTabs\Model\EffectTremoloBar
+   */
   public function getTremoloBar()
   {
     return $this->tremoloBar;
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectTremoloBar $tremoloBar
+   */
   public function setTremoloBar(EffectTremoloBar $tremoloBar = null)
   {
     $this->tremoloBar = $tremoloBar;
 
-    if($this->isTremoloBar())
+    if ($this->isTremoloBar())
     {
       $this->bend = null;
       $this->trill = null;
@@ -97,16 +115,22 @@ class NoteEffect extends NoteEffectBase
     }
   }
 
+  /**
+   * @return \PhpTabs\Model\EffectTrill
+   */
   public function getTrill()
   {
     return $this->trill;
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectTrill $trill
+   */
   public function setTrill(EffectTrill $trill = null)
   {
     $this->trill = $trill;
 
-    if($this->isTrill())
+    if ($this->isTrill())
     {
       $this->bend = null;
       $this->tremoloBar = null;
@@ -118,16 +142,22 @@ class NoteEffect extends NoteEffectBase
     }
   }
 
+  /**
+   * @return \PhpTabs\Model\EffectTremoloPicking
+   */
   public function getTremoloPicking()
   {
     return $this->tremoloPicking;
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectTremoloPicking $tremoloPicking
+   */
   public function setTremoloPicking(EffectTremoloPicking $tremoloPicking = null)
   {
     $this->tremoloPicking = $tremoloPicking;
 
-    if($this->isTremoloPicking())
+    if ($this->isTremoloPicking())
     {
       $this->trill = null;
       $this->bend = null;
@@ -139,11 +169,14 @@ class NoteEffect extends NoteEffectBase
     }
   }
 
+  /**
+   * @param bool $hammer
+   */
   public function setHammer($hammer)
   {
     $this->hammer = $hammer;
 
-    if($this->isHammer())
+    if ($this->isHammer())
     {
       $this->trill = null;
       $this->bend = null;
@@ -154,11 +187,14 @@ class NoteEffect extends NoteEffectBase
     }
   }
 
+  /**
+   * @param bool $slide
+   */
   public function setSlide($slide)
   {
     $this->slide = $slide;
 
-    if($this->isSlide())
+    if ($this->isSlide())
     {
       $this->trill = null;
       $this->bend = null;
@@ -169,136 +205,181 @@ class NoteEffect extends NoteEffectBase
     }
   }
 
+  /**
+   * @param bool $ghostNote
+   */
   public function setGhostNote($ghostNote)
   {
     $this->ghostNote = $ghostNote;
 
-    if($this->isGhostNote())
+    if ($this->isGhostNote())
     {
       $this->accentuatedNote = false;
       $this->heavyAccentuatedNote = false;
     }
   }
 
+  /**
+   * @param bool $accentuatedNote
+   */
   public function setAccentuatedNote($accentuatedNote)
   {
     $this->accentuatedNote = $accentuatedNote;
 
-    if($this->isAccentuatedNote())
+    if ($this->isAccentuatedNote())
     {
       $this->ghostNote = false;
       $this->heavyAccentuatedNote = false;
     }
   }
 
+  /**
+   * @param bool $heavyAccentuatedNote
+   */
   public function setHeavyAccentuatedNote($heavyAccentuatedNote)
   {
     $this->heavyAccentuatedNote = $heavyAccentuatedNote;
 
-    if($this->isHeavyAccentuatedNote())
+    if ($this->isHeavyAccentuatedNote())
     {
       $this->ghostNote = false;
       $this->accentuatedNote = false;
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectHarmonic $harmonic
+   */
   public function setHarmonic(EffectHarmonic $harmonic = null)
   {
     $this->harmonic = $harmonic;
   }
 
+  /**
+   * @return \PhpTabs\Model\EffectHarmonic
+   */
   public function getHarmonic()
   {
     return $this->harmonic;
   }
 
+  /**
+   * @return \PhpTabs\Model\EffectGrace
+   */
   public function getGrace()
   {
     return $this->grace;
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectGrace $grace
+   */
   public function setGrace(EffectGrace $grace = null)
   {
     $this->grace = $grace;
   }
 
+  /**
+   * @param bool $palmMute
+   */
   public function setPalmMute($palmMute)
   {
     $this->palmMute = $palmMute;
 
-    if($this->isPalmMute())
+    if ($this->isPalmMute())
     {
       $this->staccato = false;
       $this->letRing = false;
     }
   }
 
+  /**
+   * @param bool $staccato
+   */
   public function setStaccato($staccato)
   {
     $this->staccato = $staccato;
 
-    if($this->isStaccato())
+    if ($this->isStaccato())
     {
       $this->palmMute = false;
       $this->letRing = false;
     }
   }
 
+  /**
+   * @param bool $letRing
+   */
   public function setLetRing($letRing)
   {
     $this->letRing = $letRing;
 
-    if($this->isLetRing())
+    if ($this->isLetRing())
     {
       $this->staccato = false;
       $this->palmMute = false;
     }
   }
 
+  /**
+   * @param bool $popping
+   */
   public function setPopping($popping)
   {
     $this->popping = $popping;
 
-    if($this->isPopping())
+    if ($this->isPopping())
     {
       $this->tapping = false;
       $this->slapping = false;
     }
   }
 
+  /**
+   * @param bool $slapping
+   */
   public function setSlapping($slapping)
   {
     $this->slapping = $slapping;
 
-    if($this->isSlapping())
+    if ($this->isSlapping())
     {
       $this->tapping = false;
       $this->popping = false;
     }
   }
 
+  /**
+   * @param bool $tapping
+   */
   public function setTapping($tapping)
   {
     $this->tapping = $tapping;
 
-    if($this->isTapping())
+    if ($this->isTapping())
     {
       $this->slapping = false;
       $this->popping = false;
     }
   }
 
+  /**
+   * @param bool $fadeIn
+   */
   public function setFadeIn($fadeIn)
   {
     $this->fadeIn = $fadeIn;
   }
 
+  /**
+   * @return \PhpTabs\Model\NoteEffect
+   */
   public function __clone()
   {
     $effect = new NoteEffect();
-    
     $attrs = get_object_vars($this);
-    foreach($attrs as $attr => $value)
+
+    foreach ($attrs as $attr => $value)
     {
       $setter = sprintf('set%s', ucfirst($attr));
       $getter = sprintf('is%s', ucfirst($attr));

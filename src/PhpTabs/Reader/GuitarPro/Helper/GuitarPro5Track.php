@@ -4,25 +4,26 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Model\Lyric;
 use PhpTabs\Model\Song;
-use PhpTabs\Model\Track;
 use PhpTabs\Model\TabString;
+use PhpTabs\Model\Track;
 
 class GuitarPro5Track extends AbstractReader
 {
   /**
-   * Reads Track informations
+   * Reads track informations
    *
-   * @param Song $song
+   * @param \PhpTabs\Model\Song $song
    * @param integer $number
    * @param array $channels an array of Channel objects
-   * @param Lyric $lyrics
+   * @param \PhpTabs\Model\Lyric $lyrics
    *
-   * @return Track
+   * @return \PhpTabs\Model\Track
    */
-  public function readTrack(Song $song, $number, $channels, Lyric $lyrics)
+  public function readTrack(Song $song, $number, array $channels = [], Lyric $lyrics)
   {
     $this->reader->readUnsignedByte();
-    if($number == 1 || $this->reader->getVersionIndex() == 0)
+
+    if ($number == 1 || $this->reader->getVersionIndex() == 0)
     {
       $this->reader->skip();
     }
@@ -55,7 +56,7 @@ class GuitarPro5Track extends AbstractReader
 
     $this->reader->skip($this->reader->getVersionIndex() > 0 ? 49 : 44);
 
-    if($this->reader->getVersionIndex() > 0)
+    if ($this->reader->getVersionIndex() > 0)
     {
       $this->reader->readStringByteSizeOfInteger();
       $this->reader->readStringByteSizeOfInteger();

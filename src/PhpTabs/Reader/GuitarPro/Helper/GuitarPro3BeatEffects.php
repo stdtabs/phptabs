@@ -11,13 +11,16 @@ class GuitarPro3BeatEffects extends AbstractReader
   /**
    * Reads beat effects
    * 
-   * @param Beat $beat
-   * @param NoteEffect $effect
+   * @param \PhpTabs\Model\Beat $beat
+   * @param \PhpTabs\Model\NoteEffect $effect
    */
   public function readBeatEffects(Beat $beat, NoteEffect $effect)
   {
     $flags = $this->reader->readUnsignedByte();
-    $effect->setVibrato((($flags & 0x01) != 0) || (($flags & 0x02) != 0));
+    $effect->setVibrato(
+      (($flags & 0x01) != 0) || (($flags & 0x02) != 0)
+    );
+
     $effect->setFadeIn((($flags & 0x10) != 0));
 
     if (($flags & 0x20) != 0)

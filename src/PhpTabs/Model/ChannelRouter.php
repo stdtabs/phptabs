@@ -16,28 +16,36 @@ class ChannelRouter
 
   public function resetRoutes()
   {
-    for($i = 0; $i < count($this->midiChannels); $i++)
+    for ($i = 0; $i < count($this->midiChannels); $i++)
     {
       $this->midiChannels[$i]->clear();
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\ChannelRoute $route
+   */
   public function removeRoute(ChannelRoute $route)
   {
-    foreach($this->midiChannels as $k => $channel)
+    foreach ($this->midiChannels as $k => $channel)
     {
-      if($channel->getRoute() == $route)
+      if ($channel->getRoute() == $route)
       {
         array_splice($this->midiChannels, $k, 1);
       }
     }
   }
 
+  /**
+   * @param int $channelId
+   * 
+   * @return int
+   */
   public function getRoute($channelId)
   {
-    foreach($this->midiChannels as $channel)
+    foreach ($this->midiChannels as $channel)
     {
-      if($channel->getChannelId() == $channelId)
+      if ($channel->getChannelId() == $channelId)
       {
         return $channel;
       }
@@ -46,20 +54,24 @@ class ChannelRouter
     return null;
   }
 
+  /**
+   * @param \PhpTabs\Model\ChannelRoute $route
+   * @param int $percussionChannel
+   */
   public function configureRoutes(ChannelRoute $route, $percussionChannel)
   {
     $conflictingRoutes = null;
 
-    foreach($this->midiChannels as $k => $channel)
+    foreach ($this->midiChannels as $k => $channel)
     {
-      if($this->getRoute($channel->getChannelId()) == $route)
+      if ($this->getRoute($channel->getChannelId()) == $route)
       {
         array_splice($this->midiChannels, $k, 1);
       }
     }
 
     // Always channel 9 for percussions
-    if($percussionChannel)
+    if ($percussionChannel)
     {
       $route->setChannel1(ChannelRouter::PERCUSSION_CHANNEL);
       $route->setChannel2(ChannelRouter::PERCUSSION_CHANNEL);
@@ -67,9 +79,9 @@ class ChannelRouter
     else
     {
       // Use custom routes 
-      if($route->getChannel1() >= 0)
+      if ($route->getChannel1() >= 0)
       {
-        if($route->getChannel2() < 0)
+        if ($route->getChannel2() < 0)
         {
           $route->setChannel2($route->getChannel1());
         }
@@ -88,9 +100,9 @@ class ChannelRouter
     $this->midiChannels[] = $route;
 
     // Reconfigure conflicting routes
-    if($conflictingRoutes !== null)
+    if ($conflictingRoutes !== null)
     {
-      foreach($conflictingRoutes as $conflictingRoute)
+      foreach ($conflictingRoutes as $conflictingRoute)
       {
         $conflictingRoute->setChannel1(ChannelRoute::NULL_VALUE);
         $conflictingRoute->setChannel2(ChannelRoute::NULL_VALUE);
@@ -99,15 +111,20 @@ class ChannelRouter
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\ChannelRoute $channelRoute
+   * 
+   * @return array
+   */
   public function findConflictingRoutes(ChannelRoute $channelRoute)
   {
     $routes = array();
 
-    foreach($this->midiChannels as $route)
+    foreach ($this->midiChannels as $route)
     {
-      if($route != $channelRoute)
+      if ($route != $channelRoute)
       {
-        if($route->getChannel1() == $channelRoute->getChannel1()
+        if ($route->getChannel1() == $channelRoute->getChannel1()
           || $route->getChannel1() == $channelRoute->getChannel2()
           || $route->getChannel2() == $channelRoute->getChannel1()
           || $route->getChannel2() == $channelRoute->getChannel2())
@@ -120,28 +137,33 @@ class ChannelRouter
     return $routes;
   }
 
+  /**
+   * @param \PhpTabs\Model\ChannelRoute $forRoute
+   * 
+   * @return array
+   */
   public function getFreeChannels($forRoute = null)
   {
     $freeChannels = array();
 
-    for($ch = 0; $ch < ChannelRouter::MAX_CHANNELS; $ch++)
+    for ($ch = 0; $ch < ChannelRouter::MAX_CHANNELS; $ch++)
     {
-      if($ch != ChannelRouter::PERCUSSION_CHANNEL)
+      if ($ch != ChannelRouter::PERCUSSION_CHANNEL)
       {
         $isFreeChannel = true;
 
-        foreach($this->midiChannels as $route)
+        foreach ($this->midiChannels as $route)
         {
-          if($forRoute === null || !$forRoute->equals($route))
+          if ($forRoute === null || !$forRoute->equals($route))
           {
-            if($route->getChannel1() == $ch || $route->getChannel2() == $ch)
+            if ($route->getChannel1() == $ch || $route->getChannel2() == $ch)
             {
               $isFreeChannel = false;
             }
           }
         }
 
-        if($isFreeChannel)
+        if ($isFreeChannel)
         {
           $freeChannels[] = $ch;
         }

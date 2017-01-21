@@ -8,17 +8,17 @@ use PhpTabs\Model\NoteEffect;
 class GuitarPro4BeatEffects extends AbstractReader
 {
   /**
-   * Reads some NoteEffect informations
+   * Reads some beat effects
    * 
-   * @param Beat $beat
-   * @param NoteEffect $effect
+   * @param \PhpTabs\Model\Beat $beat
+   * @param \PhpTabs\Model\NoteEffect $effect
    */
   public function readBeatEffects(Beat $beat, NoteEffect $noteEffect)
   {
     $flags1 = $this->reader->readUnsignedByte();
     $flags2 = $this->reader->readUnsignedByte();
     $noteEffect->setFadeIn((($flags1 & 0x10) != 0));
-    $noteEffect->setVibrato((($flags1  & 0x02) != 0));
+    $noteEffect->setVibrato((($flags1 & 0x02) != 0));
 
     if (($flags1 & 0x20) != 0)
     {

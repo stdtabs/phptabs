@@ -40,146 +40,233 @@ class Track
     $this->lyrics = new Lyric();
   }
 
+  /**
+   * @return int
+   */
   public function getNumber()
   {
     return $this->number;
   }
 
+  /**
+   * @param int $number
+   */
   public function setNumber($number)
   {
     $this->number = $number;
   }
 
+  /**
+   * @return array
+   */
   public function getMeasures()
   {
     return $this->measures;
   }
 
+  /**
+   * @param \PhpTabs\Model\Measure $measure
+   */
   public function addMeasure(Measure $measure)
   {
     $measure->setTrack($this);
     $this->measures[] = $measure;
   }
 
+  /**
+   * @param int $index
+   *
+   * @return \PhpTabs\Model\Measure
+   */
   public function getMeasure($index)
   {
-    if($index >= 0 && $index < $this->countMeasures())
+    if ($index >= 0 && $index < $this->countMeasures())
     {
       return $this->measures[$index];
     }
+
     return null;
   }
 
+  /**
+   * @param int $index
+   */
   public function removeMeasure($index)
   {
     array_splice($this->measures, $index, 1);
   }
 
+  /**
+   * @return int
+   */
   public function countMeasures()
   {
     return count($this->measures);
   }
 
+  /**
+   * @return array
+   */
   public function getStrings()
   {
     return $this->strings;
   }
 
+  /**
+   * @param \PhpTabs\Model\TabString $string
+   */
   public function addString(TabString $string)
   {
     $this->strings[] = $string;
   }
 
+  /**
+   * @param array $strings
+   */
   public function setStrings($strings)
   {
     $this->strings = $strings;
   }
 
+  /**
+   * @return \PhpTabs\Model\Color
+   */
   public function getColor()
   {
     return $this->color;
   }
 
+  /**
+   * @param \PhpTabs\Model\Color $color
+   */
   public function setColor($color)
   {
     $this->color = $color;
   }
 
+  /**
+   * @return string
+   */
   public function getName()
   {
     return $this->name;
   }
 
+  /**
+   * @param string $name
+   */
   public function setName($name)
   {
     $this->name = $name;
   }
 
+  /**
+   * @return int
+   */
   public function getOffset()
   {
     return $this->offset;
   }
 
+  /**
+   * @param int $offset
+   */
   public function setOffset($offset)
   {
     $this->offset = $offset;
   }
 
+  /**
+   * @return bool
+   */
   public function isSolo()
   {
     return $this->solo;
   }
 
+  /**
+   * @param bool $solo
+   */
   public function setSolo($solo)
   {
     $this->solo = $solo;
   }
 
+  /**
+   * @return bool
+   */
   public function isMute()
   {
     return $this->mute;
   }
 
+  /**
+   * @param bool $mute
+   */
   public function setMute($mute)
   {
     $this->mute = $mute;
   }
 
+  /**
+   * @return int
+   */
   public function getChannelId()
   {
     return $this->channelId;
   }
 
+  /**
+   * @param int $channelId
+   */
   public function setChannelId($channelId)
   {
     $this->channelId = $channelId;
   }
 
+  /**
+   * @return \PhpTabs\Model\Lyric
+   */
   public function getLyrics()
   {
     return $this->lyrics;
   }
 
+  /**
+   * @param \PhpTabs\Model\Lyric $lyrics
+   */
   public function setLyrics(Lyric $lyrics)
   {
     $this->lyrics = $lyrics;
   }
 
+  /**
+   * @return \PhpTabs\Model\TabString
+   */
   public function getString($number)
   {
     return $this->strings[$number - 1];
   }
 
+  /**
+   * @return int
+   */
   public function countStrings()
   {
     return count($this->strings);
   }
 
+  /**
+   * @return \PhpTabs\Model\Song
+   */
   public function getSong()
   {
     return $this->song;
   }
 
+  /**
+   * @param \PhpTabs\Model\Song $song
+   */
   public function setSong(Song $song)
   {
     $this->song = $song;
@@ -189,7 +276,7 @@ class Track
   {
     $measureCount = $this->countMeasures();
     
-    for($i=0; $i<$measureCount; $i++)
+    for ($i = 0; $i < $measureCount; $i++)
     {
       $measure = $this->getMeasure($i);
       $measure->clear();
@@ -199,6 +286,9 @@ class Track
     $this->measures = array();
   }
 
+  /**
+   * @return \PhpTabs\Model\Track
+   */
   public function __clone()
   {
     $track = new Track();
@@ -206,6 +296,10 @@ class Track
     return $track;
   }
 
+  /**
+   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Model\Track $track
+   */
   public function copyFrom(Song $song, Track $track)
   {
     $this->clear();
@@ -218,12 +312,12 @@ class Track
     $this->getColor()->copyFrom($track->getColor());
     $this->getLyrics()->copyFrom($track->getLyrics());
 
-    for ($i=0; $i<$track->countStrings(); $i++)
+    for ($i = 0; $i < $track->countStrings(); $i++)
     {
       $this->strings[$i] = clone $track->getString($i);
     }
 
-    for ($i=0; $i<$track->countMeasures(); $i++)
+    for ($i = 0; $i < $track->countMeasures(); $i++)
     {
       $measure = $track->getMeasure($i);
       $this->addMeasure(clone $measure($song->getMeasureHeader($i)));

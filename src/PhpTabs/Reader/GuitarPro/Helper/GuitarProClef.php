@@ -9,18 +9,19 @@ use PhpTabs\Model\Song;
 class GuitarProClef extends AbstractReader
 {
   /**
-   * @param Track $track
+   * @param \PhpTabs\Model\Track $track
+   *
    * @return integer Clef of $track
    */
   public function getClef(Track $track)
   {
-    if(!$this->isPercussionChannel($track->getSong(), $track->getChannelId()))
+    if (!$this->isPercussionChannel($track->getSong(), $track->getChannelId()))
     {
       $strings = $track->getStrings();
 
-      foreach($strings as $string)
+      foreach ($strings as $string)
       {
-        if($string->getValue() <= 34)
+        if ($string->getValue() <= 34)
         {
           return Measure::CLEF_BASS;
         }
@@ -30,13 +31,19 @@ class GuitarProClef extends AbstractReader
     return Measure::CLEF_TREBLE;
   }
 
+  /**
+   * @param \PhpTabs\Model\Song $song
+   * @param integer $channelId
+   *
+   * @return boolean
+   */
   protected function isPercussionChannel(Song $song, $channelId)
   {
     $channels = $song->getChannels();
 
-    foreach($channels as $channel)
+    foreach ($channels as $channel)
     {
-      if($channel->getChannelId() == $channelId)
+      if ($channel->getChannelId() == $channelId)
       {
         return $channel->isPercussionChannel();
       }

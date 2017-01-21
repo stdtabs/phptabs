@@ -9,6 +9,11 @@ namespace PhpTabs\Model;
  */
 class Helper
 {
+  /**
+   * @param int $stringCount
+   *
+   * @return array
+   */
   public static function createPercussionStrings($stringCount)
   {
     return Helper::createStrings($stringCount);
@@ -17,21 +22,22 @@ class Helper
   /**
    * Creates a set of strings
    * 
-   * @param integer $stringCount
+   * @param int $stringCount
    * @param array $defaultTunings A multidim array of integer
+   *
    * @return array
    */
   public static function createStrings($stringCount, $defaultTunings = array())
   {
     $strings = array();
 
-    if(count($defaultTunings))
+    if (count($defaultTunings))
     {
-      for($i = 0; $i < count($defaultTunings); $i++)
+      for ($i = 0; $i < count($defaultTunings); $i++)
       {
-        if($stringCount == count($defaultTunings[$i]))
+        if ($stringCount == count($defaultTunings[$i]))
         {
-          for($n = 0; $n < $stringCount; $n++)
+          for ($n = 0; $n < $stringCount; $n++)
           {
             $strings[] = new TabString(($n + 1), $defaultTunings[$i][$n]);
           }
@@ -40,9 +46,9 @@ class Helper
       }
     }
 
-    if(!count($strings))
+    if (!count($strings))
     {
-      for($i = 1; $i <= $stringCount; $i++)
+      for ($i = 1; $i <= $stringCount; $i++)
       {
         $strings[] = new TabString($i, 0);
       }
@@ -51,13 +57,19 @@ class Helper
     return $strings;
   }
 
+  /**
+   * @param \PhpTabs\Model\Song $song
+   * @param int $channelId
+   *
+   * @return bool
+   */
   protected function isPercussionChannel(Song $song, $channelId)
   {
     $channels = $song->getChannels();
 
-    foreach($channels as $channel)
+    foreach ($channels as $channel)
     {
-      if($channel->getChannelId() == $channelId)
+      if ($channel->getChannelId() == $channelId)
       {
         return $channel->isPercussionChannel();
       }

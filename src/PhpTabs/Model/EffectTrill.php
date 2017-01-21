@@ -16,26 +16,41 @@ class EffectTrill
     $this->duration = new Duration();
   }
 
+  /**
+   * @return int
+   */
   public function getFret()
   {
     return $this->fret;
   }
 
+  /**
+   * @param int $fret
+   */
   public function setFret($fret)
   {
     $this->fret = $fret;
   }
 
+  /**
+   * @return \PhpTabs\Model\Duration
+   */
   public function getDuration()
   {
     return $this->duration;
   }
 
+  /**
+   * @param \PhpTabs\Model\Duration $duration
+   */
   public function setDuration(Duration $duration)
   {
     $this->duration = $duration;
   }
 
+  /**
+   * @return \PhpTabs\Model\EffectTrill
+   */
   public function __clone()
   {
     $effect = new EffectTrill();

@@ -4,6 +4,11 @@ namespace PhpTabs\Component\Dumper;
 
 abstract class DumperEffects
 {
+  /**
+   * @param \PhpTabs\Model\NoteEffect $effect
+   * 
+   * @return array
+   */
   protected function dumpEffect($effect)
   {
     return array(
@@ -30,11 +35,21 @@ abstract class DumperEffects
     );
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectBend $effect
+   * 
+   * @return array
+   */
   protected function dumpBend($effect)
   {
     return $this->dumpTremoloBar($effect);
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectGrace $effect
+   * 
+   * @return array
+   */
   protected function dumpGrace($effect)
   {
     return is_object($effect) ? array(
@@ -47,12 +62,22 @@ abstract class DumperEffects
     ) : null;
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectTremolo $effect
+   * 
+   * @return array
+   */
   protected function dumpTremoloBar($effect)
   {
     return !is_object($effect) ? null
       : array('points' => $this->dumpPoints($effect->getPoints()));
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectHarmonic $effect
+   * 
+   * @return array
+   */
   protected function dumpHarmonic($effect)
   {
     return is_object($effect) ? array(
@@ -66,6 +91,11 @@ abstract class DumperEffects
     ) : null;
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectTrill $effect
+   * 
+   * @return array
+   */
   protected function dumpTrill($effect)
   {
     return is_object($effect) ? array(
@@ -74,6 +104,11 @@ abstract class DumperEffects
     ) : null;
   }
 
+  /**
+   * @param \PhpTabs\Model\EffectTremoloPicking $effect
+   * 
+   * @return array
+   */
   protected function dumpTremoloPicking($effect)
   {
     return is_object($effect) ? array(
@@ -81,11 +116,16 @@ abstract class DumperEffects
     ) : null;
   }
 
+  /**
+   * @param array $points
+   * 
+   * @return array
+   */
   protected function dumpPoints($points)
   {
     $content = array();
 
-    foreach($points as $point)
+    foreach ($points as $point)
     {
       $content[] = array(
         'position'  => $point->getPosition(), 

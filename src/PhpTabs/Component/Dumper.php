@@ -14,7 +14,7 @@ class Dumper extends DumperBase
   protected $song;
 
   /**
-   * @param Tablature The tablature to dump
+   * @param \PhpTabs\Component\Tablature The tablature to dump
    */
   public function __construct(Tablature $tablature)
   {
@@ -28,7 +28,7 @@ class Dumper extends DumperBase
    *
    * @return mixed array|xml|json|var_export|serialize|text
    * 
-   * @throws Exception if format is not supported
+   * @throws \Exception if format is not supported
    */
   public function dump($format = 'array')
   {

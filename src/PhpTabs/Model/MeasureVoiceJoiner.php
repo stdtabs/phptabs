@@ -6,12 +6,18 @@ class MeasureVoiceJoiner
 {
   private $measure;
 
+  /**
+   * @param \PhpTabs\Model\Measure $measure
+   */
   public function __construct(Measure $measure)
   {
     $this->measure = clone $measure;
     $this->measure->setTrack($measure->getTrack());
   }
 
+  /**
+   * @return \PhpTabs\Model\Measure
+   */
   public function process()
   {
     $this->orderBeats();
@@ -27,23 +33,27 @@ class MeasureVoiceJoiner
 
     $measureStart = $this->measure->getStart();
     $measureEnd = $measureStart + $this->measure->getLength();
-    for($i = 0; $i < $this->measure->countBeats(); $i++)
+
+    for ($i = 0; $i < $this->measure->countBeats(); $i++)
     {
       $beat = $this->measure->getBeat($i);
       $voice = $beat->getVoice(0);
-      for($v = 1; $v < $beat->countVoices(); $v++)
+
+      for ($v = 1; $v < $beat->countVoices(); $v++)
       {
         $currentVoice = $beat->getVoice($v);
-        if(!$currentVoice->isEmpty())
+
+        if (!$currentVoice->isEmpty())
         {
-          for($n = 0; $n < $currentVoice->countNotes(); $n++)
+          for ($n = 0; $n < $currentVoice->countNotes(); $n++)
           {
             $note = $currentVoice->getNote($n);
             $voice->addNote($note);
           }
         }
       }
-      if($voice->isEmpty())
+
+      if ($voice->isEmpty())
       {
         $this->measure->removeBeat($beat);
         $finish = false;
@@ -51,20 +61,23 @@ class MeasureVoiceJoiner
       }
 
       $beatStart = $beat->getStart();
-      if($previous !== null)
+
+      if ($previous !== null)
       {
         $previousStart = $previous->getStart();
 
         $previousBestDuration = null;
-        for($v = 0; $v < $previous->countVoices(); $v++)
+        for ($v = 0; $v < $previous->countVoices(); $v++)
         {
           $previousVoice = $previous->getVoice($v);
-          if(!$previousVoice->isEmpty())
+
+          if (!$previousVoice->isEmpty())
           {
             $length = $previousVoice->getDuration()->getTime();
-            if($previousStart + $length <= $beatStart)
+
+            if ($previousStart + $length <= $beatStart)
             {
-              if($previousBestDuration === null || $length > $previousBestDuration->getTime())
+              if ($previousBestDuration === null || $length > $previousBestDuration->getTime())
               {
                 $previousBestDuration = $previousVoice->getDuration();
               }
@@ -72,13 +85,13 @@ class MeasureVoiceJoiner
           }
         }
 
-        if($previousBestDuration !== null)
+        if ($previousBestDuration !== null)
         {
           $previous->getVoice(0)->getDuration()->copyFrom($previousBestDuration);
         }
         else
         {
-          if($voice->isRestVoice())
+          if ($voice->isRestVoice())
           {
             $this->measure->removeBeat($beat);
             $finish = false;
@@ -90,15 +103,17 @@ class MeasureVoiceJoiner
       }
 
       $beatBestDuration = null;
-      for($v = 0; $v < $beat->countVoices(); $v++)
+      for ($v = 0; $v < $beat->countVoices(); $v++)
       {
         $currentVoice = $beat->getVoice($v);
-        if(!$currentVoice->isEmpty())
+
+        if (!$currentVoice->isEmpty())
         {
           $length = $currentVoice->getDuration()->getTime();
-          if($beatStart + $length <= $measureEnd)
+
+          if ($beatStart + $length <= $measureEnd)
           {
-            if($beatBestDuration === null || $length > $beatBestDuration->getTime())
+            if ($beatBestDuration === null || $length > $beatBestDuration->getTime())
             {
               $beatBestDuration = $currentVoice->getDuration();
             }
@@ -106,9 +121,9 @@ class MeasureVoiceJoiner
         }
       }
 
-      if($beatBestDuration === null)
+      if ($beatBestDuration === null)
       {
-        if($voice->isRestVoice())
+        if ($voice->isRestVoice())
         {
           $this->measure->removeBeat($beat);
           $finish = false;
@@ -119,7 +134,8 @@ class MeasureVoiceJoiner
       }
       $previous = $beat;
     }
-    if(!$finish)
+
+    if (!$finish)
     {
       $this->joinBeats();
     }
@@ -127,14 +143,15 @@ class MeasureVoiceJoiner
 
   public function orderBeats()
   {
-    for($i = 0; $i < $this->measure->countBeats(); $i++)
+    for ($i = 0; $i < $this->measure->countBeats(); $i++)
     {
       $minBeat = null;
 
-      for($j = $i; $j < $this->measure->countBeats(); $j++)
+      for ($j = $i; $j < $this->measure->countBeats(); $j++)
       {
         $beat = $this->measure->getBeat($j);
-        if($minBeat === null || $beat->getStart() < $minBeat->getStart())
+
+        if ($minBeat === null || $beat->getStart() < $minBeat->getStart())
         {
           $minBeat = $beat;
         }

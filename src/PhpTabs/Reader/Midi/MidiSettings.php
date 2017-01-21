@@ -24,16 +24,25 @@ class MidiSettings
     $this->transpose = 0;
   }
 
+  /**
+   * @return int
+   */
   public function getTranspose()
   {
     return $this->transpose;
   }
 
+  /**
+   * @param int $transpose
+   */
   public function setTranspose($transpose)
   {
     $this->transpose = $transpose;
   }
 
+  /**
+   * @return \PhpTabs\Reader\Midi\MidiSettings
+   */
   public static function getDefaults()
   {
     return new MidiSettings();

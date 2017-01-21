@@ -15,6 +15,10 @@ class MidiSequence
   protected $resolution;
   private $tracks;
 
+  /**
+   * @param mixed $divisionType
+   * @param mixed $resolution
+   */
   public function __construct($divisionType, $resolution)
   {
     $this->divisionType = $divisionType;
@@ -23,7 +27,7 @@ class MidiSequence
   }
 
   /**
-   * @param MidiTrack $track
+   * @param \PhpTabs\Reader\Midi\MidiTrack $track
    */
   public function addTrack(MidiTrack $track)
   {
@@ -33,7 +37,7 @@ class MidiSequence
   /**
    * @param integer $index
    *
-   * @return MidiTrack
+   * @return \PhpTabs\Reader\Midi\MidiTrack
    */
   public function getTrack($index)
   {
@@ -69,7 +73,7 @@ class MidiSequence
 
   public function finish()
   {
-    for($i = 0; $i < count($this->tracks); $i++)
+    for ($i = 0; $i < count($this->tracks); $i++)
     {
       $track = $this->tracks[$i];
 

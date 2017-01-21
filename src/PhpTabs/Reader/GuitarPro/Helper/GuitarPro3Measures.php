@@ -12,7 +12,7 @@ class GuitarPro3Measures extends AbstractReader
   /**
    * Loops on mesures to read
    * 
-   * @param Song $song
+   * @param \PhpTabs\Model\Song $song
    * @param integer $measures
    * @param integer $tracks
    * @param integer $tempoValue

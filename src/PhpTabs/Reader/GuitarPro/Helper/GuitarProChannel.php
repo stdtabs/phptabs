@@ -13,16 +13,16 @@ class GuitarProChannel extends AbstractReader
   /**
    * Reads Channel informations
    * 
-   * @param Song $song
-   * @param Track $track
+   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Model\Track $track
    * @param array $channels
    */
-  public function readChannel(Song $song, Track $track, $channels)
+  public function readChannel(Song $song, Track $track, array $channels)
   {
     $gChannel1 = $this->reader->readInt() - 1;
     $gChannel2 = $this->reader->readInt() - 1;
 
-    if($gChannel1 >= 0 && $gChannel1 < count($channels))
+    if ($gChannel1 >= 0 && $gChannel1 < count($channels))
     {
       $channel = new Channel();
       $gChannel1Param = new ChannelParameter();
@@ -36,17 +36,17 @@ class GuitarProChannel extends AbstractReader
 
       $channel->copyFrom($channels[$gChannel1]);
 
-      for($i = 0; $i < $song->countChannels(); $i++)
+      for ($i = 0; $i < $song->countChannels(); $i++)
       {
         $channelAux = $song->getChannel($i);
 
-        for($n = 0; $n < $channelAux->countParameters(); $n++)
+        for ($n = 0; $n < $channelAux->countParameters(); $n++)
         {
           $channelParameter = $channelAux->getParameter($n);
 
-          if($channelParameter->getKey() == "$gChannel1")
+          if ($channelParameter->getKey() == "$gChannel1")
           {
-            if("$gChannel1" == $channelParameter->getValue())
+            if ("$gChannel1" == $channelParameter->getValue())
             {
               $channel->setChannelId($channelAux->getChannelId());
             }
@@ -54,7 +54,7 @@ class GuitarProChannel extends AbstractReader
         }
       }
 
-      if($channel->getChannelId() <= 0)
+      if ($channel->getChannelId() <= 0)
       {
         $channel->setChannelId($song->countChannels() + 1);
         $channel->setName($this->createChannelNameFromProgram($song, $channel));
@@ -71,15 +71,16 @@ class GuitarProChannel extends AbstractReader
   /**
    * Creates a channel name with a program
    * 
-   * @param Song $song
-   * @param Channel $channel
+   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Model\Channel $channel
+   *
    * @return string a new channel name
    */
   protected function createChannelNameFromProgram(Song $song, $channel)
   {
     $names = ChannelNames::$defaultNames;
 
-    if($channel->getProgram() >= 0 && isset($names[$channel->getProgram()]))
+    if ($channel->getProgram() >= 0 && isset($names[$channel->getProgram()]))
     {
       return $this->createChannelName($song, $names[$channel->getProgram()]);
     }
@@ -90,7 +91,8 @@ class GuitarProChannel extends AbstractReader
   /**
    * Creates a channel
    * 
-   * @param Song $song
+   * @param \PhpTabs\Model\Song $song
+   *
    * @return string a generated channel name
    */
   protected function createDefaultChannelName(Song $song)
@@ -101,8 +103,9 @@ class GuitarProChannel extends AbstractReader
   /**
    * Generates a channel name
    * 
-   * @param Song $song
+   * @param \PhpTabs\Model\Song $song
    * @param string $prefix
+   *
    * @return string channel name
    */
   protected function createChannelName(Song $song, $prefix)
@@ -110,11 +113,12 @@ class GuitarProChannel extends AbstractReader
     $number = 0;
     $unusedName = null;
 
-    while($unusedName === null)
+    while ($unusedName === null)
     {
       $number ++;
       $name = $prefix . ' ' . $number;
-      if(!$this->findChannelsByName($song, $name))
+
+      if (!$this->findChannelsByName($song, $name))
       {
         $unusedName = $name;
       }
@@ -126,17 +130,18 @@ class GuitarProChannel extends AbstractReader
   /**
    * Checks if a channel is still defined
    *
-   * @param Song $song
+   * @param \PhpTabs\Model\Song $song
    * @param string $name
+   *
    * @return boolean Result of the search
    */
   protected function findChannelsByName(Song $song, $name)
   {
     $channels = $song->getChannels();
 
-    foreach($channels as $v)
+    foreach ($channels as $v)
     {
-      if($v->getName() == $name)
+      if ($v->getName() == $name)
       {
         return true;
       }

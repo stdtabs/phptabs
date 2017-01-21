@@ -8,11 +8,20 @@ class Factory
 {
   private $reader;
 
+  /**
+   * @param \PhpTabs\Reader\GuitarPro\GuitarProReaderInterface $reader
+   */
   public function __construct(GuitarProReaderInterface $reader)
   {
     $this->reader = $reader;
   }
 
+  /**
+   * @param string $name
+   * @param string $parserName
+   * 
+   * @return mixed
+   */
   public function get($name, $parserName)
   {
     $name = __NAMESPACE__ . '\\' . $name;
@@ -21,7 +30,7 @@ class Factory
 
     $object->setReader($this->reader);
     $object->setParserName($parserName);
-    
+
     return $object;
   }
 }

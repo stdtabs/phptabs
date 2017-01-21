@@ -20,55 +20,77 @@ class Stroke
     $this->direction = Stroke::STROKE_NONE;
   }
 
+  /**
+   * @return int
+   */
   public function getDirection()
   {
     return $this->direction;
   }
 
+  /**
+   * @param int $direction
+   */
   public function setDirection($direction)
   {
     $this->direction = $direction;
   }
 
+  /**
+   * @return int $value
+   */
   public function getValue()
   {
     return $this->value;
   }
 
+  /**
+   * @param int $value
+   */
   public function setValue($value)
   {
     $this->value = $value;
   }
 
+  /**
+   * @param \PhpTabs\Model\Beat $beat
+   * 
+   * @return int
+   */
   public function getIncrementTime(Beat $beat)
   {
     $duration = 0;
-    if($this->value > 0)
+
+    if ($this->value > 0)
     {
-      for($v=0; $v<$beat->countVoices(); $v++)
+      for ($v = 0; $v < $beat->countVoices(); $v++)
       {
         $voice = $beat->getVoice($v);
 
-        if(!$voice->isEmpty())
+        if (!$voice->isEmpty())
         {
           $currentDuration = $voice->getDuration()->getTime();
-        
-          if($duration == 0 || $currentDuration < $duration)
+
+          if ($duration == 0 || $currentDuration < $duration)
           {
-            $duration = ($currentDuration <= Duration::QUARTER_TIME
-              ? $currentDuration : Duration::QUARTER_TIME);
+            $duration = $currentDuration <= Duration::QUARTER_TIME
+                      ? $currentDuration : Duration::QUARTER_TIME;
           }
         }
       }
-      if($duration > 0)
+
+      if ($duration > 0)
       {
-        return round((($duration / 8.0) * (4.0 / $this->value)));
+        return round(($duration / 8.0) * (4.0 / $this->value));
       }
     }
 
     return 0;
   }
 
+  /**
+   * @return \PhpTabs\Model\Stroke
+   */
   public function __clone()
   {
     $stroke = new Stroke();
@@ -76,6 +98,9 @@ class Stroke
     return $stroke;
   }
 
+  /**
+   * @param \PhpTabs\Model\Stroke $stroke
+   */
   public function copyFrom(Stroke $stroke)
   {
     $this->setValue($stroke->getValue());

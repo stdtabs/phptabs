@@ -18,7 +18,7 @@ abstract class Log
    */
   public static function add($message, $type = 'NOTICE')
   {
-    if(Config::get('verbose'))
+    if (Config::get('verbose'))
     {
       echo PHP_EOL . "[$type] $message";
     }
@@ -37,9 +37,9 @@ abstract class Log
   {
     $count = 0;
 
-    foreach(self::$data as $log)
+    foreach (self::$data as $log)
     {
-      if(null === $type || $type == $log['type'])
+      if (null === $type || $type == $log['type'])
       {
         $count++;
       }
@@ -49,7 +49,7 @@ abstract class Log
   }
 
   /**
-   * Gets last $count log messages
+   * Gets last logged messages
    * 
    * @param integer $count Number of messages to get
    * @param string $type Used to filter messages
@@ -62,13 +62,13 @@ abstract class Log
 
     $ptrLogs = self::countLogs() - 1;
 
-    for($i = $ptrLogs; $i >= 0; $i--)
+    for ($i = $ptrLogs; $i >= 0; $i--)
     {
-      if(null === $type || $type == self::$data[$i]['type'])
+      if (null === $type || $type == self::$data[$i]['type'])
       {
         array_push($messages, self::$data[$i]);
 
-        if(count($messages) == $count)
+        if (count($messages) == $count)
         {
           return $messages;
         }

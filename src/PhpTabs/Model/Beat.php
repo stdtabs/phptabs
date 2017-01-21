@@ -33,38 +33,59 @@ class Beat
     }
   }
 
+  /**
+   * @return \PhpTabs\Model\Measure
+   */
   public function getMeasure()
   {
     return $this->measure;
   }
-	
+
+  /**
+   * @param \PhpTabs\Model\Measure $measure
+   */
   public function setMeasure(Measure $measure)
   {
     $this->measure = $measure;
   }
-	
+
+  /**
+   * @return int
+   */
   public function getStart()
   {
     return $this->start;
   }
 
+  /**
+   * @param int $start
+   */
   public function setStart($start)
   {
     $this->start = $start;
   }
 
+  /**
+   * @param int $index
+   * @param \PhpTabs\Model\Voice $voice
+   */
   public function setVoice($index, Voice $voice)
   {
-    if($index >= 0)
+    if ($index >= 0)
     {
       $this->voices[$index] = $voice;
       $this->voices[$index]->setBeat($this);
     }
   }
 
+  /**
+   * @param int $index
+   *
+   * @return \PhpTabs\Model\Voice
+   */
   public function getVoice($index)
   {
-    if($index >= 0 && $index < count($this->voices))
+    if ($index >= 0 && $index < count($this->voices))
     {
       return $this->voices[$index];
     }
@@ -72,17 +93,26 @@ class Beat
     return null;
   }
 
+  /**
+   * @return int
+   */
   public function countVoices()
   {
     return count($this->voices);
   }
 
+  /**
+   * @param \PhpTabs\Model\Chord $chord
+   */
   public function setChord(Chord $chord)
   {
     $this->chord = $chord;
     $this->chord->setBeat($this);
   }
 
+  /**
+   * @return \PhpTabs\Model\Chord
+   */
   public function getChord()
   {
     return $this->chord;
@@ -93,11 +123,17 @@ class Beat
     $this->chord = null;
   }
 
+  /**
+   * @return \PhpTabs\Model\Text
+   */
   public function getText()
   {
     return $this->text;
   }
 
+  /**
+   * @param \PhpTabs\Model\Text $text
+   */
   public function setText(Text $text)
   {
     $this->text = $text;
@@ -109,28 +145,40 @@ class Beat
     $this->text = null;
   }
 
+  /**
+   * @return bool
+   */
   public function isChordBeat()
   {
     return $this->chord !== null;
   }
 
+  /**
+   * @return bool
+   */
   public function isTextBeat()
   {
     return $this->text !== null;
   }
 
+  /**
+   * @return \PhpTabs\Model\Stroke
+   */
   public function getStroke()
   {
     return $this->stroke;
   }
 
+  /**
+   * @return bool
+   */
   public function isRestBeat()
   {
-    for($v = 0; $v < $this->countVoices(); $v++)
+    for ($v = 0; $v < $this->countVoices(); $v++)
     {
       $voice = $this->getVoice($v);
 
-      if(!$voice->isEmpty() && !$voice->isRestVoice())
+      if (!$voice->isEmpty() && !$voice->isRestVoice())
       {
         return false;
       }
@@ -139,6 +187,9 @@ class Beat
     return true;
   }
 
+  /**
+   * @return \PhpTabs\Model\Beat
+   */
   public function __clone()
   {
     $beat = new Beat();
@@ -150,12 +201,12 @@ class Beat
       $beat->setVoice($i, clone $this->voices[$i]);
     }
     
-    if($this->chord != null)
+    if ($this->chord !== null)
     {
       $beat->setChord(clone $this->chord);
     }
 
-    if($this->text != null)
+    if ($this->text !== null)
     {
       $beat->setText(clone $this->text);
     }

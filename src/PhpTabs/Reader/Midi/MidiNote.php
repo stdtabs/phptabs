@@ -11,6 +11,13 @@ class MidiNote
   private $velocity;
   private $pitchBends;
 
+  /**
+   * @param int $track
+   * @param int $track
+   * @param int $tick
+   * @param int $value
+   * @param int $velocity
+   */
   public function __construct($track, $channel, $tick, $value, $velocity)
   {
     $this->track = $track;
@@ -21,41 +28,65 @@ class MidiNote
     $this->pitchBends = array();
   }
 
+  /**
+   * @return int
+   */
   public function getChannel()
   {
     return $this->channel;
   }
 
+  /**
+   * @return int
+   */
   public function getTick()
   {
     return $this->tick;
   }
 
+  /**
+   * @return int
+   */
   public function getTrack()
   {
     return $this->track;
   }
 
+  /**
+   * @return int
+   */
   public function getValue()
   {
     return $this->value;
   }
 
+  /**
+   * @return int
+   */
   public function getVelocity()
   {
     return $this->velocity;
   }
 
+  /**
+   * @param int
+   */
   public function addPitchBend($value)
   {
     $this->pitchBends[] = $value;
   }
 
+  /**
+   * @return array
+   */
   public function getPitchBends()
   {
     return $this->pitchBends;
   }
 
+  /**
+   * @return int
+   */
   public function countPitchBends()
   {
     return count($this->pitchBends);

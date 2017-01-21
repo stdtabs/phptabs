@@ -4,6 +4,9 @@ namespace PhpTabs\Component\Dumper;
 
 abstract class DumperBase extends DumperEffects
 {
+  /**
+   * @return array
+   */
   protected function dumpSong()
   {
     $content = array(
@@ -21,14 +24,14 @@ abstract class DumperBase extends DumperEffects
 
     $countChannels = $this->song->countChannels();
 
-    for($i=0; $i<$countChannels; $i++)
+    for ($i = 0; $i < $countChannels; $i++)
     {
       $content['channels'][$i] = $this->dumpChannel($i);
     }
 
     $countMeasureHeaders = $this->song->countMeasureHeaders();
 
-    for($i=0; $i<$countMeasureHeaders; $i++)
+    for ($i = 0; $i < $countMeasureHeaders; $i++)
     {
       $content['measureHeaders'][$i] = $this->dumpMeasureHeader(
         $this->song->getMeasureHeader($i)
@@ -37,7 +40,7 @@ abstract class DumperBase extends DumperEffects
 
     $countTracks = $this->song->countTracks();
 
-    for($i=0; $i<$countTracks; $i++)
+    for ($i = 0; $i < $countTracks; $i++)
     {
       $content['tracks'][$i] = $this->dumpTrack($i);
     }
@@ -45,6 +48,11 @@ abstract class DumperBase extends DumperEffects
     return array('song' => $content);
   }
 
+  /**
+   * @param int $index
+   * 
+   * @return array
+   */
   protected function dumpTrack($index)
   {
     $track = $this->song->getTrack($index);
@@ -71,7 +79,7 @@ abstract class DumperBase extends DumperEffects
 
     $countMeasures = $track->countMeasures();
 
-    for($i=0; $i<$countMeasures; $i++)
+    for ($i = 0; $i < $countMeasures; $i++)
     {
       $content['measures'][$i] = $this->dumpMeasure(
         $track->getMeasure($i),
@@ -81,7 +89,7 @@ abstract class DumperBase extends DumperEffects
 
     $countStrings = $track->countStrings();
 
-    for($i=0; $i<$countStrings; $i++)
+    for ($i = 0; $i < $countStrings; $i++)
     {
       $content['strings'][$i] = $this->dumpString($track->getString($i+1));
     }
@@ -89,6 +97,11 @@ abstract class DumperBase extends DumperEffects
     return array('track' => $content);
   }
 
+  /**
+   * @param int $index
+   * 
+   * @return array
+   */
   protected function dumpChannel($index)
   {
     $channel = $this->song->getChannel($index);
@@ -109,7 +122,7 @@ abstract class DumperBase extends DumperEffects
 
     $countParameters = $channel->countParameters();
 
-    for($i=0; $i<$countParameters; $i++)
+    for ($i = 0; $i < $countParameters; $i++)
     {
       $content['parameters'][$i] = array(
         'key'   => $channel->getParameter($i)->getKey(),
@@ -120,6 +133,12 @@ abstract class DumperBase extends DumperEffects
     return array('channel' => $content);
   }
 
+  /**
+   * @param \PhpTabs\Model\Measure $measure
+   * @param \PhpTabs\Model\MeasureHeader $measureHeader
+   * 
+   * @return array
+   */
   protected function dumpMeasure($measure, $measureHeader)
   {
     $content = array(
@@ -133,7 +152,7 @@ abstract class DumperBase extends DumperEffects
 
     $countBeats = $measure->countBeats();
 
-    for($i=0; $i<$countBeats; $i++)
+    for ($i = 0; $i < $countBeats; $i++)
     {
       $content['beats'][$i] = $this->dumpBeat($measure->getBeat($i));
     }
@@ -141,6 +160,11 @@ abstract class DumperBase extends DumperEffects
     return array('measure' => $content);
   }
 
+  /**
+   * @param \PhpTabs\Model\Beat $beat
+   * 
+   * @return array
+   */
   protected function dumpBeat($beat)
   {
     $content = array(
@@ -156,7 +180,7 @@ abstract class DumperBase extends DumperEffects
 
     $countVoices = $beat->countVoices();
 
-    for($i=0; $i<$countVoices; $i++)
+    for ($i = 0; $i < $countVoices; $i++)
     {
       $content['voices'][$i] = $this->dumpVoice($beat->getVoice($i));
     }
@@ -164,6 +188,11 @@ abstract class DumperBase extends DumperEffects
     return array('beat' => $content);
   }
 
+  /**
+   * @param \PhpTabs\Model\Voice $voice
+   * 
+   * @return array
+   */
   protected function dumpVoice($voice)
   {
     $content = array(
@@ -176,7 +205,7 @@ abstract class DumperBase extends DumperEffects
 
     $countNotes = $voice->countNotes();
 
-    for($i=0; $i<$countNotes; $i++)
+    for ($i = 0; $i < $countNotes; $i++)
     {
       $content['notes'][$i] = $this->dumpNote($voice->getNote($i));
     }
@@ -184,6 +213,11 @@ abstract class DumperBase extends DumperEffects
     return array('voice' => $content);
   }
 
+  /**
+   * @param \PhpTabs\Model\Duration $duration
+   * 
+   * @return array
+   */
   protected function dumpDuration($duration)
   {
     return array(
@@ -197,6 +231,11 @@ abstract class DumperBase extends DumperEffects
     );
   }
 
+  /**
+   * @param \PhpTabs\Model\Note $note
+   * 
+   * @return array
+   */
   protected function dumpNote($note)
   {
     return array('note' => 
@@ -210,6 +249,11 @@ abstract class DumperBase extends DumperEffects
     );
   }
 
+  /**
+   * @param \PhpTabs\Model\TabString $string
+   * 
+   * @return array
+   */
   protected function dumpString($string)
   {
     return is_object($string) ? array('string' => array(
@@ -218,6 +262,11 @@ abstract class DumperBase extends DumperEffects
     )) : null;
   }
 
+  /**
+   * @param \PhpTabs\Model\MeasureHeader $header
+   * 
+   * @return array
+   */
   protected function dumpMeasureHeader($header)
   {
     return array('header' => array(
@@ -234,9 +283,14 @@ abstract class DumperBase extends DumperEffects
     ));
   }
 
+  /**
+   * @param \PhpTabs\Model\Chord $chord
+   * 
+   * @return array
+   */
   protected function dumpChord($chord)
   {
-    if(!is_object($chord))
+    if (!is_object($chord))
     {
       return null;
     }
@@ -250,7 +304,7 @@ abstract class DumperBase extends DumperEffects
     $countStrings = $chord->countStrings();
     $strings = $chord->getStrings();
 
-    for($i=0; $i<$countStrings; $i++)
+    for ($i = 0; $i < $countStrings; $i++)
     {
       $content['strings'][] = array('string' => $strings[$i]);
     }
@@ -258,6 +312,11 @@ abstract class DumperBase extends DumperEffects
     return $content;
   }
 
+  /**
+   * @param \PhpTabs\Model\TimeSignature $timeSignature
+   * 
+   * @return array
+   */
   protected function dumpTimeSignature($timeSignature)
   {
     return array(
@@ -266,6 +325,11 @@ abstract class DumperBase extends DumperEffects
     );
   }
 
+  /**
+   * @param \PhpTabs\Model\Marker $marker
+   * 
+   * @return array
+   */
   protected function dumpMarker($marker)
   {
     return is_object($marker) ? array(
@@ -279,6 +343,11 @@ abstract class DumperBase extends DumperEffects
     ) : null;
   }
 
+  /**
+   * @param \PhpTabs\Model\Text $text
+   * 
+   * @return array
+   */
   protected function dumpText($text)
   {
     return is_object($text) ? array(

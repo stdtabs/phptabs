@@ -55,7 +55,7 @@ class Tablature
   /**
    * Sets Song wrapper
    *
-   * @param Song $song
+   * @param \PhpTabs\Model\Song $song
    */
   public function setSong(Song $song)
   {
@@ -65,7 +65,7 @@ class Tablature
   /**
    * Gets a Song
    *
-   * @return Song
+   * @return \PhpTabs\Model\Song
    */
   public function getSong()
   {
@@ -79,14 +79,14 @@ class Tablature
    */
   public function getInstruments()
   {
-    if(!($count = $this->countChannels()))
+    if (!($count = $this->countChannels()))
     {
       return array();
     }
 
     $instruments = array();
 
-    for($i=0; $i<$count; $i++)
+    for ($i = 0; $i < $count; $i++)
     {
       $instruments[$i] = array(
         'id'    => $this->getChannel($i)->getProgram(),
@@ -126,6 +126,8 @@ class Tablature
   /**
    * Dumps a song into an array
    * 
+   * @param string $format
+   * 
    * @return array
    */
   public function dump($format = null)
@@ -139,13 +141,15 @@ class Tablature
   /**
    * Writes a song into a file
    * 
+   * @param string $filename
+   * 
    * @return mixed boolean|string
    * 
    * @throws Exception If tablature container contains error
    */
   public function save($filename = null)
   {
-    if($this->hasError())
+    if ($this->hasError())
     {
       $message = sprintf('%s(): %s'
         , __METHOD__
@@ -167,7 +171,7 @@ class Tablature
    */
   public function convert($format = null)
   {
-    if(null === $format)
+    if (null === $format)
     {
       $format = $this->getFormat();
     }
@@ -180,10 +184,12 @@ class Tablature
    * 
    * @param string $name method
    * @param array $arguments
+   * 
+   * @return mixed
    */
   public function __call($name, $arguments)
   {
-    if(!method_exists($this->song, $name))
+    if (!method_exists($this->song, $name))
     {
       $message = sprintf('Song has no method called "%s"', $name);
 

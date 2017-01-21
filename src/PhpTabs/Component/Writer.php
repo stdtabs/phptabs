@@ -3,7 +3,6 @@
 namespace PhpTabs\Component;
 
 use Exception;
-
 use PhpTabs\Component\Tablature;
 
 class Writer
@@ -24,7 +23,7 @@ class Writer
   );
 
   /**
-   * @param Tablature $tablature
+   * @param \PhpTabs\Component\Tablature $tablature
    */
   public function __construct(Tablature $tablature)
   {
@@ -38,11 +37,11 @@ class Writer
    *
    * @return string A binary chain
    * 
-   * @throws Exception if output format is not supported
+   * @throws \Exception if output format is not supported
    */
   public function build($format)
   {
-    if(!isset($this->writers[$format]))
+    if (!isset($this->writers[$format]))
     {
       $message = sprintf('Output format %s is not supported', $format);
 
@@ -59,25 +58,25 @@ class Writer
    * 
    * @return mixed boolean|string
    * 
-   * @throws Exception if an incorrect destination path is supplied
+   * @throws \Exception if an incorrect destination path is supplied
    */
   public function save($path = null)
   {
-    if($path == 'php://output')
+    if ($path == 'php://output')
     {
       print($this->build($this->tablature->getFormat()));
 
       return true;
     }
-    else if(null === $path)
+    elseif (null === $path)
     {
       return $this->build($this->tablature->getFormat());
     }
-    else if(is_string($path))
+    elseif (is_string($path))
     {
       $parts = pathinfo($path);
 
-      if(!isset($parts['basename'], $parts['extension']))
+      if (!isset($parts['basename'], $parts['extension']))
       {
         $message = sprintf('Destination path %s is not complete', $path);
 
@@ -97,17 +96,17 @@ class Writer
    * 
    * @param string $content binary chain
    * 
-   * @throws Exception If content can not be written
+   * @throws \Exception If content can not be written
    */
   private function record($content)
   {
     $dir = pathinfo($this->path, PATHINFO_DIRNAME);
 
-    if(!is_dir($dir) || !is_writable($dir))
+    if (!is_dir($dir) || !is_writable($dir))
     {
       throw new Exception('Save directory error');
     }
-    else if(is_file($this->path) && !is_writable($this->path))
+    elseif (is_file($this->path) && !is_writable($this->path))
     {
       $message = sprintf('File "%s" still exists and is not writable', $this->path);
 

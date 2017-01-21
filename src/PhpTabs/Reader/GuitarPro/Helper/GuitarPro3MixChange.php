@@ -9,7 +9,7 @@ class GuitarPro3Mixchange extends AbstractReader
   /**
    * Reads mix change informations
    * 
-   * @param Tempo $tempo
+   * @param \PhpTabs\Model\Tempo $tempo
    */
   public function readMixChange(Tempo $tempo)
   {
@@ -21,31 +21,38 @@ class GuitarPro3Mixchange extends AbstractReader
     $phaser = $this->reader->readByte();
     $tremolo = $this->reader->readByte();
     $tempoValue = $this->reader->readInt();
-    if($volume >= 0)
+
+    if ($volume >= 0)
     {
       $this->reader->readByte();
     }
-    if($pan >= 0)
+
+    if ($pan >= 0)
     {
       $this->reader->readByte();
     }
-    if($chorus >= 0)
+
+    if ($chorus >= 0)
     {
       $this->reader->readByte();
     }
-    if($reverb >= 0)
+
+    if ($reverb >= 0)
     {
       $this->reader->readByte();
     }
-    if($phaser >= 0)
+
+    if ($phaser >= 0)
     {
       $this->reader->readByte();
     }
-    if($tremolo >= 0)
+
+    if ($tremolo >= 0)
     {
       $this->reader->readByte();
     }
-    if($tempoValue >= 0)
+
+    if ($tempoValue >= 0)
     {
       $tempo->setValue($tempoValue);
       $this->reader->readByte();

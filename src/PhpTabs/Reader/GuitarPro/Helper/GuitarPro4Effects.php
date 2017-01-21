@@ -13,7 +13,7 @@ class GuitarPro4Effects extends AbstractReader
   /**
    * Reads tremolo bar
    * 
-   * @param NoteEffect $noteEffect
+   * @param \PhpTabs\Model\NoteEffect $noteEffect
    */
   public function readTremoloBar(NoteEffect $effect)
   {
@@ -34,7 +34,7 @@ class GuitarPro4Effects extends AbstractReader
       $tremoloBar->addPoint($pointPosition, $pointValue);
     }
 
-    if(count($tremoloBar->getPoints()))
+    if (count($tremoloBar->getPoints()))
     {
       $effect->setTremoloBar($tremoloBar);
     }
@@ -43,7 +43,7 @@ class GuitarPro4Effects extends AbstractReader
   /**
    * Reads tremolo picking
    * 
-   * @param NoteEffect $noteEffect
+   * @param \PhpTabs\Model\NoteEffect $noteEffect
    */
   public function readTremoloPicking(NoteEffect $noteEffect)
   {
@@ -51,17 +51,17 @@ class GuitarPro4Effects extends AbstractReader
 
     $tremoloPicking = new EffectTremoloPicking();
 
-    if($value == 1)
+    if ($value == 1)
     {
       $tremoloPicking->getDuration()->setValue(Duration::EIGHTH);
       $noteEffect->setTremoloPicking($tremoloPicking);
     }
-    else if($value == 2)
+    elseif ($value == 2)
     {
       $tremoloPicking->getDuration()->setValue(Duration::SIXTEENTH);
       $noteEffect->setTremoloPicking($tremoloPicking);
     }
-    else if($value == 3)
+    elseif ($value == 3)
     {
       $tremoloPicking->getDuration()->setValue(Duration::THIRTY_SECOND);
       $noteEffect->setTremoloPicking($tremoloPicking);

@@ -37,51 +37,81 @@ class EffectHarmonic
     $this->data = 0;
   }
 
+  /**
+   * @return array
+   */
   public function getData()
   {
     return $this->data;
   }
 
+  /**
+   * @param array $data
+   */
   public function setData($data)
   {
     $this->data = $data;
   }
 
+  /**
+   * @return int
+   */
   public function getType()
   {
     return $this->type;
   }
 
+  /**
+   * @param int $type
+   */
   public function setType($type)
   {
     $this->type = $type;
   }
 
+  /**
+   * @return bool
+   */
   public function isNatural()
   {
-    return ($this->type == EffectHarmonic::TYPE_NATURAL);
+    return $this->type == EffectHarmonic::TYPE_NATURAL;
   }
 
+  /**
+   * @return bool
+   */
   public function isArtificial()
   {
-    return ($this->type == EffectHarmonic::TYPE_ARTIFICIAL);
+    return $this->type == EffectHarmonic::TYPE_ARTIFICIAL;
   }
 
+  /**
+   * @return bool
+   */
   public function isTapped()
   {
-    return ($this->type == EffectHarmonic::TYPE_TAPPED);
+    return $this->type == EffectHarmonic::TYPE_TAPPED;
   }
 
+  /**
+   * @return bool
+   */
   public function isPinch()
   {
-    return ($this->type == EffectHarmonic::TYPE_PINCH);
+    return $this->type == EffectHarmonic::TYPE_PINCH;
   }
 
+  /**
+   * @return bool
+   */
   public function isSemi()
   {
-    return ($this->type == EffectHarmonic::TYPE_SEMI);
+    return $this->type == EffectHarmonic::TYPE_SEMI;
   }
 
+  /**
+   * @return \PhpTabs\Model\EffectHarmonic
+   */
   public function  __clone()
   {
     $effect = new EffectHarmonic();

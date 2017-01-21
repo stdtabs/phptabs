@@ -8,7 +8,7 @@ class GuitarPro5TiedNote extends AbstractReader
 {
   /**
    * @param integer $string String on which note has started
-   * @param Track $track
+   * @param \PhpTabs\Model\Track $track
    *
    * @return integer tied note value
    */
@@ -25,12 +25,12 @@ class GuitarPro5TiedNote extends AbstractReader
         for ($b = $measure->countBeats() - 1; $b >= 0; $b--)
         {
           $beat = $measure->getBeat($b);
-          
-          for($v = 0; $v < $beat->countVoices(); $v++)
+
+          for ($v = 0; $v < $beat->countVoices(); $v++)
           {
             $voice = $beat->getVoice($v);  
 
-            if(!$voice->isEmpty())
+            if (!$voice->isEmpty())
             {
               for ($n = 0; $n < $voice->countNotes(); $n++)
               {

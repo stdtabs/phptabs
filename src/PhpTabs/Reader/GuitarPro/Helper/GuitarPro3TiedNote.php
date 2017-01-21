@@ -8,7 +8,7 @@ class GuitarPro3TiedNote extends AbstractReader
 {
   /**
    * @param integer $string String on which note has started
-   * @param Track $track
+   * @param \PhpTabs\Model\Track $track
    *
    * @return integer tied note value
    */

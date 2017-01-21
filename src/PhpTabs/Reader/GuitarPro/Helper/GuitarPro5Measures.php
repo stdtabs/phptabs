@@ -12,7 +12,7 @@ class GuitarPro5Measures extends AbstractReader
   /**
    * Loops on mesures to read
    * 
-   * @param Song $song
+   * @param \PhpTabs\Model\Song $song
    * @param integer $measures
    * @param integer $tracks
    * @param integer $tempoValue
@@ -27,6 +27,7 @@ class GuitarPro5Measures extends AbstractReader
     {
       $header = $song->getMeasureHeader($i);
       $header->setStart($start);
+
       for ($j = 0; $j < $tracks; $j++)
       {
         $track = $song->getTrack($j);
@@ -35,7 +36,7 @@ class GuitarPro5Measures extends AbstractReader
         $track->addMeasure($measure);
         $this->reader->factory('GuitarPro5Measure')->readMeasure($measure, $track, $tempo);
 
-        if($i != $measures - 1 || $j != $tracks - 1)
+        if ($i != $measures - 1 || $j != $tracks - 1)
         {
           $this->reader->skip();
         }

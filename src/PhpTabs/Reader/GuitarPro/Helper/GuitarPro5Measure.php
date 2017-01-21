@@ -4,20 +4,20 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Model\Measure;
 use PhpTabs\Model\Tempo;
-use PhpTabs\Model\track;
+use PhpTabs\Model\Track;
 
 class GuitarPro5Measure extends AbstractReader
 {
   /**
    * Reads a Measure
    * 
-   * @param Measure $measure
-   * @param Track $track
-   * @param Tempo $tempo
+   * @param \PhpTabs\Model\Measure $measure
+   * @param \PhpTabs\Model\Track $track
+   * @param \PhpTabs\Model\Tempo $tempo
    */
   public function readMeasure(Measure $measure, Track $track, Tempo $tempo)
   {
-    for($voice = 0; $voice < 2; $voice++)
+    for ($voice = 0; $voice < 2; $voice++)
     {
       $nextNoteStart = intval($measure->getStart());
       $numberOfBeats = $this->reader->readInt();
@@ -30,24 +30,26 @@ class GuitarPro5Measure extends AbstractReader
 
     $emptyBeats = array();
 
-    for($i = 0; $i < $measure->countBeats(); $i++)
+    for ($i = 0; $i < $measure->countBeats(); $i++)
     {
       $beat = $measure->getBeat($i);
       $empty = true;
-      for($v = 0; $v < $beat->countVoices(); $v++)
+
+      for ($v = 0; $v < $beat->countVoices(); $v++)
       {
-        if(!$beat->getVoice($v)->isEmpty())
+        if (!$beat->getVoice($v)->isEmpty())
         {
           $empty = false;
         }
       }
-      if($empty)
+
+      if ($empty)
       {
         $emptyBeats[] = $beat;
       }
     }
 
-    foreach($emptyBeats as $beat)
+    foreach ($emptyBeats as $beat)
     {
       $measure->removeBeat($beat);
     }

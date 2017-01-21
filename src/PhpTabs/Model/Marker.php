@@ -2,7 +2,6 @@
 
 namespace PhpTabs\Model;
 
-
 class Marker
 {
   public static $defaultColor = array(255, 0, 0);
@@ -24,36 +23,57 @@ class Marker
     $this->color = $color;
   }
 
+  /**
+   * @return \PhpTabs\Model\Measure
+   */
   public function getMeasure()
   {
     return $this->measure;
   }
 
+  /**
+   * @param \PhpTabs\Model\Measure $measure
+   */
   public function setMeasure($measure)
   {
     $this->measure = $measure;
   }
 
+  /**
+   * @return \PhpTabs\Model\Measure
+   */
   public function getTitle()
   {
     return $this->title;
   }
 
+  /**
+   * @param string $title
+   */
   public function setTitle($title)
   {
     $this->title = (string)$title;
   }
 
+  /**
+   * @return \PhpTabs\Model\Color
+   */
   public function getColor()
   {
     return $this->color;
   }
 
+  /**
+   * @param \PhpTabs\Model\Color $color
+   */
   public function setColor(Color $color)
   {
     $this->color = $color;
   }
 
+  /**
+   * @return \PhpTabs\Model\Marker
+   */
   public function __clone()
   {
     $marker = new Marker();
@@ -61,6 +81,9 @@ class Marker
     return $marker;
   }
 
+  /**
+   * @param \PhpTabs\Model\Marker $marker
+   */
   public function copyFrom(Marker $marker)
   {
     $this->setMeasure($marker->getMeasure());

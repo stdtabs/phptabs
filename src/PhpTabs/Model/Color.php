@@ -28,7 +28,6 @@ class Color
 
   /**
    * Constructor sets black color by default
-   * @return void
    */
   public function __construct()
   {
@@ -37,7 +36,8 @@ class Color
 
   /**
    * Gets RGB blue value
-   * @return integer index of blue
+   *
+   * @return int Blue index
    */
   public function getB()
   {
@@ -46,8 +46,8 @@ class Color
 
   /**
    * Sets RGB blue value
-   * @param integer $blue blue index
-   * @return void
+   *
+   * @param int $blue Blue index
    */
   public function setB($blue)
   {
@@ -56,7 +56,8 @@ class Color
 
   /**
    * Gets RGB green value
-   * @return integer index of green
+   *
+   * @return int Green index
    */
   public function getG()
   {
@@ -65,8 +66,8 @@ class Color
 
   /**
    * Sets RGB green value
-   * @param integer $green green index 
-   * @return void
+   * 
+   * @param int $green Green index 
    */
   public function setG($green)
   {
@@ -75,7 +76,8 @@ class Color
 
   /**
    * Gets RGB red value
-   * @return integer index of red
+   *
+   * @return int Red index
    */
   public function getR()
   {
@@ -84,8 +86,8 @@ class Color
 
   /**
    * Sets RGB red value
-   * @param integer $red red index 
-   * @return void
+   *
+   * @param int $red Red index 
    */
   public function setR($red)
   {
@@ -94,19 +96,22 @@ class Color
 
   /**
    * Compares two colors
-   * @param Chord $color the color to compare with current color
-   * @return boolean Result of the comparison
+   *
+   * @param \Phptabs\Model\Color $color A color to compare with current color
+   * 
+   * @return bool Result of the comparison
    */
   public function isEqual(Color $color)
   {
-    return ($this->getR() == $color->getR() 
-      && $this->getG() == $color->getG()
-      && $this->getB() == $color->getB());
+    return $this->getR() == $color->getR() 
+        && $this->getG() == $color->getG()
+        && $this->getB() == $color->getB();
   }
 
   /**
    * Clones current color
-   * @return Color
+   *
+   * @return \PhpTabs\Model\Color
    */
   public function __clone()
   {
@@ -117,8 +122,8 @@ class Color
 
   /**
    * Copies a color from another one
-   * @param Color $color
-   * @return void
+   * 
+   * @param \PhpTabs\Model\Color $color
    */
   public function copyFrom(Color $color)
   {
@@ -129,9 +134,11 @@ class Color
 
   /**
    * Transforms a list of RGB codes into an array
-   * @param integer $red red value
-   * @param integer $green green value
-   * @param integer $blue blue value
+   *
+   * @param int $red   red value
+   * @param int $green green value
+   * @param int $blue  blue value
+   *
    * @return array RGB array
    */
   public static function toArray($red, $green, $blue)

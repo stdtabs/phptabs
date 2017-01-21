@@ -18,11 +18,6 @@ class Duration
   private $doubleDotted;
   private $divisionType;	
 
-  /**
-   * Constructor
-   * 
-   * @return void
-   */
   public function __construct()
   {
     $this->value = Duration::QUARTER;
@@ -31,50 +26,74 @@ class Duration
     $this->divisionType = new DivisionType();
   }
 
+  /**
+   * @return int
+   */
   public function getValue()
   {
     return $this->value;
   }
 
+  /**
+   * @param int $value
+   */
   public function setValue($value)
   {
     $this->value = $value;
   }
 
+  /**
+   * @return bool
+   */
   public function isDotted()
   {
     return $this->dotted;
   }
 
+  /**
+   * @param bool $dotted
+   */
   public function setDotted($dotted)
   {
     $this->dotted = (boolean)$dotted;
   }
 
+  /**
+   * @return bool
+   */
   public function isDoubleDotted()
   {
     return (boolean)$this->doubleDotted;
   }
 
+  /**
+   * @param bool $doubleDotted
+   */
   public function setDoubleDotted($doubleDotted)
   {
     $this->doubleDotted = (boolean)$doubleDotted;
   }
 
+  /**
+   * @return mixed
+   */
   public function getDivision()
   {
     return $this->divisionType;
   }
 
+  /**
+   * @return mixed
+   */
   public function getTime()
   {
     $time = Duration::QUARTER_TIME * (4.0 / $this->value);
 
-    if($this->dotted)
+    if ($this->dotted)
     {
       $time += $time / 2;
     }
-    else if($this->doubleDotted)
+    elseif ($this->doubleDotted)
     {
       $time += ($time / 4) * 3;
     }
@@ -82,9 +101,16 @@ class Duration
     return $this->getDivision()->convertTime($time);
   }
 
+  /**
+   * @param int $time
+   * @param int $minDuration
+   * @param int $diff
+   * 
+   * @return int
+   */
   public static function fromTime($time, $minDuration = null, $diff = null)
   {
-    if($minDuration === null && $diff === null)
+    if ($minDuration === null && $diff === null)
     {
       $duration = new Duration();
       $duration->setValue(self::SIXTY_FOURTH);
@@ -95,7 +121,7 @@ class Duration
 
       return self::fromTime($time, $duration);
     }
-    else if($diff === null)
+    elseif ($diff === null)
     {
       return self::fromTime($time, $minDuration, 10);
     }
@@ -106,22 +132,22 @@ class Duration
     $tmpDuration->setDotted(true);
     $finish = false;
 
-    while(!$finish)
+    while (!$finish)
     {
       $tmpTime = $tmpDuration->getTime();
-      if($tmpTime - $diff <= $time)
+      if ($tmpTime - $diff <= $time)
       {
-        if(abs($tmpTime - $time) < abs($duration->getTime() - $time))
+        if (abs($tmpTime - $time) < abs($duration->getTime() - $time))
         {
           $duration = clone $tmpDuration;
         }
       }
 
-      if($tmpDuration->isDotted())
+      if ($tmpDuration->isDotted())
       {
         $tmpDuration->setDotted(false);
       }
-      else if($tmpDuration->getDivision()->isEqual(DivisionType::normal()))
+      elseif ($tmpDuration->getDivision()->isEqual(DivisionType::normal()))
       {
         $tmpDuration->getDivision()->setEnters(3);
         $tmpDuration->getDivision()->setTimes(2);
@@ -134,7 +160,7 @@ class Duration
         $tmpDuration->getDivision()->setTimes(1);
       }
 
-      if($tmpDuration->getValue() > self::SIXTY_FOURTH)
+      if ($tmpDuration->getValue() > self::SIXTY_FOURTH)
       {
         $finish = true;
       }
@@ -143,16 +169,26 @@ class Duration
     return $duration;
   }
 
+  /**
+   * @return int
+   */
   public function getIndex()
   {
     $index = 0;
     $value = $this->value;
-    while(($value = ($value >> 1) ) > 0)
-      $index ++;
+    while (($value = ($value >> 1) ) > 0)
+    {
+      $index++;
+    }
 
     return $index;
   }
 
+  /**
+   * @param \PhpTabs\Model\Duration $duration
+   * 
+   * @return bool
+   */
   public function isEqual(Duration $duration)
   {
     return ($this->getValue() == $duration->getValue() 
@@ -161,6 +197,9 @@ class Duration
       && $this->getDivision()->isEqual($duration->getDivision()));
   }
 
+  /**
+   * @return \PhpTabs\Model\Duration
+   */
   public function __clone()
   {
     $duration = new Duration();
@@ -168,6 +207,9 @@ class Duration
     return $duration;
   }
 
+  /**
+   * @param \PhpTabs\Model\Duration $duration
+   */
   public function copyFrom(Duration $duration)
   {
     $this->setValue($duration->getValue());

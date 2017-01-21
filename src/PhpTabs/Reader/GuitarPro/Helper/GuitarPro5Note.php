@@ -13,11 +13,11 @@ class GuitarPro5Note extends AbstractReader
   /**
    * Reads a note
    * 
-   * @param TabString $string
-   * @param track $track
-   * @param NoteEffect $effect
+   * @param \PhpTabs\Model\TabString $string
+   * @param \PhpTabs\Model\Track $track
+   * @param \PhpTabs\Model\NoteEffect $effect
    *
-   * @return Note
+   * @return \PhpTabs\Model\Note
    */
   public function readNote(TabString $string, Track $track, NoteEffect $effect)
   {
@@ -38,7 +38,10 @@ class GuitarPro5Note extends AbstractReader
 
     if (($flags & 0x10) != 0)
     {
-      $note->setVelocity( (Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->reader->readByte())) - Velocities::VELOCITY_INCREMENT);
+      $note->setVelocity(
+        (Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->reader->readByte()))
+        - Velocities::VELOCITY_INCREMENT
+      );
     }
 
     if (($flags & 0x20) != 0)

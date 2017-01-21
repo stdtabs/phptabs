@@ -11,7 +11,7 @@ class GuitarPro4Chord extends AbstractReader
    * Reads Chord informations
    * 
    * @param integer $strings
-   * @param Beat $beat
+   * @param \PhpTabs\Model\Beat $beat
    */
   public function readChord($strings, Beat $beat)
   {
@@ -22,7 +22,7 @@ class GuitarPro4Chord extends AbstractReader
       $chord->setName($this->reader->readStringByteSizeOfInteger());
       $chord->setFirstFret($this->reader->readInt());
 
-      if($chord->getFirstFret() != 0)
+      if ($chord->getFirstFret() != 0)
       {
         for ($i = 0; $i < 6; $i++)
         {
@@ -45,17 +45,21 @@ class GuitarPro4Chord extends AbstractReader
       $this->reader->skip(32);
     }
 
-    if($chord->countNotes() > 0)
+    if ($chord->countNotes() > 0)
     {
       $beat->setChord($chord);
     }
   }
 
+  /**
+   * @param \PhpTabs\Model\Chord $chord
+   * @param integer $index
+   */
   private function readFret(Chord $chord, $index)
   {
     $fret = $this->reader->readInt();
 
-    if($index < $chord->countStrings())
+    if ($index < $chord->countStrings())
     {
       $chord->addFretValue($index, $fret);
     }

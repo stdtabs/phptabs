@@ -13,7 +13,7 @@ class GuitarPro5NoteEffects extends AbstractReader
   /**
    * Reads note effects
    * 
-   * @param NoteEffect $noteEffect
+   * @param \PhpTabs\Model\NoteEffect $noteEffect
    */
   public function readNoteEffects(NoteEffect $noteEffect)
   {
@@ -61,36 +61,37 @@ class GuitarPro5NoteEffects extends AbstractReader
   /**
    * Reads an artificial harmonic
    * 
-   * @param NoteEffect $effect
+   * @param \PhpTabs\Model\NoteEffect $effect
    */
   private function readArtificialHarmonic(NoteEffect $effect)
   {
     $type = $this->reader->readByte();
     $harmonic = new EffectHarmonic();
     $harmonic->setData(0);
-    if($type == 1)
+
+    if ($type == 1)
     {
       $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
       $effect->setHarmonic($harmonic);
     }
-    else if($type == 2)
+    elseif ($type == 2)
     {
       $this->reader->skip(3);
       $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
       $effect->setHarmonic($harmonic);
     }
-    else if($type == 3)
+    elseif ($type == 3)
     {
       $this->reader->skip(1);
       $harmonic->setType(EffectHarmonic::TYPE_TAPPED);
       $effect->setHarmonic($harmonic);
     }
-    else if($type == 4)
+    elseif ($type == 4)
     {
       $harmonic->setType(EffectHarmonic::TYPE_PINCH);
       $effect->setHarmonic($harmonic);
     }
-    else if($type == 5)
+    elseif ($type == 5)
     {
       $harmonic->setType(EffectHarmonic::TYPE_SEMI);
       $effect->setHarmonic($harmonic);
@@ -100,7 +101,7 @@ class GuitarPro5NoteEffects extends AbstractReader
   /**
    * Reads EffectGrace
    * 
-   * @param NoteEffect $effect
+   * @param \PhpTabs\Model\NoteEffect $effect
    */
   private function readGrace(NoteEffect $effect)
   {
@@ -119,19 +120,19 @@ class GuitarPro5NoteEffects extends AbstractReader
     $grace->setDead(($flags & 0x01) != 0);
     $grace->setOnBeat(($flags & 0x02) != 0);
 
-    if($transition == 0)
+    if ($transition == 0)
     {
       $grace->setTransition(EffectGrace::TRANSITION_NONE);
     }
-    else if($transition == 1)
+    elseif ($transition == 1)
     {
       $grace->setTransition(EffectGrace::TRANSITION_SLIDE);
     }
-    else if($transition == 2)
+    elseif ($transition == 2)
     {
       $grace->setTransition(EffectGrace::TRANSITION_BEND);
     }
-    else if($transition == 3)
+    elseif ($transition == 3)
     {
       $grace->setTransition(EffectGrace::TRANSITION_HAMMER);
     }

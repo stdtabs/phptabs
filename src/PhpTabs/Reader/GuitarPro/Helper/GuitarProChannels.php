@@ -15,7 +15,7 @@ class GuitarProChannels extends AbstractReader
   {
     $channels = array();
 
-    for ($i=0; $i<64; $i++)
+    for ($i = 0; $i < 64; $i++)
     {
       $channel = new Channel();
       $channel->setProgram($this->reader->readInt());
@@ -26,7 +26,8 @@ class GuitarProChannels extends AbstractReader
       $channel->setPhaser($this->toChannelShort($this->reader->readByte()));
       $channel->setTremolo($this->toChannelShort($this->reader->readByte()));
       $channel->setBank($i == 9
-        ? Channel::DEFAULT_PERCUSSION_BANK : Channel::DEFAULT_BANK);
+        ? Channel::DEFAULT_PERCUSSION_BANK : Channel::DEFAULT_BANK
+      );
 
       if ($channel->getProgram() < 0)
       {
@@ -45,6 +46,7 @@ class GuitarProChannels extends AbstractReader
    * Formats an integer
    * 
    * @param byte $bytes
+   *
    * @return integer between 0 and 32767
    */
   protected function toChannelShort($bytes)

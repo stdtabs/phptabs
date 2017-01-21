@@ -3,7 +3,6 @@
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Model\MeasureHeader;
-use PhpTabs\Model\Song;
 use PhpTabs\Model\TimeSignature;
 
 class GuitarPro5MeasureHeader extends AbstractReader
@@ -12,8 +11,7 @@ class GuitarPro5MeasureHeader extends AbstractReader
    * Reads a mesure header
    * 
    * @param integer $number
-   * @param Song $song
-   * @param TimeSignature $timeSignature
+   * @param \PhpTabs\Model\TimeSignature $timeSignature
    * @param integer $tempoValue
    * 
    * @return MeasureHeader
@@ -64,6 +62,7 @@ class GuitarPro5MeasureHeader extends AbstractReader
     {
       $this->reader->skip(4);
     }
+
     if (($flags & 0x10) == 0)
     {
       $this->reader->skip(1);
@@ -71,11 +70,11 @@ class GuitarPro5MeasureHeader extends AbstractReader
 
     $tripletFeel = $this->reader->readByte();
 
-    if($tripletFeel == 1)
+    if ($tripletFeel == 1)
     {
       $header->setTripletFeel(MeasureHeader::TRIPLET_FEEL_EIGHTH);
     }
-    else if($tripletFeel == 2)
+    elseif ($tripletFeel == 2)
     {
       $header->setTripletFeel(MeasureHeader::TRIPLET_FEEL_SIXTEENTH);
     }

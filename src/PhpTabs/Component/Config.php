@@ -14,6 +14,8 @@ abstract class Config
    * 
    * @param string $key option name
    * @param mixed $default optional return value if not defined
+   * 
+   * @return mixed
    */
   public static function get($key, $default = null)
   {
@@ -29,7 +31,7 @@ abstract class Config
    */
   public static function set($key, $value = null)
   {
-    if (is_string($key))
+    if (is_scalar($key))
     {
       self::$data[$key] = $value;
     }
@@ -47,8 +49,6 @@ abstract class Config
 
   /**
    * Delete all config values
-   * 
-   * @return void
    */
   public static function clear()
   {

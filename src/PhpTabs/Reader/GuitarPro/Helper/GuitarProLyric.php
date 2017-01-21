@@ -9,7 +9,7 @@ class GuitarProLyric extends AbstractReader
   /**
    * Reads lyrics informations
    * 
-   * @return Lyric
+   * @return \PhpTabs\Model\Lyric
    */
   public function readLyrics()
   {
