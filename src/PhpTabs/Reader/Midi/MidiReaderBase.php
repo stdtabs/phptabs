@@ -9,11 +9,11 @@ use PhpTabs\Model\Song;
 
 abstract class MidiReaderBase implements MidiReaderInterface
 {
-  /** @var File */
+  /** @var \PhpTabs\Component\File */
   private $file;
 
   /**
-   * @param File $file input file to read
+   * @param \PhpTabs\Component\File $file input file to read
    */
   public function __construct(File $file)
   {
@@ -23,7 +23,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
   /**
    * Reads a 32 bit integer big endian
    * 
-   * @return integer
+   * @return int
    */
   protected function readInt()
   {
@@ -36,7 +36,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
   /**
    * Reads a 16 bit integer big endian
    * 
-   * @return integer
+   * @return int
    */
   protected function readShort()
   {
@@ -48,7 +48,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
   /**
    * Reads an unsigned 16 bit integer big endian
    * 
-   * @return integer
+   * @return int
    */
   protected function readUnsignedShort()
   {
@@ -58,11 +58,11 @@ abstract class MidiReaderBase implements MidiReaderInterface
   }
 
   /**
-   * @param MidiTrackReaderHelper $helper
+   * @param \PhpTabs\Reader\Midi\MidiTrackReaderHelper $helper
    * 
-   * @return integer
+   * @return int
    * 
-   * @throws Exception if variable length is not readable
+   * @throws \Exception if variable length is not readable
    */
   public function readVariableLengthQuantity(MidiTrackReaderHelper $helper)
   {
@@ -98,7 +98,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
   /**
    * Skips a sequence
    * 
-   * @param integer $num
+   * @param int $num
    */
   protected function skip($num = 1)
   {
@@ -108,7 +108,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
   /**
    * Reads bytes
    * 
-   * @param integer $num
+   * @param int $num
    *
    * @return array An array of bytes
    */
@@ -125,7 +125,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
   }
 
   /**
-   * Closes File read process
+   * Closes \PhpTabs\Component\File read process
    */
   protected function closeStream()
   {
