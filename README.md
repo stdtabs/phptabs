@@ -5,7 +5,8 @@ PhpTabs
 [![Build Status](https://travis-ci.org/stdtabs/phptabs.svg?branch=master)](https://travis-ci.org/stdtabs/phptabs)
 [![License](https://poser.pugx.org/stdtabs/phptabs/license.svg)](https://packagist.org/packages/stdtabs/phptabs)
 
-PhpTabs is a PHP library that reads tablature and MIDI files. It provides direct methods to read a song name, get a list of instruments or whatever be your needs.
+PhpTabs is a PHP library that reads and writes scores and MIDI files.
+It provides direct methods to read a song name, get a list of instruments or whatever be your needs.
 
 PhpTabs currently supports the following file formats:
 
@@ -66,7 +67,7 @@ Requirements
 PhpTabs requires one of the following:
 
 - PHP 5.4+
-- PHP 7.0+
+- PHP 7+
 - HHVM
 
 ________________________________________________________________________
