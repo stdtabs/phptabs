@@ -5,7 +5,7 @@ PhpTabs
 [![Build Status](https://travis-ci.org/stdtabs/phptabs.svg?branch=master)](https://travis-ci.org/stdtabs/phptabs)
 [![License](https://poser.pugx.org/stdtabs/phptabs/license.svg)](https://packagist.org/packages/stdtabs/phptabs)
 
-PhpTabs is a PHP library that reads and writes scores and MIDI files.
+PhpTabs is a PHP library for reading and writing scores and MIDI files.
 It provides direct methods to read a song name, get a list of instruments or whatever be your needs.
 
 PhpTabs currently supports the following file formats:
@@ -15,6 +15,11 @@ PhpTabs currently supports the following file formats:
 - Guitar Pro 5 (.gp5)
 - MIDI (.mid, .midi)
 
+Any questions?
+
+- [Find support on Twitter](https://twitter.com/stdtabs)
+- [Open an issue on github](https://github.com/stdtabs/phptabs/issues)
+- [Contribute on github](https://github.com/stdtabs/phptabs/pulls)
 
 Table of contents
 =================
@@ -89,36 +94,11 @@ require_once 'src/PhpTabs/bootstrap.php';
 
 ###With Composer
 
-- __Download Composer__
-
-Download it from [https://getcomposer.org/composer.phar](https://getcomposer.org/composer.phar)
-
-[More information about Composer](https://getcomposer.org/)
-
 - __Package configuration__
 
 ```sh
 composer require stdtabs/phptabs:0.*
 ```
-
-Or
-
-```sh
-php composer.phar require stdtabs/phptabs:0.*
-```
-
-- __Package installation__
-
-```sh
-php composer.phar install
-```
-
-Or
-
-```sh
-php composer.phar update
-```
-
 ________________________________________________________________________
 
 Basic Usage
@@ -190,7 +170,7 @@ __Values__
 
   The application stops.
 
-  Exception message and stack trace are printed.
+  An exception message and a stack trace are printed.
   
 - __default__ or  anything else
 
