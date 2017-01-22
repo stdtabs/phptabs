@@ -11,10 +11,10 @@ class Tablature
 {
   const DEFAULT_FILE_FORMAT = 'gp3';
 
-  /** @var string error message */
+  /** @var string An error message */
   private $error = '';
 
-  /** @var object Song */
+  /** @var \PhpTabs\Model\Song*/
   private $song;
 
   /** @var string $format */
@@ -37,7 +37,7 @@ class Tablature
   }
 
   /**
-   * @return string Error set during build operations
+   * @return string An error set during build operations
    */
   public function getError()
   {
@@ -45,7 +45,7 @@ class Tablature
   }
 
   /**
-   * @return boolean true if there was an error. Otherwise, false.
+   * @return bool true if there was an error. Otherwise, false.
    */
   public function hasError()
   {
@@ -100,7 +100,7 @@ class Tablature
   /**
    * Counts instruments
    *
-   * @return integer
+   * @return int
    */
   public function countInstruments()
   {
@@ -108,9 +108,9 @@ class Tablature
   }
 
   /**
-   * Gets instrument by channelId
+   * Gets an instrument by channelId
    *
-   * @param integer $index
+   * @param int $index
    * 
    * @return array
    */
@@ -143,9 +143,9 @@ class Tablature
    * 
    * @param string $filename
    * 
-   * @return mixed boolean|string
+   * @return mixed bool|string
    * 
-   * @throws Exception If tablature container contains error
+   * @throws \Exception If tablature container contains error
    */
   public function save($filename = null)
   {
