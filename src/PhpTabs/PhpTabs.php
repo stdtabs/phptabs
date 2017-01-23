@@ -33,7 +33,7 @@ class PhpTabs
         $this->setTablature($reader->getTablature());
       }
     }
-    catch(Exception $e)
+    catch (Exception $e)
     {
       $message = sprintf('%s in %s on line %d%s'
           , $e->getMessage()
@@ -85,7 +85,7 @@ class PhpTabs
    */
   public function __call($name, array $arguments = [])
   {
-    switch(count($arguments))
+    switch (count($arguments))
     {
       case 0:
         return $this->tablature->$name();

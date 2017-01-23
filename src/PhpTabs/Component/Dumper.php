@@ -32,7 +32,7 @@ class Dumper extends DumperBase
    */
   public function dump($format = 'array')
   {
-    switch($format)
+    switch ($format)
     {
       case 'array':
         return $this->dumpSong();

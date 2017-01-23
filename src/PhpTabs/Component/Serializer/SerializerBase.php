@@ -9,7 +9,7 @@ abstract class SerializerBase
    */
   protected function appendNodes(array $nodes)
   {
-    foreach($nodes as $index => $node)
+    foreach ($nodes as $index => $node)
     {
       // List
       if (is_array($node) && is_int($index))

@@ -196,7 +196,7 @@ class Tablature
       trigger_error($message, E_USER_ERROR);
     }
 
-    switch(count($arguments))
+    switch (count($arguments))
     {
       case 0: return $this->song->$name();
       case 1: return $this->song->$name($arguments[0]);

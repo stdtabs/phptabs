@@ -142,7 +142,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
   {
     $bytes = array();
 
-    for($i = 0; $i <= 3; $i++)
+    for ($i = 0; $i <= 3; $i++)
     {
       $bytes[$i] = unpack('C', $this->file->getStream())[1];
     }

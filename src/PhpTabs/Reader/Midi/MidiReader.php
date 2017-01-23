@@ -574,7 +574,7 @@ class MidiReader extends MidiReaderBase
     {
       $frameType = -(($division >> 8) & 0xff);
 
-      switch($frameType)
+      switch ($frameType)
       {
         case 24:
           $divisionType = MidiReaderInterface::SMPTE_24;
@@ -963,7 +963,7 @@ class MidiReader extends MidiReaderBase
 
     if ($statusByte < 0x80)
     {
-      switch($helper->runningStatusByte)
+      switch ($helper->runningStatusByte)
       {
         case -1:
           throw new Exception('Corrupted MIDI file: status byte is missing');
