@@ -75,20 +75,17 @@ class MidiReader extends MidiReaderBase
 
     $this->checkAll();
 
-    foreach ($this->channels as $channel)
-    {
+    array_walk($this->channels, function($channel) use (&$song) {
       $song->addChannel($channel);
-    }
+    });
 
-    foreach ($this->headers as $header)
-    {
+    array_walk($this->headers, function($header) use (&$song) {
       $song->addMeasureHeader($header);
-    }
+    });
 
-    foreach ($this->tracks as $track)
-    {
+    array_walk($this->tracks, function($track) use (&$song) {
       $song->addTrack($track);
-    }
+    });
 
     $this->adjust($song);
 
@@ -231,25 +228,22 @@ class MidiReader extends MidiReaderBase
 
   private function checkTracks()
   {
-    foreach ($this->tracks as $track)
-    {
+    array_walk($this->tracks, function($track) {
       $trackChannel = null;
 
-      foreach ($this->tempChannels as $tempChannel)
-      {
+      array_walk($this->tempChannels, function($tempChannel) use (&$trackChannel, $track) {
         if ($tempChannel->getTrack() == $track->getNumber())
         {
-          foreach ($this->channels as $channel)
-          {
+          array_walk($this->channels, function($channel) use (&$tempChannel, &$trackChannel) {
             $channelRoute = $this->channelRouter->getRoute($channel->getChannelId());
 
             if ($channelRoute !== null && $tempChannel->getChannel() == $channelRoute->getChannel1())
             {
               $trackChannel = $channel;
             }
-          }
+          });
         }
-      }
+      });
 
       if ($trackChannel !== null)
       {
@@ -264,7 +258,7 @@ class MidiReader extends MidiReaderBase
       {
         $track->setStrings($this->getTrackTuningHelper($track->getNumber())->getStrings());
       }
-    }
+    });
   }
 
   /**
