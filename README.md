@@ -82,7 +82,7 @@ Installation
 
 Installation with Composer is required if you want to run PHPUnit tests.
 
-###From Github
+### From Github
 
 Download and extract an archive from [https://github.com/stdtabs/phptabs/releases](https://github.com/stdtabs/phptabs/releases)
 
@@ -92,7 +92,7 @@ Then add this PHP line before usage:
 require_once 'src/PhpTabs/bootstrap.php';
 ```
 
-###With Composer
+### With Composer
 
 - __Package configuration__
 
@@ -133,7 +133,7 @@ Config::set('<option name>', '<option value>');
 Config::get('<option name>');
 ```
 ________________________________________________________________________
-###type
+### type
 Useful to set one specific type of analyse
 
 __Values__
@@ -161,7 +161,7 @@ __Example__
 Config::set("type", "meta");
 ```
 ________________________________________________________________________
-###debug
+### debug
 Useful to manage Exceptions
 
 __Values__
@@ -185,7 +185,7 @@ Config::set("debug", true);
 ```
 
 ________________________________________________________________________
-###verbose
+### verbose
 Useful to print all logged events such as stream reads, internal notices
 and warnings.
 
@@ -212,9 +212,9 @@ ________________________________________________________________________
 Methods
 -------
 
-###Error handling
+### Error handling
 ________________________________________________________________________
-####hasError()
+#### hasError()
 
 __Type__ *boolean*
 
@@ -224,7 +224,7 @@ It returns true if an error has been set, otherwise false.
 $tablature->hasError();
 ```
 ________________________________________________________________________
-####getError()
+#### getError()
 
 __Type__ *string*
 
@@ -236,9 +236,9 @@ $tablature->getError();
 ________________________________________________________________________
 
 
-###Accessing metadata
+### Accessing metadata
 ________________________________________________________________________
-####getName()
+#### getName()
 
 __Type__ *string*
 
@@ -250,7 +250,7 @@ __Example__
 $tablature->getName();
 ```
 ________________________________________________________________________
-####getArtist()
+#### getArtist()
 
 __Type__ *string*
 
@@ -262,7 +262,7 @@ __Example__
 $tablature->getArtist();
 ```
 ________________________________________________________________________
-####getAlbum()
+#### getAlbum()
 
 __Type__ *string*
 
@@ -274,7 +274,7 @@ __Example__
 $tablature->getAlbum();
 ```
 ________________________________________________________________________
-####getAuthor()
+#### getAuthor()
 
 __Type__ *string*
 
@@ -286,7 +286,7 @@ __Example__
 $tablature->getAuthor();
 ```
 ________________________________________________________________________
-####getCopyright()
+#### getCopyright()
 
 __Type__ *string*
 
@@ -298,7 +298,7 @@ __Example__
 $tablature->getCopyright();
 ```
 ________________________________________________________________________
-####getWriter()
+#### getWriter()
 
 __Type__ *string*
 
@@ -310,7 +310,7 @@ __Example__
 $tablature->getWriter();
 ```
 ________________________________________________________________________
-####getComments()
+#### getComments()
 
 __Type__ *string*
 
@@ -323,7 +323,7 @@ __Example__
 $tablature->getComments();
 ```
 ________________________________________________________________________
-####getTranscriber()
+#### getTranscriber()
 
 __Type__ *string*
 
@@ -340,7 +340,7 @@ __Example__
 $tablature->getTranscriber();
 ```
 ________________________________________________________________________
-####getDate()
+#### getDate()
 
 __Type__ *string*
 
@@ -357,10 +357,10 @@ $tablature->getDate();
 ```
 ________________________________________________________________________
 
-###Accessing tracks
+### Accessing tracks
 ________________________________________________________________________
 
-####countTracks()
+#### countTracks()
 
 __Type__ *integer*
 
@@ -372,7 +372,7 @@ __Example__
 $tablature->countTracks();
 ```
 ________________________________________________________________________
-####getTracks()
+#### getTracks()
 
 __Type__ *array*
 
@@ -386,7 +386,7 @@ __Example__
 $tablature->getTracks();
 ```
 ________________________________________________________________________
-####getTrack($index)
+#### getTrack($index)
 
 __Type__ *object*
 
@@ -402,10 +402,10 @@ $tablature->getTrack(0);
 ```
 ________________________________________________________________________
 
-###Accessing channels
+### Accessing channels
 ________________________________________________________________________
 
-####countChannels()
+#### countChannels()
 
 __Type__ *integer*
 
@@ -417,7 +417,7 @@ __Example__
 $tablature->countChannels();
 ```
 ________________________________________________________________________
-####getChannels()
+#### getChannels()
 
 __Type__ *array*
 
@@ -431,7 +431,7 @@ __Example__
 $tablature->getChannels();
 ```
 ________________________________________________________________________
-####getChannel($index)
+#### getChannel($index)
 
 __Type__ *object*
 
@@ -447,10 +447,10 @@ $tablature->getChannel(0);
 ```
 ________________________________________________________________________
 
-###Accessing instruments
+### Accessing instruments
 ________________________________________________________________________
 
-####countInstruments()
+#### countInstruments()
 
 __Type__ *integer*
 
@@ -462,7 +462,7 @@ __Example__
 $tablature->countInstruments();
 ```
 ________________________________________________________________________
-####getInstruments()
+#### getInstruments()
 
 __Type__ *array*
 
@@ -481,7 +481,7 @@ __Example__
 $tablature->getInstruments();
 ```
 ________________________________________________________________________
-####getInstrument($index)
+#### getInstrument($index)
 
 __Type__ *array*
 
@@ -504,10 +504,10 @@ $tablature->getInstrument(0);
 ```
 ________________________________________________________________________
 
-###Accessing measure headers
+### Accessing measure headers
 ________________________________________________________________________
 
-####countMeasureHeaders()
+#### countMeasureHeaders()
 
 __Type__ *integer*
 
@@ -519,7 +519,7 @@ __Example__
 $tablature->countMeasureHeaders();
 ```
 ________________________________________________________________________
-####getMeasureHeaders()
+#### getMeasureHeaders()
 
 __Type__ *array*
 
@@ -531,7 +531,7 @@ __Example__
 $tablature->getMeasureHeaders();
 ```
 ________________________________________________________________________
-####getMeasureHeader($index)
+#### getMeasureHeader($index)
 
 __Type__ *object*
 
