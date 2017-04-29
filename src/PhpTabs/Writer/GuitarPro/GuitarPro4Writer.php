@@ -113,7 +113,7 @@ class GuitarPro4Writer extends GuitarProWriterBase
   private function parseDuration(Duration $duration)
   {
     $value = 0;
-    switch($duration->getValue())
+    switch ($duration->getValue())
     {
       case Duration::WHOLE:
         $value = -2;
