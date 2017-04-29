@@ -133,7 +133,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
   private function parseDuration(Duration $duration)
   {
     $value = 0;
-    switch($duration->getValue())
+    switch ($duration->getValue())
     {
       case Duration::WHOLE:
         $value = -2;
@@ -385,22 +385,30 @@ class GuitarPro5Writer extends GuitarProWriterBase
    */
   private function writeBend(EffectBend $bend)
   {
-    $points = count($bend->getPoints());
+    $points = $bend->getPoints();
     $this->writeByte(1);
     $this->writeInt(0);
-    $this->writeInt($points);
+    $this->writeInt(count($points));
 
-    for ($i = 0; $i < $points; $i++)
-    {
-      $point = $bend->getPoints()[$i];
+    array_walk($points, function ($point) {
       $this->writeInt(
-        intval($point->getPosition() * GprInterface::GP_BEND_POSITION / EffectBend::MAX_POSITION_LENGTH)
+        intval(
+          $point->getPosition() 
+          * GprInterface::GP_BEND_POSITION 
+          / EffectBend::MAX_POSITION_LENGTH
+        )
       );
+
       $this->writeInt(
-        intval($point->getValue() * GprInterface::GP_BEND_SEMITONE / EffectBend::SEMITONE_LENGTH)
+        intval(
+          $point->getValue() 
+          * GprInterface::GP_BEND_SEMITONE 
+          / EffectBend::SEMITONE_LENGTH
+        )
       );
+
       $this->writeByte(0);
-    }
+    });
   }
 
   /**
@@ -410,17 +418,16 @@ class GuitarPro5Writer extends GuitarProWriterBase
   {
     $channels = $this->makeChannels($song);
 
-    for ($i = 0; $i < count($channels); $i++)
-    {
-      $this->writeInt($channels[$i]->getProgram());
-      $this->writeByte($this->toChannelByte($channels[$i]->getVolume()));
-      $this->writeByte($this->toChannelByte($channels[$i]->getBalance()));
-      $this->writeByte($this->toChannelByte($channels[$i]->getChorus()));
-      $this->writeByte($this->toChannelByte($channels[$i]->getReverb()));
-      $this->writeByte($this->toChannelByte($channels[$i]->getPhaser()));
-      $this->writeByte($this->toChannelByte($channels[$i]->getTremolo()));
+    array_walk($channels, function ($channel) {
+      $this->writeInt($channel->getProgram());
+      $this->writeByte($this->toChannelByte($channel->getVolume()));
+      $this->writeByte($this->toChannelByte($channel->getBalance()));
+      $this->writeByte($this->toChannelByte($channel->getChorus()));
+      $this->writeByte($this->toChannelByte($channel->getReverb()));
+      $this->writeByte($this->toChannelByte($channel->getPhaser()));
+      $this->writeByte($this->toChannelByte($channel->getTremolo()));
       $this->writeBytes(array(0, 0));
-    }
+    });
   }
 
   /**
@@ -1121,7 +1128,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
    */
   private function writeTracks(Song $song)
   {
-    for($i = 0; $i < $song->countTracks(); $i++)
+    for ($i = 0; $i < $song->countTracks(); $i++)
     {
       $track = $song->getTrack($i);
       $this->writeTrack($track);
