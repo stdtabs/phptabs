@@ -21,10 +21,7 @@ class Chord
    */
   public function __construct($length)
   {
-    for ($i = 0; $i < $length; $i++)
-    {
-      $this->strings[$i] = -1;
-    }
+    $this->strings = array_fill(0, $length, -1);
   }
 
   /**
@@ -121,17 +118,14 @@ class Chord
    */
   public function countNotes()
   {
-    $count = 0;
-
-    for ($i = 0; $i < count($this->strings); $i++)
-    {
-      if ($this->strings[$i] >= 0)
-      {
-        $count++;
-      }
-    }
-
-    return $count;
+    return count(
+      array_filter(
+        $this->strings,
+        function ($value) {
+          return $value >= 0;
+        }
+      )
+    );
   }
 
   /**

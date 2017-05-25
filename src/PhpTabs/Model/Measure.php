@@ -253,7 +253,6 @@ class Measure
 
   /**
    * @param int $start
-   *
    * @return \PhpTabs\Model\Beat
    */
   public function getBeatByStart($start)
@@ -262,11 +261,9 @@ class Measure
 
     for ($i = 0; $i < $beatCount; $i++)
     {
-      $beat = $this->getBeat($i);
-
-      if ($beat->getStart() == $start)
+      if ($this->getBeat($i)->getStart() == $start)
       {
-        return $beat;
+        return $this->getBeat($i);
       }
     }
 
@@ -286,10 +283,12 @@ class Measure
     $this->keySignature = $measure->getKeySignature();
     $this->clear();
 
-    for ($i = 0; $i < $measure->countBeats(); $i++)
-    {
-      $this->addBeat(clone $measure->getBeat($i));
-    }
+    array_walk(
+      $measure->getBeats(),
+      function ($beat) {
+        $this->addBeat(clone $beat);
+      }
+    );
   }
 
   /**
