@@ -279,16 +279,13 @@ class Measure
    */
   public function copyFrom(Measure $measure)
   {
-    $this->clef = $measure->getClef();
-    $this->keySignature = $measure->getKeySignature();
     $this->clear();
+    $this->clef         = $measure->getClef();
+    $this->keySignature = $measure->getKeySignature();
 
-    array_walk(
-      $measure->getBeats(),
-      function ($beat) {
-        $this->addBeat(clone $beat);
-      }
-    );
+    foreach ($measure->getBeats() as $beat) {
+      $this->addBeat(clone $beat);
+    }
   }
 
   /**
