@@ -2,7 +2,7 @@
 <phpunit bootstrap="test/bootstrap.php" colors="true">
 <testsuites>
   <testsuite name="PhpTabs Test Suite">
-    <directory>./test/PhpTabs/</directory>
+    <directory>test/PhpTabs/</directory>
   </testsuite>
 </testsuites>
 
