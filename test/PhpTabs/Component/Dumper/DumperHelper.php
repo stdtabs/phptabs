@@ -7,12 +7,13 @@ use PhpTabs\PhpTabs;
 
 /**
  * Helpers for testing dumps of a simple tablature
- * Guitar Pro 3, 4, 5
+ * Guitar Pro 3, 4, 5 & MIDI
  */
 class DumperHelper extends XmlTestCaseHelper
 {
   private static $tablature;
   private static $plainText;
+  private static $yamlText;
   private static $xmlDoc;
 
   /**
@@ -28,6 +29,8 @@ class DumperHelper extends XmlTestCaseHelper
 
     #Text
     self::$plainText = self::$tablature->dump('text');
+    #YAML
+    self::$yamlText = self::$tablature->dump('yaml');
 
     # XML
     $xmlString = self::$tablature->dump('xml');
@@ -128,5 +131,21 @@ class DumperHelper extends XmlTestCaseHelper
   {
     $pattern = sprintf('/%s/', $text);
     $this->assertRegexp($pattern, self::$plainText);
+  }
+
+  /**
+   * Text serialization
+   * 
+   * @dataProvider getYamlScenarios
+   */
+  public function testDumperYaml($text)
+  {
+    $pattern = sprintf('/%s/', $text);
+    $this->assertRegexp($pattern, self::$plainText);
+  }
+
+  public function getYamlScenarios()
+  {
+    return $this->getTextScenarios();
   }
 }
