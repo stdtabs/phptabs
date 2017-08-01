@@ -7,6 +7,7 @@ use PhpTabs\Component\Tablature;
 use PhpTabs\Component\Dumper\DumperBase;
 use PhpTabs\Component\Serializer\Text;
 use PhpTabs\Component\Serializer\Xml;
+use PhpTabs\Component\Serializer\Yaml;
 
 class Dumper extends DumperBase
 {
@@ -24,10 +25,18 @@ class Dumper extends DumperBase
   /**
    * Returns a representation of the song into a desired format
    * 
-   * @param string $format array|xml|json|var_export|serialize|text
+   * @param  string $format
+   *  - array       : a raw PHP array
+   *  - xml         : an XML string
+   *  - json        : a JSON string
+   *  - var_export  : a raw PHP array as string
+   *  - serialize   : a PHP serialized
+   *  - text        : a non standardized text
+   *  - txt         : same as text
+   *  - yaml        : a YAML representation
+   *  - yml         : same as yaml
    *
-   * @return mixed array|xml|json|var_export|serialize|text
-   * 
+   * @return string|array
    * @throws \Exception if format is not supported
    */
   public function dump($format = 'array')
@@ -45,7 +54,11 @@ class Dumper extends DumperBase
       case 'serialize':
         return serialize($this->dump());
       case 'text':
+      case 'txt':
         return (new Text())->serialize($this->dump());
+      case 'yaml':
+      case 'yml':
+        return (new Yaml())->serialize($this->dump());
       default:
         $message = sprintf('%s does not support "%s" format', __METHOD__, $format);
         throw new Exception($message);
