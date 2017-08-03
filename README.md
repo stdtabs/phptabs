@@ -63,6 +63,10 @@ Table of contents
     - [countMeasureHeaders()](#countmeasureheaders)
     - [getMeasureHeaders()](#getmeasureheaders)
     - [getMeasureHeader()](#getmeasureheaderindex)
+  - [Saving data](#savingdata)
+    - [save()](#savefilename)
+    - [dump()](#dumpformat)
+    - [convert()](#converttype)
 
 ________________________________________________________________________
 
@@ -545,5 +549,123 @@ __Example__
 // Get the first measure header
 $tablature->getMeasureHeader(0);
 ```
+
 ________________________________________________________________________
 
+### Saving data
+________________________________________________________________________
+
+#### save($filename)
+
+__Type__ *string|bool*
+
+__Parameter__ *string* $filename 
+
+This method records data as binary to the disk or buffer.
+It implicitly converts filetype if the specified file extension is
+different from the original (see examples below).
+
+Following formats are allowed:
+
+| Parameter        | Type      | Description                      |
+|:-----------------|:----------|:---------------------------------|
+| php://output     | *string*  | A binary string into the buffer  |
+| null             | *string*  | Same as php://output             |
+| filename.ext     | *bool*    | A file_put_contents() return     |
+
+__Example__
+
+```php
+// Instanciate a GP3 tab
+$tab = new PhpTabs('mytab.gp3');
+
+// Save as GP3
+$tab->save('newfile.gp3');
+
+// Convert and save as GP5
+$tab->save('newfile.gp5');
+
+// Dump the binary into the buffer
+echo $tab->save();
+
+```
+________________________________________________________________________
+
+#### dump($format)
+
+__Type__ *string|array*
+
+__Parameter__ *string* $format 
+
+Dumps are made to visualize the internal music-tree or to communicate 
+with a third-party application.
+
+Following formats are allowed:
+
+| Parameter        | Type      | Description                  |
+|:-----------------|:----------|:-----------------------------|
+| array            | *array*   | a raw PHP array              |
+| xml              | *string*  | an XML string                |
+| json             | *string*  | a JSON string                |
+| var_export       | *string*  | a raw PHP array as string    |
+| serialize        | *string*  | a PHP serialized             |
+| text             | *string*  | a non standardized text      |
+| txt              | *string*  | same as text                 |
+| yaml             | *string*  | a YAML representation        |
+| yml              | *string*  | same as yaml                 |
+
+__Example__
+
+```php
+// Dump content into a file as XML
+file_put_contents(
+  'tab.xml',
+  $tab->dump('xml')
+);
+
+// Dump into a variable as PHP array
+$array = $tab->dump(); // array is the default format
+
+```
+________________________________________________________________________
+
+#### convert($type)
+________________________________________________________________________
+
+__Type__ *string*
+
+__Parameter__ *string* $type 
+
+This method returns data as a binary string into a specified format.
+
+Following formats are allowed:
+
+| Parameter        | Type      | Description                       |
+|:-----------------|:----------|:----------------------------------|
+| null             | *string*  | A binary string, original format  |
+| gp3              | *string*  | A binary string, GP3 formatted    |
+| gp4              | *string*  | A binary string, GP4 formatted    |
+| gp5              | *string*  | A binary string, GP5 formatted    |
+| mid              | *string*  | A binary string, MIDI formatted   |
+| midi             | *string*  | A binary string, MIDI formatted   |
+
+__Example__
+
+```php
+// Instanciate a GP3 tab
+$tab = new PhpTabs('mytab.gp3');
+
+// Convert as GP3
+echo $tab->convert('gp3');
+
+// Convert as GP5
+echo $tab->convert('gp5');
+
+// Convert as MIDI
+echo $tab->convert('mid');
+
+// Render as original format
+// Should be equal as file_get_contents('mytab.gp3')
+echo $tab->convert();
+
+```
