@@ -63,7 +63,7 @@ Table of contents
     - [countMeasureHeaders()](#countmeasureheaders)
     - [getMeasureHeaders()](#getmeasureheaders)
     - [getMeasureHeader()](#getmeasureheaderindex)
-  - [Saving data](#savingdata)
+  - [Saving data](#saving-data)
     - [save()](#savefilename)
     - [dump()](#dumpformat)
     - [convert()](#converttype)
