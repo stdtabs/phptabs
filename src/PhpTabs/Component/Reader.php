@@ -50,8 +50,10 @@ class Reader
     // Bridge not found
     if (!($this->bridge instanceof ReaderInterface))
     {
-      $message = sprintf('No reader has been found for "%s" type of file'
-        , $file->getExtension());
+      $message = sprintf(
+        'No reader has been found for "%s" type of file',
+        $file->getExtension()
+      );
 
       $this->tablature->setError($message);
 
