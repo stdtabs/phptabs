@@ -2,8 +2,8 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Beat;
-use PhpTabs\Model\Chord;
+use PhpTabs\Music\Beat;
+use PhpTabs\Music\Chord;
 
 class GuitarPro5Chord extends AbstractReader
 {
@@ -11,7 +11,7 @@ class GuitarPro5Chord extends AbstractReader
    * Reads Chord informations
    * 
    * @param integer $strings
-   * @param \PhpTabs\Model\Beat $beat
+   * @param \PhpTabs\Music\Beat $beat
    */
   public function readChord($strings, Beat $beat)
   {

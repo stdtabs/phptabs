@@ -23,7 +23,7 @@ class ChannelRouter
   }
 
   /**
-   * @param \PhpTabs\Model\ChannelRoute $route
+   * @param \PhpTabs\Music\ChannelRoute $route
    */
   public function removeRoute(ChannelRoute $route)
   {
@@ -55,7 +55,7 @@ class ChannelRouter
   }
 
   /**
-   * @param \PhpTabs\Model\ChannelRoute $route
+   * @param \PhpTabs\Music\ChannelRoute $route
    * @param int $percussionChannel
    */
   public function configureRoutes(ChannelRoute $route, $percussionChannel)
@@ -112,7 +112,7 @@ class ChannelRouter
   }
 
   /**
-   * @param \PhpTabs\Model\ChannelRoute $channelRoute
+   * @param \PhpTabs\Music\ChannelRoute $channelRoute
    * 
    * @return array
    */
@@ -138,7 +138,7 @@ class ChannelRouter
   }
 
   /**
-   * @param \PhpTabs\Model\ChannelRoute $forRoute
+   * @param \PhpTabs\Music\ChannelRoute $forRoute
    * 
    * @return array
    */

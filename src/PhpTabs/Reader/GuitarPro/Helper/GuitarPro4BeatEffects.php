@@ -2,16 +2,16 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Beat;
-use PhpTabs\Model\NoteEffect;
+use PhpTabs\Music\Beat;
+use PhpTabs\Music\NoteEffect;
 
 class GuitarPro4BeatEffects extends AbstractReader
 {
   /**
    * Reads some beat effects
    * 
-   * @param \PhpTabs\Model\Beat $beat
-   * @param \PhpTabs\Model\NoteEffect $effect
+   * @param \PhpTabs\Music\Beat $beat
+   * @param \PhpTabs\Music\NoteEffect $effect
    */
   public function readBeatEffects(Beat $beat, NoteEffect $noteEffect)
   {

@@ -2,8 +2,8 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\MeasureHeader;
-use PhpTabs\Model\TimeSignature;
+use PhpTabs\Music\MeasureHeader;
+use PhpTabs\Music\TimeSignature;
 
 class GuitarPro5MeasureHeader extends AbstractReader
 {
@@ -11,7 +11,7 @@ class GuitarPro5MeasureHeader extends AbstractReader
    * Reads a mesure header
    * 
    * @param integer $number
-   * @param \PhpTabs\Model\TimeSignature $timeSignature
+   * @param \PhpTabs\Music\TimeSignature $timeSignature
    * @param integer $tempoValue
    * 
    * @return MeasureHeader

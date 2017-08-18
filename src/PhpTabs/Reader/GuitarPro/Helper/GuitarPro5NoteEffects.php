@@ -2,18 +2,18 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Duration;
-use PhpTabs\Model\EffectHarmonic;
-use PhpTabs\Model\EffectGrace;
-use PhpTabs\Model\NoteEffect;
-use PhpTabs\Model\Velocities;
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\EffectHarmonic;
+use PhpTabs\Music\EffectGrace;
+use PhpTabs\Music\NoteEffect;
+use PhpTabs\Music\Velocities;
 
 class GuitarPro5NoteEffects extends AbstractReader
 {
   /**
    * Reads note effects
    * 
-   * @param \PhpTabs\Model\NoteEffect $noteEffect
+   * @param \PhpTabs\Music\NoteEffect $noteEffect
    */
   public function readNoteEffects(NoteEffect $noteEffect)
   {
@@ -61,7 +61,7 @@ class GuitarPro5NoteEffects extends AbstractReader
   /**
    * Reads an artificial harmonic
    * 
-   * @param \PhpTabs\Model\NoteEffect $effect
+   * @param \PhpTabs\Music\NoteEffect $effect
    */
   private function readArtificialHarmonic(NoteEffect $effect)
   {
@@ -101,7 +101,7 @@ class GuitarPro5NoteEffects extends AbstractReader
   /**
    * Reads EffectGrace
    * 
-   * @param \PhpTabs\Model\NoteEffect $effect
+   * @param \PhpTabs\Music\NoteEffect $effect
    */
   private function readGrace(NoteEffect $effect)
   {

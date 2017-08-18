@@ -2,16 +2,16 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Song;
-use PhpTabs\Model\Track;
-use PhpTabs\Model\TabString;
+use PhpTabs\Music\Song;
+use PhpTabs\Music\Track;
+use PhpTabs\Music\TabString;
 
 class GuitarPro3Track extends AbstractReader
 {
   /**
    * Reads track informations
    * 
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * @param integer $number
    * @param array $channels An array of Channel objects
    * 

@@ -2,14 +2,14 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Song;
+use PhpTabs\Music\Song;
 
 class GuitarPro3RepeatAlternative extends AbstractReader
 {
   /**
    * Parses repeat alternative
    * 
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * @param integer $measure
    * 
    * @return integer Number of repeat alternatives

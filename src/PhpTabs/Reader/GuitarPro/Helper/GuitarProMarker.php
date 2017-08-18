@@ -2,7 +2,7 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Marker;
+use PhpTabs\Music\Marker;
 
 class GuitarProMarker extends AbstractReader
 {
@@ -11,7 +11,7 @@ class GuitarProMarker extends AbstractReader
    * 
    * @param integer $measure
    *
-   * @return \PhpTabs\Model\Marker
+   * @return \PhpTabs\Music\Marker
    */
   public function readMarker($measure)
   {

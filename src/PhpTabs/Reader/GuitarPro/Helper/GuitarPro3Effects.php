@@ -3,18 +3,18 @@
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
-use PhpTabs\Model\EffectBend;
-use PhpTabs\Model\EffectGrace;
-use PhpTabs\Model\EffectTremoloBar;
-use PhpTabs\Model\NoteEffect;
-use PhpTabs\Model\Velocities;
+use PhpTabs\Music\EffectBend;
+use PhpTabs\Music\EffectGrace;
+use PhpTabs\Music\EffectTremoloBar;
+use PhpTabs\Music\NoteEffect;
+use PhpTabs\Music\Velocities;
 
 class GuitarPro3Effects extends AbstractReader
 {
   /**
    * Reads a note effect
    * 
-   * @param \PhpTabs\Model\NoteEffect $noteEffect
+   * @param \PhpTabs\Music\NoteEffect $noteEffect
    */
   public function readNoteEffects(NoteEffect $effect)
   {
@@ -37,7 +37,7 @@ class GuitarPro3Effects extends AbstractReader
   /**
    * Reads bend
    *
-   * @param \PhpTabs\Model\NoteEffect $effect
+   * @param \PhpTabs\Music\NoteEffect $effect
    */
   public function readBend(NoteEffect $effect)
   {
@@ -65,7 +65,7 @@ class GuitarPro3Effects extends AbstractReader
   /**
    * Reads grace
    * 
-   * @param \PhpTabs\Model\NoteEffect $effect
+   * @param \PhpTabs\Music\NoteEffect $effect
    */
   private function readGrace(NoteEffect $effect)
   {
@@ -101,7 +101,7 @@ class GuitarPro3Effects extends AbstractReader
   /**
    * Reads tremolo bar
    * 
-   * @param \PhpTabs\Model\NoteEffect $noteEffect
+   * @param \PhpTabs\Music\NoteEffect $noteEffect
    */
   public function readTremoloBar(NoteEffect $noteEffect)
   {

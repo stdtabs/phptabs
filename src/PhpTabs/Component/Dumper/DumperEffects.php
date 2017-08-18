@@ -5,7 +5,7 @@ namespace PhpTabs\Component\Dumper;
 abstract class DumperEffects
 {
   /**
-   * @param \PhpTabs\Model\NoteEffect $effect
+   * @param \PhpTabs\Music\NoteEffect $effect
    * 
    * @return array
    */
@@ -36,7 +36,7 @@ abstract class DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\EffectBend $effect
+   * @param \PhpTabs\Music\EffectBend $effect
    * 
    * @return array
    */
@@ -46,7 +46,7 @@ abstract class DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\EffectGrace $effect
+   * @param \PhpTabs\Music\EffectGrace $effect
    * 
    * @return array
    */
@@ -74,7 +74,7 @@ abstract class DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\EffectHarmonic $effect
+   * @param \PhpTabs\Music\EffectHarmonic $effect
    * 
    * @return array
    */
@@ -92,7 +92,7 @@ abstract class DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\EffectTrill $effect
+   * @param \PhpTabs\Music\EffectTrill $effect
    * 
    * @return array
    */
@@ -105,7 +105,7 @@ abstract class DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\EffectTremoloPicking $effect
+   * @param \PhpTabs\Music\EffectTremoloPicking $effect
    * 
    * @return array
    */

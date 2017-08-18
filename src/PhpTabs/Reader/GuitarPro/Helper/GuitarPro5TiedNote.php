@@ -2,13 +2,13 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Track;
+use PhpTabs\Music\Track;
 
 class GuitarPro5TiedNote extends AbstractReader
 {
   /**
    * @param integer $string String on which note has started
-   * @param \PhpTabs\Model\Track $track
+   * @param \PhpTabs\Music\Track $track
    *
    * @return integer tied note value
    */

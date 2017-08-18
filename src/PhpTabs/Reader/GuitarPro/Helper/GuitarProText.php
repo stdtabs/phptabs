@@ -2,15 +2,15 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Beat;
-use PhpTabs\Model\Text;
+use PhpTabs\Music\Beat;
+use PhpTabs\Music\Text;
 
 class GuitarProText extends AbstractReader
 {
   /**
    * Reads some text
    * 
-   * @param \PhpTabs\Model\Beat $beat
+   * @param \PhpTabs\Music\Beat $beat
    */
   public function readText(Beat $beat)
   {

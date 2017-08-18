@@ -2,11 +2,11 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Beat;
-use PhpTabs\Model\Measure;
-use PhpTabs\Model\NoteEffect;
-use PhpTabs\Model\Tempo;
-use PhpTabs\Model\Track;
+use PhpTabs\Music\Beat;
+use PhpTabs\Music\Measure;
+use PhpTabs\Music\NoteEffect;
+use PhpTabs\Music\Tempo;
+use PhpTabs\Music\Track;
 
 class GuitarPro3Beat extends AbstractReader
 {
@@ -14,9 +14,9 @@ class GuitarPro3Beat extends AbstractReader
    * Reads some Beat informations
    * 
    * @param integer $start
-   * @param \PhpTabs\Model\Measure $measure
-   * @param \PhpTabs\Model\Track $track
-   * @param \PhpTabs\Model\Tempo $tempo
+   * @param \PhpTabs\Music\Measure $measure
+   * @param \PhpTabs\Music\Track $track
+   * @param \PhpTabs\Music\Tempo $tempo
    * 
    * @return integer $time duration time
    */

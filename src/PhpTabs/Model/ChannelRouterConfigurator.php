@@ -2,12 +2,14 @@
 
 namespace PhpTabs\Model;
 
+use PhpTabs\Music\Channel;
+
 class ChannelRouterConfigurator
 {
   private $router;
 
   /**
-   * @param \PhpTabs\Model\ChannelRouter $router
+   * @param \PhpTabs\Music\ChannelRouter $router
    */
   public function __construct(ChannelRouter $router)
   {
@@ -38,7 +40,7 @@ class ChannelRouterConfigurator
   }
 
   /**
-   * @param \PhpTabs\Model\Channel $channel
+   * @param \PhpTabs\Music\Channel $channel
    * @param int $key
    * 
    * @return int
@@ -56,10 +58,10 @@ class ChannelRouterConfigurator
   }
 
   /**
-   * @param \PhpTabs\Model\Channel $channel
+   * @param \PhpTabs\Music\Channel $channel
    * @param int $key
    *
-   * @return \PhpTabs\Model\ChannelParameter
+   * @return \PhpTabs\Music\ChannelParameter
    */
   private function findChannelParameter(Channel $channel, $key)
   {

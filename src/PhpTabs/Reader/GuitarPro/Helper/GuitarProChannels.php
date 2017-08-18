@@ -2,7 +2,7 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Channel;
+use PhpTabs\Music\Channel;
 
 class GuitarProChannels extends AbstractReader
 {

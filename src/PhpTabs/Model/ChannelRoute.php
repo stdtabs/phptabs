@@ -30,7 +30,7 @@ class ChannelRoute
   }
 
   /**
-   * @return \PhpTabs\Model\Channel
+   * @return \PhpTabs\Music\Channel
    */
   public function getChannel1()
   {
@@ -38,7 +38,7 @@ class ChannelRoute
   }
 
   /**
-   * @param \PhpTabs\Model\Channel $channel1
+   * @param \PhpTabs\Music\Channel $channel1
    */
   public function setChannel1($channel1)
   {
@@ -46,7 +46,7 @@ class ChannelRoute
   }
 
   /**
-   * @return \PhpTabs\Model\Channel
+   * @return \PhpTabs\Music\Channel
    */
   public function getChannel2()
   {
@@ -54,7 +54,7 @@ class ChannelRoute
   }
 
   /**
-   * @param \PhpTabs\Model\Channel $channel2
+   * @param \PhpTabs\Music\Channel $channel2
    */
   public function setChannel2($channel2)
   {

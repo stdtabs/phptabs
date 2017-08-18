@@ -3,27 +3,27 @@
 namespace PhpTabs\Writer\GuitarPro;
 
 use Exception;
-use PhpTabs\Model\Beat;
-use PhpTabs\Model\Channel;
-use PhpTabs\Model\Color;
-use PhpTabs\Model\DivisionType;
-use PhpTabs\Model\Duration;
-use PhpTabs\Model\EffectBend;
-use PhpTabs\Model\EffectGrace;
-use PhpTabs\Model\EffectHarmonic;
-use PhpTabs\Model\Marker;
-use PhpTabs\Model\Measure;
-use PhpTabs\Model\MeasureHeader;
+use PhpTabs\Music\Beat;
+use PhpTabs\Music\Channel;
+use PhpTabs\Music\Color;
+use PhpTabs\Music\DivisionType;
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\EffectBend;
+use PhpTabs\Music\EffectGrace;
+use PhpTabs\Music\EffectHarmonic;
+use PhpTabs\Music\Marker;
+use PhpTabs\Music\Measure;
+use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Model\MeasureVoiceJoiner;
-use PhpTabs\Model\NoteEffect;
-use PhpTabs\Model\Note;
-use PhpTabs\Model\Song;
-use PhpTabs\Model\Stroke;
-use PhpTabs\Model\Tempo;
-use PhpTabs\Model\Text;
-use PhpTabs\Model\TimeSignature;
-use PhpTabs\Model\Track;
-use PhpTabs\Model\Velocities;
+use PhpTabs\Music\NoteEffect;
+use PhpTabs\Music\Note;
+use PhpTabs\Music\Song;
+use PhpTabs\Music\Stroke;
+use PhpTabs\Music\Tempo;
+use PhpTabs\Music\Text;
+use PhpTabs\Music\TimeSignature;
+use PhpTabs\Music\Track;
+use PhpTabs\Music\Velocities;
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface as GprInterface;
 
 class GuitarPro3Writer extends GuitarProWriterBase
@@ -32,7 +32,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   const VERSION = 'FICHIER GUITAR PRO v3.00';
 
   /**
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    */
   public function __construct(Song $song)
   {
@@ -61,7 +61,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * 
    * @return array
    */
@@ -101,7 +101,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Duration $duration
+   * @param \PhpTabs\Music\Duration $duration
    * 
    * @return int
    */
@@ -136,8 +136,8 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Beat $beat
-   * @param \PhpTabs\Model\Measure $measure
+   * @param \PhpTabs\Music\Beat $beat
+   * @param \PhpTabs\Music\Measure $measure
    * @param bool $changeTempo
    */
   private function writeBeat(Beat $beat, Measure $measure, $changeTempo)
@@ -250,8 +250,8 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Beat $beat
-   * @param \PhpTabs\Model\NoteEffect $noteEffect
+   * @param \PhpTabs\Music\Beat $beat
+   * @param \PhpTabs\Music\NoteEffect $noteEffect
    */
   private function writeBeatEffects(Beat $beat, NoteEffect $noteEffect)
   {
@@ -327,7 +327,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\EffectBend $bend
+   * @param \PhpTabs\Music\EffectBend $bend
    */
   private function writeBend(EffectBend $bend)
   {
@@ -349,7 +349,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    */
   private function writeChannels(Song $song)
   {
@@ -368,7 +368,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Color $color
+   * @param \PhpTabs\Music\Color $color
    */
   private function writeColor(Color $color)
   {
@@ -379,7 +379,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\EffectGrace $grace
+   * @param \PhpTabs\Music\EffectGrace $grace
    */
   private function writeGrace(EffectGrace $grace)
   {
@@ -417,7 +417,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    */
   private function writeInformations(Song $song)
   {
@@ -439,7 +439,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Marker $marker
+   * @param \PhpTabs\Music\Marker $marker
    */
   private function writeMarker(Marker $marker)
   {
@@ -448,7 +448,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Measure $measure
+   * @param \PhpTabs\Music\Measure $measure
    * @param bool $changeTempo
    */
   private function writeMeasure(Measure $srcMeasure, $changeTempo)
@@ -466,8 +466,8 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\MeasureHeader $measure
-   * @param \PhpTabs\Model\TimeSignature $timeSignature
+   * @param \PhpTabs\Music\MeasureHeader $measure
+   * @param \PhpTabs\Music\TimeSignature $timeSignature
    */
   private function writeMeasureHeader(MeasureHeader $measure, TimeSignature $timeSignature)
   {
@@ -522,7 +522,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    */
   private function writeMeasureHeaders(Song $song)
   {
@@ -542,8 +542,8 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Song $song
-   * @param \PhpTabs\Model\Tempo $tempo
+   * @param \PhpTabs\Music\Song $song
+   * @param \PhpTabs\Music\Tempo $tempo
    */
   private function writeMeasures(Song $song, Tempo $tempo)
   {
@@ -563,7 +563,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Note $note
+   * @param \PhpTabs\Music\Note $note
    */
   private function writeNote(Note $note)
   {
@@ -615,7 +615,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\NoteEffect $effect
+   * @param \PhpTabs\Music\NoteEffect $effect
    */
   private function writeNoteEffects(NoteEffect $effect)
   {
@@ -692,7 +692,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Stroke $stroke
+   * @param \PhpTabs\Music\Stroke $stroke
    * 
    * @return int
    */
@@ -727,7 +727,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Text $text
+   * @param \PhpTabs\Music\Text $text
    */
   private function writeText(Text $text)
   {
@@ -735,7 +735,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Track $track
+   * @param \PhpTabs\Music\Track $track
    */
   private function writeTrack(Track $track)
   {
@@ -769,7 +769,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    */
   private function writeTracks(Song $song)
   {

@@ -3,17 +3,17 @@
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
-use PhpTabs\Model\Duration;
-use PhpTabs\Model\EffectTremoloBar;
-use PhpTabs\Model\EffectTremoloPicking;
-use PhpTabs\Model\NoteEffect;
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\EffectTremoloBar;
+use PhpTabs\Music\EffectTremoloPicking;
+use PhpTabs\Music\NoteEffect;
 
 class GuitarPro4Effects extends AbstractReader
 {
   /**
    * Reads tremolo bar
    * 
-   * @param \PhpTabs\Model\NoteEffect $noteEffect
+   * @param \PhpTabs\Music\NoteEffect $noteEffect
    */
   public function readTremoloBar(NoteEffect $effect)
   {
@@ -43,7 +43,7 @@ class GuitarPro4Effects extends AbstractReader
   /**
    * Reads tremolo picking
    * 
-   * @param \PhpTabs\Model\NoteEffect $noteEffect
+   * @param \PhpTabs\Music\NoteEffect $noteEffect
    */
   public function readTremoloPicking(NoteEffect $noteEffect)
   {

@@ -6,7 +6,7 @@ use PhpTabs\Component\WriterInterface;
 use PhpTabs\Model\ChannelRouter;
 use PhpTabs\Model\ChannelRouterConfigurator;
 use PhpTabs\Model\Helper;
-use PhpTabs\Model\Song;
+use PhpTabs\Music\Song;
 
 abstract class GuitarProWriterBase extends Helper implements WriterInterface
 {
@@ -28,7 +28,7 @@ abstract class GuitarProWriterBase extends Helper implements WriterInterface
   /**
    * @param int $channelId
    *
-   * @return \PhpTabs\Model\ChannelRoute
+   * @return \PhpTabs\Music\ChannelRoute
    */
   protected function getChannelRoute($channelId)
   {
@@ -45,7 +45,7 @@ abstract class GuitarProWriterBase extends Helper implements WriterInterface
   }
 
   /**
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    */
   protected function configureChannelRouter(Song $song)
   {

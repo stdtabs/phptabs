@@ -2,13 +2,13 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Beat;
-use PhpTabs\Model\Stroke;
+use PhpTabs\Music\Beat;
+use PhpTabs\Music\Stroke;
 
 class GuitarPro5Stroke extends AbstractReader
 {
   /**
-   * @param \PhpTabs\Model\Beat $beat
+   * @param \PhpTabs\Music\Beat $beat
    */
   public function readStroke(Beat $beat)
   {

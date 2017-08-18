@@ -2,12 +2,14 @@
 
 namespace PhpTabs\Model;
 
+use PhpTabs\Music\Measure;
+
 class MeasureVoiceJoiner
 {
   private $measure;
 
   /**
-   * @param \PhpTabs\Model\Measure $measure
+   * @param \PhpTabs\Music\Measure $measure
    */
   public function __construct(Measure $measure)
   {
@@ -16,7 +18,7 @@ class MeasureVoiceJoiner
   }
 
   /**
-   * @return \PhpTabs\Model\Measure
+   * @return \PhpTabs\Music\Measure
    */
   public function process()
   {

@@ -40,21 +40,21 @@ class GuitarPro3ReaderTest extends PHPUnit_Framework_TestCase
 
     # Tracks
     $this->assertEquals(2, $this->tablature->countTracks());
-    $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\Track', $this->tablature->getTracks());
+    $this->assertContainsOnlyInstancesOf('PhpTabs\\Music\\Track', $this->tablature->getTracks());
     $this->assertEquals(null, $this->tablature->getTrack(42));
-    $this->assertInstanceOf('PhpTabs\\Model\\Track', $this->tablature->getTrack(0));
+    $this->assertInstanceOf('PhpTabs\\Music\\Track', $this->tablature->getTrack(0));
 
     # Channels
     $this->assertEquals(2, $this->tablature->countChannels());
-    $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\Channel', $this->tablature->getChannels());
+    $this->assertContainsOnlyInstancesOf('PhpTabs\\Music\\Channel', $this->tablature->getChannels());
     $this->assertEquals(null, $this->tablature->getChannel(42));
-    $this->assertInstanceOf('PhpTabs\\Model\\Channel', $this->tablature->getChannel(0));
+    $this->assertInstanceOf('PhpTabs\\Music\\Channel', $this->tablature->getChannel(0));
 
     # MeasureHeaders
     $this->assertEquals(4, $this->tablature->countMeasureHeaders());
-    $this->assertContainsOnlyInstancesOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeaders());
+    $this->assertContainsOnlyInstancesOf('PhpTabs\\Music\\MeasureHeader', $this->tablature->getMeasureHeaders());
     $this->assertEquals(null, $this->tablature->getMeasureHeader(42));
-    $this->assertInstanceOf('PhpTabs\\Model\\MeasureHeader', $this->tablature->getMeasureHeader(0));
+    $this->assertInstanceOf('PhpTabs\\Music\\MeasureHeader', $this->tablature->getMeasureHeader(0));
 
     # Instruments
     $this->assertEquals(2, $this->tablature->countInstruments());

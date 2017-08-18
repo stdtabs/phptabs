@@ -2,17 +2,17 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Duration;
-use PhpTabs\Model\Measure;
-use PhpTabs\Model\Song;
-use PhpTabs\Model\Tempo;
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\Measure;
+use PhpTabs\Music\Song;
+use PhpTabs\Music\Tempo;
 
 class GuitarPro5Measures extends AbstractReader
 {
   /**
    * Loops on mesures to read
    * 
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * @param integer $measures
    * @param integer $tracks
    * @param integer $tempoValue

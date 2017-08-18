@@ -2,7 +2,7 @@
 
 namespace PhpTabs\Reader\Midi;
 
-use PhpTabs\Model\TabString;
+use PhpTabs\Music\TabString;
 
 class MidiTrackTuningHelper
 {

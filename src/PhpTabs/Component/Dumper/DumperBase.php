@@ -134,8 +134,8 @@ abstract class DumperBase extends DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\Measure $measure
-   * @param \PhpTabs\Model\MeasureHeader $measureHeader
+   * @param \PhpTabs\Music\Measure $measure
+   * @param \PhpTabs\Music\MeasureHeader $measureHeader
    * 
    * @return array
    */
@@ -161,7 +161,7 @@ abstract class DumperBase extends DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\Beat $beat
+   * @param \PhpTabs\Music\Beat $beat
    * 
    * @return array
    */
@@ -189,7 +189,7 @@ abstract class DumperBase extends DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\Voice $voice
+   * @param \PhpTabs\Music\Voice $voice
    * 
    * @return array
    */
@@ -214,7 +214,7 @@ abstract class DumperBase extends DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\Duration $duration
+   * @param \PhpTabs\Music\Duration $duration
    * 
    * @return array
    */
@@ -232,7 +232,7 @@ abstract class DumperBase extends DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\Note $note
+   * @param \PhpTabs\Music\Note $note
    * 
    * @return array
    */
@@ -250,7 +250,7 @@ abstract class DumperBase extends DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\TabString $string
+   * @param \PhpTabs\Music\TabString $string
    * 
    * @return array
    */
@@ -263,7 +263,7 @@ abstract class DumperBase extends DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\MeasureHeader $header
+   * @param \PhpTabs\Music\MeasureHeader $header
    * 
    * @return array
    */
@@ -284,7 +284,7 @@ abstract class DumperBase extends DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\Chord $chord
+   * @param \PhpTabs\Music\Chord $chord
    * 
    * @return array
    */
@@ -313,7 +313,7 @@ abstract class DumperBase extends DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\TimeSignature $timeSignature
+   * @param \PhpTabs\Music\TimeSignature $timeSignature
    * 
    * @return array
    */
@@ -326,7 +326,7 @@ abstract class DumperBase extends DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\Marker $marker
+   * @param \PhpTabs\Music\Marker $marker
    * 
    * @return array
    */
@@ -344,7 +344,7 @@ abstract class DumperBase extends DumperEffects
   }
 
   /**
-   * @param \PhpTabs\Model\Text $text
+   * @param \PhpTabs\Music\Text $text
    * 
    * @return array
    */

@@ -2,14 +2,14 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Lyric;
+use PhpTabs\Music\Lyric;
 
 class GuitarProLyric extends AbstractReader
 {
   /**
    * Reads lyrics informations
    * 
-   * @return \PhpTabs\Model\Lyric
+   * @return \PhpTabs\Music\Lyric
    */
   public function readLyrics()
   {

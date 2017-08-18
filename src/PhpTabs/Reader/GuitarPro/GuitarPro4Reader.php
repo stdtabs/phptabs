@@ -6,15 +6,15 @@ use Exception;
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
-use PhpTabs\Model\Duration;
-use PhpTabs\Model\EffectGrace;
-use PhpTabs\Model\Lyric;
-use PhpTabs\Model\Measure;
-use PhpTabs\Model\MeasureHeader;
-use PhpTabs\Model\NoteEffect;
-use PhpTabs\Model\Song;
-use PhpTabs\Model\TimeSignature;
-use PhpTabs\Model\Velocities;
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\EffectGrace;
+use PhpTabs\Music\Lyric;
+use PhpTabs\Music\Measure;
+use PhpTabs\Music\MeasureHeader;
+use PhpTabs\Music\NoteEffect;
+use PhpTabs\Music\Song;
+use PhpTabs\Music\TimeSignature;
+use PhpTabs\Music\Velocities;
 
 class GuitarPro4Reader extends GuitarProReaderBase
 {
@@ -108,7 +108,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
   /**
    * Initializes Tablature with read Song
    *
-   * @param \PhpTabs\Model\Song $song as read from file
+   * @param \PhpTabs\Music\Song $song as read from file
    */
   private function setTablature(Song $song)
   {
@@ -128,7 +128,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
   /**
    * Reads GraceEffect
    * 
-   * @param \PhpTabs\Model\NoteEffect $effect
+   * @param \PhpTabs\Music\NoteEffect $effect
    */
   public function readGrace(NoteEffect $effect)
   {
@@ -164,7 +164,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
   /**
    * Loops on mesure headers to read
    * 
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    *
    * @param integer $count
    */
@@ -181,10 +181,10 @@ class GuitarPro4Reader extends GuitarProReaderBase
   /**
    * Loops on tracks to read
    * 
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * @param int $count
    * @param array $channels Current array of channels
-   * @param \PhpTabs\Model\Lyric $lyric
+   * @param \PhpTabs\Music\Lyric $lyric
    * @param integer $lyricTrack
    */
   private function readTracks(Song $song, $count, array $channels, Lyric $lyric, $lyricTrack)

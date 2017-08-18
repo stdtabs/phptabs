@@ -5,7 +5,7 @@ namespace PhpTabs\Reader\Midi;
 use Exception;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Log;
-use PhpTabs\Model\Song;
+use PhpTabs\Music\Song;
 
 abstract class MidiReaderBase implements MidiReaderInterface
 {

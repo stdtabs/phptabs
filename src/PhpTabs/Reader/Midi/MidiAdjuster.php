@@ -2,11 +2,11 @@
 
 namespace PhpTabs\Reader\Midi;
 
-use PhpTabs\Model\Beat;
-use PhpTabs\Model\Duration;
-use PhpTabs\Model\Measure;
-use PhpTabs\Model\Song;
-use PhpTabs\Model\Track;
+use PhpTabs\Music\Beat;
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\Measure;
+use PhpTabs\Music\Song;
+use PhpTabs\Music\Track;
 
 class MidiAdjuster
 {
@@ -14,7 +14,7 @@ class MidiAdjuster
   private $song;
 
   /**
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    */
   public function __construct(Song $song)
   {
@@ -23,7 +23,7 @@ class MidiAdjuster
   }
 	
   /**
-   * @return \PhpTabs\Model\Song
+   * @return \PhpTabs\Music\Song
    */
   public function adjustSong()
   {
@@ -37,7 +37,7 @@ class MidiAdjuster
   }
 	
   /**
-   * @param \PhpTabs\Model\Track $track
+   * @param \PhpTabs\Music\Track $track
    */
   private function adjustTrack(Track $track)
   {
@@ -49,7 +49,7 @@ class MidiAdjuster
   }
 
   /**
-   * @param \PhpTabs\Model\Measure $measure
+   * @param \PhpTabs\Music\Measure $measure
    */
   private function process(Measure $measure)
   {
@@ -59,7 +59,7 @@ class MidiAdjuster
   }
 
   /**
-   * @param \PhpTabs\Model\Measure $measure
+   * @param \PhpTabs\Music\Measure $measure
    */
   private function joinBeats(Measure $measure)
   {
@@ -149,7 +149,7 @@ class MidiAdjuster
   }
 
   /**
-   * @param \PhpTabs\Model\Measure $measure
+   * @param \PhpTabs\Music\Measure $measure
    */
   private function orderBeats(Measure $measure)
   {
@@ -172,7 +172,7 @@ class MidiAdjuster
   }
 
   /**
-   * @param \PhpTabs\Model\Measure $measure
+   * @param \PhpTabs\Music\Measure $measure
    */
   private function adjustBeatsStrings(Measure $measure)
   {
@@ -185,7 +185,7 @@ class MidiAdjuster
   }
 
   /**
-   * @param \PhpTabs\Model\Beat $beat
+   * @param \PhpTabs\Music\Beat $beat
    */
   private function adjustStrings(Beat $beat)
   {

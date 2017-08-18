@@ -3,9 +3,9 @@
 namespace PhpTabs\Component;
 
 use Exception;
-use PhpTabs\Model\Channel;
-use PhpTabs\Model\ChannelNames;
-use PhpTabs\Model\Song;
+use PhpTabs\Music\Channel;
+use PhpTabs\Music\ChannelNames;
+use PhpTabs\Music\Song;
 
 class Tablature
 {
@@ -14,7 +14,7 @@ class Tablature
   /** @var string An error message */
   private $error = '';
 
-  /** @var \PhpTabs\Model\Song*/
+  /** @var \PhpTabs\Music\Song*/
   private $song;
 
   /** @var string $format */
@@ -55,7 +55,7 @@ class Tablature
   /**
    * Sets Song wrapper
    *
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    */
   public function setSong(Song $song)
   {
@@ -65,7 +65,7 @@ class Tablature
   /**
    * Gets a Song
    *
-   * @return \PhpTabs\Model\Song
+   * @return \PhpTabs\Music\Song
    */
   public function getSong()
   {

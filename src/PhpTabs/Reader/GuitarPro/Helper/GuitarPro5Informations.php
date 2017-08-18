@@ -2,14 +2,14 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Song;
+use PhpTabs\Music\Song;
 
 class GuitarPro5Informations extends AbstractReader
 {
   /**
    * Reads meta informations about tablature
    * 
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    */
   public function readInformations(Song $song)
   {

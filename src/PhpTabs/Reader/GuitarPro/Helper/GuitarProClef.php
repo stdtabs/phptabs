@@ -2,14 +2,14 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Measure;
-use PhpTabs\Model\Track;
-use PhpTabs\Model\Song;
+use PhpTabs\Music\Measure;
+use PhpTabs\Music\Track;
+use PhpTabs\Music\Song;
 
 class GuitarProClef extends AbstractReader
 {
   /**
-   * @param \PhpTabs\Model\Track $track
+   * @param \PhpTabs\Music\Track $track
    *
    * @return integer Clef of $track
    */
@@ -32,7 +32,7 @@ class GuitarProClef extends AbstractReader
   }
 
   /**
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * @param integer $channelId
    *
    * @return boolean

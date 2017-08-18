@@ -7,21 +7,21 @@ use PhpTabs\Component\Config;
 use PhpTabs\Component\Log;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
-use PhpTabs\Model\Beat;
-use PhpTabs\Model\Channel;
+use PhpTabs\Music\Beat;
+use PhpTabs\Music\Channel;
 use PhpTabs\Model\ChannelRoute;
 use PhpTabs\Model\ChannelRouter;
-use PhpTabs\Model\Color;
-use PhpTabs\Model\Duration;
-use PhpTabs\Model\EffectBend;
+use PhpTabs\Music\Color;
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\EffectBend;
 use PhpTabs\Model\Helper;
-use PhpTabs\Model\Measure;
-use PhpTabs\Model\MeasureHeader;
-use PhpTabs\Model\Note;
-use PhpTabs\Model\Song;
-use PhpTabs\Model\Tempo;
-use PhpTabs\Model\TimeSignature;
-use PhpTabs\Model\Track;
+use PhpTabs\Music\Measure;
+use PhpTabs\Music\MeasureHeader;
+use PhpTabs\Music\Note;
+use PhpTabs\Music\Song;
+use PhpTabs\Music\Tempo;
+use PhpTabs\Music\TimeSignature;
+use PhpTabs\Music\Track;
 
 class MidiReader extends MidiReaderBase
 {
@@ -104,7 +104,7 @@ class MidiReader extends MidiReaderBase
   /**
    * Initializes Tablature with read Song
    * 
-   * @param \PhpTabs\Model\Song $song as read from file
+   * @param \PhpTabs\Music\Song $song as read from file
    */
   private function setTablature(Song $song)
   {
@@ -122,7 +122,7 @@ class MidiReader extends MidiReaderBase
    * -----------------------------------------------------------------*/
 
   /**
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    */
   private function adjust(Song $song)
   {
@@ -264,7 +264,7 @@ class MidiReader extends MidiReaderBase
   /**
    * @param mixed $tick
    * 
-   * @return \PhpTabs\Model\MeasureHeader
+   * @return \PhpTabs\Music\MeasureHeader
    */
   private function getHeader($tick)
   {
@@ -319,7 +319,7 @@ class MidiReader extends MidiReaderBase
   }
 
   /**
-   * @return \PhpTabs\Model\MeasureHeader
+   * @return \PhpTabs\Music\MeasureHeader
    */
   private function getLastHeader()
   {
@@ -332,10 +332,10 @@ class MidiReader extends MidiReaderBase
   }
 
   /**
-   * @param \PhpTabs\Model\Track $track
+   * @param \PhpTabs\Music\Track $track
    * @param mixed $tick
    * 
-   * @return \PhpTabs\Model\Measure
+   * @return \PhpTabs\Music\Measure
    */
   private function getMeasure(Track $track, $tick)
   {
@@ -391,7 +391,7 @@ class MidiReader extends MidiReaderBase
   /**
    * @param integer $channel
    * 
-   * @return \PhpTabs\Model\Channel
+   * @return \PhpTabs\Music\Channel
    */
   public function getTempChannel($channel)
   {
@@ -411,11 +411,11 @@ class MidiReader extends MidiReaderBase
 
   /**
    * @param integer $track
-   * @param \PhpTabs\Model\Channel $channel
+   * @param \PhpTabs\Music\Channel $channel
    * @param mixed $value
    * @param bool $purge
    * 
-   * @return \PhpTabs\Model\Note
+   * @return \PhpTabs\Music\Note
    */
   private function getTempNote($track, $channel, $value, $purge)
   {
@@ -612,7 +612,7 @@ class MidiReader extends MidiReaderBase
   /**
    * @param int $number
    * 
-   * @return \PhpTabs\Model\Track
+   * @return \PhpTabs\Music\Track
    */
   private function getTrack($number)
   {
@@ -727,7 +727,7 @@ class MidiReader extends MidiReaderBase
   }
 
   /**
-   * @param \PhpTabs\Model\Note $note
+   * @param \PhpTabs\Music\Note $note
    * @param array $pitchBends
    */
   private function makeNoteEffect(Note $note, array $pitchBends)

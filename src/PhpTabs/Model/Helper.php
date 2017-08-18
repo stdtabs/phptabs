@@ -2,6 +2,8 @@
 
 namespace PhpTabs\Model;
 
+use PhpTabs\Music\Song;
+
 /**
  * @uses ChannelNames
  * @uses Song
@@ -58,7 +60,7 @@ class Helper
   }
 
   /**
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * @param int $channelId
    *
    * @return bool

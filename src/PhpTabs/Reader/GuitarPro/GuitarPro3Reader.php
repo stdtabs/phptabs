@@ -6,9 +6,9 @@ use Exception;
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
-use PhpTabs\Model\MeasureHeader;
-use PhpTabs\Model\Song;
-use PhpTabs\Model\TimeSignature;
+use PhpTabs\Music\MeasureHeader;
+use PhpTabs\Music\Song;
+use PhpTabs\Music\TimeSignature;
 
 class GuitarPro3Reader extends GuitarProReaderBase
 {
@@ -97,7 +97,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
   /**
    * Initializes Tablature with read Song
    *
-   * @param \PhpTabs\Model\Song $song as read from file
+   * @param \PhpTabs\Music\Song $song as read from file
    */
   private function setTablature(Song $song)
   {
@@ -117,7 +117,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
   /**
    * Loops on mesure headers to read
    * 
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * @param integer $count
    */
   private function readMeasureHeaders(Song $song, $count)
@@ -135,7 +135,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
   /**
    * Loops on tracks to read
    * 
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * @param int $count
    * @param array $channels Current array of channels
    */

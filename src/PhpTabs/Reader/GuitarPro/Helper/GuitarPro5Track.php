@@ -2,22 +2,22 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Lyric;
-use PhpTabs\Model\Song;
-use PhpTabs\Model\TabString;
-use PhpTabs\Model\Track;
+use PhpTabs\Music\Lyric;
+use PhpTabs\Music\Song;
+use PhpTabs\Music\TabString;
+use PhpTabs\Music\Track;
 
 class GuitarPro5Track extends AbstractReader
 {
   /**
    * Reads track informations
    *
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * @param integer $number
    * @param array $channels an array of Channel objects
-   * @param \PhpTabs\Model\Lyric $lyrics
+   * @param \PhpTabs\Music\Lyric $lyrics
    *
-   * @return \PhpTabs\Model\Track
+   * @return \PhpTabs\Music\Track
    */
   public function readTrack(Song $song, $number, array $channels = [], Lyric $lyrics)
   {

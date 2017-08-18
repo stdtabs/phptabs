@@ -6,7 +6,7 @@ use Exception;
 
 use PHPUnit_Framework_TestCase;
 use PhpTabs\Component\Autoloader;
-use PhpTabs\Model\MeasureHeader;
+use PhpTabs\Music\MeasureHeader;
 
 /**
  * Tests Autoloader component
@@ -18,6 +18,6 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
   {
     Autoloader::register();
     
-    $this->assertInstanceOf('PhpTabs\\Model\\MeasureHeader', new MeasureHeader());
+    $this->assertInstanceOf('PhpTabs\\Music\\MeasureHeader', new MeasureHeader());
   }
 }

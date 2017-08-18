@@ -2,19 +2,19 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Channel;
-use PhpTabs\Model\ChannelNames;
-use PhpTabs\Model\ChannelParameter;
-use PhpTabs\Model\Song;
-use PhpTabs\Model\Track;
+use PhpTabs\Music\Channel;
+use PhpTabs\Music\ChannelNames;
+use PhpTabs\Music\ChannelParameter;
+use PhpTabs\Music\Song;
+use PhpTabs\Music\Track;
 
 class GuitarProChannel extends AbstractReader
 {
   /**
    * Reads Channel informations
    * 
-   * @param \PhpTabs\Model\Song $song
-   * @param \PhpTabs\Model\Track $track
+   * @param \PhpTabs\Music\Song $song
+   * @param \PhpTabs\Music\Track $track
    * @param array $channels
    */
   public function readChannel(Song $song, Track $track, array $channels)
@@ -71,8 +71,8 @@ class GuitarProChannel extends AbstractReader
   /**
    * Creates a channel name with a program
    * 
-   * @param \PhpTabs\Model\Song $song
-   * @param \PhpTabs\Model\Channel $channel
+   * @param \PhpTabs\Music\Song $song
+   * @param \PhpTabs\Music\Channel $channel
    *
    * @return string a new channel name
    */
@@ -91,7 +91,7 @@ class GuitarProChannel extends AbstractReader
   /**
    * Creates a channel
    * 
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    *
    * @return string a generated channel name
    */
@@ -103,7 +103,7 @@ class GuitarProChannel extends AbstractReader
   /**
    * Generates a channel name
    * 
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * @param string $prefix
    *
    * @return string channel name
@@ -130,7 +130,7 @@ class GuitarProChannel extends AbstractReader
   /**
    * Checks if a channel is still defined
    *
-   * @param \PhpTabs\Model\Song $song
+   * @param \PhpTabs\Music\Song $song
    * @param string $name
    *
    * @return boolean Result of the search

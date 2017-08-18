@@ -2,17 +2,17 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Duration;
-use PhpTabs\Model\EffectHarmonic;
-use PhpTabs\Model\EffectTrill;
-use PhpTabs\Model\NoteEffect;
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\EffectHarmonic;
+use PhpTabs\Music\EffectTrill;
+use PhpTabs\Music\NoteEffect;
 
 class GuitarPro4NoteEffects extends AbstractReader
 {
   /**
    * Reads NoteEffect
    * 
-   * @param \PhpTabs\Model\NoteEffect $noteEffect
+   * @param \PhpTabs\Music\NoteEffect $noteEffect
    */
   public function readNoteEffects(NoteEffect $noteEffect)
   {
@@ -57,7 +57,7 @@ class GuitarPro4NoteEffects extends AbstractReader
   }
 
   /**
-   * @param \PhpTabs\Model\NoteEffect $noteEffect
+   * @param \PhpTabs\Music\NoteEffect $noteEffect
    */
   public function readTrill(NoteEffect $noteEffect)
   {
@@ -85,7 +85,7 @@ class GuitarPro4NoteEffects extends AbstractReader
   }
 
   /**
-   * @param \PhpTabs\Model\NoteEffect $noteEffect
+   * @param \PhpTabs\Music\NoteEffect $noteEffect
    */
   private function readHarmonic(NoteEffect $noteEffect)
   {

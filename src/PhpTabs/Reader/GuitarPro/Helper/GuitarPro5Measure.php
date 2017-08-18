@@ -2,18 +2,18 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Measure;
-use PhpTabs\Model\Tempo;
-use PhpTabs\Model\Track;
+use PhpTabs\Music\Measure;
+use PhpTabs\Music\Tempo;
+use PhpTabs\Music\Track;
 
 class GuitarPro5Measure extends AbstractReader
 {
   /**
    * Reads a Measure
    * 
-   * @param \PhpTabs\Model\Measure $measure
-   * @param \PhpTabs\Model\Track $track
-   * @param \PhpTabs\Model\Tempo $tempo
+   * @param \PhpTabs\Music\Measure $measure
+   * @param \PhpTabs\Music\Track $track
+   * @param \PhpTabs\Music\Tempo $tempo
    */
   public function readMeasure(Measure $measure, Track $track, Tempo $tempo)
   {

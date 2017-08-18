@@ -2,14 +2,14 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Color;
+use PhpTabs\Music\Color;
 
 class GuitarProColor extends AbstractReader
 {
   /**
    * Reads color informations
    * 
-   * @param \PhpTabs\Model\Color $color
+   * @param \PhpTabs\Music\Color $color
    */
   public function readColor(Color $color)
   {

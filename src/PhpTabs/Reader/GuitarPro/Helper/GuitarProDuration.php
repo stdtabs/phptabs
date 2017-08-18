@@ -2,7 +2,7 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Duration;
+use PhpTabs\Music\Duration;
 
 class GuitarProDuration extends AbstractReader
 {
@@ -11,7 +11,7 @@ class GuitarProDuration extends AbstractReader
    *
    * @param byte $flags unsigned bytes
    *
-   * @return \PhpTabs\Model\Duration
+   * @return \PhpTabs\Music\Duration
    */
   public function readDuration($flags)
   {

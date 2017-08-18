@@ -2,22 +2,22 @@
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Model\Note;
-use PhpTabs\Model\NoteEffect;
-use PhpTabs\Model\TabString;
-use PhpTabs\Model\Track;
-use PhpTabs\Model\Velocities;
+use PhpTabs\Music\Note;
+use PhpTabs\Music\NoteEffect;
+use PhpTabs\Music\TabString;
+use PhpTabs\Music\Track;
+use PhpTabs\Music\Velocities;
 
 class GuitarPro4Note extends AbstractReader
 {
   /**
    * Reads a note
    * 
-   * @param \PhpTabs\Model\TabString $string
-   * @param \PhpTabs\Model\Track $track
-   * @param \PhpTabs\Model\NoteEffect $effect
+   * @param \PhpTabs\Music\TabString $string
+   * @param \PhpTabs\Music\Track $track
+   * @param \PhpTabs\Music\NoteEffect $effect
    *
-   * @return \PhpTabs\Model\Note
+   * @return \PhpTabs\Music\Note
    */
   public function readNote(TabString $string, Track $track, NoteEffect $effect)
   {
