@@ -139,6 +139,17 @@ class Tablature
   }
 
   /**
+   * Render a song into a string
+   * 
+   * @param  string $format
+   * @return \PhpTabs\Component\RendererInterface
+   */
+  public function getRenderer($format = null)
+  {
+    return (new Renderer($this))->setFormat($format);
+  }
+
+  /**
    * Writes a song into a file
    * 
    * @param string $filename
