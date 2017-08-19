@@ -172,7 +172,7 @@ class VexTabTrackRenderer
     } elseif (($measure->getRepeatClose() > 0 || $this->isLastMeasure($measure))
       && $this->doubleRepeatOpen
     ) {
-      $this->staves          .= '=:|';
+      $this->staves          .= '=::';
       $this->doubleRepeatOpen = false;
     } else {
       // bugfix: time notation creates an offset which is not

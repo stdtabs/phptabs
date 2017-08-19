@@ -56,42 +56,4 @@ class Renderer
 
     return $this->bridge;
   }
-
-  /**
-   * Overloads with $bridge methods
-   * 
-   * @param  string $name method
-   * @param  array  $arguments
-   * @return mixed
-   */
-  public function __call($name, $arguments)
-  {
-    if (null === $this->bridge) {
-      throw new Exception('Bridge must be set.');
-    }
-
-    if (!method_exists($this->bridge, $name)) {
-
-      $message = sprintf(
-        'Renderer has no method called "%s"',
-        $name
-      );
-
-      trigger_error($message, E_USER_ERROR);
-    }
-
-    switch (count($arguments))
-    {
-      case 0: return $this->bridge->$name();
-      case 1: return $this->bridge->$name($arguments[0]);
-      case 2: return $this->bridge->$name($arguments[0], $arguments[1]);
-      default:
-        $message = sprintf('%s method does not support %d arguments',
-            __METHOD__,
-            count($arguments)
-        );
-
-        trigger_error($message, E_USER_ERROR);
-    }
-  }
 }

@@ -219,7 +219,7 @@ class BeatContext
    */
   private function getTied(Note $note)
   {
-    return $note->isTiedNote() && $this->getSlide($note) == ''
+    return $note->isTiedNote()
           ? 'T' : '';
   }
 
@@ -287,10 +287,9 @@ class BeatContext
    * 
    * @todo implement this feature
    * 
-   * @param  \PhpTabs\Music\Note $note
    * @return string
    */
-  private function getHarshVibrato(Note $note)
+  private function getHarshVibrato()
   {
     return '';
   }
