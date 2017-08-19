@@ -12,7 +12,7 @@ class File
   /** @var string Path to the file */
   private $path;
 
-  /** @var boolean|string error message */
+  /** @var bool|string error message */
   private $error = false;
 
   /** @var string dirname of the file */
@@ -27,8 +27,11 @@ class File
   /** @var int File size in bytes */
   private $size = 0;
 
-  /** @var A file system pointer resource */
-  private $handle;
+  /** @var int A file system pointer */
+  private $handle = 0;
+
+  /** @var string file content */
+  private $content = '';
 
   /**
    * @param string $path Path to the file
@@ -37,16 +40,16 @@ class File
   {
     $this->setPath($path);
 
-    if (!is_readable($path))
-    {
+    if (!is_readable($path)) {
+
       $message = sprintf('Path %s is not readable', $path);
-      
+
       return $this->setError($message);
     }
 
     # Is a file
-    if (!is_file($path))
-    {
+    if (!is_file($path)) {
+
       $message = sprintf('Path must be a file. "%s" given', $path);
 
       return $this->setError($message);
@@ -58,6 +61,7 @@ class File
     $this->setBasename(isset($informations['basename']) ? $informations['basename'] : '');
     $this->setExtension(isset($informations['extension']) ? $informations['extension'] : '');
     $this->setSize(filesize($path));
+    $this->content = file_get_contents($path);
   }
 
   /**
@@ -153,43 +157,26 @@ class File
    */
   public function getStream($bytes = 1, $offset = null)
   {
-    if (!$this->handle)
-    {
-      $this->handle = fopen($this->getPath(), "rb");
-    }
-    elseif (feof($this->handle))
-    {
-      return;
-    }
-    elseif ($this->getStreamPosition() + $bytes > $this->getSize())
-    {
+    if ($this->handle + $bytes > $this->getSize()) {
       throw new Exception('Pointer');
     }
 
-    $message = __METHOD__ . "($bytes): position:" . $this->getStreamPosition();
-
     # Nothing to read
-    if ($bytes <= 0)
-    {
-      Log::add($message, 'NOTICE');
-
+    if ($bytes <= 0) {
       return;
     }
 
     # Read $bytes with no offset
-    if (null === $offset)
-    {
-      $this->stream = fread($this->handle, $bytes);
+    if (null === $offset) {
 
-      Log::add($message . '|stream=' . $this->stream, 'NOTICE');
+      $this->stream = substr($this->content, $this->handle, $bytes);
+      $this->handle += $bytes;
 
       return $this->stream;
     }
 
-    Log::add($message, 'NOTICE');
-
     # Moves pointer to $offset
-    fread($this->handle, $offset);
+    $this->handle += $offset;
 
     return $this->getStream($bytes);
   }
@@ -197,16 +184,11 @@ class File
   /**
    * Returns the current position of the file read pointer
    *
-   * @return int|boolean Position of the pointer. Otherwise, false
+   * @return int Position of the pointer.
    */
   public function getStreamPosition()
   {
-    if (!$this->handle)
-    {
-      return false;
-    }
-
-    return ftell($this->handle);
+    return $this->handle;
   }
 
   /**
@@ -214,10 +196,7 @@ class File
    */
   public function closeStream()
   {
-    if ($this->handle)
-    {
-      fclose($this->handle);
-    }
+    $this->handle = 0;
   }
 
   /**
