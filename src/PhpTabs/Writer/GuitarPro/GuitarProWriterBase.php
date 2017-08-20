@@ -5,10 +5,9 @@ namespace PhpTabs\Writer\GuitarPro;
 use PhpTabs\Component\WriterInterface;
 use PhpTabs\Model\ChannelRouter;
 use PhpTabs\Model\ChannelRouterConfigurator;
-use PhpTabs\Model\Helper;
 use PhpTabs\Music\Song;
 
-abstract class GuitarProWriterBase extends Helper implements WriterInterface
+abstract class GuitarProWriterBase implements WriterInterface
 {
   private $content;
 

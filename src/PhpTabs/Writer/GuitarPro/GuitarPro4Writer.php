@@ -933,8 +933,11 @@ class GuitarPro4Writer extends GuitarProWriterBase
     $channel = $this->getChannelRoute($track->getChannelId());
 
     $flags = 0;
-    if ($this->isPercussionChannel($track->getSong(), $track->getChannelId()))
-    {
+    if ($track
+          ->getSong()
+          ->getChannelById($track->getChannelId())
+          ->isPercussionChannel()
+    ) {
       $flags |= 0x01;
     }
 

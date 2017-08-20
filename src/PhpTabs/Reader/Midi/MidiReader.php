@@ -14,7 +14,6 @@ use PhpTabs\Model\ChannelRouter;
 use PhpTabs\Music\Color;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\EffectBend;
-use PhpTabs\Model\Helper;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\Note;
@@ -252,13 +251,30 @@ class MidiReader extends MidiReaderBase
 
       if ($trackChannel !== null && $trackChannel->isPercussionChannel())
       {
-        $track->setStrings(Helper::createPercussionStrings(6)); 
+        $track->setStrings($this->createPercussionStrings(6)); 
       }
       else
       {
         $track->setStrings($this->getTrackTuningHelper($track->getNumber())->getStrings());
       }
     });
+  }
+
+  /**
+   * Create percussion strings
+   * 
+   * @param  int $stringCount
+   * @return array
+   */
+  private function createPercussionStrings($stringCount)
+  {
+    $strings = array();
+
+    for ($i = 1; $i <= $stringCount; $i++) {
+      $strings[] = new TabString($i, 0);
+    }
+
+    return $strings;
   }
 
   /**
