@@ -17,9 +17,11 @@ class VexTabRenderer extends VexTabRendererHelper
     'notation'           => 'true',
     'tablature'          => 'true',
     'measures_per_stave' => 1,
-    'scale'              => 0.8,
+    'scale'              => 1,
     'space'              => 16,
-    'width'              => 1024
+    'width'              => 520,
+    'tab-stems'          => 'false',
+    'tab-stem-direction' => 'auto'
   ];
 
   /**

@@ -18,14 +18,14 @@ class VexTabTrackRenderer
    * 
    * @var string
    */
-  private $staveTpl = "tabstave\n\tnotation=%s\n\ttablature=%s\n\tclef=%s";
+  private $staveTpl = "tabstave%s";
 
   /**
    * Global options template
    * 
    * @var string
    */
-  private $optionsTpl = "options tempo=%s width=%s scale=%s space=%s\n\n";
+  private $optionsTpl = "options%s\n\n";
 
   /**
    * Durations translation
@@ -94,6 +94,8 @@ class VexTabTrackRenderer
       );
     }
 
+    $this->options = new VexTabOptions($renderer);
+
     $this->renderer = $renderer;
     $this->track    = $track;
     $this->channel  = $track
@@ -145,10 +147,8 @@ class VexTabTrackRenderer
       $this->line++;
       $this->staves .= $measure->getNumber() > 1 
         ? sprintf(
-            "\n\n" . $this->staveTpl, 
-            $this->renderer->getOption('notation', 'true'),
-            $this->renderer->getOption('tablature', 'true'),
-            $this->getClefName($this->channel, $measure)
+            "\n\n{$this->staveTpl}", 
+            $this->options->render('stave')
           ) 
         : '';
 
@@ -202,28 +202,21 @@ class VexTabTrackRenderer
     $numerator    = $measure->getTimeSignature()->getNumerator();
     $denominator  = $measure->getTimeSignature()->getDenominator()->getValue();
 
+    $this->options->add('tempo', $measure->getTempo()->getValue());
+    $this->options->add('clef',  $this->getClefName($measure));
+
     $this->staves = sprintf(
       $this->optionsTpl,
-      $measure->getTempo()->getValue(),
-      $this->renderer->getOption('width', 1024),
-      $this->renderer->getOption('scale', 0.8),
-      $this->renderer->getOption('space', 16)
+      $this->options->render('globals')
     );
 
     // stave config
     $this->staves .= sprintf(
       $this->staveTpl,
-      $this->renderer->getOption('notation', 'true'),
-      $this->renderer->getOption('tablature', 'true'),
-      $this->getClefName(
-        $measure->getTrack()->getSong()->getChannelById(
-          $measure->getTrack()->getChannelId()
-        ),
-        $measure
-      )
+      $this->options->render('stave')
     );
 
-    $this->staves .= "\n\ttime=$numerator/$denominator\n";
+    $this->staves .= " time=$numerator/$denominator\n";
   }
 
   /**
@@ -354,15 +347,14 @@ class VexTabTrackRenderer
   /**
    * Get corresponding clef name
    * 
-   * @param  \PhpTabs\Music\Channel $channel
    * @param  \PhpTabs\Music\Measure $measure
    * @return string
    * 
    * @throws \Exception if clef name does not exist
    */
-  private function getClefName(Channel $channel, Measure $measure)
+  private function getClefName(Measure $measure)
   {
-    if ($channel->isPercussionChannel()) {
+    if ($this->channel->isPercussionChannel()) {
       return 'percussion';
     }
 
