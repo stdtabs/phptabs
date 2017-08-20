@@ -7,12 +7,12 @@ use Exception;
 class Renderer
 {
   /** 
-   * @var PhpTabs\Component\Tablature
+   * @var \PhpTabs\Component\Tablature
    */
   private $tablature;
 
   /** 
-   * @var PhpTabs\Component\RendererInterface
+   * @var \PhpTabs\Component\RendererInterface
    */
   private $bridge;
 
@@ -28,7 +28,7 @@ class Renderer
   /**
    * Instanciates tablature container
    * 
-   * @param  PhpTabs\Component\Tablature $tablature
+   * @param  \PhpTabs\Component\Tablature $tablature
    */
   public function __construct(Tablature $tablature = null)
   {
@@ -39,6 +39,7 @@ class Renderer
    * Set renderer format
    * 
    * @param  string $format
+   * @return \PhpTabs\Component\RendererInterface
    */
   public function setFormat($format = null)
   {

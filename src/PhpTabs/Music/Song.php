@@ -143,8 +143,7 @@ class Song extends SongBase
   }
 
   /**
-   * @param int $channelId
-   *
+   * @param  int $channelId
    * @return \PhpTabs\Music\Channel
    */
   public function getChannelById($channelId)
