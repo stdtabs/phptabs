@@ -864,21 +864,17 @@ class GuitarPro4Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param string $comments
-   * 
+   * @param  string $comments
    * @return array
    */
   private function toCommentLines($comments)
   {
     $lines = array();
+    $line  = $comments;
 
-    $line = $comments;
-
-    while (strlen($line) > 127)
-    {
-      $subline = substr($line, 0, 127);
-      $lines[] = $subline;
-      $line = substr($line, 127);
+    while (strlen($line) > 127) {
+      $lines[] = substr($line, 0, 127);
+      $line    = substr($line, 127);
     }
 
     $lines[] = $line;
@@ -887,34 +883,25 @@ class GuitarPro4Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param \PhpTabs\Music\Stroke $stroke
-   * 
+   * @param  \PhpTabs\Music\Stroke $stroke
    * @return int
    */
   private function toStrokeValue(Stroke $stroke)
   {
-    if ($stroke->getValue() == Duration::SIXTY_FOURTH)
-    {
-      return 2;
+    switch ($stroke->getValue()) {
+      case Duration::SIXTY_FOURTH:
+        return 2;
+      case Duration::THIRTY_SECOND:
+        return 3;
+      case Duration::SIXTEENTH:
+        return 4;
+      case Duration::EIGHTH:
+        return 5;
+      case Duration::QUARTER:
+        return 6;
+      default:
+        return 2;
     }
-    if ($stroke->getValue() == Duration::THIRTY_SECOND)
-    {
-      return 3;
-    }
-    if ($stroke->getValue() == Duration::SIXTEENTH)
-    {
-      return 4;
-    }
-    if ($stroke->getValue() == Duration::EIGHTH)
-    {
-      return 5;
-    }
-    if ($stroke->getValue() == Duration::QUARTER)
-    {
-      return 6;
-    }
-
-    return 2;
   }
 
   /**
@@ -999,16 +986,11 @@ class GuitarPro4Writer extends GuitarProWriterBase
    */
   private function writeTremoloPicking(EffectTremoloPicking $effect)
   {
-    if ($effect->getDuration()->getValue() == Duration::EIGHTH)
-    {
+    if ($effect->getDuration()->getValue() == Duration::EIGHTH) {
       $this->writeUnsignedByte(1);
-    }
-    elseif ($effect->getDuration()->getValue() == Duration::SIXTEENTH)
-    {
+    } elseif ($effect->getDuration()->getValue() == Duration::SIXTEENTH) {
       $this->writeUnsignedByte(2);
-    }
-    elseif ($effect->getDuration()->getValue() == Duration::THIRTY_SECOND)
-    {
+    } elseif ($effect->getDuration()->getValue() == Duration::THIRTY_SECOND) {
       $this->writeUnsignedByte(3);
     }
   }
