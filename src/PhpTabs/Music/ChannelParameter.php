@@ -56,8 +56,6 @@ class ChannelParameter
    */
   public function __clone()
   {
-    $channelParameter = new ChannelParameter();
-    $channelParameter->copyFrom($this);
-    return $channelParameter;
+    return (new ChannelParameter())->copyFrom($this);
   }
 }
