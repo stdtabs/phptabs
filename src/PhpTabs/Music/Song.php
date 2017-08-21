@@ -4,7 +4,6 @@ namespace PhpTabs\Music;
 
 class Song extends SongBase
 {
-
   /**
    * @param \PhpTabs\Music\MeasureHeader $measureHeader
    */

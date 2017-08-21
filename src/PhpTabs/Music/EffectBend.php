@@ -36,6 +36,14 @@ class EffectBend
   }
 
   /**
+   * @return int
+   */
+  public function countPoints()
+  {
+    return count($this->points);
+  }
+
+  /**
    * @return \PhpTabs\Music\EffectBend
    */
   public function __clone()

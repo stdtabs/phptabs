@@ -13,9 +13,9 @@ class SongBase
   protected $writer;
   protected $transcriber;
   protected $comments;
-  protected $tracks = array();
+  protected $tracks         = array();
   protected $measureHeaders = array();
-  protected $channels = array();
+  protected $channels       = array();
 
   /**
    * @return string

@@ -7,12 +7,12 @@ class Lyric
   const REGEX = " ";
 
   private $from;
-  private $lyrics = array();
+  private $lyrics;
 
   public function __construct()
   {
-    $this->from = 1;
-    $this->lyrics = array();
+    $this->from   = 1;
+    $this->lyrics = [];
   }
 
   /**
@@ -40,7 +40,7 @@ class Lyric
   }
 
   /**
-   * @param array $lyrics
+   * @param string $lyrics
    */
   public function setLyrics($lyrics)
   {

@@ -128,18 +128,13 @@ class Measure
   }
 
   /**
-   * @param int $index
-   *
+   * @param  int $index
    * @return \PhpTabs\Music\Beat
    */
   public function getBeat($index)
   {
-    if ($index >= 0 && $index < $this->countBeats())
-    {
-      return $this->beats[$index];
-    }
-
-    return null;
+    return isset($this->beats[$index])
+         ? $this->beats[$index] : null;
   }
 
   /**
@@ -252,19 +247,21 @@ class Measure
   }
 
   /**
-   * @param int $start
+   * @param  int $start
    * @return \PhpTabs\Music\Beat
    */
   public function getBeatByStart($start)
   {
-    $beatCount = $this->countBeats();
-
-    for ($i = 0; $i < $beatCount; $i++)
-    {
-      if ($this->getBeat($i)->getStart() == $start)
-      {
-        return $this->getBeat($i);
+    $beat = array_reduce(
+      $this->beats,
+      function ($carry, $beat) use ($start) {
+        return $beat->getStart() == $start
+             ? $beat : $carry;
       }
+    );
+
+    if ($beat instanceof Beat) {
+      return $beat;
     }
 
     $beat = new Beat();

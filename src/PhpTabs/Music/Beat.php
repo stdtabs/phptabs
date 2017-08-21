@@ -24,11 +24,10 @@ class Beat
 
   public function __construct()
   {
-    $this->start = Duration::QUARTER_TIME;
+    $this->start  = Duration::QUARTER_TIME;
     $this->stroke = new Stroke();
     $this->voices = array();
-    for ($i = 0; $i < Beat::MAX_VOICES; $i++)
-    {
+    for ($i = 0; $i < Beat::MAX_VOICES; $i++) {
       $this->setVoice($i, new Voice($i));
     }
   }
@@ -71,26 +70,20 @@ class Beat
    */
   public function setVoice($index, Voice $voice)
   {
-    if ($index >= 0)
-    {
+    if ($index >= 0) {
       $this->voices[$index] = $voice;
       $this->voices[$index]->setBeat($this);
     }
   }
 
   /**
-   * @param int $index
-   *
+   * @param  int $index
    * @return \PhpTabs\Music\Voice
    */
   public function getVoice($index)
   {
-    if ($index >= 0 && $index < count($this->voices))
-    {
-      return $this->voices[$index];
-    }
-
-    return null;
+    return isset($this->voices[$index])
+         ? $this->voices[$index] : null;
   }
 
   /**

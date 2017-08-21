@@ -169,12 +169,8 @@ class Voice
    */
   public function getNote($index)
   {
-    if ($index >= 0 && $index < $this->countNotes())
-    {
-      return $this->notes[$index];
-    }
-
-    return null;
+    return isset($this->notes[$index])
+         ? $this->notes[$index] : null;
   }
 
   /**

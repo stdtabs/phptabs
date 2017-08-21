@@ -23,11 +23,11 @@ class NoteEffect extends NoteEffectBase
   {
     parent::__construct();
 
-    $this->bend = null;
-    $this->harmonic = null;
-    $this->grace = null;
-    $this->trill = null;
-    $this->tremoloBar = null;
+    $this->bend           = null;
+    $this->harmonic       = null;
+    $this->grace          = null;
+    $this->trill          = null;
+    $this->tremoloBar     = null;
     $this->tremoloPicking = null;
   }
 
@@ -38,13 +38,12 @@ class NoteEffect extends NoteEffectBase
   {
     $this->deadNote = $deadNote;
 
-    if ($this->isDeadNote())
-    {
-      $this->bend = null;
-      $this->trill = null;
-      $this->slide = false;
-      $this->hammer = false;
-      $this->tremoloBar = null;
+    if ($this->isDeadNote()) {
+      $this->bend           = null;
+      $this->trill          = null;
+      $this->slide          = false;
+      $this->hammer         = false;
+      $this->tremoloBar     = null;
       $this->tremoloPicking = null;
     }
   }
@@ -56,9 +55,8 @@ class NoteEffect extends NoteEffectBase
   {
     $this->vibrato = $vibrato;
 
-    if ($this->isVibrato())
-    {
-      $this->trill = null;
+    if ($this->isVibrato()) {
+      $this->trill          = null;
       $this->tremoloPicking = null;
     }
   }
@@ -78,13 +76,12 @@ class NoteEffect extends NoteEffectBase
   {
     $this->bend = $bend;
 
-    if ($this->isBend())
-    {
-      $this->trill = null;
-      $this->deadNote = false;
-      $this->slide = false;
-      $this->hammer = false;
-      $this->tremoloBar = null;
+    if ($this->isBend()) {
+      $this->trill          = null;
+      $this->deadNote       = false;
+      $this->slide          = false;
+      $this->hammer         = false;
+      $this->tremoloBar     = null;
       $this->tremoloPicking = null;
     }
   }
@@ -104,13 +101,12 @@ class NoteEffect extends NoteEffectBase
   {
     $this->tremoloBar = $tremoloBar;
 
-    if ($this->isTremoloBar())
-    {
-      $this->bend = null;
-      $this->trill = null;
-      $this->deadNote = false;
-      $this->slide = false;
-      $this->hammer = false;
+    if ($this->isTremoloBar()) {
+      $this->bend           = null;
+      $this->trill          = null;
+      $this->deadNote       = false;
+      $this->slide          = false;
+      $this->hammer         = false;
       $this->tremoloPicking = null;
     }
   }
@@ -130,15 +126,14 @@ class NoteEffect extends NoteEffectBase
   {
     $this->trill = $trill;
 
-    if ($this->isTrill())
-    {
-      $this->bend = null;
-      $this->tremoloBar = null;
+    if ($this->isTrill()) {
+      $this->bend           = null;
+      $this->tremoloBar     = null;
       $this->tremoloPicking = null;
-      $this->slide = false;
-      $this->hammer = false;
-      $this->deadNote = false;
-      $this->vibrato = false;
+      $this->slide          = false;
+      $this->hammer         = false;
+      $this->deadNote       = false;
+      $this->vibrato        = false;
     }
   }
 
@@ -157,15 +152,14 @@ class NoteEffect extends NoteEffectBase
   {
     $this->tremoloPicking = $tremoloPicking;
 
-    if ($this->isTremoloPicking())
-    {
-      $this->trill = null;
-      $this->bend = null;
+    if ($this->isTremoloPicking()) {
+      $this->trill      = null;
+      $this->bend       = null;
       $this->tremoloBar = null;
-      $this->slide = false;
-      $this->hammer = false;
-      $this->deadNote = false;
-      $this->vibrato = false;
+      $this->slide      = false;
+      $this->hammer     = false;
+      $this->deadNote   = false;
+      $this->vibrato    = false;
     }
   }
 
@@ -176,13 +170,12 @@ class NoteEffect extends NoteEffectBase
   {
     $this->hammer = $hammer;
 
-    if ($this->isHammer())
-    {
-      $this->trill = null;
-      $this->bend = null;
-      $this->deadNote = false;
-      $this->slide = false;
-      $this->tremoloBar = null;
+    if ($this->isHammer()) {
+      $this->trill          = null;
+      $this->bend           = null;
+      $this->deadNote       = false;
+      $this->slide          = false;
+      $this->tremoloBar     = null;
       $this->tremoloPicking = null;
     }
   }
@@ -194,13 +187,12 @@ class NoteEffect extends NoteEffectBase
   {
     $this->slide = $slide;
 
-    if ($this->isSlide())
-    {
-      $this->trill = null;
-      $this->bend = null;
-      $this->deadNote = false;
-      $this->hammer = false;
-      $this->tremoloBar = null;
+    if ($this->isSlide()) {
+      $this->trill          = null;
+      $this->bend           = null;
+      $this->deadNote       = false;
+      $this->hammer         = false;
+      $this->tremoloBar     = null;
       $this->tremoloPicking = null;
     }
   }
@@ -212,9 +204,8 @@ class NoteEffect extends NoteEffectBase
   {
     $this->ghostNote = $ghostNote;
 
-    if ($this->isGhostNote())
-    {
-      $this->accentuatedNote = false;
+    if ($this->isGhostNote()) {
+      $this->accentuatedNote      = false;
       $this->heavyAccentuatedNote = false;
     }
   }
@@ -226,9 +217,8 @@ class NoteEffect extends NoteEffectBase
   {
     $this->accentuatedNote = $accentuatedNote;
 
-    if ($this->isAccentuatedNote())
-    {
-      $this->ghostNote = false;
+    if ($this->isAccentuatedNote()) {
+      $this->ghostNote            = false;
       $this->heavyAccentuatedNote = false;
     }
   }
@@ -240,9 +230,8 @@ class NoteEffect extends NoteEffectBase
   {
     $this->heavyAccentuatedNote = $heavyAccentuatedNote;
 
-    if ($this->isHeavyAccentuatedNote())
-    {
-      $this->ghostNote = false;
+    if ($this->isHeavyAccentuatedNote()) {
+      $this->ghostNote       = false;
       $this->accentuatedNote = false;
     }
   }
@@ -286,10 +275,9 @@ class NoteEffect extends NoteEffectBase
   {
     $this->palmMute = $palmMute;
 
-    if ($this->isPalmMute())
-    {
+    if ($this->isPalmMute()) {
       $this->staccato = false;
-      $this->letRing = false;
+      $this->letRing  = false;
     }
   }
 
@@ -300,10 +288,9 @@ class NoteEffect extends NoteEffectBase
   {
     $this->staccato = $staccato;
 
-    if ($this->isStaccato())
-    {
+    if ($this->isStaccato()) {
       $this->palmMute = false;
-      $this->letRing = false;
+      $this->letRing  = false;
     }
   }
 
@@ -314,8 +301,7 @@ class NoteEffect extends NoteEffectBase
   {
     $this->letRing = $letRing;
 
-    if ($this->isLetRing())
-    {
+    if ($this->isLetRing()) {
       $this->staccato = false;
       $this->palmMute = false;
     }
@@ -328,9 +314,8 @@ class NoteEffect extends NoteEffectBase
   {
     $this->popping = $popping;
 
-    if ($this->isPopping())
-    {
-      $this->tapping = false;
+    if ($this->isPopping()) {
+      $this->tapping  = false;
       $this->slapping = false;
     }
   }
@@ -342,8 +327,7 @@ class NoteEffect extends NoteEffectBase
   {
     $this->slapping = $slapping;
 
-    if ($this->isSlapping())
-    {
+    if ($this->isSlapping()) {
       $this->tapping = false;
       $this->popping = false;
     }
@@ -356,10 +340,9 @@ class NoteEffect extends NoteEffectBase
   {
     $this->tapping = $tapping;
 
-    if ($this->isTapping())
-    {
+    if ($this->isTapping()) {
       $this->slapping = false;
-      $this->popping = false;
+      $this->popping  = false;
     }
   }
 
@@ -379,8 +362,7 @@ class NoteEffect extends NoteEffectBase
     $effect = new NoteEffect();
     $attrs = get_object_vars($this);
 
-    foreach ($attrs as $attr => $value)
-    {
+    foreach ($attrs as $attr => $value) {
       $setter = sprintf('set%s', ucfirst($attr));
       $getter = sprintf('is%s', ucfirst($attr));
 

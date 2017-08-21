@@ -58,7 +58,7 @@ abstract class NoteEffectBase
    */
   public function isBend()
   {
-    return $this->bend !== null && count($this->bend->getPoints());
+    return $this->bend !== null && $this->bend->countPoints();
   }
 
   /**
@@ -203,26 +203,25 @@ abstract class NoteEffectBase
   public function hasAnyEffect()
   {
     return
-      $this->isBend() ||
-      $this->isTremoloBar() ||
-      $this->isHarmonic() ||
-      $this->isGrace() ||
-      $this->isTrill() ||
-      $this->isTremoloPicking() ||
-      $this->isVibrato() ||
-      $this->isDeadNote() ||
-      $this->isSlide() ||
-      $this->isHammer() ||
-      $this->isGhostNote() ||
-      $this->isAccentuatedNote() ||
+      $this->isBend()                 ||
+      $this->isTremoloBar()           ||
+      $this->isHarmonic()             ||
+      $this->isGrace()                ||
+      $this->isTrill()                ||
+      $this->isTremoloPicking()       ||
+      $this->isVibrato()              ||
+      $this->isDeadNote()             ||
+      $this->isSlide()                ||
+      $this->isHammer()               ||
+      $this->isGhostNote()            ||
+      $this->isAccentuatedNote()      ||
       $this->isHeavyAccentuatedNote() ||
-      $this->isPalmMute() ||
-      $this->isLetRing() ||
-      $this->isStaccato() ||
-      $this->isTapping() ||
-      $this->isSlapping() ||
-      $this->isPopping() ||
-      $this->isFadeIn()
-    ;
-  }	
+      $this->isPalmMute()             ||
+      $this->isLetRing()              ||
+      $this->isStaccato()             ||
+      $this->isTapping()              ||
+      $this->isSlapping()             ||
+      $this->isPopping()              ||
+      $this->isFadeIn()               ;
+  }
 }

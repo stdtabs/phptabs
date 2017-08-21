@@ -18,11 +18,11 @@ class Note
 
   public function __construct()
   {
-    $this->value = 0;
+    $this->value    = 0;
     $this->velocity = Velocities::FORTE;
-    $this->string = 1;
+    $this->string   = 1;
     $this->tiedNote = false;
-    $this->effect = new NoteEffect();
+    $this->effect   = new NoteEffect();
   }
 
   /**
@@ -58,7 +58,7 @@ class Note
   }
 
   /**
-   * @return \PhpTabs\Music\TabString
+   * @return int
    */
   public function getString()
   {
@@ -66,7 +66,7 @@ class Note
   }
 
   /**
-   * @param \PhpTabs\Music\TabString $string
+   * @param int $string
    */
   public function setString($string)
   {

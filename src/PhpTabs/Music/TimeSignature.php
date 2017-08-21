@@ -12,7 +12,7 @@ class TimeSignature
 
   public function __construct()
   {
-    $this->numerator = 4;
+    $this->numerator   = 4;
     $this->denominator = new Duration();
   }
 
