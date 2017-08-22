@@ -74,18 +74,13 @@ class Track
   }
 
   /**
-   * @param int $index
-   *
+   * @param  int $index
    * @return \PhpTabs\Music\Measure
    */
   public function getMeasure($index)
   {
-    if ($index >= 0 && $index < $this->countMeasures())
-    {
-      return $this->measures[$index];
-    }
-
-    return null;
+    return isset($this->measures[$index])
+        ? $this->measures[$index] : null;
   }
 
   /**

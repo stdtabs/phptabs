@@ -6,15 +6,15 @@ class Channel
 {
   const DEFAULT_PERCUSSION_CHANNEL = 9;
   const DEFAULT_PERCUSSION_PROGRAM = 0;
-  const DEFAULT_PERCUSSION_BANK = 128;
+  const DEFAULT_PERCUSSION_BANK    = 128;
 
-  const DEFAULT_BANK = 0;
+  const DEFAULT_BANK    = 0;
   const DEFAULT_PROGRAM = 25;
-  const DEFAULT_VOLUME = 127;
+  const DEFAULT_VOLUME  = 127;
   const DEFAULT_BALANCE = 64;
-  const DEFAULT_CHORUS = 0;
-  const DEFAULT_REVERB = 0;
-  const DEFAULT_PHASER = 0;
+  const DEFAULT_CHORUS  = 0;
+  const DEFAULT_REVERB  = 0;
+  const DEFAULT_PHASER  = 0;
   const DEFAULT_TREMOLO = 0;
 
   private $channelId;
@@ -31,16 +31,16 @@ class Channel
 
   public function __construct()
   {
-    $this->channelId = 0;
-    $this->bank = Channel::DEFAULT_BANK;
-    $this->program = Channel::DEFAULT_PROGRAM;
-    $this->volume = Channel::DEFAULT_VOLUME;
-    $this->balance = Channel::DEFAULT_BALANCE;
-    $this->chorus = Channel::DEFAULT_CHORUS;
-    $this->reverb = Channel::DEFAULT_REVERB;
-    $this->phaser = Channel::DEFAULT_PHASER;
-    $this->tremolo = Channel::DEFAULT_TREMOLO;
-    $this->name = '';
+    $this->channelId  = 0;
+    $this->bank       = Channel::DEFAULT_BANK;
+    $this->program    = Channel::DEFAULT_PROGRAM;
+    $this->volume     = Channel::DEFAULT_VOLUME;
+    $this->balance    = Channel::DEFAULT_BALANCE;
+    $this->chorus     = Channel::DEFAULT_CHORUS;
+    $this->reverb     = Channel::DEFAULT_REVERB;
+    $this->phaser     = Channel::DEFAULT_PHASER;
+    $this->tremolo    = Channel::DEFAULT_TREMOLO;
+    $this->name       = '';
     $this->parameters = array();
   }
 
@@ -230,18 +230,13 @@ class Channel
   }
 
   /**
-   * @param int $index
-   *
+   * @param  int $index
    * @return \PhpTabs\Music\ChannelParameter
    */
   public function getParameter($index)
   {
-    if ($index >= 0 && $index < $this->countParameters())
-    {
-      return $this->parameters[$index];
-    }
-
-    return null;
+    return isset($this->parameters[$index])
+         ? $this->parameters[$index] : null;
   }
 
   /**

@@ -10,7 +10,7 @@ class Song extends SongBase
   public function addMeasureHeader(MeasureHeader $measureHeader)
   {
     $measureHeader->setSong($this);
-    $this->measureHeaders[$this->countMeasureHeaders()] = $measureHeader;
+    $this->measureHeaders[] = $measureHeader;
   }
 
   /**
