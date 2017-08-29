@@ -5,7 +5,6 @@ namespace PhpTabsTest\Renderer;
 use Exception;
 use PHPUnit_Framework_TestCase;
 use PhpTabs\PhpTabs;
-use PhpTabs\Music\Track;
 
 /**
  * Tests the options stack of vextab renderer
@@ -54,11 +53,6 @@ class VexTabOptionsTest extends PHPUnit_Framework_TestCase
 
     # Check values
     foreach ($options as $name => $value) {
-      if ($value === true) {
-//        $value = 'true';
-      } elseif ($value === false) {
-//        $value = 'false';
-      }
 
       $this->assertEquals(
         $value,
