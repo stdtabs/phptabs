@@ -129,7 +129,7 @@ class VexTabOptions
         $this->globals[$name] = $value;
       }
     }
-    
+
     // stave
     if (isset($this->defStave[$name])) {
       if ($this->validateOption($value, $this->defStave[$name])) {

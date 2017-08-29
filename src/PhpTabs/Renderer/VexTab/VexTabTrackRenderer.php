@@ -382,7 +382,7 @@ class VexTabTrackRenderer
         . $duration->getValue()
       ); // @codeCoverageIgnore
     }
-    
+
     return sprintf(
       ':%s%s%s ',
       $this->defDuration[

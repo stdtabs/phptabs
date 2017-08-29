@@ -155,16 +155,6 @@ class BeatContext
   }
 
   /**
-   * Get beat
-   * 
-   * @return \PhpTabs\Music\Beat
-   */
-  public function getBeat()
-  {
-    return $this->beat;
-  }
-
-  /**
    * Get tuplet counter
    * 
    * @return int

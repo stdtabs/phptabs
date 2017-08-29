@@ -63,7 +63,7 @@ tabstave notation=true time=12/8
 notes =|: :q 5/2 5/2 5/2 5/2 5/2 5/2 |:q 5/2 5/2 (3/1.5/2.5/3.5/4.3/5.3/6) 5/2 5/2 5/2 
 
 tabstave notation=true
-notes :q 5/2 5d/2 5/2 5b7b9v/2 5/2 5/2 |:q 5/2 :8 5v/2 ## :q 5/2 5/2 5/2 5/2 =:|',
+notes :q 5/2 5d/2 5/2 (5b7b9v/2)u 5/2 5/2 |:q 5/2 :8 5v/2 ## :q 5/2 5/2 5/2 5/2 =:|',
       $renderer->render(1)
     );
   }

@@ -15,7 +15,7 @@ abstract class VexTabRendererHelper implements RendererInterface
    * @api
    * @since 0.5.0
    */
-  public function getOption($name, $default)
+  public function getOption($name, $default = null)
   {
     return isset($this->options[$name])
       ? $this->options[$name]
