@@ -365,7 +365,7 @@ class VexTabTrackRenderer
     throw new Exception(
       'Clef name was not found. Given:'
       . $measure->getClef()
-    );
+    ); // @codeCoverageIgnore
   }
 
   /**
@@ -380,7 +380,7 @@ class VexTabTrackRenderer
       throw new Exception (
         'Duration value is not defined. Given:'
         . $duration->getValue()
-      );
+      ); // @codeCoverageIgnore
     }
     
     return sprintf(

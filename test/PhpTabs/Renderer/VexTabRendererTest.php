@@ -5,6 +5,7 @@ namespace PhpTabsTest\Renderer;
 use Exception;
 use PHPUnit_Framework_TestCase;
 use PhpTabs\PhpTabs;
+use PhpTabs\Music\Track;
 
 /**
  * Tests with a simple tablature
@@ -24,7 +25,9 @@ class VexTabRendererTest extends PHPUnit_Framework_TestCase
   public function testRenderer()
   {
     $options = [
-      'notation'            => 'true',
+      'player'              => false,
+      'font-face'           => 'times',
+      'notation'            => true,
       'tablature'           => 'true',
       'measures_per_stave'  => 2
     ];
@@ -41,7 +44,7 @@ class VexTabRendererTest extends PHPUnit_Framework_TestCase
 
     # Render 2 tracks
     $this->assertEquals(
-      'options scale=1 space=16 width=520 tempo=66
+      'options scale=1 space=16 width=520 font-face=times tempo=66
 
 tabstave notation=true time=12/8
 
@@ -53,7 +56,7 @@ notes :16 10/3 12/3 :8 12b14/3 10v/2 :q T10/2 :8 10/2 10/2 12/2 13/2 14/2 15/2 t
     );
 
     $this->assertEquals(
-      'options scale=1 space=16 width=520 tempo=66
+      'options scale=1 space=16 width=520 font-face=times tempo=66
 
 tabstave notation=true time=12/8
 
@@ -71,6 +74,36 @@ notes :q 5/2 5d/2 5/2 5b7b9v/2 5/2 5/2 |:q 5/2 :8 5v/2 ## :q 5/2 5/2 5/2 5/2 =:|
   public function testBadFormatException()
   {
     $this->tablature->getRenderer('Not a valid format');
+  }
+
+  /**
+   * Track index does not exist
+   *
+   * @expectedException \Exception
+   */
+  public function testNoTrackException()
+  {
+    $this
+      ->tablature
+      ->getRenderer('vextab')
+      ->render(10);
+  }
+
+  /**
+   * Track has no measure
+   * 
+   * @expectedException \Exception
+   */
+  public function testNoMeasureException()
+  {
+    $tab = new PhpTabs();
+    $tab->addTrack(
+      new Track()
+    );
+
+    $tab
+      ->getRenderer('vextab')
+      ->render(0);
   }
 
   public function tearDown()
