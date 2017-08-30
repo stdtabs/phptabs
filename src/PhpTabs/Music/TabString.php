@@ -59,7 +59,7 @@ class TabString
    * 
    * @return bool Result of the comparison
    */
-  public function isEqual($string)
+  public function isEqual(TabString $string)
   {
     return $this->getNumber() == $string->getNumber() 
         && $this->getValue()  == $string->getValue();
