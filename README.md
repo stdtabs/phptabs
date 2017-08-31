@@ -5,7 +5,7 @@ PhpTabs
 [![Build Status](https://travis-ci.org/stdtabs/phptabs.svg?branch=master)](https://travis-ci.org/stdtabs/phptabs)
 [![License](https://poser.pugx.org/stdtabs/phptabs/license.svg)](https://packagist.org/packages/stdtabs/phptabs)
 
-PhpTabs is a PHP library for reading and writing scores and MIDI files.
+[PhpTabs](https://stdtabs.github.io/) is a PHP library for reading and writing scores and MIDI files.
 It provides direct methods to read a song name, get a list of instruments or whatever be your needs.
 
 PhpTabs currently supports the following file formats:
@@ -17,9 +17,10 @@ PhpTabs currently supports the following file formats:
 
 Any questions?
 
-- [Find support on Twitter](https://twitter.com/stdtabs)
+- Read the [PhpTabs Manual](https://stdtabs.github.io/)
 - [Open an issue on github](https://github.com/stdtabs/phptabs/issues)
-- [Contribute on github](https://github.com/stdtabs/phptabs/pulls)
+- [Contribute code](https://github.com/stdtabs/phptabs/pulls)
+- [Contribute documentation](https://github.com/stdtabs/stdtabs.github.io)
 
 Table of contents
 =================
