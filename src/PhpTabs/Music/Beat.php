@@ -96,6 +96,14 @@ class Beat
   }
 
   /**
+   * @return []\PhpTabs\Music\Voice
+   */
+  public function getVoices()
+  {
+    return $this->voices;
+  }
+
+  /**
    * @return int
    */
   public function countVoices()
