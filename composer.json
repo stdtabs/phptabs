@@ -4,7 +4,7 @@
     "version": "0.5.0-dev",
     "description": "A PHP library for reading and writing scores and MIDI files",
     "keywords": ["tablature", "guitar", "tabs", "MIDI", "music"],
-    "homepage": "https://github.com/stdtabs/phptabs",
+    "homepage": "https://stdtabs.github.io/",
     "license": "LGPL-2.1+",
     "require": {
         "php": ">=5.4.0 || ^7.0"
