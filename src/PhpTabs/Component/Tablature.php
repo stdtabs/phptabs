@@ -136,15 +136,16 @@ class Tablature
    * Export a song into an array
    * 
    * @param string $format
+   * @param mixed  $options Flags for some exported formats
    * 
    * @return array
    */
-  public function export($format = null)
+  public function export($format = null, $options = null)
   { 
     $exporter = new Exporter($this);
 
     return null === $format
-      ? $exporter->export() : $exporter->export($format);
+      ? $exporter->export() : $exporter->export($format, $options);
   }
 
   /**

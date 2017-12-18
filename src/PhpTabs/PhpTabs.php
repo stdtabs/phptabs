@@ -102,6 +102,9 @@ class PhpTabs
       case 1:
         return $this->tablature->$name($arguments[0]);
 
+      case 2:
+        return $this->tablature->$name($arguments[0], $arguments[1]);
+
       default:
         $message = sprintf(
           '%s method does not support %d arguments',

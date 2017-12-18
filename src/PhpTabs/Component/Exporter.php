@@ -44,11 +44,11 @@ class Exporter extends ExporterBase
    *  - txt         : same as text
    *  - yaml        : a YAML representation
    *  - yml         : same as yaml
-   *
+   * @param  mixed $options Some flags for exported formats
    * @return string|array
    * @throws \Exception if format is not supported
    */
-  public function export($format = 'array')
+  public function export($format = 'array', $options = null)
   {
     switch ($format)
     {
@@ -57,7 +57,7 @@ class Exporter extends ExporterBase
       case 'xml':
         return (new Xml())->serialize($this->export());
       case 'json':
-        return json_encode($this->export());
+        return json_encode($this->export(), $options);
       case 'var_export':
         return var_export($this->export(), true);
       case 'serialize':
