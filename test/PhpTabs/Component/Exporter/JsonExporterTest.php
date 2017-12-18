@@ -59,7 +59,7 @@ class JsonExporterTest extends PHPUnit_Framework_TestCase
   {
     $tabs     = new PhpTabs();
     $text     = $tabs->export('json');
-    $expected = file_get_contents(PHPTABS_TEST_FILES_DIR . '/json/empty-tabs.json');
+    $expected = file_get_contents(PHPTABS_TEST_BASEDIR . '/files/json/empty-tabs.json');
     $this->assertEquals(
       $expected,
       $text,
