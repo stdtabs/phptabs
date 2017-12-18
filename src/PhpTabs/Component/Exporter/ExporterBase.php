@@ -9,14 +9,14 @@
  * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
  */
 
-namespace PhpTabs\Component\Dumper;
+namespace PhpTabs\Component\Exporter;
 
-abstract class DumperBase extends DumperEffects
+abstract class ExporterBase extends ExporterEffects
 {
   /**
    * @return array
    */
-  protected function dumpSong()
+  protected function exportSong()
   {
     $content = array(
       'name'          => $this->song->getName(),
@@ -35,14 +35,14 @@ abstract class DumperBase extends DumperEffects
 
     for ($i = 0; $i < $countChannels; $i++)
     {
-      $content['channels'][$i] = $this->dumpChannel($i);
+      $content['channels'][$i] = $this->exportChannel($i);
     }
 
     $countMeasureHeaders = $this->song->countMeasureHeaders();
 
     for ($i = 0; $i < $countMeasureHeaders; $i++)
     {
-      $content['measureHeaders'][$i] = $this->dumpMeasureHeader(
+      $content['measureHeaders'][$i] = $this->exportMeasureHeader(
         $this->song->getMeasureHeader($i)
       );
     }
@@ -51,7 +51,7 @@ abstract class DumperBase extends DumperEffects
 
     for ($i = 0; $i < $countTracks; $i++)
     {
-      $content['tracks'][$i] = $this->dumpTrack($i);
+      $content['tracks'][$i] = $this->exportTrack($i);
     }
 
     return array('song' => $content);
@@ -62,7 +62,7 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpTrack($index)
+  protected function exportTrack($index)
   {
     $track = $this->song->getTrack($index);
 
@@ -90,7 +90,7 @@ abstract class DumperBase extends DumperEffects
 
     for ($i = 0; $i < $countMeasures; $i++)
     {
-      $content['measures'][$i] = $this->dumpMeasure(
+      $content['measures'][$i] = $this->exportMeasure(
         $track->getMeasure($i),
         $this->song->getMeasureHeader($i)
       );
@@ -100,7 +100,7 @@ abstract class DumperBase extends DumperEffects
 
     for ($i = 0; $i < $countStrings; $i++)
     {
-      $content['strings'][$i] = $this->dumpString($track->getString($i+1));
+      $content['strings'][$i] = $this->exportString($track->getString($i+1));
     }
 
     return array('track' => $content);
@@ -111,7 +111,7 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpChannel($index)
+  protected function exportChannel($index)
   {
     $channel = $this->song->getChannel($index);
 
@@ -148,13 +148,13 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpMeasure($measure, $measureHeader)
+  protected function exportMeasure($measure, $measureHeader)
   {
     $content = array(
       'channelId'     => $measure->getTrack()->getChannelId(),
       'clef'          => $measure->getClef(),
       'keySignature'  => $measure->getKeySignature(),
-      'header'        => $this->dumpMeasureHeader($measureHeader)['header'],
+      'header'        => $this->exportMeasureHeader($measureHeader)['header'],
       'keySignature'  => $measure->getKeySignature(),
       'beats'         => array()
     );
@@ -163,7 +163,7 @@ abstract class DumperBase extends DumperEffects
 
     for ($i = 0; $i < $countBeats; $i++)
     {
-      $content['beats'][$i] = $this->dumpBeat($measure->getBeat($i));
+      $content['beats'][$i] = $this->exportBeat($measure->getBeat($i));
     }
 
     return array('measure' => $content);
@@ -174,12 +174,12 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpBeat($beat)
+  protected function exportBeat($beat)
   {
     $content = array(
       'start'     => $beat->getStart(),
-      'chord'     => $this->dumpChord($beat->getChord()),
-      'text'      => $this->dumpText($beat->getText()),
+      'chord'     => $this->exportChord($beat->getChord()),
+      'text'      => $this->exportText($beat->getText()),
       'voices'    => array(),
       'stroke'    => array(
         'direction' => $beat->getStroke()->getDirection(),
@@ -191,7 +191,7 @@ abstract class DumperBase extends DumperEffects
 
     for ($i = 0; $i < $countVoices; $i++)
     {
-      $content['voices'][$i] = $this->dumpVoice($beat->getVoice($i));
+      $content['voices'][$i] = $this->exportVoice($beat->getVoice($i));
     }
 
     return array('beat' => $content);
@@ -202,10 +202,10 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpVoice($voice)
+  protected function exportVoice($voice)
   {
     $content = array(
-      'duration' => $this->dumpDuration($voice->getDuration()),
+      'duration' => $this->exportDuration($voice->getDuration()),
       'index'    => $voice->getIndex(),
       'empty'    => $voice->isEmpty(),
       'direction'=> $voice->getDirection(),
@@ -216,7 +216,7 @@ abstract class DumperBase extends DumperEffects
 
     for ($i = 0; $i < $countNotes; $i++)
     {
-      $content['notes'][$i] = $this->dumpNote($voice->getNote($i));
+      $content['notes'][$i] = $this->exportNote($voice->getNote($i));
     }
 
     return array('voice' => $content);
@@ -227,7 +227,7 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpDuration($duration)
+  protected function exportDuration($duration)
   {
     return array(
         'value'        => $duration->getValue(),
@@ -245,7 +245,7 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpNote($note)
+  protected function exportNote($note)
   {
     return array('note' => 
       array(
@@ -253,7 +253,7 @@ abstract class DumperBase extends DumperEffects
         'velocity'  => $note->getVelocity(),
         'string'    => $note->getString(),
         'tiedNote'  => $note->isTiedNote(),
-        'effect'    => $this->dumpEffect($note->getEffect())
+        'effect'    => $this->exportEffect($note->getEffect())
       )
     );
   }
@@ -263,7 +263,7 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpString($string)
+  protected function exportString($string)
   {
     return is_object($string) ? array('string' => array(
       'number'  => $string->getNumber(),
@@ -276,15 +276,15 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpMeasureHeader($header)
+  protected function exportMeasureHeader($header)
   {
     return array('header' => array(
       'number'        => $header->getNumber(),
       'start'         => $header->getStart(),
       'length'        => $header->getLength(),
-      'timeSignature' => $this->dumpTimeSignature($header->getTimeSignature()),
+      'timeSignature' => $this->exportTimeSignature($header->getTimeSignature()),
       'tempo'         => $header->getTempo()->getValue(),
-      'marker'        => $this->dumpMarker($header->getMarker()),
+      'marker'        => $this->exportMarker($header->getMarker()),
       'repeatOpen'     => $header->isRepeatOpen(),
       'repeatAlternative' => $header->getRepeatAlternative(),
       'repeatClose'   => $header->getRepeatClose(),
@@ -297,7 +297,7 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpChord($chord)
+  protected function exportChord($chord)
   {
     if (!is_object($chord))
     {
@@ -326,11 +326,11 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpTimeSignature($timeSignature)
+  protected function exportTimeSignature($timeSignature)
   {
     return array(
       'numerator'   => $timeSignature->getNumerator(), 
-      'denominator' => $this->dumpDuration($timeSignature->getDenominator())
+      'denominator' => $this->exportDuration($timeSignature->getDenominator())
     );
   }
 
@@ -339,7 +339,7 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpMarker($marker)
+  protected function exportMarker($marker)
   {
     return is_object($marker) ? array(
       'measure' => $marker->getMeasure(), 
@@ -357,7 +357,7 @@ abstract class DumperBase extends DumperEffects
    * 
    * @return array
    */
-  protected function dumpText($text)
+  protected function exportText($text)
   {
     return is_object($text) ? array(
       'value' => $text->getValue()

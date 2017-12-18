@@ -9,13 +9,13 @@
  * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
  */
 
-namespace PhpTabsTest\Component\Dumper;
+namespace PhpTabsTest\Component\Exporter;
 
 /**
  * Tests with a simple tablature
  * Guitar Pro 3
  */
-class GuitarPro3DumperTest extends DumperHelper
+class GuitarPro3ExporterTest extends ExporterHelper
 {
   protected static function getFilename()
   {

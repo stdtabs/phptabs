@@ -9,24 +9,24 @@
  * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
  */
 
-namespace PhpTabs\Component\Dumper;
+namespace PhpTabs\Component\Exporter;
 
-abstract class DumperEffects
+abstract class ExporterEffects
 {
   /**
    * @param \PhpTabs\Music\NoteEffect $effect
    * 
    * @return array
    */
-  protected function dumpEffect($effect)
+  protected function exportEffect($effect)
   {
     return array(
-      'bend'            => $this->dumpBend($effect->getBend()),
-      'tremoloBar'      => $this->dumpTremoloBar($effect->getTremoloBar()),
-      'harmonic'        => $this->dumpHarmonic($effect->getHarmonic()),
-      'grace'           => $this->dumpGrace($effect->getGrace()),
-      'trill'           => $this->dumpTrill($effect->getTrill()),
-      'tremoloPicking'  => $this->dumpTremoloPicking($effect->getTremoloPicking()),
+      'bend'            => $this->exportBend($effect->getBend()),
+      'tremoloBar'      => $this->exportTremoloBar($effect->getTremoloBar()),
+      'harmonic'        => $this->exportHarmonic($effect->getHarmonic()),
+      'grace'           => $this->exportGrace($effect->getGrace()),
+      'trill'           => $this->exportTrill($effect->getTrill()),
+      'tremoloPicking'  => $this->exportTremoloPicking($effect->getTremoloPicking()),
       'vibrato'         => $effect->isVibrato(),
       'deadNote'        => $effect->isDeadNote(),
       'slide'           => $effect->isSlide(),
@@ -49,9 +49,9 @@ abstract class DumperEffects
    * 
    * @return array
    */
-  protected function dumpBend($effect)
+  protected function exportBend($effect)
   {
-    return $this->dumpTremoloBar($effect);
+    return $this->exportTremoloBar($effect);
   }
 
   /**
@@ -59,7 +59,7 @@ abstract class DumperEffects
    * 
    * @return array
    */
-  protected function dumpGrace($effect)
+  protected function exportGrace($effect)
   {
     return is_object($effect) ? array(
         'fret'       => $effect->getFret(), 
@@ -76,10 +76,10 @@ abstract class DumperEffects
    * 
    * @return array
    */
-  protected function dumpTremoloBar($effect)
+  protected function exportTremoloBar($effect)
   {
     return !is_object($effect) ? null
-      : array('points' => $this->dumpPoints($effect->getPoints()));
+      : array('points' => $this->exportPoints($effect->getPoints()));
   }
 
   /**
@@ -87,7 +87,7 @@ abstract class DumperEffects
    * 
    * @return array
    */
-  protected function dumpHarmonic($effect)
+  protected function exportHarmonic($effect)
   {
     return is_object($effect) ? array(
       'type'         => $effect->getType(), 
@@ -105,11 +105,11 @@ abstract class DumperEffects
    * 
    * @return array
    */
-  protected function dumpTrill($effect)
+  protected function exportTrill($effect)
   {
     return is_object($effect) ? array(
       'fret'      => $effect->getFret(), 
-      'duration'  => $this->dumpDuration($effect->getDuration())
+      'duration'  => $this->exportDuration($effect->getDuration())
     ) : null;
   }
 
@@ -118,10 +118,10 @@ abstract class DumperEffects
    * 
    * @return array
    */
-  protected function dumpTremoloPicking($effect)
+  protected function exportTremoloPicking($effect)
   {
     return is_object($effect) ? array(
-      'duration'  => $this->dumpDuration($effect->getDuration())
+      'duration'  => $this->exportDuration($effect->getDuration())
     ) : null;
   }
 
@@ -130,7 +130,7 @@ abstract class DumperEffects
    * 
    * @return array
    */
-  protected function dumpPoints($points)
+  protected function exportPoints($points)
   {
     $content = array();
 

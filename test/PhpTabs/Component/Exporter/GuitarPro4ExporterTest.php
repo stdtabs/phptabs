@@ -9,16 +9,17 @@
  * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
  */
 
-namespace PhpTabsTest\Component\Dumper;
+namespace PhpTabsTest\Component\Exporter;
 
 /**
- * Tests with a simple Midi file
+ * Tests with a simple tablature
+ * Guitar Pro 4
  */
-class MidiDumperTest extends DumperHelper
+class GuitarPro4ExporterTest extends ExporterHelper
 {
   protected static function getFilename()
   {
-    return 'testSimpleMidi.mid';
+    return 'testSimpleTab.gp4';
   }
 
   /**
@@ -26,6 +27,7 @@ class MidiDumperTest extends DumperHelper
    */
   public function getTextScenarios()
   {
+    // regex string
     return [
       ['song:'],
       ['name:'],
@@ -36,7 +38,6 @@ class MidiDumperTest extends DumperHelper
       ['writer:'],
       ['comments:'],
       ['channels:'],
-      ['channel:'],
       ['channelId:'],
       ['bank:'],
       ['program:'],
@@ -47,6 +48,8 @@ class MidiDumperTest extends DumperHelper
       ['phaser:'],
       ['tremolo:'],
       ['parameters:'],
+      ['key:'],
+      ['value:'],
       ['measureHeaders:'],
       ['number:'],
       ['start:'],
@@ -65,6 +68,7 @@ class MidiDumperTest extends DumperHelper
       ['repeatClose:'],
       ['tripletFeel:'],
       ['tracks:'],
+      ['track:'],
       ['offset:'],
       ['solo:'],
       ['mute:'],

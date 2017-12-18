@@ -16,9 +16,9 @@ use PHPUnit_Framework_TestCase;
 use PhpTabs\PhpTabs;
 
 /**
- * Tests Dumper component
+ * Tests Exporter component
  */
-class DumperTest extends PHPUnit_Framework_TestCase
+class ExporterTest extends PHPUnit_Framework_TestCase
 {
   public function setUp()
   {
@@ -29,7 +29,7 @@ class DumperTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * Following dumps must be a string
+   * Following exports must be a string
    * - text
    * - txt
    * - yaml
@@ -54,14 +54,14 @@ class DumperTest extends PHPUnit_Framework_TestCase
     ) {
       $this->assertTrue(
         is_string(
-          $this->tablature->dump($format)
+          $this->tablature->export($format)
         )
       );
     }
   }
 
   /**
-   * Following dumps must be an array
+   * Following exports must be an array
    * - array
    * - none
    */
@@ -74,27 +74,27 @@ class DumperTest extends PHPUnit_Framework_TestCase
     ) {
       $this->assertTrue(
         is_array(
-          $this->tablature->dump($format)
+          $this->tablature->export($format)
         )
       );
     }
   }
 
   /**
-   * Some dump format parameters have aliases
+   * Some export format parameters have aliases
    * - text = txt
    * - yaml = yml
    */
   public function testAliases()
   {
     $this->assertSame(
-      $this->tablature->dump('text'),
-      $this->tablature->dump('txt')
+      $this->tablature->export('text'),
+      $this->tablature->export('txt')
     );
     
     $this->assertSame(
-      $this->tablature->dump('yaml'),
-      $this->tablature->dump('yml')
+      $this->tablature->export('yaml'),
+      $this->tablature->export('yml')
     );
   }
 
@@ -103,7 +103,7 @@ class DumperTest extends PHPUnit_Framework_TestCase
    */
   public function testException()
   {
-    # Not a valid dump format
-    (new PhpTabs())->dump('exception');
+    # Not a valid export format
+    (new PhpTabs())->export('exception');
   }
 }

@@ -9,7 +9,7 @@
  * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
  */
 
-namespace PhpTabsTest\Component\Dumper;
+namespace PhpTabsTest\Component\Exporter;
 
 use DOMXPath;
 use PHPUnit_Framework_TestCase;

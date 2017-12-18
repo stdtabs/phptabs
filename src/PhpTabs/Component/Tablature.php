@@ -133,18 +133,18 @@ class Tablature
   }
 
   /**
-   * Dumps a song into an array
+   * Export a song into an array
    * 
    * @param string $format
    * 
    * @return array
    */
-  public function dump($format = null)
+  public function export($format = null)
   { 
-    $dumper = new Dumper($this);
+    $exporter = new Exporter($this);
 
     return null === $format
-      ? $dumper->dump() : $dumper->dump($format);
+      ? $exporter->export() : $exporter->export($format);
   }
 
   /**

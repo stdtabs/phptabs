@@ -13,18 +13,18 @@ namespace PhpTabs\Component;
 
 use Exception;
 use PhpTabs\Component\Tablature;
-use PhpTabs\Component\Dumper\DumperBase;
+use PhpTabs\Component\Exporter\ExporterBase;
 use PhpTabs\Component\Serializer\Text;
 use PhpTabs\Component\Serializer\Xml;
 use PhpTabs\Component\Serializer\Yaml;
 
-class Dumper extends DumperBase
+class Exporter extends ExporterBase
 {
   /** @var \Phptabs\Model\Song */
   protected $song;
 
   /**
-   * @param \PhpTabs\Component\Tablature The tablature to dump
+   * @param \PhpTabs\Component\Tablature The tablature to export
    */
   public function __construct(Tablature $tablature)
   {
@@ -48,26 +48,26 @@ class Dumper extends DumperBase
    * @return string|array
    * @throws \Exception if format is not supported
    */
-  public function dump($format = 'array')
+  public function export($format = 'array')
   {
     switch ($format)
     {
       case 'array':
-        return $this->dumpSong();
+        return $this->exportSong();
       case 'xml':
-        return (new Xml())->serialize($this->dump());
+        return (new Xml())->serialize($this->export());
       case 'json':
-        return json_encode($this->dump());
+        return json_encode($this->export());
       case 'var_export':
-        return var_export($this->dump(), true);
+        return var_export($this->export(), true);
       case 'serialize':
-        return serialize($this->dump());
+        return serialize($this->export());
       case 'text':
       case 'txt':
-        return (new Text())->serialize($this->dump());
+        return (new Text())->serialize($this->export());
       case 'yaml':
       case 'yml':
-        return (new Yaml())->serialize($this->dump());
+        return (new Yaml())->serialize($this->export());
       default:
         $message = sprintf('%s does not support "%s" format', __METHOD__, $format);
         throw new Exception($message);

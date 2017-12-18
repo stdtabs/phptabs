@@ -26,6 +26,6 @@ class PhpTabsTest extends PHPUnit_Framework_TestCase
   public function testException()
   {
     # Not a valid number of params
-    (new PhpTabs())->dump('param1', 'param2', 'param3');
+    (new PhpTabs())->export('param1', 'param2', 'param3');
   }
 }

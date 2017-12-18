@@ -9,16 +9,16 @@
  * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
  */
 
-namespace PhpTabsTest\Component\Dumper;
+namespace PhpTabsTest\Component\Exporter;
 
 use DOMDocument;
 use PhpTabs\PhpTabs;
 
 /**
- * Helpers for testing dumps of a simple tablature
+ * Helpers for testing exports of a simple tablature
  * Guitar Pro 3, 4, 5 & MIDI
  */
-class DumperHelper extends XmlTestCaseHelper
+class ExporterHelper extends XmlTestCaseHelper
 {
   private static $tablature;
   private static $plainText;
@@ -37,12 +37,12 @@ class DumperHelper extends XmlTestCaseHelper
     );
 
     #Text
-    self::$plainText = self::$tablature->dump('text');
+    self::$plainText = self::$tablature->export('text');
     #YAML
-    self::$yamlText = self::$tablature->dump('yaml');
+    self::$yamlText = self::$tablature->export('yaml');
 
     # XML
-    $xmlString = self::$tablature->dump('xml');
+    $xmlString = self::$tablature->export('xml');
     $document = new DOMDocument();    
     $document->loadXML($xmlString);
     self::$xmlDoc = $document;
@@ -54,9 +54,9 @@ class DumperHelper extends XmlTestCaseHelper
   }
 
   /**
-   * Dumper XML
+   * Exporter XML
    */
-  public function testDumperXml()
+  public function testExporterXml()
   {
     // expected, xpath, message
     $tests = array(
@@ -136,7 +136,7 @@ class DumperHelper extends XmlTestCaseHelper
    * 
    * @dataProvider getTextScenarios
    */
-  public function testDumperText($text)
+  public function testExporterText($text)
   {
     $pattern = sprintf('/%s/', $text);
     $this->assertRegexp($pattern, self::$plainText);
@@ -147,7 +147,7 @@ class DumperHelper extends XmlTestCaseHelper
    * 
    * @dataProvider getYamlScenarios
    */
-  public function testDumperYaml($text)
+  public function testExporterYaml($text)
   {
     $pattern = sprintf('/%s/', $text);
     $this->assertRegexp($pattern, self::$plainText);
