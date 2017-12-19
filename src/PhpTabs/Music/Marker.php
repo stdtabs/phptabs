@@ -33,7 +33,7 @@ class Marker
   }
 
   /**
-   * @return \PhpTabs\Music\Measure
+   * @return int
    */
   public function getMeasure()
   {
@@ -41,7 +41,7 @@ class Marker
   }
 
   /**
-   * @param \PhpTabs\Music\Measure $measure
+   * @param int
    */
   public function setMeasure($measure)
   {
@@ -49,7 +49,7 @@ class Marker
   }
 
   /**
-   * @return \PhpTabs\Music\Measure
+   * @return string
    */
   public function getTitle()
   {
