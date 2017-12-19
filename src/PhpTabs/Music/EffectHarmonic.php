@@ -47,7 +47,7 @@ class EffectHarmonic
   }
 
   /**
-   * @return array
+   * @return int
    */
   public function getData()
   {
@@ -55,7 +55,7 @@ class EffectHarmonic
   }
 
   /**
-   * @param array $data
+   * @param int $data
    */
   public function setData($data)
   {
