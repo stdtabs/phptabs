@@ -143,7 +143,7 @@ class Track
   /**
    * @param \PhpTabs\Music\Color $color
    */
-  public function setColor($color)
+  public function setColor(Color $color)
   {
     $this->color = $color;
   }
