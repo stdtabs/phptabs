@@ -166,7 +166,7 @@ class Channel
   }
 
   /**
-   * @return \PhpTabs\Model\EffectTremolo
+   * @return int
    */
   public function getTremolo()
   {
@@ -174,7 +174,7 @@ class Channel
   }
 
   /**
-   * @param \PhpTabs\Model\EffectTremolo $tremolo
+   * @param int $tremolo
    */
   public function setTremolo($tremolo)
   {
