@@ -4486,7 +4486,18 @@
                                                                         "tremoloBar": null,
                                                                         "harmonic": null,
                                                                         "grace": null,
-                                                                        "trill": null,
+                                                                        "trill": {
+                                                                            "fret": 5,
+                                                                            "duration": {
+                                                                                "value": 16,
+                                                                                "dotted": false,
+                                                                                "doubleDotted": false,
+                                                                                "divisionType": {
+                                                                                    "enters": 1,
+                                                                                    "times": 1
+                                                                                }
+                                                                            }
+                                                                        },
                                                                         "tremoloPicking": null,
                                                                         "vibrato": false,
                                                                         "deadNote": false,
@@ -4998,7 +5009,17 @@
                                                                         "harmonic": null,
                                                                         "grace": null,
                                                                         "trill": null,
-                                                                        "tremoloPicking": null,
+                                                                        "tremoloPicking": {
+                                                                            "duration": {
+                                                                                "value": 8,
+                                                                                "dotted": false,
+                                                                                "doubleDotted": false,
+                                                                                "divisionType": {
+                                                                                    "enters": 1,
+                                                                                    "times": 1
+                                                                                }
+                                                                            }
+                                                                        },
                                                                         "vibrato": false,
                                                                         "deadNote": false,
                                                                         "slide": false,
