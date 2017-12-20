@@ -149,6 +149,17 @@ class Tablature
   }
 
   /**
+   * Import a representation to PhpTabs model
+   * 
+   * @param  array $data
+   * @return \PhpTabs\Tablature
+   */
+  public function import(array $data)
+  {
+    return $this;
+  }
+
+  /**
    * Render a song into a string
    * 
    * @param  string $format

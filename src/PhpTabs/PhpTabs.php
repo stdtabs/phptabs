@@ -14,6 +14,7 @@ namespace PhpTabs;
 use Exception;
 use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
+use PhpTabs\Component\Importer;
 use PhpTabs\Component\Reader;
 use PhpTabs\Component\Tablature;
 
@@ -29,21 +30,15 @@ class PhpTabs
    */
   public function __construct($pathname = null)
   {
-    try
-    {
-      if (null === $pathname)
-      {
+    try {
+      if (null === $pathname) {
         $this->setTablature(new Tablature());
-      }
-      else
-      {
+      } else {
         $reader = new Reader(new File($pathname));
 
         $this->setTablature($reader->getTablature());
       }
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $message = sprintf('%s in %s on line %d%s'
           , $e->getMessage()
           , $e->getFile()
@@ -52,8 +47,7 @@ class PhpTabs
       );
 
       # if debug mode, an error kills the process
-      if (Config::get('debug'))
-      {
+      if (Config::get('debug')) {
         trigger_error($message, E_USER_ERROR);
 
         return;
@@ -85,17 +79,32 @@ class PhpTabs
   }
 
   /**
+   * Import a tablature from an array
+   * 
+   * @param  array $data A set of data that has been exported
+   * @return \PhpTabs\PhpTabs
+   */
+  public function import(array $data)
+  {
+    $importer = new Importer($data);
+
+    $this->getTablature()->setSong(
+      $importer->getSong()
+    );
+
+    return $this;
+  }
+
+  /**
    * Overloads with $tablature methods
    * 
-   * @param string $name A method name
-   * @param array $arguments Some arguments for the method 
-   *
+   * @param  string $name A method name
+   * @param  array  $arguments Some arguments for the method
    * @return mixed
    */
   public function __call($name, array $arguments = [])
   {
-    switch (count($arguments))
-    {
+    switch (count($arguments)) {
       case 0:
         return $this->tablature->$name();
 
