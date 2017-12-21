@@ -35,12 +35,11 @@ class PhpTabsFromJsonTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @dataProvider getExceptionScenarios
+   * @dataProvider      getExceptionScenarios
+   * @expectedException Exception
    */
   public function testExceptionScenario($filename)
   {
-    $this->expectException(Exception::class);
-
     (new PhpTabs())->fromJson($filename);
   }
 }
