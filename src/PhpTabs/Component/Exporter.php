@@ -57,7 +57,14 @@ class Exporter extends ExporterBase
       case 'xml':
         return (new Xml())->serialize($this->export());
       case 'json':
-        return json_encode($this->export(), $options);
+        $flags = is_int($options) ? $options : 0;
+        // >=PHP 5.5.0, export 
+        // Skip JSON error 5 Malformed UTF-8 characters, 
+        // possibly incorrectly encoded
+        if (defined('JSON_PARTIAL_OUTPUT_ON_ERROR')) {
+          $flags |= JSON_PARTIAL_OUTPUT_ON_ERROR;
+        }
+        return json_encode($this->export(), $flags);
       case 'var_export':
         return var_export($this->export(), true);
       case 'serialize':
