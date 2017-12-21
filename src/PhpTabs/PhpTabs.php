@@ -98,6 +98,69 @@ class PhpTabs
   }
 
   /**
+   * Import a tablature from a JSON file
+   * 
+   * @param  string $filename
+   * @return \PhpTabs\PhpTabs
+   * @throws \Exception if file is not readable or if JSON decode failed
+   */
+  public function fromJson($filename)
+  {
+    $this->checkFile($filename);
+
+    $data = json_decode(
+      file_get_contents($filename),
+      true
+    );
+
+    // JSON decoding error
+    if (json_last_error() !== JSON_ERROR_NONE) {
+      $message = sprintf(
+        'JSON_DECODE_FAILURE: Error number %d - %s', 
+        json_last_error(),
+        json_last_error_msg()
+      );
+
+      throw new Exception($message);
+    }
+
+    // Import
+    return $this->import($data);
+  }
+
+  /**
+   * Check that given filename is a string and is readable
+   * 
+   * @param mixed $filename
+   * @throws \Exception if filename is not a string 
+   *  or if filename is not a file
+   *  or if file is not readable
+   */
+  private function checkFile($filename)
+  {
+    // Must be a string
+    if (!is_string($filename)) {
+      throw new Exception(
+        "Filename must be a string. Given: " . gettype($filename)
+      );
+    }
+
+    // Must be readable
+    if (!is_readable($filename)) {
+      throw new Exception(
+        "Filename '$filename' is not readable"
+      );
+    }
+
+    // Must be a file
+    if (!is_file($filename)) {
+      throw new Exception(
+        "Filename '$filename' must be a file"
+      );
+    }
+  }
+
+  /**
    * Overloads with $tablature methods
    * 
    * @param  string $name A method name
