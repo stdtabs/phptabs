@@ -71,11 +71,14 @@ class PhpTabs
   /**
    * Sets the tablature instance
    *
-   * @param \PhpTabs\Component\Tablature $tablature a tablature instance
+   * @param  \PhpTabs\Component\Tablature $tablature a tablature instance
+   * @return \PhpTabs\PhpTabs
    */
   protected function setTablature(Tablature $tablature)
   {
     $this->tablature = $tablature;
+
+    return $this;
   }
 
   /**
@@ -88,9 +91,8 @@ class PhpTabs
   {
     $importer = new Importer($data);
 
-    $this->getTablature()->setSong(
-      $importer->getSong()
-    );
+    $this ->setTablature(new Tablature())
+          ->setSong($importer->getSong());
 
     return $this;
   }
