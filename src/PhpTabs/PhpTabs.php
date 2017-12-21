@@ -118,7 +118,10 @@ class PhpTabs
       $message = sprintf(
         'JSON_DECODE_FAILURE: Error number %d - %s', 
         json_last_error(),
-        json_last_error_msg()
+        function_exists('json_last_error_msg') # >= PHP 5.5.0
+          ? json_last_error_msg()
+          : 'See http://php.net/manual/en/function.json-last-error.php '
+            . 'with your error code for more information'
       );
 
       throw new Exception($message);
