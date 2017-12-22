@@ -42,4 +42,46 @@ class PhpTabsFromJsonTest extends PHPUnit_Framework_TestCase
   {
     (new PhpTabs())->fromJson($filename);
   }
+
+  /**
+   * Provide all JSON & source files
+   */
+  public function getAllSampleTabs()
+  {
+    $files = glob(
+      PHPTABS_TEST_BASEDIR 
+      . '/samples/testS*'
+    );
+
+    $filenames = [];
+
+    foreach ($files as $filename) {
+      $jsonFilename = str_replace(
+        '/samples/',
+        '/files/json/',
+        $filename
+      ) . '.json';
+      $filenames[] = [$filename, $jsonFilename];
+    }
+
+    return $filenames;
+  }
+
+  /**
+   * Test simple tabs bijection
+   * 
+   * @dataProvider getAllSampleTabs()
+   */
+  public function testSimpleTabsBijection($filename, $jsonFilename)
+  {
+    $tabs     = new PhpTabs($filename);
+    $expected = $tabs->export();
+    $import   = (new PhpTabs())->fromJson($jsonFilename);
+
+    $this->assertEquals(
+      $expected,
+      $import->export(),
+      "Simple tabs '$filename' fromJson() fails"
+    );
+  }
 }

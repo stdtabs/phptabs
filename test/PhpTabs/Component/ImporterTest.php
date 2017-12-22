@@ -37,7 +37,11 @@ class ImporterTest extends PHPUnit_Framework_TestCase
     $expected = $tabs->export();
     $result   = $tabs->import($tabs->export())->export();
 
-    $this->assertEquals($expected, $result, 'Empty tabs export-import fails');
+    $this->assertEquals(
+      $expected,
+      $result,
+      'Empty tabs export-import fails'
+    );
   }
 
   /**
@@ -70,7 +74,11 @@ class ImporterTest extends PHPUnit_Framework_TestCase
     $expected = $tabs->export();
     $import   = (new PhpTabs())->import($expected);
 
-    $this->assertEquals($expected, $import->export(), "Simple tabs '$filename' export-import fails");
+    $this->assertEquals(
+      $expected,
+      $import->export(),
+      "Simple tabs '$filename' export-import fails"
+    );
   }
 
   /**

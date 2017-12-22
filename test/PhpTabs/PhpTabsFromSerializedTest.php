@@ -42,4 +42,46 @@ class PhpTabsFromSerializedTest extends PHPUnit_Framework_TestCase
   {
     (new PhpTabs())->fromSerialized($filename);
   }
+
+  /**
+   * Provide all serialized & source files
+   */
+  public function getAllSampleTabs()
+  {
+    $files = glob(
+      PHPTABS_TEST_BASEDIR 
+      . '/samples/testS*'
+    );
+
+    $filenames = [];
+
+    foreach ($files as $filename) {
+      $serFilename = str_replace(
+        '/samples/',
+        '/files/serialized/',
+        $filename
+      ) . '.ser';
+      $filenames[] = [$filename, $serFilename];
+    }
+
+    return $filenames;
+  }
+
+  /**
+   * Test simple tabs bijection
+   * 
+   * @dataProvider getAllSampleTabs()
+   */
+  public function testSimpleTabsBijection($filename, $serFilename)
+  {
+    $tabs     = new PhpTabs($filename);
+    $expected = $tabs->export();
+    $import   = (new PhpTabs())->fromSerialized($serFilename);
+
+    $this->assertEquals(
+      $expected,
+      $import->export(),
+      "Simple tabs '$filename' fromSerialized() fails"
+    );
+  }
 }
