@@ -190,7 +190,7 @@ class MeasureHeader
   /**
    * @param \PhpTabs\Music\Marker $marker
    */
-  public function setMarker(Marker $marker)
+  public function setMarker(Marker $marker = null)
   {
     $this->marker = $marker;
   }
@@ -258,7 +258,7 @@ class MeasureHeader
    */
   public function __clone()
   {
-    $measureHeader = new MesureHeader();
+    $measureHeader = new MeasureHeader();
     $measureHeader->copyFrom($this);
     return $measureHeader;
   }
