@@ -102,7 +102,7 @@ class PhpTabs
    * 
    * @param  string $filename
    * @return \PhpTabs\PhpTabs
-   * @throws \Exception if file is not readable or if JSON decode failed
+   * @throws \Exception if JSON decode failed
    */
   public function fromJson($filename)
   {
@@ -127,7 +127,35 @@ class PhpTabs
       throw new Exception($message);
     }
 
-    // Import
+    return $this->import($data);
+  }
+
+  /**
+   * Import a tablature from a PHP serialized file
+   * 
+   * @param  string $filename
+   * @return \PhpTabs\PhpTabs
+   * @throws \Exception if unserialize method failed
+   */
+  public function fromSerialized($filename)
+  {
+    $this->checkFile($filename);
+
+    $data = @unserialize( # Skip warning
+      file_get_contents($filename),
+      ['allowed_classes' => false]
+    );
+
+    // unserialize failed
+    if ($data === false) {
+      $message = sprintf(
+        'UNSERIALIZE_FAILURE: given filename %s', 
+        $filename
+      );
+
+      throw new Exception($message);
+    }
+
     return $this->import($data);
   }
 
