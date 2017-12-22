@@ -52,6 +52,7 @@ class Exporter extends ExporterBase
   {
     switch ($format)
     {
+      case null:
       case 'array':
         return $this->exportSong();
       case 'xml':
