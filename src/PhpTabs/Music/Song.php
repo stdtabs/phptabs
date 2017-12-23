@@ -72,15 +72,12 @@ class Song extends SongBase
    */
   public function removeTrack(Track $track)
   {
-    foreach ($this->tracks as $k => $v)
-    {
-      if ($v->getNumber() == $track->getNumber())
-      {
-        array_splice($this->tracks, $k, 1);	
+    foreach ($this->tracks as $index => $track) {
+      if ($track->getNumber() == $track->getNumber()) {
+        array_splice($this->tracks, $index, 1);
+        break;
       }
     }
-
-    $track->clear();
   }
 
   /**
@@ -108,12 +105,9 @@ class Song extends SongBase
    */
   public function addChannel($index, $channel = null)
   {
-    if ($index instanceof Channel)
-    {
+    if ($index instanceof Channel) {
       $this->channels[] = $index;
-    }
-    elseif (is_int($index))
-    {
+    } elseif (is_int($index)) {
       array_splice($this->channels, $index, 0, $channel);
     }
   }
@@ -132,11 +126,10 @@ class Song extends SongBase
    */
   public function removeChannel(Channel $channel)
   {
-    foreach ($this-channels as $k => $v)
-    {
-      if ($v == $channel)
-      {
-        array_splice($this->channels, $k, 1);
+    foreach ($this-channels as $index => $chan) {
+      if ($chan == $channel) {
+        array_splice($this->channels, $index, 1);
+        break;
       }
     }
   }
@@ -158,10 +151,8 @@ class Song extends SongBase
   {
     $channels = $this->getChannels();
 
-    foreach ($channels as $channel)
-    {
-      if ($channel->getChannelId() == $channelId)
-      {
+    foreach ($channels as $channel) {
+      if ($channel->getChannelId() == $channelId) {
         return $channel;
       }
     }
@@ -184,6 +175,7 @@ class Song extends SongBase
   {
     $song = new Song();
     $song->copyFrom($this);
+
     return $song;
   }
 }
