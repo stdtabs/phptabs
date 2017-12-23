@@ -20,8 +20,15 @@ use PhpTabs\Component\Serializer\Yaml;
 
 class Exporter extends ExporterBase
 {
-  /** @var \Phptabs\Model\Song */
+  /**
+   * @var \Phptabs\Model\Song
+   */
   protected $song;
+
+  /**
+   * @var array $filters
+   */
+  protected $filters = [];
 
   /**
    * @param \PhpTabs\Component\Tablature The tablature to export
@@ -81,5 +88,16 @@ class Exporter extends ExporterBase
         throw new Exception($message);
         break;
     }
+  }
+
+  /**
+   * Set a filter before exporting
+   * 
+   * @param string $type
+   * @param mixed  $filter
+   */
+  public function setFilter($type, $filter)
+  {
+    $this->filters[$type] = $filter;
   }
 }

@@ -12,6 +12,7 @@
 namespace PhpTabs\Component;
 
 use Exception;
+use PhpTabs\PhpTabs;
 use PhpTabs\Music\Channel;
 use PhpTabs\Music\ChannelNames;
 use PhpTabs\Music\Song;
@@ -88,15 +89,13 @@ class Tablature
    */
   public function getInstruments()
   {
-    if (!($count = $this->countChannels()))
-    {
+    if (!($count = $this->countChannels())) {
       return array();
     }
 
     $instruments = array();
 
-    for ($i = 0; $i < $count; $i++)
-    {
+    for ($i = 0; $i < $count; $i++) {
       $instruments[$i] = array(
         'id'    => $this->getChannel($i)->getProgram(),
         'name'  => ChannelNames::$defaultNames[$this->getChannel($i)->getProgram()]
@@ -119,8 +118,7 @@ class Tablature
   /**
    * Gets an instrument by channelId
    *
-   * @param int $index
-   * 
+   * @param  int $index
    * @return array
    */
   public function getInstrument($index)
@@ -135,17 +133,35 @@ class Tablature
   /**
    * Export a song into an array
    * 
-   * @param string $format
-   * @param mixed  $options Flags for some exported formats
-   * 
+   * @param  string $format
+   * @param  mixed  $options Flags for some exported formats
    * @return array
    */
   public function export($format = null, $options = null)
   { 
     $exporter = new Exporter($this);
 
-    return null === $format
-      ? $exporter->export() : $exporter->export($format, $options);
+    return $exporter->export($format, $options);
+  }
+
+  /**
+   * Export one track + song context
+   * 
+   * @param  int    $index   Target track
+   * @param  string $format  Desired format
+   * @param  int    $options Export options
+   * @return string|array
+   */
+  public function exportTrack($index, $format = null, $options = null)
+  {
+    if (null === $this->getSong()->getTrack($index)) {
+      throw new Exception("Track n°$index does not exist");
+    }
+
+    $exporter = new Exporter($this);
+    $exporter->setFilter('trackIndex', $index);
+
+    return $exporter->export($format, $options);
   }
 
   /**
@@ -162,19 +178,17 @@ class Tablature
   /**
    * Writes a song into a file
    * 
-   * @param string $filename
-   * 
+   * @param  string $filename
    * @return mixed bool|string
-   * 
    * @throws \Exception If tablature container contains error
    */
   public function save($filename = null)
   {
-    if ($this->hasError())
-    {
-      $message = sprintf('%s(): %s'
-        , __METHOD__
-        , 'Current data cannot be saved because parsing has encountered an error'
+    if ($this->hasError()) {
+      $message = sprintf(
+        '%s(): %s',
+        __METHOD__,
+        'Current data cannot be saved because parsing has encountered an error'
       );
 
       throw new Exception($message);
@@ -186,14 +200,12 @@ class Tablature
   /**
    * Builds a binary starting from Music DOM
    *
-   * @param string $format
-   * 
+   * @param  string $format
    * @return string A binary chain
    */
   public function convert($format = null)
   {
-    if (null === $format)
-    {
+    if (null === $format) {
       $format = $this->getFormat();
     }
 
@@ -203,26 +215,27 @@ class Tablature
   /**
    * Overloads with $song methods
    * 
-   * @param string $name method
-   * @param array $arguments
-   * 
+   * @param  string $name method
+   * @param  array $arguments
    * @return mixed
    */
   public function __call($name, $arguments)
   {
-    if (!method_exists($this->song, $name))
-    {
-      $message = sprintf('Song has no method called "%s"', $name);
+    if (!method_exists($this->song, $name)) {
+      $message = sprintf(
+        'Song has no method called "%s"',
+        $name
+      );
 
       trigger_error($message, E_USER_ERROR);
     }
 
-    switch (count($arguments))
-    {
+    switch (count($arguments)) {
       case 0: return $this->song->$name();
       case 1: return $this->song->$name($arguments[0]);
       default:
-        $message = sprintf('%s method does not support %d arguments',
+        $message = sprintf(
+            '%s method does not support %d arguments',
             __METHOD__,
             count($arguments)
         );

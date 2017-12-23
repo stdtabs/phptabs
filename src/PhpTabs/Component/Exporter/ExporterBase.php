@@ -33,15 +33,13 @@ abstract class ExporterBase extends ExporterEffects
 
     $countChannels = $this->song->countChannels();
 
-    for ($i = 0; $i < $countChannels; $i++)
-    {
+    for ($i = 0; $i < $countChannels; $i++) {
       $content['channels'][$i] = $this->exportChannel($i);
     }
 
     $countMeasureHeaders = $this->song->countMeasureHeaders();
 
-    for ($i = 0; $i < $countMeasureHeaders; $i++)
-    {
+    for ($i = 0; $i < $countMeasureHeaders; $i++) {
       $content['measureHeaders'][$i] = $this->exportMeasureHeader(
         $this->song->getMeasureHeader($i)
       );
@@ -49,9 +47,14 @@ abstract class ExporterBase extends ExporterEffects
 
     $countTracks = $this->song->countTracks();
 
-    for ($i = 0; $i < $countTracks; $i++)
-    {
-      $content['tracks'][$i] = $this->exportTrack($i);
+    for ($i = 0; $i < $countTracks; $i++) {
+      if (isset($this->filters['trackIndex'])
+        && $this->filters['trackIndex'] !== $i
+      ) {
+        continue;
+      }
+
+      $content['tracks'][] = $this->exportTrack($i);
     }
 
     return array('song' => $content);
