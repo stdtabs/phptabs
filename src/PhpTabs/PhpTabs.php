@@ -141,10 +141,14 @@ class PhpTabs
   {
     $this->checkFile($filename);
 
-    $data = @unserialize( # Skip warning
-      file_get_contents($filename),
-      ['allowed_classes' => false]
-    );
+    $data = version_compare(PHP_VERSION, '7.0.0', '>=')
+      ? @unserialize( # Skip warning
+          file_get_contents($filename),
+          ['allowed_classes' => false]
+      )
+      : @unserialize( # Skip warning
+          file_get_contents($filename)
+      );
 
     // unserialize failed
     if ($data === false) {
