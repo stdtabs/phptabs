@@ -89,7 +89,7 @@ class Track
   public function getMeasure($index)
   {
     return isset($this->measures[$index])
-        ? $this->measures[$index] : null;
+         ? $this->measures[$index] : null;
   }
 
   /**
@@ -280,8 +280,7 @@ class Track
   {
     $measureCount = $this->countMeasures();
     
-    for ($i = 0; $i < $measureCount; $i++)
-    {
+    for ($i = 0; $i < $measureCount; $i++) {
       $measure = $this->getMeasure($i);
       $measure->clear();
     }
@@ -296,15 +295,14 @@ class Track
   public function __clone()
   {
     $track = new Track();
-    $track->copyFrom($this->getSong(), $this);
+    $track->copyFrom($this);
     return $track;
   }
 
   /**
-   * @param \PhpTabs\Music\Song $song
    * @param \PhpTabs\Music\Track $track
    */
-  public function copyFrom(Song $song, Track $track)
+  public function copyFrom(Track $track)
   {
     $this->clear();
     $this->setNumber($track->getNumber());
@@ -313,18 +311,16 @@ class Track
     $this->setSolo($track->isSolo());
     $this->setMute($track->isMute());
     $this->setChannelId($track->getChannelId());
-    $this->getColor()->copyFrom($track->getColor());
-    $this->getLyrics()->copyFrom($track->getLyrics());
+    $this->getColor()->copyFrom(clone $track->getColor());
+    $this->getLyrics()->copyFrom(clone $track->getLyrics());
 
-    for ($i = 0; $i < $track->countStrings(); $i++)
-    {
-      $this->strings[$i] = clone $track->getString($i);
+    for ($i = 0; $i < $track->countStrings(); $i++) {
+      $this->strings[$i] = clone $track->getString($i + 1);
     }
 
-    for ($i = 0; $i < $track->countMeasures(); $i++)
-    {
-      $measure = $track->getMeasure($i);
-      $this->addMeasure(clone $measure($song->getMeasureHeader($i)));
+    for ($i = 0; $i < $track->countMeasures(); $i++) {
+      $measure = clone $track->getMeasure($i);
+      $this->addMeasure(clone $measure);
     }
   }
 }
