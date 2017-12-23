@@ -195,7 +195,7 @@ class Measure
   }
 
   /**
-   * @return int
+   * @return \PhpTabs\Music\Tempo
    */
   public function getTempo()
   {

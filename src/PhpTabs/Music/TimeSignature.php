@@ -77,8 +77,7 @@ class TimeSignature
   }
 
   /**
-   * @param \PhpTabs\Music\TimeSignature $timeSignature
-   *
+   * @param  \PhpTabs\Music\TimeSignature $timeSignature
    * @return bool
    */
   public function isEqual(TimeSignature $timeSignature)
