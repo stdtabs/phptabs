@@ -74,7 +74,7 @@ abstract class IOFactory
    * @return \PhpTabs\PhpTabs
    * @throws \Exception if JSON decode failed
    */
-  public function fromJsonFile($filename)
+  public static function fromJsonFile($filename)
   {
     self::checkFile($filename);
 
