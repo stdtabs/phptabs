@@ -106,28 +106,7 @@ class PhpTabs
    */
   public function fromJson($filename)
   {
-    $this->checkFile($filename);
-
-    $data = json_decode(
-      file_get_contents($filename),
-      true
-    );
-
-    // JSON decoding error
-    if (json_last_error() !== JSON_ERROR_NONE) {
-      $message = sprintf(
-        'JSON_DECODE_FAILURE: Error number %d - %s', 
-        json_last_error(),
-        function_exists('json_last_error_msg') # >= PHP 5.5.0
-          ? json_last_error_msg()
-          : 'See http://php.net/manual/en/function.json-last-error.php '
-            . 'with your error code for more information'
-      );
-
-      throw new Exception($message);
-    }
-
-    return $this->import($data);
+    return IOFactory::fromJsonFile($filename);
   }
 
   /**
@@ -139,60 +118,7 @@ class PhpTabs
    */
   public function fromSerialized($filename)
   {
-    $this->checkFile($filename);
-
-    $data = version_compare(PHP_VERSION, '7.0.0', '>=')
-      ? @unserialize( # Skip warning
-          file_get_contents($filename),
-          ['allowed_classes' => false]
-      )
-      : @unserialize( # Skip warning
-          file_get_contents($filename)
-      );
-
-    // unserialize failed
-    if ($data === false) {
-      $message = sprintf(
-        'UNSERIALIZE_FAILURE: given filename %s', 
-        $filename
-      );
-
-      throw new Exception($message);
-    }
-
-    return $this->import($data);
-  }
-
-  /**
-   * Check that given filename is a string and is readable
-   * 
-   * @param mixed $filename
-   * @throws \Exception if filename is not a string 
-   *  or if filename is not a file
-   *  or if file is not readable
-   */
-  private function checkFile($filename)
-  {
-    // Must be a string
-    if (!is_string($filename)) {
-      throw new Exception(
-        "Filename must be a string. Given: " . gettype($filename)
-      );
-    }
-
-    // Must be readable
-    if (!is_readable($filename)) {
-      throw new Exception(
-        "Filename '$filename' is not readable"
-      );
-    }
-
-    // Must be a file
-    if (!is_file($filename)) {
-      throw new Exception(
-        "Filename '$filename' must be a file"
-      );
-    }
+    return IOFactory::fromSerializedFile($filename);
   }
 
   /**
