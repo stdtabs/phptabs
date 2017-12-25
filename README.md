@@ -25,9 +25,9 @@ Any questions?
 Table of contents
 =================
 
-__ The documentation below contains only basic examples. If you want to 
+__The documentation below contains only basic examples. If you want to 
 fully exploit the library, read the 
-[PhpTabs Manual](https://stdtabs.github.io/). __
+[PhpTabs Manual](https://stdtabs.github.io/).__
 
 - [Requirements](#requirements)
 - [Installation](#installation)
