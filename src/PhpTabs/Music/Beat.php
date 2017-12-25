@@ -24,18 +24,17 @@ class Beat
   /** @const MAX_VOICES Number of voices to set */
   const MAX_VOICES = 2;
 
-  private $start;
+  private $start = Duration::QUARTER_TIME;
   private $measure;
   private $chord;
   private $text;
-  private $voices;
+  private $voices = [];
   private $stroke;
 
   public function __construct()
   {
-    $this->start  = Duration::QUARTER_TIME;
     $this->stroke = new Stroke();
-    $this->voices = array();
+
     for ($i = 0; $i < Beat::MAX_VOICES; $i++) {
       $this->setVoice($i, new Voice($i));
     }
@@ -184,12 +183,10 @@ class Beat
    */
   public function isRestBeat()
   {
-    for ($v = 0; $v < $this->countVoices(); $v++)
-    {
+    for ($v = 0; $v < $this->countVoices(); $v++) {
       $voice = $this->getVoice($v);
 
-      if (!$voice->isEmpty() && !$voice->isRestVoice())
-      {
+      if (!$voice->isEmpty() && !$voice->isRestVoice()) {
         return false;
       }
     }
@@ -206,18 +203,15 @@ class Beat
     $beat->setStart($this->getStart());
     $beat->getStroke()->copyFrom($this->getStroke());
 
-    for ($i = 0; $i < count($this->voices); $i++)
-    {
+    for ($i = 0; $i < count($this->voices); $i++) {
       $beat->setVoice($i, clone $this->voices[$i]);
     }
     
-    if ($this->chord !== null)
-    {
+    if ($this->chord !== null) {
       $beat->setChord(clone $this->chord);
     }
 
-    if ($this->text !== null)
-    {
+    if ($this->text !== null) {
       $beat->setText(clone $this->text);
     }
 
