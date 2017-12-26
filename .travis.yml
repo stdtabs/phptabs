@@ -18,10 +18,18 @@ php:
   - hhvm
 
 install:
-  - composer install
+  - composer install --prefer-source --no-interaction
+  # PHPUnit
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "5.4" ]]; then composer require phpunit/phpunit 4.8.*; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "5.5" ]]; then composer require phpunit/phpunit 4.8.*; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "5.6" ]]; then composer require phpunit/phpunit 5.7.*; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]; then composer require phpunit/phpunit 5.7.*; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then composer require phpunit/phpunit 6.1.*; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:4} == "hhvm" ]]; then composer require phpunit/phpunit; fi
+- ./vendor/bin/phpunit --version
 
 script: ./vendor/bin/phpunit -c phpunit.xml.dist
 
 after_script:
   ## Code climate
-  - ./vendor/bin/test-reporter
+ - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then ./vendor/bin/test-reporter; fi
