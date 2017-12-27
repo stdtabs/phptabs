@@ -150,17 +150,18 @@ abstract class IOFactory
   /**
    * Check that given filename is a string and is readable
    * 
-   * @param mixed $filename
+   * @param  mixed $filename
    * @throws \Exception if filename is not a string 
    *  or if filename is not a file
    *  or if file is not readable
    */
-  private static function checkFile($filename)
+  public static function checkFile($filename)
   {
     // Must be a string
     if (!is_string($filename)) {
       throw new Exception(
-        "FILE_ERROR Filename must be a string. Given: " . gettype($filename)
+        "FILE_ERROR Filename must be a string. Given: "
+        . gettype($filename)
       );
     }
 
