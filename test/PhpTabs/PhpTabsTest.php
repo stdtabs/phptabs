@@ -13,7 +13,7 @@ namespace PhpTabsTest\Component;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
-use PhpTabs\PhpTabs;
+use PhpTabs\IOFactory;
 
 /**
  * Tests PhpTabs component
@@ -26,6 +26,18 @@ class PhpTabsTest extends PHPUnit_Framework_TestCase
   public function testException()
   {
     # Not a valid number of params
-    (new PhpTabs())->export('param1', 'param2', 'param3');
+    IOFactory::create()->export('param1', 'param2', 'param3');
+  }
+
+  /**
+   * Test getVersion()
+   */
+  public function testGetVersion()
+  {
+    $this->assertRegExp(
+      '/\d.\d.\d/',
+      IOFactory::create()->getVersion(),
+      'getVersion failed'
+    );
   }
 }

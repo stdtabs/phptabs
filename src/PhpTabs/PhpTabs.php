@@ -39,11 +39,12 @@ class PhpTabs
         $this->setTablature($reader->getTablature());
       }
     } catch (Exception $e) {
-      $message = sprintf('%s in %s on line %d%s'
-          , $e->getMessage()
-          , $e->getFile()
-          , $e->getLine()
-          , PHP_EOL . $e->getTraceAsString() . PHP_EOL
+      $message = sprintf(
+        "%s in %s on line %d\n%s\n",
+        $e->getMessage(),
+        $e->getFile(),
+        $e->getLine(),
+        $e->getTraceAsString()
       );
 
       # if debug mode, an error kills the process
@@ -95,6 +96,30 @@ class PhpTabs
           ->setSong($importer->getSong());
 
     return $this;
+  }
+
+  /**
+   * Get PhpTabs version
+   * 
+   * @return string
+   */
+  public function getVersion()
+  {
+    $filename = dirname(dirname(__DIR__)) . '/composer.json';
+
+    IOFactory::checkFile($filename);
+
+    $composer = json_decode(
+      file_get_contents($filename)
+    );
+
+    if (json_last_error() === JSON_ERROR_NONE) {
+      if (isset($composer->version) && is_string($composer->version)) {
+        return $composer->version;
+      }
+    }
+
+    return 'Undefined';
   }
 
   /**
