@@ -13,12 +13,12 @@ namespace PhpTabsTest;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
-use PhpTabs\PhpTabs;
+use PhpTabs\IOFactory;
 
 /**
- * Tests PhpTabs::fromSerialized()
+ * Tests IOFactory::fromSerializedFile()
  */
-class PhpTabsFromSerializedTest extends PHPUnit_Framework_TestCase
+class IOFactoryFromSerializedFileTest extends PHPUnit_Framework_TestCase
 {
   /**
    * A provider for various scenarios that throw \Exception 
@@ -40,7 +40,7 @@ class PhpTabsFromSerializedTest extends PHPUnit_Framework_TestCase
    */
   public function testExceptionScenario($filename)
   {
-    (new PhpTabs())->fromSerialized($filename);
+    IOFactory::fromSerializedFile($filename);
   }
 
   /**
@@ -74,14 +74,14 @@ class PhpTabsFromSerializedTest extends PHPUnit_Framework_TestCase
    */
   public function testSimpleTabsBijection($filename, $serFilename)
   {
-    $tabs     = new PhpTabs($filename);
+    $tabs     = IOFactory::fromFile($filename);
     $expected = $tabs->export();
-    $import   = (new PhpTabs())->fromSerialized($serFilename);
+    $import   = IOFactory::fromSerializedFile($serFilename);
 
     $this->assertEquals(
       $expected,
       $import->export(),
-      "Simple tabs '$filename' fromSerialized() fails"
+      "Simple tabs '$filename' fromSerializedFile() fails"
     );
   }
 }

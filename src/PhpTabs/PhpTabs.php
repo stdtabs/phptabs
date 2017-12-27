@@ -98,30 +98,6 @@ class PhpTabs
   }
 
   /**
-   * Import a tablature from a JSON file
-   * 
-   * @param  string $filename
-   * @return \PhpTabs\PhpTabs
-   * @throws \Exception if JSON decode failed
-   */
-  public function fromJson($filename)
-  {
-    return IOFactory::fromJsonFile($filename);
-  }
-
-  /**
-   * Import a tablature from a PHP serialized file
-   * 
-   * @param  string $filename
-   * @return \PhpTabs\PhpTabs
-   * @throws \Exception if unserialize method failed
-   */
-  public function fromSerialized($filename)
-  {
-    return IOFactory::fromSerializedFile($filename);
-  }
-
-  /**
    * Overloads with $tablature methods
    * 
    * @param  string $name A method name
@@ -133,21 +109,18 @@ class PhpTabs
     switch (count($arguments)) {
       case 0:
         return $this->tablature->$name();
-
       case 1:
         return $this->tablature->$name($arguments[0]);
-
       case 2:
         return $this->tablature->$name($arguments[0], $arguments[1]);
-
-      default:
-        $message = sprintf(
-          '%s method does not support %d arguments',
-          __METHOD__,
-          count($arguments)
-        );
-
-        trigger_error($message, E_USER_ERROR);
     }
+
+    $message = sprintf(
+      '%s method does not support %d arguments',
+      __METHOD__,
+      count($arguments)
+    );
+
+    trigger_error($message, E_USER_ERROR);
   }
 }

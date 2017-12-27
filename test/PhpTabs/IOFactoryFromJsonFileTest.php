@@ -13,12 +13,12 @@ namespace PhpTabsTest;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
-use PhpTabs\PhpTabs;
+use PhpTabs\IOFactory;
 
 /**
- * Tests PhpTabs::fromJson()
+ * Tests IOFactory::fromJsonFile()
  */
-class PhpTabsFromJsonTest extends PHPUnit_Framework_TestCase
+class IOFactoryFromJsonFileTest extends PHPUnit_Framework_TestCase
 {
   /**
    * A provider for various scenarios that throw \Exception 
@@ -40,7 +40,7 @@ class PhpTabsFromJsonTest extends PHPUnit_Framework_TestCase
    */
   public function testExceptionScenario($filename)
   {
-    (new PhpTabs())->fromJson($filename);
+    IOFactory::fromJsonFile($filename);
   }
 
   /**
@@ -74,14 +74,14 @@ class PhpTabsFromJsonTest extends PHPUnit_Framework_TestCase
    */
   public function testSimpleTabsBijection($filename, $jsonFilename)
   {
-    $tabs     = new PhpTabs($filename);
+    $tabs     = IOFactory::fromFile($filename);
     $expected = $tabs->export();
-    $import   = (new PhpTabs())->fromJson($jsonFilename);
+    $import   = IOFactory::fromJsonFile($jsonFilename);
 
     $this->assertEquals(
       $expected,
       $import->export(),
-      "Simple tabs '$filename' fromJson() fails"
+      "Simple tabs '$filename' fromJsonFile() fails"
     );
   }
 }
