@@ -92,5 +92,12 @@ abstract class ParserBase
 
       throw new Exception($message);
     }
+    
+    throw new Exception(
+      sprintf(
+        "Method '%s()' is not supported",
+        $name
+      )
+    );
   }
 }
