@@ -67,14 +67,13 @@ class MidiReader extends MidiReaderBase
 
     $countTracks = $this->sequence->countTracks();
 
-    for ($i = 0; $i < $countTracks; $i++)
-    {
-      $track = $this->sequence->getTrack($i);
-      $trackNumber = $this->getNextTrackNumber();
-      $events = $track->countEvents();
+    for ($i = 0; $i < $countTracks; $i++) {
 
-      for ($j = 0; $j < $events; $j++)
-      {
+      $track       = $this->sequence->getTrack($i);
+      $trackNumber = $this->getNextTrackNumber();
+      $events      = $track->countEvents();
+
+      for ($j = 0; $j < $events; $j++) {
         $event = $track->get($j);
 
         $this->parseMessage($trackNumber, $event->getTick(), $event->getMessage());
@@ -106,7 +105,8 @@ class MidiReader extends MidiReaderBase
   public function getTablature()
   {
     return isset($this->tablature)
-      ? $this->tablature : new Tablature();
+      ? $this->tablature 
+      : new Tablature();
   }
 
   /**
@@ -116,8 +116,7 @@ class MidiReader extends MidiReaderBase
    */
   private function setTablature(Song $song)
   {
-    if (!isset($this->tablature))
-    {
+    if (!isset($this->tablature)) {
       $this->tablature = new Tablature();
     }
 
@@ -143,21 +142,21 @@ class MidiReader extends MidiReaderBase
     $this->checkTracks();
 
     $headerCount = count($this->headers);
+    $trackCount  = count($this->tracks);
 
-    for ($i = 0; $i < count($this->tracks); $i++)
-    {
+    for ($i = 0; $i < $trackCount; $i++) {
+
       $track = $this->tracks[$i];
       $track->setSong($this->tablature->getSong());
 
-      while ($track->countMeasures() < $headerCount)
-      {
+      while ($track->countMeasures() < $headerCount) {
+
         $start = Duration::QUARTER_TIME;
 
         $lastMeasure = $track->countMeasures() > 0
             ? $track->getMeasure($track->countMeasures() - 1) : null;
 
-        if ($lastMeasure !== null)
-        {
+        if ($lastMeasure !== null) {
           $start = $lastMeasure->getStart() + $lastMeasure->getLength();
         }
 
@@ -165,8 +164,7 @@ class MidiReader extends MidiReaderBase
       }
     }
 
-    if (!count($this->headers) || !count($this->tracks))
-    {
+    if (!count($this->headers) || !count($this->tracks)) {
       throw new Exception('Empty Song');
     }
   }
@@ -549,39 +547,33 @@ class MidiReader extends MidiReaderBase
    */
   private function getSequence()
   {
-    if ($this->readInt() != MidiReaderInterface::HEADER_MAGIC)
-    {
+    if ($this->readInt() != MidiReaderInterface::HEADER_MAGIC) {
       throw new Exception('Not a MIDI file: wrong header magic');
     }
 
     $headerLength = $this->readInt();
 
-    if ($headerLength < MidiReaderInterface::HEADER_LENGTH)
-    {
+    if ($headerLength < MidiReaderInterface::HEADER_LENGTH) {
       throw new Exception('Corrupted MIDI file: wrong header length');
     }
 
     $type = $this->readShort();
 
-    if ($type < 0 || $type > 2)
-    {
+    if ($type < 0 || $type > 2) {
       throw new Exception('Corrupted MIDI file: illegal type');
     }
 
-    if ($type == 2)
-    {
+    if ($type == 2) {
       throw new Exception('this implementation doesn\'t support type 2 MIDI files');
     }
 
     $trackCount = $this->readShort();
 
-    if ($trackCount <= 0)
-    {
+    if ($trackCount <= 0) {
       throw new Exception('Corrupted MIDI file: number of tracks must be positive');
     }
 
-    if ($type == 0 && $trackCount != 1)
-    {
+    if ($type == 0 && $trackCount != 1) {
       throw new Exception("Corrupted MIDI file:  type 0 files must contain exactly one track $trackCount");
     }
 
@@ -589,12 +581,10 @@ class MidiReader extends MidiReaderBase
     $resolution = -1;
     $division = $this->readUnsignedShort();
 
-    if (($division & 0x8000) != 0)
-    {
+    if (($division & 0x8000) != 0) {
       $frameType = -(($division >> 8) & 0xff);
 
-      switch ($frameType)
-      {
+      switch ($frameType) {
         case 24:
           $divisionType = MidiReaderInterface::SMPTE_24;
           break;
@@ -613,9 +603,7 @@ class MidiReader extends MidiReaderBase
       }
 
       $resolution = $division & 0xff;
-    }
-    else
-    {
+    } else {
       $divisionType = MidiReaderInterface::PPQ;
       $resolution = $division & 0x7fff;
     }
@@ -624,8 +612,7 @@ class MidiReader extends MidiReaderBase
 
     $sequence = new MidiSequence($divisionType, $resolution);
 
-    for ($i = 0; $i < $trackCount; $i++)
-    {
+    for ($i = 0; $i < $trackCount; $i++) {
       $track = new MidiTrack();
       $sequence->addTrack($track);
       $this->readTrack($track);
@@ -635,16 +622,13 @@ class MidiReader extends MidiReaderBase
   }
 
   /**
-   * @param int $number
-   * 
+   * @param  int $number
    * @return \PhpTabs\Music\Track
    */
   private function getTrack($number)
   {
-    foreach ($this->tracks as $track)
-    {
-      if ($track->getNumber() == $number)
-      {
+    foreach ($this->tracks as $track) {
+      if ($track->getNumber() == $number) {
         return $track;
       }
     }
@@ -720,8 +704,7 @@ class MidiReader extends MidiReaderBase
   {
     $tempNote = $this->getTempNote($track, $channel, $value, true);
 
-    if ($tempNote !== null)
-    {
+    if ($tempNote !== null) {
       $nString = 0;
       $nValue = $tempNote->getValue() + $this->settings->getTranspose();
       $nVelocity = $tempNote->getVelocity();
@@ -741,8 +724,7 @@ class MidiReader extends MidiReaderBase
       $note->setVelocity($nVelocity);
 
       // Effect Bends / Vibrato
-      if ($tempNote->countPitchBends() > 0)
-      {
+      if ($tempNote->countPitchBends() > 0) {
         $this->makeNoteEffect($note, $tempNote->getPitchBends());
       }
 
@@ -758,17 +740,14 @@ class MidiReader extends MidiReaderBase
   {
     $tmp = array();
 
-    foreach ($pitchBends as $pitchBend)
-    {
-      if (!in_array($pitchBend, $tmp))
-      {
+    foreach ($pitchBends as $pitchBend) {
+      if (!in_array($pitchBend, $tmp)) {
         array_push($tmp, $pitchBend);
       }
     }
 
     // All pitches have the same value: vibrato
-    if (count($tmp) == 1)
-    {
+    if (count($tmp) == 1) {
       $note->getEffect()->setVibrato(true);
 
       return;
@@ -778,8 +757,7 @@ class MidiReader extends MidiReaderBase
     $bend = new EffectBend();
     $bend->addPoint(0, 0);
 
-    foreach ($pitchBends as $k => $pitchBend)
-    {
+    foreach ($pitchBends as $k => $pitchBend) {
       $bend->addPoint($k, $pitchBend);
     }
 
@@ -796,12 +774,10 @@ class MidiReader extends MidiReaderBase
 
     $countTempNotes = count($this->tempNotes);
 
-    for ($i = 0; $i < $countTempNotes; $i++)
-    {
+    for ($i = 0; $i < $countTempNotes; $i++) {
       $note = $this->tempNotes[$i];
 
-      if ($note->getTick() < $nextTick && $note->getTrack() == $track)
-      {
+      if ($note->getTick() < $nextTick && $note->getTrack() == $track) {
         $nextTick = $note->getTick() + (Duration::QUARTER_TIME * 5); //First beat + 4/4 measure;
         $this->makeNote($nextTick, $track, $note->getChannel(), $note->getValue());
         break;
@@ -819,14 +795,10 @@ class MidiReader extends MidiReaderBase
     $control = ($length > 1)?($data[1] & 0xff):-1;
     $value = ($length > 2)?($data[2] & 0xff):-1;
 
-    if ($channel != -1 && $control != -1 && $value != -1)
-    {
-      if ($control == MidiSettings::VOLUME)
-      {
+    if ($channel != -1 && $control != -1 && $value != -1) {
+      if ($control == MidiSettings::VOLUME) {
         $this->getTempChannel($channel)->setVolume($value);
-      }
-      elseif ($control == MidiSettings::BALANCE)
-      {
+      } elseif ($control == MidiSettings::BALANCE) {
         $this->getTempChannel($channel)->setBalance($value);
       }
     }
@@ -859,12 +831,9 @@ class MidiReader extends MidiReaderBase
     $value = $length > 1 ? ($data[1] & 0xff) : 0;
     $velocity = $length > 2 ? ($data[2] & 0xff) : 0;
 
-    if ($velocity == 0)
-    {
+    if ($velocity == 0) {
       $this->parseNoteOff($track, $tick, $data);
-    }
-    elseif ($value > 0)
-    {
+    } elseif ($value > 0) {
       $this->makeTempNotesBefore($tick, $track);
       $this->getTempChannel($channel)->setTrack($track);
       $this->getTrackTuningHelper($track)->checkValue($value);
@@ -883,8 +852,7 @@ class MidiReader extends MidiReaderBase
     // Resolution
     $value = $length > 2 ? ($data[2] - 0x40) : 0;
 
-    if ($value !== 0 && count($this->tempNotes) > 0)
-    {
+    if ($value !== 0 && count($this->tempNotes) > 0) {
       $noteCount = count($this->tempNotes);
 
       $this->tempNotes[$noteCount-1]->addPitchBend($value);
@@ -900,8 +868,7 @@ class MidiReader extends MidiReaderBase
     $channel = $length > 0 ? (($data[0] & 0xff) & 0x0f) : -1;
     $instrument = $length > 1 ? ($data[1] & 0xff):-1;
 
-    if ($channel != -1 && $instrument != -1)
-    {
+    if ($channel != -1 && $instrument != -1) {
       $this->getTempChannel($channel)->setInstrument($instrument);
     }
   }
@@ -912,8 +879,7 @@ class MidiReader extends MidiReaderBase
    */
   private function parseTempo($tick, array $data)
   {
-    if (count($data) >= 3)
-    {
+    if (count($data) >= 3) {
       $tempo = Tempo::fromTPQ(($data[2] & 0xff) | (($data[1] & 0xff) << 8) | (($data[0] & 0xff) << 16));
 
       $this->getHeader($tick)->setTempo($tempo);
@@ -934,35 +900,30 @@ class MidiReader extends MidiReaderBase
    */
   private function parseTimeSignature($tick, array $data)
   {
-    if (count($data) >= 2)
-    {
+    if (count($data) >= 2) {
       $timeSignature = new TimeSignature();
       $timeSignature->setNumerator($data[0]);
       $timeSignature->getDenominator()->setValue(Duration::QUARTER);
 
-      if ($data[1] == 0)
-      {
-        $timeSignature->getDenominator()->setValue(Duration::WHOLE);
-      }
-      elseif ($data[1] == 1)
-      {
-        $timeSignature->getDenominator()->setValue(Duration::HALF);
-      }
-      elseif ($data[1] == 2)
-      {
-        $timeSignature->getDenominator()->setValue(Duration::QUARTER);
-      }
-      elseif ($data[1] == 3)
-      {
-        $timeSignature->getDenominator()->setValue(Duration::EIGHTH);
-      }
-      elseif ($data[1] == 4)
-      {
-        $timeSignature->getDenominator()->setValue(Duration::SIXTEENTH);
-      }
-      elseif ($data[1] == 5)
-      {
-        $timeSignature->getDenominator()->setValue(Duration::THIRTY_SECOND);
+      switch ($data[1]) {
+        case 0:
+          $timeSignature->getDenominator()->setValue(Duration::WHOLE);
+          break;
+        case 1:
+          $timeSignature->getDenominator()->setValue(Duration::HALF);
+          break;
+        case 2:
+          $timeSignature->getDenominator()->setValue(Duration::QUARTER);
+          break;
+        case 3:
+          $timeSignature->getDenominator()->setValue(Duration::EIGHTH);
+          break;
+        case 4:
+          $timeSignature->getDenominator()->setValue(Duration::SIXTEENTH);
+          break;
+        case 5:
+          $timeSignature->getDenominator()->setValue(Duration::THIRTY_SECOND);
+          break;
       }
 
       $this->getHeader($tick)->setTimeSignature($timeSignature);
@@ -979,10 +940,8 @@ class MidiReader extends MidiReaderBase
     $savedByte = 0;
     $runningStatusApplies = false;
 
-    if ($statusByte < 0x80)
-    {
-      switch ($helper->runningStatusByte)
-      {
+    if ($statusByte < 0x80) {
+      switch ($helper->runningStatusByte) {
         case -1:
           throw new Exception('Corrupted MIDI file: status byte is missing');
           break;
@@ -996,33 +955,25 @@ class MidiReader extends MidiReaderBase
 
     $type = $this->getType($statusByte);
 
-    if ($type == MidiReader::STATUS_ONE_BYTE)
-    {
+    if ($type == MidiReader::STATUS_ONE_BYTE) {
       $data = 0;
 
-      if ($runningStatusApplies)
-      {
+      if ($runningStatusApplies) {
         $data = $savedByte;
-      }
-      else
-      {
+      } else {
         $data = $this->readUnsignedByte();
         $helper->remainingBytes--;
         $helper->runningStatusByte = $statusByte;
       }
 
       return new MidiEvent(MidiMessage::shortMessage(($statusByte & 0xf0), ($statusByte & 0x0f) , $data), $helper->ticks);
-    }
-    elseif ($type == MidiReader::STATUS_TWO_BYTES)
-    {
+
+    } elseif ($type == MidiReader::STATUS_TWO_BYTES) {
       $data1 = 0;
 
-      if ($runningStatusApplies)
-      {
+      if ($runningStatusApplies) {
         $data1 = $savedByte;
-      }
-      else
-      {
+      } else {
         $data1 = $this->readUnsignedByte();
         $helper->remainingBytes--;
         $helper->runningStatusByte = $statusByte;
@@ -1031,27 +982,22 @@ class MidiReader extends MidiReaderBase
       $helper->remainingBytes--;
 
       return new MidiEvent(MidiMessage::shortMessage(($statusByte & 0xf0), ($statusByte & 0x0f), $data1, $this->readUnsignedByte()), $helper->ticks);
-    }
-    elseif ($type == MidiReader::STATUS_SYSEX)
-    {
-      if (MidiReader::CANCEL_RUNNING_STATUS_ON_META_AND_SYSEX)
-      {
+
+    } elseif ($type == MidiReader::STATUS_SYSEX) {
+      if (MidiReader::CANCEL_RUNNING_STATUS_ON_META_AND_SYSEX) {
         $helper->runningStatusByte = -1;
       }
 
       $dataLength = $this->readVariableLengthQuantity($helper);
       $data = array();
 
-      for ($i = 0; $i < $dataLength; $i++)
-      {
+      for ($i = 0; $i < $dataLength; $i++) {
         $data[$i] = $this->readUnsignedByte();
         $helper->remainingBytes--;
       }
-    }
-    elseif ($type == MidiReader::STATUS_META)
-    {
-      if (MidiReader::CANCEL_RUNNING_STATUS_ON_META_AND_SYSEX)
-      {
+
+    } elseif ($type == MidiReader::STATUS_META) {
+      if (MidiReader::CANCEL_RUNNING_STATUS_ON_META_AND_SYSEX) {
         $helper->runningStatusByte = -1;
       }
 
@@ -1060,8 +1006,7 @@ class MidiReader extends MidiReaderBase
       $dataLength = $this->readVariableLengthQuantity($helper);
       $data = array();
 
-      for ($i = 0; $i < $dataLength; $i++)
-      {
+      for ($i = 0; $i < $dataLength; $i++) {
         $data[$i] = $this->readUnsignedByte();
         $helper->remainingBytes--;
       }
