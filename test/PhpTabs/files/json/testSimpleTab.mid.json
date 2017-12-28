@@ -3330,7 +3330,7 @@
                                                             {
                                                                 "note": {
                                                                     "value": 1,
-                                                                    "velocity": 95,
+                                                                    "velocity": 111,
                                                                     "string": 1,
                                                                     "tiedNote": false,
                                                                     "effect": {
@@ -3408,7 +3408,7 @@
                                                             {
                                                                 "note": {
                                                                     "value": 1,
-                                                                    "velocity": 95,
+                                                                    "velocity": 127,
                                                                     "string": 1,
                                                                     "tiedNote": false,
                                                                     "effect": {
@@ -3486,7 +3486,7 @@
                                                             {
                                                                 "note": {
                                                                     "value": 1,
-                                                                    "velocity": 95,
+                                                                    "velocity": 79,
                                                                     "string": 1,
                                                                     "tiedNote": false,
                                                                     "effect": {
@@ -3549,85 +3549,7 @@
                                                 {
                                                     "voice": {
                                                         "duration": {
-                                                            "value": 4,
-                                                            "dotted": false,
-                                                            "doubleDotted": false,
-                                                            "divisionType": {
-                                                                "enters": 1,
-                                                                "times": 1
-                                                            }
-                                                        },
-                                                        "index": 0,
-                                                        "empty": false,
-                                                        "direction": 0,
-                                                        "notes": [
-                                                            {
-                                                                "note": {
-                                                                    "value": 1,
-                                                                    "velocity": 95,
-                                                                    "string": 1,
-                                                                    "tiedNote": false,
-                                                                    "effect": {
-                                                                        "bend": null,
-                                                                        "tremoloBar": null,
-                                                                        "harmonic": null,
-                                                                        "grace": null,
-                                                                        "trill": null,
-                                                                        "tremoloPicking": null,
-                                                                        "vibrato": false,
-                                                                        "deadNote": false,
-                                                                        "slide": false,
-                                                                        "hammer": false,
-                                                                        "ghostNote": false,
-                                                                        "accentuatedNote": false,
-                                                                        "heavyAccentuatedNote": false,
-                                                                        "palmMute": false,
-                                                                        "staccato": false,
-                                                                        "tapping": false,
-                                                                        "slapping": false,
-                                                                        "popping": false,
-                                                                        "fadeIn": false,
-                                                                        "letRing": false
-                                                                    }
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "voice": {
-                                                        "duration": {
-                                                            "value": 4,
-                                                            "dotted": false,
-                                                            "doubleDotted": false,
-                                                            "divisionType": {
-                                                                "enters": 1,
-                                                                "times": 1
-                                                            }
-                                                        },
-                                                        "index": 1,
-                                                        "empty": true,
-                                                        "direction": 0,
-                                                        "notes": []
-                                                    }
-                                                }
-                                            ],
-                                            "stroke": {
-                                                "direction": 0,
-                                                "value": null
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "beat": {
-                                            "start": 5760,
-                                            "chord": null,
-                                            "text": null,
-                                            "voices": [
-                                                {
-                                                    "voice": {
-                                                        "duration": {
-                                                            "value": 4,
+                                                            "value": 2,
                                                             "dotted": false,
                                                             "doubleDotted": false,
                                                             "divisionType": {

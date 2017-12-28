@@ -3574,7 +3574,7 @@
                                                                         "deadNote": false,
                                                                         "slide": false,
                                                                         "hammer": false,
-                                                                        "ghostNote": false,
+                                                                        "ghostNote": true,
                                                                         "accentuatedNote": false,
                                                                         "heavyAccentuatedNote": false,
                                                                         "palmMute": false,
@@ -3718,7 +3718,7 @@
                                                                     "value": 5,
                                                                     "velocity": 95,
                                                                     "string": 2,
-                                                                    "tiedNote": false,
+                                                                    "tiedNote": true,
                                                                     "effect": {
                                                                         "bend": null,
                                                                         "tremoloBar": null,
