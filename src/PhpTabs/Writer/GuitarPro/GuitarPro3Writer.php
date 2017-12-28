@@ -572,6 +572,19 @@ class GuitarPro3Writer extends GuitarProWriterBase
   }
 
   /**
+   * @param \PhpTabs\Music\Tempo $tempo
+   */
+  private function writeMixChange(Tempo $tempo)
+  {
+    for ($i = 0; $i < 7; $i++) {
+      $this->writeByte(-1);
+    }
+
+    $this->writeInt($tempo->getValue());
+    $this->writeByte(0);
+  }
+
+  /**
    * @param \PhpTabs\Music\Note $note
    */
   private function writeNote(Note $note)
