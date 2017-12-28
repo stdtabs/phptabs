@@ -40,6 +40,13 @@ class NoteEffectParser extends ParserBase
         'letRing'
   ];
 
+  private $parsers = [
+    'harmonic'        => 'Harmonic',
+    'grace'           => 'Grace',
+    'trill'           => 'Trill',
+    'tremoloPicking'  => 'TremoloPicking'
+  ];
+
   private $autoset = [
         'vibrato',
         'deadNote',
@@ -80,28 +87,15 @@ class NoteEffectParser extends ParserBase
       );
     }
 
-    if ($data['harmonic'] !== null) {
-      $effect->setHarmonic(
-        $this->parseHarmonic($data['harmonic'])
-      );
-    }
-
-    if ($data['grace'] !== null) {
-      $effect->setGrace(
-        $this->parseGrace($data['grace'])
-      );
-    }
-
-    if ($data['trill'] !== null) {
-      $effect->setTrill(
-        $this->parseTrill($data['trill'])
-      );
-    }
-
-    if ($data['tremoloPicking'] !== null) {
-      $effect->setTremoloPicking(
-        $this->parseTremoloPicking($data['tremoloPicking'])
-      );
+    foreach ($this->parsers as $name => $parser) {
+      if ($data[$name] !== null) {
+        $setter = 'set' . $parser;
+        $getter = 'parse' . $parser;
+        
+        $effect->$setter(
+          $this->$getter($data[$name])
+        );
+      }
     }
 
     foreach ($this->autoset as $key) {

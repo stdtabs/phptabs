@@ -25,59 +25,34 @@ class GuitarPro5Mixchange extends AbstractReader
     $this->reader->readByte();
     
     $this->reader->skip(16);
-    $volume = $this->reader->readByte();
-    $pan = $this->reader->readByte();
-    $chorus = $this->reader->readByte();
-    $reverb = $this->reader->readByte();
-    $phaser = $this->reader->readByte();
-    $tremolo = $this->reader->readByte();
+
+    $criterias = ['volume', 'pan', 'chorus', 'reverb', 'phaser', 'tremolo'];
+    
+    foreach ($criterias as $name) {
+      $$name = $this->reader->readByte();
+    }
+
     $this->reader->readStringByteSizeOfInteger();
+
     $tempoValue = $this->reader->readInt();
 
-    if ($volume >= 0)
-    {
-      $this->reader->readByte();
+    foreach ($criterias as $name) {
+      if ($$name >= 0) {
+        $this->reader->readByte();
+      }
     }
 
-    if ($pan >= 0)
-    {
-      $this->reader->readByte();
-    }
-
-    if ($chorus >= 0)
-    {
-      $this->reader->readByte();
-    }
-
-    if ($reverb >= 0)
-    {
-      $this->reader->readByte();
-    }
-
-    if ($phaser >= 0)
-    {
-      $this->reader->readByte();
-    }
-
-    if ($tremolo >= 0)
-    {
-      $this->reader->readByte();
-    }
-
-    if ($tempoValue >= 0)
-    {
+    if ($tempoValue >= 0) {
       $tempo->setValue($tempoValue);
       $this->reader->readByte();
-      if ($this->reader->getVersionIndex() > 0)
-      {
+      if ($this->reader->getVersionIndex() > 0) {
         $this->reader->skip();
       }
     }
 
     $this->reader->skip(2);
     
-    if ($this->reader->getVersionIndex() > 0)
-    {
+    if ($this->reader->getVersionIndex() > 0) {
       $this->reader->readStringByteSizeOfInteger();
       $this->reader->readStringByteSizeOfInteger();
     }

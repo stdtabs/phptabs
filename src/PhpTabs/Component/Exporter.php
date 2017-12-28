@@ -57,8 +57,7 @@ class Exporter extends ExporterBase
    */
   public function export($format = 'array', $options = null)
   {
-    switch ($format)
-    {
+    switch ($format) {
       case null:
       case 'array':
         return $this->exportSong();
@@ -66,9 +65,8 @@ class Exporter extends ExporterBase
         return (new Xml())->serialize($this->export());
       case 'json':
         $flags = is_int($options) ? $options : 0;
-        // >=PHP 5.5.0, export 
-        // Skip JSON error 5 Malformed UTF-8 characters, 
-        // possibly incorrectly encoded
+        // >=PHP 5.5.0, export Skip JSON error 5 Malformed UTF-8 
+        // characters, possibly incorrectly encoded
         if (defined('JSON_PARTIAL_OUTPUT_ON_ERROR')) {
           $flags |= JSON_PARTIAL_OUTPUT_ON_ERROR;
         }
@@ -86,7 +84,6 @@ class Exporter extends ExporterBase
       default:
         $message = sprintf('%s does not support "%s" format', __METHOD__, $format);
         throw new Exception($message);
-        break;
     }
   }
 
