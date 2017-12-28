@@ -33,7 +33,7 @@ class Importer extends ImporterBase
       throw new Exception ('Invalid data: song key must be set');
     }
 
-    $this->parseSong($data['song']);
+    $this->parseSong($data['song'], $this->song);
   }
 
   /**
