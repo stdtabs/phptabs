@@ -73,26 +73,46 @@ class NoteEffectParser extends ParserBase
   {
     $this->checkKeys($data, $this->required);
 
-    $effect = new NoteEffect();
+    $this->item = new NoteEffect();
 
+    $this->createBendAndTremolo($data);
+
+    $this->createAttributes($data);
+  }
+
+  /**
+   * Create bend and tremolo bar values
+   *
+   * @param array $data
+   */
+  private function createBendAndTremolo(array $data)
+  {
     if ($data['bend'] !== null) {
-      $effect->setBend(
+      $this->item->setBend(
         $this->parseEffectPoints($data['bend'], new EffectBend())
       );
     }
 
     if ($data['tremoloBar'] !== null) {
-      $effect->setTremoloBar(
+      $this->item->setTremoloBar(
         $this->parseEffectPoints($data['tremoloBar'], new EffectTremoloBar())
       );
     }
+  }
 
+  /**
+   * Create attributes
+   *
+   * @param array $data
+   */
+  private function createAttributes(array $data)
+  {
     foreach ($this->parsers as $name => $parser) {
       if ($data[$name] !== null) {
         $setter = 'set' . $parser;
         $getter = 'parse' . $parser;
         
-        $effect->$setter(
+        $this->item->$setter(
           $this->$getter($data[$name])
         );
       }
@@ -101,10 +121,8 @@ class NoteEffectParser extends ParserBase
     foreach ($this->autoset as $key) {
       if ($data[$key] !== null) {
         $method = 'set' . ucfirst($key);
-        $effect->$method($data[$key]);
+        $this->item->$method($data[$key]);
       }
     }
-
-    $this->item = $effect;
   }
 }
