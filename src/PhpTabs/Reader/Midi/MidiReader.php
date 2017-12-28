@@ -668,29 +668,28 @@ class MidiReader extends MidiReaderBase
    */
   private function getType($statusByte)
   {
-    if ($statusByte < 0xf0)
-    {
+    if ($statusByte < 0xf0) {
       $command = $statusByte & 0xf0;
 
-      if ($command == 0x80 || $command == 0x90 || $command == 0xa0 
-       || $command == 0xb0 || $command == 0xe0)
-      {
-        return MidiReader::STATUS_TWO_BYTES;
+      switch ($command) {
+        case 0x80:
+        case 0x90:
+        case 0xa0:
+        case 0xb0:
+        case 0xe0:
+          return MidiReader::STATUS_TWO_BYTES;
+        case 0xc0:
+        case 0xd0:
+          return MidiReader::STATUS_ONE_BYTE;
       }
-      elseif ($command == 0xc0 || $command == 0xd0)
-      {
-        return MidiReader::STATUS_ONE_BYTE;
-      }
+    }
 
-      return MidiReader::STATUS_NONE;
-    }
-    elseif ($statusByte == 0xf0 || $statusByte == 0xf7)
-    {
-      return MidiReader::STATUS_SYSEX;
-    }
-    elseif ($statusByte == 0xff)
-    {
-      return MidiReader::STATUS_META;
+    switch ($statusByte) {
+      case 0xf0:
+      case 0xf7:
+        return MidiReader::STATUS_SYSEX;
+      case 0xff:
+        return MidiReader::STATUS_META;
     }
 
     return MidiReader::STATUS_NONE;
