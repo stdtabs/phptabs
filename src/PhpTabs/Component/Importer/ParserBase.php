@@ -26,15 +26,27 @@ abstract class ParserBase
    */
   protected function checkKeys(array $data, $keys)
   {
+    if (is_string($keys)) {
+      $keys = [$keys];
+    }
+
     if (is_array($keys)) {
-      foreach ($keys as $key) {
-        if (!isset($data[$key]) && !array_key_exists($key, $data)) {
-          throw new Exception ("Invalid data: '$key' key must be set");
-        }
-      }
-    } elseif (is_string($keys)) {
-      if (!isset($data[$keys]) && !array_key_exists($key, $data)) {
-        throw new Exception ("Invalid data: '$keys' key must be set");
+      $this->hasKeys($data, $keys);
+    }
+  }
+
+  /**
+   * Require that a key must be set
+   * 
+   * @param  array $data
+   * @param  array $keys
+   * @throws \Exception if key is not set
+   */
+  private function hasKeys(array $data, array $keys)
+  {
+    foreach ($keys as $key) {
+      if (!isset($data[$key]) && !array_key_exists($key, $data)) {
+        throw new Exception ("Invalid data: '$key' key must be set");
       }
     }
   }
@@ -62,11 +74,10 @@ abstract class ParserBase
       $parserName = 
         __NAMESPACE__
         . '\\'
-        . str_replace('parse', '', $name) . 'Parser';
+        . str_replace('parse', '', $name) 
+        . 'Parser';
 
       switch (count($arguments)) {
-        case 0:
-          return (new $parserName())->parse();
         case 1:
           return (new $parserName($arguments[0]))->parse();
         case 2:
@@ -81,12 +92,5 @@ abstract class ParserBase
 
       throw new Exception($message);
     }
-
-    $message = sprintf(
-      '%s method is not defined',
-      $name
-    );
-
-    throw new Exception($message);
   }
 }

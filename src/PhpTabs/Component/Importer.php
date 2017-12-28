@@ -13,9 +13,9 @@ namespace PhpTabs\Component;
 
 use Exception;
 use PhpTabs\Music\Song;
-use PhpTabs\Component\Importer\ImporterBase;
+use PhpTabs\Component\Importer\ParserBase;
 
-class Importer extends ImporterBase
+class Importer extends ParserBase
 {
   /**
    * @var \Phptabs\Music\Song
