@@ -3695,7 +3695,30 @@
                                     {
                                         "beat": {
                                             "start": 5760,
-                                            "chord": null,
+                                            "chord": {
+                                                "firstFret": 1,
+                                                "name": "E5",
+                                                "strings": [
+                                                    {
+                                                        "string": -1
+                                                    },
+                                                    {
+                                                        "string": 5
+                                                    },
+                                                    {
+                                                        "string": -1
+                                                    },
+                                                    {
+                                                        "string": -1
+                                                    },
+                                                    {
+                                                        "string": -1
+                                                    },
+                                                    {
+                                                        "string": -1
+                                                    }
+                                                ]
+                                            },
                                             "text": null,
                                             "voices": [
                                                 {
