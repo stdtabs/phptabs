@@ -3237,7 +3237,7 @@
                                                 {
                                                     "voice": {
                                                         "duration": {
-                                                            "value": 4,
+                                                            "value": 8,
                                                             "dotted": false,
                                                             "doubleDotted": false,
                                                             "divisionType": {
@@ -4121,8 +4121,8 @@
                                                 {
                                                     "voice": {
                                                         "duration": {
-                                                            "value": 4,
-                                                            "dotted": false,
+                                                            "value": 64,
+                                                            "dotted": true,
                                                             "doubleDotted": false,
                                                             "divisionType": {
                                                                 "enters": 1,
