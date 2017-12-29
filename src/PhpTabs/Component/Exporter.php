@@ -64,13 +64,7 @@ class Exporter extends ExporterBase
       case 'xml':
         return (new Xml())->serialize($this->export());
       case 'json':
-        $flags = is_int($options) ? $options : 0;
-        // >=PHP 5.5.0, export Skip JSON error 5 Malformed UTF-8 
-        // characters, possibly incorrectly encoded
-        if (defined('JSON_PARTIAL_OUTPUT_ON_ERROR')) {
-          $flags |= JSON_PARTIAL_OUTPUT_ON_ERROR;
-        }
-        return json_encode($this->export(), $flags);
+        return $this->toJson(is_int($options) ? $options : 0);
       case 'var_export':
         return var_export($this->export(), true);
       case 'serialize':
@@ -81,10 +75,27 @@ class Exporter extends ExporterBase
       case 'yaml':
       case 'yml':
         return (new Yaml())->serialize($this->export());
-      default:
-        $message = sprintf('%s does not support "%s" format', __METHOD__, $format);
-        throw new Exception($message);
     }
+
+    $message = sprintf('%s does not support "%s" format', __METHOD__, $format);
+    throw new Exception($message);
+  }
+
+  /**
+   * Export to JSON string
+   * 
+   * @param  int $flags
+   * @return string
+   */
+  private function toJson($flags)
+  {
+    // >=PHP 5.5.0, export Skip JSON error 5 Malformed UTF-8 
+    // characters, possibly incorrectly encoded
+    if (defined('JSON_PARTIAL_OUTPUT_ON_ERROR')) {
+      $flags |= JSON_PARTIAL_OUTPUT_ON_ERROR;
+    }
+
+    return json_encode($this->export(), $flags);
   }
 
   /**

@@ -68,33 +68,27 @@ class Stroke
    */
   public function getIncrementTime(Beat $beat)
   {
+    if ($this->value <= 0) {
+      return 0;
+    }
+
     $duration = 0;
 
-    if ($this->value > 0)
-    {
-      for ($v = 0; $v < $beat->countVoices(); $v++)
-      {
-        $voice = $beat->getVoice($v);
+    foreach ($beat->getVoices() as $voice) {
 
-        if (!$voice->isEmpty())
-        {
-          $currentDuration = $voice->getDuration()->getTime();
+      if (!$voice->isEmpty()) {
+        $currentDuration = $voice->getDuration()->getTime();
 
-          if ($duration == 0 || $currentDuration < $duration)
-          {
-            $duration = $currentDuration <= Duration::QUARTER_TIME
-                      ? $currentDuration : Duration::QUARTER_TIME;
-          }
+        if ($duration == 0 || $currentDuration < $duration) {
+          $duration = $currentDuration <= Duration::QUARTER_TIME
+                    ? $currentDuration : Duration::QUARTER_TIME;
         }
-      }
-
-      if ($duration > 0)
-      {
-        return round(($duration / 8.0) * (4.0 / $this->value));
       }
     }
 
-    return 0;
+    return $duration > 0
+      ? round(($duration / 8.0) * (4.0 / $this->value))
+      : 0;
   }
 
   /**

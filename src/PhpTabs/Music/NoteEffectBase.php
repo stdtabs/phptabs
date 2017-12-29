@@ -231,6 +231,6 @@ abstract class NoteEffectBase
       $this->isTapping()              ||
       $this->isSlapping()             ||
       $this->isPopping()              ||
-      $this->isFadeIn()               ;
+      $this->isFadeIn();
   }
 }
