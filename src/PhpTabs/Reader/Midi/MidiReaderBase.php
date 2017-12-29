@@ -13,8 +13,6 @@ namespace PhpTabs\Reader\Midi;
 
 use Exception;
 use PhpTabs\Component\File;
-use PhpTabs\Component\Log;
-use PhpTabs\Music\Song;
 
 abstract class MidiReaderBase implements MidiReaderInterface
 {
@@ -67,10 +65,8 @@ abstract class MidiReaderBase implements MidiReaderInterface
   }
 
   /**
-   * @param \PhpTabs\Reader\Midi\MidiTrackReaderHelper $helper
-   * 
+   * @param  \PhpTabs\Reader\Midi\MidiTrackReaderHelper $helper
    * @return int
-   * 
    * @throws \Exception if variable length is not readable
    */
   public function readVariableLengthQuantity(MidiTrackReaderHelper $helper)
@@ -78,15 +74,13 @@ abstract class MidiReaderBase implements MidiReaderInterface
     $count = 0;
     $value = 0;
 
-    while ($count < 4)
-    {
+    while ($count < 4) {
       $data = $this->readUnsignedByte();
       $helper->remainingBytes--;
       $count++;
       $value <<= 7;
       $value |= ($data & 0x7f);
-      if ($data < 128)
-      {
+      if ($data < 128) {
         return $value;
       }
     }
@@ -117,16 +111,14 @@ abstract class MidiReaderBase implements MidiReaderInterface
   /**
    * Reads bytes
    * 
-   * @param int $num
-   *
+   * @param  int $num
    * @return array An array of bytes
    */
   protected function readBytesBigEndian($num = 1)
   {
     $bytes = array();
 
-    for ($i = 0; $i < $num; $i++)
-    {
+    for ($i = 0; $i < $num; $i++) {
       $bytes[$i] = ord($this->file->getStream());
     }
 
