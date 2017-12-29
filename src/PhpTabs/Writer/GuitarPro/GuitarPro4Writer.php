@@ -674,65 +674,61 @@ class GuitarPro4Writer extends GuitarProWriterBase
   private function writeNote(Note $note)
   {
     $flags = 0x20 | 0x10;
+    $effect = $note->getEffect();
 
-    if ($note->getEffect()->isGhostNote())
-    {
+    if ($effect->isGhostNote()) {
       $flags |= 0x04;
     }
 
-    if ($note->getEffect()->isAccentuatedNote())
-    {
+    if ($effect->isAccentuatedNote()) {
       $flags |= 0x40;
     }
 
-    if ($note->getEffect()->isVibrato()
-        || $note->getEffect()->isBend()
-        || $note->getEffect()->isGrace() 
-        || $note->getEffect()->isSlide()
-        || $note->getEffect()->isHammer()
-        || $note->getEffect()->isLetRing()
-        || $note->getEffect()->isPalmMute()
-        || $note->getEffect()->isStaccato()
-        || $note->getEffect()->isTapping()
-        || $note->getEffect()->isSlapping()
-        || $note->getEffect()->isPopping()
-        || $note->getEffect()->isHarmonic()
-        || $note->getEffect()->isTrill()
-        || $note->getEffect()->isTremoloPicking() )
-    {
+    if ($effect->isVibrato()
+        || $effect->isBend()
+        || $effect->isGrace() 
+        || $effect->isSlide()
+        || $effect->isHammer()
+        || $effect->isLetRing()
+        || $effect->isPalmMute()
+        || $effect->isStaccato()
+        || $effect->isTapping()
+        || $effect->isSlapping()
+        || $effect->isPopping()
+        || $effect->isHarmonic()
+        || $effect->isTrill()
+        || $effect->isTremoloPicking()
+    ) {
       $flags |= 0x08;
     }
 
     $this->writeUnsignedByte($flags);
 
-    if (($flags & 0x20) != 0)
-    {
+    if (($flags & 0x20) != 0) {
       $typeHeader = 0x01;
-      if ($note->isTiedNote())
-      {
+
+      if ($note->isTiedNote()) {
         $typeHeader = 0x02;
-      }
-      elseif ($note->getEffect()->isDeadNote())
-      {
+      } elseif ($effect->isDeadNote()) {
         $typeHeader = 0x03;
       }
+
       $this->writeUnsignedByte($typeHeader);
     }
 
-    if (($flags & 0x10) != 0)
-    {
+    if (($flags & 0x10) != 0) {
       $this->writeByte(intval((($note->getVelocity() - Velocities::MIN_VELOCITY) / Velocities::VELOCITY_INCREMENT) + 1));
     }
 
-    if (($flags & 0x20) != 0)
-    {
+    if (($flags & 0x20) != 0) {
       $this->writeByte($note->getValue());
     }
 
-    if (($flags & 0x08) != 0)
-    {
-      $this->writeNoteEffects($note->getEffect());
+    if (($flags & 0x08) != 0) {
+      $this->writeNoteEffects($effect);
     }
+
+    unset($effect);
   }
 
   /**
