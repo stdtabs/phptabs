@@ -17,6 +17,7 @@ use PhpTabs\Music\EffectGrace;
 use PhpTabs\Music\EffectHarmonic;
 use PhpTabs\Music\EffectTremoloBar;
 use PhpTabs\Music\EffectTremoloPicking;
+use PhpTabs\Music\EffectTrill;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Velocities;
 use PhpTabs\Writer\GuitarProWriterBase;
@@ -127,7 +128,7 @@ class NoteEffectWriter
   }
 
   /**
-   * Parse flag 2 for GuitarPro 4
+   * Parse flag 2 for GuitarPro 4, 5
    * 
    * @param \PhpTabs\Music\NoteEffect $effect
    * @return int
@@ -152,16 +153,16 @@ class NoteEffectWriter
       $flags2 |= 0x08;
     }
 
-    if ($effect->isVibrato()) {
-      $flags2 |= 0x40;
-    }
-
     if ($effect->isHarmonic()) {
       $flags2 |= 0x10;
     }
 
     if ($effect->isTrill()) {
       $flags2 |= 0x20;
+    }
+
+    if ($effect->isVibrato()) {
+      $flags2 |= 0x40;
     }
 
     return $flags2;
@@ -227,13 +228,21 @@ class NoteEffectWriter
    */
   public function writeTremoloBar(EffectTremoloBar $effect)
   {
-    $points = count($effect->getPoints());
-    $this->writer->writeByte(6);
-    $this->writer->writeInt(0);
-    $this->writer->writeInt($points);
+    $points = $effect->getPoints();
 
-    for ($i = 0; $i < $points; $i++) {
-      $point = $effect->getPoints()[$i];
+    switch(str_replace('PhpTabs\\Writer\\GuitarPro\\', '', get_class($this->writer))) {
+      case 'GuitarPro5Writer':
+        $this->writer->writeByte(1);
+        break;
+      default:
+        $this->writer->writeByte(6);
+        break;
+    }
+    
+    $this->writer->writeInt(0);
+    $this->writer->writeInt(count($points));
+
+    foreach ($points as $point) {
       $this->writer->writeInt($point->getPosition() * GprInterface::GP_BEND_POSITION / EffectTremoloBar::MAX_POSITION_LENGTH);
       $this->writer->writeInt($point->getValue() * GprInterface::GP_BEND_SEMITONE * 2);
       $this->writer->writeByte(0);
@@ -254,6 +263,26 @@ class NoteEffectWriter
         break;
       case Duration::THIRTY_SECOND:
         $this->writer->writeUnsignedByte(3);
+        break;
+    }
+  }
+
+  /**
+   * @param \PhpTabs\Music\EffectTrill $effect
+   */
+  public function writeTrill(EffectTrill $effect)
+  {
+    $this->writer->writeByte($effect->getFret());
+
+    switch ($effect->getDuration()->getValue()) {
+      case Duration::SIXTEENTH:
+        $this->writer->writeByte(1);
+        break;
+      case Duration::THIRTY_SECOND:
+        $this->writer->writeByte(2);
+        break;
+      case Duration::SIXTY_FOURTH:
+        $this->writer->writeByte(3);
         break;
     }
   }

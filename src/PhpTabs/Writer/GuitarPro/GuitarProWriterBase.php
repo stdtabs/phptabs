@@ -14,16 +14,84 @@ namespace PhpTabs\Writer\GuitarPro;
 use PhpTabs\Component\WriterInterface;
 use PhpTabs\Model\ChannelRouter;
 use PhpTabs\Model\ChannelRouterConfigurator;
+use PhpTabs\Music\Color;
+use PhpTabs\Music\Duration;
 use PhpTabs\Music\Song;
+use PhpTabs\Music\Stroke;
 
 abstract class GuitarProWriterBase implements WriterInterface
 {
   private $content;
+  private $name;
   private $writers = [];
 
   public function __construct()
   {
     $this->content = '';
+    $this->name = str_replace(
+      __NAMESPACE__ . '\\', 
+      '', 
+      get_class($this)
+    );
+  }
+
+  /**
+   * @param \PhpTabs\Music\Color $color
+   */
+  public function writeColor(Color $color)
+  {
+    $this->writeUnsignedByte($color->getR());
+    $this->writeUnsignedByte($color->getG());
+    $this->writeUnsignedByte($color->getB());
+    $this->writeByte(0);
+  }
+
+  /**
+   * @param  \PhpTabs\Music\Duration $duration
+   * @return int
+   */
+  public function parseDuration(Duration $duration)
+  {
+    switch ($duration->getValue()) {
+      case Duration::WHOLE:
+        return -2;
+      case Duration::HALF:
+        return -1;
+      case Duration::QUARTER:
+        return 0;
+      case Duration::EIGHTH:
+        return 1;
+      case Duration::SIXTEENTH:
+        return 2;
+      case Duration::THIRTY_SECOND:
+        return 3;
+      case Duration::SIXTY_FOURTH:
+        return 4;
+    }
+
+    return 0;
+  }
+
+  /**
+   * @param  \PhpTabs\Music\Stroke $stroke
+   * @return int
+   */
+  public function toStrokeValue(Stroke $stroke)
+  {
+    switch ($stroke->getValue()) {
+      case Duration::SIXTY_FOURTH:
+        return 2;
+      case Duration::THIRTY_SECOND:
+        return 3;
+      case Duration::SIXTEENTH:
+        return 4;
+      case Duration::EIGHTH:
+        return 5;
+      case Duration::QUARTER:
+        return 6;
+      default:
+        return 2;
+    }
   }
 
   /**
@@ -40,6 +108,16 @@ abstract class GuitarProWriterBase implements WriterInterface
     }
 
     return $this->writers[$name];
+  }
+
+  /**
+   * Get name
+   * 
+   * @return string
+   */
+  public function getName()
+  {
+    return $this->name;
   }
 
   /**

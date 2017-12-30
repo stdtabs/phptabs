@@ -16,6 +16,7 @@ use PhpTabs\Music\DivisionType;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Stroke;
+use PhpTabs\Music\Voice;
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface as GprInterface;
 
 class BeatWriter
@@ -36,32 +37,9 @@ class BeatWriter
   {
     $voice = $beat->getVoice(0);
     $duration = $voice->getDuration();
-    $effect = new NoteEffect();
-
-    for ($i = 0; $i < $voice->countNotes(); $i++) {
-      $playedNote = $voice->getNote($i);
-
-      if ($playedNote->getEffect()->isFadeIn()) {
-        $effect->setFadeIn(true);
-      }
-
-      if ($playedNote->getEffect()->isTremoloBar()) {
-        $effect->setTremoloBar(clone $playedNote->getEffect()->getTremoloBar());
-      }
-
-      if ($playedNote->getEffect()->isTapping()) {
-        $effect->setTapping(true);
-      }
-
-      if ($playedNote->getEffect()->isSlapping()) {
-        $effect->setSlapping(true);
-      }
-
-      if ($playedNote->getEffect()->isPopping()) {
-        $effect->setPopping(true);
-      }
-    }
-
+    
+    $effect = $this->createEffect($voice);
+    
     $flags = 0;
 
     if ($duration->isDotted() || $duration->isDoubleDotted()) {
@@ -151,5 +129,42 @@ class BeatWriter
         }
       }
     }
+  }
+
+  /**
+   * Create a NoteEffect for handling beat effect
+   * 
+   * @param  \PhpTabs\Music\Voice $voice
+   * @return \PhpTabs\Music\NoteEffect
+   */
+  public function createEffect(Voice $voice)
+  {
+    $effect = new NoteEffect();
+
+    for ($i = 0; $i < $voice->countNotes(); $i++) {
+      $playedNote = $voice->getNote($i);
+
+      if ($playedNote->getEffect()->isFadeIn()) {
+        $effect->setFadeIn(true);
+      }
+
+      if ($playedNote->getEffect()->isTremoloBar()) {
+        $effect->setTremoloBar(clone $playedNote->getEffect()->getTremoloBar());
+      }
+
+      if ($playedNote->getEffect()->isTapping()) {
+        $effect->setTapping(true);
+      }
+
+      if ($playedNote->getEffect()->isSlapping()) {
+        $effect->setSlapping(true);
+      }
+
+      if ($playedNote->getEffect()->isPopping()) {
+        $effect->setPopping(true);
+      }
+    }
+
+    return $effect;
   }
 }

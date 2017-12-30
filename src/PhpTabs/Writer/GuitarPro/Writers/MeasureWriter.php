@@ -52,16 +52,14 @@ class MeasureWriter
   {
     $measure = (new MeasureVoiceJoiner($srcMeasure))->process();
 
-    $beatCount = $measure->countBeats();
-    $this->writer->writeInt($beatCount);
+    $this->writer->writeInt($measure->countBeats());
 
-    for ($i = 0; $i < $beatCount; $i++) {
-      $beat = $measure->getBeat($i);
+    foreach ($measure->getBeats() as $index => $beat) {
 
       $this->writer->getWriter('BeatWriter')->writeBeat(
         $beat,
         $measure,
-        ($changeTempo && $i == 0)
+        ($changeTempo && $index == 0)
       );
     }
   }

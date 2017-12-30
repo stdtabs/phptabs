@@ -61,87 +61,12 @@ class GuitarPro3Writer extends GuitarProWriterBase
     );
     $this->writeInt($header->getTempo()->getValue());
     $this->writeInt(0);
-    $this->writeChannels($song);
+    $this->getWriter('ChannelWriter')->writeChannels($song);
     $this->writeInt($song->countMeasureHeaders());
     $this->writeInt($song->countTracks());
     $this->writeMeasureHeaders($song);
     $this->writeTracks($song);
     $this->writeMeasures($song, clone $header->getTempo());
-  }
-
-  /**
-   * @param \PhpTabs\Music\Song $song
-   * 
-   * @return array
-   */
-  private function makeChannels(Song $song)
-  {
-    $channels = array();
-    for ($i = 0; $i < 64; $i++)
-    {
-      $channels[$i] = new Channel();
-      $channels[$i]->setProgram(
-        $i == Channel::DEFAULT_PERCUSSION_CHANNEL
-            ? Channel::DEFAULT_PERCUSSION_PROGRAM : 24
-      );
-      $channels[$i]->setVolume(13);
-      $channels[$i]->setBalance(8);
-      $channels[$i]->setChorus(0);
-      $channels[$i]->setReverb(0);
-      $channels[$i]->setPhaser(0);
-      $channels[$i]->setTremolo(0);
-    }
-
-    $songChannels = $song->getChannels();
-
-    foreach ($songChannels as $channel)
-    {
-      $channelRoute = $this->getChannelRoute($channel->getChannelId());
-      $channels[$channelRoute->getChannel1()]->setProgram($channel->getProgram());
-      $channels[$channelRoute->getChannel1()]->setVolume($channel->getVolume());
-      $channels[$channelRoute->getChannel1()]->setBalance($channel->getBalance());
-
-      $channels[$channelRoute->getChannel2()]->setProgram($channel->getProgram());
-      $channels[$channelRoute->getChannel2()]->setVolume($channel->getVolume());
-      $channels[$channelRoute->getChannel2()]->setBalance($channel->getBalance());
-    }
-
-    return $channels;
-  }
-
-  /**
-   * @param \PhpTabs\Music\Duration $duration
-   * 
-   * @return int
-   */
-  private function parseDuration(Duration $duration)
-  {
-    $value = 0;
-    switch ($duration->getValue())
-    {
-      case Duration::WHOLE:
-        $value = -2;
-        break;
-      case Duration::HALF:
-        $value = -1;
-        break;
-      case Duration::QUARTER:
-        $value = 0;
-        break;
-      case Duration::EIGHTH:
-        $value = 1;
-        break;
-      case Duration::SIXTEENTH:
-        $value = 2;
-        break;
-      case Duration::THIRTY_SECOND:
-        $value = 3;
-        break;
-      case Duration::SIXTY_FOURTH:
-        $value = 4;
-        break;
-    }
-    return $value;
   }
 
   /**
@@ -355,36 +280,6 @@ class GuitarPro3Writer extends GuitarProWriterBase
       );
       $this->writeByte(0);
     }
-  }
-
-  /**
-   * @param \PhpTabs\Music\Song $song
-   */
-  private function writeChannels(Song $song)
-  {
-    $channels = $this->makeChannels($song);
-    for ($i = 0; $i < count($channels); $i++)
-    {
-      $this->writeInt($channels[$i]->getProgram());
-      $this->writeByte($this->toChannelByte($channels[$i]->getVolume()));
-      $this->writeByte($this->toChannelByte($channels[$i]->getBalance()));
-      $this->writeByte($this->toChannelByte($channels[$i]->getChorus()));
-      $this->writeByte($this->toChannelByte($channels[$i]->getReverb()));
-      $this->writeByte($this->toChannelByte($channels[$i]->getPhaser()));
-      $this->writeByte($this->toChannelByte($channels[$i]->getTremolo()));
-      $this->skipBytes(2);
-    }
-  }
-
-  /**
-   * @param \PhpTabs\Music\Color $color
-   */
-  private function writeColor(Color $color)
-  {
-    $this->writeUnsignedByte($color->getR());
-    $this->writeUnsignedByte($color->getG());
-    $this->writeUnsignedByte($color->getB());
-    $this->writeByte(0);
   }
 
   /**
@@ -711,41 +606,6 @@ class GuitarPro3Writer extends GuitarProWriterBase
     $lines[] = $line;
 
     return $lines;
-  }
-
-  /**
-   * @param \PhpTabs\Music\Stroke $stroke
-   * 
-   * @return int
-   */
-  private function toStrokeValue(Stroke $stroke)
-  {
-    if ($stroke->getValue() == Duration::SIXTY_FOURTH)
-    {
-      return 2;
-    }
-
-    if ($stroke->getValue() == Duration::THIRTY_SECOND)
-    {
-      return 3;
-    }
-
-    if ($stroke->getValue() == Duration::SIXTEENTH)
-    {
-      return 4;
-    }
-
-    if ($stroke->getValue() == Duration::EIGHTH)
-    {
-      return 5;
-    }
-
-    if ($stroke->getValue() == Duration::QUARTER)
-    {
-      return 6;
-    }
-
-    return 2;
   }
 
   /**

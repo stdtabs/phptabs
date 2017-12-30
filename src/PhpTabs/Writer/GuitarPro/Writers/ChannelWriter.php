@@ -30,16 +30,16 @@ class ChannelWriter
   {
     $channels = $this->makeChannels($song);
 
-    for ($i = 0; $i < count($channels); $i++) {
-      $this->writer->writeInt($channels[$i]->getProgram());
-      $this->writer->writeByte($this->toChannelByte($channels[$i]->getVolume()));
-      $this->writer->writeByte($this->toChannelByte($channels[$i]->getBalance()));
-      $this->writer->writeByte($this->toChannelByte($channels[$i]->getChorus()));
-      $this->writer->writeByte($this->toChannelByte($channels[$i]->getReverb()));
-      $this->writer->writeByte($this->toChannelByte($channels[$i]->getPhaser()));
-      $this->writer->writeByte($this->toChannelByte($channels[$i]->getTremolo()));
-      $this->writer->skipBytes(2);
-    }
+    array_walk($channels, function ($channel) {
+      $this->writer->writeInt($channel->getProgram());
+      $this->writer->writeByte($this->toChannelByte($channel->getVolume()));
+      $this->writer->writeByte($this->toChannelByte($channel->getBalance()));
+      $this->writer->writeByte($this->toChannelByte($channel->getChorus()));
+      $this->writer->writeByte($this->toChannelByte($channel->getReverb()));
+      $this->writer->writeByte($this->toChannelByte($channel->getPhaser()));
+      $this->writer->writeByte($this->toChannelByte($channel->getTremolo()));
+      $this->writer->writeBytes(array(0, 0));
+    });
   }
 
   /**

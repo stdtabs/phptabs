@@ -61,32 +61,6 @@ class GuitarPro4Writer extends GuitarProWriterBase
   }
 
   /**
-   * @param  \PhpTabs\Music\Duration $duration
-   * @return int
-   */
-  public function parseDuration(Duration $duration)
-  {
-    switch ($duration->getValue()) {
-      case Duration::WHOLE:
-        return -2;
-      case Duration::HALF:
-        return -1;
-      case Duration::QUARTER:
-        return 0;
-      case Duration::EIGHTH:
-        return 1;
-      case Duration::SIXTEENTH:
-        return 2;
-      case Duration::THIRTY_SECOND:
-        return 3;
-      case Duration::SIXTY_FOURTH:
-        return 4;
-    }
-
-    return 0;
-  }
-
-  /**
    * @param \PhpTabs\Music\Chord $chord
    */
   public function writeChord(Chord $chord)
@@ -102,17 +76,6 @@ class GuitarPro4Writer extends GuitarProWriterBase
     }
 
     $this->skipBytes(32);
-  }
-
-  /**
-   * @param \PhpTabs\Music\Color $color
-   */
-  public function writeColor(Color $color)
-  {
-    $this->writeUnsignedByte($color->getR());
-    $this->writeUnsignedByte($color->getG());
-    $this->writeUnsignedByte($color->getB());
-    $this->writeByte(0);
   }
 
   /**
@@ -177,28 +140,6 @@ class GuitarPro4Writer extends GuitarProWriterBase
     $lines[] = $line;
 
     return $lines;
-  }
-
-  /**
-   * @param  \PhpTabs\Music\Stroke $stroke
-   * @return int
-   */
-  public function toStrokeValue(Stroke $stroke)
-  {
-    switch ($stroke->getValue()) {
-      case Duration::SIXTY_FOURTH:
-        return 2;
-      case Duration::THIRTY_SECOND:
-        return 3;
-      case Duration::SIXTEENTH:
-        return 4;
-      case Duration::EIGHTH:
-        return 5;
-      case Duration::QUARTER:
-        return 6;
-      default:
-        return 2;
-    }
   }
 
   /**
