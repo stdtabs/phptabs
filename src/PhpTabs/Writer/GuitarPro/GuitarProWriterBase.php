@@ -19,10 +19,27 @@ use PhpTabs\Music\Song;
 abstract class GuitarProWriterBase implements WriterInterface
 {
   private $content;
+  private $writers = [];
 
   public function __construct()
   {
     $this->content = '';
+  }
+
+  /**
+   * Get a dedicated writer
+   * 
+   * @param  string $name
+   * @return mixed
+   */
+  public function getWriter($name)
+  {
+    if (!isset($this->writers[$name])) {
+      $classname = __NAMESPACE__ . '\\Writers\\' . ucfirst($name);
+      $this->writers[$name] = new $classname($this);
+    }
+
+    return $this->writers[$name];
   }
 
   /**
@@ -34,16 +51,14 @@ abstract class GuitarProWriterBase implements WriterInterface
   }
 
   /**
-   * @param int $channelId
-   *
+   * @param  int $channelId
    * @return \PhpTabs\Music\ChannelRoute
    */
-  protected function getChannelRoute($channelId)
+  public function getChannelRoute($channelId)
   {
     $channelRoute = $this->channelRouter->getRoute($channelId);
 
-    if (null === $channelRoute)
-    {
+    if (null === $channelRoute) {
       $channelRoute = new ChannelRoute(ChannelRoute::NULL_VALUE);
       $channelRoute->setChannel1(15);
       $channelRoute->setChannel2(15);
@@ -66,10 +81,9 @@ abstract class GuitarProWriterBase implements WriterInterface
   /**
    * @param int $count
    */
-  protected function skipBytes($count)
+  public function skipBytes($count)
   {
-    for ($i = 0; $i < $count; $i++)
-    {
+    for ($i = 0; $i < $count; $i++) {
       $this->writeByte(0);
     }
   }
@@ -77,15 +91,15 @@ abstract class GuitarProWriterBase implements WriterInterface
   /**
    * @param bool $boolean
    */
-  protected function writeBoolean($boolean)
+  public function writeBoolean($boolean)
   {
-    $this->writeByte($boolean == true ? 1 : 0);
+    $this->writeByte($boolean ? 1 : 0);
   }
 
   /**
    * @param byte $byte
    */
-  protected function writeByte($byte)
+  public function writeByte($byte)
   {
     $this->content .= pack('c', $byte);
   }
@@ -93,18 +107,17 @@ abstract class GuitarProWriterBase implements WriterInterface
   /**
    * @param array $bytes
    */
-  protected function writeBytes(array $bytes)
+  public function writeBytes(array $bytes)
   {
-    foreach ($bytes as $byte)
-    {
-      $this->content .= pack('c', $byte);
-    }
+    array_walk($bytes, function ($byte) {
+      $this->writeByte($byte);
+    });
   }
 
   /**
    * @param int $integer
    */
-  protected function writeInt($integer)
+  public function writeInt($integer)
   {
     $this->content .= pack('V', $integer);
   }
@@ -112,7 +125,7 @@ abstract class GuitarProWriterBase implements WriterInterface
   /**
    * @param string $string
    */
-  protected function writeStringByteSizeOfInteger($string)
+  public function writeStringByteSizeOfInteger($string)
   {
     $this->writeInt(strlen($string) + 1);
     $this->writeStringByte($string, strlen($string));
@@ -122,13 +135,12 @@ abstract class GuitarProWriterBase implements WriterInterface
    * @param string $bytes
    * @param int $maximumLength
    */
-  protected function writeString($bytes, $maximumLength)
+  public function writeString($bytes, $maximumLength)
   {
     $length = $maximumLength == 0 || $maximumLength > strlen($bytes)
       ? strlen($bytes) : $maximumLength;
 
-    for ($i = 0 ; $i < $length; $i++)
-    {
+    for ($i = 0 ; $i < $length; $i++) {
       $this->content .= $bytes[$i];
     }
   }
@@ -136,7 +148,7 @@ abstract class GuitarProWriterBase implements WriterInterface
   /**
    * @param string $string
    */
-  protected function writeStringInteger($string)
+  public function writeStringInteger($string)
   {
     $this->writeInt(strlen($string));
     $this->writeString($string, 0);
@@ -146,7 +158,7 @@ abstract class GuitarProWriterBase implements WriterInterface
    * @param string $string
    * @param int $size
    */
-  protected function writeStringByte($string, $size)
+  public function writeStringByte($string, $size)
   {
     $this->writeByte($size == 0 || $size > strlen($string) 
       ? strlen($string) : $size
@@ -159,7 +171,7 @@ abstract class GuitarProWriterBase implements WriterInterface
   /**
    * @param byte $byte
    */
-  protected function writeUnsignedByte($byte)
+  public function writeUnsignedByte($byte)
   {
     $this->content .= pack('C', $byte);
   }
