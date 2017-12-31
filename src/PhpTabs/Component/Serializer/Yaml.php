@@ -65,46 +65,50 @@ class Yaml extends SerializerBase
   protected function appendText($index, $value)
   {
     $this->content .= sprintf(
-      '%s%s: ',
+      '%s%s: %s%s',
       $this->indent(),
-      $index
+      $index,
+      $this->formatValue($value),
+      PHP_EOL
     );
-
-    switch (true) {
-      case ($value === false):
-        $this->content .= 'false';
-        break;
-      case ($value === true):
-        $this->content .= 'true';
-        break;
-      case (strpos($value, PHP_EOL) !== false):
-        $this->writeMultilineString($value);
-        break;
-      case is_string($value):
-        $this->content .= sprintf('"%s"', $value);
-        break;
-      case is_numeric($value):
-        $this->content .= $value;
-        break;
-    }
-
-    $this->content .= PHP_EOL;
   }
 
   /**
-   * @param string $value
+   * Format a string value
+   * 
+   * @param string|int|bool $value
+   * @return string
    */
-  protected function writeMultilineString($value)
+  private function formatValue($value)
+  {
+    switch (true) {
+      case ($value === false):
+        return 'false';
+      case ($value === true):
+        return 'true';
+      case is_string($value):
+        return sprintf('"%s"', $value);
+      case is_numeric($value):
+        return "{$value}";
+      case (strpos($value, PHP_EOL) !== false):
+        return $this->getMultilineString($value);
+    }
+  }
+
+  /**
+   * @param  string $value
+   * @return string
+   */
+  private function getMultilineString($value)
   {
     $this->depth++;
 
     $strings = explode(PHP_EOL, $value);
 
-    $this->content .= '|';
+    $content = '|';
 
-    foreach ($strings as $string)
-    {
-      $this->content .= sprintf(
+    foreach ($strings as $string) {
+      $content .= sprintf(
         '%s%s%s',
         PHP_EOL,
         $this->indent(),
@@ -113,6 +117,8 @@ class Yaml extends SerializerBase
     }
 
     $this->depth--;
+
+    return $content;
   }
 
   /**
