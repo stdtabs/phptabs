@@ -70,25 +70,22 @@ class Yaml extends SerializerBase
       $index
     );
 
-    if ($value === false)
-    {
-      $this->content .= 'false';
-    }
-    elseif ($value === true)
-    {
-      $this->content .= 'true';
-    }
-    elseif (strpos($value, PHP_EOL) !== false)
-    {
-      $this->writeMultilineString($value);
-    }
-    elseif (is_string($value))
-    {
-      $this->content .= sprintf('"%s"', $value);
-    }
-    elseif (is_numeric($value))
-    {
-      $this->content .= $value;
+    switch (true) {
+      case ($value === false):
+        $this->content .= 'false';
+        break;
+      case ($value === true):
+        $this->content .= 'true';
+        break;
+      case (strpos($value, PHP_EOL) !== false):
+        $this->writeMultilineString($value);
+        break;
+      case is_string($value):
+        $this->content .= sprintf('"%s"', $value);
+        break;
+      case is_numeric($value):
+        $this->content .= $value;
+        break;
     }
 
     $this->content .= PHP_EOL;
