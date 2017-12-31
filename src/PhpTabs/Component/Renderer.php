@@ -21,7 +21,7 @@ class Renderer
   private $tablature;
 
   /** 
-   * @var \PhpTabs\Component\RendererInterface
+   * @var \PhpTabs\Component\Renderer\RendererInterface
    */
   private $bridge;
 
@@ -39,7 +39,7 @@ class Renderer
    * 
    * @param  \PhpTabs\Component\Tablature $tablature
    */
-  public function __construct(Tablature $tablature = null)
+  public function __construct(Tablature $tablature)
   {
     $this->tablature = $tablature;
   }

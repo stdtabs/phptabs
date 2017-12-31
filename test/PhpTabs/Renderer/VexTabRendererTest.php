@@ -47,7 +47,7 @@ class VexTabRendererTest extends PHPUnit_Framework_TestCase
 
     # have a good type
     $this->assertInstanceOf(
-      'PhpTabs\\Component\\RendererInterface',
+      'PhpTabs\\Component\\Renderer\\RendererInterface',
       $renderer
     );
 

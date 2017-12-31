@@ -12,7 +12,7 @@
 namespace PhpTabs\Renderer\VexTab;
 
 use Exception;
-use PhpTabs\Component\RendererInterface;
+use PhpTabs\Component\Renderer\RendererInterface;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\Channel;
 use PhpTabs\Music\Duration;
@@ -92,8 +92,8 @@ class VexTabTrackRenderer
   private $channel;
 
   /**
-   * @param \PhpTabs\Component\RendererInterface $renderer
-   * @param \PhpTabs\Music\Track                 $track
+   * @param \PhpTabs\Component\Renderer\RendererInterface $renderer
+   * @param \PhpTabs\Music\Track                          $track
    */
   public function __construct(RendererInterface $renderer, Track $track)
   {

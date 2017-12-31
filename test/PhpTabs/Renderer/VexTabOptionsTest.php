@@ -13,7 +13,7 @@ namespace PhpTabsTest\Renderer;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
-use PhpTabs\PhpTabs;
+use PhpTabs\IOFactory;
 
 /**
  * Tests the options stack of vextab renderer
@@ -23,7 +23,7 @@ class VexTabOptionsTest extends PHPUnit_Framework_TestCase
   public function setUp()
   {
     $this->filename  = 'testSimpleTab.gp3';
-    $this->tablature = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/' . $this->filename);
+    $this->tablature = IOFactory::fromFile(PHPTABS_TEST_BASEDIR . '/samples/' . $this->filename);
   }
 
   /**

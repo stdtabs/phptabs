@@ -9,7 +9,7 @@
  * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
  */
 
-namespace PhpTabs\Component;
+namespace PhpTabs\Component\Renderer;
 
 interface RendererInterface
 {

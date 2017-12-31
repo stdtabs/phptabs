@@ -9,11 +9,9 @@
  * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
  */
 
-namespace PhpTabs\Renderer\VexTab;
+namespace PhpTabs\Component\Renderer;
 
-use PhpTabs\Component\RendererInterface;
-
-abstract class VexTabRendererHelper implements RendererInterface
+abstract class RendererHelper
 {
   /**
    * Get an option
@@ -36,7 +34,7 @@ abstract class VexTabRendererHelper implements RendererInterface
    * 
    * @param  string     $name
    * @param  int|string $value
-   * @return \PhpTabs\Model\RendererInterface
+   * @return \PhpTabs\Component\Renderer\RendererInterface
    * @api
    * @since 0.5.0
    */
@@ -51,7 +49,7 @@ abstract class VexTabRendererHelper implements RendererInterface
    * Set all options
    * 
    * @param  array $options
-   * @return \PhpTabs\Model\RendererInterface
+   * @return \PhpTabs\Component\Renderer\RendererInterface
    * @api
    * @since 0.5.0
    */

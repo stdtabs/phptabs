@@ -12,10 +12,12 @@
 namespace PhpTabs\Renderer\VexTab;
 
 use Exception;
+use PhpTabs\Component\Renderer\RendererHelper;
+use PhpTabs\Component\Renderer\RendererInterface;
 use PhpTabs\Music\Track;
 use PhpTabs\Music\Song;
 
-class VexTabRenderer extends VexTabRendererHelper
+class VexTabRenderer extends RendererHelper implements RendererInterface
 {
   /**
    * Default stave options
