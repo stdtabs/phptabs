@@ -15,17 +15,11 @@ use Exception;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\Channel;
 use PhpTabs\Music\Chord;
-use PhpTabs\Music\Color;
 use PhpTabs\Music\DivisionType;
 use PhpTabs\Music\Duration;
-use PhpTabs\Music\EffectBend;
-use PhpTabs\Music\EffectGrace;
-use PhpTabs\Music\EffectHarmonic;
 use PhpTabs\Music\Marker;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\MeasureHeader;
-use PhpTabs\Music\Note;
-use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\Stroke;
 use PhpTabs\Music\Tempo;
@@ -221,10 +215,8 @@ class GuitarPro5Writer extends GuitarProWriterBase
   {
     $this->writeBytes(
       array(
-        1, 1, 0, 0,
-        0, 12, 0, 0,
-        -1, -1, -1, -1,
-        0, 0, 0, 0, 0
+         1,  1,  0,  0, 0, 12, 0, 0,
+        -1, -1, -1, -1, 0,  0, 0, 0, 0
       )
     );
 
@@ -256,8 +248,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
 
     $comments = $this->toCommentLines($song->getComments());
     $this->writeInt(count($comments));
-    for ($i = 0; $i < count($comments); $i++)
-    {
+    for ($i = 0; $i < count($comments); $i++) {
       $this->writeStringByteSizeOfInteger($comments[$i]);
     }
   }
@@ -349,89 +340,70 @@ class GuitarPro5Writer extends GuitarProWriterBase
   {
     $flags = 0;
 
-    if ($measure->getNumber() == 1)
-    {
+    if ($measure->getNumber() == 1) {
       $flags |= 0x40;
     }
 
-    if ($measure->getNumber() == 1 || !$measure->getTimeSignature()->isEqual($timeSignature))
-    {
+    if ($measure->getNumber() == 1 || !$measure->getTimeSignature()->isEqual($timeSignature)) {
       $flags |= 0x01;
       $flags |= 0x02;
     }
 
-    if ($measure->isRepeatOpen())
-    {
+    if ($measure->isRepeatOpen()) {
       $flags |= 0x04;
     }
 
-    if ($measure->getRepeatClose() > 0)
-    {
+    if ($measure->getRepeatClose() > 0) {
       $flags |= 0x08;
     }
 
-    if ($measure->getRepeatAlternative() > 0)
-    {
+    if ($measure->getRepeatAlternative() > 0) {
       $flags |= 0x10;
     }
 
-    if ($measure->hasMarker())
-    {
+    if ($measure->hasMarker()) {
       $flags |= 0x20;
     }
 
     $this->writeUnsignedByte($flags);
 
-    if (($flags & 0x01) != 0)
-    {
+    if (($flags & 0x01) != 0) {
       $this->writeByte($measure->getTimeSignature()->getNumerator());
     }
 
-    if (($flags & 0x02) != 0)
-    {
+    if (($flags & 0x02) != 0) {
       $this->writeByte($measure->getTimeSignature()->getDenominator()->getValue());
     }
 
-    if (($flags & 0x08) != 0)
-    {
+    if (($flags & 0x08) != 0) {
       $this->writeByte($measure->getRepeatClose() + 1);
     }
 
-    if (($flags & 0x20) != 0)
-    {
+    if (($flags & 0x20) != 0) {
       $this->writeMarker($measure->getMarker());
     }
 
-    if (($flags & 0x10) != 0)
-    {
+    if (($flags & 0x10) != 0) {
       $this->writeByte($measure->getRepeatAlternative());
     }
 
-    if (($flags & 0x40) != 0)
-    {
+    if (($flags & 0x40) != 0) {
       $this->skipBytes(2);
     }
 
-    if (($flags & 0x01) != 0)
-    {
+    if (($flags & 0x01) != 0) {
       $this->writeBytes( $this->makeEighthNoteBytes( $measure->getTimeSignature() ));
     }
 
-    if (($flags & 0x10) == 0)
-    {
+    if (($flags & 0x10) == 0) {
       $this->writeByte(0);
     }
 
-    if ($measure->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_NONE)
-    {
+    if ($measure->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_NONE) {
       $this->writeByte(0);
-    }
-    elseif ($measure->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_EIGHTH)
-    {
+    } elseif ($measure->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_EIGHTH) {
       $this->writeByte(1);
-    }
-    elseif ($measure->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_SIXTEENTH)
-    {
+    } elseif ($measure->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_SIXTEENTH) {
       $this->writeByte(2);
     }
   }
@@ -443,15 +415,11 @@ class GuitarPro5Writer extends GuitarProWriterBase
   {
     $timeSignature = new TimeSignature();
 
-    if ($song->countMeasureHeaders() > 0)
-    {
-      for ($i = 0; $i < $song->countMeasureHeaders(); $i++)
-      {
-        if ($i > 0)
-        {
+    if ($song->countMeasureHeaders() > 0) {
+      foreach ($song->getMeasureHeaders() as $index => $header) {
+        if ($index > 0) {
           $this->skipBytes(1);
         }
-        $header = $song->getMeasureHeader($i);
         $this->writeMeasureHeader($header, $timeSignature);
         $timeSignature->setNumerator($header->getTimeSignature()->getNumerator());
         $timeSignature->getDenominator()->setValue(

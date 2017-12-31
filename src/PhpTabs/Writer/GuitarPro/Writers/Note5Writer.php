@@ -40,7 +40,7 @@ class Note5Writer
   
       if ($note->isTiedNote()) {
         $typeHeader = 0x02;
-      } elseif ($note->getEffect()->isDeadNote()) {
+      } elseif ($effect->isDeadNote()) {
         $typeHeader = 0x03;
       }
   
@@ -58,7 +58,7 @@ class Note5Writer
     $this->writer->skipBytes(1);
 
     if (($flags & 0x08) != 0) {
-      $this->writer->getWriter('NoteEffect5Writer')->writeNoteEffects($note->getEffect());
+      $this->writer->getWriter('NoteEffect5Writer')->writeNoteEffects($effect);
     }
   }
 
