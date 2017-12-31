@@ -55,21 +55,18 @@ class BeatContext
 
     $voice = $this->beat->getVoice(0);
 
-    if (null === $voice || $voice->countNotes() == 0) {
-      $this->isChordBeat = false;
-      return false;
+    if (null === $voice || !$voice->countNotes()) {
+      return ($this->isChordBeat = false);
     }
 
     if ($voice->countNotes() > 1) {
-      $this->isChordBeat = true;
-      return true;
+      return ($this->isChordBeat = true);
     }
 
     if ($voice->getNote(0)->getEffect()->isVibrato() 
         && $this->beat->getStroke()->getDirection() !== Stroke::STROKE_NONE
     ) {
-      $this->isChordBeat = true;
-      return true;
+      return ($this->isChordBeat = true);
     }
   }
 
@@ -199,13 +196,11 @@ class BeatContext
   private function getHammer(Note $note)
   {
     foreach ($this->beat->getVoice(0)->getNotes() as $prevNote) {
-      if ($prevNote->getString() == $note->getString()) {
-        if ($prevNote->getEffect()->isHammer()) {
-          return $prevNote->getValue() >= $note->getValue()
-            ? 'p' : 'h';
-        }
-        
-        return '';
+      if ($prevNote->getString() == $note->getString()
+       && $prevNote->getEffect()->isHammer()
+      ) {
+        return $prevNote->getValue() >= $note->getValue()
+          ? 'p' : 'h';
       }
     }
   }
