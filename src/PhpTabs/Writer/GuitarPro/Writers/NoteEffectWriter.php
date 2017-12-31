@@ -205,7 +205,21 @@ class NoteEffectWriter
       intval((($grace->getDynamic() - Velocities::MIN_VELOCITY) / Velocities::VELOCITY_INCREMENT) + 1)
     );
 
-    switch ($grace->getTransition()) {
+    $this->writeTransition(
+      $grace->getTransition()
+    );
+
+    $this->writer->writeUnsignedByte($grace->getDuration());
+  }
+
+  /**
+   * Write a Grace transition byte
+   * 
+   * @param int $transition
+   */
+  public function writeTransition($transition)
+  {
+    switch ($transition) {
       case EffectGrace::TRANSITION_NONE:
         $this->writer->writeUnsignedByte(0);
         break;
@@ -219,8 +233,6 @@ class NoteEffectWriter
         $this->writer->writeUnsignedByte(3);
         break;
     }
-
-    $this->writer->writeUnsignedByte($grace->getDuration());
   }
 
   /**
