@@ -36,8 +36,10 @@ abstract class MidiReaderBase implements MidiReaderInterface
   {
     $bytes = $this->readBytesBigEndian(4);
 
-    return ($bytes[3] & 0xff) | (($bytes[2] & 0xff) << 8) 
-      | (($bytes[1] & 0xff) << 16) | (($bytes[0] & 0xff) << 24);
+    return ($bytes[3] & 0xff)
+        | (($bytes[2] & 0xff) << 8)
+        | (($bytes[1] & 0xff) << 16)
+        | (($bytes[0] & 0xff) << 24);
   }
 
   /**
