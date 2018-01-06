@@ -19,25 +19,23 @@ namespace PhpTabs\Music;
 class Voice
 {
   const DIRECTION_NONE = 0;
-  const DIRECTION_UP = 1;
+  const DIRECTION_UP   = 1;
   const DIRECTION_DOWN = 2;
 
   private $beat;
   private $duration;
-  private $notes;
   private $index;
   private $direction;
-  private $empty;
+  private $notes = [];
+  private $empty = true;
 
   /**
    * @param int $index
    */
   public function __construct($index)
   {
-    $this->duration = new Duration();
-    $this->notes = array();
-    $this->index = $index;
-    $this->empty = true;
+    $this->duration  = new Duration();
+    $this->index     = $index;
     $this->direction = Voice::DIRECTION_NONE;
   }
 

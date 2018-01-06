@@ -19,9 +19,9 @@ namespace PhpTabs\Music;
 class Measure
 {
   const CLEF_TREBLE = 1;
-  const CLEF_BASS = 2;
-  const CLEF_TENOR = 3;
-  const CLEF_ALTO = 4;
+  const CLEF_BASS   = 2;
+  const CLEF_TENOR  = 3;
+  const CLEF_ALTO   = 4;
 
   const DEFAULT_CLEF = 1;
   const DEFAULT_KEY_SIGNATURE = 0;
@@ -30,7 +30,7 @@ class Measure
   private $track;
   private $clef;
   private $keySignature;
-  private $beats;
+  private $beats = [];
 
   /**
    * @param \PhpTabs\Music\MeasureHeader $header
@@ -40,7 +40,6 @@ class Measure
     $this->header = $header;
     $this->clef = self::DEFAULT_CLEF;
     $this->keySignature = self::DEFAULT_KEY_SIGNATURE;
-    $this->beats = array();
   }
 
   /**

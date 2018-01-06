@@ -35,7 +35,7 @@ class Beat
   {
     $this->stroke = new Stroke();
 
-    for ($i = 0; $i < Beat::MAX_VOICES; $i++) {
+    for ($i = 0; $i < self::MAX_VOICES; $i++) {
       $this->setVoice($i, new Voice($i));
     }
   }

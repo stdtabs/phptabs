@@ -16,12 +16,11 @@ namespace PhpTabs\Music;
  */ 
 class TimeSignature
 {
+  private $numerator = 4;
   private $denominator;
-  private $numerator;
 
   public function __construct()
   {
-    $this->numerator   = 4;
     $this->denominator = new Duration();
   }
 

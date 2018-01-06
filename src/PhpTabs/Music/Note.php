@@ -18,19 +18,16 @@ namespace PhpTabs\Music;
  */
 class Note
 {
-  private $value;
+  private $value    = 0;
+  private $string   = 1;
+  private $tiedNote = false;
   private $velocity;
-  private $string;
-  private $tiedNote;
   private $effect;
   private $voice;
 
   public function __construct()
   {
-    $this->value    = 0;
     $this->velocity = Velocities::FORTE;
-    $this->string   = 1;
-    $this->tiedNote = false;
     $this->effect   = new NoteEffect();
   }
 

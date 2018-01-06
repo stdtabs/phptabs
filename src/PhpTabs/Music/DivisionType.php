@@ -16,14 +16,8 @@ namespace PhpTabs\Music;
  */
 class DivisionType
 {
-  private $enters;
-  private $times;
-
-  public function __construct()
-  {
-    $this->enters = 1;
-    $this->times = 1;
-  }
+  private $enters = 1;
+  private $times  = 1;
 
   /**
    * @return array

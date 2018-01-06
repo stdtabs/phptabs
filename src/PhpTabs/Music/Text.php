@@ -16,8 +16,6 @@ class Text
   private $value;
   private $beat;
 
-  public function __construct(){}
-
   /**
    * @return \PhpTabs\Music\Beat
    */

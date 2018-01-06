@@ -26,7 +26,9 @@ class Channel
   const DEFAULT_PHASER  = 0;
   const DEFAULT_TREMOLO = 0;
 
-  private $channelId;
+  private $channelId  = 0;
+  private $name       = '';
+  private $parameters = [];
   private $bank;
   private $program;
   private $volume;
@@ -35,22 +37,17 @@ class Channel
   private $reverb;
   private $phaser;
   private $tremolo;
-  private $name;
-  private $parameters = array();
 
   public function __construct()
   {
-    $this->channelId  = 0;
-    $this->bank       = Channel::DEFAULT_BANK;
-    $this->program    = Channel::DEFAULT_PROGRAM;
-    $this->volume     = Channel::DEFAULT_VOLUME;
-    $this->balance    = Channel::DEFAULT_BALANCE;
-    $this->chorus     = Channel::DEFAULT_CHORUS;
-    $this->reverb     = Channel::DEFAULT_REVERB;
-    $this->phaser     = Channel::DEFAULT_PHASER;
-    $this->tremolo    = Channel::DEFAULT_TREMOLO;
-    $this->name       = '';
-    $this->parameters = array();
+    $this->bank    = Channel::DEFAULT_BANK;
+    $this->program = Channel::DEFAULT_PROGRAM;
+    $this->volume  = Channel::DEFAULT_VOLUME;
+    $this->balance = Channel::DEFAULT_BALANCE;
+    $this->chorus  = Channel::DEFAULT_CHORUS;
+    $this->reverb  = Channel::DEFAULT_REVERB;
+    $this->phaser  = Channel::DEFAULT_PHASER;
+    $this->tremolo = Channel::DEFAULT_TREMOLO;
   }
 
   /**
@@ -269,7 +266,7 @@ class Channel
    */
   public function isPercussionChannel()
   {
-    return $this->getBank() == Channel::DEFAULT_PERCUSSION_BANK;
+    return $this->getBank() === Channel::DEFAULT_PERCUSSION_BANK;
   }
 
   /**

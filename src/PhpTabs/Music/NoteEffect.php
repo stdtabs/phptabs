@@ -21,24 +21,12 @@ namespace PhpTabs\Music;
  */
 class NoteEffect extends NoteEffectBase
 {
-  protected $bend;
-  protected $grace;
-  protected $harmonic;
-  protected $tremoloBar;
-  protected $tremoloPicking;
-  protected $trill;
-
-  public function __construct()
-  {
-    parent::__construct();
-
-    $this->bend           = null;
-    $this->harmonic       = null;
-    $this->grace          = null;
-    $this->trill          = null;
-    $this->tremoloBar     = null;
-    $this->tremoloPicking = null;
-  }
+  protected $bend           = null;
+  protected $harmonic       = null;
+  protected $grace          = null;
+  protected $trill          = null;
+  protected $tremoloBar     = null;
+  protected $tremoloPicking = null;
 
   /**
    * @param bool $deadNote

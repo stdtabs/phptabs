@@ -20,15 +20,7 @@ class Tempo
   const SECOND_IN_MILLIS = 1000;
 
   /** @var int $value Current value of the tempo */
-  private $value;
-
-  /**
-   * Sets a default value for tempo
-   */
-  public function __construct()
-  {
-    $this->value = 120;
-  }
+  private $value = 120;
 
   /**
    * Gets tempo value

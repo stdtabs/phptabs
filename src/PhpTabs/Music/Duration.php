@@ -23,15 +23,13 @@ class Duration
   const SIXTY_FOURTH = 64;
 
   private $value;
-  private $dotted;
-  private $doubleDotted;
-  private $divisionType;	
+  private $divisionType;
+  private $dotted       = false;
+  private $doubleDotted = false;
 
   public function __construct()
   {
-    $this->value = Duration::QUARTER;
-    $this->dotted = false;
-    $this->doubleDotted = false;
+    $this->value        = Duration::QUARTER;
     $this->divisionType = new DivisionType();
   }
 

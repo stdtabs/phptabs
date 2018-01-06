@@ -26,7 +26,7 @@ class TabString
   public function __construct($number = 0, $value = 0)
   {
     $this->number = $number;
-    $this->value = $value;
+    $this->value  = $value;
   }
 
   /**
