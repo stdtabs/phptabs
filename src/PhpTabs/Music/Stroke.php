@@ -18,7 +18,7 @@ namespace PhpTabs\Music;
 class Stroke
 {
   const STROKE_NONE = 0;
-  const STROKE_UP = 1;
+  const STROKE_UP   = 1;
   const STROKE_DOWN = -1;
 
   private $direction;

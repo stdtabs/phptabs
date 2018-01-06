@@ -16,12 +16,11 @@ namespace PhpTabs\Music;
  */
 class EffectTrill
 {
-  private $fret;
+  private $fret = 0;
   private $duration;
 
   public function __construct()
   {
-    $this->fret = 0;
     $this->duration = new Duration();
   }
 

@@ -17,26 +17,22 @@ namespace PhpTabs\Music;
  */
 class EffectGrace
 {
-  const TRANSITION_NONE = 0;
-  const TRANSITION_SLIDE = 1;
-  const TRANSITION_BEND = 2;
+  const TRANSITION_NONE   = 0;
+  const TRANSITION_SLIDE  = 1;
+  const TRANSITION_BEND   = 2;
   const TRANSITION_HAMMER = 3;
 
-  private $fret;
-  private $duration;
+  private $fret     = 0;
+  private $duration = 1;
+  private $onBeat   = false;
+  private $dead     = false;
   private $dynamic;
   private $transition;
-  private $onBeat;
-  private $dead;
 
   public function __construct()
   {
-    $this->fret = 0;
-    $this->duration = 1;
-    $this->dynamic = Velocities::_DEFAULT;
+    $this->dynamic    = Velocities::_DEFAULT;
     $this->transition = EffectGrace::TRANSITION_NONE;
-    $this->onBeat = false;
-    $this->dead = false;
   }
 
   /**
@@ -140,7 +136,9 @@ class EffectGrace
    */
   public function getDurationTime()
   {
-    return intval((Duration::QUARTER_TIME / 16.00 ) * $this->getDuration());
+    return intval(
+      (Duration::QUARTER_TIME / 16.00 ) * $this->getDuration()
+    );
   }
 
   /**

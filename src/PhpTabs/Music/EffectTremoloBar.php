@@ -17,14 +17,9 @@ namespace PhpTabs\Music;
 class EffectTremoloBar
 {
   const MAX_POSITION_LENGTH = 12;
-  const MAX_VALUE_LENGTH = 12;
+  const MAX_VALUE_LENGTH    = 12;
 
-  private $points;
-
-  public function __construct()
-  {
-    $this->points = array();
-  }
+  private $points = [];
 
   /**
    * @param int $position
@@ -50,8 +45,7 @@ class EffectTremoloBar
   {
     $effect = new EffectTremoloBar();
 
-    foreach ($this->points as $point)
-    {
+    foreach ($this->points as $point) {
       $effect->addPoint($point->getPosition(), $point->getValue());
     }
 

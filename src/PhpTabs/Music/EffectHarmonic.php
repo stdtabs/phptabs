@@ -13,20 +13,20 @@ namespace PhpTabs\Music;
 
 class EffectHarmonic
 {
-  const KEY_NATURAL = "N.H";
-  const KEY_ARTIFICIAL = "A.H";
-  const KEY_TAPPED = "T.H";
-  const KEY_PINCH = "P.H";
-  const KEY_SEMI = "S.H";
+  const KEY_NATURAL     = "N.H";
+  const KEY_ARTIFICIAL  = "A.H";
+  const KEY_TAPPED      = "T.H";
+  const KEY_PINCH       = "P.H";
+  const KEY_SEMI        = "S.H";
 
-  const TYPE_NATURAL = 1;
+  const TYPE_NATURAL    = 1;
   const TYPE_ARTIFICIAL = 2;
-  const TYPE_TAPPED = 3;
-  const TYPE_PINCH = 4;
-  const TYPE_SEMI = 5;
+  const TYPE_TAPPED     = 3;
+  const TYPE_PINCH      = 4;
+  const TYPE_SEMI       = 5;
   const MIN_ARTIFICIAL_OFFSET = -24;
   const MAX_ARTIFICIAL_OFFSET = 24;
-  const MAX_TAPPED_OFFSET = 24;
+  const MAX_TAPPED_OFFSET     = 24;
 
   public static $naturalFrequencies = array(
     array(12, 12), //AH12 (+12 frets)
@@ -37,14 +37,8 @@ class EffectHarmonic
     array(3, 31)  //AH3 (+31 frets)
   );
 
-  private $type;
-  private $data;
-
-  public function __construct()
-  {
-    $this->type = 0;
-    $this->data = 0;
-  }
+  private $type = 0;
+  private $data = 0;
 
   /**
    * @return int

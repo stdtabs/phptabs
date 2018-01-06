@@ -16,16 +16,11 @@ namespace PhpTabs\Music;
  */
 class EffectBend
 {
-  const SEMITONE_LENGTH = 1;
+  const SEMITONE_LENGTH     = 1;
   const MAX_POSITION_LENGTH = 12;
-  const MAX_VALUE_LENGTH = 12;
+  const MAX_VALUE_LENGTH    = 12;
 
-  private $points;
-
-  public function __construct()
-  {
-    $this->points = array();
-  }
+  private $points = [];
 
   /**
    * @param int $position
@@ -58,10 +53,8 @@ class EffectBend
   public function __clone()
   {
     $effect = new EffectBend();
-    $points = $this->getPoints();
 
-    foreach ($points as $point)
-    {
+    foreach ($this->getPoints() as $point) {
       $effect->addPoint($point->getPosition(), $point->getValue());
     }
 
