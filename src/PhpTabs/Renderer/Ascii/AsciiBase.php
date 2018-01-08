@@ -15,7 +15,7 @@ use Exception;
 
 class AsciiBase
 {
-  public $content = [];
+  private $content = [];
   private $x = 0;
   private $y = 0;
 
@@ -35,10 +35,6 @@ class AsciiBase
    */
   public function drawNote($fret)
   {
-    if (!is_scalar($fret)) {
-      throw new Exception("Fret value must be a scalar");
-    }
-
     $this->movePoint(
       $this->getPosX() + mb_strlen(strval($fret)),
       $this->getPosY()
@@ -74,11 +70,6 @@ class AsciiBase
    */
   public function drawStringSegments($count)
   {
-    if ($count < 1) {
-      //echo $this->output();
-      //throw new Exception("Must draw at least 1 string segment. Given: $count");
-    }
-
     for ($i = 0; $i < $count; $i++) {
       $this->movePoint($this->getPosX() + $i + 1 + $count, $this->getPosY());
       $this->append(AsciiRenderer::STRING_SEGMENT_CHR);
@@ -122,7 +113,7 @@ class AsciiBase
    * @param int $x
    * @param int $y
    */
-	private function movePoint($x, $y)
+  private function movePoint($x, $y)
   {
     $this->x = $x;
     $this->y = $y;
@@ -164,10 +155,6 @@ class AsciiBase
    */
   public function append($data)
   {
-    if (!is_scalar($data)) {
-      throw new Exception("Printer value $data is not a scalar");
-    }
-
     // Try to find a better X (min)
     $x = $this->getPosX();
     while ($x >= 0) {
@@ -218,9 +205,7 @@ class AsciiBase
   public function output()
   {
     $maxLines = max(array_keys($this->content));
-    $maxCols  = array_reduce($this->content, function ($carry, $item) {
-      return max($carry, max(array_keys($item)));
-    }, 0);
+    $maxCols  = array_reduce($this->content, $this->findMaxValue(), 0);
 
     $content = '';
 
@@ -235,5 +220,17 @@ class AsciiBase
     }
 
     return $content;
+  }
+
+  /**
+   * Find max key value
+   * 
+   * @return \Closure
+   */
+  private function findMaxValue()
+  {
+    return function ($carry, $item) {
+      return max($carry, max(array_keys($item)));
+    };
   }
 }
