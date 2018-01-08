@@ -14,6 +14,11 @@ namespace PhpTabs\Component\Renderer;
 abstract class RendererHelper
 {
   /**
+   * @var array
+   */
+  private $options = [];
+
+  /**
    * Get an option
    * 
    * @param  string     $name

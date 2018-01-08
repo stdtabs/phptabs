@@ -26,12 +26,13 @@ class Renderer
   private $bridge;
 
   /**
-   * List of supported renders 
+   * List of supported types of renders 
    *
    * @var array
    */
   private $formats = array(
-    'vextab'   => 'PhpTabs\\Renderer\\VexTab\\VexTabRenderer',
+    'vextab'  => 'PhpTabs\\Renderer\\VexTab\\VexTabRenderer',
+    'ascii'   => 'PhpTabs\\Renderer\\Ascii\\AsciiRenderer',
   );
 
   /**

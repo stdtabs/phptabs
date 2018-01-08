@@ -20,23 +20,7 @@ use PhpTabs\Music\Song;
 class VexTabRenderer extends RendererHelper implements RendererInterface
 {
   /**
-   * Default stave options
-   * 
-   * @var array
-   */
-  protected $options = [
-    'notation'           => 'true',
-    'tablature'          => 'true',
-    'measures_per_stave' => 1,
-    'scale'              => 1,
-    'space'              => 16,
-    'width'              => 520,
-    'tab-stems'          => 'false',
-    'tab-stem-direction' => 'auto'
-  ];
-
-  /**
-   * Global song container
+   * Song container
    * 
    * @var \PhpTabs\Music\Song
    */

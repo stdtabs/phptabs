@@ -30,6 +30,22 @@ class VexTabOptions
   private $stave = [];
 
   /**
+   * Default options
+   * 
+   * @var array
+   */
+  private $options = [
+    'notation'           => 'true',
+    'tablature'          => 'true',
+    'measures_per_stave' => 1,
+    'scale'              => 1,
+    'space'              => 16,
+    'width'              => 520,
+    'tab-stems'          => 'false',
+    'tab-stem-direction' => 'auto'
+  ];
+
+  /**
    * Allowed global values
    * 
    * @var array
@@ -70,6 +86,11 @@ class VexTabOptions
   public function __construct(RendererInterface $renderer)
   {
     $this->renderer = $renderer;
+
+    // Defaults
+    foreach ($this->options as $name => $value) {
+      $this->parseOption($name, $value);
+    }
 
     foreach ($renderer->getOptions() as $name => $value) {
       $this->parseOption($name, $value);
