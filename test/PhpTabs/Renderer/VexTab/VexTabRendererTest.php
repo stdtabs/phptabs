@@ -9,7 +9,7 @@
  * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
  */
 
-namespace PhpTabsTest\Renderer;
+namespace PhpTabsTest\Renderer\VexTab;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
