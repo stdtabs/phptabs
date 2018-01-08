@@ -205,7 +205,7 @@ class AsciiBase
   public function output()
   {
     $maxLines = max(array_keys($this->content));
-    $maxCols  = array_reduce($this->content, $this->findMaxValue(), 0);
+    $maxCols  = $this->findMaxValue();
 
     $content = '';
 
@@ -225,12 +225,12 @@ class AsciiBase
   /**
    * Find max key value
    * 
-   * @return \Closure
+   * @return int
    */
   private function findMaxValue()
   {
-    return function ($carry, $item) {
+    return array_reduce($this->content, function ($carry, $item) {
       return max($carry, max(array_keys($item)));
-    };
+    }, 0);
   }
 }
