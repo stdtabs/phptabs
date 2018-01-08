@@ -25,7 +25,7 @@ class AsciiBase
   public function drawBarSegment()
   {
     $this->movePoint($this->getPosX() + 1, $this->getPosY());
-    $this->print(AsciiRenderer::BAR_SEGMENT_CHR);
+    $this->append(AsciiRenderer::BAR_SEGMENT_CHR);
   }
 
   /**
@@ -44,7 +44,7 @@ class AsciiBase
       $this->getPosY()
     );
 
-    $this->print(strval($fret));
+    $this->append(strval($fret));
   }
 
   /**
@@ -53,7 +53,7 @@ class AsciiBase
   public function drawSpace()
   {
     $this->movePoint($this->getPosX() + 1, $this->getPosY());
-    $this->print(" ");
+    $this->append(" ");
   }
 
   /**
@@ -81,7 +81,7 @@ class AsciiBase
 
     for ($i = 0; $i < $count; $i++) {
       $this->movePoint($this->getPosX() + $i + 1 + $count, $this->getPosY());
-      $this->print(AsciiRenderer::STRING_SEGMENT_CHR);
+      $this->append(AsciiRenderer::STRING_SEGMENT_CHR);
     }
   }
 
@@ -99,7 +99,7 @@ class AsciiBase
 
     $this->movePoint($this->getPosX() + mb_strlen($tune), $this->getPosY());
 
-    $this->print($tune);
+    $this->append($tune);
   }
 
   /**
@@ -162,7 +162,7 @@ class AsciiBase
    * 
    * @param string $data
    */
-  public function print($data)
+  public function append($data)
   {
     if (!is_scalar($data)) {
       throw new Exception("Printer value $data is not a scalar");
