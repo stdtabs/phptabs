@@ -23,28 +23,20 @@ class Track
   const MAX_OFFSET = 24;
   const MIN_OFFSET = -24;
 
-  private $number;
-  private $offset;
-  private $channelId;
-  private $solo;
-  private $mute;
-  private $name;
-  private $measures;
-  private $strings;
+  private $number     = 0;
+  private $offset     = 0;
+  private $channelId  = -1;
+  private $solo       = false;
+  private $mute       = false;
+  private $name       = '';
+  private $measures   = [];
+  private $strings    = [];
   private $color;
   private $lyrics;
   private $song;
 
   public function __construct()
   {
-    $this->number = 0;
-    $this->offset = 0;
-    $this->channelId = -1;
-    $this->solo = false;
-    $this->mute = false;
-    $this->name = '';
-    $this->measures = array();
-    $this->strings = array();
     $this->color = new Color();
     $this->lyrics = new Lyric();
   }
