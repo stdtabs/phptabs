@@ -18,8 +18,6 @@ use PhpTabs\Component\File;
 use PhpTabs\Component\Tablature;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\Channel;
-use PhpTabs\Model\ChannelRoute;
-use PhpTabs\Model\ChannelRouter;
 use PhpTabs\Music\Color;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\EffectBend;
@@ -30,6 +28,8 @@ use PhpTabs\Music\Song;
 use PhpTabs\Music\Tempo;
 use PhpTabs\Music\TimeSignature;
 use PhpTabs\Music\Track;
+use PhpTabs\Share\ChannelRoute;
+use PhpTabs\Share\ChannelRouter;
 
 class MidiReader extends MidiReaderBase
 {

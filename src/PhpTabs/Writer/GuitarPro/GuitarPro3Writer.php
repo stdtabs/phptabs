@@ -23,7 +23,6 @@ use PhpTabs\Music\EffectHarmonic;
 use PhpTabs\Music\Marker;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\MeasureHeader;
-use PhpTabs\Model\MeasureVoiceJoiner;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Note;
 use PhpTabs\Music\Song;
@@ -34,6 +33,7 @@ use PhpTabs\Music\TimeSignature;
 use PhpTabs\Music\Track;
 use PhpTabs\Music\Velocities;
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface as GprInterface;
+use PhpTabs\Share\MeasureVoiceJoiner;
 
 class GuitarPro3Writer extends GuitarProWriterBase
 {

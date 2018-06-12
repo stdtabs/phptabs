@@ -12,12 +12,12 @@
 namespace PhpTabs\Writer\GuitarPro;
 
 use PhpTabs\Component\WriterInterface;
-use PhpTabs\Model\ChannelRouter;
-use PhpTabs\Model\ChannelRouterConfigurator;
 use PhpTabs\Music\Color;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\Stroke;
+use PhpTabs\Share\ChannelRouter;
+use PhpTabs\Share\ChannelRouterConfigurator;
 
 abstract class GuitarProWriterBase implements WriterInterface
 {

@@ -223,7 +223,7 @@ class AsciiBase
   }
 
   /**
-   * Find max key value
+   * Find maximum column index
    * 
    * @return int
    */

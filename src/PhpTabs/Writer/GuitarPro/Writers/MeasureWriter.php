@@ -11,10 +11,10 @@
 
 namespace PhpTabs\Writer\GuitarPro\Writers;
 
-use PhpTabs\Model\MeasureVoiceJoiner;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\Tempo;
+use PhpTabs\Share\MeasureVoiceJoiner;
 
 class MeasureWriter
 {

@@ -9,7 +9,7 @@
  * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
  */
 
-namespace PhpTabs\Model;
+namespace PhpTabs\Share;
 
 class ChannelRouter
 {
