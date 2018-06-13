@@ -32,8 +32,7 @@ class ChannelRouterConfigurator
   {
     $this->router->resetRoutes();
 
-    foreach ($channels as $channel)
-    {
+    array_walk ($channels, function($channel) {
       $channelRoute = new ChannelRoute($channel->getChannelId());
 
       $channelRoute->setChannel1(
@@ -45,7 +44,7 @@ class ChannelRouterConfigurator
       );
 
       $this->router->configureRoutes($channelRoute, $channel->isPercussionChannel());
-    }
+    });
   }
 
   /**
@@ -58,8 +57,7 @@ class ChannelRouterConfigurator
   {
     $channelParameter = $this->findChannelParameter($channel, $key);
 
-    if ($channelParameter !== null && $channelParameter->getValue() !== null)
-    {
+    if ($channelParameter !== null && $channelParameter->getValue() !== null) {
       return intval($channelParameter->getValue());
     }
 
@@ -76,10 +74,8 @@ class ChannelRouterConfigurator
   {
     $parameters = $channel->getParameters();
 
-    foreach ($parameters as $parameter)
-    {
-      if ($parameter->getKey() == $key)
-      {
+    foreach ($parameters as $parameter) {
+      if ($parameter->getKey() == $key) {
         return $parameter;
       }
     }
