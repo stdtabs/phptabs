@@ -77,45 +77,44 @@ class AsciiTrackRenderer
 
     list($tuning, $maxTuningLength) = $this->getTuning();
 
-		$nextMeasure  = 0;
+    $nextMeasure  = 0;
     $measureCount = $this->track->countMeasures();
     $stringCount  = $this->track->countStrings();
-    
-		$eof = false;
 
-		while (!$eof) {
-			$this->writer->nextLine();
-			$index = $nextMeasure;
+    $eof = false;
 
-			for ($i = 0; $i < $stringCount; $i++) {
-				$string = $this->track->getString($i + 1);
+    while (!$eof) {
+      $this->writer->nextLine();
+      $index = $nextMeasure;
 
-				$this->writer->drawTuneSegment($tuning[$i], $maxTuningLength);
-				
-				for ($j = $index; $j < $measureCount; $j++) {
+      for ($i = 0; $i < $stringCount; $i++) {
+        $string = $this->track->getString($i + 1);
 
-					$measure = $this->track->getMeasure($j);
-					$this->writeMeasure($measure, $string);
-					$nextMeasure = $j + 1;
+        $this->writer->drawTuneSegment($tuning[$i], $maxTuningLength);
 
-					// Last measure
-					$eof = $measureCount === $measure->getNumber();
+        for ($j = $index; $j < $measureCount; $j++) {
+          $measure = $this->track->getMeasure($j);
+          $this->writeMeasure($measure, $string);
+          $nextMeasure = $j + 1;
 
-					// Break line
-					if ($this->writer->getPosX() > $this->parent->getOption('maxLineLength')) {
-						break;
-					}
-				}
+          // Last measure
+          $eof = $measureCount === $measure->getNumber();
 
-				// Close measure
-				$this->writer->drawBarSegment();
-				$this->writer->nextLine();
-			}
+          // Break line
+          if ($this->writer->getPosX() > $this->parent->getOption('maxLineLength')) {
+            break;
+          }
+        }
 
-			$this->writer->nextLine();
-		}
+        // Close measure
+        $this->writer->drawBarSegment();
+        $this->writer->nextLine();
+      }
 
-		$this->writer->nextLine();
+      $this->writer->nextLine();
+    }
+
+    $this->writer->nextLine();
   }
 
   /**

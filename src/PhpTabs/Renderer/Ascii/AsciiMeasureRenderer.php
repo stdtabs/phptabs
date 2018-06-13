@@ -159,8 +159,6 @@ class AsciiMeasureRenderer
         }
       }
     }
-
-    return null;
   }
 
   /**
@@ -177,8 +175,6 @@ class AsciiMeasureRenderer
         return $note;
       }
     }
-
-    return null;
   }
 
   /**
@@ -189,20 +185,19 @@ class AsciiMeasureRenderer
    */
   private function getDurationScaping($length)
   {
-    $spacing = 7;
-
-    if ($length <= (Duration::QUARTER_TIME / 8)) {
-      $spacing = 2;
-    } elseif ($length <= (Duration::QUARTER_TIME / 4)) {
-      $spacing = 3;
-    } elseif ($length <= (Duration::QUARTER_TIME / 2)) {
-      $spacing = 4;
-    } elseif ($length <= Duration::QUARTER_TIME) {
-      $spacing = 5;
-    } elseif ($length <= (Duration::QUARTER_TIME * 2)) {
-      $spacing = 6;
+    switch (true) {
+      case $length <= (Duration::QUARTER_TIME / 8):
+        return 2;
+      case $length <= (Duration::QUARTER_TIME / 4):
+        return 3;
+      case $length <= (Duration::QUARTER_TIME / 2):
+        return 4;
+      case $length <= Duration::QUARTER_TIME:
+        return 5;
+      case $length <= (Duration::QUARTER_TIME * 2):
+        return 6;
     }
 
-    return $spacing;
+    return 7;
   }
 }

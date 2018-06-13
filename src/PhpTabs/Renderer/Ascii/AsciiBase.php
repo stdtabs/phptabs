@@ -117,7 +117,7 @@ class AsciiBase
   {
     $this->x = $x;
     $this->y = $y;
-	}
+  }
 
   /**
    * Apped a new empty line
