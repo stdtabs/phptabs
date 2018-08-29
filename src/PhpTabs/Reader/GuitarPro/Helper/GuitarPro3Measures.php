@@ -19,7 +19,7 @@ use PhpTabs\Music\Tempo;
 class GuitarPro3Measures extends AbstractReader
 {
   /**
-   * Loops on mesures to read
+   * Loops on measures to read
    * 
    * @param \PhpTabs\Music\Song $song
    * @param integer $measures
