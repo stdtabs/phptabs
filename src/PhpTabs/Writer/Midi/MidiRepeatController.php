@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * This file is part of the PhpTabs package.
+ *
+ * Copyright (c) landrok at github.com/landrok
+ *
+ * For the full copyright and license information, please see
+ * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
+ */
+
 namespace PhpTabs\Writer\Midi;
 
-use PhpTabs\Model\Duration;
-use PhpTabs\Model\Song;
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\Song;
 
 class MidiRepeatController
 {
@@ -22,6 +31,11 @@ class MidiRepeatController
   private $sHeader;
   private $eHeader;
 
+  /**
+   * @param \PhpTabs\Music\Song $song
+   * @param mixed $sHeader
+   * @param mixed $eHeader
+   */
   public function __construct(Song $song, $sHeader, $eHeader)
   {
     $this->song = $song;
@@ -45,7 +59,7 @@ class MidiRepeatController
     $header = $this->song->getMeasureHeader($this->index);
 
     // Checks pointer is in range
-    if( ($this->sHeader != -1 && $header->getNumber() < $this->sHeader) || ( $this->eHeader != -1 && $header->getNumber() > $this->eHeader ) )
+    if (($this->sHeader != -1 && $header->getNumber() < $this->sHeader) || ($this->eHeader != -1 && $header->getNumber() > $this->eHeader))
     {
       $this->shouldPlay = false;
       $this->index ++;
@@ -53,7 +67,7 @@ class MidiRepeatController
     }
 
     // always repeat open first
-    if( ($this->sHeader != -1 && $header->getNumber() == $this->sHeader ) || $header->getNumber() == 1 )
+    if (($this->sHeader != -1 && $header->getNumber() == $this->sHeader ) || $header->getNumber() == 1)
     {
       $this->repeatStartIndex = $this->index;
       $this->repeatStart = $header->getStart();
@@ -71,7 +85,7 @@ class MidiRepeatController
       $this->repeatOpen = true;
 
       // First pass on the repeat
-      if($this->index > $this->lastIndex)
+      if ($this->index > $this->lastIndex)
       {
         $this->repeatNumber = 0;
         $this->repeatAlternative = 0;
@@ -80,7 +94,7 @@ class MidiRepeatController
     else
     {
       // Checks if an alternative has been opened
-      if($this->repeatAlternative == 0)
+      if ($this->repeatAlternative == 0)
       {
         $this->repeatAlternative = $header->getRepeatAlternative();
       }
@@ -124,24 +138,36 @@ class MidiRepeatController
       $this->repeatAlternative = 0;
     }
 
-    $this->index ++;
+    $this->index++;
   }
-	
+
+  /**
+   * @return bool
+   */
   public function finished()
   {
     return ($this->index >= $this->count);
   }
-	
+
+  /**
+   * @return bool
+   */
   public function shouldPlay()
   {
     return $this->shouldPlay;
   }
-	
+
+  /**
+   * @return int
+   */
   public function getIndex()
   {
     return $this->index;
   }
-	
+
+  /**
+   * @return int
+   */
   public function getRepeatMove()
   {
     return $this->repeatMove;

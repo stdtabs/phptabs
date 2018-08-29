@@ -1,11 +1,18 @@
 <?php
 
+/*
+ * This file is part of the PhpTabs package.
+ *
+ * Copyright (c) landrok at github.com/landrok
+ *
+ * For the full copyright and license information, please see
+ * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
+ */
+
 namespace PhpTabs\Writer\Midi;
 
 use Exception;
-use PhpTabs\Model\Song;
-use PhpTabs\Model\ChannelRouter;
-use PhpTabs\Model\ChannelRouterConfigurator;
+use PhpTabs\Music\Song;
 use PhpTabs\Reader\Midi\MidiReaderInterface;
 use PhpTabs\Reader\Midi\MidiEvent;
 use PhpTabs\Reader\Midi\MidiMessage;
@@ -13,6 +20,8 @@ use PhpTabs\Reader\Midi\MidiReader;
 use PhpTabs\Reader\Midi\MidiTrack;
 use PhpTabs\Reader\Midi\MidiSequence;
 use PhpTabs\Reader\Midi\MidiSettings;
+use PhpTabs\Share\ChannelRouter;
+use PhpTabs\Share\ChannelRouterConfigurator;
 
 class MidiWriter extends MidiWriterBase
 {  
@@ -34,6 +43,9 @@ class MidiWriter extends MidiWriterBase
   const RPN_MSB = 0x65 ;
   const ALL_NOTES_OFF = 0x7B;
 
+  /**
+   * @param \PhpTabs\Music\Song $song
+   */
   public function __construct(Song $song)
   {
     parent::__construct();
@@ -51,6 +63,13 @@ class MidiWriter extends MidiWriterBase
     $midiSequenceParser->parse(new MidiSequenceHandler($song->countTracks() + 1, $channelRouter, $this));
   }
 
+  /**
+   * Starts write process
+   * 
+   * @param \PhpTabs\Reader\Midi\MidiSequence $sequence
+   * 
+   * @param int $type
+   */
   public function write(MidiSequence $sequence, $type)
   {
     $this->writeInt(MidiReaderInterface::HEADER_MAGIC);
@@ -69,6 +88,13 @@ class MidiWriter extends MidiWriterBase
     }
   }
 
+  /**
+   * Writes a track
+   * 
+   * @param \PhpTabs\Reader\Midi\MidiTrack $track
+   * 
+   * @return int
+   */
   private function writeTrack(MidiTrack $track)
   {
     $length = 0;
@@ -86,6 +112,15 @@ class MidiWriter extends MidiWriterBase
     return $length;
   }
 
+  /**
+   * Writes a MIDI event
+   * 
+   * @param \PhpTabs\Reader\Midi\MidiEvent $event
+   * 
+   * @param \PhpTabs\Reader\Midi\MidiEvent $previous
+   * 
+   * @return int
+   */
   private function writeEvent(MidiEvent $event, MidiEvent $previous = null)
   {
     $length = $this->writeVariableLengthQuantity($previous !== null
@@ -93,11 +128,11 @@ class MidiWriter extends MidiWriterBase
 
     $message = $event->getMessage();
 
-    if($message->getType() == MidiMessage::TYPE_SHORT)
+    if ($message->getType() == MidiMessage::TYPE_SHORT)
     {
       $length += $this->writeShortMessage($message);
     }
-    else if($message->getType() == MidiMessage::TYPE_META)
+    elseif ($message->getType() == MidiMessage::TYPE_META)
     {
       $length += $this->writeMetaMessage($message);
     }
@@ -105,6 +140,13 @@ class MidiWriter extends MidiWriterBase
     return $length;
   }
 
+  /**
+   * Writes a short MIDI message
+   * 
+   * @param \PhpTabs\Reader\Midi\MidiMessage $message
+   * 
+   * @return int
+   */
   private function writeShortMessage(MidiMessage $message)
   {
     $data = $message->getData();
@@ -115,16 +157,26 @@ class MidiWriter extends MidiWriterBase
     return $length;
   }
 
+  /**
+   * Writes a meta MIDI message
+   * 
+   * @param \PhpTabs\Reader\Midi\MidiMessage $message
+   * 
+   * @return int
+   */
   protected function writeMetaMessage(MidiMessage $message)
   {
     $length = 0;
     $data = $message->getData();
-
-    $this->writeUnsignedBytes(array(255));
-    $this->writeUnsignedBytes(array($message->getCommand()));
+    
+    if ($this->getContent() != '')
+    {
+      $this->writeUnsignedBytes(array(255));
+      $this->writeUnsignedBytes(array($message->getCommand()));
+    }
     $length += 2;
 
-    if(is_array($data))
+    if (is_array($data))
     {
       $length += $this->writeVariableLengthQuantity(count($data));
       $this->writeUnsignedBytes($data);

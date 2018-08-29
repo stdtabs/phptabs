@@ -1,19 +1,28 @@
 <?php
 
+/*
+ * This file is part of the PhpTabs package.
+ *
+ * Copyright (c) landrok at github.com/landrok
+ *
+ * For the full copyright and license information, please see
+ * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
+ */
+
 namespace PhpTabs\Writer\Midi;
 
-use PhpTabs\Model\Beat;
-use PhpTabs\Model\Channel;
-use PhpTabs\Model\Duration;
-use PhpTabs\Model\EffectBend;
-use PhpTabs\Model\Measure;
-use PhpTabs\Model\MeasureHeader;
-use PhpTabs\Model\Note;
-use PhpTabs\Model\Song;
-use PhpTabs\Model\Stroke;
-use PhpTabs\Model\Tempo;
-use PhpTabs\Model\Track;
-use PhpTabs\Model\Voice;
+use PhpTabs\Music\Beat;
+use PhpTabs\Music\Channel;
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\EffectBend;
+use PhpTabs\Music\Measure;
+use PhpTabs\Music\MeasureHeader;
+use PhpTabs\Music\Note;
+use PhpTabs\Music\Song;
+use PhpTabs\Music\Stroke;
+use PhpTabs\Music\Tempo;
+use PhpTabs\Music\Track;
+use PhpTabs\Music\Voice;
 
 class MidiSequenceParser
 {
@@ -34,6 +43,10 @@ class MidiSequenceParser
   private $sHeader;
   private $eHeader;
 
+  /**
+   * @param \PhpTabs\Music\Song $song
+   * @param byte $flags
+   */
   public function __construct(Song $song, $flags)
   {
 		$this->song = $song;
@@ -46,52 +59,84 @@ class MidiSequenceParser
       ? -Duration::QUARTER_TIME : 0;
   }
 
+  /**
+   * @return byte
+   */  
   public function getInfoTrack()
   {
     return $this->infoTrack;
   }
 
+  /**
+   * @return byte
+   */  
   public function getMetronomeTrack()
   {
     return $this->metronomeTrack;
   }
 
+  /**
+   * @return mixed
+   */  
   private function getTick($tick)
   {
     return $tick + $this->firstTickMove;
   }
 
+  /**
+   * @param byte $header
+   */  
   public function setSHeader($header)
   {
     $this->sHeader = $header;
   }
 
+  /**
+   * @param byte $header
+   */  
   public function setEHeader($header)
   {
     $this->eHeader = $header;
   }
 
+  /**
+   * @param int $metronomeChannelId
+   */  
   public function setMetronomeChannelId($metronomeChannelId)
   {
     $this->metronomeChannelId = $metronomeChannelId;
   }
 
+  /**
+   * @param float $metronomeChannelId
+   */  
   public function setTempoPercent($tempoPercent)
   {
     $this->tempoPercent = $tempoPercent;
   }
 
+  /**
+   * @param int $metronomeChannelId
+   */  
   public function setTranspose($transpose)
   {
     $this->transpose = $transpose;
   }
 
-  private function fix( $value )
+  /**
+   * @param int $value
+   * 
+   * @return int
+   */  
+  private function fix($value)
   {
-    return $value >= 0 ? 
-      ($value <= 127 ? $value : 127) : 0;
+    return $value >= 0
+        ? ($value <= 127 ? $value : 127) : 0;
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHandler $sequence
+   */
   public function parse(MidiSequenceHandler $sequence)
   {
     $this->infoTrack = 0;
@@ -100,13 +145,13 @@ class MidiSequenceParser
     $helper = new MidiSequenceHelper($sequence);
     $controller = new MidiRepeatController($this->song, $this->sHeader, $this->eHeader);
 
-    while(!$controller->finished())
+    while (!$controller->finished())
     {
       $index = $controller->getIndex();
       $move = $controller->getRepeatMove();
       $controller->process();
 
-      if($controller->shouldPlay())
+      if ($controller->shouldPlay())
       {
         $helper->addMeasureHelper( new MidiMeasureHelper($index, $move) );
       }
@@ -123,11 +168,15 @@ class MidiSequenceParser
     $sequence->notifyFinish();
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\Track $track
+   */
   private function createTrack(MidiSequenceHelper $helper, Track $track)
   {
     $channel = $this->song->getChannelById($track->getChannelId());
 
-    if( $channel !== null )
+    if ($channel !== null)
     {
       $previous = null;
 
@@ -136,13 +185,13 @@ class MidiSequenceParser
 
       $mCount = count($helper->getMeasureHelpers());
 
-      for( $mIndex = 0 ; $mIndex < $mCount ; $mIndex++ )
+      for ($mIndex = 0; $mIndex < $mCount; $mIndex++)
       {
         $measureHelper = $helper->getMeasureHelper( $mIndex );
 
         $measure = $track->getMeasure($measureHelper->getIndex());
 
-        if($track->getNumber() == 1)
+        if ($track->getNumber() == 1)
         {
           $this->addTimeSignature($helper, $measure, $previous, $measureHelper->getMove());
           $this->addTempo($helper, $measure, $previous, $measureHelper->getMove());
@@ -156,10 +205,19 @@ class MidiSequenceParser
     }
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\Channel $channel
+   * @param \PhpTabs\Writer\Midi\Track $track
+   * @param \PhpTabs\Writer\Midi\Measure $measure
+   * @param int $mIndex
+   * @param int $startMove
+   */
   private function makeBeats(MidiSequenceHelper $helper, Channel $channel, Track $track, Measure $measure, $mIndex, $startMove)
   {
     $stroke = array();
-    for($i=0; $i<$track->countStrings(); $i++)
+
+    for ($i = 0; $i < $track->countStrings(); $i++)
     {
       $stroke[] = 0;
     }
@@ -175,9 +233,20 @@ class MidiSequenceParser
     }
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\Channel $channel
+   * @param \PhpTabs\Writer\Midi\Track $track
+   * @param \PhpTabs\Writer\Midi\Beat $beat
+   * @param \PhpTabs\Writer\Midi\Tempo $tempo
+   * @param int $mIndex
+   * @param int $bIndex
+   * @param int $startMove
+   * @param int $stroke
+   */
   private function makeNotes( MidiSequenceHelper $sHelper, Channel $channel, Track $track, Beat $beat, Tempo $tempo, $mIndex, $bIndex, $startMove, $stroke)
   {
-    for( $vIndex = 0; $vIndex < $beat->countVoices(); $vIndex++ )
+    for ($vIndex = 0; $vIndex < $beat->countVoices(); $vIndex++)
     {
       $voice = $beat->getVoice($vIndex);
 
@@ -199,12 +268,12 @@ class MidiSequenceParser
 
           $percussionChannel = $channel->isPercussionChannel();
           //---Fade In---
-          if($note->getEffect()->isFadeIn())
+          if ($note->getEffect()->isFadeIn())
           {
             $this->makeFadeIn( $sHelper, $track->getNumber(), $start, $duration, $channelId);
           }
           //---Grace---
-          if($note->getEffect()->isGrace() && !$percussionChannel )
+          if ($note->getEffect()->isGrace() && !$percussionChannel )
           {
             $bendMode = true;
             $graceKey = $track->getOffset() + $note->getEffect()->getGrace()->getFret() + $track->getStrings()[$note->getString() - 1]->getValue();
@@ -213,7 +282,7 @@ class MidiSequenceParser
             $graceDuration = $note->getEffect()->getGrace()->isDead()
               ? $this->applyStaticDuration($tempo, self::DEFAULT_DURATION_DEAD, $graceLength) : $graceLength;
 
-            if($note->getEffect()->getGrace()->isOnBeat() || ($start - $graceLength) < Duration::QUARTER_TIME)
+            if ($note->getEffect()->getGrace()->isOnBeat() || ($start - $graceLength) < Duration::QUARTER_TIME)
             {
               $start += $graceLength;
               $duration -= $graceLength;
@@ -222,20 +291,20 @@ class MidiSequenceParser
 
           }
           //---Trill---
-          if($note->getEffect()->isTrill() && !$percussionChannel )
+          if ($note->getEffect()->isTrill() && !$percussionChannel )
           {
             $trillKey = $track->getOffset() + $note->getEffect()->getTrill()->getFret() + $track->getStrings()[$note->getString() - 1]->getValue();
             $trillLength = $note->getEffect()->getTrill()->getDuration()->getTime();
 
             $realKey = true;
             $tick = $start;
-            while(true)
+            while (true)
             {
-              if($tick + 10 >= ($start + $duration))
+              if ($tick + 10 >= ($start + $duration))
               {
                 break;
               }
-              else if( ($tick + $trillLength) >= ($start + $duration))
+              elseif (($tick + $trillLength) >= ($start + $duration))
               {
                 $trillLength = ((($start + $duration) - $tick) - 1);
               }
@@ -247,17 +316,17 @@ class MidiSequenceParser
             continue;
           }
           //---Tremolo Picking---
-          if($note->getEffect()->isTremoloPicking())
+          if ($note->getEffect()->isTremoloPicking())
           {
             $tpLength = $note->getEffect()->getTremoloPicking()->getDuration()->getTime();
             $tick = $start;
-            while(true)
+            while (true)
             {
-              if($tick + 10 >= ($start + $duration))
+              if ($tick + 10 >= ($start + $duration))
               {
                 break ;
               }
-              else if( ($tick + $tpLength) >= ($start + $duration))
+              elseif (($tick + $tpLength) >= ($start + $duration))
               {
                 $tpLength = ((($start + $duration) - $tick) - 1);
               }
@@ -268,40 +337,40 @@ class MidiSequenceParser
           }
 
           //---Bend---
-          if( $note->getEffect()->isBend() && !$percussionChannel )
+          if ($note->getEffect()->isBend() && !$percussionChannel)
           {
             $bendMode = true;
             $this->makeBend($sHelper, $track->getNumber(), $start, $duration, $note->getEffect()->getBend(), $channelId, $midiVoice, $bendMode);
           }
           //---TremoloBar---
-          else if( $note->getEffect()->isTremoloBar() && !$percussionChannel )
+          elseif ($note->getEffect()->isTremoloBar() && !$percussionChannel)
           {
             $bendMode = true;
             $this->makeTremoloBar($sHelper, $track->getNumber(), $start, $duration, $note->getEffect()->getTremoloBar(), $channelId, $midiVoice, $bendMode);
           }
           //---Slide---
-          else if( $note->getEffect()->isSlide() && !$percussionChannel)
+          elseif ($note->getEffect()->isSlide() && !$percussionChannel)
           {
             $bendMode = true;
             $this->makeSlide($sHelper, $note, $track, $mIndex, $bIndex, $startMove, $channelId, $midiVoice, $bendMode);
           }
           //---Vibrato---
-          else if( $note->getEffect()->isVibrato() && !$percussionChannel)
+          elseif ($note->getEffect()->isVibrato() && !$percussionChannel)
           {
             $bendMode = true;
             $this->makeVibrato($sHelper, $track->getNumber(), $start, $duration, $channelId, $midiVoice, $bendMode);
           }
           //---Harmonic---
-          if( $note->getEffect()->isHarmonic() && !$percussionChannel)
+          if ($note->getEffect()->isHarmonic() && !$percussionChannel)
           {
             $orig = $key;
 
             //Natural
-            if($note->getEffect()->getHarmonic()->isNatural())
+            if ($note->getEffect()->getHarmonic()->isNatural())
             {
-              for($i = 0; $i < count(EffectHarmonic::$naturalFrequencies); $i++)
+              for ($i = 0; $i < count(EffectHarmonic::$naturalFrequencies); $i++)
               {
-                if(($note->getValue() % 12) ==  (EffectHarmonic::$naturalFrequencies[$i][0] % 12) )
+                if (($note->getValue() % 12) ==  (EffectHarmonic::$naturalFrequencies[$i][0] % 12))
                 {
                   $key = $orig + EffectHarmonic::$naturalFrequencies[$i][1] - $note->getValue();
                   break;
@@ -311,14 +380,14 @@ class MidiSequenceParser
             //Artifical/Tapped/Pinch/Semi
             else
             {
-              if( $note->getEffect()->getHarmonic()->isSemi() && !$percussionChannel )
+              if ($note->getEffect()->getHarmonic()->isSemi() && !$percussionChannel)
               {
                 $this->makeNote($sHelper, $track->getNumber(), min(127, orig), $start, $duration, max(Velocities::MIN_VELOCITY, $velocity - (Velocities::VELOCITY_INCREMENT * 3)), $channelId, $bendMode);
               }
               $key = ($orig + EffectHarmonic::$naturalFrequencies[$note->getEffect()->getHarmonic()->getData()][1]);
 
             }
-            if( ($key - 12) > 0 )
+            if (($key - 12) > 0)
             {
               $hVelocity = max(Velocities::MIN_VELOCITY, $velocity - (Velocities::VELOCITY_INCREMENT * 4));
               $this->makeNote($sHelper, $track->getNumber(),($key - 12), $start, $duration, $hVelocity, $channelId, $bendMode);
@@ -332,19 +401,34 @@ class MidiSequenceParser
     }
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param int $track
+   * @param int $key
+   * @param int $start
+   * @param int $duration
+   * @param int $velocity
+   * @param int $channel
+   * @param int $bendMode
+   */
   private function makeNote(MidiSequenceHelper $sHelper, $track, $key, $start, $duration, $velocity, $channel, $bendMode)
   {
     $sHelper->getSequence()->addNoteOn($this->getTick($start), $track, $channel, $this->fix($key), $this->fix($velocity), $bendMode);
 
-    if( $duration > 0 )
+    if ($duration > 0)
     {
       $sHelper->getSequence()->addNoteOff($this->getTick($start + $duration), $track, $channel, $this->fix($key), $this->fix($velocity), $bendMode);
     }
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\Channel $channel
+   * @param int $track
+   */
   private function makeChannel(MidiSequenceHelper $sHelper, Channel $channel, $track)
   {
-    if(($this->flags & MidiWriter::ADD_MIXER_MESSAGES) != 0)
+    if (($this->flags & MidiWriter::ADD_MIXER_MESSAGES) != 0)
     {
       $channelId = $channel->getChannelId();
       $tick = $this->getTick(Duration::QUARTER_TIME);
@@ -356,7 +440,7 @@ class MidiSequenceParser
       $sHelper->getSequence()->addControlChange($tick, $track, $channelId, MidiWriter::TREMOLO,$this->fix($channel->getTremolo()));
       $sHelper->getSequence()->addControlChange($tick, $track, $channelId, MidiWriter::EXPRESSION, 127);
 
-      if(!$channel->isPercussionChannel())
+      if (!$channel->isPercussionChannel())
       {
         $sHelper->getSequence()->addControlChange($tick, $track, $channelId, MidiWriter::BANK_SELECT, $this->fix($channel->getBank()));
       }
@@ -365,6 +449,12 @@ class MidiSequenceParser
     }
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\Measure $measure
+   * @param \PhpTabs\Writer\Midi\Measure $measure
+   * @param int $startMove
+   */
   private function addTimeSignature(MidiSequenceHelper $sHelper, Measure $currMeasure, Measure $prevMeasure = null, $startMove)
   {
     $addTimeSignature = false;
@@ -390,6 +480,12 @@ class MidiSequenceParser
     }
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\Measure $measure
+   * @param \PhpTabs\Writer\Midi\Measure $measure
+   * @param int $startMove
+   */
   private function addTempo(MidiSequenceHelper $sHelper, Measure $currMeasure, Measure $prevMeasure = null, $startMove)
   {
     $addTempo = false;
@@ -411,6 +507,17 @@ class MidiSequenceParser
     }
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\Track $track
+   * @param \PhpTabs\Writer\Midi\Note $note
+   * @param \PhpTabs\Writer\Midi\Tempo $tempo
+   * @param int $duration
+   * @param int $mIndex
+   * @param int $bIndex
+   * 
+   * @return float
+   */
   private function getRealNoteDuration(MidiSequenceHelper $sHelper, Track $track, Note $note, Tempo $tempo, $duration, $mIndex, $bIndex)
   {
     $letRing = ($note->getEffect()->isLetRing());
@@ -429,9 +536,9 @@ class MidiSequenceParser
       {
         $beat = $measure->getBeat($b);
         $voice = $beat->getVoice($note->getVoice()->getIndex());
-        if(!$voice->isEmpty())
+        if (!$voice->isEmpty())
         {
-          if($voice->isRestVoice())
+          if ($voice->isRestVoice())
           {
             return $this->applyDurationEffects($note, $tempo, $realDuration);
           }
@@ -439,7 +546,7 @@ class MidiSequenceParser
           for ($n = 0; $n < $noteCount; $n++) 
           {
             $nextNote = $voice->getNote( $n );
-            if (!$nextNote == $note || $mIndex != $m )
+            if (!$nextNote == $note || $mIndex != $m)
             {
               if ($nextNote->getString() == $note->getString())
               {
@@ -457,8 +564,8 @@ class MidiSequenceParser
               }
             }
           }
-            
-          if($letRing && !$letRingBeatChanged)
+
+          if ($letRing && !$letRingBeatChanged)
           {
             $realDuration += ( $voice->getDuration()->getTime() );
           }
@@ -467,60 +574,86 @@ class MidiSequenceParser
       }
       $nextBIndex = 0;
     }
+
     return $this->applyDurationEffects($note, $tempo, $realDuration);
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\Note $note
+   * @param \PhpTabs\Writer\Midi\Tempo $tempo
+   * @param int $duration
+   * 
+   * @return float
+   */
   private function applyDurationEffects(Note $note, Tempo $tempo, $duration)
   {
     //dead note
-    if($note->getEffect()->isDeadNote())
+    if ($note->getEffect()->isDeadNote())
     {
       return $this->applyStaticDuration($tempo, self::DEFAULT_DURATION_DEAD, $duration);
     }
     //palm mute
-    if($note->getEffect()->isPalmMute())
+    if ($note->getEffect()->isPalmMute())
     {
       return $this->applyStaticDuration(tempo, self::DEFAULT_DURATION_PM, $duration);
     }
     //staccato
-    if($note->getEffect()->isStaccato())
+    if ($note->getEffect()->isStaccato())
     {
       return $duration * 50 / 100;
     }
+
     return $duration;
   }
 
-  private function applyStaticDuration(Tempo $tempo, $duration, $maximum )
+  /**
+   * @param \PhpTabs\Writer\Midi\Tempo $tempo
+   * @param int $duration
+   * @param int $maximum
+   * 
+   * @return int
+   */
+  private function applyStaticDuration(Tempo $tempo, $duration, $maximum)
   {
     $value = $tempo->getValue() * $duration / 60;
 
     return $value < $maximum ? $value : $maximum;
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\Note $note
+   * @param \PhpTabs\Writer\Midi\Track $track
+   * @param \PhpTabs\Writer\Midi\Channel $channel
+   * @param int $mIndex
+   * @param int $bIndex
+   * 
+   * @return int
+   */
   private function getRealVelocity(MidiSequenceHelper $sHelper, Note $note, Track $track, Channel $channel, $mIndex, $bIndex)
   {
     $velocity = $note->getVelocity();
 
     //Check for Hammer effect
-    if(!$channel->isPercussionChannel())
+    if (!$channel->isPercussionChannel())
     {
       $previousNote = $this->getPreviousNote($sHelper, $note, $track, $mIndex, $bIndex, false);
-      if($previousNote !== null && $previousNote->getNote()->getEffect()->isHammer())
+      if ($previousNote !== null && $previousNote->getNote()->getEffect()->isHammer())
       {
         $velocity = max(Velocities::MIN_VELOCITY, $velocity - 25);
       }
     }
 
     //Check for GhostNote effect
-    if($note->getEffect()->isGhostNote())
+    if ($note->getEffect()->isGhostNote())
     {
       $velocity = max(Velocities::MIN_VELOCITY, ($velocity - Velocities::VELOCITY_INCREMENT));
     }
-    else if($note->getEffect()->isAccentuatedNote())
+    elseif ($note->getEffect()->isAccentuatedNote())
     {
       $velocity = max(Velocities::MIN_VELOCITY, ($velocity + Velocities::VELOCITY_INCREMENT));
     }
-    else if($note->getEffect()->isHeavyAccentuatedNote())
+    elseif ($note->getEffect()->isHeavyAccentuatedNote())
     {
       $velocity = max(Velocities::MIN_VELOCITY, ($velocity + (Velocities::VELOCITY_INCREMENT * 2)));
     }
@@ -528,15 +661,20 @@ class MidiSequenceParser
     return $velocity > 127 ? 127 : $velocity;
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\MeasureHeader $header
+   * @param int $startMove
+   */
   public function addMetronome(MidiSequenceHelper $sHelper, MeasureHeader $header, $startMove)
   {
-    if( ($this->flags & MidiWriter::ADD_METRONOME) != 0)
+    if (($this->flags & MidiWriter::ADD_METRONOME) != 0)
     {
-      if( $this->metronomeChannelId >= 0 )
+      if ($this->metronomeChannelId >= 0)
       {
         $start = $startMove + $header->getStart();
         $length = $header->getTimeSignature()->getDenominator()->getTime();
-        for($i = 1; $i <= $header->getTimeSignature()->getNumerator(); $i++)
+        for ($i = 1; $i <= $header->getTimeSignature()->getNumerator(); $i++)
         {
           $this->makeNote($sHelper, $this->getMetronomeTrack(), self::DEFAULT_METRONOME_KEY, $start, $length, Velocities::_DEFAULT, $this->metronomeChannelId, false);
           $start += $length;
@@ -545,12 +683,16 @@ class MidiSequenceParser
     }
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\Song $song
+   */
   public function addDefaultMessages(MidiSequenceHelper $sHelper, Song $song)
   {
-    if( ($this->flags & MidiWriter::ADD_DEFAULT_CONTROLS) != 0)
+    if (($this->flags & MidiWriter::ADD_DEFAULT_CONTROLS) != 0)
     {
       $channels = $song->getChannels();
-      foreach($channels as $channel)
+      foreach ($channels as $channel)
       {
         $channelId = $channel->getChannelId();
         $sHelper->getSequence()->addControlChange($this->getTick(Duration::QUARTER_TIME), $this->getInfoTrack(), $channelId, MidiWriter::RPN_MSB, 0);
@@ -561,17 +703,34 @@ class MidiSequenceParser
     }
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param int $track
+   * @param int $tick
+   * @param int $bend
+   * @param int $channel
+   * @param int $bendMode
+   */
   private function addBend(MidiSequenceHelper $sHelper, $track, $tick, $bend, $channel, $bendMode)
   {
     $sHelper->getSequence()->addPitchBend($this->getTick($tick), $track, $channel, $this->fix($bend), $bendMode);
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param int $track
+   * @param int $start
+   * @param int $duration
+   * @param int $channel
+   * @param int $midiVoice
+   * @param int $bendMode
+   */
   public function makeVibrato(MidiSequenceHelper $sHelper, $track, $start, $duration, $channel, $midiVoice, $bendMode)
   {
     $nextStart = $start;
     $end = $nextStart + $duration;
 
-    while($nextStart < $end)
+    while ($nextStart < $end)
     {
       $nextStart = ($nextStart + 160 > $end)
         ? $end : ($nextStart + 160);
@@ -587,10 +746,20 @@ class MidiSequenceParser
     $this->addBend($sHelper, $track, $nextStart, self::DEFAULT_BEND, $channel, $bendMode);
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param int $track
+   * @param int $start
+   * @param int $duration
+   * @param \PhpTabs\Writer\Midi\EffectBend $bend
+   * @param int $channel
+   * @param int $midiVoice
+   * @param int $bendMode
+   */
   public function makeBend(MidiSequenceHelper $sHelper, $track, $start, $duration, EffectBend $bend, $channel, $midiVoice, $bendMode)
   {
     $points = $bend->getPoints();
-    for($i=0; $i<count($points); $i++)
+    for ($i = 0; $i < count($points); $i++)
     {
       $point = $points[$i];
       $bendStart = $start + $point->getTime($duration);
@@ -599,18 +768,18 @@ class MidiSequenceParser
       $value = $value >= 0 ? $value : 0;
       $this->addBend($sHelper, $track, $bendStart, $value, $channel, $bendMode);
 
-      if(count($points) > $i + 1)
+      if (count($points) > $i + 1)
       {
         $nextPoint = $points[$i + 1];
         $nextValue = self::DEFAULT_BEND + intval($nextPoint->getValue() * self::DEFAULT_BEND_SEMI_TONE / EffectBend::SEMITONE_LENGTH);
         $nextBendStart = $start + $nextPoint->getTime($duration);
-        if($nextValue != $value)
+        if ($nextValue != $value)
         {
           $width = ($nextBendStart - $bendStart) / abs($nextValue - $value);
           //asc
-          if($value < $nextValue)
+          if ($value < $nextValue)
           {
-            while($value < $nextValue)
+            while ($value < $nextValue)
             {
               $value++;
               $bendStart += $width;
@@ -618,9 +787,9 @@ class MidiSequenceParser
             }
             //desc
           }
-          else if($value > $nextValue)
+          elseif ($value > $nextValue)
           {
-            while($value > $nextValue)
+            while ($value > $nextValue)
             {
               $value--;
               $bendStart += $width;
@@ -633,10 +802,20 @@ class MidiSequenceParser
     $this->addBend($sHelper, $track, $start + $duration, self::DEFAULT_BEND, $channel, $bendMode);
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param int $track
+   * @param int $start
+   * @param int $duration
+   * @param \PhpTabs\Writer\Midi\EffectTremoloBar $effect
+   * @param int $channel
+   * @param int $midiVoice
+   * @param int $bendMode
+   */
   public function makeTremoloBar(MidiSequenceHelper $sHelper, $track, $start, $duration, EffectTremoloBar $effect, $channel, $midiVoice, $bendMode)
   {
     $points = $effect->getPoints();
-    for($i=0; $i<count($points); $i++)
+    for ($i = 0; $i < count($points); $i++)
     {
       $point = $points[$i];
       $pointStart = $start + $point->getTime($duration);
@@ -644,18 +823,18 @@ class MidiSequenceParser
       $value = $value <= 127 ? $value : 127;
       $value = $value >= 0 ? $value : 0;
       $this->addBend($sHelper, $track, $pointStart, $value, $channel, $bendMode);
-      if(count($points) > $i + 1)
+      if (count($points) > $i + 1)
       {
         $nextPoint = $points[$i + 1];
         $nextValue = self::DEFAULT_BEND + intval($nextPoint->getValue() * self::DEFAULT_BEND_SEMI_TONE * 2);
         $nextPointStart = $start + $nextPoint->getTime($duration);
-        if($nextValue != $value)
+        if ($nextValue != $value)
         {
           $width = ($nextPointStart - $pointStart) / abs($nextValue - $value);
           //asc
-          if($value < $nextValue)
+          if ($value < $nextValue)
           {
-            while($value < $nextValue)
+            while ($value < $nextValue)
             {
               $value++;
               $pointStart += $width;
@@ -663,9 +842,9 @@ class MidiSequenceParser
             }
           //desc
           }
-          else if($value > $nextValue)
+          elseif ($value > $nextValue)
           {
-            while($value > $nextValue)
+            while ($value > $nextValue)
             {
               $value--;
               $pointStart += $width;
@@ -678,10 +857,21 @@ class MidiSequenceParser
     $this->addBend($sHelper, $track, $start + $duration, self::DEFAULT_BEND, $channel, $bendMode);
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\Note $note
+   * @param \PhpTabs\Writer\Midi\Track $track
+   * @param int $mIndex
+   * @param int $bIndex
+   * @param int $startMove
+   * @param int $channel
+   * @param int $midiVoice
+   * @param int $bendMode
+   */
   private function makeSlide(MidiSequenceHelper $sHelper, Note $note, Track $track, $mIndex, $bIndex, $startMove, $channel, $midiVoice, $bendMode)
   {
     $nextNote = $this->getNextNote($sHelper, $note, $track, $mIndex, $bIndex, true);
-    if( $nextNote !== null )
+    if ($nextNote !== null)
     {
       $value1 = $note->getValue();
       $value2 = $nextNote->getNote()->getValue();
@@ -695,13 +885,24 @@ class MidiSequenceParser
       $this->addBend($sHelper, $track->getNumber(), $tick2 , self::DEFAULT_BEND, $channel, $bendMode);
     }
   }
-	
+
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param int $track
+   * @param int $tick1
+   * @param int $value1
+   * @param int $tick2
+   * @param int $value2
+   * @param int $channel
+   * @param int $midiVoice
+   * @param int $bendMode
+   */
   public function makeMidiSlide(MidiSequenceHelper $sHelper, $track, $tick1, $value1, $tick2, $value2, $channel, $midiVoice, $bendMode)
   {
     $distance = $value2 - $value1;
     $length = $tick2 - $tick1;
     $points = intval($length / (Duration::QUARTER_TIME / 8));
-    for($i = 1; $i <= $points; $i++)
+    for ($i = 1; $i <= $points; $i++)
     {
       $tone = (((($length / $points) * $i) * $distance) / $length);
       $bend = self::DEFAULT_BEND + intval($tone * (self::DEFAULT_BEND_SEMI_TONE * 2));
@@ -709,13 +910,20 @@ class MidiSequenceParser
     }
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param int $track
+   * @param int $start
+   * @param int $duration
+   * @param int $channel
+   */
   private function makeFadeIn(MidiSequenceHelper $sHelper, $track, $start, $duration, $channel)
   {
     $expression = 31;
     $expressionIncrement = 1;
     $tick = $start;
     $tickIncrement = intval($duration / ((127 - $expression) / $expressionIncrement));
-    while($tick < ($start + $duration) && $expression < 127 )
+    while ($tick < ($start + $duration) && $expression < 127)
     {
       $sHelper->getSequence()->addControlChange($this->getTick($tick), $track, $channel, MidiWriter::EXPRESSION, $this->fix($expression));
       $tick += $tickIncrement;
@@ -724,14 +932,21 @@ class MidiSequenceParser
     $sHelper->getSequence()->addControlChange($this->getTick(($start + $duration)), $track, $channel, MidiWriter::EXPRESSION, 127);
   }
 
+  /**
+   * @param \PhpTabs\Music\Beat $beat
+   * @param \PhpTabs\Music\Beat $previous
+   * @param array $stroke
+   * 
+   * @return int
+   */
   private function getStroke(Beat $beat, Beat $previous = null, array $stroke)
   {
     $direction = $beat->getStroke()->getDirection();
-    if( $previous === null || !($direction == Stroke::STROKE_NONE && $previous->getStroke()->getDirection() == Stroke::STROKE_NONE))
+    if ($previous === null || !($direction == Stroke::STROKE_NONE && $previous->getStroke()->getDirection() == Stroke::STROKE_NONE))
     {
-      if( $direction == Stroke::STROKE_NONE )
+      if ($direction == Stroke::STROKE_NONE)
       {
-        for( $i = 0 ; $i < count($stroke) ; $i++ )
+        for ($i = 0; $i < count($stroke); $i++)
         {
           $stroke[ $i ] = 0;
         }
@@ -740,27 +955,27 @@ class MidiSequenceParser
       {
         $stringUseds = 0;
         $stringCount = 0;
-        for( $vIndex = 0; $vIndex < $beat->countVoices(); $vIndex++ )
+        for ($vIndex = 0; $vIndex < $beat->countVoices(); $vIndex++)
         {
           $voice = $beat->getVoice($vIndex);
           for ($nIndex = 0; $nIndex < $voice->countNotes(); $nIndex++)
           {
             $note = $voice->getNote($nIndex);
-            if( !$note->isTiedNote() )
+            if (!$note->isTiedNote())
             {
               $stringUseds |= 0x01 << ( $note->getString() - 1 );
               $stringCount ++;
             }
           }
         }
-        if( $stringCount > 0 )
+        if ($stringCount > 0)
         {
           $strokeMove = 0;
           $strokeIncrement = $beat->getStroke()->getIncrementTime($beat);
-          for( $i = 0 ; $i < count($stroke); $i++ )
+          for ($i = 0; $i < count($stroke); $i++)
           {
             $index = ( $direction == Stroke::STROKE_DOWN ? (count($stroke) - 1) - $i : $i );
-            if( ($stringUseds & ( 0x01 << $index ) ) != 0 )
+            if (($stringUseds & ( 0x01 << $index ) ) != 0)
             {
               $stroke[ $index ] = $strokeMove;
               $strokeMove += $strokeIncrement;
@@ -769,32 +984,54 @@ class MidiSequenceParser
         }
       }
     }
+
     return $stroke;
   }
 
-  private function applyStrokeStart( Note $note, $start, array $stroke)
+  /**
+   * @param \PhpTabs\Music\Note $note
+   * @param int $start
+   * @param array $stroke
+   * 
+   * @return int
+   */
+  private function applyStrokeStart(Note $note, $start, array $stroke)
   {
-    return ($start + $stroke[ $note->getString() - 1 ]);
+    return ($start + $stroke[$note->getString() - 1]);
   }
 
-  private function applyStrokeDuration( Note $note, $duration, array $stroke)
+  /**
+   * @param \PhpTabs\Music\Note $note
+   * @param int $duration
+   * @param array $stroke
+   * 
+   * @return int
+   */
+  private function applyStrokeDuration(Note $note, $duration, array $stroke)
   {
-    return ($duration > $stroke[$note->getString() - 1] ? ($duration - $stroke[ $note->getString() - 1 ]) : $duration );
+    return ($duration > $stroke[$note->getString() - 1] 
+         ? ($duration - $stroke[$note->getString() - 1]) : $duration);
   }
 
+  /**
+   * @param \PhpTabs\Music\Voice $voice
+   * @param int $bIndex
+   * 
+   * @return \PhpTabs\Writer\Midi\MidiTickHelper
+   */
   private function checkTripletFeel(Voice $voice, $bIndex)
   {
     $bStart = $voice->getBeat()->getStart();
     $bDuration =  $voice->getDuration()->getTime();
-    if($voice->getBeat()->getMeasure()->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_EIGHTH)
+    if ($voice->getBeat()->getMeasure()->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_EIGHTH)
     {
-      if($voice->getDuration()->isEqual($this->newDuration(Duration::EIGHTH)))
+      if ($voice->getDuration()->isEqual($this->newDuration(Duration::EIGHTH)))
       {
         //first time
-        if( ($bStart % Duration::QUARTER_TIME) == 0)
+        if (($bStart % Duration::QUARTER_TIME) == 0)
         {
           $v = $this->getNextBeat($voice, $bIndex);
-          if($v === null || ( $v->getBeat()->getStart() > ($bStart + $voice->getDuration()->getTime()) || $v->getDuration()->isEqual($this->newDuration(Duration::EIGHTH)))  )
+          if ($v === null || ( $v->getBeat()->getStart() > ($bStart + $voice->getDuration()->getTime()) || $v->getDuration()->isEqual($this->newDuration(Duration::EIGHTH))))
           {
             $duration = $this->newDuration(Duration::EIGHTH);
             $duration->getDivision()->setEnters(3);
@@ -803,10 +1040,10 @@ class MidiSequenceParser
           }
         }
         //second time
-        else if( ($bStart % (Duration::QUARTER_TIME / 2)) == 0)
+        elseif (($bStart % (Duration::QUARTER_TIME / 2)) == 0)
         {
           $v = $this->getPreviousBeat($voice, $bIndex);
-          if($v === null || ( $v->getBeat()->getStart() < ($bStart - $voice->getDuration()->getTime())  || $v->getDuration()->isEqual($this->newDuration(Duration::EIGHTH)) ))
+          if ($v === null || ( $v->getBeat()->getStart() < ($bStart - $voice->getDuration()->getTime()) || $v->getDuration()->isEqual($this->newDuration(Duration::EIGHTH))))
           {
             $duration = $this->newDuration(Duration::EIGHTH);
             $duration->getDivision()->setEnters(3);
@@ -817,15 +1054,15 @@ class MidiSequenceParser
         }
       }
     }
-    else if($voice->getBeat()->getMeasure()->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_SIXTEENTH)
+    elseif ($voice->getBeat()->getMeasure()->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_SIXTEENTH)
     {
-      if($voice->getDuration()->isEqual($this->newDuration(Duration::SIXTEENTH)))
+      if ($voice->getDuration()->isEqual($this->newDuration(Duration::SIXTEENTH)))
       {
         //first time
-        if( ($bStart % (Duration::QUARTER_TIME / 2)) == 0)
+        if (($bStart % (Duration::QUARTER_TIME / 2)) == 0)
         {
           $v = $this->getNextBeat($voice, $bIndex);
-          if($v === null || ( $v->getBeat()->getStart() > ($bStart + $voice->getDuration()->getTime()) || $v->getDuration()->isEqual($this->newDuration(Duration::SIXTEENTH)))  )
+          if ($v === null || ( $v->getBeat()->getStart() > ($bStart + $voice->getDuration()->getTime()) || $v->getDuration()->isEqual($this->newDuration(Duration::SIXTEENTH))))
           {
             $duration = $this->newDuration(Duration::SIXTEENTH);
             $duration->getDivision()->setEnters(3);
@@ -834,64 +1071,96 @@ class MidiSequenceParser
           }
         }
         //second time
-        else if( ($bStart % (Duration::QUARTER_TIME / 4)) == 0)
+        elseif (($bStart % (Duration::QUARTER_TIME / 4)) == 0)
         {
           $v = $this->getPreviousBeat($voice, $bIndex);
-          if($v === null || ( $v->getBeat()->getStart() < ($bStart - $voice->getDuration()->getTime())  || $v->getDuration()->isEqual($this->newDuration(Duration::SIXTEENTH)) ))
+          if ($v === null || ( $v->getBeat()->getStart() < ($bStart - $voice->getDuration()->getTime()) || $v->getDuration()->isEqual($this->newDuration(Duration::SIXTEENTH))))
           {
             $duration = $this->newDuration(Duration::SIXTEENTH);
             $duration->getDivision()->setEnters(3);
             $duration->getDivision()->setTimes(2);
-            $bStart = ( ($bStart - $voice->getDuration()->getTime()) + ($duration->getTime() * 2));
+            $bStart = (($bStart - $voice->getDuration()->getTime()) + ($duration->getTime() * 2));
             $bDuration = $duration->getTime();
           }
         }
       }
     }
+
     return new MidiTickHelper($bStart, $bDuration);
   }
 
+  /**
+   * @param int $value
+   * 
+   * @return \PhpTabs\Music\Duration
+   */
   private function newDuration($value)
   {
     $duration = new Duration();
     $duration->setValue($value);
+
     return $duration;
   }
 
-  private function getPreviousBeat(Voice $beat, $bIndex)
+  /**
+   * @param \PhpTabs\Music\Voice $voice
+   * @param int $bIndex
+   * 
+   * @return \PhpTabs\Music\Beat
+   */
+  private function getPreviousBeat(Voice $voice, $bIndex)
   {
     $previous = null;
+
     for ($b = $bIndex - 1; $b >= 0; $b--)
     {
-      $current = $beat->getBeat()->getMeasure()->getBeat( $b );
-      if($current->getStart() < $beat->getBeat()->getStart() && !$current->getVoice($beat->getIndex())->isEmpty())
+      $current = $voice->getBeat()->getMeasure()->getBeat( $b );
+      if ($current->getStart() < $voice->getBeat()->getStart() && !$current->getVoice($voice->getIndex())->isEmpty())
       {
-        if($previous === null || $current->getStart() > $previous->getBeat()->getStart())
+        if ($previous === null || $current->getStart() > $previous->getBeat()->getStart())
         {
-          $previous = $current->getVoice($beat->getIndex());
+          $previous = $current->getVoice($voice->getIndex());
         }
       }
     }
+
     return $previous;
   }
 
-  private function getNextBeat(Voice $beat, $bIndex)
+  /**
+   * @param \PhpTabs\Music\Voice $voice
+   * @param int $bIndex
+   * 
+   * @return \PhpTabs\Music\Beat
+   */
+  private function getNextBeat(Voice $voice, $bIndex)
   {
     $next = null;
-    for ($b = $bIndex + 1; $b < $beat->getBeat()->getMeasure()->countBeats(); $b++)
+    for ($b = $bIndex + 1; $b < $voice->getBeat()->getMeasure()->countBeats(); $b++)
     {
-      $current = $beat->getBeat()->getMeasure()->getBeat( $b );
-      if($current->getStart() > $beat->getBeat()->getStart() && !$current->getVoice($beat->getIndex())->isEmpty())
+      $current = $voice->getBeat()->getMeasure()->getBeat( $b );
+      if ($current->getStart() > $voice->getBeat()->getStart() && !$current->getVoice($voice->getIndex())->isEmpty())
       {
-        if($next === null || $current->getStart() < $next->getBeat()->getStart())
+        if ($next === null || $current->getStart() < $next->getBeat()->getStart())
         {
-          $next = $current->getVoice($beat->getIndex());
+          $next = $current->getVoice($voice->getIndex());
         }
       }
     }
+
     return $next;
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $sHelper
+   * @param \PhpTabs\Music\Note $note
+   * @param \PhpTabs\Music\Track $track
+   * @param int $mIndex
+   * @param int $bIndex
+   * @param bool $breakAtRest
+   * 
+   * @return \PhpTabs\Writer\Midi\MidiNoteHelper
+   */
   private function getNextNote(MidiSequenceHelper $sHelper, Note $note, Track $track, $mIndex, $bIndex, $breakAtRest)
   { 
     $nextBIndex = $bIndex + 1;
@@ -906,18 +1175,18 @@ class MidiSequenceParser
       {
         $beat = $measure->getBeat( $b );
         $voice = $beat->getVoice( $note->getVoice()->getIndex() );
-        if( !$voice->isEmpty() )
+        if (!$voice->isEmpty())
         {
           $noteCount = $voice->countNotes();
           for ($n = 0; $n < $noteCount; $n++)
           {
             $nextNote = $voice->getNote( $n );
-            if($nextNote->getString() == $note->getString())
+            if ($nextNote->getString() == $note->getString())
             {
               return new MidiNoteHelper($mHelper, $nextNote);
             }
           }
-          if( $breakAtRest )
+          if ($breakAtRest)
           {
             return null;
           }
@@ -929,6 +1198,16 @@ class MidiSequenceParser
     return null;
   }
 
+  /**
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $sHelper
+   * @param \PhpTabs\Music\Note $note
+   * @param \PhpTabs\Music\Track $track
+   * @param int $mIndex
+   * @param int $bIndex
+   * @param bool $breakAtRest
+   * 
+   * @return \PhpTabs\Writer\Midi\MidiNoteHelper
+   */
   private function getPreviousNote(MidiSequenceHelper $sHelper, Note $note, Track $track, $mIndex, $bIndex, $breakAtRest)
   {
     $nextBIndex = $bIndex;
@@ -937,25 +1216,25 @@ class MidiSequenceParser
       $mHelper = $sHelper->getMeasureHelper( $m );
 
       $measure = $track->getMeasure( $mHelper->getIndex() );
-      if( $this->sHeader == -1 || $this->sHeader <= $measure->getNumber() )
+      if ($this->sHeader == -1 || $this->sHeader <= $measure->getNumber())
       {
         $nextBIndex = $nextBIndex < 0 ? $measure->countBeats() : $nextBIndex;
         for ($b = ($nextBIndex - 1); $b >= 0; $b--)
         {
           $beat = $measure->getBeat( $b );
           $voice = $beat->getVoice( $note->getVoice()->getIndex() );
-          if( !$voice->isEmpty() )
+          if (!$voice->isEmpty())
           {
             $noteCount = $voice->countNotes();
             for ($n = 0; $n < $noteCount; $n++)
             {
               $current = $voice->getNote( $n );
-              if($current->getString() == $note->getString())
+              if ($current->getString() == $note->getString())
               {
                 return new MidiNoteHelper($mHelper, $current);
               }
             }
-            if( $breakAtRest )
+            if ($breakAtRest)
             {
               return null;
             }
