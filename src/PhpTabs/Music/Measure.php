@@ -268,13 +268,11 @@ class Measure
       }
     );
 
-    if ($beat instanceof Beat) {
-      return $beat;
+    if (!($beat instanceof Beat)) {
+      $beat = new Beat();
+      $beat->setStart($start);
+      $this->addBeat($beat);
     }
-
-    $beat = new Beat();
-    $beat->setStart($start);
-    $this->addBeat($beat);
 
     return $beat;
   }
