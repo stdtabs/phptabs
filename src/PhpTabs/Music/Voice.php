@@ -197,6 +197,55 @@ class Voice
   }
 
   /**
+   * Get duration in seconds
+   * 
+   * @return float
+   */
+  public function getTime()
+  {
+	$measure = $this->getBeat()->getMeasure();
+
+    $time = 60 
+      * $measure->getTimeSignature()->getNumerator()
+      / $measure->getTempo()->getValue();
+
+    return $time 
+         * $this->getDuration()->getTime()
+         / $this->getMeasureDuration($measure); 
+  }
+
+  /**
+   * Calculate total measure duration
+   * 
+   * @param  \PhpTabs\Music\Measure $measure
+   * @return int
+   */
+  private function getMeasureDuration(Measure $measure)
+  {
+    return array_reduce(
+      $measure->getBeats(),
+      $this->getMeasureTimeHelper(),
+      0
+    );
+  }
+
+  /**
+   * Provides a closure helper for measure time calculation
+   * 
+   * @return \Closure
+   */
+  private function getMeasureTimeHelper()
+  {
+    return function ($carry, $item) {
+      return $carry
+           + $item
+              ->getVoice($this->getIndex())
+              ->getDuration()
+              ->getTime();
+    };
+  }
+
+  /**
    * @return \PhpTabs\Music\Voice
    */
   public function __clone()
