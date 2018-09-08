@@ -88,7 +88,7 @@ class Voice
   }
 
   /**
-   * @return int
+   * @return \PhpTabs\Music\Duration
    */
   public function getDuration()
   {
