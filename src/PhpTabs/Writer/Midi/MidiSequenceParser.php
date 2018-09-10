@@ -596,7 +596,7 @@ class MidiSequenceParser
     //palm mute
     if ($note->getEffect()->isPalmMute())
     {
-      return $this->applyStaticDuration(tempo, self::DEFAULT_DURATION_PM, $duration);
+      return $this->applyStaticDuration($tempo, self::DEFAULT_DURATION_PM, $duration);
     }
     //staccato
     if ($note->getEffect()->isStaccato())
