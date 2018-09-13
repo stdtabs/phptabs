@@ -24,7 +24,7 @@ use PhpTabs\Music\Tempo;
 use PhpTabs\Music\Track;
 use PhpTabs\Music\Velocities;
 use PhpTabs\Music\Voice;
-
+use PhpTabs\Music\EffectHarmonic;
 class MidiSequenceParser
 {
   const DEFAULT_METRONOME_KEY = 37;
