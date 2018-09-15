@@ -288,7 +288,7 @@ class MidiSequenceParser
               $start += $graceLength;
               $duration -= $graceLength;
             }
-            $this->makeNote($sHelper, $track->getNumber(), $graceKey->start - $graceLength, $graceDuration, $graceVelocity, $channelId, $bendMode);
+            $this->makeNote($sHelper, $track->getNumber(), $graceKey, $start - $graceLength, $graceDuration, $graceVelocity, $channelId, $bendMode);
 
           }
           //---Trill---
