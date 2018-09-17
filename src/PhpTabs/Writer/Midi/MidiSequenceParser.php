@@ -24,7 +24,7 @@ use PhpTabs\Music\Tempo;
 use PhpTabs\Music\Track;
 use PhpTabs\Music\Velocities;
 use PhpTabs\Music\Voice;
-
+use PhpTabs\Music\EffectHarmonic;
 class MidiSequenceParser
 {
   const DEFAULT_METRONOME_KEY = 37;
@@ -288,7 +288,7 @@ class MidiSequenceParser
               $start += $graceLength;
               $duration -= $graceLength;
             }
-            $this->makeNote($sHelper, $track->getNumber(), $graceKey->start - $graceLength, $graceDuration, $graceVelocity, $channelId, $bendMode);
+            $this->makeNote($sHelper, $track->getNumber(), $graceKey, $start - $graceLength, $graceDuration, $graceVelocity, $channelId, $bendMode);
 
           }
           //---Trill---
