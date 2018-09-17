@@ -15,6 +15,7 @@ use PhpTabs\Music\Beat;
 use PhpTabs\Music\Channel;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\EffectBend;
+use PhpTabs\Music\EffectHarmonic;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\Note;
@@ -24,7 +25,7 @@ use PhpTabs\Music\Tempo;
 use PhpTabs\Music\Track;
 use PhpTabs\Music\Velocities;
 use PhpTabs\Music\Voice;
-use PhpTabs\Music\EffectHarmonic;
+
 class MidiSequenceParser
 {
   const DEFAULT_METRONOME_KEY = 37;
@@ -50,14 +51,14 @@ class MidiSequenceParser
    */
   public function __construct(Song $song, $flags)
   {
-		$this->song = $song;
-		$this->flags = $flags;
-		$this->tempoPercent = 100;
-		$this->transpose = 0;
-		$this->sHeader = -1;
-		$this->eHeader = -1;
-		$this->firstTickMove = ($flags & 0x08) != 0
-      ? -Duration::QUARTER_TIME : 0;
+    $this->song = $song;
+    $this->flags = $flags;
+    $this->tempoPercent = 100;
+    $this->transpose = 0;
+    $this->sHeader = -1;
+    $this->eHeader = -1;
+    $this->firstTickMove = ($flags & 0x08) != 0
+        ? -Duration::QUARTER_TIME : 0;
   }
 
   /**
@@ -553,9 +554,9 @@ class MidiSequenceParser
               {
                 if ($nextNote->isTiedNote())
                 {
-                  $realDuration += ($mh->getMove() + $beat->getStart() - $lastEnd) + ($nextNote->getVoice()->getDuration()->getTime());
-                  $lastEnd = ($mh->getMove() + $beat->getStart() + $voice->getDuration()->getTime());
-                  $letRing = ($nextNote->getEffect()->isLetRing());
+                  $realDuration += $mh->getMove() + $beat->getStart() - $lastEnd + $nextNote->getVoice()->getDuration()->getTime();
+                  $lastEnd = $mh->getMove() + $beat->getStart() + $voice->getDuration()->getTime();
+                  $letRing = $nextNote->getEffect()->isLetRing();
                   $letRingBeatChanged = true;
                 }
                 else
@@ -568,7 +569,7 @@ class MidiSequenceParser
 
           if ($letRing && !$letRingBeatChanged)
           {
-            $realDuration += ( $voice->getDuration()->getTime() );
+            $realDuration += $voice->getDuration()->getTime();
           }
           $letRingBeatChanged = false;
         }
@@ -648,15 +649,15 @@ class MidiSequenceParser
     //Check for GhostNote effect
     if ($note->getEffect()->isGhostNote())
     {
-      $velocity = max(Velocities::MIN_VELOCITY, ($velocity - Velocities::VELOCITY_INCREMENT));
+      $velocity = max(Velocities::MIN_VELOCITY, $velocity - Velocities::VELOCITY_INCREMENT);
     }
     elseif ($note->getEffect()->isAccentuatedNote())
     {
-      $velocity = max(Velocities::MIN_VELOCITY, ($velocity + Velocities::VELOCITY_INCREMENT));
+      $velocity = max(Velocities::MIN_VELOCITY, $velocity + Velocities::VELOCITY_INCREMENT);
     }
     elseif ($note->getEffect()->isHeavyAccentuatedNote())
     {
-      $velocity = max(Velocities::MIN_VELOCITY, ($velocity + (Velocities::VELOCITY_INCREMENT * 2)));
+      $velocity = max(Velocities::MIN_VELOCITY, $velocity + (Velocities::VELOCITY_INCREMENT * 2));
     }
 
     return $velocity > 127 ? 127 : $velocity;
