@@ -75,7 +75,7 @@ class DivisionType
    */
   public function __clone()
   {
-    $divisionType = self::newDivisionType();
+    $divisionType = new DivisionType();
     $divisionType->copyFrom($this);
     return $divisionType;
   }
