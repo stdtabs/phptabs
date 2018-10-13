@@ -21,13 +21,12 @@ use PhpTabs\Share\ChannelRouterConfigurator;
 
 abstract class GuitarProWriterBase implements WriterInterface
 {
-  private $content;
+  private $content = '';
   private $name;
   private $writers = [];
 
   public function __construct()
   {
-    $this->content = '';
     $this->name = str_replace(
       __NAMESPACE__ . '\\', 
       '', 
@@ -130,7 +129,7 @@ abstract class GuitarProWriterBase implements WriterInterface
 
   /**
    * @param  int $channelId
-   * @return \PhpTabs\Music\ChannelRoute
+   * @return \PhpTabs\Share\ChannelRoute
    */
   public function getChannelRoute($channelId)
   {
