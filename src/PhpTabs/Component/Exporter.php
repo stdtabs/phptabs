@@ -21,7 +21,7 @@ use PhpTabs\Component\Serializer\Yaml;
 class Exporter extends ExporterBase
 {
   /**
-   * @var \Phptabs\Model\Song
+   * @var \Phptabs\Music\Song
    */
   protected $song;
 
