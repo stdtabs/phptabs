@@ -22,7 +22,7 @@ interface RendererInterface
   /**
    * @param  string     $name
    * @param  int|string $value
-   * @return \PhpTabs\Model\RendererInterface
+   * @return \PhpTabs\Component\Renderer\RendererInterface
    */
   public function setOption($name, $value);
 
@@ -35,7 +35,7 @@ interface RendererInterface
 
   /**
    * @param  array $options
-   * @return \PhpTabs\Model\RendererInterface
+   * @return \PhpTabs\Component\Renderer\RendererInterface
    */
   public function setOptions(array $options);
 
