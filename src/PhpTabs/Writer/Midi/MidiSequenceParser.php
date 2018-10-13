@@ -384,7 +384,7 @@ class MidiSequenceParser
             {
               if ($note->getEffect()->getHarmonic()->isSemi() && !$percussionChannel)
               {
-                $this->makeNote($sHelper, $track->getNumber(), min(127, orig), $start, $duration, max(Velocities::MIN_VELOCITY, $velocity - (Velocities::VELOCITY_INCREMENT * 3)), $channelId, $bendMode);
+                $this->makeNote($sHelper, $track->getNumber(), min(127, $orig), $start, $duration, max(Velocities::MIN_VELOCITY, $velocity - (Velocities::VELOCITY_INCREMENT * 3)), $channelId, $bendMode);
               }
               $key = ($orig + EffectHarmonic::$naturalFrequencies[$note->getEffect()->getHarmonic()->getData()][1]);
 
