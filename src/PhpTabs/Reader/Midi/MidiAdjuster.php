@@ -204,7 +204,7 @@ class MidiAdjuster
 
     $notes = $beat->getVoice(0)->getNotes();
 
-    array_walk($notes, function($note) use (&$track, &$freeStrings, &$notesToRemove) {
+    array_walk($notes, function($note) use (&$freeStrings, &$notesToRemove) {
       $string = $this->getStringForValue($freeStrings, $note->getValue());
       
       for ($j = 0; $j < count($freeStrings); $j++)
