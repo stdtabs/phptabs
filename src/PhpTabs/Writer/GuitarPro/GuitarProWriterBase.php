@@ -33,6 +33,8 @@ abstract class GuitarProWriterBase implements WriterInterface
       '', 
       get_class($this)
     );
+
+    $this->channelRouter = new ChannelRouter();
   }
 
   /**
