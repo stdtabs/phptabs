@@ -16,6 +16,7 @@ use PhpTabs\Music\Color;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\Stroke;
+use PhpTabs\Share\ChannelRoute;
 use PhpTabs\Share\ChannelRouter;
 use PhpTabs\Share\ChannelRouterConfigurator;
 
