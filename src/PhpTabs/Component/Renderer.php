@@ -49,7 +49,7 @@ class Renderer
    * Set renderer format
    * 
    * @param  string $format
-   * @return \PhpTabs\Component\RendererInterface
+   * @return \PhpTabs\Component\Renderer\RendererInterface
    */
   public function setFormat($format = null)
   {
