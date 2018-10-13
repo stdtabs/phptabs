@@ -78,10 +78,15 @@ class VexTabOptions
   ];
 
   /**
+   * @var \PhpTabs\Component\Renderer\RendererInterface
+   */
+  protected $renderer;
+
+  /**
    * Constructor
    * Parse options scopes (global, tabstave)
    * 
-   * @param \PhpTabs\Component\RendererInterface $renderer
+   * @param \PhpTabs\Component\Renderer\RendererInterface $renderer
    */
   public function __construct(RendererInterface $renderer)
   {
