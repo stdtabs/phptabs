@@ -25,6 +25,7 @@ use PhpTabs\Music\Measure;
 use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\Note;
 use PhpTabs\Music\Song;
+use PhpTabs\Music\TabString;
 use PhpTabs\Music\Tempo;
 use PhpTabs\Music\TimeSignature;
 use PhpTabs\Music\Track;
