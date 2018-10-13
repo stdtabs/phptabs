@@ -156,8 +156,8 @@ abstract class ExporterBase extends ExporterEffects
     $content = array(
       'channelId'     => $measure->getTrack()->getChannelId(),
       'clef'          => $measure->getClef(),
-      'header'        => $this->exportMeasureHeader($measureHeader)['header'],
       'keySignature'  => $measure->getKeySignature(),
+      'header'        => $this->exportMeasureHeader($measureHeader)['header'],
       'beats'         => array()
     );
 
