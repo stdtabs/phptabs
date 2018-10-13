@@ -40,7 +40,7 @@ class File
   private $handle = 0;
 
   /** @var string file content */
-  private $content = '';
+  private $stream = '';
 
   /**
    * @param string $path Path to the file
