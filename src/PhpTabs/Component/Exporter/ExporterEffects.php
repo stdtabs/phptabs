@@ -72,7 +72,7 @@ abstract class ExporterEffects
   }
 
   /**
-   * @param \PhpTabs\Model\EffectTremolo $effect
+   * @param \PhpTabs\Music\EffectTremolo $effect
    * 
    * @return array
    */
