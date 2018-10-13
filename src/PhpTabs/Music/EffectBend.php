@@ -79,7 +79,7 @@ class BendPoint extends EffectPointsBase
   }
 
   /**
-   * @return \PhpTabs\Model\BendPoint
+   * @return \PhpTabs\Music\BendPoint
    */
   public function __clone()
   {
