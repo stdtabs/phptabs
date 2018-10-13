@@ -132,16 +132,16 @@ abstract class ExporterEffects
    */
   protected function exportPoints($points)
   {
-    $content = array();
-
-    foreach ($points as $point)
-    {
-      $content[] = array(
-        'position'  => $point->getPosition(), 
-        'value'     => $point->getValue()
-      );
-    }
-
-    return $content;
+    return array_reduce(
+      $points,
+      function ($carry, $point) {
+        $carry[] = array(
+          'position'  => $point->getPosition(), 
+          'value'     => $point->getValue()
+        );
+        return $carry;
+      },
+      []
+    );
   }
 }
