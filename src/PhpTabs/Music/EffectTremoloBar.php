@@ -69,7 +69,7 @@ class TremoloBarPoint extends EffectPointsBase
   }
 
   /**
-   * @return \PhpTabs\Model\TremoloBarPoint
+   * @return \PhpTabs\Music\TremoloBarPoint
    */
   public function __clone()
   {
