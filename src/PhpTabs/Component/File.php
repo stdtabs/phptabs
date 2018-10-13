@@ -40,6 +40,9 @@ class File
   private $handle = 0;
 
   /** @var string file content */
+  private $content = '';
+
+  /** @var string current segment */
   private $stream = '';
 
   /**
