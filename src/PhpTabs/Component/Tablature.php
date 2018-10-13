@@ -168,7 +168,7 @@ class Tablature
    * Render a song into a string
    * 
    * @param  string $format
-   * @return \PhpTabs\Component\RendererInterface
+   * @return \PhpTabs\Component\Renderer\RendererInterface
    */
   public function getRenderer($format = null)
   {
