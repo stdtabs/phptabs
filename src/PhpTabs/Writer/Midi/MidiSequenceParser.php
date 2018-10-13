@@ -809,7 +809,7 @@ class MidiSequenceParser
    * @param int $track
    * @param int $start
    * @param int $duration
-   * @param \PhpTabs\Writer\Midi\EffectTremoloBar $effect
+   * @param \PhpTabs\Music\EffectTremoloBar $effect
    * @param int $channel
    * @param int $midiVoice
    * @param int $bendMode
