@@ -15,12 +15,19 @@ use PhpTabs\Music\Note;
 
 class MidiNoteHelper
 {
+  /**
+   * @var \PhpTabs\Writer\Midi\MidiMeasureHelper
+   */
   private $measure;
+
+  /**
+   * @var \PhpTabs\Music\Note
+   */
   private $note;
 
   /**
    * @param \PhpTabs\Writer\Midi\MidiMeasureHelper $measure
-   * @param \PhpTabs\Writer\Midi\Note $note $measure
+   * @param \PhpTabs\Music\Note $note
    */
   public function __construct(MidiMeasureHelper $measure, Note $note)
   {
@@ -37,7 +44,7 @@ class MidiNoteHelper
   }
 
   /**
-   * @return \PhpTabs\Writer\Midi\Note $note
+   * @return \PhpTabs\Music\Note
    */
   public function getNote()
   {
