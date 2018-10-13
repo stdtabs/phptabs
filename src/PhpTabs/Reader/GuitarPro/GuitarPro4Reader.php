@@ -37,6 +37,11 @@ class GuitarPro4Reader extends GuitarProReaderBase
   protected $tripletFeel, $keySignature;
 
   /**
+   * @var \PhpTabs\Component\Tablature
+   */
+  protected $tablature;
+
+  /**
    * @param \PhpTabs\Component\File $file An input file to read
    */
   public function __construct(File $file)
@@ -110,7 +115,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
    */
   public function getTablature()
   {
-    return isset($this->tablature)
+    return !is_null($this->tablature)
       ? $this->tablature : new Tablature();
   }
 
@@ -121,8 +126,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
    */
   private function setTablature(Song $song)
   {
-    if (!isset($this->tablature))
-    {
+    if (is_null($this->tablature)) {
       $this->tablature = new Tablature();
     }
 
