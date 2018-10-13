@@ -11,6 +11,7 @@
 
 namespace PhpTabs\Share;
 
+use PhpTabs\Music\Duration;
 use PhpTabs\Music\Measure;
 
 class MeasureVoiceJoiner
