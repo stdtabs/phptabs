@@ -39,7 +39,7 @@ class Tablature
   /**
    * Sets an error message
    *
-   * @param string $error
+   * @param string $message
    */
   public function setError($message)
   {
