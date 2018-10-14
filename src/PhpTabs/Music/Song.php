@@ -33,7 +33,7 @@ class Song extends SongBase
   /**
    * @param int $index
    * 
-   * @return \PhpTabs\Music\MeasureHeader
+   * @return null|\PhpTabs\Music\MeasureHeader
    */
   public function getMeasureHeader($index)
   {
@@ -83,7 +83,7 @@ class Song extends SongBase
   /**
    * @param int $index
    *
-   * @return \PhpTabs\Music\Track
+   * @return null|\PhpTabs\Music\Track
    */
   public function getTrack($index)
   {
@@ -135,7 +135,7 @@ class Song extends SongBase
   }
 
   /**
-   * @return \PhpTabs\Music\Channel
+   * @return null|\PhpTabs\Music\Channel
    */
   public function getChannel($index)
   {
