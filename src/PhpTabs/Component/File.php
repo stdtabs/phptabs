@@ -223,7 +223,7 @@ class File
   }
 
   /**
-   * @return string Error set during file read operations
+   * @return bool|string Error set during file read operations
    */
   public function getError()
   {
