@@ -103,7 +103,7 @@ class MeasureHeader
   }
 
   /**
-   * @param bool $repeatOpen
+   * @param bool|int $repeatOpen
    */
   public function setRepeatOpen($repeatOpen)
   {
@@ -175,7 +175,7 @@ class MeasureHeader
   }
 
   /**
-   * @return \PhpTabs\Music\Marker
+   * @return null|\PhpTabs\Music\Marker
    */
   public function getMarker()
   {
@@ -183,7 +183,7 @@ class MeasureHeader
   }
 
   /**
-   * @param \PhpTabs\Music\Marker $marker
+   * @param null|\PhpTabs\Music\Marker $marker
    */
   public function setMarker(Marker $marker = null)
   {
