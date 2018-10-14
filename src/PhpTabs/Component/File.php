@@ -211,7 +211,7 @@ class File
   }
 
   /**
-   * @param string $error Error during file read operations
+   * @param string $message Error during file read operations
    * 
    * @throws \Exception when an error occurred
    */
