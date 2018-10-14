@@ -17,7 +17,7 @@ use PhpTabs\Component\Renderer\RendererInterface;
 use PhpTabs\Music\Track;
 use PhpTabs\Music\Song;
 
-class VexTabRenderer extends RendererHelper implements RendererInterface
+class VexTabRenderer extends RendererHelper
 {
   /**
    * Song container

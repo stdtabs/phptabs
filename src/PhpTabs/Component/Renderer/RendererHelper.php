@@ -11,7 +11,7 @@
 
 namespace PhpTabs\Component\Renderer;
 
-abstract class RendererHelper
+abstract class RendererHelper implements RendererInterface
 {
   /**
    * @var array
