@@ -27,7 +27,7 @@ class MidiSequenceHandler
   private $writer;
 
   /**
-   * @param array $tracks
+   * @param int $tracks
    * @param \PhpTabs\Music\ChannelRouter $router
    * @param \PhpTabs\Model\MidiWriter $writer
    */
@@ -57,7 +57,7 @@ class MidiSequenceHandler
   }
 
   /**
-   * @return array
+   * @return int
    */
   public function getTracks()
   {
