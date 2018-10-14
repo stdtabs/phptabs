@@ -41,7 +41,7 @@ class Marker
   }
 
   /**
-   * @param int
+   * @param int $measure
    */
   public function setMeasure($measure)
   {
