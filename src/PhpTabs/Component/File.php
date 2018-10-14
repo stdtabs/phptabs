@@ -48,7 +48,7 @@ class File
   /**
    * @param string $path Path to the file
    */
-  public function __construct($path = null)
+  public function __construct($path)
   {
     $this->setPath($path);
 
