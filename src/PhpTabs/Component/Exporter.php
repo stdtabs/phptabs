@@ -41,7 +41,7 @@ class Exporter extends ExporterBase
   /**
    * Returns a representation of the song into a desired format
    * 
-   * @param  string $format
+   * @param  null|string $format
    *  - array       : a raw PHP array
    *  - xml         : an XML string
    *  - json        : a JSON string
@@ -55,7 +55,7 @@ class Exporter extends ExporterBase
    * @return string|array
    * @throws \Exception if format is not supported
    */
-  public function export($format = 'array', $options = null)
+  public function export($format = null, $options = null)
   {
     switch ($format) {
       case null:
