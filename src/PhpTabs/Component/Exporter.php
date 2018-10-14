@@ -21,7 +21,7 @@ use PhpTabs\Component\Serializer\Yaml;
 class Exporter extends ExporterBase
 {
   /**
-   * @var \Phptabs\Music\Song
+   * @var \PhpTabs\Music\Song
    */
   protected $song;
 
@@ -31,7 +31,7 @@ class Exporter extends ExporterBase
   protected $filters = [];
 
   /**
-   * @param \PhpTabs\Component\Tablature The tablature to export
+   * @param \PhpTabs\Component\Tablature $tablature The tablature to export
    */
   public function __construct(Tablature $tablature)
   {
@@ -62,19 +62,19 @@ class Exporter extends ExporterBase
       case 'array':
         return $this->exportSong();
       case 'xml':
-        return (new Xml())->serialize($this->export());
+        return (new Xml())->serialize($this->exportSong());
       case 'json':
         return $this->toJson(is_int($options) ? $options : 0);
       case 'var_export':
-        return var_export($this->export(), true);
+        return var_export($this->exportSong(), true);
       case 'serialize':
-        return serialize($this->export());
+        return serialize($this->exportSong());
       case 'text':
       case 'txt':
-        return (new Text())->serialize($this->export());
+        return (new Text())->serialize($this->exportSong());
       case 'yaml':
       case 'yml':
-        return (new Yaml())->serialize($this->export());
+        return (new Yaml())->serialize($this->exportSong());
     }
 
     $message = sprintf('%s does not support "%s" format', __METHOD__, $format);
