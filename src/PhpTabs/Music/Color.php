@@ -106,7 +106,7 @@ class Color
   /**
    * Compares two colors
    *
-   * @param \Phptabs\Model\Color $color A color to compare with current color
+   * @param \Phptabs\Music\Color $color A color to compare with current color
    * 
    * @return bool Result of the comparison
    */
