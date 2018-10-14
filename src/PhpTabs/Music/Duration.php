@@ -117,8 +117,7 @@ class Duration
    */
   public static function fromTime($time, Duration $minDuration = null, $diff = null)
   {
-    if ($minDuration === null && $diff === null)
-    {
+    if (is_null($minDuration)) {
       $duration = new Duration();
       $duration->setValue(self::SIXTY_FOURTH);
       $duration->setDotted(false);
@@ -127,9 +126,7 @@ class Duration
       $duration->getDivision()->setTimes(2);
 
       return self::fromTime($time, $duration);
-    }
-    elseif ($diff === null)
-    {
+    } elseif (is_null($diff)) {
       return self::fromTime($time, $minDuration, 10);
     }
 
@@ -139,8 +136,7 @@ class Duration
     $tmpDuration->setDotted(true);
     $finish = false;
 
-    while (!$finish)
-    {
+    while (!$finish) {
       $tmpTime = $tmpDuration->getTime();
       if ($tmpTime - $diff <= $time)
       {
