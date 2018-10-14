@@ -67,7 +67,7 @@ class Measure
   }
 
   /**
-   * @param int
+   * @param int $clef
    */
   public function setClef($clef)
   {
