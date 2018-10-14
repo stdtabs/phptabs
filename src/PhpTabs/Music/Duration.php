@@ -110,12 +110,12 @@ class Duration
 
   /**
    * @param int $time
-   * @param int $minDuration
+   * @param \PhpTabs\Music\Duration $minDuration
    * @param int $diff
    * 
    * @return int
    */
-  public static function fromTime($time, $minDuration = null, $diff = null)
+  public static function fromTime($time, Duration $minDuration = null, $diff = null)
   {
     if ($minDuration === null && $diff === null)
     {
