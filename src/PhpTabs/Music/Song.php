@@ -100,10 +100,10 @@ class Song extends SongBase
   }
 
   /**
-   * @param int $index
-   * @param \PhpTabs\Music\Channel $channel
+   * @param int|\PhpTabs\Music\Channel $index
+   * @param \PhpTabs\Music\Channel     $channel
    */
-  public function addChannel($index, $channel = null)
+  public function addChannel($index, Channel $channel = null)
   {
     if ($index instanceof Channel) {
       $this->channels[] = $index;
