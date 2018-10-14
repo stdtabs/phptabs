@@ -246,7 +246,7 @@ class Channel
   }
 
   /**
-   * @param int index
+   * @param int $index
    */
   public function removeParameter($index)
   {
