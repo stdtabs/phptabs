@@ -119,7 +119,7 @@ class Tablature
    * Gets an instrument by channelId
    *
    * @param  int $index
-   * @return array
+   * @return null|array
    */
   public function getInstrument($index)
   {
