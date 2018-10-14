@@ -60,8 +60,7 @@ class DivisionType
   }
 
   /**
-   * @param \PhpTabs\Music\DivisionType
-   * 
+   * @param  \PhpTabs\Music\DivisionType $divisionType
    * @return bool
    */
   public function isEqual(DivisionType $divisionType)
