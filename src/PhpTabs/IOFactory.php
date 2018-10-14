@@ -33,7 +33,7 @@ abstract class IOFactory
    * @param  string $type     Force a file type read
    * @return \PhpTabs\PhpTabs
    */
-  public static function fromFile($pathname = null, $type = null)
+  public static function fromFile($pathname, $type = null)
   {
     self::checkFile($pathname);
 
