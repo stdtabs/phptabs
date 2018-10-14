@@ -53,18 +53,18 @@ class File
     $this->setPath($path);
 
     if (!is_readable($path)) {
-
-      $message = sprintf('Path %s is not readable', $path);
-
-      return $this->setError($message);
+      $this->setError(
+        sprintf('Path %s is not readable', $path)
+      );
+      return;
     }
 
     # Is a file
     if (!is_file($path)) {
-
-      $message = sprintf('Path must be a file. "%s" given', $path);
-
-      return $this->setError($message);
+      $this->setError(
+        sprintf('Path must be a file. "%s" given', $path)
+      );
+      return;
     }
 
     $informations = pathinfo($path);
