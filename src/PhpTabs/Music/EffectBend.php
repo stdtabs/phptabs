@@ -75,7 +75,10 @@ class BendPoint extends EffectPointsBase
    */
   public function getTime($duration)
   {
-    return ($duration * $this->getPosition() / EffectBend::MAX_POSITION_LENGTH);
+    return intval(
+      $duration * $this->getPosition() 
+      / EffectBend::MAX_POSITION_LENGTH
+    );
   }
 
   /**
