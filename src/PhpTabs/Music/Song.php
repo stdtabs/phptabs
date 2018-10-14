@@ -126,7 +126,7 @@ class Song extends SongBase
    */
   public function removeChannel(Channel $channel)
   {
-    foreach ($this-channels as $index => $chan) {
+    foreach ($this->channels as $index => $chan) {
       if ($chan == $channel) {
         array_splice($this->channels, $index, 1);
         break;
@@ -145,7 +145,7 @@ class Song extends SongBase
 
   /**
    * @param  int $channelId
-   * @return \PhpTabs\Music\Channel
+   * @return null|\PhpTabs\Music\Channel
    */
   public function getChannelById($channelId)
   {
