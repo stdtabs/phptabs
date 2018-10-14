@@ -38,17 +38,15 @@ class Reader
    * 
    * @throws \Exception If file format is not supported
    */
-  public function __construct(File $file = null)
+  public function __construct(File $file)
   {
     $this->tablature = new Tablature();
 
-    if ($file->hasError())
-    {
+    if ($file->hasError()) {
       return;
     }
 
-    if (isset($this->extensions[ $file->getExtension() ]))
-    {
+    if (isset($this->extensions[ $file->getExtension() ])) {
       $name = $this->extensions[ $file->getExtension() ];
 
       $this->tablature->setFormat($file->getExtension());
@@ -57,8 +55,7 @@ class Reader
     }
 
     // Bridge not found
-    if (!($this->bridge instanceof ReaderInterface))
-    {
+    if (!($this->bridge instanceof ReaderInterface)) {
       $message = sprintf(
         'No reader has been found for "%s" type of file',
         $file->getExtension()
@@ -78,8 +75,7 @@ class Reader
    */
   public function getTablature()
   {   
-    if ($this->bridge instanceof ReaderInterface)
-    {
+    if ($this->bridge instanceof ReaderInterface) {
       return $this->bridge->getTablature();
     }
 
