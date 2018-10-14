@@ -95,7 +95,7 @@ class Beat
   }
 
   /**
-   * @return []\PhpTabs\Music\Voice
+   * @return \PhpTabs\Music\Voice[]
    */
   public function getVoices()
   {
