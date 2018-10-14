@@ -162,7 +162,7 @@ class File
    * @param int $bytes
    * @param int $offset
    * 
-   * @return nullstring a file segment
+   * @return null|string A file segment
    * 
    * @throws Exception If asked position is larger than the file size
    */
