@@ -39,7 +39,7 @@ class Scale
 
   /**
    * @param int $note
-   * @param int $on
+   * @param int|boolean $on
    */
   public function setNote($note, $on)
   {
