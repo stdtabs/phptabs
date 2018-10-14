@@ -61,7 +61,7 @@ class Marker
    */
   public function setTitle($title)
   {
-    $this->title = (string)$title;
+    $this->title = $title;
   }
 
   /**
