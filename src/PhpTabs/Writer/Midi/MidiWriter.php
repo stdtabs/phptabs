@@ -54,7 +54,7 @@ class MidiWriter extends MidiWriterBase
     $channelRouter = new ChannelRouter();
     $channelRouterConfigurator = new ChannelRouterConfigurator($channelRouter);
     $channelRouterConfigurator->configureRouter($song->getChannels());
-    $settings = (new MidiSettings())->getdefaults();
+    $settings = (new MidiSettings())->getDefaults();
 
     $midiSequenceParser = new MidiSequenceParser($song, 
       (self::ADD_FIRST_TICK_MOVE | self::ADD_DEFAULT_CONTROLS | self::ADD_MIXER_MESSAGES)
