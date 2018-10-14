@@ -110,8 +110,8 @@ class Duration
 
   /**
    * @param int $time
-   * @param \PhpTabs\Music\Duration $minDuration
-   * @param int $diff
+   * @param null|\PhpTabs\Music\Duration $minDuration
+   * @param null|int $diff
    * 
    * @return int
    */
