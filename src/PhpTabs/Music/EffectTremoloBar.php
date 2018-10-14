@@ -60,12 +60,14 @@ class TremoloBarPoint extends EffectPointsBase
 {
   /**
    * @param int $duration
-   *
    * @return int
    */
   public function getTime($duration)
   {
-    return $duration * $this->getPosition() / EffectTremoloBar::MAX_POSITION_LENGTH;
+    return intval(
+      $duration * $this->getPosition()
+      / EffectTremoloBar::MAX_POSITION_LENGTH
+    );
   }
 
   /**
