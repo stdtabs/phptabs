@@ -135,7 +135,7 @@ class Tablature
    * 
    * @param  string $format
    * @param  mixed  $options Flags for some exported formats
-   * @return array
+   * @return array|string
    */
   public function export($format = null, $options = null)
   { 
