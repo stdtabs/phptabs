@@ -18,7 +18,7 @@ use PhpTabs\Component\Importer\ParserBase;
 class Importer extends ParserBase
 {
   /**
-   * @var \Phptabs\Music\Song
+   * @var \PhpTabs\Music\Song
    */
   protected $song;
 
