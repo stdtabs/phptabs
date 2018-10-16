@@ -100,7 +100,7 @@ class MidiMessage
   }
 
   /**
-   * @param string $command
+   * @param int   $command
    * @param array $data
    *
    * @return \PhpTabs\Reader\Midi\MidiMessage
