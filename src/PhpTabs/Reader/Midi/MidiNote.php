@@ -78,7 +78,7 @@ class MidiNote
   }
 
   /**
-   * @param int
+   * @param int $value
    */
   public function addPitchBend($value)
   {
