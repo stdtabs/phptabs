@@ -321,12 +321,9 @@ class MidiReader extends MidiReaderBase
         ? $last->getTempo()->getValue() : 120
     );
 
-    if ($last !== null)
-    {
+    if ($last !== null) {
       $header->getTimeSignature()->copyFrom($last->getTimeSignature());
-    }
-    else
-    {
+    } else {
       $header->getTimeSignature()->setNumerator(4);
       $header->getTimeSignature()->getDenominator()->setValue(Duration::QUARTER);
     }
@@ -343,7 +340,7 @@ class MidiReader extends MidiReaderBase
   }
 
   /**
-   * @return \PhpTabs\Music\MeasureHeader
+   * @return null|\PhpTabs\Music\MeasureHeader
    */
   private function getLastHeader()
   {
@@ -415,14 +412,12 @@ class MidiReader extends MidiReaderBase
   /**
    * @param integer $channel
    * 
-   * @return \PhpTabs\Music\Channel
+   * @return \PhpTabs\Reader\Midi\MidiChannel
    */
   public function getTempChannel($channel)
   {
-    foreach ($this->tempChannels as $tempChannel)
-    {
-      if ($tempChannel->getChannel() == $channel)
-      {
+    foreach ($this->tempChannels as $tempChannel) {
+      if ($tempChannel->getChannel() == $channel) {
         return $tempChannel;
       }
     }
