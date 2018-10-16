@@ -544,7 +544,7 @@ class MidiReader extends MidiReaderBase
   }
 
   /**
-   * @return string $sequence
+   * @return \PhpTabs\Reader\Midi\MidiSequence $sequence
    */
   private function getSequence()
   {
