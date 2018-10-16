@@ -439,20 +439,20 @@ class MidiReader extends MidiReaderBase
    * @param mixed $value
    * @param bool $purge
    * 
-   * @return \PhpTabs\Music\Note
+   * @return null|\PhpTabs\Reader\Midi\MidiNote
    */
   private function getTempNote($track, $channel, $value, $purge)
   {
     $countTempNotes = count($this->tempNotes);
 
-    for ($i = 0; $i < $countTempNotes; $i++)
-    {
+    for ($i = 0; $i < $countTempNotes; $i++) {
       $note = $this->tempNotes[$i];
 
-      if ($note->getTrack() == $track && $note->getChannel() == $channel && $note->getValue() == $value)
-      {
-        if ($purge)
-        {
+      if ( $note->getTrack()    == $track
+        && $note->getChannel()  == $channel 
+        && $note->getValue()    == $value
+      ) {
+        if ($purge) {
           array_splice($this->tempNotes, $i, 1);
         }
 
