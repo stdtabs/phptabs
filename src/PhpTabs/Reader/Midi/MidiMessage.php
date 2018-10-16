@@ -30,7 +30,7 @@ class MidiMessage
   private $data;
 
   /**
-   * @param string $message
+   * @param int    $message
    * @param string $command
    */
   public function __construct($message, $command) 
