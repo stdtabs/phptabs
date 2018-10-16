@@ -434,10 +434,10 @@ class MidiReader extends MidiReaderBase
   }
 
   /**
-   * @param integer $track
-   * @param \PhpTabs\Music\Channel $channel
+   * @param int   $track
+   * @param int   $channel
    * @param mixed $value
-   * @param bool $purge
+   * @param bool  $purge
    * 
    * @return null|\PhpTabs\Reader\Midi\MidiNote
    */
@@ -470,10 +470,8 @@ class MidiReader extends MidiReaderBase
    */
   private function getTrackTuningHelper($track)
   {
-    foreach ($this->trackTuningHelpers as $helper)
-    {
-      if ($helper->getTrack() == $track)
-      {
+    foreach ($this->trackTuningHelpers as $helper) {
+      if ($helper->getTrack() == $track) {
         return $helper;
       }
     }
@@ -1023,17 +1021,14 @@ class MidiReader extends MidiReaderBase
    */
   private function readTrack(MidiTrack $track)
   {
-    while (true)
-    {
-      if ($this->readInt() == MidiReaderInterface::TRACK_MAGIC)
-      {
+    while (true) {
+      if ($this->readInt() == MidiReaderInterface::TRACK_MAGIC) {
         break;
       }
 
       $chunkLength = $this->readInt();
 
-      if ($chunkLength % 2 != 0)
-      {
+      if ($chunkLength % 2 != 0) {
         $chunkLength++;
       }
 
@@ -1042,14 +1037,12 @@ class MidiReader extends MidiReaderBase
 
     $helper = new MidiTrackReaderHelper(0, $this->readInt(), -1);
 
-    while ($helper->remainingBytes > 0)
-    {
+    while ($helper->remainingBytes > 0) {
       $helper->ticks += $this->readVariableLengthQuantity($helper);
 
       $event = $this->readEvent($helper);
 
-      if ($event !== null)
-      {
+      if ($event !== null) {
         $track->add($event);
       }
     }
