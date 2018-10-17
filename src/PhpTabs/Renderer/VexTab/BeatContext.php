@@ -20,7 +20,7 @@ class BeatContext
   /**
    * Referenced Beat
    * 
-   * @var PhpTabs\Music\Beat
+   * @var \PhpTabs\Music\Beat
    */
   private $beat;
 
@@ -32,10 +32,15 @@ class BeatContext
   private $tupletCounter = 0;
 
   /**
+   * @var null|bool
+   */
+  private $isChordBeat;
+
+  /**
    * Constructor
    * Parse beat informations for current and later usage
    * 
-   * @param PhpTabs\Music\Beat $beat
+   * @param \PhpTabs\Music\Beat $beat
    */
   public function __construct(Beat $beat)
   {
@@ -49,7 +54,7 @@ class BeatContext
    */
   public function isChordBeat()
   {
-    if (isset($this->isChordBeat)) {
+    if (!is_null($this->isChordBeat)) {
       return $this->isChordBeat;
     }
 
