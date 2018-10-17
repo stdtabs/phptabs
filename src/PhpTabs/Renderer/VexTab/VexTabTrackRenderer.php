@@ -132,9 +132,7 @@ class VexTabTrackRenderer
     $this->line             = 0;
 
     foreach ($track->getMeasures() as $measure) {
-
       $this->renderMeasure($measure);
-
     }
   }
 
@@ -200,7 +198,7 @@ class VexTabTrackRenderer
   }
 
   /**
-   * @param  \phpTabs\Music\Measure $measure
+   * @param  \PhpTabs\Music\Measure $measure
    * @return bool
    */
   private function isLastMeasure(Measure $measure)
@@ -245,7 +243,6 @@ class VexTabTrackRenderer
     $this->lastDuration   = '';
 
     foreach ($measure->getBeats() as $beat) {
-
       $this->beat        = $beat;
       $this->beatContext = new BeatContext($beat);
 
@@ -269,25 +266,20 @@ class VexTabTrackRenderer
      * Chord beat
      */
     if ($this->beatContext->isChordBeat()) {
-
       $this->staves .= $this->renderChordBeat();
 
     /**
      * Single note beat
      */
     } elseif (!$this->beat->isRestBeat()) {
-
       $this->staves .= $this->renderSingleNoteBeat(
         $this->beat->getVoice(0)->getNote(0)
       );
-
     /**
      * Rest beat
      */
     } elseif ($this->beat->isRestBeat()) {
-
       $this->staves .= $this->renderRestBeat();
-
     }
 
     $this->lastBeatContext = $this->beatContext;
