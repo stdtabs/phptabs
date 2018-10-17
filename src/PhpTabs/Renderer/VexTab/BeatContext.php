@@ -120,7 +120,7 @@ class BeatContext
   {
     return $this->getBend($note)
          . $this->getVibrato($note)
-         . $this->getHarshVibrato($note)
+         // . $this->getHarshVibrato($note)
          . (!$this->isChordBeat() ? $this->getStroke() : '');   
   }
 
