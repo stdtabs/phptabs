@@ -69,4 +69,17 @@ class ChannelRoute
   {
     $this->channel2 = $channel2;
   }
+
+  /**
+   * Compare current channel route with a given channel route
+   * 
+   * @param \PhpTabs\Share\ChannelRoute $route
+   * @return bool
+   */
+  public function equals(ChannelRoute $route)
+  {
+    return $this->channelId == $route->getChannelId()
+        && $this->channel1  == $route->getChannel1()
+        && $this->channel2  == $route->getChannel2();
+  }
 }
