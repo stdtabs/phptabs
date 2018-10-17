@@ -66,8 +66,8 @@ class ChannelRouter
   }
 
   /**
-   * @param \PhpTabs\Music\ChannelRoute $route
-   * @param int $percussionChannel
+   * @param \PhpTabs\Share\ChannelRoute $route
+   * @param bool $percussionChannel
    */
   public function configureRoutes(ChannelRoute $route, $percussionChannel)
   {
@@ -112,7 +112,7 @@ class ChannelRouter
   }
 
   /**
-   * @param \PhpTabs\Music\ChannelRoute $channelRoute
+   * @param \PhpTabs\Share\ChannelRoute $channelRoute
    * 
    * @return array
    */
@@ -136,7 +136,7 @@ class ChannelRouter
   }
 
   /**
-   * @param \PhpTabs\Music\ChannelRoute $forRoute
+   * @param \PhpTabs\Share\ChannelRoute $forRoute
    * 
    * @return array
    */
