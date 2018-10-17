@@ -23,7 +23,7 @@ abstract class RendererHelper implements RendererInterface
    * 
    * @param  string     $name
    * @param  int|string $default
-   * @return int|string
+   * @return null|int|string
    * @api
    * @since 0.5.0
    */
