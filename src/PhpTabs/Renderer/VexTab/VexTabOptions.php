@@ -146,7 +146,7 @@ class VexTabOptions
    * Parse options scope
    * 
    * @param string     $name
-   * @param string|int $value
+   * @param string|int|bool $value
    */
   private function parseOption($name, $value)
   {
@@ -176,7 +176,7 @@ class VexTabOptions
   /**
    * Validate given option value
    * 
-   * @param  string|int   $value
+   * @param  string|int|float $value
    * @param  string|array $definition
    * @return bool
    */
