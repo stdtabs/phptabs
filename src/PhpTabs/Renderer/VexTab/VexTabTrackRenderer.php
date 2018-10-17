@@ -66,7 +66,7 @@ class VexTabTrackRenderer
   /**
    * Global renderer
    * 
-   * @var \PhpTabs\Component\RendererInterface
+   * @var \PhpTabs\Component\Renderer\RendererInterface
    */
   private $renderer;
 
@@ -83,6 +83,13 @@ class VexTabTrackRenderer
    * @var \PhpTabs\Music\Track
    */
   private $track;
+
+  /**
+   * Options
+   * 
+   * @var \PhpTabs\Renderer\VexTab\VexTabOptions
+   */
+  private $options;
 
   /**
    * Channel
