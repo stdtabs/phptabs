@@ -31,7 +31,7 @@ class AsciiBase
   /**
    * Draw a note
    * 
-   * @param int $fret
+   * @param string $fret
    */
   public function drawNote($fret)
   {

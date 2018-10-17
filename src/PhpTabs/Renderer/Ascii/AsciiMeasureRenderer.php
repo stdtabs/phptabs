@@ -103,9 +103,9 @@ class AsciiMeasureRenderer
   /**
    * Get following beat
    * 
-   * @param  []\PhpTabs\Music\Beat $beats
+   * @param  \PhpTabs\Music\Beat[] $beats
    * @param  \PhpTabs\Music\Beat   $beat The current beat
-   * @return \PhpTabs\Music\Beat
+   * @return null|\PhpTabs\Music\Beat
    */
   public function getNextBeat(array $beats, Beat $beat)
   {
@@ -145,7 +145,7 @@ class AsciiMeasureRenderer
    * 
    * @param  \PhpTabs\Music\Beat $beat
    * @param  int                 $stringNumber
-   * @return \PhpTabs\Music\Note
+   * @return null|\PhpTabs\Music\Note
    */
   private function getNote(Beat $beat, $stringNumber)
   {
@@ -166,7 +166,7 @@ class AsciiMeasureRenderer
    * 
    * @param  \PhpTabs\Music\Voice $voice
    * @param  int                  $stringNumber
-   * @return \PhpTabs\Music\Note
+   * @return null|\PhpTabs\Music\Note
    */
   private function getNoteByVoice(Voice $voice, $stringNumber)
   {
