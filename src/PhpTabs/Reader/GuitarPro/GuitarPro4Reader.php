@@ -31,8 +31,8 @@ class GuitarPro4Reader extends GuitarProReaderBase
   private static $supportedVersions = array('FICHIER GUITAR PRO v4.00', 'FICHIER GUITAR PRO v4.06', 'FICHIER GUITAR PRO L4.06');
 
   /**
-   * @var boolean $tripletFeel
-   * @var integer $keySignature
+   * @var int $tripletFeel
+   * @var int $keySignature
    */  
   protected $tripletFeel, $keySignature;
 
@@ -50,8 +50,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     $this->readVersion();
 
-    if (!$this->isSupportedVersion($this->getVersion()))
-    {
+    if (!$this->isSupportedVersion($this->getVersion())) {
       $this->closeStream();
 
       throw new Exception(sprintf('Version "%s" is not supported', $this->getVersion()));
@@ -68,9 +67,9 @@ class GuitarPro4Reader extends GuitarProReaderBase
       : MeasureHeader::TRIPLET_FEEL_NONE;
 
     # Meta only
-    if (Config::get('type') == 'meta')
-    {
-      return $this->closeStream();
+    if (Config::get('type') == 'meta') {
+      $this->closeStream();
+      return;
     }
 
     $lyricTrack = $this->readInt();
@@ -92,9 +91,9 @@ class GuitarPro4Reader extends GuitarProReaderBase
     $this->readTracks($song, $tracks, $channels, $lyric, $lyricTrack);
 
     # Meta+channels+tracks+measure headers only
-    if (Config::get('type') == 'channels')
-    {
-      return $this->closeStream();
+    if (Config::get('type') == 'channels') {
+      $this->closeStream();
+      return;
     }
 
     $this->factory('GuitarPro3Measures')->readMeasures($song, $measures, $tracks, $tempoValue);
