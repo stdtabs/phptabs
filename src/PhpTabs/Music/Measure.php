@@ -137,7 +137,7 @@ class Measure
 
   /**
    * @param  int $index
-   * @return \PhpTabs\Music\Beat
+   * @return null|\PhpTabs\Music\Beat
    */
   public function getBeat($index)
   {
