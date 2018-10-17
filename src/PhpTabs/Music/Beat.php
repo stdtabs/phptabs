@@ -86,7 +86,7 @@ class Beat
 
   /**
    * @param  int $index
-   * @return \PhpTabs\Music\Voice
+   * @return null|\PhpTabs\Music\Voice
    */
   public function getVoice($index)
   {
