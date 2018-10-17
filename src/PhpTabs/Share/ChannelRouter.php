@@ -25,22 +25,23 @@ class ChannelRouter
 
   public function resetRoutes()
   {
-    for ($i = 0; $i < count($this->midiChannels); $i++)
-    {
+    for ($i = 0; $i < count($this->midiChannels); $i++) {
       $this->midiChannels[$i]->clear();
     }
   }
 
   /**
-   * @param \PhpTabs\Music\ChannelRoute $route
+   * @param \PhpTabs\Share\ChannelRoute $route
    */
   public function removeRoute(ChannelRoute $route)
   {
-    array_walk($this->midiChannels, function ($channel, $key) {
-      if ($channel->getRoute() == $route) {
-        array_splice($this->midiChannels, $key, 1);
+    array_walk($this->midiChannels,
+      function ($channel, $key) use ($route) {
+        if ($channel->getRoute() == $route) {
+          array_splice($this->midiChannels, $key, 1);
+        }
       }
-    });
+    );
   }
 
   /**
