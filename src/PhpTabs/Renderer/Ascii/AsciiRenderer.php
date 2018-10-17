@@ -55,7 +55,7 @@ class AsciiRenderer extends RendererHelper
   /**
    * Draw a song, ASCII formatted
    * 
-   * @param  int    $index
+   * @param  null|int $trackIndex
    * @return string A list of tabstaves, ASCII formatted
    * @api
    * @since 0.6.0
