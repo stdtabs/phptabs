@@ -18,7 +18,7 @@ class ChannelRouterConfigurator
   private $router;
 
   /**
-   * @param \PhpTabs\Music\ChannelRouter $router
+   * @param \PhpTabs\Share\ChannelRouter $router
    */
   public function __construct(ChannelRouter $router)
   {
@@ -49,7 +49,7 @@ class ChannelRouterConfigurator
 
   /**
    * @param \PhpTabs\Music\Channel $channel
-   * @param int $key
+   * @param string $key
    * 
    * @return int
    */
@@ -66,9 +66,9 @@ class ChannelRouterConfigurator
 
   /**
    * @param \PhpTabs\Music\Channel $channel
-   * @param int $key
+   * @param string $key
    *
-   * @return \PhpTabs\Music\ChannelParameter
+   * @return null|\PhpTabs\Music\ChannelParameter
    */
   private function findChannelParameter(Channel $channel, $key)
   {

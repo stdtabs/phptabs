@@ -17,10 +17,14 @@ namespace PhpTabs\Music;
 class ChannelParameter
 {
   private $key;
+  
+  /**
+   * @var null|int|string
+   */
   private $value;
 
   /**
-   * @return int
+   * @return int|string
    */
   public function getKey()
   {
@@ -28,7 +32,7 @@ class ChannelParameter
   }
 
   /**
-   * @param int $key
+   * @param int|string $key
    */
   public function setKey($key)
   {
@@ -36,7 +40,7 @@ class ChannelParameter
   }
 
   /**
-   * @return int
+   * @return null|int|string
    */
   public function getValue()
   {
@@ -44,7 +48,7 @@ class ChannelParameter
   }
 
   /**
-   * @param int $value
+   * @param null|int|string $value
    */
   public function setValue($value)
   {
