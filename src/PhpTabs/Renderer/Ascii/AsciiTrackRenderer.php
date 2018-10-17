@@ -38,9 +38,16 @@ class AsciiTrackRenderer
   private $writer;
 
   /**
+   * Parent renderer
+   * 
+   * @var \PhpTabs\Renderer\Ascii\AsciiRenderer
+   */
+  private $parent;
+
+  /**
    * Constructor
    *
-   * @param  \PhpTabs\Renderer\Ascii\AsciiBase $writer
+   * @param  \PhpTabs\Renderer\Ascii\AsciiBase $renderer
    * @param  \PhpTabs\Music\Track              $track
    */
   public function __construct(AsciiRenderer $renderer, Track $track)
