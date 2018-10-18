@@ -86,12 +86,20 @@ class Beat
 
   /**
    * @param  int $index
-   * @return null|\PhpTabs\Music\Voice
+   * @return \PhpTabs\Music\Voice
    */
   public function getVoice($index)
   {
-    return isset($this->voices[$index])
-         ? $this->voices[$index] : null;
+    if (isset($this->voices[$index])) {
+      return $this->voices[$index];
+    }
+
+    throw new Exception(
+      sprintf(
+        'Index %s does not exist',
+        $index
+      )
+    );
   }
 
   /**

@@ -11,6 +11,8 @@
 
 namespace PhpTabs\Music;
 
+use Exception;
+
 /**
  * @uses Beat
  * @uses MeasureHeader
@@ -137,12 +139,20 @@ class Measure
 
   /**
    * @param  int $index
-   * @return null|\PhpTabs\Music\Beat
+   * @return \PhpTabs\Music\Beat
    */
   public function getBeat($index)
   {
-    return isset($this->beats[$index])
-         ? $this->beats[$index] : null;
+    if (isset($this->beats[$index])) {
+      return $this->beats[$index];
+    }
+    
+    throw new Exception(
+      sprintf(
+        'Index %s does not exist',
+        $index
+      )
+    );
   }
 
   /**
