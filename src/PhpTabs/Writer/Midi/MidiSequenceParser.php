@@ -110,7 +110,7 @@ class MidiSequenceParser
   }
 
   /**
-   * @param float $metronomeChannelId
+   * @param float $tempoPercent
    */  
   public function setTempoPercent($tempoPercent)
   {
@@ -118,7 +118,7 @@ class MidiSequenceParser
   }
 
   /**
-   * @param int $metronomeChannelId
+   * @param int $transpose
    */  
   public function setTranspose($transpose)
   {
@@ -147,22 +147,19 @@ class MidiSequenceParser
     $helper = new MidiSequenceHelper($sequence);
     $controller = new MidiRepeatController($this->song, $this->sHeader, $this->eHeader);
 
-    while (!$controller->finished())
-    {
+    while (!$controller->finished()) {
       $index = $controller->getIndex();
       $move = $controller->getRepeatMove();
       $controller->process();
 
-      if ($controller->shouldPlay())
-      {
+      if ($controller->shouldPlay()) {
         $helper->addMeasureHelper( new MidiMeasureHelper($index, $move) );
       }
     }
 
     $this->addDefaultMessages($helper, $this->song);
 
-    for ($i = 0; $i < $this->song->countTracks(); $i++)
-    {
+    for ($i = 0; $i < $this->song->countTracks(); $i++) {
       $songTrack = $this->song->getTrack($i);
       $this->createTrack($helper, $songTrack);
     }
@@ -172,14 +169,13 @@ class MidiSequenceParser
 
   /**
    * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
-   * @param \PhpTabs\Writer\Midi\Track $track
+   * @param \PhpTabs\Reader\Midi\MidiTrack $track
    */
   private function createTrack(MidiSequenceHelper $helper, Track $track)
   {
     $channel = $this->song->getChannelById($track->getChannelId());
 
-    if ($channel !== null)
-    {
+    if ($channel !== null) {
       $previous = null;
 
       $this->addBend($helper, $track->getNumber(), Duration::QUARTER_TIME, self::DEFAULT_BEND, $channel->getChannelId(), false);
@@ -210,8 +206,8 @@ class MidiSequenceParser
   /**
    * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
    * @param \PhpTabs\Writer\Midi\Channel $channel
-   * @param \PhpTabs\Writer\Midi\Track $track
-   * @param \PhpTabs\Writer\Midi\Measure $measure
+   * @param \PhpTabs\Reader\Midi\MidiTrack $track
+   * @param \PhpTabs\Music\Measure $measure
    * @param int $mIndex
    * @param int $startMove
    */
@@ -219,16 +215,14 @@ class MidiSequenceParser
   {
     $stroke = array();
 
-    for ($i = 0; $i < $track->countStrings(); $i++)
-    {
+    for ($i = 0; $i < $track->countStrings(); $i++) {
       $stroke[] = 0;
     }
 
     $track->getStrings();
     $previous = null;
 
-    for ($bIndex = 0; $bIndex < $measure->countBeats(); $bIndex++)
-    {
+    for ($bIndex = 0; $bIndex < $measure->countBeats(); $bIndex++) {
       $beat = $measure->getBeat($bIndex);
       $this->makeNotes( $helper, $channel, $track, $beat, $measure->getTempo(), $mIndex, $bIndex, $startMove, $this->getStroke($beat, $previous, $stroke) );
       $previous = $beat;
@@ -239,8 +233,8 @@ class MidiSequenceParser
    * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
    * @param \PhpTabs\Writer\Midi\Channel $channel
    * @param \PhpTabs\Writer\Midi\Track $track
-   * @param \PhpTabs\Writer\Midi\Beat $beat
-   * @param \PhpTabs\Writer\Midi\Tempo $tempo
+   * @param \PhpTabs\Music\Beat $beat
+   * @param \PhpTabs\Music\Tempo $tempo
    * @param int $mIndex
    * @param int $bIndex
    * @param int $startMove
@@ -425,13 +419,12 @@ class MidiSequenceParser
 
   /**
    * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
-   * @param \PhpTabs\Writer\Midi\Channel $channel
+   * @param \PhpTabs\Music\Channel $channel
    * @param int $track
    */
   private function makeChannel(MidiSequenceHelper $sHelper, Channel $channel, $track)
   {
-    if (($this->flags & MidiWriter::ADD_MIXER_MESSAGES) != 0)
-    {
+    if (($this->flags & MidiWriter::ADD_MIXER_MESSAGES) != 0) {
       $channelId = $channel->getChannelId();
       $tick = $this->getTick(Duration::QUARTER_TIME);
       $sHelper->getSequence()->addControlChange($tick, $track, $channelId, MidiWriter::VOLUME,$this->fix($channel->getVolume()));
@@ -442,8 +435,7 @@ class MidiSequenceParser
       $sHelper->getSequence()->addControlChange($tick, $track, $channelId, MidiWriter::TREMOLO,$this->fix($channel->getTremolo()));
       $sHelper->getSequence()->addControlChange($tick, $track, $channelId, MidiWriter::EXPRESSION, 127);
 
-      if (!$channel->isPercussionChannel())
-      {
+      if (!$channel->isPercussionChannel()) {
         $sHelper->getSequence()->addControlChange($tick, $track, $channelId, MidiWriter::BANK_SELECT, $this->fix($channel->getBank()));
       }
 
@@ -452,9 +444,9 @@ class MidiSequenceParser
   }
 
   /**
-   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
-   * @param \PhpTabs\Writer\Midi\Measure $measure
-   * @param \PhpTabs\Writer\Midi\Measure $measure
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $sHelper
+   * @param \PhpTabs\Music\Measure $currMeasure
+   * @param \PhpTabs\Music\Measure $prevMeasure
    * @param int $startMove
    */
   private function addTimeSignature(MidiSequenceHelper $sHelper, Measure $currMeasure, Measure $prevMeasure = null, $startMove)
@@ -484,8 +476,8 @@ class MidiSequenceParser
 
   /**
    * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
-   * @param \PhpTabs\Writer\Midi\Measure $measure
-   * @param \PhpTabs\Writer\Midi\Measure $measure
+   * @param \PhpTabs\Music\Measure $measure
+   * @param \PhpTabs\Music\Measure $measure
    * @param int $startMove
    */
   private function addTempo(MidiSequenceHelper $sHelper, Measure $currMeasure, Measure $prevMeasure = null, $startMove)
@@ -511,9 +503,9 @@ class MidiSequenceParser
 
   /**
    * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
-   * @param \PhpTabs\Writer\Midi\Track $track
-   * @param \PhpTabs\Writer\Midi\Note $note
-   * @param \PhpTabs\Writer\Midi\Tempo $tempo
+   * @param \PhpTabs\Music\Track $track
+   * @param \PhpTabs\Music\Note $note
+   * @param \PhpTabs\Music\Tempo $tempo
    * @param int $duration
    * @param int $mIndex
    * @param int $bIndex
@@ -581,8 +573,8 @@ class MidiSequenceParser
   }
 
   /**
-   * @param \PhpTabs\Writer\Midi\Note $note
-   * @param \PhpTabs\Writer\Midi\Tempo $tempo
+   * @param \PhpTabs\Music\Note $note
+   * @param \PhpTabs\Music\Tempo $tempo
    * @param int $duration
    * 
    * @return float
@@ -609,7 +601,7 @@ class MidiSequenceParser
   }
 
   /**
-   * @param \PhpTabs\Writer\Midi\Tempo $tempo
+   * @param \PhpTabs\Music\Tempo $tempo
    * @param int $duration
    * @param int $maximum
    * 
@@ -624,9 +616,9 @@ class MidiSequenceParser
 
   /**
    * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
-   * @param \PhpTabs\Writer\Midi\Note $note
-   * @param \PhpTabs\Writer\Midi\Track $track
-   * @param \PhpTabs\Writer\Midi\Channel $channel
+   * @param \PhpTabs\Music\Note $note
+   * @param \PhpTabs\Music\Track $track
+   * @param \PhpTabs\Music\Channel $channel
    * @param int $mIndex
    * @param int $bIndex
    * 
@@ -665,7 +657,7 @@ class MidiSequenceParser
 
   /**
    * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
-   * @param \PhpTabs\Writer\Midi\MeasureHeader $header
+   * @param \PhpTabs\Music\MeasureHeader $header
    * @param int $startMove
    */
   public function addMetronome(MidiSequenceHelper $sHelper, MeasureHeader $header, $startMove)
@@ -687,7 +679,7 @@ class MidiSequenceParser
 
   /**
    * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
-   * @param \PhpTabs\Writer\Midi\Song $song
+   * @param \PhpTabs\Music\Song $song
    */
   public function addDefaultMessages(MidiSequenceHelper $sHelper, Song $song)
   {
@@ -753,7 +745,7 @@ class MidiSequenceParser
    * @param int $track
    * @param int $start
    * @param int $duration
-   * @param \PhpTabs\Writer\Midi\EffectBend $bend
+   * @param \PhpTabs\Music\EffectBend $bend
    * @param int $channel
    * @param int $midiVoice
    * @param int $bendMode
@@ -805,7 +797,7 @@ class MidiSequenceParser
   }
 
   /**
-   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
+   * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $sHelper
    * @param int $track
    * @param int $start
    * @param int $duration
@@ -861,8 +853,8 @@ class MidiSequenceParser
 
   /**
    * @param \PhpTabs\Writer\Midi\MidiSequenceHelper $helper
-   * @param \PhpTabs\Writer\Midi\Note $note
-   * @param \PhpTabs\Writer\Midi\Track $track
+   * @param \PhpTabs\Music\Note $note
+   * @param \PhpTabs\Music\Track $track
    * @param int $mIndex
    * @param int $bIndex
    * @param int $startMove
