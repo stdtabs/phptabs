@@ -51,8 +51,7 @@ class MidiWriterBase implements WriterInterface
    */
   protected function writeBytes(array $bytes)
   {
-    foreach ($bytes as $byte)
-    {
+    foreach ($bytes as $byte) {
       $this->content .= pack('c', $byte);
     }
   }
@@ -62,8 +61,7 @@ class MidiWriterBase implements WriterInterface
    */
   protected function writeUnsignedBytes(array $bytes)
   {
-    foreach ($bytes as $byte)
-    {
+    foreach ($bytes as $byte) {
       $this->content .= pack('C', $byte);
     }
   }
@@ -71,7 +69,7 @@ class MidiWriterBase implements WriterInterface
   /**
    * @param int $value
    * 
-   * @param int
+   * @param int $value
    */
   protected function writeVariableLengthQuantity($value)
   {
@@ -79,8 +77,7 @@ class MidiWriterBase implements WriterInterface
     $length = 0;
     $data = intval(($value >> 21) & 0x7f);
 
-    if ($data != 0)
-    {
+    if ($data != 0) {
       $this->writeUnsignedBytes(array($data | 0x80));
       $length++;
       $started = true;
@@ -88,8 +85,7 @@ class MidiWriterBase implements WriterInterface
 
     $data = intval(($value >> 14) & 0x7f);
 
-    if ($data != 0 || $started)
-    {
+    if ($data != 0 || $started) {
       $this->writeUnsignedBytes(array($data | 0x80));
       $length++;
       $started = true;
@@ -97,8 +93,7 @@ class MidiWriterBase implements WriterInterface
 
     $data = intval(($value >> 7) & 0x7f);
 
-    if ($data != 0 || $started)
-    {
+    if ($data != 0 || $started) {
       $this->writeUnsignedBytes(array($data | 0x80));
       $length++;
     }
