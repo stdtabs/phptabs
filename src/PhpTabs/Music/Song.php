@@ -11,6 +11,8 @@
 
 namespace PhpTabs\Music;
 
+use Exception;
+
 class Song extends SongBase
 {
   /**
@@ -33,12 +35,20 @@ class Song extends SongBase
   /**
    * @param int $index
    * 
-   * @return null|\PhpTabs\Music\MeasureHeader
+   * @return \PhpTabs\Music\MeasureHeader
    */
   public function getMeasureHeader($index)
   {
-    return isset($this->measureHeaders[$index])
-               ? $this->measureHeaders[$index] : null;
+    if (isset($this->measureHeaders[$index])) {
+      return $this->measureHeaders[$index];
+    }
+
+    throw new Exception(
+      sprintf(
+        'Index %s does not exist',
+        $index
+      )
+    );
   }
 
   /**
@@ -83,12 +93,20 @@ class Song extends SongBase
   /**
    * @param int $index
    *
-   * @return null|\PhpTabs\Music\Track
+   * @return \PhpTabs\Music\Track
    */
   public function getTrack($index)
   {
-    return isset($this->tracks[$index])
-               ? $this->tracks[$index] : null;
+    if (isset($this->tracks[$index])) {
+      return $this->tracks[$index];
+    }
+
+    throw new Exception(
+      sprintf(
+        'Index %s does not exist',
+        $index
+      )
+    );    
   }
 
   /**
@@ -135,12 +153,20 @@ class Song extends SongBase
   }
 
   /**
-   * @return null|\PhpTabs\Music\Channel
+   * @return \PhpTabs\Music\Channel
    */
   public function getChannel($index)
   {
-    return isset($this->channels[$index])
-               ? $this->channels[$index] : null;
+    if (isset($this->channels[$index])) {
+      return $this->channels[$index];
+    }
+
+    throw new Exception(
+      sprintf(
+        'Index %s does not exist',
+        $index
+      )
+    );
   }
 
   /**

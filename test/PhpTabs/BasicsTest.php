@@ -41,22 +41,18 @@ class BasicsTest extends PHPUnit_Framework_TestCase
     # Tracks
     $this->assertEquals(0, $tablature->countTracks());
     $this->assertEquals(array(), $tablature->getTracks());
-    $this->assertEquals(null, $tablature->getTrack(42));
 
     # Channels
     $this->assertEquals(0, $tablature->countChannels());
     $this->assertEquals(array(), $tablature->getChannels());
-    $this->assertEquals(null, $tablature->getChannel(42));
 
     # MeasureHeaders
     $this->assertEquals(0, $tablature->countMeasureHeaders());
     $this->assertEquals(array(), $tablature->getMeasureHeaders());
-    $this->assertEquals(null, $tablature->getMeasureHeader(42));
 
     # Instruments
     $this->assertEquals(0, $tablature->countInstruments());
     $this->assertEquals(array(), $tablature->getInstruments());
-    $this->assertEquals(null, $tablature->getInstrument(42));
     
     $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $tablature->getTablature());
   }
@@ -81,5 +77,35 @@ class BasicsTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(true, $tablature->hasError());
     $this->assertEquals('Path must be a file. "' . __DIR__ . '" given'
       , $tablature->getError());
+  }
+
+  /**
+   * @expectedException Exception
+   */
+  public function testExceptionTrackNotDefined()
+  {
+    $tablature = new PhpTabs();
+    
+    $tablature->getTrack(0);
+  }
+
+  /**
+   * @expectedException Exception
+   */
+  public function testExceptionChannelNotDefined()
+  {
+    $tablature = new PhpTabs();
+    
+    $tablature->getChannel(0);
+  }
+
+  /**
+   * @expectedException Exception
+   */
+  public function testExceptionMeasureHeaderNotDefined()
+  {
+    $tablature = new PhpTabs();
+    
+    $tablature->getMeasureHeader(0);
   }
 }

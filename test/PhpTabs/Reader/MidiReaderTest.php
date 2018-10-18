@@ -46,19 +46,16 @@ class PhpTabsMidiTest extends PHPUnit_Framework_TestCase
     # Tracks
     $this->assertEquals(2, $this->tablature->countTracks());
     $this->assertContainsOnlyInstancesOf('PhpTabs\\Music\\Track', $this->tablature->getTracks());
-    $this->assertEquals(null, $this->tablature->getTrack(42));
     $this->assertInstanceOf('PhpTabs\\Music\\Track', $this->tablature->getTrack(0));
 
     # Channels
     $this->assertEquals(2, $this->tablature->countChannels());
     $this->assertContainsOnlyInstancesOf('PhpTabs\\Music\\Channel', $this->tablature->getChannels());
-    $this->assertEquals(null, $this->tablature->getChannel(42));
     $this->assertInstanceOf('PhpTabs\\Music\\Channel', $this->tablature->getChannel(0));
 
     # MeasureHeaders
     $this->assertEquals(4, $this->tablature->countMeasureHeaders());
     $this->assertContainsOnlyInstancesOf('PhpTabs\\Music\\MeasureHeader', $this->tablature->getMeasureHeaders());
-    $this->assertEquals(null, $this->tablature->getMeasureHeader(42));
     $this->assertInstanceOf('PhpTabs\\Music\\MeasureHeader', $this->tablature->getMeasureHeader(0));
 
     # Instruments
@@ -76,7 +73,6 @@ class PhpTabsMidiTest extends PHPUnit_Framework_TestCase
     );
 
     $this->assertArraySubset($expected, $this->tablature->getInstruments());
-    $this->assertEquals(null, $this->tablature->getInstrument(42));
     $this->assertArraySubset($expected[0], $this->tablature->getInstrument(0));
     
     $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $this->tablature->getTablature());
