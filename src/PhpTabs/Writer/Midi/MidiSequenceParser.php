@@ -16,6 +16,7 @@ use PhpTabs\Music\Channel;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\EffectBend;
 use PhpTabs\Music\EffectHarmonic;
+use PhpTabs\Music\EffectTremoloBar;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\Note;
