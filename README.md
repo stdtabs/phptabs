@@ -31,8 +31,8 @@ fully exploit the library, read the
 
 - [Requirements](#requirements)
 - [Installation](#installation)
-  - [From Github](#from-github)
-  - [With Composer](#with-composer)
+  - [Composer](#composer)
+  - [Alternative](#alternative)
 - [Basic Usage](#basic-usage)
 - [Options](#options)
   - [type](#type)
@@ -70,7 +70,7 @@ fully exploit the library, read the
     - [getMeasureHeader()](#getmeasureheaderindex)
   - [Saving data](#saving-data)
     - [save()](#savefilename)
-    - [dump()](#dumpformat)
+    - [export()](#exportformat)
     - [convert()](#converttype)
 
 ________________________________________________________________________
@@ -89,25 +89,23 @@ ________________________________________________________________________
 Installation
 ------------
 
-Installation with Composer is required if you want to run PHPUnit tests.
+### Composer
 
-### From Github
+```sh
+composer require stdtabs/phptabs
+```
+
+### Alternative
 
 Download and extract an archive from [https://github.com/stdtabs/phptabs/releases](https://github.com/stdtabs/phptabs/releases)
 
 Then add this PHP line before usage:
 
 ```php
+// Use standalone bootstrap
 require_once 'src/PhpTabs/bootstrap.php';
 ```
 
-### With Composer
-
-- __Package configuration__
-
-```sh
-composer require stdtabs/phptabs:0.*
-```
 ________________________________________________________________________
 
 Basic Usage
@@ -596,7 +594,7 @@ echo $tab->save();
 ```
 ________________________________________________________________________
 
-#### dump($format)
+#### export($format)
 
 __Type__ *string|array*
 
@@ -625,13 +623,49 @@ __Example__
 // Dump content into a file as XML
 file_put_contents(
   'tab.xml',
-  $tab->dump('xml')
+  $tab->export('xml')
 );
 
 // Dump into a variable as PHP array
-$array = $tab->dump(); // array is the default format
+$data = $tab->export(); // array is the default format
 
 ```
+
+After an export has been made, you can import data with `import()` method.
+
+- It's an array export:
+
+```php
+use PhpTabs\IOFactory;
+
+$song = IOFactory::create()->import($data);
+```
+
+- It's an JSON export:
+
+```php
+use PhpTabs\IOFactory;
+
+// With a JSON string
+$song = IOFactory::fromJson($json);
+
+// With a JSON file
+$song = IOFactory::fromJsonFile($filename);
+```
+
+- It's an PHP serialized export:
+
+```php
+use PhpTabs\IOFactory;
+
+// With a Serialized string
+$song = IOFactory::fromSerialized($json);
+
+// With a Serialized file
+$song = IOFactory::fromSerializedFile($filename);
+```
+
+
 ________________________________________________________________________
 
 #### convert($type)
