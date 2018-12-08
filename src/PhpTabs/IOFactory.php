@@ -27,6 +27,17 @@ abstract class IOFactory
   }
 
   /**
+   * Create a PhpTabs instance from an array
+   * 
+   * @param  array $data
+   * @return \PhpTabs\PhpTabs
+   */
+  public static function fromArray(array $data)
+  {
+    return self::create()->import($data);
+  }
+
+  /**
    * Load data from a file
    * 
    * @param  string $pathname A complete pathname
@@ -113,7 +124,7 @@ abstract class IOFactory
       throw new Exception($message);
     }
 
-    return self::create()->import($data);
+    return self::fromArray($data);
   }
 
   /**
@@ -144,7 +155,7 @@ abstract class IOFactory
       throw new Exception($message);
     }
 
-    return self::create()->import($data);
+    return self::fromArray($data);
   }
 
   /**
