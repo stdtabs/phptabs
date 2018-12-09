@@ -708,3 +708,5 @@ echo $tab->convert('mid');
 echo $tab->convert();
 
 ```
+
+A lot more examples on [PhpTabs Manual](https://stdtabs.github.io/).
