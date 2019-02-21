@@ -22,7 +22,7 @@ class MeasureHeader
     const TRIPLET_FEEL_EIGHTH    = 2;
     const TRIPLET_FEEL_SIXTEENTH = 3;
 
-    private $number            = 0;
+    private $number            = 1;
     private $marker            = null;
     private $repeatOpen        = false;
     private $repeatAlternative = 0;

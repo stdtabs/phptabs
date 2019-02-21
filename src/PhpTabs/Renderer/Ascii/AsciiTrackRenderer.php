@@ -55,7 +55,7 @@ class AsciiTrackRenderer
         $this->track  = $track;
         $this->writer = $renderer->getWriter();
         $this->parent = $renderer;
-    
+
         if ($this->parent->getOption('maxLineLength') === null) {
             $this->parent->setOption('maxLineLength', self::MAX_LINE_LENGTH);
         }
@@ -136,7 +136,7 @@ class AsciiTrackRenderer
 
         foreach ($this->track->getStrings() as $index => $string) {
             $tuning[$index] = self::$TONIC_NAMES[
-            ($string->getValue() % count(self::$TONIC_NAMES))
+                ($string->getValue() % count(self::$TONIC_NAMES))
             ];
             $maxTuningLength = max($maxTuningLength, strlen($tuning[$index]));
         }

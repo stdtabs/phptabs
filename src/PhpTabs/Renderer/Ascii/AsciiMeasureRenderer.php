@@ -78,11 +78,11 @@ class AsciiMeasureRenderer
                 $outLength = mb_strlen($this->getNoteValue($note)) - 1;
                 $this->writer->drawNote($this->getNoteValue($note));
 
-                // Rest beat
+            // Rest beat
             } elseif ($beat->isRestBeat() && in_array($this->string->getNumber(), $drawRestBeatStrings)) {
                 $this->writer->drawNote(AsciiRenderer::RESTBEAT_CHR);
 
-                // Draw a space
+            // Draw a space
             } else {
                 $this->writer->drawStringSegments(1);
             }
@@ -90,8 +90,8 @@ class AsciiMeasureRenderer
             $nextBeat = $this->getNextBeat($this->measure->getBeats(), $beat);
 
             $length = ($nextBeat !== null 
-            ? $nextBeat->getStart() - $beat->getStart() 
-            : ($this->measure->getStart() + $this->measure->getLength()) - $beat->getStart()
+                ? $nextBeat->getStart() - $beat->getStart() 
+                : ($this->measure->getStart() + $this->measure->getLength()) - $beat->getStart()
             );
 
             $this->writer->drawStringSegments($this->getDurationScaping($length) - $outLength);
@@ -186,16 +186,16 @@ class AsciiMeasureRenderer
     private function getDurationScaping($length)
     {
         switch (true) {
-        case $length <= (Duration::QUARTER_TIME / 8):
-            return 2;
-        case $length <= (Duration::QUARTER_TIME / 4):
-            return 3;
-        case $length <= (Duration::QUARTER_TIME / 2):
-            return 4;
-        case $length <= Duration::QUARTER_TIME:
-            return 5;
-        case $length <= (Duration::QUARTER_TIME * 2):
-            return 6;
+            case $length <= (Duration::QUARTER_TIME / 8):
+                return 2;
+            case $length <= (Duration::QUARTER_TIME / 4):
+                return 3;
+            case $length <= (Duration::QUARTER_TIME / 2):
+                return 4;
+            case $length <= Duration::QUARTER_TIME:
+                return 5;
+            case $length <= (Duration::QUARTER_TIME * 2):
+                return 6;
         }
 
         return 7;

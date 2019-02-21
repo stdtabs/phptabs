@@ -220,14 +220,12 @@ class MidiReader extends MidiReaderBase
 
                     for ($tcAux = ($tc + 1); $tcAux < count($this->tempChannels); $tcAux++)
                     {
-                            $tempChannelAux = $this->tempChannels[$tcAux];
+                        $tempChannelAux = $this->tempChannels[$tcAux];
 
                         if ($tempChannel->getTrack() == $tempChannelAux->getTrack()) {
                             if ($channelRoute->getChannel2() == $channelRoute->getChannel1()) {
-                                        $channelRoute->setChannel2($tempChannelAux->getChannel());
-                            }
-                            else
-                                {
+                                $channelRoute->setChannel2($tempChannelAux->getChannel());
+                            } else {
                                 $tempChannelAux->setTrack(-1);
                             }
                         }
