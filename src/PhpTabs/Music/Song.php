@@ -59,13 +59,14 @@ class Song extends SongBase
     return $this->measureHeaders;
   }
 
-  /**
-   * @param \PhpTabs\Music\Track $track
-   */
-  public function addTrack(Track $track)
-  {
-    $this->tracks[$this->countTracks()] = $track;
-  }
+    /**
+     * @param \PhpTabs\Music\Track $track
+     */
+    public function addTrack(Track $track)
+    {
+        $track->setSong($this);
+        $this->tracks[] = $track;
+    }
 
   /**
    * @param int $index
