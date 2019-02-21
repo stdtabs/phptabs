@@ -13,14 +13,14 @@ namespace PhpTabsTest\Component;
 
 use Exception;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\Component\Autoloader;
 use PhpTabs\Music\MeasureHeader;
 
 /**
  * Tests Autoloader component
  */
-class AutoloaderTest extends PHPUnit_Framework_TestCase
+class AutoloaderTest extends TestCase
 {
     // Existing class
     public function testExistingClass()

@@ -11,10 +11,10 @@
 
 namespace PhpTabsTest\Reader;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 
-class PhpTabsMidiTest extends PHPUnit_Framework_TestCase
+class PhpTabsMidiTest extends TestCase
 {
     public function setUp()
     {

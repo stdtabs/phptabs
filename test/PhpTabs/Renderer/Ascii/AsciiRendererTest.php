@@ -12,20 +12,20 @@
 namespace PhpTabsTest\Renderer\Ascii;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\IOFactory;
 
 /**
  * Tests with a simple tablature
  * Render simple tabs, ASCII formatted
  */
-class AsciiRendererTest extends PHPUnit_Framework_TestCase
+class AsciiRendererTest extends TestCase
 {
     public function setUp()
     {
         $this->filename = 'testSimpleTab.gp5';
         $this->tablature = IOFactory::fromFile(
-            PHPTABS_TEST_BASEDIR 
+            PHPTABS_TEST_BASEDIR
             . '/samples/'
             . $this->filename
         );
@@ -34,7 +34,7 @@ class AsciiRendererTest extends PHPUnit_Framework_TestCase
     public function getScenarios()
     {
         $scenarios = [
-        // 0 Test track index 1
+        #0 Test track index 1
         [1, [], '
 
 
@@ -54,7 +54,7 @@ A|-----------------------------------------|
 E|-----------------------------------------|
 '     ],
 
-        // 1 Test all tracks
+        #1 Test all tracks
         [null, [], '
 
 
@@ -94,7 +94,7 @@ A|-----------------------------------------|
 E|-----------------------------------------|
 '     ],
 
-        // 2 Test track index 0 + songHeader + TrackHeader
+#2 Test track index 0 + songHeader + TrackHeader
         [0, ['songHeader'  => true, 'trackHeader' => true], '
 Title: Testing name
 Album: Testing album
@@ -118,7 +118,7 @@ D|------------------------------------------------------------|-----------------
 A|------------------------------------------------------------|-------------------------------------------------|
 E|------------------------------------------------------------|-------------------------------------------------|
 '],
-        // 3 Test track index 0 + maxLineLength = 500
+#3 Test track index 0 + maxLineLength = 500
         [0, ['maxLineLength' => 500], '
 
 
@@ -137,7 +137,7 @@ E|------------------------|-----------------------------------------------------
 
     /**
      * Test ASCII renderers
-     * 
+     *
      * @dataProvider getScenarios()
      */
     public function testScenarios($trackIndex, $options, $expected)
@@ -146,13 +146,15 @@ E|------------------------|-----------------------------------------------------
             ->getRenderer('ascii')
             ->setOptions($options);
 
-        // Check type
+        # Check type
         $this->assertInstanceOf(
             'PhpTabs\\Component\\Renderer\\RendererInterface',
             $renderer
         );
 
-        // Check output
+        # Check output
+        $lineBreaks = "/\r?\n/"; // take care of newline-encodings
+        $expected = preg_replace($lineBreaks, PHP_EOL, $expected);
         $this->assertEquals($expected, $renderer->render($trackIndex));
     }
 

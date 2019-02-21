@@ -12,7 +12,7 @@
 namespace PhpTabsTest\Renderer\VexTab;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 use PhpTabs\Music\Track;
 
@@ -20,7 +20,7 @@ use PhpTabs\Music\Track;
  * Tests with a simple tablature
  * Render simple tabs, VexTab formatted
  */
-class VexTabRendererTest extends PHPUnit_Framework_TestCase
+class VexTabRendererTest extends TestCase
 {
     public function setUp()
     {

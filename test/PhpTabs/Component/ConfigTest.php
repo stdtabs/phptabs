@@ -11,13 +11,13 @@
 
 namespace PhpTabsTest\Component;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\Component\Config;
 
 /**
  * Tests Config component
  */
-class ConfigTest extends PHPUnit_Framework_TestCase
+class ConfigTest extends TestCase
 {
     public function testConfig()
     {

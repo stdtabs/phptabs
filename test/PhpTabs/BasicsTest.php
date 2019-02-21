@@ -11,10 +11,10 @@
 
 namespace PhpTabsTest;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 
-class BasicsTest extends PHPUnit_Framework_TestCase
+class BasicsTest extends TestCase
 {
     /**
      * Tests write mode with empty attributes

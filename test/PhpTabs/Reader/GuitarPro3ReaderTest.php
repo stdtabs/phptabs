@@ -11,14 +11,14 @@
 
 namespace PhpTabsTest\Reader;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 
 /**
  * Tests with a simple tablature
  * Guitar Pro 3
  */
-class GuitarPro3ReaderTest extends PHPUnit_Framework_TestCase
+class GuitarPro3ReaderTest extends TestCase
 {
     public function setUp()
     {

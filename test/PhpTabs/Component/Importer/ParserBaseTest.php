@@ -12,13 +12,13 @@
 namespace PhpTabsTest\Component\Importer;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\Component\Importer\TempoParser;
 
 /**
  * Tests ParserBase exceptions
  */
-class ParserBaseTest extends PHPUnit_Framework_TestCase
+class ParserBaseTest extends TestCase
 {
     /**
      * Test parse method exceptions when no argument

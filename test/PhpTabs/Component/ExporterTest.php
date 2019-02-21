@@ -12,13 +12,13 @@
 namespace PhpTabsTest\Component;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 
 /**
  * Tests Exporter component
  */
-class ExporterTest extends PHPUnit_Framework_TestCase
+class ExporterTest extends TestCase
 {
     public function setUp()
     {

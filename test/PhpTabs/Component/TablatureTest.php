@@ -11,13 +11,13 @@
 
 namespace PhpTabsTest\Component;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\Component\Tablature;
 
-class TablatureTest extends PHPUnit_Framework_TestCase
+class TablatureTest extends TestCase
 {
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException PHPUnit\Framework\Error\Error
      */
     public function testUnexistingMethod()
     {
@@ -26,7 +26,7 @@ class TablatureTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException PHPUnit\Framework\Error\Error
      */
     public function testException()
     {

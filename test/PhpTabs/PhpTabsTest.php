@@ -9,29 +9,29 @@
  * <https://github.com/stdtabs/phptabs/blob/master/LICENSE>.
  */
 
-namespace PhpTabsTest\Component;
+namespace PhpTabsTest;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\IOFactory;
 
 /**
  * Tests PhpTabs component
  */
-class PhpTabsTest extends PHPUnit_Framework_TestCase
+class PhpTabsTest extends TestCase
 {
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */
+  /**
+   * @expectedException PHPUnit\Framework\Error\Error
+   */
     public function testException()
     {
-        // Not a valid number of params
+      # Not a valid number of params
         IOFactory::create()->export('param1', 'param2', 'param3');
     }
 
-    /**
-     * Test getVersion()
-     */
+  /**
+   * Test getVersion()
+   */
     public function testGetVersion()
     {
         $this->assertRegExp(

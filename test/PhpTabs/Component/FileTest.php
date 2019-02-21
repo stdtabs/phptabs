@@ -11,10 +11,10 @@
 
 namespace PhpTabsTest\Component;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\Component\File;
 
-class FileTest extends PHPUnit_Framework_TestCase
+class FileTest extends TestCase
 {
     public function setUp()
     {

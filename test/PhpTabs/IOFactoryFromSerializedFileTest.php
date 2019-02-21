@@ -12,13 +12,13 @@
 namespace PhpTabsTest;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\IOFactory;
 
 /**
  * Tests IOFactory::fromSerializedFile()
  */
-class IOFactoryFromSerializedFileTest extends PHPUnit_Framework_TestCase
+class IOFactoryFromSerializedFileTest extends TestCase
 {
     /**
      * A provider for various scenarios that throw \Exception 

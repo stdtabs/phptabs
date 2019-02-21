@@ -12,13 +12,13 @@
 namespace PhpTabsTest;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\IOFactory;
 
 /**
  * Tests IOFactory::fromJsonFile()
  */
-class IOFactoryFromJsonFileTest extends PHPUnit_Framework_TestCase
+class IOFactoryFromJsonFileTest extends TestCase
 {
     /**
      * A provider for various scenarios that throw \Exception 

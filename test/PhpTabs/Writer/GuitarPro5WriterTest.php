@@ -11,10 +11,10 @@
 
 namespace PhpTabsTest\Writer;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 
-class GuitarPro5WriterTest extends PHPUnit_Framework_TestCase
+class GuitarPro5WriterTest extends TestCase
 {
     public function setUp()
     {

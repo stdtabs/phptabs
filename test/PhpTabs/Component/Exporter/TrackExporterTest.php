@@ -12,13 +12,13 @@
 namespace PhpTabsTest\Component\Exporter;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 
 /**
  * Tests export track by track
  */
-class TrackExporterTest extends PHPUnit_Framework_TestCase
+class TrackExporterTest extends TestCase
 {
     public function getSimpleFiles()
     {

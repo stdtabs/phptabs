@@ -12,7 +12,7 @@
 namespace PhpTabsTest\Component\Importer;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\Song;
@@ -20,7 +20,7 @@ use PhpTabs\Music\Song;
 /**
  * Tests Importer exceptions
  */
-class ImporterExceptionTest extends PHPUnit_Framework_TestCase
+class ImporterExceptionTest extends TestCase
 {
     /**
      * Provider

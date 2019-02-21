@@ -12,9 +12,9 @@
 namespace PhpTabsTest\Component\Exporter;
 
 use DOMXPath;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-abstract class XmlTestCaseHelper extends PHPUnit_Framework_TestCase
+abstract class XmlTestCaseHelper extends TestCase
 {
     protected abstract function getXmlDocument();
 

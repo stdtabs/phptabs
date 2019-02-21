@@ -12,13 +12,13 @@
 namespace PhpTabsTest\Music;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\IOFactory;
 
 /**
  * Tests voice methods
  */
-class VoiceTest extends PHPUnit_Framework_TestCase
+class VoiceTest extends TestCase
 {
     public function setUp()
     {

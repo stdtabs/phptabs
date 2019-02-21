@@ -12,13 +12,13 @@
 namespace PhpTabsTest\Renderer\VexTab;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\IOFactory;
 
 /**
  * Tests the options stack of vextab renderer
  */
-class VexTabOptionsTest extends PHPUnit_Framework_TestCase
+class VexTabOptionsTest extends TestCase
 {
     public function setUp()
     {

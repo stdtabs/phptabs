@@ -11,11 +11,11 @@
 
 namespace PhpTabsTest\Component;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use PhpTabs\Component\Tablature;
 use PhpTabs\Component\Writer;
 
-class WriterTest extends PHPUnit_Framework_TestCase
+class WriterTest extends TestCase
 {
     /**
      * @expectedException Exception
