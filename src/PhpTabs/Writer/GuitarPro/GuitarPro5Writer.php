@@ -32,10 +32,14 @@ use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface as GprInterface;
 
 class GuitarPro5Writer extends GuitarProWriterBase
 {
-  /** @constant version */
-  const VERSION = 'FICHIER GUITAR PRO v5.00';
+    /**
+* 
+     *
+ * @constant version 
+*/
+    const VERSION = 'FICHIER GUITAR PRO v5.00';
 
-  private $setUpLines = array(
+    private $setUpLines = array(
     '%TITLE%',
     '%SUBTITLE%',
     '%ARTIST%',
@@ -47,547 +51,544 @@ class GuitarPro5Writer extends GuitarProWriterBase
     'All Rights Reserved - International Copyright Secured',
     'Page %N%/%P%',
     'Moderate'
-  );
-
-  /**
-   * @param \PhpTabs\Music\Song $song
-   */
-  public function __construct(Song $song)
-  {
-    parent::__construct();
-
-    if ($song->isEmpty()) {
-      throw new Exception('Song is empty');
-    }
-
-    $this->configureChannelRouter($song);
-    $header = $song->getMeasureHeader(0);
-    $this->writeStringByte(self::VERSION, 30);
-    $this->writeInformations($song);
-    $this->writeLyrics($song);
-    $this->writeSetup();
-    $this->writeInt($header->getTempo()->getValue());
-    $this->writeInt(0);
-    $this->writeByte(0);
-    $this->getWriter('ChannelWriter')->writeChannels($song);
-
-    for ($i = 0; $i < 42; $i++) {
-      $this->writeByte(255);
-    }
-
-    $this->writeInt($song->countMeasureHeaders());
-    $this->writeInt($song->countTracks());
-    $this->writeMeasureHeaders($song);
-    $this->writeTracks($song);
-    $this->skipBytes(2);
-    $this->writeMeasures($song, clone $header->getTempo());   
-  }
-
-  /**
-   * @param \PhpTabs\Music\Voice   $voice
-   * @param \PhpTabs\Music\Beat    $beat
-   * @param \PhpTabs\Music\Measure $measure
-   * @param bool $changeTempo
-   */
-  private function writeBeat(Voice $voice, Beat $beat, Measure $measure, $changeTempo)
-  {
-    $duration = $voice->getDuration();
-
-    $effect = $this->getWriter('BeatWriter')->createEffect($voice);
-
-    $flags = 0;
-
-    if ($duration->isDotted() || $duration->isDoubleDotted()) {
-      $flags |= 0x01;
-    }
-
-    if ($voice->getIndex() == 0 && $beat->isChordBeat()) {
-      $flags |= 0x02;
-    }
-
-    if ($voice->getIndex() == 0 && $beat->isTextBeat()) {
-      $flags |= 0x04;
-    }
-
-    if ($beat->getStroke()->getDirection() != Stroke::STROKE_NONE) {
-      $flags |= 0x08;
-    } elseif ($effect->isTremoloBar() 
-          || $effect->isTapping() 
-          || $effect->isSlapping() 
-          || $effect->isPopping() 
-          || $effect->isFadeIn()
-    ) {
-      $flags |= 0x08;
-    }
-
-    if ($changeTempo) {
-      $flags |= 0x10;
-    }
-
-    if (!$duration->getDivision()->isEqual(DivisionType::normal())) {
-      $flags |= 0x20;
-    }
-
-    if ($voice->isEmpty() || $voice->isRestVoice()) {
-      $flags |= 0x40;
-    }
-
-    $this->writeUnsignedByte($flags);
-
-    if (($flags & 0x40) != 0) {
-      $this->writeUnsignedByte($voice->isEmpty() ? 0 : 0x02);
-    }
-
-    $this->writeByte($this->parseDuration($duration));
-
-    if (($flags & 0x20) != 0) {
-      $this->writeInt($duration->getDivision()->getEnters());
-    }
-
-    if (($flags & 0x02) != 0) {
-      $this->writeChord($beat->getChord());
-    }
-
-    if (($flags & 0x04) != 0) {
-      $this->writeText($beat->getText());
-    }
-
-    if (($flags & 0x08) != 0) {
-      $this->getWriter('BeatEffectWriter')
-           ->writeBeatEffects($beat, $effect);
-    }
-
-    if (($flags & 0x10) != 0) {
-      $this->writeMixChange($measure->getTempo());
-    }
-
-    $stringFlags = 0;
-
-    if (!$voice->isRestVoice()) {
-      foreach ($voice->getNotes() as $playedNote) {
-        $string       = (7 - $playedNote->getString());
-        $stringFlags |= (1 << $string);
-      }
-    }
-
-    $this->writeUnsignedByte($stringFlags);
-
-    for ($i = 6; $i >= 0; $i--) {
-      if (($stringFlags & (1 << $i)) != 0) {
-        foreach ($voice->getNotes() as $playedNote) {
-          if ($playedNote->getString() == (6 - $i + 1)) {
-            $this->getWriter('Note5Writer')->writeNote($playedNote);
-            break;
-          }
-        }
-      }
-    }
-
-    $this->skipBytes(2);
-  }
-
-  /**
-   * @param \PhpTabs\Music\Chord $chord
-   */
-  private function writeChord(Chord $chord)
-  {
-    $this->writeBytes(
-      array(
-         1,  1,  0,  0, 0, 12, 0, 0,
-        -1, -1, -1, -1, 0,  0, 0, 0, 0
-      )
     );
 
-    $this->writeStringByte($chord->getName(), 21);
-    $this->skipBytes(4);
-    $this->writeInt($chord->getFirstFret());
+    /**
+     * @param \PhpTabs\Music\Song $song
+     */
+    public function __construct(Song $song)
+    {
+        parent::__construct();
 
-    for ($i = 0; $i < 7; $i++) {
-      $this->writeInt($i < $chord->countStrings() ? $chord->getFretValue($i) : -1);
-    }
-
-    $this->skipBytes(32);
-  }
-
-  /**
-   * @param \PhpTabs\Music\Song $song
-   */
-  private function writeInformations(Song $song)
-  {
-    $this->writeStringByteSizeOfInteger($song->getName());
-    $this->writeStringByteSizeOfInteger('');
-    $this->writeStringByteSizeOfInteger($song->getArtist());
-    $this->writeStringByteSizeOfInteger($song->getAlbum());
-    $this->writeStringByteSizeOfInteger($song->getAuthor());
-    $this->writeStringByteSizeOfInteger('');
-    $this->writeStringByteSizeOfInteger($song->getCopyright());
-    $this->writeStringByteSizeOfInteger($song->getWriter());
-    $this->writeStringByteSizeOfInteger('');
-
-    $comments = $this->toCommentLines($song->getComments());
-    $this->writeInt(count($comments));
-    for ($i = 0; $i < count($comments); $i++) {
-      $this->writeStringByteSizeOfInteger($comments[$i]);
-    }
-  }
-
-  /**
-   * @param \PhpTabs\Music\Song $song
-   */
-  private function writeLyrics(Song $song)
-  {
-    $lyricTrack = null;
-    $tracks = $song->getTracks();
-
-    foreach ($tracks as $track) {
-      if (!$track->getLyrics()->isEmpty()) {
-        $lyricTrack = $track;
-        break;
-      }
-    }
-
-    $this->writeInt($lyricTrack == null ? 0 : $lyricTrack->getNumber());
-    $this->writeInt($lyricTrack == null ? 0 : $lyricTrack->getLyrics()->getFrom());
-    $this->writeStringInteger(
-      $lyricTrack == null ? '' : $lyricTrack->getLyrics()->getLyrics()
-    );
-
-    for ($i = 0; $i < 4; $i++) {
-      $this->writeInt($lyricTrack === null ? 0 : 1);
-      $this->writeStringInteger('');
-    }
-  }
-
-  /**
-   * @param \PhpTabs\Music\Marker $marker
-   */
-  private function writeMarker(Marker $marker)
-  {
-    $this->writeStringByteSizeOfInteger($marker->getTitle());
-    $this->writeColor($marker->getColor());
-  }
-
-  /**
-   * @param \PhpTabs\Music\Measure $measure
-   * @param bool $changeTempo
-   */
-  private function writeMeasure(Measure $measure, $changeTempo)
-  {
-    for ($v = 0; $v < 2; $v++) {
-      $voices = [];
-
-      foreach ($measure->getBeats() as $beat) {
-        if ($v < $beat->countVoices()) {
-          $voice = $beat->getVoice($v);
-          if (!$voice->isEmpty()) {
-            $voices[] = $voice;
-          }
+        if ($song->isEmpty()) {
+            throw new Exception('Song is empty');
         }
-      }
 
-      if (count($voices)) {
-        $this->writeInt(count($voices));
-        foreach ($voices as $index => $voice) {
-          $this->writeBeat(
-            $voice,
-            $voice->getBeat(),
-            $measure,
-            $changeTempo && $index == 0
-          );					
-        }
-      } else {
-        $count = $measure->getTimeSignature()->getNumerator();
-        $beat  = new Beat();
-
-        if ($v < $beat->countVoices()) {
-          $voice = $beat->getVoice($v);
-          $voice->getDuration()->setValue($measure->getTimeSignature()->getDenominator()->getValue());
-          $voice->setEmpty(true);
-
-          $this->writeInt($count);
-          for ($i = 0; $i < $count; $i++) {
-            $this->writeBeat($voice, $voice->getBeat(), $measure, $changeTempo && $i == 0);
-          }
-        }
-      }
-    }
-  }
-
-  /**
-   * @param \PhpTabs\Music\MeasureHeader $measure
-   * @param \PhpTabs\Music\TimeSignature $timeSignature
-   */
-  private function writeMeasureHeader(MeasureHeader $measure, TimeSignature $timeSignature)
-  {
-    $flags = 0;
-
-    if ($measure->getNumber() == 1) {
-      $flags |= 0x40;
-    }
-
-    if ($measure->getNumber() == 1 || !$measure->getTimeSignature()->isEqual($timeSignature)) {
-      $flags |= 0x01;
-      $flags |= 0x02;
-    }
-
-    if ($measure->isRepeatOpen()) {
-      $flags |= 0x04;
-    }
-
-    if ($measure->getRepeatClose() > 0) {
-      $flags |= 0x08;
-    }
-
-    if ($measure->getRepeatAlternative() > 0) {
-      $flags |= 0x10;
-    }
-
-    if ($measure->hasMarker()) {
-      $flags |= 0x20;
-    }
-
-    $this->writeUnsignedByte($flags);
-
-    if (($flags & 0x01) != 0) {
-      $this->writeByte($measure->getTimeSignature()->getNumerator());
-    }
-
-    if (($flags & 0x02) != 0) {
-      $this->writeByte($measure->getTimeSignature()->getDenominator()->getValue());
-    }
-
-    if (($flags & 0x08) != 0) {
-      $this->writeByte($measure->getRepeatClose() + 1);
-    }
-
-    if (($flags & 0x20) != 0) {
-      $this->writeMarker($measure->getMarker());
-    }
-
-    if (($flags & 0x10) != 0) {
-      $this->writeByte($measure->getRepeatAlternative());
-    }
-
-    if (($flags & 0x40) != 0) {
-      $this->skipBytes(2);
-    }
-
-    if (($flags & 0x01) != 0) {
-      $this->writeBytes( $this->makeEighthNoteBytes( $measure->getTimeSignature() ));
-    }
-
-    if (($flags & 0x10) == 0) {
-      $this->writeByte(0);
-    }
-
-    switch ($measure->getTripletFeel()) {
-      case MeasureHeader::TRIPLET_FEEL_NONE:
+        $this->configureChannelRouter($song);
+        $header = $song->getMeasureHeader(0);
+        $this->writeStringByte(self::VERSION, 30);
+        $this->writeInformations($song);
+        $this->writeLyrics($song);
+        $this->writeSetup();
+        $this->writeInt($header->getTempo()->getValue());
+        $this->writeInt(0);
         $this->writeByte(0);
-        break;
-      case MeasureHeader::TRIPLET_FEEL_EIGHTH:
-        $this->writeByte(1);
-        break;
-      case MeasureHeader::TRIPLET_FEEL_SIXTEENTH:
-        $this->writeByte(2);
-        break;
-    }
-  }
+        $this->getWriter('ChannelWriter')->writeChannels($song);
 
-  /**
-   * @param \PhpTabs\Music\Song $song
-   */
-  private function writeMeasureHeaders(Song $song)
-  {
-    $timeSignature = new TimeSignature();
-
-    if ($song->countMeasureHeaders()) {
-      foreach ($song->getMeasureHeaders() as $index => $header) {
-        if ($index > 0) {
-          $this->skipBytes(1);
+        for ($i = 0; $i < 42; $i++) {
+            $this->writeByte(255);
         }
-        $this->writeMeasureHeader($header, $timeSignature);
-        $timeSignature->setNumerator($header->getTimeSignature()->getNumerator());
-        $timeSignature->getDenominator()->setValue(
-          $header->getTimeSignature()->getDenominator()->getValue()
+
+        $this->writeInt($song->countMeasureHeaders());
+        $this->writeInt($song->countTracks());
+        $this->writeMeasureHeaders($song);
+        $this->writeTracks($song);
+        $this->skipBytes(2);
+        $this->writeMeasures($song, clone $header->getTempo());   
+    }
+
+    /**
+     * @param \PhpTabs\Music\Voice   $voice
+     * @param \PhpTabs\Music\Beat    $beat
+     * @param \PhpTabs\Music\Measure $measure
+     * @param bool                   $changeTempo
+     */
+    private function writeBeat(Voice $voice, Beat $beat, Measure $measure, $changeTempo)
+    {
+        $duration = $voice->getDuration();
+
+        $effect = $this->getWriter('BeatWriter')->createEffect($voice);
+
+        $flags = 0;
+
+        if ($duration->isDotted() || $duration->isDoubleDotted()) {
+            $flags |= 0x01;
+        }
+
+        if ($voice->getIndex() == 0 && $beat->isChordBeat()) {
+            $flags |= 0x02;
+        }
+
+        if ($voice->getIndex() == 0 && $beat->isTextBeat()) {
+            $flags |= 0x04;
+        }
+
+        if ($beat->getStroke()->getDirection() != Stroke::STROKE_NONE) {
+            $flags |= 0x08;
+        } elseif ($effect->isTremoloBar() 
+            || $effect->isTapping() 
+            || $effect->isSlapping() 
+            || $effect->isPopping() 
+            || $effect->isFadeIn()
+        ) {
+            $flags |= 0x08;
+        }
+
+        if ($changeTempo) {
+            $flags |= 0x10;
+        }
+
+        if (!$duration->getDivision()->isEqual(DivisionType::normal())) {
+            $flags |= 0x20;
+        }
+
+        if ($voice->isEmpty() || $voice->isRestVoice()) {
+            $flags |= 0x40;
+        }
+
+        $this->writeUnsignedByte($flags);
+
+        if (($flags & 0x40) != 0) {
+            $this->writeUnsignedByte($voice->isEmpty() ? 0 : 0x02);
+        }
+
+        $this->writeByte($this->parseDuration($duration));
+
+        if (($flags & 0x20) != 0) {
+            $this->writeInt($duration->getDivision()->getEnters());
+        }
+
+        if (($flags & 0x02) != 0) {
+            $this->writeChord($beat->getChord());
+        }
+
+        if (($flags & 0x04) != 0) {
+            $this->writeText($beat->getText());
+        }
+
+        if (($flags & 0x08) != 0) {
+            $this->getWriter('BeatEffectWriter')
+                ->writeBeatEffects($beat, $effect);
+        }
+
+        if (($flags & 0x10) != 0) {
+            $this->writeMixChange($measure->getTempo());
+        }
+
+        $stringFlags = 0;
+
+        if (!$voice->isRestVoice()) {
+            foreach ($voice->getNotes() as $playedNote) {
+                $string       = (7 - $playedNote->getString());
+                $stringFlags |= (1 << $string);
+            }
+        }
+
+        $this->writeUnsignedByte($stringFlags);
+
+        for ($i = 6; $i >= 0; $i--) {
+            if (($stringFlags & (1 << $i)) != 0) {
+                foreach ($voice->getNotes() as $playedNote) {
+                    if ($playedNote->getString() == (6 - $i + 1)) {
+                        $this->getWriter('Note5Writer')->writeNote($playedNote);
+                        break;
+                    }
+                }
+            }
+        }
+
+        $this->skipBytes(2);
+    }
+
+    /**
+     * @param \PhpTabs\Music\Chord $chord
+     */
+    private function writeChord(Chord $chord)
+    {
+        $this->writeBytes(
+            array(
+            1,  1,  0,  0, 0, 12, 0, 0,
+            -1, -1, -1, -1, 0,  0, 0, 0, 0
+            )
         );
-      }
+
+        $this->writeStringByte($chord->getName(), 21);
+        $this->skipBytes(4);
+        $this->writeInt($chord->getFirstFret());
+
+        for ($i = 0; $i < 7; $i++) {
+            $this->writeInt($i < $chord->countStrings() ? $chord->getFretValue($i) : -1);
+        }
+
+        $this->skipBytes(32);
     }
-  }
 
-  /**
-   * @param \PhpTabs\Music\Song  $song
-   * @param \PhpTabs\Music\Tempo $tempo
-   */
-  private function writeMeasures(Song $song, Tempo $tempo)
-  {
-    foreach ($song->getMeasureHeaders() as $index => $header) {
+    /**
+     * @param \PhpTabs\Music\Song $song
+     */
+    private function writeInformations(Song $song)
+    {
+        $this->writeStringByteSizeOfInteger($song->getName());
+        $this->writeStringByteSizeOfInteger('');
+        $this->writeStringByteSizeOfInteger($song->getArtist());
+        $this->writeStringByteSizeOfInteger($song->getAlbum());
+        $this->writeStringByteSizeOfInteger($song->getAuthor());
+        $this->writeStringByteSizeOfInteger('');
+        $this->writeStringByteSizeOfInteger($song->getCopyright());
+        $this->writeStringByteSizeOfInteger($song->getWriter());
+        $this->writeStringByteSizeOfInteger('');
 
-      foreach ($song->getTracks() as $track) {
+        $comments = $this->toCommentLines($song->getComments());
+        $this->writeInt(count($comments));
+        for ($i = 0; $i < count($comments); $i++) {
+            $this->writeStringByteSizeOfInteger($comments[$i]);
+        }
+    }
 
-        $measure = $track->getMeasure($index);
-        $this->writeMeasure(
-          $measure,
-          $header->getTempo()->getValue() != $tempo->getValue()
+    /**
+     * @param \PhpTabs\Music\Song $song
+     */
+    private function writeLyrics(Song $song)
+    {
+        $lyricTrack = null;
+        $tracks = $song->getTracks();
+
+        foreach ($tracks as $track) {
+            if (!$track->getLyrics()->isEmpty()) {
+                $lyricTrack = $track;
+                break;
+            }
+        }
+
+        $this->writeInt($lyricTrack == null ? 0 : $lyricTrack->getNumber());
+        $this->writeInt($lyricTrack == null ? 0 : $lyricTrack->getLyrics()->getFrom());
+        $this->writeStringInteger(
+            $lyricTrack == null ? '' : $lyricTrack->getLyrics()->getLyrics()
         );
-        $this->skipBytes(1);
-      }
 
-      $tempo->copyFrom($header->getTempo());
-    }
-  }
-
-  /**
-   * @param \PhpTabs\Music\Tempo $tempo
-   */
-  private function writeMixChange(Tempo $tempo)
-  {
-    for ($i = 0; $i < 23; $i++) {
-      $this->writeByte(0xff);
+        for ($i = 0; $i < 4; $i++) {
+            $this->writeInt($lyricTrack === null ? 0 : 1);
+            $this->writeStringInteger('');
+        }
     }
 
-    $this->writeStringByteSizeOfInteger('');
-    $this->writeInt($tempo !== null ? $tempo->getValue() : -1);
-
-    if ($tempo !== null) {
-      $this->skipBytes(1);
+    /**
+     * @param \PhpTabs\Music\Marker $marker
+     */
+    private function writeMarker(Marker $marker)
+    {
+        $this->writeStringByteSizeOfInteger($marker->getTitle());
+        $this->writeColor($marker->getColor());
     }
 
-    $this->writeByte(0x01);
-    $this->writeByte(0xff);
-  }
+    /**
+     * @param \PhpTabs\Music\Measure $measure
+     * @param bool                   $changeTempo
+     */
+    private function writeMeasure(Measure $measure, $changeTempo)
+    {
+        for ($v = 0; $v < 2; $v++) {
+            $voices = [];
 
-  /**
-   * @param  \PhpTabs\Music\TimeSignature $timeSignature
-   * @return array
-   */
-  private function makeEighthNoteBytes(TimeSignature $timeSignature)
-  {
-    $bytes = array(0, 0, 0, 0);
+            foreach ($measure->getBeats() as $beat) {
+                if ($v < $beat->countVoices()) {
+                    $voice = $beat->getVoice($v);
+                    if (!$voice->isEmpty()) {
+                        $voices[] = $voice;
+                    }
+                }
+            }
 
-    if ($timeSignature->getDenominator()->getValue() <= Duration::EIGHTH) {
-      $eighthsInDenominator = intval(Duration::EIGHTH / $timeSignature->getDenominator()->getValue());
-      $total = ($eighthsInDenominator * $timeSignature->getNumerator());
-      $byteValue = intval( $total / 4 );
-      $missingValue = $total - (4 * $byteValue);
+            if (count($voices)) {
+                $this->writeInt(count($voices));
+                foreach ($voices as $index => $voice) {
+                    $this->writeBeat(
+                        $voice,
+                        $voice->getBeat(),
+                        $measure,
+                        $changeTempo && $index == 0
+                    );                    
+                }
+            } else {
+                $count = $measure->getTimeSignature()->getNumerator();
+                $beat  = new Beat();
 
-      for ($i = 0 ; $i < count($bytes); $i++) {
-        $bytes[$i] = $byteValue;
-      }
+                if ($v < $beat->countVoices()) {
+                    $voice = $beat->getVoice($v);
+                    $voice->getDuration()->setValue($measure->getTimeSignature()->getDenominator()->getValue());
+                    $voice->setEmpty(true);
 
-      if ($missingValue > 0) {
-        $bytes[0] += $missingValue;
-      }
+                    $this->writeInt($count);
+                    for ($i = 0; $i < $count; $i++) {
+                        $this->writeBeat($voice, $voice->getBeat(), $measure, $changeTempo && $i == 0);
+                    }
+                }
+            }
+        }
     }
 
-    return $bytes;
-  }
+    /**
+     * @param \PhpTabs\Music\MeasureHeader $measure
+     * @param \PhpTabs\Music\TimeSignature $timeSignature
+     */
+    private function writeMeasureHeader(MeasureHeader $measure, TimeSignature $timeSignature)
+    {
+        $flags = 0;
 
-  /**
-   * @param  string $comments
-   * @return array
-   */
-  private function toCommentLines($comments)
-  {
-    $lines = [];
+        if ($measure->getNumber() == 1) {
+            $flags |= 0x40;
+        }
 
-    while (strlen($comments) > 127) {
-      $subline  = substr($comments, 0, 127);
-      $lines[]  = $subline;
-      $comments = substr($comments, 127);
+        if ($measure->getNumber() == 1 || !$measure->getTimeSignature()->isEqual($timeSignature)) {
+            $flags |= 0x01;
+            $flags |= 0x02;
+        }
+
+        if ($measure->isRepeatOpen()) {
+            $flags |= 0x04;
+        }
+
+        if ($measure->getRepeatClose() > 0) {
+            $flags |= 0x08;
+        }
+
+        if ($measure->getRepeatAlternative() > 0) {
+            $flags |= 0x10;
+        }
+
+        if ($measure->hasMarker()) {
+            $flags |= 0x20;
+        }
+
+        $this->writeUnsignedByte($flags);
+
+        if (($flags & 0x01) != 0) {
+            $this->writeByte($measure->getTimeSignature()->getNumerator());
+        }
+
+        if (($flags & 0x02) != 0) {
+            $this->writeByte($measure->getTimeSignature()->getDenominator()->getValue());
+        }
+
+        if (($flags & 0x08) != 0) {
+            $this->writeByte($measure->getRepeatClose() + 1);
+        }
+
+        if (($flags & 0x20) != 0) {
+            $this->writeMarker($measure->getMarker());
+        }
+
+        if (($flags & 0x10) != 0) {
+            $this->writeByte($measure->getRepeatAlternative());
+        }
+
+        if (($flags & 0x40) != 0) {
+            $this->skipBytes(2);
+        }
+
+        if (($flags & 0x01) != 0) {
+            $this->writeBytes($this->makeEighthNoteBytes($measure->getTimeSignature()));
+        }
+
+        if (($flags & 0x10) == 0) {
+            $this->writeByte(0);
+        }
+
+        switch ($measure->getTripletFeel()) {
+        case MeasureHeader::TRIPLET_FEEL_NONE:
+            $this->writeByte(0);
+            break;
+        case MeasureHeader::TRIPLET_FEEL_EIGHTH:
+            $this->writeByte(1);
+            break;
+        case MeasureHeader::TRIPLET_FEEL_SIXTEENTH:
+            $this->writeByte(2);
+            break;
+        }
     }
 
-    $lines[] = $comments;
+    /**
+     * @param \PhpTabs\Music\Song $song
+     */
+    private function writeMeasureHeaders(Song $song)
+    {
+        $timeSignature = new TimeSignature();
 
-    return $lines;
-  }
-
-  private function writeSetup()
-  {
-    $this->writeInt( 210 );
-    $this->writeInt( 297 );
-    $this->writeInt( 10 );
-    $this->writeInt( 10 );
-    $this->writeInt( 15 );
-    $this->writeInt( 10 );
-    $this->writeInt( 100 );
-
-    $this->writeByte(255);
-    $this->writeByte(1);
-
-    foreach ($this->setUpLines as $setUpLines) {
-      $this->writeInt(strlen($setUpLines) + 1);
-      $this->writeStringByte($setUpLines, 0);
-    }
-  }
-
-  /**
-   * @param \PhpTabs\Music\Text $text
-   */
-  private function writeText(Text $text)
-  {
-    $this->writeStringByteSizeOfInteger($text->getValue());
-  }
-
-  /**
-   * @param \PhpTabs\Music\Track $track
-   */
-  private function writeTrack(Track $track)
-  {
-    $channel = $this->getChannelRoute($track->getChannelId());
-
-    $flags = 0;
-    if ($track
-          ->getSong()
-          ->getChannelById($track->getChannelId())
-          ->isPercussionChannel()
-    ) {
-      $flags |= 0x01;
+        if ($song->countMeasureHeaders()) {
+            foreach ($song->getMeasureHeaders() as $index => $header) {
+                if ($index > 0) {
+                    $this->skipBytes(1);
+                }
+                $this->writeMeasureHeader($header, $timeSignature);
+                $timeSignature->setNumerator($header->getTimeSignature()->getNumerator());
+                $timeSignature->getDenominator()->setValue(
+                    $header->getTimeSignature()->getDenominator()->getValue()
+                );
+            }
+        }
     }
 
-    $this->writeUnsignedByte($flags);
-    $this->writeUnsignedByte(8 | $flags);
-    $this->writeStringByte($track->getName(), 40);
-    $this->writeInt(count($track->getStrings()));
+    /**
+     * @param \PhpTabs\Music\Song  $song
+     * @param \PhpTabs\Music\Tempo $tempo
+     */
+    private function writeMeasures(Song $song, Tempo $tempo)
+    {
+        foreach ($song->getMeasureHeaders() as $index => $header) {
 
-    for ($i = 0; $i < 7; $i++) {
-      $value = 0;
+            foreach ($song->getTracks() as $track) {
 
-      if ($track->countStrings() > $i) {
-        $value = $track->getString($i + 1)->getValue();
-      }
-      $this->writeInt($value);
+                $measure = $track->getMeasure($index);
+                $this->writeMeasure(
+                    $measure,
+                    $header->getTempo()->getValue() != $tempo->getValue()
+                );
+                $this->skipBytes(1);
+            }
+
+            $tempo->copyFrom($header->getTempo());
+        }
     }
 
-    $this->writeInt(1);
-    $this->writeInt($channel->getChannel1() + 1);
-    $this->writeInt($channel->getChannel2() + 1);
-    $this->writeInt(24);
-    $this->writeInt($track->getOffset());
-    $this->writeColor($track->getColor());
-    $this->writeBytes(
-        array(
-          67, 1, 0, 0,
-          0, 0, 0, 0,
-          0, 0, 0, 0,
-          0, 100, 0, 0,
-          0, 1, 2, 3,
-          4, 5, 6, 7,
-          8, 9, 10, -1,
-          3, -1, -1, -1,
-          -1, -1, -1, -1,
-          -1, -1, -1, -1,
-          -1, -1, -1, -1
-        )
-    );
-  }
+    /**
+     * @param \PhpTabs\Music\Tempo $tempo
+     */
+    private function writeMixChange(Tempo $tempo)
+    {
+        for ($i = 0; $i < 23; $i++) {
+            $this->writeByte(0xff);
+        }
 
-  /**
-   * @param \PhpTabs\Music\Song $song
-   */
-  private function writeTracks(Song $song) 
-  {
-    foreach ($song->getTracks() as $track) {
-      $this->writeTrack($track);
+        $this->writeStringByteSizeOfInteger('');
+        $this->writeInt($tempo !== null ? $tempo->getValue() : -1);
+
+        if ($tempo !== null) {
+            $this->skipBytes(1);
+        }
+
+        $this->writeByte(0x01);
+        $this->writeByte(0xff);
     }
-  }
+
+    /**
+     * @param  \PhpTabs\Music\TimeSignature $timeSignature
+     * @return array
+     */
+    private function makeEighthNoteBytes(TimeSignature $timeSignature)
+    {
+        $bytes = array(0, 0, 0, 0);
+
+        if ($timeSignature->getDenominator()->getValue() <= Duration::EIGHTH) {
+            $eighthsInDenominator = intval(Duration::EIGHTH / $timeSignature->getDenominator()->getValue());
+            $total = ($eighthsInDenominator * $timeSignature->getNumerator());
+            $byteValue = intval($total / 4);
+            $missingValue = $total - (4 * $byteValue);
+
+            for ($i = 0 ; $i < count($bytes); $i++) {
+                $bytes[$i] = $byteValue;
+            }
+
+            if ($missingValue > 0) {
+                $bytes[0] += $missingValue;
+            }
+        }
+
+        return $bytes;
+    }
+
+    /**
+     * @param  string $comments
+     * @return array
+     */
+    private function toCommentLines($comments)
+    {
+        $lines = [];
+
+        while (strlen($comments) > 127) {
+            $subline  = substr($comments, 0, 127);
+            $lines[]  = $subline;
+            $comments = substr($comments, 127);
+        }
+
+        $lines[] = $comments;
+
+        return $lines;
+    }
+
+    private function writeSetup()
+    {
+        $this->writeInt(210);
+        $this->writeInt(297);
+        $this->writeInt(10);
+        $this->writeInt(10);
+        $this->writeInt(15);
+        $this->writeInt(10);
+        $this->writeInt(100);
+
+        $this->writeByte(255);
+        $this->writeByte(1);
+
+        foreach ($this->setUpLines as $setUpLines) {
+            $this->writeInt(strlen($setUpLines) + 1);
+            $this->writeStringByte($setUpLines, 0);
+        }
+    }
+
+    /**
+     * @param \PhpTabs\Music\Text $text
+     */
+    private function writeText(Text $text)
+    {
+        $this->writeStringByteSizeOfInteger($text->getValue());
+    }
+
+    /**
+     * @param \PhpTabs\Music\Track $track
+     */
+    private function writeTrack(Track $track)
+    {
+        $channel = $this->getChannelRoute($track->getChannelId());
+
+        $flags = 0;
+        if ($track          ->getSong()          ->getChannelById($track->getChannelId())          ->isPercussionChannel()
+        ) {
+            $flags |= 0x01;
+        }
+
+        $this->writeUnsignedByte($flags);
+        $this->writeUnsignedByte(8 | $flags);
+        $this->writeStringByte($track->getName(), 40);
+        $this->writeInt(count($track->getStrings()));
+
+        for ($i = 0; $i < 7; $i++) {
+            $value = 0;
+
+            if ($track->countStrings() > $i) {
+                $value = $track->getString($i + 1)->getValue();
+            }
+            $this->writeInt($value);
+        }
+
+        $this->writeInt(1);
+        $this->writeInt($channel->getChannel1() + 1);
+        $this->writeInt($channel->getChannel2() + 1);
+        $this->writeInt(24);
+        $this->writeInt($track->getOffset());
+        $this->writeColor($track->getColor());
+        $this->writeBytes(
+            array(
+            67, 1, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 100, 0, 0,
+            0, 1, 2, 3,
+            4, 5, 6, 7,
+            8, 9, 10, -1,
+            3, -1, -1, -1,
+            -1, -1, -1, -1,
+            -1, -1, -1, -1,
+            -1, -1, -1, -1
+            )
+        );
+    }
+
+    /**
+     * @param \PhpTabs\Music\Song $song
+     */
+    private function writeTracks(Song $song) 
+    {
+        foreach ($song->getTracks() as $track) {
+            $this->writeTrack($track);
+        }
+    }
 }

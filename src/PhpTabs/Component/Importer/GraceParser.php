@@ -15,32 +15,32 @@ use PhpTabs\Music\EffectGrace;
 
 class GraceParser extends ParserBase
 {
-  protected $required = [
+    protected $required = [
       'fret',
       'duration',
       'dynamic',
       'transition',
       'onBeat',
       'dead'
-  ];
+    ];
 
-  /**
-   * Parse a grace effect array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a grace effect array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $grace = new EffectGrace();
-    $grace->setFret($data['fret']);
-    $grace->setDuration($data['duration']);
-    $grace->setDynamic($data['dynamic']);
-    $grace->setTransition($data['transition']);
-    $grace->setOnBeat($data['onBeat']);
-    $grace->setDead($data['dead']);
+        $grace = new EffectGrace();
+        $grace->setFret($data['fret']);
+        $grace->setDuration($data['duration']);
+        $grace->setDynamic($data['dynamic']);
+        $grace->setTransition($data['transition']);
+        $grace->setOnBeat($data['onBeat']);
+        $grace->setDead($data['dead']);
 
-    $this->item = $grace;
-  }
+        $this->item = $grace;
+    }
 }

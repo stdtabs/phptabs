@@ -17,294 +17,294 @@ use PhpTabs\Music\Stroke;
 
 class BeatContext
 {
-  /**
-   * Referenced Beat
-   * 
-   * @var \PhpTabs\Music\Beat
-   */
-  private $beat;
+    /**
+     * Referenced Beat
+     * 
+     * @var \PhpTabs\Music\Beat
+     */
+    private $beat;
 
-  /**
-   * Tuplet counter
-   * 
-   * @var int
-   */
-  private $tupletCounter = 0;
+    /**
+     * Tuplet counter
+     * 
+     * @var int
+     */
+    private $tupletCounter = 0;
 
-  /**
-   * @var null|bool
-   */
-  private $isChordBeat;
+    /**
+     * @var null|bool
+     */
+    private $isChordBeat;
 
-  /**
-   * Constructor
-   * Parse beat informations for current and later usage
-   * 
-   * @param \PhpTabs\Music\Beat $beat
-   */
-  public function __construct(Beat $beat)
-  {
-    $this->beat = $beat;
-  }
-
-  /**
-   * Should be processed as a Chord beat
-   * 
-   * @return bool
-   */
-  public function isChordBeat()
-  {
-    if (!is_null($this->isChordBeat)) {
-      return $this->isChordBeat;
+    /**
+     * Constructor
+     * Parse beat informations for current and later usage
+     * 
+     * @param \PhpTabs\Music\Beat $beat
+     */
+    public function __construct(Beat $beat)
+    {
+        $this->beat = $beat;
     }
 
-    $voice = $this->beat->getVoice(0);
+    /**
+     * Should be processed as a Chord beat
+     * 
+     * @return bool
+     */
+    public function isChordBeat()
+    {
+        if (!is_null($this->isChordBeat)) {
+            return $this->isChordBeat;
+        }
 
-    if (null === $voice || !$voice->countNotes()) {
-      return ($this->isChordBeat = false);
+        $voice = $this->beat->getVoice(0);
+
+        if (null === $voice || !$voice->countNotes()) {
+            return ($this->isChordBeat = false);
+        }
+
+        if ($voice->countNotes() > 1) {
+            return ($this->isChordBeat = true);
+        }
+
+        if ($voice->getNote(0)->getEffect()->isVibrato() 
+            && $this->beat->getStroke()->getDirection() !== Stroke::STROKE_NONE
+        ) {
+            return ($this->isChordBeat = true);
+        }
     }
 
-    if ($voice->countNotes() > 1) {
-      return ($this->isChordBeat = true);
-    }
-
-    if ($voice->getNote(0)->getEffect()->isVibrato() 
-        && $this->beat->getStroke()->getDirection() !== Stroke::STROKE_NONE
-    ) {
-      return ($this->isChordBeat = true);
-    }
-  }
-
-  /**
-   * Get effects from last beat for current note
-   *  - s
-   *  - h
-   *  - p
-   *
-   * @param  \PhpTabs\Music\Note $note
-   * @return string
-   */
-  public function getPrevPrefix(Note $note)
-  {
-    return $this->getSlide($note)
+    /**
+     * Get effects from last beat for current note
+     *  - s
+     *  - h
+     *  - p
+     *
+     * @param  \PhpTabs\Music\Note $note
+     * @return string
+     */
+    public function getPrevPrefix(Note $note)
+    {
+        return $this->getSlide($note)
          . $this->getHammer($note);    
-  }
+    }
 
-  /**
-   * Get effects that have to be prefixed for current note
-   *  - t
-   *  - T
-   *
-   * @param  \PhpTabs\Music\Note $note
-   * @return string
-   */
-  public function getPrefix(Note $note)
-  {
-    return $this->getTied($note)
+    /**
+     * Get effects that have to be prefixed for current note
+     *  - t
+     *  - T
+     *
+     * @param  \PhpTabs\Music\Note $note
+     * @return string
+     */
+    public function getPrefix(Note $note)
+    {
+        return $this->getTied($note)
          . $this->getTapping($note);    
-  }
+    }
 
-  /**
-   * Get effects that have to be suffixed for current note
-   * - b ie: 6b7b8/1
-   * - v
-   * - V
-   * If it's a single note
-   * - u
-   * - d
-   *
-   * @param  \PhpTabs\Music\Note $note
-   * @return string
-   */
-  public function getSuffix(Note $note)
-  {
-    return $this->getBend($note)
+    /**
+     * Get effects that have to be suffixed for current note
+     * - b ie: 6b7b8/1
+     * - v
+     * - V
+     * If it's a single note
+     * - u
+     * - d
+     *
+     * @param  \PhpTabs\Music\Note $note
+     * @return string
+     */
+    public function getSuffix(Note $note)
+    {
+        return $this->getBend($note)
          . $this->getVibrato($note)
          // . $this->getHarshVibrato($note)
          . (!$this->isChordBeat() ? $this->getStroke() : '');   
-  }
-
-  /**
-   * Get suffix for a chord beat
-   * - u
-   * - d
-   *
-   * @return string
-   */
-  public function getChordSuffix()
-  {
-    return $this->getStroke();    
-  }
-
-  /**
-   * return a tuplet symbol
-   * 
-   * @return string
-   */
-  public function getTuplet(BeatContext $lastBeatContext)
-  {
-    $enters = $this->beat
-      ->getVoice(0)
-      ->getDuration()
-      ->getDivision()
-      ->getEnters();
-
-    if ($enters == 1) {
-      return '';
     }
 
-    $lastCounter = $lastBeatContext->getTupletCounter();
-
-    if (++$lastCounter == $enters) {
-      return sprintf(
-        '^%d^ ',
-        $enters
-      );
+    /**
+     * Get suffix for a chord beat
+     * - u
+     * - d
+     *
+     * @return string
+     */
+    public function getChordSuffix()
+    {
+        return $this->getStroke();    
     }
 
-    $this->tupletCounter = $lastCounter;
-  }
+    /**
+     * return a tuplet symbol
+     * 
+     * @return string
+     */
+    public function getTuplet(BeatContext $lastBeatContext)
+    {
+        $enters = $this->beat
+            ->getVoice(0)
+            ->getDuration()
+            ->getDivision()
+            ->getEnters();
 
-  /**
-   * Get tuplet counter
-   * 
-   * @return int
-   */
-  public function getTupletCounter()
-  {
-    return $this->tupletCounter;
-  }
+        if ($enters == 1) {
+            return '';
+        }
 
-  /**
-   * Find corresponding string and return a slide effect if existing
-   * 
-   * @param  \PhpTabs\Music\Note $note
-   * @return string
-   */
-  private function getSlide(Note $note)
-  {
-    foreach ($this->beat->getVoice(0)->getNotes() as $prevNote) {
-      if ($prevNote->getString() == $note->getString()) {
-        return $prevNote->getEffect()->isSlide()
-          ? 's' : '';
-      }
+        $lastCounter = $lastBeatContext->getTupletCounter();
+
+        if (++$lastCounter == $enters) {
+            return sprintf(
+                '^%d^ ',
+                $enters
+            );
+        }
+
+        $this->tupletCounter = $lastCounter;
     }
-  }
 
-  /**
-   * Find corresponding string and return a hammer-on or a pull-off
-   *  effect if existing
-   * 
-   * @param  \PhpTabs\Music\Note $note
-   * @return string
-   */
-  private function getHammer(Note $note)
-  {
-    foreach ($this->beat->getVoice(0)->getNotes() as $prevNote) {
-      if ($prevNote->getString() == $note->getString()
-       && $prevNote->getEffect()->isHammer()
-      ) {
-        return $prevNote->getValue() >= $note->getValue()
-          ? 'p' : 'h';
-      }
+    /**
+     * Get tuplet counter
+     * 
+     * @return int
+     */
+    public function getTupletCounter()
+    {
+        return $this->tupletCounter;
     }
-  }
 
-  /**
-   * Return a tied symbol if existing
-   * 
-   * @param  \PhpTabs\Music\Note $note
-   * @return string
-   */
-  private function getTied(Note $note)
-  {
-    return $note->isTiedNote()
+    /**
+     * Find corresponding string and return a slide effect if existing
+     * 
+     * @param  \PhpTabs\Music\Note $note
+     * @return string
+     */
+    private function getSlide(Note $note)
+    {
+        foreach ($this->beat->getVoice(0)->getNotes() as $prevNote) {
+            if ($prevNote->getString() == $note->getString()) {
+                return $prevNote->getEffect()->isSlide()
+                ? 's' : '';
+            }
+        }
+    }
+
+    /**
+     * Find corresponding string and return a hammer-on or a pull-off
+     *  effect if existing
+     * 
+     * @param  \PhpTabs\Music\Note $note
+     * @return string
+     */
+    private function getHammer(Note $note)
+    {
+        foreach ($this->beat->getVoice(0)->getNotes() as $prevNote) {
+            if ($prevNote->getString() == $note->getString()
+                && $prevNote->getEffect()->isHammer()
+            ) {
+                return $prevNote->getValue() >= $note->getValue()
+                ? 'p' : 'h';
+            }
+        }
+    }
+
+    /**
+     * Return a tied symbol if existing
+     * 
+     * @param  \PhpTabs\Music\Note $note
+     * @return string
+     */
+    private function getTied(Note $note)
+    {
+        return $note->isTiedNote()
           ? 'T' : '';
-  }
+    }
 
-  /**
-   * Return a tapping symbol if existing
-   * 
-   * @param  \PhpTabs\Music\Note $note
-   * @return string
-   */
-  private function getTapping(Note $note)
-  {
-    return $note->getEffect()->isTapping()
+    /**
+     * Return a tapping symbol if existing
+     * 
+     * @param  \PhpTabs\Music\Note $note
+     * @return string
+     */
+    private function getTapping(Note $note)
+    {
+        return $note->getEffect()->isTapping()
           ? 't' : '';
-  }
-
-
-  /**
-   * Return a bend symbol if existing
-   * 
-   * @param  \PhpTabs\Music\Note $note
-   * @return string
-   */
-  private function getBend(Note $note)
-  {
-    if (!$note->getEffect()->isBend()) {
-      return '';
     }
 
-    $value         = '';
-    $lastBendValue = $note->getValue();
 
-    foreach ($note->getEffect()->getBend()->getPoints() as $point) {
+    /**
+     * Return a bend symbol if existing
+     * 
+     * @param  \PhpTabs\Music\Note $note
+     * @return string
+     */
+    private function getBend(Note $note)
+    {
+        if (!$note->getEffect()->isBend()) {
+            return '';
+        }
 
-      $bendValue = $note->getValue() + intval($point->getValue() / 2);
-      //  must skip if;
-      // - first bend is the same note as starting note
-      // - bend is standing on the same point
-      if ($bendValue != $lastBendValue) {
-        $lastBendValue = $bendValue;
+        $value         = '';
+        $lastBendValue = $note->getValue();
 
-        $value .= sprintf(
-          'b%d', 
-          $bendValue
-        );
-      }
+        foreach ($note->getEffect()->getBend()->getPoints() as $point) {
+
+            $bendValue = $note->getValue() + intval($point->getValue() / 2);
+            //  must skip if;
+            // - first bend is the same note as starting note
+            // - bend is standing on the same point
+            if ($bendValue != $lastBendValue) {
+                $lastBendValue = $bendValue;
+
+                $value .= sprintf(
+                    'b%d', 
+                    $bendValue
+                );
+            }
+        }
+
+        return $value;
     }
 
-    return $value;
-  }
-
-  /**
-   * Return a vibrato symbol if existing
-   * 
-   * @param  \PhpTabs\Music\Note $note
-   * @return string
-   */
-  private function getVibrato(Note $note)
-  {
-    return $note->getEffect()->isVibrato()
+    /**
+     * Return a vibrato symbol if existing
+     * 
+     * @param  \PhpTabs\Music\Note $note
+     * @return string
+     */
+    private function getVibrato(Note $note)
+    {
+        return $note->getEffect()->isVibrato()
           ? 'v' : '';
-  }
-
-  /**
-   * Return a harsh vibrato symbol if existing
-   * 
-   * @todo implement this feature
-   * 
-   * @return string
-   */
-  private function getHarshVibrato()
-  {
-    return '';
-  }
-
-  /**
-   * Return a stroke symbol if existing
-   * 
-   * @return string
-   */
-  private function getStroke()
-  {
-    if ($this->beat->getStroke()->getDirection() == Stroke::STROKE_NONE) {
-      return '';
     }
 
-    return $this->beat->getStroke()->getDirection() == Stroke::STROKE_UP
-      ? 'u' : 'd';
-  }
+    /**
+     * Return a harsh vibrato symbol if existing
+     * 
+     * @todo implement this feature
+     * 
+     * @return string
+     */
+    private function getHarshVibrato()
+    {
+        return '';
+    }
+
+    /**
+     * Return a stroke symbol if existing
+     * 
+     * @return string
+     */
+    private function getStroke()
+    {
+        if ($this->beat->getStroke()->getDirection() == Stroke::STROKE_NONE) {
+            return '';
+        }
+
+        return $this->beat->getStroke()->getDirection() == Stroke::STROKE_UP
+        ? 'u' : 'd';
+    }
 }

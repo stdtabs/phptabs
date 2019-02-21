@@ -18,41 +18,40 @@ use PhpTabs\Music\Tempo;
 
 class GuitarPro5Measures extends AbstractReader
 {
-  /**
-   * Loops on mesures to read
-   * 
-   * @param \PhpTabs\Music\Song $song
-   * @param integer $measures
-   * @param integer $tracks
-   * @param integer $tempoValue
-   */
-  public function readMeasures(Song $song, $measures, $tracks, $tempoValue)
-  {
-    $tempo = new Tempo();
-    $tempo->setValue($tempoValue);
-    $start = Duration::QUARTER_TIME;
-
-    for ($i = 0; $i < $measures; $i++)
+    /**
+     * Loops on mesures to read
+     * 
+     * @param \PhpTabs\Music\Song $song
+     * @param integer             $measures
+     * @param integer             $tracks
+     * @param integer             $tempoValue
+     */
+    public function readMeasures(Song $song, $measures, $tracks, $tempoValue)
     {
-      $header = $song->getMeasureHeader($i);
-      $header->setStart($start);
+        $tempo = new Tempo();
+        $tempo->setValue($tempoValue);
+        $start = Duration::QUARTER_TIME;
 
-      for ($j = 0; $j < $tracks; $j++)
-      {
-        $track = $song->getTrack($j);
-        $measure = new Measure($header);
-
-        $track->addMeasure($measure);
-        $this->reader->factory('GuitarPro5Measure')->readMeasure($measure, $track, $tempo);
-
-        if ($i != $measures - 1 || $j != $tracks - 1)
+        for ($i = 0; $i < $measures; $i++)
         {
-          $this->reader->skip();
-        }
-      }
+            $header = $song->getMeasureHeader($i);
+            $header->setStart($start);
 
-      $header->getTempo()->copyFrom($tempo);
-      $start += $header->getLength();
+            for ($j = 0; $j < $tracks; $j++)
+            {
+                $track = $song->getTrack($j);
+                $measure = new Measure($header);
+
+                $track->addMeasure($measure);
+                $this->reader->factory('GuitarPro5Measure')->readMeasure($measure, $track, $tempo);
+
+                if ($i != $measures - 1 || $j != $tracks - 1) {
+                    $this->reader->skip();
+                }
+            }
+
+            $header->getTempo()->copyFrom($tempo);
+            $start += $header->getLength();
+        }
     }
-  }
 }

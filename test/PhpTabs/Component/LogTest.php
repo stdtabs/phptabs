@@ -20,36 +20,36 @@ use PhpTabs\Component\Log;
  */
 class LogTest extends PHPUnit_Framework_TestCase
 {
-  public function testLog()
-  {
-    Log::clear();
+    public function testLog()
+    {
+        Log::clear();
     
-    Config::set('verbose', true);
+        Config::set('verbose', true);
 
-    # Empty log
-    $this->assertEquals(0, Log::countLogs());
-    $this->assertEquals(array(), Log::tail(4));
+        // Empty log
+        $this->assertEquals(0, Log::countLogs());
+        $this->assertEquals(array(), Log::tail(4));
 
-    # Adds a default type message
-    $this->expectOutputString("\n[NOTICE] Log with default type");
-    Log::add('Log with default type');
+        // Adds a default type message
+        $this->expectOutputString("\n[NOTICE] Log with default type");
+        Log::add('Log with default type');
 
 
-    $expected = array(
-      0 => array(
+        $expected = array(
+        0 => array(
         'type'    =>'NOTICE',
         'message' => 'Log with default type'
-      )
-    );
-    $this->assertEquals($expected, Log::tail(42));
-    $this->assertEquals($expected, Log::tail(1));
+        )
+        );
+        $this->assertEquals($expected, Log::tail(42));
+        $this->assertEquals($expected, Log::tail(1));
 
-    # counts an unexisting key
-    $this->assertEquals(0, Log::countLogs(42));
+        // counts an unexisting key
+        $this->assertEquals(0, Log::countLogs(42));
 
-    # Counts an existing key
-    $this->assertEquals(1, Log::countLogs('NOTICE'));
+        // Counts an existing key
+        $this->assertEquals(1, Log::countLogs('NOTICE'));
 
-    Config::set('verbose', false);
-  }
+        Config::set('verbose', false);
+    }
 }

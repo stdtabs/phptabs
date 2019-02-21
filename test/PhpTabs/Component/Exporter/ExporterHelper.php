@@ -20,141 +20,141 @@ use PhpTabs\PhpTabs;
  */
 class ExporterHelper extends XmlTestCaseHelper
 {
-  private static $tablature;
-  private static $plainText;
-  private static $yamlText;
-  private static $xmlDoc;
+    private static $tablature;
+    private static $plainText;
+    private static $yamlText;
+    private static $xmlDoc;
 
-  /**
-   * Prepare some read only data
-   */
-  public static function setUpBeforeClass()
-  {
-    self::$tablature = new PhpTabs(
-      PHPTABS_TEST_BASEDIR 
-      . '/samples/' 
-      . static::getFilename()
-    );
+    /**
+     * Prepare some read only data
+     */
+    public static function setUpBeforeClass()
+    {
+        self::$tablature = new PhpTabs(
+            PHPTABS_TEST_BASEDIR 
+            . '/samples/' 
+            . static::getFilename()
+        );
 
-    #Text
-    self::$plainText = self::$tablature->export('text');
-    #YAML
-    self::$yamlText = self::$tablature->export('yaml');
+        // Text
+        self::$plainText = self::$tablature->export('text');
+        // YAML
+        self::$yamlText = self::$tablature->export('yaml');
 
-    # XML
-    $xmlString = self::$tablature->export('xml');
-    $document = new DOMDocument();    
-    $document->loadXML($xmlString);
-    self::$xmlDoc = $document;
-  }
+        // XML
+        $xmlString = self::$tablature->export('xml');
+        $document = new DOMDocument();    
+        $document->loadXML($xmlString);
+        self::$xmlDoc = $document;
+    }
 
-  public function getXmlDocument()
-  {
-    return self::$xmlDoc;
-  }
+    public function getXmlDocument()
+    {
+        return self::$xmlDoc;
+    }
 
-  /**
-   * Exporter XML
-   */
-  public function testExporterXml()
-  {
-    // expected, xpath, message
-    $tests = array(
-      [1, 'count(/song)', 'Incorrect number of Song elements.'],
+    /**
+     * Exporter XML
+     */
+    public function testExporterXml()
+    {
+        // expected, xpath, message
+        $tests = array(
+        [1, 'count(/song)', 'Incorrect number of Song elements.'],
       
-      # Meta attributes
-      [ self::$tablature->getName()
+        // Meta attributes
+        [ self::$tablature->getName()
         , 'string(/song/name)'
         , 'Incorrect or missing Name element.'],
-      [ self::$tablature->getArtist()
+        [ self::$tablature->getArtist()
         , 'string(/song/artist)'
         , 'Incorrect or missing Artist element.'],
-      [ self::$tablature->getAlbum()
+        [ self::$tablature->getAlbum()
         , 'string(/song/album)'
         , 'Incorrect or missing Album element.'],
-      [ self::$tablature->getAuthor()
+        [ self::$tablature->getAuthor()
         , 'string(/song/author)'
         , 'Incorrect or missing Author element.'],
-      [ self::$tablature->getCopyright()
+        [ self::$tablature->getCopyright()
         , 'string(/song/copyright)'
         , 'Incorrect or missing Copyright element.'],
-      [ self::$tablature->getWriter()
+        [ self::$tablature->getWriter()
         , 'string(/song/writer)'
         , 'Incorrect or missing Writer element.'],
-      [ self::$tablature->getComments()
+        [ self::$tablature->getComments()
         , 'string(/song/comments)'
         , 'Incorrect or missing Comments element.'],
-      [ self::$tablature->getDate()
+        [ self::$tablature->getDate()
         , 'string(/song/date)'
         , 'Incorrect or missing Date element.'],
-      [ self::$tablature->getTranscriber()
+        [ self::$tablature->getTranscriber()
         , 'string(/song/transcriber)'
         , 'Incorrect or missing Transcriber element.'],
         
-      # Tracks
-      [ self::$tablature->countTracks()
+        // Tracks
+        [ self::$tablature->countTracks()
         , 'count(/song/tracks/track)'
         , 'Incorrect number of Track elements.'],
-      [ 0
+        [ 0
         , 'count(/song/tracks/track[42])'
         , 'Track element should NOT exist.'],
-      [ 1
+        [ 1
         , 'count(/song/tracks/track[1])'
         , 'Track element should exist.'],
 
-      # Channels
-      [ self::$tablature->countChannels()
+        // Channels
+        [ self::$tablature->countChannels()
         , 'count(/song/channels/channel)'
         , 'Incorrect number of Channel elements.'],
-      [ 0
+        [ 0
         , 'count(/song/channels/channel[42])'
         , 'Channel element should NOT exist.'],
-      [ 1
+        [ 1
         , 'count(/song/channels/channel[1])'
         , 'Channel element should exist.'],
 
-      # MeasureHeaders
-      [ self::$tablature->countMeasureHeaders()
+        // MeasureHeaders
+        [ self::$tablature->countMeasureHeaders()
         , 'count(/song/measureHeaders/header)'
         , 'Incorrect number of MeasureHeader elements.'],
-      [ 0
+        [ 0
         , 'count(/song/measureHeaders/header[42])'
         , 'MeasureHeader element should NOT exist.'],
-      [ 1
+        [ 1
         , 'count(/song/measureHeaders/header[1])'
         , 'MeasureHeader element should exist.']
-    );
+        );
 
-    foreach ($tests as $test)
-    {
-      $this->assertXpathMatch($test[0], $test[1], $test[2]);
+        foreach ($tests as $test)
+        {
+            $this->assertXpathMatch($test[0], $test[1], $test[2]);
+        }
     }
-  }
 
-  /**
-   * Text serialization
-   * 
-   * @dataProvider getTextScenarios
-   */
-  public function testExporterText($text)
-  {
-    $pattern = sprintf('/%s/', $text);
-    $this->assertRegexp($pattern, self::$plainText);
-  }
+    /**
+     * Text serialization
+     * 
+     * @dataProvider getTextScenarios
+     */
+    public function testExporterText($text)
+    {
+        $pattern = sprintf('/%s/', $text);
+        $this->assertRegexp($pattern, self::$plainText);
+    }
 
-  /**
-   * Text serialization
-   * 
-   * @dataProvider getYamlScenarios
-   */
-  public function testExporterYaml($text)
-  {
-    $pattern = sprintf('/%s/', $text);
-    $this->assertRegexp($pattern, self::$plainText);
-  }
+    /**
+     * Text serialization
+     * 
+     * @dataProvider getYamlScenarios
+     */
+    public function testExporterYaml($text)
+    {
+        $pattern = sprintf('/%s/', $text);
+        $this->assertRegexp($pattern, self::$plainText);
+    }
 
-  public function getYamlScenarios()
-  {
-    return $this->getTextScenarios();
-  }
+    public function getYamlScenarios()
+    {
+        return $this->getTextScenarios();
+    }
 }

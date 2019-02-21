@@ -13,32 +13,32 @@ namespace PhpTabs\Writer\Midi;
 
 class MidiTickHelper
 {
-  private $start;
-  private $duration;
+    private $start;
+    private $duration;
 
-  /**
-   * @param int $start
-   * @param int $duration
-   */
-  public function __construct($start, $duration)
-  {
-    $this->start = $start;
-    $this->duration = $duration;
-  }
+    /**
+     * @param int $start
+     * @param int $duration
+     */
+    public function __construct($start, $duration)
+    {
+        $this->start = $start;
+        $this->duration = $duration;
+    }
 
-  /**
-   * @return int
-   */
-  public function getDuration()
-  {
-    return $this->duration;
-  }
+    /**
+     * @return int
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
 
-  /**
-   * @return int
-   */
-  public function getStart()
-  {
-    return $this->start;
-  }
+    /**
+     * @return int
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
 }

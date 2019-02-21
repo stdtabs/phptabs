@@ -20,90 +20,90 @@ use PhpTabs\PhpTabs;
  */
 class ExporterTest extends PHPUnit_Framework_TestCase
 {
-  public function setUp()
-  {
-    $this->tablature = new PhpTabs(
-      PHPTABS_TEST_BASEDIR 
-      . '/samples/testSimpleTab.gp5'
-    );
-  }
-
-  /**
-   * Following exports must be a string
-   * - text
-   * - txt
-   * - yaml
-   * - yml
-   * - serialize
-   * - json
-   * - var_export
-   * - xml
-   */
-  public function testStringFormats()
-  {
-    foreach ([
-      'text',
-      'txt',
-      'yaml',
-      'yml',
-      'serialize',
-      'json',
-      'var_export',
-      'xml'
-    ] as $format
-    ) {
-      $this->assertTrue(
-        is_string(
-          $this->tablature->export($format)
-        )
-      );
+    public function setUp()
+    {
+        $this->tablature = new PhpTabs(
+            PHPTABS_TEST_BASEDIR 
+            . '/samples/testSimpleTab.gp5'
+        );
     }
-  }
 
-  /**
-   * Following exports must be an array
-   * - array
-   * - none
-   */
-  public function testArrayFormats()
-  {
-    foreach ([
-      'array',
-      null
-    ] as $format
-    ) {
-      $this->assertTrue(
-        is_array(
-          $this->tablature->export($format)
-        )
-      );
+    /**
+     * Following exports must be a string
+     * - text
+     * - txt
+     * - yaml
+     * - yml
+     * - serialize
+     * - json
+     * - var_export
+     * - xml
+     */
+    public function testStringFormats()
+    {
+        foreach ([
+        'text',
+        'txt',
+        'yaml',
+        'yml',
+        'serialize',
+        'json',
+        'var_export',
+        'xml'
+        ] as $format
+        ) {
+            $this->assertTrue(
+                is_string(
+                    $this->tablature->export($format)
+                )
+            );
+        }
     }
-  }
 
-  /**
-   * Some export format parameters have aliases
-   * - text = txt
-   * - yaml = yml
-   */
-  public function testAliases()
-  {
-    $this->assertSame(
-      $this->tablature->export('text'),
-      $this->tablature->export('txt')
-    );
+    /**
+     * Following exports must be an array
+     * - array
+     * - none
+     */
+    public function testArrayFormats()
+    {
+        foreach ([
+        'array',
+        null
+        ] as $format
+        ) {
+            $this->assertTrue(
+                is_array(
+                    $this->tablature->export($format)
+                )
+            );
+        }
+    }
+
+    /**
+     * Some export format parameters have aliases
+     * - text = txt
+     * - yaml = yml
+     */
+    public function testAliases()
+    {
+        $this->assertSame(
+            $this->tablature->export('text'),
+            $this->tablature->export('txt')
+        );
     
-    $this->assertSame(
-      $this->tablature->export('yaml'),
-      $this->tablature->export('yml')
-    );
-  }
+        $this->assertSame(
+            $this->tablature->export('yaml'),
+            $this->tablature->export('yml')
+        );
+    }
 
-  /**
-   * @expectedException Exception
-   */
-  public function testException()
-  {
-    # Not a valid export format
-    (new PhpTabs())->export('exception');
-  }
+    /**
+     * @expectedException Exception
+     */
+    public function testException()
+    {
+        // Not a valid export format
+        (new PhpTabs())->export('exception');
+    }
 }

@@ -19,143 +19,138 @@ use PhpTabs\Music\Track;
 
 class GuitarProChannel extends AbstractReader
 {
-  /**
-   * Reads Channel informations
-   * 
-   * @param \PhpTabs\Music\Song $song
-   * @param \PhpTabs\Music\Track $track
-   * @param array $channels
-   */
-  public function readChannel(Song $song, Track $track, array $channels)
-  {
-    $gChannel1 = $this->reader->readInt() - 1;
-    $gChannel2 = $this->reader->readInt() - 1;
-
-    if ($gChannel1 >= 0 && $gChannel1 < count($channels))
+    /**
+     * Reads Channel informations
+     * 
+     * @param \PhpTabs\Music\Song  $song
+     * @param \PhpTabs\Music\Track $track
+     * @param array                $channels
+     */
+    public function readChannel(Song $song, Track $track, array $channels)
     {
-      $channel = new Channel();
-      $gChannel1Param = new ChannelParameter();
-      $gChannel2Param = new ChannelParameter();
+        $gChannel1 = $this->reader->readInt() - 1;
+        $gChannel2 = $this->reader->readInt() - 1;
 
-      $gChannel1Param->setKey("channel-1");
-      $gChannel1Param->setValue("$gChannel1");
-      $gChannel2Param->setKey("channel-2");
-      $gChannel2Param->setValue($gChannel1 != 9
-        ? "$gChannel2" : "$gChannel1");
+        if ($gChannel1 >= 0 && $gChannel1 < count($channels)) {
+            $channel = new Channel();
+            $gChannel1Param = new ChannelParameter();
+            $gChannel2Param = new ChannelParameter();
 
-      $channel->copyFrom($channels[$gChannel1]);
+            $gChannel1Param->setKey("channel-1");
+            $gChannel1Param->setValue("$gChannel1");
+            $gChannel2Param->setKey("channel-2");
+            $gChannel2Param->setValue(
+                $gChannel1 != 9
+                ? "$gChannel2" : "$gChannel1"
+            );
 
-      for ($i = 0; $i < $song->countChannels(); $i++)
-      {
-        $channelAux = $song->getChannel($i);
+            $channel->copyFrom($channels[$gChannel1]);
 
-        for ($n = 0; $n < $channelAux->countParameters(); $n++)
-        {
-          $channelParameter = $channelAux->getParameter($n);
-
-          if ($channelParameter->getKey() == "$gChannel1")
-          {
-            if ("$gChannel1" == $channelParameter->getValue())
+            for ($i = 0; $i < $song->countChannels(); $i++)
             {
-              $channel->setChannelId($channelAux->getChannelId());
+                  $channelAux = $song->getChannel($i);
+
+                for ($n = 0; $n < $channelAux->countParameters(); $n++)
+                  {
+                    $channelParameter = $channelAux->getParameter($n);
+
+                    if ($channelParameter->getKey() == "$gChannel1") {
+                        if ("$gChannel1" == $channelParameter->getValue()) {
+                            $channel->setChannelId($channelAux->getChannelId());
+                        }
+                    }
+                }
             }
-          }
+
+            if ($channel->getChannelId() <= 0) {
+                $channel->setChannelId($song->countChannels() + 1);
+                $channel->setName($this->createChannelNameFromProgram($song, $channel));
+                $channel->addParameter($gChannel1Param);
+                $channel->addParameter($gChannel2Param);
+
+                $song->addChannel($channel);
+            }
+
+            $track->setChannelId($channel->getChannelId());
         }
-      }
-
-      if ($channel->getChannelId() <= 0)
-      {
-        $channel->setChannelId($song->countChannels() + 1);
-        $channel->setName($this->createChannelNameFromProgram($song, $channel));
-        $channel->addParameter($gChannel1Param);
-        $channel->addParameter($gChannel2Param);
-
-        $song->addChannel($channel);
-      }
-
-      $track->setChannelId($channel->getChannelId());
     }
-  }
 
-  /**
-   * Creates a channel name with a program
-   * 
-   * @param \PhpTabs\Music\Song $song
-   * @param \PhpTabs\Music\Channel $channel
-   *
-   * @return string a new channel name
-   */
-  protected function createChannelNameFromProgram(Song $song, $channel)
-  {
-    $names = ChannelNames::$defaultNames;
-
-    if ($channel->getProgram() >= 0 && isset($names[$channel->getProgram()]))
+    /**
+     * Creates a channel name with a program
+     * 
+     * @param \PhpTabs\Music\Song    $song
+     * @param \PhpTabs\Music\Channel $channel
+     *
+     * @return string a new channel name
+     */
+    protected function createChannelNameFromProgram(Song $song, $channel)
     {
-      return $this->createChannelName($song, $names[$channel->getProgram()]);
+        $names = ChannelNames::$defaultNames;
+
+        if ($channel->getProgram() >= 0 && isset($names[$channel->getProgram()])) {
+            return $this->createChannelName($song, $names[$channel->getProgram()]);
+        }
+
+        return $this->createDefaultChannelName($song);
     }
 
-    return $this->createDefaultChannelName($song);
-  }
-
-  /**
-   * Creates a channel
-   * 
-   * @param \PhpTabs\Music\Song $song
-   *
-   * @return string a generated channel name
-   */
-  protected function createDefaultChannelName(Song $song)
-  {
-    return $this->createChannelName($song, 'Unnamed');
-  }
-
-  /**
-   * Generates a channel name
-   * 
-   * @param \PhpTabs\Music\Song $song
-   * @param string $prefix
-   *
-   * @return string channel name
-   */
-  protected function createChannelName(Song $song, $prefix)
-  {
-    $number = 0;
-    $unusedName = null;
-
-    while ($unusedName === null)
+    /**
+     * Creates a channel
+     * 
+     * @param \PhpTabs\Music\Song $song
+     *
+     * @return string a generated channel name
+     */
+    protected function createDefaultChannelName(Song $song)
     {
-      $number ++;
-      $name = $prefix . ' ' . $number;
-
-      if (!$this->findChannelsByName($song, $name))
-      {
-        $unusedName = $name;
-      }
+        return $this->createChannelName($song, 'Unnamed');
     }
 
-    return $unusedName;
-  }
-
-  /**
-   * Checks if a channel is still defined
-   *
-   * @param \PhpTabs\Music\Song $song
-   * @param string $name
-   *
-   * @return boolean Result of the search
-   */
-  protected function findChannelsByName(Song $song, $name)
-  {
-    $channels = $song->getChannels();
-
-    foreach ($channels as $v)
+    /**
+     * Generates a channel name
+     * 
+     * @param \PhpTabs\Music\Song $song
+     * @param string              $prefix
+     *
+     * @return string channel name
+     */
+    protected function createChannelName(Song $song, $prefix)
     {
-      if ($v->getName() == $name)
-      {
-        return true;
-      }
+        $number = 0;
+        $unusedName = null;
+
+        while ($unusedName === null)
+        {
+            $number ++;
+            $name = $prefix . ' ' . $number;
+
+            if (!$this->findChannelsByName($song, $name)) {
+                $unusedName = $name;
+            }
+        }
+
+        return $unusedName;
     }
 
-    return false;
-  }
+    /**
+     * Checks if a channel is still defined
+     *
+     * @param \PhpTabs\Music\Song $song
+     * @param string              $name
+     *
+     * @return boolean Result of the search
+     */
+    protected function findChannelsByName(Song $song, $name)
+    {
+        $channels = $song->getChannels();
+
+        foreach ($channels as $v)
+        {
+            if ($v->getName() == $name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

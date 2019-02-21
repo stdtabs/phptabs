@@ -16,8 +16,8 @@ namespace PhpTabs\Component;
  */
 interface ReaderInterface
 {
-  /**
-   * @return \PhpTabs\Component\Tablature built from file read
-   */
-  public function getTablature();
+    /**
+     * @return \PhpTabs\Component\Tablature built from file read
+     */
+    public function getTablature();
 }

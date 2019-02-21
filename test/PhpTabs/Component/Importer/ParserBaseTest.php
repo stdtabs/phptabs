@@ -20,39 +20,39 @@ use PhpTabs\Component\Importer\TempoParser;
  */
 class ParserBaseTest extends PHPUnit_Framework_TestCase
 {
-  /**
-   * Test parse method exceptions when no argument
-   * 
-   * @expectedException Exception
-   */
-  public function testNoArgumentExceptions()
-  {
-    $parser = new TempoParser(1);
+    /**
+     * Test parse method exceptions when no argument
+     * 
+     * @expectedException Exception
+     */
+    public function testNoArgumentExceptions()
+    {
+        $parser = new TempoParser(1);
 
-    $parser->parseTempo();
-  }
+        $parser->parseTempo();
+    }
 
-  /**
-   * Test parse method exceptions when too many arguments
-   * 
-   * @expectedException Exception
-   */
-  public function testTooManyArgumentsException()
-  {
-    $parser = new TempoParser(1);
+    /**
+     * Test parse method exceptions when too many arguments
+     * 
+     * @expectedException Exception
+     */
+    public function testTooManyArgumentsException()
+    {
+        $parser = new TempoParser(1);
 
-    $parser->parseTempo(1, 2, 3);
-  }
+        $parser->parseTempo(1, 2, 3);
+    }
 
-  /**
-   * Test method exception when method is unknown
-   * 
-   * @expectedException Exception
-   */
-  public function testUnknownMethodException()
-  {
-    $parser = new TempoParser(1);
+    /**
+     * Test method exception when method is unknown
+     * 
+     * @expectedException Exception
+     */
+    public function testUnknownMethodException()
+    {
+        $parser = new TempoParser(1);
 
-    $parser->unknownPrefixTempo(1, 2, 3);
-  }
+        $parser->unknownPrefixTempo(1, 2, 3);
+    }
 }

@@ -17,32 +17,32 @@ use PhpTabs\Component\Importer\ParserBase;
 
 class Importer extends ParserBase
 {
-  /**
-   * @var \PhpTabs\Music\Song
-   */
-  protected $song;
+    /**
+     * @var \PhpTabs\Music\Song
+     */
+    protected $song;
 
-  /**
-   * @param array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->song = new Song();
+    /**
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->song = new Song();
 
-    if (!isset($data['song'])) {
-      throw new Exception ('Invalid data: song key must be set');
+        if (!isset($data['song'])) {
+            throw new Exception('Invalid data: song key must be set');
+        }
+
+        $this->parseSong($data['song'], $this->song);
     }
 
-    $this->parseSong($data['song'], $this->song);
-  }
-
-  /**
-   * Get built song object
-   * 
-   * @return \PhpTabs\Music\Song
-   */
-  public function getSong()
-  {
-    return $this->song;
-  }
+    /**
+     * Get built song object
+     * 
+     * @return \PhpTabs\Music\Song
+     */
+    public function getSong()
+    {
+        return $this->song;
+    }
 }

@@ -20,23 +20,23 @@ use PhpTabs\IOFactory;
  */
 class IOFactoryFromSerializedTest extends PHPUnit_Framework_TestCase
 {
-  /**
-   * A provider for various scenarios that throw \Exception 
-   */
-  public function getExceptionScenarios()
-  {
-    return [
-      [['ee']], # Array as data
-      [1.25],   # Float as data
-    ];
-  }
+    /**
+     * A provider for various scenarios that throw \Exception 
+     */
+    public function getExceptionScenarios()
+    {
+        return [
+        [['ee']], // Array as data
+        [1.25],   // Float as data
+        ];
+    }
 
-  /**
-   * @dataProvider      getExceptionScenarios
-   * @expectedException Exception
-   */
-  public function testExceptionScenario($data)
-  {
-    IOFactory::fromSerialized($data);
-  }
+    /**
+     * @dataProvider      getExceptionScenarios
+     * @expectedException Exception
+     */
+    public function testExceptionScenario($data)
+    {
+        IOFactory::fromSerialized($data);
+    }
 }

@@ -15,16 +15,16 @@ use PhpTabs\Music\Tempo;
 
 class TempoParser extends ParserBase
 {
-  /**
-   * Parse a tempo array
-   * 
-   * @param  int $data
-   */
-  public function __construct($data)
-  {
-    $tempo = new Tempo();
-    $tempo->setValue($data);
+    /**
+     * Parse a tempo array
+     * 
+     * @param int $data
+     */
+    public function __construct($data)
+    {
+        $tempo = new Tempo();
+        $tempo->setValue($data);
 
-    $this->item = $tempo;
-  }
+        $this->item = $tempo;
+    }
 }

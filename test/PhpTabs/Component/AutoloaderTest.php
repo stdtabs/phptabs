@@ -22,11 +22,11 @@ use PhpTabs\Music\MeasureHeader;
  */
 class AutoloaderTest extends PHPUnit_Framework_TestCase
 {
-  # Existing class
-  public function testExistingClass()
-  {
-    Autoloader::register();
+    // Existing class
+    public function testExistingClass()
+    {
+        Autoloader::register();
     
-    $this->assertInstanceOf('PhpTabs\\Music\\MeasureHeader', new MeasureHeader());
-  }
+        $this->assertInstanceOf('PhpTabs\\Music\\MeasureHeader', new MeasureHeader());
+    }
 }

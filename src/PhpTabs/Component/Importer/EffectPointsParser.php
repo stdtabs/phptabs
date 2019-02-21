@@ -13,22 +13,22 @@ namespace PhpTabs\Component\Importer;
 
 class EffectPointsParser extends ParserBase
 {
-  protected $required = ['points'];
+    protected $required = ['points'];
 
-  /**
-   * Parse a color array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data, $effect)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a color array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data, $effect)
+    {
+        $this->checkKeys($data, $this->required);
 
-    foreach ($data['points'] as $point) {
-      $this->checkKeys($point, ['position', 'value']);
-      $effect->addPoint($point['position'], $point['value']);
+        foreach ($data['points'] as $point) {
+            $this->checkKeys($point, ['position', 'value']);
+            $effect->addPoint($point['position'], $point['value']);
+        }
+
+        $this->item = $effect;
     }
-
-    $this->item = $effect;
-  }
 }

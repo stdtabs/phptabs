@@ -15,7 +15,7 @@ use PhpTabs\Music\EffectHarmonic;
 
 class HarmonicParser extends ParserBase
 {
-  protected $required = [
+    protected $required = [
       'type',
       'data',
       'isNatural',
@@ -23,21 +23,21 @@ class HarmonicParser extends ParserBase
       'isTapped',
       'isPinch',
       'isSemi'
-  ];
+    ];
 
-  /**
-   * Parse an harmonic array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse an harmonic array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $harmonic = new EffectHarmonic();
-    $harmonic->setType($data['type']);
-    $harmonic->setData($data['data']);
+        $harmonic = new EffectHarmonic();
+        $harmonic->setType($data['type']);
+        $harmonic->setData($data['data']);
 
-    $this->item = $harmonic;
-  }
+        $this->item = $harmonic;
+    }
 }

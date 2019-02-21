@@ -15,23 +15,23 @@ use PhpTabs\Music\EffectTrill;
 
 class TrillParser extends ParserBase
 {
-  protected $required = ['fret', 'duration'];
+    protected $required = ['fret', 'duration'];
 
-  /**
-   * Parse a trill effect array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a trill effect array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $effect = new EffectTrill();
-    $effect->setFret($data['fret']);
-    $effect->setDuration(
-      $this->parseDuration($data['duration'])
-    );
+        $effect = new EffectTrill();
+        $effect->setFret($data['fret']);
+        $effect->setDuration(
+            $this->parseDuration($data['duration'])
+        );
 
-    $this->item = $effect;
-  }
+        $this->item = $effect;
+    }
 }

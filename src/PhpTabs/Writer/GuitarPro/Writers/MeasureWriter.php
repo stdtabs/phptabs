@@ -18,49 +18,49 @@ use PhpTabs\Share\MeasureVoiceJoiner;
 
 class MeasureWriter
 {
-  private $writer;
+    private $writer;
 
-  public function __construct($writer)
-  {
-    $this->writer = $writer;
-  }
-
-  /**
-   * @param \PhpTabs\Music\Song $song
-   * @param \PhpTabs\Music\Tempo $tempo
-   */
-  public function writeMeasures(Song $song, Tempo $tempo)
-  {
-    foreach ($song->getMeasureHeaders() as $index => $header) {
-
-      foreach ($song->getTracks() as $track) {
-        $this->writeMeasure(
-          $track->getMeasure($index),
-          $header->getTempo()->getValue() != $tempo->getValue()
-        );
-      }
-
-      $tempo->copyFrom($header->getTempo());
+    public function __construct($writer)
+    {
+        $this->writer = $writer;
     }
-  }
 
-  /**
-   * @param \PhpTabs\Music\Measure $srcMeasure
-   * @param bool $changeTempo
-   */
-  private function writeMeasure(Measure $srcMeasure, $changeTempo)
-  {
-    $measure = (new MeasureVoiceJoiner($srcMeasure))->process();
+    /**
+     * @param \PhpTabs\Music\Song  $song
+     * @param \PhpTabs\Music\Tempo $tempo
+     */
+    public function writeMeasures(Song $song, Tempo $tempo)
+    {
+        foreach ($song->getMeasureHeaders() as $index => $header) {
 
-    $this->writer->writeInt($measure->countBeats());
+            foreach ($song->getTracks() as $track) {
+                $this->writeMeasure(
+                    $track->getMeasure($index),
+                    $header->getTempo()->getValue() != $tempo->getValue()
+                );
+            }
 
-    foreach ($measure->getBeats() as $index => $beat) {
-
-      $this->writer->getWriter('BeatWriter')->writeBeat(
-        $beat,
-        $measure,
-        ($changeTempo && $index == 0)
-      );
+            $tempo->copyFrom($header->getTempo());
+        }
     }
-  }
+
+    /**
+     * @param \PhpTabs\Music\Measure $srcMeasure
+     * @param bool                   $changeTempo
+     */
+    private function writeMeasure(Measure $srcMeasure, $changeTempo)
+    {
+        $measure = (new MeasureVoiceJoiner($srcMeasure))->process();
+
+        $this->writer->writeInt($measure->countBeats());
+
+        foreach ($measure->getBeats() as $index => $beat) {
+
+            $this->writer->getWriter('BeatWriter')->writeBeat(
+                $beat,
+                $measure,
+                ($changeTempo && $index == 0)
+            );
+        }
+    }
 }

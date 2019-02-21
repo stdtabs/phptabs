@@ -18,36 +18,36 @@ use PhpTabs\Music\Tempo;
 
 class GuitarPro3Measures extends AbstractReader
 {
-  /**
-   * Loops on measures to read
-   * 
-   * @param \PhpTabs\Music\Song $song
-   * @param integer $measures
-   * @param integer $tracks
-   * @param integer $tempoValue
-   */
-  public function readMeasures(Song $song, $measures, $tracks, $tempoValue)
-  {
-    $tempo = new Tempo();
-    $tempo->setValue($tempoValue);
-    $start = Duration::QUARTER_TIME;
-
-    for ($i = 0; $i < $measures; $i++)
+    /**
+     * Loops on measures to read
+     * 
+     * @param \PhpTabs\Music\Song $song
+     * @param integer             $measures
+     * @param integer             $tracks
+     * @param integer             $tempoValue
+     */
+    public function readMeasures(Song $song, $measures, $tracks, $tempoValue)
     {
-      $header = $song->getMeasureHeader($i);
-      $header->setStart($start);
+        $tempo = new Tempo();
+        $tempo->setValue($tempoValue);
+        $start = Duration::QUARTER_TIME;
 
-      for ($j = 0; $j < $tracks; $j++)
-      {
-        $track = $song->getTrack($j);
-        $measure = new Measure($header);
+        for ($i = 0; $i < $measures; $i++)
+        {
+            $header = $song->getMeasureHeader($i);
+            $header->setStart($start);
 
-        $track->addMeasure($measure);
-        $this->reader->factory('GuitarPro3Measure')->readMeasure($measure, $track, $tempo);
-      }
+            for ($j = 0; $j < $tracks; $j++)
+            {
+                $track = $song->getTrack($j);
+                $measure = new Measure($header);
 
-      $header->getTempo()->copyFrom($tempo);
-      $start += $header->getLength();
+                $track->addMeasure($measure);
+                $this->reader->factory('GuitarPro3Measure')->readMeasure($measure, $track, $tempo);
+            }
+
+            $header->getTempo()->copyFrom($tempo);
+            $start += $header->getLength();
+        }
     }
-  }
 }

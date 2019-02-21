@@ -13,47 +13,47 @@ namespace PhpTabs\Writer\Midi;
 
 class MidiSequenceHelper
 {
-  private $measureHeaderHelpers;
-  private $sequence;
+    private $measureHeaderHelpers;
+    private $sequence;
 
-  /**
-   * @param \PhpTabs\Writer\Midi\MidiSequenceHandler $sequence
-   */
-  public function __construct(MidiSequenceHandler $sequence)
-  {
-    $this->sequence = $sequence;
-    $this->measureHeaderHelpers = array();
-  }
+    /**
+     * @param \PhpTabs\Writer\Midi\MidiSequenceHandler $sequence
+     */
+    public function __construct(MidiSequenceHandler $sequence)
+    {
+        $this->sequence = $sequence;
+        $this->measureHeaderHelpers = array();
+    }
 
-  /**
-   * @return \PhpTabs\Writer\Midi\MidiSequenceHandler
-   */
-  public function getSequence()
-  {
-    return $this->sequence;
-  }
+    /**
+     * @return \PhpTabs\Writer\Midi\MidiSequenceHandler
+     */
+    public function getSequence()
+    {
+        return $this->sequence;
+    }
 
-  /**
-   * @param \PhpTabs\Writer\Midi\MidiMeasureHelper $helper
-   */
-  public function addMeasureHelper(MidiMeasureHelper $helper)
-  {
-    $this->measureHeaderHelpers[] = $helper;
-  }
+    /**
+     * @param \PhpTabs\Writer\Midi\MidiMeasureHelper $helper
+     */
+    public function addMeasureHelper(MidiMeasureHelper $helper)
+    {
+        $this->measureHeaderHelpers[] = $helper;
+    }
 
-  /**
-   * @return array
-   */
-  public function getMeasureHelpers()
-  {
-    return $this->measureHeaderHelpers;
-  }
+    /**
+     * @return array
+     */
+    public function getMeasureHelpers()
+    {
+        return $this->measureHeaderHelpers;
+    }
 
-  /**
-   * @return \PhpTabs\Writer\Midi\MidiMeasureHelper $helper
-   */
-  public function getMeasureHelper($index)
-  {
-    return $this->measureHeaderHelpers[$index];
-  }
+    /**
+     * @return \PhpTabs\Writer\Midi\MidiMeasureHelper $helper
+     */
+    public function getMeasureHelper($index)
+    {
+        return $this->measureHeaderHelpers[$index];
+    }
 }

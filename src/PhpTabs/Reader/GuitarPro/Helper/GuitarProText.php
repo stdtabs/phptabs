@@ -16,17 +16,17 @@ use PhpTabs\Music\Text;
 
 class GuitarProText extends AbstractReader
 {
-  /**
-   * Reads some text
-   * 
-   * @param \PhpTabs\Music\Beat $beat
-   */
-  public function readText(Beat $beat)
-  {
-    $text = new Text();
+    /**
+     * Reads some text
+     * 
+     * @param \PhpTabs\Music\Beat $beat
+     */
+    public function readText(Beat $beat)
+    {
+        $text = new Text();
 
-    $text->setValue($this->reader->readStringByteSizeOfInteger());
+        $text->setValue($this->reader->readStringByteSizeOfInteger());
 
-    $beat->setText($text);
-  }
+        $beat->setText($text);
+    }
 }

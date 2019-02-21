@@ -15,47 +15,44 @@ use PhpTabs\Music\Track;
 
 class GuitarPro5TiedNote extends AbstractReader
 {
-  /**
-   * @param integer $string String on which note has started
-   * @param \PhpTabs\Music\Track $track
-   *
-   * @return integer tied note value
-   */
-  public function getTiedNoteValue($string, Track $track)
-  {
-    $measureCount = $track->countMeasures();
-
-    if ($measureCount > 0)
+    /**
+     * @param integer              $string String on which note has started
+     * @param \PhpTabs\Music\Track $track
+     *
+     * @return integer tied note value
+     */
+    public function getTiedNoteValue($string, Track $track)
     {
-      for ($m = $measureCount - 1; $m >= 0; $m--)
-      {
-        $measure = $track->getMeasure($m);
+        $measureCount = $track->countMeasures();
 
-        for ($b = $measure->countBeats() - 1; $b >= 0; $b--)
-        {
-          $beat = $measure->getBeat($b);
-
-          for ($v = 0; $v < $beat->countVoices(); $v++)
-          {
-            $voice = $beat->getVoice($v);  
-
-            if (!$voice->isEmpty())
+        if ($measureCount > 0) {
+            for ($m = $measureCount - 1; $m >= 0; $m--)
             {
-              for ($n = 0; $n < $voice->countNotes(); $n++)
-              {
-                $note = $voice->getNote($n);
+                $measure = $track->getMeasure($m);
 
-                if ($note->getString() == $string)
+                for ($b = $measure->countBeats() - 1; $b >= 0; $b--)
                 {
-                  return $note->getValue();
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                    $beat = $measure->getBeat($b);
 
-    return -1;
-  }
+                    for ($v = 0; $v < $beat->countVoices(); $v++)
+                    {
+                        $voice = $beat->getVoice($v);  
+
+                        if (!$voice->isEmpty()) {
+                            for ($n = 0; $n < $voice->countNotes(); $n++)
+                            {
+                                  $note = $voice->getNote($n);
+
+                                if ($note->getString() == $string) {
+                                    return $note->getValue();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
 }

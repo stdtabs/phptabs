@@ -15,71 +15,73 @@ use PhpTabs\Music\Channel;
 
 class ChannelRouterConfigurator
 {
-  private $router;
+    private $router;
 
-  /**
-   * @param \PhpTabs\Share\ChannelRouter $router
-   */
-  public function __construct(ChannelRouter $router)
-  {
-    $this->router = $router;
-  }
-
-  /**
-   * @param array $channels
-   */
-  public function configureRouter(array $channels)
-  {
-    $this->router->resetRoutes();
-
-    array_walk ($channels, function($channel) {
-      $channelRoute = new ChannelRoute($channel->getChannelId());
-
-      $channelRoute->setChannel1(
-        $this->getIntegerChannelParameter($channel, ChannelRoute::PARAMETER_CHANNEL_1)
-      );
-
-      $channelRoute->setChannel2(
-        $this->getIntegerChannelParameter($channel, ChannelRoute::PARAMETER_CHANNEL_2)
-      );
-
-      $this->router->configureRoutes($channelRoute, $channel->isPercussionChannel());
-    });
-  }
-
-  /**
-   * @param \PhpTabs\Music\Channel $channel
-   * @param string $key
-   * 
-   * @return int
-   */
-  private function getIntegerChannelParameter(Channel $channel, $key)
-  {
-    $channelParameter = $this->findChannelParameter($channel, $key);
-
-    if ($channelParameter !== null && $channelParameter->getValue() !== null) {
-      return intval($channelParameter->getValue());
+    /**
+     * @param \PhpTabs\Share\ChannelRouter $router
+     */
+    public function __construct(ChannelRouter $router)
+    {
+        $this->router = $router;
     }
 
-    return ChannelRoute::NULL_VALUE;
-  }
+    /**
+     * @param array $channels
+     */
+    public function configureRouter(array $channels)
+    {
+        $this->router->resetRoutes();
 
-  /**
-   * @param \PhpTabs\Music\Channel $channel
-   * @param string $key
-   *
-   * @return null|\PhpTabs\Music\ChannelParameter
-   */
-  private function findChannelParameter(Channel $channel, $key)
-  {
-    $parameters = $channel->getParameters();
+        array_walk(
+            $channels, function ($channel) {
+                $channelRoute = new ChannelRoute($channel->getChannelId());
 
-    foreach ($parameters as $parameter) {
-      if ($parameter->getKey() == $key) {
-        return $parameter;
-      }
+                $channelRoute->setChannel1(
+                    $this->getIntegerChannelParameter($channel, ChannelRoute::PARAMETER_CHANNEL_1)
+                );
+
+                $channelRoute->setChannel2(
+                    $this->getIntegerChannelParameter($channel, ChannelRoute::PARAMETER_CHANNEL_2)
+                );
+
+                $this->router->configureRoutes($channelRoute, $channel->isPercussionChannel());
+            }
+        );
     }
 
-    return null;
-  }
+    /**
+     * @param \PhpTabs\Music\Channel $channel
+     * @param string                 $key
+     * 
+     * @return int
+     */
+    private function getIntegerChannelParameter(Channel $channel, $key)
+    {
+        $channelParameter = $this->findChannelParameter($channel, $key);
+
+        if ($channelParameter !== null && $channelParameter->getValue() !== null) {
+            return intval($channelParameter->getValue());
+        }
+
+        return ChannelRoute::NULL_VALUE;
+    }
+
+    /**
+     * @param \PhpTabs\Music\Channel $channel
+     * @param string                 $key
+     *
+     * @return null|\PhpTabs\Music\ChannelParameter
+     */
+    private function findChannelParameter(Channel $channel, $key)
+    {
+        $parameters = $channel->getParameters();
+
+        foreach ($parameters as $parameter) {
+            if ($parameter->getKey() == $key) {
+                return $parameter;
+            }
+        }
+
+        return null;
+    }
 }

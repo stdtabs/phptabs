@@ -15,34 +15,34 @@ use PhpTabs\Music\Tempo;
 
 class GuitarPro4MixChange extends AbstractReader
 {
-  /**
-   * Reads mix change informations
-   * 
-   * @param \PhpTabs\Music\Tempo $tempo
-   */
-  public function readMixChange(Tempo $tempo)
-  {
-    $this->reader->readByte(); //instrument
+    /**
+     * Reads mix change informations
+     * 
+     * @param \PhpTabs\Music\Tempo $tempo
+     */
+    public function readMixChange(Tempo $tempo)
+    {
+        $this->reader->readByte(); //instrument
     
-    $criterias = ['volume', 'pan', 'chorus', 'reverb', 'phaser', 'tremolo'];
+        $criterias = ['volume', 'pan', 'chorus', 'reverb', 'phaser', 'tremolo'];
     
-    foreach ($criterias as $name) {
-      $$name = $this->reader->readByte();
-    }
+        foreach ($criterias as $name) {
+            $$name = $this->reader->readByte();
+        }
 
-    $tempoValue = $this->reader->readInt();
+        $tempoValue = $this->reader->readInt();
 
-    foreach ($criterias as $name) {
-      if ($$name >= 0) {
+        foreach ($criterias as $name) {
+            if ($$name >= 0) {
+                $this->reader->readByte();
+            }
+        }
+
+        if ($tempoValue >= 0) {
+            $tempo->setValue($tempoValue);
+            $this->reader->readByte();
+        }
+
         $this->reader->readByte();
-      }
     }
-
-    if ($tempoValue >= 0) {
-      $tempo->setValue($tempoValue);
-      $this->reader->readByte();
-    }
-
-    $this->reader->readByte();
-  }
 }

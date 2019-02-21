@@ -15,17 +15,17 @@ use PhpTabs\Music\TabString;
 
 class StringParser extends ParserBase
 {
-  protected $required = ['number', 'value'];
+    protected $required = ['number', 'value'];
 
-  /**
-   * Parse a string array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a string array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $this->item = new TabString($data['number'], $data['value']);
-  }
+        $this->item = new TabString($data['number'], $data['value']);
+    }
 }

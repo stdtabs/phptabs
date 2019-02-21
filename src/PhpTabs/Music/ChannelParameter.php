@@ -16,59 +16,59 @@ namespace PhpTabs\Music;
  */
 class ChannelParameter
 {
-  private $key;
+    private $key;
   
-  /**
-   * @var null|int|string
-   */
-  private $value;
+    /**
+     * @var null|int|string
+     */
+    private $value;
 
-  /**
-   * @return int|string
-   */
-  public function getKey()
-  {
-    return $this->key;
-  }
+    /**
+     * @return int|string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
 
-  /**
-   * @param int|string $key
-   */
-  public function setKey($key)
-  {
-    $this->key = $key;
-  }
+    /**
+     * @param int|string $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
 
-  /**
-   * @return null|int|string
-   */
-  public function getValue()
-  {
-    return $this->value;
-  }
+    /**
+     * @return null|int|string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
 
-  /**
-   * @param null|int|string $value
-   */
-  public function setValue($value)
-  {
-    $this->value = $value;
-  }
+    /**
+     * @param null|int|string $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
 
-  /**
-   * @param \PhpTabs\Music\ChannelParameter $channelParameter
-   */
-  public function copyFrom(ChannelParameter $channelParameter)
-  {
-    $this->setKey($channelParameter->getKey());
-    $this->setValue($channelParameter->getValue());
-  }
+    /**
+     * @param \PhpTabs\Music\ChannelParameter $channelParameter
+     */
+    public function copyFrom(ChannelParameter $channelParameter)
+    {
+        $this->setKey($channelParameter->getKey());
+        $this->setValue($channelParameter->getValue());
+    }
 
-  /**
-   * @return \PhpTabs\Music\ChannelParameter
-   */
-  public function __clone()
-  {
-    return (new ChannelParameter())->copyFrom($this);
-  }
+    /**
+     * @return \PhpTabs\Music\ChannelParameter
+     */
+    public function __clone()
+    {
+        return (new ChannelParameter())->copyFrom($this);
+    }
 }

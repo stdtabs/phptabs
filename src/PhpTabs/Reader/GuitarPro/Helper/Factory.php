@@ -15,31 +15,31 @@ use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 
 class Factory
 {
-  private $reader;
+    private $reader;
 
-  /**
-   * @param \PhpTabs\Reader\GuitarPro\GuitarProReaderInterface $reader
-   */
-  public function __construct(GuitarProReaderInterface $reader)
-  {
-    $this->reader = $reader;
-  }
+    /**
+     * @param \PhpTabs\Reader\GuitarPro\GuitarProReaderInterface $reader
+     */
+    public function __construct(GuitarProReaderInterface $reader)
+    {
+        $this->reader = $reader;
+    }
 
-  /**
-   * @param string $name
-   * @param string $parserName
-   * 
-   * @return mixed
-   */
-  public function get($name, $parserName)
-  {
-    $name = __NAMESPACE__ . '\\' . $name;
+    /**
+     * @param string $name
+     * @param string $parserName
+     * 
+     * @return mixed
+     */
+    public function get($name, $parserName)
+    {
+        $name = __NAMESPACE__ . '\\' . $name;
 
-    $object = new $name();
+        $object = new $name();
 
-    $object->setReader($this->reader);
-    $object->setParserName($parserName);
+        $object->setReader($this->reader);
+        $object->setParserName($parserName);
 
-    return $object;
-  }
+        return $object;
+    }
 }

@@ -15,44 +15,44 @@ use PhpTabs\Music\Beat;
 
 class BeatParser extends ParserBase
 {
-  protected $required = ['start', 'voices', 'stroke'];
+    protected $required = ['start', 'voices', 'stroke'];
 
-  /**
-   * Parse a beat array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a beat array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $beat = new Beat();
-    $beat->setStart($data['start']);
+        $beat = new Beat();
+        $beat->setStart($data['start']);
     
-    if (isset($data['chord'])) {
-      $beat->setChord(
-        $this->parseChord($data['chord'])
-      );
+        if (isset($data['chord'])) {
+            $beat->setChord(
+                $this->parseChord($data['chord'])
+            );
+        }
+
+        if (isset($data['text'])) {
+            $beat->setText(
+                $this->parseText($data['text'])
+            );
+        }
+
+        $this->checkKeys($data['stroke'], ['direction', 'value']);
+        $beat->getStroke()->setDirection($data['stroke']['direction']);
+        $beat->getStroke()->setValue($data['stroke']['value']);
+
+        foreach ($data['voices'] as $index => $voice) {
+            $this->checkKeys($voice, 'voice');
+            $beat->setVoice(
+                $index,
+                $this->parseVoice($index, $voice['voice'])
+            );
+        }
+
+        $this->item = $beat;
     }
-
-    if (isset($data['text'])) {
-      $beat->setText(
-        $this->parseText($data['text'])
-      );
-    }
-
-    $this->checkKeys($data['stroke'], ['direction', 'value']);
-    $beat->getStroke()->setDirection($data['stroke']['direction']);
-    $beat->getStroke()->setValue($data['stroke']['value']);
-
-    foreach ($data['voices'] as $index => $voice) {
-      $this->checkKeys($voice, 'voice');
-      $beat->setVoice(
-        $index,
-        $this->parseVoice($index, $voice['voice'])
-      );
-    }
-
-    $this->item = $beat;
-  }
 }

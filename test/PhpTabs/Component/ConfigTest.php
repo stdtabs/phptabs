@@ -19,25 +19,25 @@ use PhpTabs\Component\Config;
  */
 class ConfigTest extends PHPUnit_Framework_TestCase
 {
-  public function testConfig()
-  {
-    Config::clear();
+    public function testConfig()
+    {
+        Config::clear();
 
-    # bad key format scenario
-    $this->assertEquals(null, Config::get(array(42)));
+        // bad key format scenario
+        $this->assertEquals(null, Config::get(array(42)));
     
-    Config::set(array(42), 42);
+        Config::set(array(42), 42);
 
-    $this->assertEquals(null, Config::get(array(42)));
+        $this->assertEquals(null, Config::get(array(42)));
     
-    # sets a good key
-    Config::set('Sense', 42);
-    $this->assertEquals(42, Config::get('Sense'));
+        // sets a good key
+        Config::set('Sense', 42);
+        $this->assertEquals(42, Config::get('Sense'));
     
-    # Gets all configs
-    $expected = array(
-      'Sense' => 42
-    );
-    $this->assertEquals($expected, Config::getAll());
-  }
+        // Gets all configs
+        $expected = array(
+        'Sense' => 42
+        );
+        $this->assertEquals($expected, Config::getAll());
+    }
 }

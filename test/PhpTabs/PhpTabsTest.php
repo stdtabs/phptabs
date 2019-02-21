@@ -20,24 +20,24 @@ use PhpTabs\IOFactory;
  */
 class PhpTabsTest extends PHPUnit_Framework_TestCase
 {
-  /**
-   * @expectedException PHPUnit_Framework_Error
-   */
-  public function testException()
-  {
-    # Not a valid number of params
-    IOFactory::create()->export('param1', 'param2', 'param3');
-  }
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+    public function testException()
+    {
+        // Not a valid number of params
+        IOFactory::create()->export('param1', 'param2', 'param3');
+    }
 
-  /**
-   * Test getVersion()
-   */
-  public function testGetVersion()
-  {
-    $this->assertRegExp(
-      '/\d.\d.\d/',
-      IOFactory::create()->getVersion(),
-      'getVersion failed'
-    );
-  }
+    /**
+     * Test getVersion()
+     */
+    public function testGetVersion()
+    {
+        $this->assertRegExp(
+            '/\d.\d.\d/',
+            IOFactory::create()->getVersion(),
+            'getVersion failed'
+        );
+    }
 }

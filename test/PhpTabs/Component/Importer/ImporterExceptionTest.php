@@ -22,68 +22,68 @@ use PhpTabs\Music\Song;
  */
 class ImporterExceptionTest extends PHPUnit_Framework_TestCase
 {
-  /**
-   * Provider
-   */
-  public function getAllParsers()
-  {
-    $names = [
-      'Beat',
-      'ChannelParameter',
-      'Channel',
-      'Chord',
-      'Color',
-      'Duration',
-      'EffectPoints',
-      'Grace',
-      'Harmonic',
-      'Lyrics',
-      'Marker',
-      'MeasureHeader',
-      'Measure',
-      'NoteEffect',
-      'Note',
-      'Song',
-      'String',
-      'Text',
-      'TimeSignature',
-      'Track',
-      'TremoloPicking',
-      'Trill',
-      'Voice'
-    ];
+    /**
+     * Provider
+     */
+    public function getAllParsers()
+    {
+        $names = [
+        'Beat',
+        'ChannelParameter',
+        'Channel',
+        'Chord',
+        'Color',
+        'Duration',
+        'EffectPoints',
+        'Grace',
+        'Harmonic',
+        'Lyrics',
+        'Marker',
+        'MeasureHeader',
+        'Measure',
+        'NoteEffect',
+        'Note',
+        'Song',
+        'String',
+        'Text',
+        'TimeSignature',
+        'Track',
+        'TremoloPicking',
+        'Trill',
+        'Voice'
+        ];
 
-    $parsers = [];
+        $parsers = [];
 
-    foreach ($names as $name) {
-      $param1 = [];
-      $param2 = null;
+        foreach ($names as $name) {
+            $param1 = [];
+            $param2 = null;
 
-      if ($name == 'Song') {
-        $param2 = new Song();
-      } elseif ($name == 'Track') {
-        $param2 = new Song();
-      } elseif ($name == 'Voice') {
-        $param1 = 0;
-        $param2 = [];
-      } elseif ($name == 'Measure') {
-        $param2 = new MeasureHeader();
-      }
+            if ($name == 'Song') {
+                $param2 = new Song();
+            } elseif ($name == 'Track') {
+                $param2 = new Song();
+            } elseif ($name == 'Voice') {
+                $param1 = 0;
+                $param2 = [];
+            } elseif ($name == 'Measure') {
+                $param2 = new MeasureHeader();
+            }
 
-      $parsers[] = ['PhpTabs\\Component\\Importer\\' . $name . 'Parser', $param1, $param2];
+            $parsers[] = ['PhpTabs\\Component\\Importer\\' . $name . 'Parser', $param1, $param2];
+        }
+
+        return $parsers;
     }
 
-    return $parsers;
-  }
-
-  /**
-   * Test importer exceptions
-   * 
-   * @dataProvider getAllParsers()
-   * @expectedException Exception
-   */
-  public function testExceptions($name, $data, $param2)
-  {
-    new $name($data, $param2);
-  }
+    /**
+     * Test importer exceptions
+     * 
+     * @dataProvider      getAllParsers()
+     * @expectedException Exception
+     */
+    public function testExceptions($name, $data, $param2)
+    {
+        new $name($data, $param2);
+    }
 }

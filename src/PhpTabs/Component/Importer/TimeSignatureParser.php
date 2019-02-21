@@ -15,23 +15,23 @@ use PhpTabs\Music\TimeSignature;
 
 class TimeSignatureParser extends ParserBase
 {
-  protected $required = ['numerator', 'denominator'];
+    protected $required = ['numerator', 'denominator'];
 
-  /**
-   * Parse a time signature array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a time signature array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $timeSignature = new TimeSignature();
-    $timeSignature->setNumerator($data['numerator']);
-    $timeSignature->setDenominator(
-      $this->parseDuration($data['denominator'])
-    );
+        $timeSignature = new TimeSignature();
+        $timeSignature->setNumerator($data['numerator']);
+        $timeSignature->setDenominator(
+            $this->parseDuration($data['denominator'])
+        );
 
-    $this->item = $timeSignature;
-  }
+        $this->item = $timeSignature;
+    }
 }

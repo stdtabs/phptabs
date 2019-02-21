@@ -13,32 +13,32 @@ namespace PhpTabs\Writer\Midi;
 
 class MidiMeasureHelper
 {
-  private $index;
-  private $move;
+    private $index;
+    private $move;
 
-  /**
-   * @param int $index
-   * @param int $move
-   */
-  public function __construct($index, $move)
-  {
-    $this->index = $index;
-    $this->move = $move;
-  }
+    /**
+     * @param int $index
+     * @param int $move
+     */
+    public function __construct($index, $move)
+    {
+        $this->index = $index;
+        $this->move = $move;
+    }
 
-  /**
-   * @return int
-   */
-  public function getIndex()
-  {
-    return $this->index;
-  }
+    /**
+     * @return int
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
 
-  /**
-   * @return int
-   */
-  public function getMove()
-  {
-    return $this->move;
-  }
+    /**
+     * @return int
+     */
+    public function getMove()
+    {
+        return $this->move;
+    }
 }

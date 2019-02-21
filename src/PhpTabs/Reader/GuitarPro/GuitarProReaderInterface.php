@@ -18,11 +18,11 @@ use PhpTabs\Component\ReaderInterface;
  */
 interface GuitarProReaderInterface extends ReaderInterface
 {
-  const GP_BEND_SEMITONE = 25;
-  const GP_BEND_POSITION = 60;
+    const GP_BEND_SEMITONE = 25;
+    const GP_BEND_POSITION = 60;
 
-  /**
-   * @return array of supported versions
-   */
-  public function getSupportedVersions();
+    /**
+     * @return array of supported versions
+     */
+    public function getSupportedVersions();
 }

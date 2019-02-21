@@ -15,26 +15,26 @@ use PhpTabs\Music\Chord;
 
 class ChordParser extends ParserBase
 {
-  protected $required = ['firstFret', 'name', 'strings'];
+    protected $required = ['firstFret', 'name', 'strings'];
 
-  /**
-   * Parse a chord array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a chord array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $chord = new Chord(count($data['strings']));
-    $chord->setName($data['name']);
-    $chord->setFirstFret($data['firstFret']);
+        $chord = new Chord(count($data['strings']));
+        $chord->setName($data['name']);
+        $chord->setFirstFret($data['firstFret']);
 
-    foreach ($data['strings'] as $index => $string) {
-      $this->checkKeys($string, 'string');
-      $chord->addFretValue($index, $string['string']);
+        foreach ($data['strings'] as $index => $string) {
+            $this->checkKeys($string, 'string');
+            $chord->addFretValue($index, $string['string']);
+        }
+
+        $this->item = $chord;
     }
-
-    $this->item = $chord;
-  }
 }

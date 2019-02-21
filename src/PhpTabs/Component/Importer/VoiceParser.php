@@ -15,35 +15,35 @@ use PhpTabs\Music\Voice;
 
 class VoiceParser extends ParserBase
 {
-  protected $required = ['duration', 'index', 'empty', 'direction', 'notes'];
+    protected $required = ['duration', 'index', 'empty', 'direction', 'notes'];
 
-  /**
-   * Parse a voice array
-   * 
-   * @param  int   $index
-   * @param  array $data
-   */
-  public function __construct($index, array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a voice array
+     * 
+     * @param int   $index
+     * @param array $data
+     */
+    public function __construct($index, array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $voice = new Voice($index);
+        $voice = new Voice($index);
 
-    $voice->setDuration(
-      $this->parseDuration($data['duration'])
-    );
+        $voice->setDuration(
+            $this->parseDuration($data['duration'])
+        );
 
-    $voice->setDirection($data['direction']);
+        $voice->setDirection($data['direction']);
 
-    foreach ($data['notes'] as $note) {
-      $this->checkKeys($note, 'note');
-      $voice->addNote(
-        $this->parseNote($note['note'])
-      );
+        foreach ($data['notes'] as $note) {
+            $this->checkKeys($note, 'note');
+            $voice->addNote(
+                $this->parseNote($note['note'])
+            );
+        }
+
+        $voice->setEmpty($data['empty']);
+
+        $this->item = $voice;
     }
-
-    $voice->setEmpty($data['empty']);
-
-    $this->item = $voice;
-  }
 }

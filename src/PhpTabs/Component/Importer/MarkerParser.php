@@ -15,25 +15,25 @@ use PhpTabs\Music\Marker;
 
 class MarkerParser extends ParserBase
 {
-  protected $required = ['measure', 'title', 'color'];
+    protected $required = ['measure', 'title', 'color'];
 
-  /**
-   * Parse a marker array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a marker array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $marker = new Marker();
-    $marker->setMeasure($data['measure']);
-    $marker->setTitle($data['title']);
-    $marker->setColor(
-      $this->parseColor($data['color'])
-    );
+        $marker = new Marker();
+        $marker->setMeasure($data['measure']);
+        $marker->setTitle($data['title']);
+        $marker->setColor(
+            $this->parseColor($data['color'])
+        );
 
 
-    $this->item = $marker;
-  }
+        $this->item = $marker;
+    }
 }

@@ -16,43 +16,43 @@ namespace PhpTabs\Music;
  */
 class EffectTremoloPicking
 {
-  private $duration;
+    private $duration;
 
-  public function __construct()
-  {
-    $this->duration = new Duration();
-  }
+    public function __construct()
+    {
+        $this->duration = new Duration();
+    }
 
-  /**
-   * @return \PhpTabs\Music\Duration
-   */
-  public function getDuration()
-  {
-    return $this->duration;
-  }
+    /**
+     * @return \PhpTabs\Music\Duration
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
 
-  /**
-   * @param \PhpTabs\Music\Duration $duration
-   */
-  public function setDuration(Duration $duration)
-  {
-    $this->duration = $duration;
-  }
+    /**
+     * @param \PhpTabs\Music\Duration $duration
+     */
+    public function setDuration(Duration $duration)
+    {
+        $this->duration = $duration;
+    }
 
-  /**
-   * @return \PhpTabs\Music\EffectTremoloPicking
-   */
-  public function __clone()
-  {
-    $effect = new EffectTremoloPicking();
+    /**
+     * @return \PhpTabs\Music\EffectTremoloPicking
+     */
+    public function __clone()
+    {
+        $effect = new EffectTremoloPicking();
 
-    $effect->getDuration()->setValue($this->getDuration()->getValue());
-    $effect->getDuration()->setDotted($this->getDuration()->isDotted());
-    $effect->getDuration()->setDoubleDotted($this->getDuration()->isDoubleDotted());
-    $effect->getDuration()->getDivision()->setEnters($this->getDuration()->getDivision()->getEnters());
-    $effect->getDuration()->getDivision()->setTimes($this->getDuration()->getDivision()->getTimes());
+        $effect->getDuration()->setValue($this->getDuration()->getValue());
+        $effect->getDuration()->setDotted($this->getDuration()->isDotted());
+        $effect->getDuration()->setDoubleDotted($this->getDuration()->isDoubleDotted());
+        $effect->getDuration()->getDivision()->setEnters($this->getDuration()->getDivision()->getEnters());
+        $effect->getDuration()->getDivision()->setTimes($this->getDuration()->getDivision()->getTimes());
 
-    return $effect;
-  }
-	
+        return $effect;
+    }
+    
 }

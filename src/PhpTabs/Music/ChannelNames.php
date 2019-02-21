@@ -16,7 +16,7 @@ namespace PhpTabs\Music;
  */
 class ChannelNames
 {
-  public static $defaultNames = array(
+    public static $defaultNames = array(
     "Piano",
     "Bright Piano",
     "Electric Grand",
@@ -145,5 +145,5 @@ class ChannelNames
     "Helicopter",
     "Applause",
     "Gunshot"
-  );
+    );
 }

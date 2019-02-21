@@ -15,21 +15,21 @@ use PhpTabs\Music\ChannelParameter;
 
 class ChannelParameterParser extends ParserBase
 {
-  protected $required = ['key', 'value'];
+    protected $required = ['key', 'value'];
 
-  /**
-   * Parse a channel parameter array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a channel parameter array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $parameter = new ChannelParameter();
-    $parameter->setKey($data['key']);
-    $parameter->setValue($data['value']);
+        $parameter = new ChannelParameter();
+        $parameter->setKey($data['key']);
+        $parameter->setValue($data['value']);
 
-    $this->item = $parameter;
-  }
+        $this->item = $parameter;
+    }
 }

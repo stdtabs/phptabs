@@ -15,39 +15,39 @@ use PhpTabs\Music\Note;
 
 class MidiNoteHelper
 {
-  /**
-   * @var \PhpTabs\Writer\Midi\MidiMeasureHelper
-   */
-  private $measure;
+    /**
+     * @var \PhpTabs\Writer\Midi\MidiMeasureHelper
+     */
+    private $measure;
 
-  /**
-   * @var \PhpTabs\Music\Note
-   */
-  private $note;
+    /**
+     * @var \PhpTabs\Music\Note
+     */
+    private $note;
 
-  /**
-   * @param \PhpTabs\Writer\Midi\MidiMeasureHelper $measure
-   * @param \PhpTabs\Music\Note $note
-   */
-  public function __construct(MidiMeasureHelper $measure, Note $note)
-  {
-    $this->measure = $measure;
-    $this->note = $note;
-  }
+    /**
+     * @param \PhpTabs\Writer\Midi\MidiMeasureHelper $measure
+     * @param \PhpTabs\Music\Note                    $note
+     */
+    public function __construct(MidiMeasureHelper $measure, Note $note)
+    {
+        $this->measure = $measure;
+        $this->note = $note;
+    }
 
-  /**
-   * @return \PhpTabs\Writer\Midi\MidiMeasureHelper $measure
-   */
-  public function getMeasure()
-  {
-    return $this->measure;
-  }
+    /**
+     * @return \PhpTabs\Writer\Midi\MidiMeasureHelper $measure
+     */
+    public function getMeasure()
+    {
+        return $this->measure;
+    }
 
-  /**
-   * @return \PhpTabs\Music\Note
-   */
-  public function getNote()
-  {
-    return $this->note;
-  }
+    /**
+     * @return \PhpTabs\Music\Note
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
 }

@@ -15,7 +15,7 @@ use PhpTabs\Music\Channel;
 
 class ChannelParser extends ParserBase
 {
-  protected $required = [
+    protected $required = [
       'channelId',
       'name',
       'bank',
@@ -27,35 +27,35 @@ class ChannelParser extends ParserBase
       'phaser',
       'tremolo',
       'parameters'
-  ];
+    ];
 
-  /**
-   * Parse a channel array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a channel array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $channel = new Channel();
-    $channel->setChannelId($data['channelId']);
-    $channel->setName($data['name']);
-    $channel->setBank($data['bank']);
-    $channel->setProgram($data['program']);
-    $channel->setVolume($data['volume']);
-    $channel->setBalance($data['balance']);
-    $channel->setChorus($data['chorus']);
-    $channel->setReverb($data['reverb']);
-    $channel->setPhaser($data['phaser']);
-    $channel->setTremolo($data['tremolo']);
+        $channel = new Channel();
+        $channel->setChannelId($data['channelId']);
+        $channel->setName($data['name']);
+        $channel->setBank($data['bank']);
+        $channel->setProgram($data['program']);
+        $channel->setVolume($data['volume']);
+        $channel->setBalance($data['balance']);
+        $channel->setChorus($data['chorus']);
+        $channel->setReverb($data['reverb']);
+        $channel->setPhaser($data['phaser']);
+        $channel->setTremolo($data['tremolo']);
 
-    foreach ($data['parameters'] as $parameter) {
-      $channel->addParameter(
-        $this->parseChannelParameter($parameter)
-      );
+        foreach ($data['parameters'] as $parameter) {
+            $channel->addParameter(
+                $this->parseChannelParameter($parameter)
+            );
+        }
+
+        $this->item = $channel;
     }
-
-    $this->item = $channel;
-  }
 }

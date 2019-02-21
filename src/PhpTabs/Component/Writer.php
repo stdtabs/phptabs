@@ -16,112 +16,117 @@ use PhpTabs\Component\Tablature;
 
 class Writer
 {
-  /** @var string $path */
-  private $path;
+    /**
+     * 
+     *
+     * @var string $path 
+     */
+    private $path;
 
-  /** @var Tablature */
-  private $tablature;
+    /**
+     * 
+     *
+     * @var Tablature 
+     */
+    private $tablature;
 
-  /** @var array A list of supported writers */
-  private $writers = array(
+    /**
+     * 
+     *
+     * @var array A list of supported writers 
+     */
+    private $writers = array(
     'gp3' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro3Writer',
     'gp4' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro4Writer',
     'gp5' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro5Writer',
     'mid' => 'PhpTabs\\Writer\\Midi\\MidiWriter',
     'midi'=> 'PhpTabs\\Writer\\Midi\\MidiWriter'
-  );
+    );
 
-  /**
-   * @param \PhpTabs\Component\Tablature $tablature
-   */
-  public function __construct(Tablature $tablature)
-  {
-    $this->tablature = $tablature;
-  }
-
-  /**
-   * Builds content in $format
-   * 
-   * @param string $format
-   *
-   * @return string A binary chain
-   * 
-   * @throws \Exception if output format is not supported
-   */
-  public function build($format)
-  {
-    if (!isset($this->writers[$format]))
+    /**
+     * @param \PhpTabs\Component\Tablature $tablature
+     */
+    public function __construct(Tablature $tablature)
     {
-      $message = sprintf('Output format %s is not supported', $format);
-
-      throw new Exception($message);
+        $this->tablature = $tablature;
     }
 
-    return (new $this->writers[$format]($this->tablature->getSong()))->getContent();
-  }
-
-  /**
-   * Outputs internal model into buffer or a file
-   *
-   * @param string $path
-   * 
-   * @return mixed boolean|string
-   * 
-   * @throws \Exception if an incorrect destination path is supplied
-   */
-  public function save($path = null)
-  {
-    if ($path == 'php://output')
+    /**
+     * Builds content in $format
+     * 
+     * @param string $format
+     *
+     * @return string A binary chain
+     * 
+     * @throws \Exception if output format is not supported
+     */
+    public function build($format)
     {
-      print($this->build($this->tablature->getFormat()));
+        if (!isset($this->writers[$format])) {
+            $message = sprintf('Output format %s is not supported', $format);
 
-      return true;
-    }
-    elseif (null === $path)
-    {
-      return $this->build($this->tablature->getFormat());
-    }
-    elseif (is_string($path))
-    {
-      $parts = pathinfo($path);
+            throw new Exception($message);
+        }
 
-      if (!isset($parts['basename'], $parts['extension']))
-      {
-        $message = sprintf('Destination path %s is not complete', $path);
-
-        throw new Exception($message);
-      }
-
-      $this->path = $path;
-
-      return $this->record($this->build($parts['extension']));
+        return (new $this->writers[$format]($this->tablature->getSong()))->getContent();
     }
 
-    throw new Exception('Save path is not allowed');
-  }
-
-  /**
-   * Records $content into a file
-   * 
-   * @param string $content binary chain
-   * 
-   * @throws \Exception If content can not be written
-   */
-  private function record($content)
-  {
-    $dir = pathinfo($this->path, PATHINFO_DIRNAME);
-
-    if (!is_dir($dir) || !is_writable($dir))
+    /**
+     * Outputs internal model into buffer or a file
+     *
+     * @param string $path
+     * 
+     * @return mixed boolean|string
+     * 
+     * @throws \Exception if an incorrect destination path is supplied
+     */
+    public function save($path = null)
     {
-      throw new Exception('Save directory error');
+        if ($path == 'php://output') {
+            print($this->build($this->tablature->getFormat()));
+
+            return true;
+        }
+        elseif (null === $path) {
+            return $this->build($this->tablature->getFormat());
+        }
+        elseif (is_string($path)) {
+            $parts = pathinfo($path);
+
+            if (!isset($parts['basename'], $parts['extension'])) {
+                $message = sprintf('Destination path %s is not complete', $path);
+
+                throw new Exception($message);
+            }
+
+            $this->path = $path;
+
+            return $this->record($this->build($parts['extension']));
+        }
+
+        throw new Exception('Save path is not allowed');
     }
-    elseif (is_file($this->path) && !is_writable($this->path))
+
+    /**
+     * Records $content into a file
+     * 
+     * @param string $content binary chain
+     * 
+     * @throws \Exception If content can not be written
+     */
+    private function record($content)
     {
-      $message = sprintf('File "%s" still exists and is not writable', $this->path);
+        $dir = pathinfo($this->path, PATHINFO_DIRNAME);
 
-      throw new Exception($message);
+        if (!is_dir($dir) || !is_writable($dir)) {
+            throw new Exception('Save directory error');
+        }
+        elseif (is_file($this->path) && !is_writable($this->path)) {
+            $message = sprintf('File "%s" still exists and is not writable', $this->path);
+
+            throw new Exception($message);
+        }
+
+        file_put_contents($this->path, $content);
     }
-
-    file_put_contents($this->path, $content);
-  }
 }

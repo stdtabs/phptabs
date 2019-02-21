@@ -15,20 +15,20 @@ use PhpTabs\Music\Text;
 
 class TextParser extends ParserBase
 {
-  protected $required = ['value'];
+    protected $required = ['value'];
 
-  /**
-   * Parse a text array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a text array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $text = new Text();
-    $text->setValue($data['value']);
+        $text = new Text();
+        $text->setValue($data['value']);
 
-    $this->item = $text;
-  }
+        $this->item = $text;
+    }
 }

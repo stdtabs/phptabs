@@ -21,21 +21,21 @@ use PhpTabs\IOFactory;
  */
 class AsciiRendererTest extends PHPUnit_Framework_TestCase
 {
-  public function setUp()
-  {
-    $this->filename = 'testSimpleTab.gp5';
-    $this->tablature = IOFactory::fromFile(
-      PHPTABS_TEST_BASEDIR 
-      . '/samples/'
-      . $this->filename
-    );
-  }
+    public function setUp()
+    {
+        $this->filename = 'testSimpleTab.gp5';
+        $this->tablature = IOFactory::fromFile(
+            PHPTABS_TEST_BASEDIR 
+            . '/samples/'
+            . $this->filename
+        );
+    }
 
-  public function getScenarios()
-  {
-    $scenarios = [
-      #0 Test track index 1
-      [1, [], '
+    public function getScenarios()
+    {
+        $scenarios = [
+        // 0 Test track index 1
+        [1, [], '
 
 
 E|-------------------------------------|-0-----------3-----------------------|-------------------------------------|
@@ -54,8 +54,8 @@ A|-----------------------------------------|
 E|-----------------------------------------|
 '     ],
 
-      #1 Test all tracks
-      [null, [], '
+        // 1 Test all tracks
+        [null, [], '
 
 
 E|------------------------|-10-----10-----------------------------------------------------|
@@ -94,8 +94,8 @@ A|-----------------------------------------|
 E|-----------------------------------------|
 '     ],
 
-#2 Test track index 0 + songHeader + TrackHeader
-      [0, ['songHeader'  => true, 'trackHeader' => true], '
+        // 2 Test track index 0 + songHeader + TrackHeader
+        [0, ['songHeader'  => true, 'trackHeader' => true], '
 Title: Testing name
 Album: Testing album
 Artist: Testing artist
@@ -118,8 +118,8 @@ D|------------------------------------------------------------|-----------------
 A|------------------------------------------------------------|-------------------------------------------------|
 E|------------------------------------------------------------|-------------------------------------------------|
 '],
-#3 Test track index 0 + maxLineLength = 500
-      [0, ['maxLineLength' => 500], '
+        // 3 Test track index 0 + maxLineLength = 500
+        [0, ['maxLineLength' => 500], '
 
 
 E|------------------------|-10-----10-----------------------------------------------------|------------------------------------------------------------|-----------------------------12---12-------------|
@@ -130,47 +130,47 @@ A|------------------------|-----------------------------------------------------
 E|------------------------|---------------------------------------------------------------|------------------------------------------------------------|-------------------------------------------------|
 ']
 
-    ];
+        ];
 
-    return $scenarios;
-  }
+        return $scenarios;
+    }
 
-  /**
-   * Test ASCII renderers
-   * 
-   * @dataProvider getScenarios()
-   */
-  public function testScenarios($trackIndex, $options, $expected)
-  {
-    $renderer = $this->tablature
-      ->getRenderer('ascii')
-      ->setOptions($options);
+    /**
+     * Test ASCII renderers
+     * 
+     * @dataProvider getScenarios()
+     */
+    public function testScenarios($trackIndex, $options, $expected)
+    {
+        $renderer = $this->tablature
+            ->getRenderer('ascii')
+            ->setOptions($options);
 
-    # Check type
-    $this->assertInstanceOf(
-      'PhpTabs\\Component\\Renderer\\RendererInterface',
-      $renderer
-    );
+        // Check type
+        $this->assertInstanceOf(
+            'PhpTabs\\Component\\Renderer\\RendererInterface',
+            $renderer
+        );
 
-    # Check output
-    $this->assertEquals($expected, $renderer->render($trackIndex));
-  }
+        // Check output
+        $this->assertEquals($expected, $renderer->render($trackIndex));
+    }
 
-  /**
-   * Track index does not exist
-   *
-   * @expectedException \Exception
-   */
-  public function testNoTrackException()
-  {
-    $this
-      ->tablature
-      ->getRenderer('ascii')
-      ->render(10);
-  }
+    /**
+     * Track index does not exist
+     *
+     * @expectedException \Exception
+     */
+    public function testNoTrackException()
+    {
+        $this
+            ->tablature
+            ->getRenderer('ascii')
+            ->render(10);
+    }
 
-  public function tearDown()
-  {
-    unset($this->tablature);
-  }
+    public function tearDown()
+    {
+        unset($this->tablature);
+    }
 }

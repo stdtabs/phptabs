@@ -16,29 +16,29 @@ use PhpTabs\Music\MeasureHeader;
 
 class MeasureParser extends ParserBase
 {
-  protected $required = ['clef', 'keySignature', 'beats'];
+    protected $required = ['clef', 'keySignature', 'beats'];
 
-  /**
-   * Parse a color array
-   * 
-   * @param  array $data
-   * @param  \PhpTabs\Music\MeasureHeader $header
-   */
-  public function __construct(array $data, MeasureHeader $header)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a color array
+     * 
+     * @param array                        $data
+     * @param \PhpTabs\Music\MeasureHeader $header
+     */
+    public function __construct(array $data, MeasureHeader $header)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $measure = new Measure($header);
-    $measure->setClef($data['clef']);
-    $measure->setKeySignature($data['keySignature']);
+        $measure = new Measure($header);
+        $measure->setClef($data['clef']);
+        $measure->setKeySignature($data['keySignature']);
 
-    foreach ($data['beats'] as $beat) {
-      $this->checkKeys($beat, 'beat');
-      $measure->addBeat(
-        $this->parseBeat($beat['beat'])
-      );
+        foreach ($data['beats'] as $beat) {
+            $this->checkKeys($beat, 'beat');
+            $measure->addBeat(
+                $this->parseBeat($beat['beat'])
+            );
+        }
+
+        $this->item = $measure;
     }
-
-    $this->item = $measure;
-  }
 }

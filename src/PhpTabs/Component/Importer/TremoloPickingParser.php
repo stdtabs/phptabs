@@ -15,22 +15,22 @@ use PhpTabs\Music\EffectTremoloPicking;
 
 class TremoloPickingParser extends ParserBase
 {
-  protected $required = ['duration'];
+    protected $required = ['duration'];
 
-  /**
-   * Parse a tremolo picking effect array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a tremolo picking effect array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $effect = new EffectTremoloPicking();
-    $effect->setDuration(
-      $this->parseDuration($data['duration'])
-    );
+        $effect = new EffectTremoloPicking();
+        $effect->setDuration(
+            $this->parseDuration($data['duration'])
+        );
 
-    $this->item = $effect;
-  }
+        $this->item = $effect;
+    }
 }

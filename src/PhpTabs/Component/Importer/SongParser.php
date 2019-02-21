@@ -15,7 +15,7 @@ use PhpTabs\Music\Song;
 
 class SongParser extends ParserBase
 {
-  protected $required = [
+    protected $required = [
         'name',
         'artist',
         'album',
@@ -26,48 +26,48 @@ class SongParser extends ParserBase
         'channels',
         'measureHeaders',
         'tracks'
-  ];
+    ];
 
-  /**
-   * Parse a song array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data, Song $song)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a song array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data, Song $song)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $song->setName($data['name']);
-    $song->setArtist($data['artist']);
-    $song->setAlbum($data['album']);
-    $song->setAuthor($data['author']);
-    $song->setCopyright($data['copyright']);
-    $song->setWriter($data['writer']);
-    $song->setComments($data['comments']);
+        $song->setName($data['name']);
+        $song->setArtist($data['artist']);
+        $song->setAlbum($data['album']);
+        $song->setAuthor($data['author']);
+        $song->setCopyright($data['copyright']);
+        $song->setWriter($data['writer']);
+        $song->setComments($data['comments']);
 
-    $channelCount = count($data['channels']);
+        $channelCount = count($data['channels']);
 
-    foreach ($data['channels'] as $channel) {
-      $this->checkKeys($channel, 'channel');
-      $song->addChannel(
-        $this->parseChannel($channel['channel'])
-      );
+        foreach ($data['channels'] as $channel) {
+            $this->checkKeys($channel, 'channel');
+            $song->addChannel(
+                $this->parseChannel($channel['channel'])
+            );
+        }
+
+        foreach ($data['measureHeaders'] as $header) {
+            $this->checkKeys($header, 'header');
+            $song->addMeasureHeader(
+                $this->parseMeasureHeader($header['header'])
+            );
+        }
+
+        foreach ($data['tracks'] as $track) {
+            $this->checkKeys($track, 'track');
+            $song->addTrack(
+                $this->parseTrack($track['track'], $song)
+            );
+        }
+
+        $this->item = $song;
     }
-
-    foreach ($data['measureHeaders'] as $header) {
-      $this->checkKeys($header, 'header');
-      $song->addMeasureHeader(
-        $this->parseMeasureHeader($header['header'])
-      );
-    }
-
-    foreach ($data['tracks'] as $track) {
-      $this->checkKeys($track, 'track');
-      $song->addTrack(
-        $this->parseTrack($track['track'], $song)
-      );
-    }
-
-    $this->item = $song;
-  }
 }

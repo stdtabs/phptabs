@@ -19,61 +19,57 @@ use PhpTabs\Music\NoteEffect;
 
 class GuitarPro4Effects extends AbstractReader
 {
-  /**
-   * Reads tremolo bar
-   * 
-   * @param \PhpTabs\Music\NoteEffect $noteEffect
-   */
-  public function readTremoloBar(NoteEffect $effect)
-  {
-    $tremoloBar = new EffectTremoloBar();
-
-    $this->reader->skip(5);
-
-    $points = $this->reader->readInt();
-
-    for ($i = 0; $i < $points; $i++)
+    /**
+     * Reads tremolo bar
+     * 
+     * @param \PhpTabs\Music\NoteEffect $noteEffect
+     */
+    public function readTremoloBar(NoteEffect $effect)
     {
-      $position = $this->reader->readInt();
-      $value = $this->reader->readInt();
-      $this->reader->readByte();
+        $tremoloBar = new EffectTremoloBar();
 
-      $pointPosition = round($position * EffectTremoloBar::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
-      $pointValue = round($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2));
-      $tremoloBar->addPoint($pointPosition, $pointValue);
+        $this->reader->skip(5);
+
+        $points = $this->reader->readInt();
+
+        for ($i = 0; $i < $points; $i++)
+        {
+            $position = $this->reader->readInt();
+            $value = $this->reader->readInt();
+            $this->reader->readByte();
+
+            $pointPosition = round($position * EffectTremoloBar::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
+            $pointValue = round($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2));
+            $tremoloBar->addPoint($pointPosition, $pointValue);
+        }
+
+        if (count($tremoloBar->getPoints())) {
+            $effect->setTremoloBar($tremoloBar);
+        }
     }
 
-    if (count($tremoloBar->getPoints()))
+    /**
+     * Reads tremolo picking
+     * 
+     * @param \PhpTabs\Music\NoteEffect $noteEffect
+     */
+    public function readTremoloPicking(NoteEffect $noteEffect)
     {
-      $effect->setTremoloBar($tremoloBar);
-    }
-  }
+        $value = $this->reader->readUnsignedByte();
 
-  /**
-   * Reads tremolo picking
-   * 
-   * @param \PhpTabs\Music\NoteEffect $noteEffect
-   */
-  public function readTremoloPicking(NoteEffect $noteEffect)
-  {
-    $value = $this->reader->readUnsignedByte();
+        $tremoloPicking = new EffectTremoloPicking();
 
-    $tremoloPicking = new EffectTremoloPicking();
-
-    if ($value == 1)
-    {
-      $tremoloPicking->getDuration()->setValue(Duration::EIGHTH);
-      $noteEffect->setTremoloPicking($tremoloPicking);
+        if ($value == 1) {
+            $tremoloPicking->getDuration()->setValue(Duration::EIGHTH);
+            $noteEffect->setTremoloPicking($tremoloPicking);
+        }
+        elseif ($value == 2) {
+            $tremoloPicking->getDuration()->setValue(Duration::SIXTEENTH);
+            $noteEffect->setTremoloPicking($tremoloPicking);
+        }
+        elseif ($value == 3) {
+            $tremoloPicking->getDuration()->setValue(Duration::THIRTY_SECOND);
+            $noteEffect->setTremoloPicking($tremoloPicking);
+        }
     }
-    elseif ($value == 2)
-    {
-      $tremoloPicking->getDuration()->setValue(Duration::SIXTEENTH);
-      $noteEffect->setTremoloPicking($tremoloPicking);
-    }
-    elseif ($value == 3)
-    {
-      $tremoloPicking->getDuration()->setValue(Duration::THIRTY_SECOND);
-      $noteEffect->setTremoloPicking($tremoloPicking);
-    }
-  }
 }

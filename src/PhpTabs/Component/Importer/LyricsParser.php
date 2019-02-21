@@ -15,21 +15,21 @@ use PhpTabs\Music\Lyric;
 
 class LyricsParser extends ParserBase
 {
-  protected $required = ['from', 'lyrics'];
+    protected $required = ['from', 'lyrics'];
 
-  /**
-   * Parse a color array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a color array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $lyric = new Lyric();
-    $lyric->setFrom($data['from']);
-    $lyric->setLyrics($data['lyrics']);
+        $lyric = new Lyric();
+        $lyric->setFrom($data['from']);
+        $lyric->setLyrics($data['lyrics']);
 
-    $this->item = $lyric;
-  }
+        $this->item = $lyric;
+    }
 }

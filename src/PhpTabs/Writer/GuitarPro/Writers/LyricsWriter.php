@@ -15,37 +15,37 @@ use PhpTabs\Music\Song;
 
 class LyricsWriter
 {
-  private $writer;
+    private $writer;
 
-  public function __construct($writer)
-  {
-    $this->writer = $writer;
-  }
-
-  /**
-   * @param \PhpTabs\Music\Song $song
-   */
-  public function writeLyrics(Song $song)
-  {
-    $lyricTrack = null;
-    $tracks = $song->getTracks();
-
-    foreach ($tracks as $track) {
-      if (!$track->getLyrics()->isEmpty()) {
-        $lyricTrack = $track;
-        break;
-      }
+    public function __construct($writer)
+    {
+        $this->writer = $writer;
     }
 
-    $this->writer->writeInt($lyricTrack == null ? 0 : $lyricTrack->getNumber());
-    $this->writer->writeInt($lyricTrack == null ? 0 : $lyricTrack->getLyrics()->getFrom());
-    $this->writer->writeStringInteger(
-      $lyricTrack == null ? '' : $lyricTrack->getLyrics()->getLyrics()
-    );
+    /**
+     * @param \PhpTabs\Music\Song $song
+     */
+    public function writeLyrics(Song $song)
+    {
+        $lyricTrack = null;
+        $tracks = $song->getTracks();
 
-    for ($i = 0; $i < 4; $i++) {
-      $this->writer->writeInt($lyricTrack === null ? 0 : 1);
-      $this->writer->writeStringInteger('');
+        foreach ($tracks as $track) {
+            if (!$track->getLyrics()->isEmpty()) {
+                $lyricTrack = $track;
+                break;
+            }
+        }
+
+        $this->writer->writeInt($lyricTrack == null ? 0 : $lyricTrack->getNumber());
+        $this->writer->writeInt($lyricTrack == null ? 0 : $lyricTrack->getLyrics()->getFrom());
+        $this->writer->writeStringInteger(
+            $lyricTrack == null ? '' : $lyricTrack->getLyrics()->getLyrics()
+        );
+
+        for ($i = 0; $i < 4; $i++) {
+            $this->writer->writeInt($lyricTrack === null ? 0 : 1);
+            $this->writer->writeStringInteger('');
+        }
     }
-  }
 }

@@ -21,138 +21,138 @@ use PhpTabs\Music\TimeSignature;
 
 class GuitarPro3Reader extends GuitarProReaderBase
 {
-  /** @var array $supportedVersions */
-  private static $supportedVersions = array('FICHIER GUITAR PRO v3.00');
+    /**
+     * 
+     *
+     * @var array $supportedVersions 
+     */
+    private static $supportedVersions = array('FICHIER GUITAR PRO v3.00');
 
-  /**
-   * @var boolean $tripletFeel
-   * @var integer $keySignature
-   */  
-  protected $tripletFeel, $keySignature;
+    /**
+     * @var boolean $tripletFeel
+     * @var integer $keySignature
+     */  
+    protected $tripletFeel, $keySignature;
 
-  /**
-   * @param \PhpTabs\Component\File $file An input file to read
-   */
-  public function __construct(File $file)
-  {
-    parent::__construct($file);
-
-    $this->readVersion();
-
-    if (!$this->isSupportedVersion($this->getVersion()))
+    /**
+     * @param \PhpTabs\Component\File $file An input file to read
+     */
+    public function __construct(File $file)
     {
-      $this->closeStream();
+        parent::__construct($file);
 
-      throw new Exception(sprintf('Version "%s" is not supported', $this->getVersion()));
+        $this->readVersion();
+
+        if (!$this->isSupportedVersion($this->getVersion())) {
+            $this->closeStream();
+
+            throw new Exception(sprintf('Version "%s" is not supported', $this->getVersion()));
+        }
+
+        $song = new Song();
+
+        $this->setTablature($song);
+
+        $this->factory('GuitarPro3Informations')->readInformations($song);
+
+        $this->tripletFeel = $this->readBoolean()
+        ? MeasureHeader::TRIPLET_FEEL_EIGHTH
+        : MeasureHeader::TRIPLET_FEEL_NONE;
+
+        $tempoValue = $this->readInt();
+
+        $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature();
+        $this->skip(3);
+
+        // Meta only
+        if (Config::get('type') == 'meta') {
+            return $this->closeStream();
+        }
+
+        $channels = $this->factory('GuitarProChannels')->readChannels();
+
+        $measures = $this->readInt();
+        $tracks = $this->readInt();
+
+        $this->readMeasureHeaders($song, $measures);
+        $this->readTracks($song, $tracks, $channels);
+
+        // Meta+channels+tracks+measure headers only
+        if (Config::get('type') == 'channels') {
+            return $this->closeStream();
+        }
+
+        $this->factory('GuitarPro3Measures')->readMeasures($song, $measures, $tracks, $tempoValue);
+
+        $this->closeStream();
     }
 
-    $song = new Song();
-
-    $this->setTablature($song);
-
-    $this->factory('GuitarPro3Informations')->readInformations($song);
-
-    $this->tripletFeel = $this->readBoolean()
-      ? MeasureHeader::TRIPLET_FEEL_EIGHTH
-      : MeasureHeader::TRIPLET_FEEL_NONE;
-
-    $tempoValue = $this->readInt();
-
-    $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature();
-    $this->skip(3);
-
-    # Meta only
-    if (Config::get('type') == 'meta')
+    /**
+     * @return array An array of supported versions
+     */
+    public function getSupportedVersions()
     {
-      return $this->closeStream();
+        return self::$supportedVersions;
     }
 
-    $channels = $this->factory('GuitarProChannels')->readChannels();
-
-    $measures = $this->readInt();
-    $tracks = $this->readInt();
-
-    $this->readMeasureHeaders($song, $measures);
-    $this->readTracks($song, $tracks, $channels);
-
-    # Meta+channels+tracks+measure headers only
-    if (Config::get('type') == 'channels')
+    /**
+     * {@inheritdoc}
+     */
+    public function getTablature()
     {
-      return $this->closeStream();
+        return isset($this->tablature)
+        ? $this->tablature : new Tablature();
     }
 
-    $this->factory('GuitarPro3Measures')->readMeasures($song, $measures, $tracks, $tempoValue);
-
-    $this->closeStream();
-  }
-
-  /**
-   * @return array An array of supported versions
-   */
-  public function getSupportedVersions()
-  {
-    return self::$supportedVersions;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getTablature()
-  {
-    return isset($this->tablature)
-      ? $this->tablature : new Tablature();
-  }
-
-  /**
-   * Initializes Tablature with read Song
-   *
-   * @param \PhpTabs\Music\Song $song as read from file
-   */
-  private function setTablature(Song $song)
-  {
-    if (!isset($this->tablature))
+    /**
+     * Initializes Tablature with read Song
+     *
+     * @param \PhpTabs\Music\Song $song as read from file
+     */
+    private function setTablature(Song $song)
     {
-      $this->tablature = new Tablature();
+        if (!isset($this->tablature)) {
+            $this->tablature = new Tablature();
+        }
+
+        $this->tablature->setSong($song);
+        $this->tablature->setFormat('gp3');
     }
 
-    $this->tablature->setSong($song);
-    $this->tablature->setFormat('gp3');
-  }
+    /*-------------------------------------------------------------------
+    * Private methods are below
+    * -----------------------------------------------------------------*/
 
-  /*-------------------------------------------------------------------
-   * Private methods are below
-   * -----------------------------------------------------------------*/
-
-  /**
-   * Loops on mesure headers to read
-   * 
-   * @param \PhpTabs\Music\Song $song
-   * @param integer $count
-   */
-  private function readMeasureHeaders(Song $song, $count)
-  {
-    $timeSignature = new TimeSignature();
-
-    for ($i = 0; $i < $count; $i++) 
+    /**
+     * Loops on mesure headers to read
+     * 
+     * @param \PhpTabs\Music\Song $song
+     * @param integer             $count
+     */
+    private function readMeasureHeaders(Song $song, $count)
     {
-      $song->addMeasureHeader(
-        $this->factory('GuitarPro3MeasureHeader')->readMeasureHeader(($i + 1), $song, $timeSignature)
-      );
-    }
-  }
+        $timeSignature = new TimeSignature();
 
-  /**
-   * Loops on tracks to read
-   * 
-   * @param \PhpTabs\Music\Song $song
-   * @param int $count
-   * @param array $channels Current array of channels
-   */
-  private function readTracks(Song $song, $count, array $channels)
-  {
-    for ($number = 1; $number <= $count; $number++)
-    {
-      $song->addTrack($this->factory('GuitarPro3Track')->readTrack($song, $number, $channels));
+        for ($i = 0; $i < $count; $i++) 
+        {
+            $song->addMeasureHeader(
+                $this->factory('GuitarPro3MeasureHeader')->readMeasureHeader(($i + 1), $song, $timeSignature)
+            );
+        }
     }
-  }
+
+    /**
+     * Loops on tracks to read
+     * 
+     * @param \PhpTabs\Music\Song $song
+     * @param int                 $count
+     * @param array               $channels Current array of channels
+     */
+    private function readTracks(Song $song, $count, array $channels)
+    {
+        for ($number = 1; $number <= $count; $number++)
+        {
+            $song->addTrack($this->factory('GuitarPro3Track')->readTrack($song, $number, $channels));
+        }
+    }
 }

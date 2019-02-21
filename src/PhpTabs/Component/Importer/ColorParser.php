@@ -15,22 +15,22 @@ use PhpTabs\Music\Color;
 
 class ColorParser extends ParserBase
 {
-  protected $required = ['R', 'G', 'B'];
+    protected $required = ['R', 'G', 'B'];
 
-  /**
-   * Parse a color array
-   * 
-   * @param  array $data
-   */
-  public function __construct(array $data)
-  {
-    $this->checkKeys($data, $this->required);
+    /**
+     * Parse a color array
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->checkKeys($data, $this->required);
 
-    $color = new Color();
-    $color->setR($data['R']);
-    $color->setG($data['G']);
-    $color->setB($data['B']);
+        $color = new Color();
+        $color->setR($data['R']);
+        $color->setG($data['G']);
+        $color->setB($data['B']);
 
-    $this->item = $color;
-  }
+        $this->item = $color;
+    }
 }
