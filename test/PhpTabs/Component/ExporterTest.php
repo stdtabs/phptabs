@@ -20,7 +20,7 @@ use PhpTabs\PhpTabs;
  */
 class ExporterTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->tablature = new PhpTabs(
             PHPTABS_TEST_BASEDIR 
