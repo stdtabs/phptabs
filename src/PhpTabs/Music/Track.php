@@ -11,6 +11,8 @@
 
 namespace PhpTabs\Music;
 
+use Exception;
+
 /**
  * @uses Measure
  * @uses TabString
@@ -80,8 +82,18 @@ class Track
      */
     public function getMeasure($index)
     {
-        return isset($this->measures[$index])
-         ? $this->measures[$index] : null;
+        if (!isset($this->measures[$index])) {
+            $message = "Track #%d, Measure is not set at index '%s'";
+            throw new Exception(
+                sprintf(
+                    $message,
+                    $this->getNumber(),
+                    $index
+                )
+            );
+        }
+
+        return $this->measures[$index];
     }
 
     /**

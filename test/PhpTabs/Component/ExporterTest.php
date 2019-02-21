@@ -42,14 +42,14 @@ class ExporterTest extends TestCase
     public function testStringFormats()
     {
         foreach ([
-        'text',
-        'txt',
-        'yaml',
-        'yml',
-        'serialize',
-        'json',
-        'var_export',
-        'xml'
+            'text',
+            'txt',
+            'yaml',
+            'yml',
+            'serialize',
+            'json',
+            'var_export',
+            'xml'
         ] as $format
         ) {
             $this->assertTrue(
@@ -68,9 +68,9 @@ class ExporterTest extends TestCase
     public function testArrayFormats()
     {
         foreach ([
-        'array',
-        null
-        ] as $format
+                'array',
+                null
+            ] as $format
         ) {
             $this->assertTrue(
                 is_array(
