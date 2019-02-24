@@ -72,8 +72,6 @@ class TrackParser extends ParserBase
             );
         }
 
-        $track->setSong($song);
-
         $this->item = $track;
     }
 }

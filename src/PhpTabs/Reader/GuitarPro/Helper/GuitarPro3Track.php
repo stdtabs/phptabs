@@ -29,14 +29,12 @@ class GuitarPro3Track extends AbstractReader
     public function readTrack(Song $song, $number, array $channels = [])
     {
         $track = new Track();
-        $track->setSong($song);
         $track->setNumber($number);
         $this->reader->readUnsignedByte();
         $track->setName($this->reader->readStringByte(40));
         $stringCount = $this->reader->readInt();
 
-        for ($i = 0; $i < 7; $i++)
-        {
+        for ($i = 0; $i < 7; $i++) {
             $tuning = $this->reader->readInt();
             if ($stringCount > $i) {
                 $string = new TabString();

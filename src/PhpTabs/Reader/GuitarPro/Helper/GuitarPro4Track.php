@@ -31,8 +31,6 @@ class GuitarPro4Track extends AbstractReader
     public function readTrack(Song $song, $number, array $channels = [], Lyric $lyrics)
     {
         $track = new Track();
-
-        $track->setSong($song);
         $track->setNumber($number);
         $track->setLyrics($lyrics);
 
@@ -42,8 +40,7 @@ class GuitarPro4Track extends AbstractReader
 
         $stringCount = $this->reader->readInt();
 
-        for ($i = 0; $i < 7; $i++)
-        {
+        for ($i = 0; $i < 7; $i++) {
             $tuning = $this->reader->readInt();
 
             if ($stringCount > $i) {
