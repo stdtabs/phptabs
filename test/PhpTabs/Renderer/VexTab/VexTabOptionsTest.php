@@ -62,12 +62,11 @@ class VexTabOptionsTest extends TestCase
 
         // Check values
         foreach ($options as $name => $value) {
-
             $this->assertEquals(
                 $value,
                 $renderer->getOption($name),
                 sprintf(
-                    "Name: %s, given: %s, expected: %s", 
+                    "Name: %s, given: %s, expected: %s",
                     $name,
                     $renderer->getOption($name),
                     $value

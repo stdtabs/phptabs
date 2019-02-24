@@ -21,15 +21,15 @@ use PhpTabs\IOFactory;
 class IOFactoryFromFileTest extends TestCase
 {
     /**
-     * A provider for various scenarios that throw \Exception 
+     * A provider for various scenarios that throw \Exception
      */
     public function getExceptionScenarios()
     {
         return [
         [['ee']], // Array as filename
         [1.25],   // Float as filename
-        [PHPTABS_TEST_BASEDIR . '/sample'],   // Unreadable filename  
-        [PHPTABS_TEST_BASEDIR . '/samples/'],  // Dir as filename 
+        [PHPTABS_TEST_BASEDIR . '/sample'],   // Unreadable filename
+        [PHPTABS_TEST_BASEDIR . '/samples/'],  // Dir as filename
         ];
     }
 
@@ -48,7 +48,7 @@ class IOFactoryFromFileTest extends TestCase
     public function getAllSampleTabs()
     {
         $files = glob(
-            PHPTABS_TEST_BASEDIR 
+            PHPTABS_TEST_BASEDIR
             . '/samples/testS*'
         );
 
@@ -74,7 +74,7 @@ class IOFactoryFromFileTest extends TestCase
 
     /**
      * Test simple tabs bijection WITHOUT type parameter
-     * 
+     *
      * @dataProvider getAllSampleTabs()
      */
     public function testSimpleTabsBijection($filename, $destFilename, $type)
@@ -92,7 +92,7 @@ class IOFactoryFromFileTest extends TestCase
 
     /**
      * Test simple tabs bijection WITH type parameter
-     * 
+     *
      * @dataProvider getAllSampleTabs()
      */
     public function testSimpleTabsBijectionWithType($filename, $destFilename, $type)

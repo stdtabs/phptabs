@@ -21,16 +21,16 @@ use PhpTabs\IOFactory;
 class IOFactoryFromJsonFileTest extends TestCase
 {
     /**
-     * A provider for various scenarios that throw \Exception 
+     * A provider for various scenarios that throw \Exception
      */
     public function getExceptionScenarios()
     {
         return [
         [['ee']], // Array as filename
         [1.25],   // Float as filename
-        [PHPTABS_TEST_BASEDIR . '/sample'],   // Unreadable filename  
-        [PHPTABS_TEST_BASEDIR . '/samples/'],  // Dir as filename 
-        [PHPTABS_TEST_BASEDIR . '/samples/testSimpleMidi.mid']  // Not a valid JSON file   
+        [PHPTABS_TEST_BASEDIR . '/sample'],   // Unreadable filename
+        [PHPTABS_TEST_BASEDIR . '/samples/'],  // Dir as filename
+        [PHPTABS_TEST_BASEDIR . '/samples/testSimpleMidi.mid']  // Not a valid JSON file
         ];
     }
 
@@ -49,7 +49,7 @@ class IOFactoryFromJsonFileTest extends TestCase
     public function getAllSampleTabs()
     {
         $files = glob(
-            PHPTABS_TEST_BASEDIR 
+            PHPTABS_TEST_BASEDIR
             . '/samples/testS*'
         );
 
@@ -69,7 +69,7 @@ class IOFactoryFromJsonFileTest extends TestCase
 
     /**
      * Test simple tabs bijection
-     * 
+     *
      * @dataProvider getAllSampleTabs()
      */
     public function testSimpleTabsBijection($filename, $jsonFilename)

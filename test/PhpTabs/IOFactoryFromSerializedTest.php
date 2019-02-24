@@ -21,7 +21,7 @@ use PhpTabs\IOFactory;
 class IOFactoryFromSerializedTest extends TestCase
 {
     /**
-     * A provider for various scenarios that throw \Exception 
+     * A provider for various scenarios that throw \Exception
      */
     public function getExceptionScenarios()
     {

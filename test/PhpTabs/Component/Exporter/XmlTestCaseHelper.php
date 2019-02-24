@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class XmlTestCaseHelper extends TestCase
 {
-    protected abstract function getXmlDocument();
+    abstract protected function getXmlDocument();
 
     protected function assertXpathMatch($expected, $xpath, $message = null, DOMNode $context = null)
     {

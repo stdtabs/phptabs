@@ -23,7 +23,7 @@ class ImporterTest extends TestCase
     public function setUp()
     {
         $this->tablature = new PhpTabs(
-            PHPTABS_TEST_BASEDIR 
+            PHPTABS_TEST_BASEDIR
             . '/samples/testSimpleTab.gp5'
         );
     }
@@ -50,7 +50,7 @@ class ImporterTest extends TestCase
     public function getAllSampleTabs()
     {
         $files = glob(
-            PHPTABS_TEST_BASEDIR 
+            PHPTABS_TEST_BASEDIR
             . '/samples/testS*'
         );
 
@@ -65,7 +65,7 @@ class ImporterTest extends TestCase
 
     /**
      * Test simple tabs bijection
-     * 
+     *
      * @dataProvider getAllSampleTabs()
      */
     public function testSimpleTabsBijection($filename)

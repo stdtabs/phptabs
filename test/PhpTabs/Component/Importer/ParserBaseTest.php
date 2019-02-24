@@ -22,7 +22,7 @@ class ParserBaseTest extends TestCase
 {
     /**
      * Test parse method exceptions when no argument
-     * 
+     *
      * @expectedException Exception
      */
     public function testNoArgumentExceptions()
@@ -34,7 +34,7 @@ class ParserBaseTest extends TestCase
 
     /**
      * Test parse method exceptions when too many arguments
-     * 
+     *
      * @expectedException Exception
      */
     public function testTooManyArgumentsException()
@@ -46,7 +46,7 @@ class ParserBaseTest extends TestCase
 
     /**
      * Test method exception when method is unknown
-     * 
+     *
      * @expectedException Exception
      */
     public function testUnknownMethodException()

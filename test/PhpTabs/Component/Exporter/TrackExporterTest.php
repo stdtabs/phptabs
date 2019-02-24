@@ -37,7 +37,7 @@ class TrackExporterTest extends TestCase
 
     /**
      * Track-by-Track exports
-     * 
+     *
      * @dataProvider getSimpleFiles
      */
     public function testExporter($source)
@@ -82,7 +82,6 @@ class TrackExporterTest extends TestCase
                     "Track '$varname' have changed during export"
                 );
             }
-
         }
     }
 

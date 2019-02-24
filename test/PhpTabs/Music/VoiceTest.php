@@ -23,7 +23,7 @@ class VoiceTest extends TestCase
     public function setUp()
     {
         $this->tablature = IOFactory::fromFile(
-            PHPTABS_TEST_BASEDIR 
+            PHPTABS_TEST_BASEDIR
             . '/samples/testSimpleTab.gp5'
         );
     }

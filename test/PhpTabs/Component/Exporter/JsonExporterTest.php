@@ -27,7 +27,7 @@ class JsonExporterTest extends TestCase
 
         foreach ($files as $filename) {
             $filenames[] = [
-            $filename, 
+            $filename,
             str_replace('samples', 'files/json', $filename) . '.json'
             ];
         }
@@ -37,7 +37,7 @@ class JsonExporterTest extends TestCase
 
     /**
      * JSON exports
-     * 
+     *
      * @dataProvider getSimpleFiles
      */
     public function testJsonExporter($source, $result)

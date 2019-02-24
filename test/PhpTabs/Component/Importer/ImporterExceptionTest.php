@@ -78,7 +78,7 @@ class ImporterExceptionTest extends TestCase
 
     /**
      * Test importer exceptions
-     * 
+     *
      * @dataProvider      getAllParsers()
      * @expectedException Exception
      */

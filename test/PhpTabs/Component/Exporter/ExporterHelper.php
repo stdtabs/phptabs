@@ -31,8 +31,8 @@ class ExporterHelper extends XmlTestCaseHelper
     public static function setUpBeforeClass()
     {
         self::$tablature = new PhpTabs(
-            PHPTABS_TEST_BASEDIR 
-            . '/samples/' 
+            PHPTABS_TEST_BASEDIR
+            . '/samples/'
             . static::getFilename()
         );
 
@@ -43,7 +43,7 @@ class ExporterHelper extends XmlTestCaseHelper
 
         // XML
         $xmlString = self::$tablature->export('xml');
-        $document = new DOMDocument();    
+        $document = new DOMDocument();
         $document->loadXML($xmlString);
         self::$xmlDoc = $document;
     }
@@ -125,15 +125,14 @@ class ExporterHelper extends XmlTestCaseHelper
         , 'MeasureHeader element should exist.']
         );
 
-        foreach ($tests as $test)
-        {
+        foreach ($tests as $test) {
             $this->assertXpathMatch($test[0], $test[1], $test[2]);
         }
     }
 
     /**
      * Text serialization
-     * 
+     *
      * @dataProvider getTextScenarios
      */
     public function testExporterText($text)
@@ -144,7 +143,7 @@ class ExporterHelper extends XmlTestCaseHelper
 
     /**
      * Text serialization
-     * 
+     *
      * @dataProvider getYamlScenarios
      */
     public function testExporterYaml($text)

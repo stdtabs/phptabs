@@ -23,7 +23,7 @@ class ExporterTest extends TestCase
     public function setUp()
     {
         $this->tablature = new PhpTabs(
-            PHPTABS_TEST_BASEDIR 
+            PHPTABS_TEST_BASEDIR
             . '/samples/testSimpleTab.gp5'
         );
     }
@@ -50,8 +50,7 @@ class ExporterTest extends TestCase
             'json',
             'var_export',
             'xml'
-        ] as $format
-        ) {
+        ] as $format) {
             $this->assertTrue(
                 is_string(
                     $this->tablature->export($format)
@@ -70,8 +69,7 @@ class ExporterTest extends TestCase
         foreach ([
                 'array',
                 null
-            ] as $format
-        ) {
+            ] as $format) {
             $this->assertTrue(
                 is_array(
                     $this->tablature->export($format)
