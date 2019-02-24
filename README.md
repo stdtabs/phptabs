@@ -78,11 +78,10 @@ ________________________________________________________________________
 Requirements
 ------------
 
-PhpTabs requires one of the following:
+PhpTabs requires PHP 7+.
 
-- PHP 5.4+
-- PHP 7+
-- HHVM
+Until PhpTabs 0.6.0, it was maintained for PHP versions 5.4, 5.5, 5.6
+and HHVM.
 
 ________________________________________________________________________
 
