@@ -20,7 +20,7 @@ use PhpTabs\IOFactory;
  */
 class VexTabOptionsTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->filename  = 'testSimpleTab.gp3';
         $this->tablature = IOFactory::fromFile(PHPTABS_TEST_BASEDIR . '/samples/' . $this->filename);
@@ -115,7 +115,7 @@ class VexTabOptionsTest extends TestCase
         );
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         unset($this->tablature);
     }

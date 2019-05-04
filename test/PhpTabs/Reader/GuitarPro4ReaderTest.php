@@ -16,7 +16,7 @@ use PhpTabs\PhpTabs;
 
 class GuitarPro4ReaderTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->filename = 'testSimpleTab.gp4';
         $this->tablature = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/' . $this->filename);
@@ -59,19 +59,24 @@ class GuitarPro4ReaderTest extends TestCase
         // Instruments
         $this->assertEquals(2, $this->tablature->countInstruments());
 
-        $expected = array(
-        0 => array (
-        'id'   => 27,
-        'name' => 'Clean Guitar'
-        ),
-        1 => array (
-        'id'   => 54,
-        'name' => 'Syn Choir'
-        )
-        );
+        $expected = [
+            0 => [
+                'id'   => 27,
+                'name' => 'Clean Guitar'
+            ],
+            1 => [
+                'id'   => 54,
+                'name' => 'Syn Choir'
+            ]
+        ];
 
-        $this->assertArraySubset($expected, $this->tablature->getInstruments());
-        $this->assertArraySubset($expected[0], $this->tablature->getInstrument(0));
+        $instruments = $this->tablature->getInstruments();
+        foreach ($expected as $key => $value) {
+            $this->assertArrayHasKey($key, $instruments);
+            $this->assertSame($value, $instruments[$key]);
+        }
+
+        $this->assertSame($expected[0], $this->tablature->getInstrument(0));
 
         // MeasureHeaders
         $this->assertEquals(4, $this->tablature->countMeasureHeaders());
@@ -81,7 +86,7 @@ class GuitarPro4ReaderTest extends TestCase
         $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $this->tablature->getTablature());
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         unset($this->tablature);
     }

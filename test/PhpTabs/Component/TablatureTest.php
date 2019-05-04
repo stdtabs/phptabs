@@ -12,24 +12,23 @@
 namespace PhpTabsTest\Component;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Error;
 use PhpTabs\Component\Tablature;
 
 class TablatureTest extends TestCase
 {
-    /**
-     * @expectedException PHPUnit\Framework\Error\Error
-     */
     public function testUnexistingMethod()
     {
+        $this->expectException(Error::class);
+
         // Method does not exist
         (new Tablature())->undefinedMethod();
     }
 
-    /**
-     * @expectedException PHPUnit\Framework\Error\Error
-     */
     public function testException()
     {
+        $this->expectException(Error::class);
+
         // Not a valid number of params
         (new Tablature())->getChannels('param1', 'param2', 'param3');
     }

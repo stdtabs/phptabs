@@ -11,17 +11,17 @@
 
 namespace PhpTabsTest\Component;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\Component\Reader;
 use PhpTabs\Component\File;
 
 class ReaderTest extends TestCase
 {
-    /**
-     * @expectedException Exception
-     */
     public function testNotAllowedExtension()
     {
+        $this->expectException(Exception::class);
+
         $filename = PHPTABS_TEST_BASEDIR . '/samples/testNotAllowedExtension.xxx';
         new Reader(new File($filename));
     }

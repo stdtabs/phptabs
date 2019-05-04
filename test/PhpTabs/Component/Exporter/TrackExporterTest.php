@@ -87,10 +87,11 @@ class TrackExporterTest extends TestCase
 
     /**
      * @dataProvider      getSimpleFiles
-     * @expectedException Exception
      */
     public function testUnexistingTrack($filename)
     {
+        $this->expectException(Exception::class);
+
         $tabs = new PhpTabs($filename);
 
         $tabs->exportTrack(rand(2, 85));

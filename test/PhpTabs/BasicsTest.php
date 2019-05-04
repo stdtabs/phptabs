@@ -11,6 +11,7 @@
 
 namespace PhpTabsTest;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 
@@ -83,31 +84,28 @@ class BasicsTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testExceptionTrackNotDefined()
     {
+        $this->expectException(Exception::class);
+
         $tablature = new PhpTabs();
     
         $tablature->getTrack(0);
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testExceptionChannelNotDefined()
     {
+        $this->expectException(Exception::class);
+
         $tablature = new PhpTabs();
     
         $tablature->getChannel(0);
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testExceptionMeasureHeaderNotDefined()
     {
+        $this->expectException(Exception::class);
+
         $tablature = new PhpTabs();
     
         $tablature->getMeasureHeader(0);

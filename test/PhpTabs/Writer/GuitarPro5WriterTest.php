@@ -16,7 +16,7 @@ use PhpTabs\PhpTabs;
 
 class GuitarPro5WriterTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->path = '/samples/testSimpleTab.gp5';
         $this->pathGp3 = '/samples/testSimpleTab.gp3';
@@ -72,7 +72,7 @@ class GuitarPro5WriterTest extends TestCase
         );
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         unset($this->tablature);
     }

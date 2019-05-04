@@ -20,7 +20,7 @@ use PhpTabs\PhpTabs;
  */
 class ExporterTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->tablature = new PhpTabs(
             PHPTABS_TEST_BASEDIR
@@ -96,11 +96,10 @@ class ExporterTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testException()
     {
+        $this->expectException(Exception::class);
+
         // Not a valid export format
         (new PhpTabs())->export('exception');
     }

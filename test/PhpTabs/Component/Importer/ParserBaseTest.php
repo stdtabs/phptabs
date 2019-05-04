@@ -22,11 +22,11 @@ class ParserBaseTest extends TestCase
 {
     /**
      * Test parse method exceptions when no argument
-     *
-     * @expectedException Exception
      */
     public function testNoArgumentExceptions()
     {
+        $this->expectException(Exception::class);
+
         $parser = new TempoParser(1);
 
         $parser->parseTempo();
@@ -34,11 +34,11 @@ class ParserBaseTest extends TestCase
 
     /**
      * Test parse method exceptions when too many arguments
-     *
-     * @expectedException Exception
      */
     public function testTooManyArgumentsException()
     {
+        $this->expectException(Exception::class);
+
         $parser = new TempoParser(1);
 
         $parser->parseTempo(1, 2, 3);
@@ -46,11 +46,11 @@ class ParserBaseTest extends TestCase
 
     /**
      * Test method exception when method is unknown
-     *
-     * @expectedException Exception
      */
     public function testUnknownMethodException()
     {
+        $this->expectException(Exception::class);
+
         $parser = new TempoParser(1);
 
         $parser->unknownPrefixTempo(1, 2, 3);

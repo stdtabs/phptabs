@@ -28,7 +28,7 @@ class ExporterHelper extends XmlTestCaseHelper
     /**
      * Prepare some read only data
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass() : void
     {
         self::$tablature = new PhpTabs(
             PHPTABS_TEST_BASEDIR

@@ -11,12 +11,13 @@
 
 namespace PhpTabsTest\Component;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\Component\File;
 
 class FileTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->filename = PHPTABS_TEST_BASEDIR . '/samples/testNotAllowedExtension.xxx';
     }
@@ -51,11 +52,11 @@ class FileTest extends TestCase
 
     /**
      * Pointer exception
-     *
-     * @expectedException Exception
      */
     public function testPointerException()
     {
+        $this->expectException(Exception::class);
+
         $file = new File($this->filename);
         $file->getStream(1);
         $file->getStream(50000000);

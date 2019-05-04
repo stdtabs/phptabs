@@ -33,10 +33,11 @@ class IOFactoryFromSerializedTest extends TestCase
 
     /**
      * @dataProvider      getExceptionScenarios
-     * @expectedException Exception
      */
     public function testExceptionScenario($data)
     {
+        $this->expectException(Exception::class);
+
         IOFactory::fromSerialized($data);
     }
 }

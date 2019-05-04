@@ -20,7 +20,7 @@ use PhpTabs\PhpTabs;
  */
 class ImporterTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->tablature = new PhpTabs(
             PHPTABS_TEST_BASEDIR
@@ -81,11 +81,10 @@ class ImporterTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testImportException()
     {
+        $this->expectException(Exception::class);
+
         // Not a valid import format
         (new PhpTabs())->import([]);
     }

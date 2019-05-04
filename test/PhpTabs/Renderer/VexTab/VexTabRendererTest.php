@@ -22,7 +22,7 @@ use PhpTabs\Music\Track;
  */
 class VexTabRendererTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->filename = 'testSimpleTab.gp3';
         $this->tablature = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/' . $this->filename);
@@ -77,21 +77,20 @@ notes :q 5/2 5d/2 5/2 (5b7b9v/2)u 5/2 5/2 |:q 5/2 :8 5v/2 ## :q 5/2 5/2 5/2 5/2 
         );
     }
 
-    /**
-     * @expectedException \Exception
-     */
     public function testBadFormatException()
     {
+        $this->expectException(Exception::class);
+
         $this->tablature->getRenderer('Not a valid format');
     }
 
     /**
      * Track index does not exist
-     *
-     * @expectedException \Exception
      */
     public function testNoTrackException()
     {
+        $this->expectException(Exception::class);
+
         $this
             ->tablature
             ->getRenderer('vextab')
@@ -100,11 +99,11 @@ notes :q 5/2 5d/2 5/2 (5b7b9v/2)u 5/2 5/2 |:q 5/2 :8 5v/2 ## :q 5/2 5/2 5/2 5/2 
 
     /**
      * Track has no measure
-     *
-     * @expectedException \Exception
      */
     public function testNoMeasureException()
     {
+        $this->expectException(Exception::class);
+
         $tab = new PhpTabs();
         $tab->addTrack(
             new Track()
@@ -115,7 +114,7 @@ notes :q 5/2 5d/2 5/2 (5b7b9v/2)u 5/2 5/2 |:q 5/2 :8 5v/2 ## :q 5/2 5/2 5/2 5/2 
             ->render(0);
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         unset($this->tablature);
     }

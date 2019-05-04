@@ -21,7 +21,7 @@ use PhpTabs\IOFactory;
  */
 class AsciiRendererTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->filename = 'testSimpleTab.gp5';
         $this->tablature = IOFactory::fromFile(
@@ -160,18 +160,18 @@ E|------------------------|-----------------------------------------------------
 
     /**
      * Track index does not exist
-     *
-     * @expectedException \Exception
      */
     public function testNoTrackException()
     {
+        $this->expectException(Exception::class);
+
         $this
             ->tablature
             ->getRenderer('ascii')
             ->render(10);
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         unset($this->tablature);
     }

@@ -35,10 +35,11 @@ class IOFactoryFromFileTest extends TestCase
 
     /**
      * @dataProvider      getExceptionScenarios
-     * @expectedException Exception
      */
     public function testExceptionScenario($filename)
     {
+        $this->expectException(Exception::class);
+
         IOFactory::fromFile($filename);
     }
 
@@ -109,10 +110,11 @@ class IOFactoryFromFileTest extends TestCase
 
     /**
      * @dataProvider      getAllSampleTabs
-     * @expectedException Exception
      */
     public function testExceptionScenarioWithGivenTypeError($filename, $destFilename, $type)
     {
+        $this->expectException(Exception::class);
+
         $wrongType = $type == 'json' ? 'ser' : 'json';
 
         IOFactory::fromFile($destFilename, $wrongType);

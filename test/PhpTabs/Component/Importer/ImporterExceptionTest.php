@@ -80,10 +80,11 @@ class ImporterExceptionTest extends TestCase
      * Test importer exceptions
      *
      * @dataProvider      getAllParsers()
-     * @expectedException Exception
      */
     public function testExceptions($name, $data, $param2)
     {
+        $this->expectException(Exception::class);
+
         new $name($data, $param2);
     }
 }

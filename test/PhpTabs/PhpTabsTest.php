@@ -13,6 +13,7 @@ namespace PhpTabsTest;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Error;
 use PhpTabs\IOFactory;
 
 /**
@@ -20,12 +21,10 @@ use PhpTabs\IOFactory;
  */
 class PhpTabsTest extends TestCase
 {
-  /**
-   * @expectedException PHPUnit\Framework\Error\Error
-   */
     public function testException()
     {
-      # Not a valid number of params
+        $this->expectException(Error::class);
+        # Not a valid number of params
         IOFactory::create()->export('param1', 'param2', 'param3');
     }
 

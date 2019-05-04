@@ -20,7 +20,7 @@ use PhpTabs\IOFactory;
  */
 class VoiceTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->tablature = IOFactory::fromFile(
             PHPTABS_TEST_BASEDIR
@@ -42,7 +42,7 @@ class VoiceTest extends TestCase
             ->getVoice(0)
             ->getTime();
 
-        $this->assertEquals(7.2727, $duration, '', 0.0001);
+        $this->assertEqualsWithDelta(7.2727, $duration, 0.0001);
 
         // First beat / second measure / first track
         // Tempo 88 / timeSignature 12/8 / dotted=true
@@ -53,10 +53,10 @@ class VoiceTest extends TestCase
             ->getVoice(0)
             ->getTime();
 
-        $this->assertEquals(2.0454, $duration, '', 0.0001);
+        $this->assertEqualsWithDelta(2.0454, $duration, 0.0001);
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         unset($this->tablature);
     }
