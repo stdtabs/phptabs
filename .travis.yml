@@ -17,8 +17,8 @@ install:
     - composer install --prefer-source --no-interaction
     # PHPUnit
     - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then composer require phpunit/phpunit; fi
-    - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then composer require phpunit/phpunit ^7; fi
-    - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.3" ]]; then composer require phpunit/phpunit ^7; fi
+    - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then composer require phpunit/phpunit; fi
+    - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.3" ]]; then composer require phpunit/phpunit; fi
     - ./vendor/bin/phpunit --version
 
 before_script: 
