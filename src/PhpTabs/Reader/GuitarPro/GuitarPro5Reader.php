@@ -188,11 +188,10 @@ class GuitarPro5Reader extends GuitarProReaderBase
      */
     private function readTracks(Song $song, $count, array $channels, Lyric $lyric, $lyricTrack)
     {
-        for ($number = 1; $number <= $count; $number++)
-        {
+        for ($number = 0; $number < $count; $number++) {
             $track = $this->factory('GuitarPro5Track')->readTrack(
-                $song, $number, $channels,
-                $number == $lyricTrack ? $lyric : new Lyric()
+                $song, $channels,
+                $number + 1 == $lyricTrack ? $lyric : new Lyric()
             );
 
             $song->addTrack($track);

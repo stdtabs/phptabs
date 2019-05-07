@@ -66,6 +66,10 @@ class Song extends SongBase
     {
         $track->setSong($this);
         $this->tracks[] = $track;
+        // Track number has default value
+        if ($track->getNumber() == 0) {
+            $track->setNumber($this->countTracks());
+        }
     }
 
     /**

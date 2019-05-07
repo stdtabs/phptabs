@@ -46,14 +46,14 @@ class TrackExporterTest extends TestCase
         $countTracks = $tabs->countTracks();
 
         $checkPoints = [
-        'name'      => 'getName',
-        'nbMeasure' => 'countMeasures',
-        'channelId' => 'getChannelId',
-        'number'    => 'getNumber',
-        'offset'    => 'getOffset',
-        'lyrics'    => 'getLyrics',
-        'color'     => 'getColor',
-        'strings'   => 'getStrings'
+            'name'      => 'getName',
+            'nbMeasure' => 'countMeasures',
+            'channelId' => 'getChannelId',
+            'number'    => 'getNumber',
+            'offset'    => 'getOffset',
+            'lyrics'    => 'getLyrics',
+            'color'     => 'getColor',
+            'strings'   => 'getStrings'
         ];
 
         foreach ($tabs->getTracks() as $index => $track) {

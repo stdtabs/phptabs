@@ -22,22 +22,20 @@ class GuitarPro5Track extends AbstractReader
      * Reads track informations
      *
      * @param \PhpTabs\Music\Song  $song
-     * @param integer              $number
      * @param array                $channels an array of Channel objects
      * @param \PhpTabs\Music\Lyric $lyrics
      *
      * @return \PhpTabs\Music\Track
      */
-    public function readTrack(Song $song, $number, array $channels = [], Lyric $lyrics)
+    public function readTrack(Song $song, array $channels = [], Lyric $lyrics)
     {
         $this->reader->readUnsignedByte();
 
-        if ($number == 1 || $this->reader->getVersionIndex() == 0) {
+        if ($song->countTracks() == 0 || $this->reader->getVersionIndex() == 0) {
             $this->reader->skip();
         }
 
         $track = new Track();
-        $track->setNumber($number);
         $track->setLyrics($lyrics);
         $track->setName($this->reader->readStringByte(40));
 

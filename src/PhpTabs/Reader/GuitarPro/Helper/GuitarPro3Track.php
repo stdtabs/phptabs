@@ -21,15 +21,13 @@ class GuitarPro3Track extends AbstractReader
      * Reads track informations
      * 
      * @param \PhpTabs\Music\Song $song
-     * @param integer             $number
      * @param array               $channels An array of Channel objects
      * 
      * @return Track
      */
-    public function readTrack(Song $song, $number, array $channels = [])
+    public function readTrack(Song $song, array $channels = [])
     {
         $track = new Track();
-        $track->setNumber($number);
         $this->reader->readUnsignedByte();
         $track->setName($this->reader->readStringByte(40));
         $stringCount = $this->reader->readInt();

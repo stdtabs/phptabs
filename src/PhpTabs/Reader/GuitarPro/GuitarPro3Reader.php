@@ -56,8 +56,8 @@ class GuitarPro3Reader extends GuitarProReaderBase
         $this->factory('GuitarPro3Informations')->readInformations($song);
 
         $this->tripletFeel = $this->readBoolean()
-        ? MeasureHeader::TRIPLET_FEEL_EIGHTH
-        : MeasureHeader::TRIPLET_FEEL_NONE;
+            ? MeasureHeader::TRIPLET_FEEL_EIGHTH
+            : MeasureHeader::TRIPLET_FEEL_NONE;
 
         $tempoValue = $this->readInt();
 
@@ -101,7 +101,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     public function getTablature()
     {
         return isset($this->tablature)
-        ? $this->tablature : new Tablature();
+             ? $this->tablature : new Tablature();
     }
 
     /**
@@ -133,10 +133,10 @@ class GuitarPro3Reader extends GuitarProReaderBase
     {
         $timeSignature = new TimeSignature();
 
-        for ($i = 0; $i < $count; $i++) 
-        {
+        for ($i = 0; $i < $count; $i++) {
             $song->addMeasureHeader(
-                $this->factory('GuitarPro3MeasureHeader')->readMeasureHeader(($i + 1), $song, $timeSignature)
+                $this->factory('GuitarPro3MeasureHeader')
+                     ->readMeasureHeader(($i + 1), $song, $timeSignature)
             );
         }
     }
@@ -150,9 +150,11 @@ class GuitarPro3Reader extends GuitarProReaderBase
      */
     private function readTracks(Song $song, $count, array $channels)
     {
-        for ($number = 1; $number <= $count; $number++)
-        {
-            $song->addTrack($this->factory('GuitarPro3Track')->readTrack($song, $number, $channels));
+        for ($number = 0; $number < $count; $number++) {
+            $song->addTrack(
+                $this->factory('GuitarPro3Track')
+                     ->readTrack($song, $channels)
+            );
         }
     }
 }

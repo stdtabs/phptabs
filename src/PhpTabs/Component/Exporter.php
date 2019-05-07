@@ -58,23 +58,23 @@ class Exporter extends ExporterBase
     public function export($format = null, $options = null)
     {
         switch ($format) {
-        case null:
-        case 'array':
-            return $this->exportSong();
-        case 'xml':
-            return (new Xml())->serialize($this->exportSong());
-        case 'json':
-            return $this->toJson(is_int($options) ? $options : 0);
-        case 'var_export':
-            return var_export($this->exportSong(), true);
-        case 'serialize':
-            return serialize($this->exportSong());
-        case 'text':
-        case 'txt':
-            return (new Text())->serialize($this->exportSong());
-        case 'yaml':
-        case 'yml':
-            return (new Yaml())->serialize($this->exportSong());
+            case null:
+            case 'array':
+                return $this->exportSong();
+            case 'xml':
+                return (new Xml())->serialize($this->exportSong());
+            case 'json':
+                return $this->toJson(is_int($options) ? $options : 0);
+            case 'var_export':
+                return var_export($this->exportSong(), true);
+            case 'serialize':
+                return serialize($this->exportSong());
+            case 'text':
+            case 'txt':
+                return (new Text())->serialize($this->exportSong());
+            case 'yaml':
+            case 'yml':
+                return (new Yaml())->serialize($this->exportSong());
         }
 
         $message = sprintf('%s does not support "%s" format', __METHOD__, $format);

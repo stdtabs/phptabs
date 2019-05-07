@@ -22,16 +22,14 @@ class GuitarPro4Track extends AbstractReader
      * Reads track informations
      *
      * @param \PhpTabs\Music\Song  $song
-     * @param integer              $number
      * @param array                $channels an array of Channel objects
      * @param \PhpTabs\Music\Lyric $lyrics
      *
      * @return \PhpTabs\Music\Track
      */
-    public function readTrack(Song $song, $number, array $channels = [], Lyric $lyrics)
+    public function readTrack(Song $song, array $channels = [], Lyric $lyrics)
     {
         $track = new Track();
-        $track->setNumber($number);
         $track->setLyrics($lyrics);
 
         $this->reader->readUnsignedByte();
