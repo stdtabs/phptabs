@@ -113,7 +113,7 @@ class Track
     }
 
     /**
-     * @return array
+     * @return \PhpTabs\Music\TabString[]
      */
     public function getStrings()
     {
@@ -131,9 +131,11 @@ class Track
     /**
      * @param array $strings
      */
-    public function setStrings($strings)
+    public function setStrings(array $strings)
     {
-        $this->strings = $strings;
+        foreach ($strings as $string) {
+            $this->addString($string);
+        }
     }
 
     /**
