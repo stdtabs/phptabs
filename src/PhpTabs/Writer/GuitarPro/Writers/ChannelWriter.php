@@ -67,7 +67,7 @@ class ChannelWriter
         }
 
         foreach ($song->getChannels() as $channel) {
-            $channelRoute = $this->writer->getChannelRoute($channel->getChannelId());
+            $channelRoute = $this->writer->getChannelRoute($channel->getId());
             $channels[$channelRoute->getChannel1()]->setProgram($channel->getProgram());
             $channels[$channelRoute->getChannel1()]->setVolume($channel->getVolume());
             $channels[$channelRoute->getChannel1()]->setBalance($channel->getBalance());

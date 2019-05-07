@@ -19,16 +19,16 @@ abstract class ExporterBase extends ExporterEffects
     protected function exportSong()
     {
         $content = array(
-        'name'          => $this->song->getName(),
-        'artist'        => $this->song->getArtist(),
-        'album'         => $this->song->getAlbum(),
-        'author'        => $this->song->getAuthor(),
-        'copyright'     => $this->song->getCopyright(),
-        'writer'        => $this->song->getWriter(),
-        'comments'      => $this->song->getComments(),
-        'channels'      => array(),
-        'measureHeaders'=> array(),
-        'tracks'        => array()
+            'name'          => $this->song->getName(),
+            'artist'        => $this->song->getArtist(),
+            'album'         => $this->song->getAlbum(),
+            'author'        => $this->song->getAuthor(),
+            'copyright'     => $this->song->getCopyright(),
+            'writer'        => $this->song->getWriter(),
+            'comments'      => $this->song->getComments(),
+            'channels'      => array(),
+            'measureHeaders'=> array(),
+            'tracks'        => array()
         );
 
         $countChannels = $this->song->countChannels();
@@ -117,7 +117,7 @@ abstract class ExporterBase extends ExporterEffects
         $channel = $this->song->getChannel($index);
 
         $content = array(
-            'channelId' => $channel->getChannelId(),
+            'id'        => $channel->getId(),
             'name'      => $channel->getName(),
             'bank'      => $channel->getBank(),
             'program'   => $channel->getProgram(),

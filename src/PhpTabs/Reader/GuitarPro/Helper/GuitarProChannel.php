@@ -56,14 +56,14 @@ class GuitarProChannel extends AbstractReader
 
                     if ($channelParameter->getKey() == "$gChannel1") {
                         if ("$gChannel1" == $channelParameter->getValue()) {
-                            $channel->setChannelId($channelAux->getChannelId());
+                            $channel->setId($channelAux->getId());
                         }
                     }
                 }
             }
 
-            if ($channel->getChannelId() <= 0) {
-                $channel->setChannelId($song->countChannels() + 1);
+            if ($channel->getId() <= 0) {
+                $channel->setId($song->countChannels() + 1);
                 $channel->setName($this->createChannelNameFromProgram($song, $channel));
                 $channel->addParameter($gChannel1Param);
                 $channel->addParameter($gChannel2Param);
@@ -71,7 +71,7 @@ class GuitarProChannel extends AbstractReader
                 $song->addChannel($channel);
             }
 
-            $track->setChannelId($channel->getChannelId());
+            $track->setChannelId($channel->getId());
         }
     }
 

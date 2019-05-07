@@ -26,7 +26,7 @@ class Channel
     const DEFAULT_PHASER  = 0;
     const DEFAULT_TREMOLO = 0;
 
-    private $channelId  = 0;
+    private $id  = 0;
     private $name       = '';
     private $parameters = [];
     private $bank;
@@ -53,17 +53,17 @@ class Channel
     /**
      * @return int
      */
-    public function getChannelId()
+    public function getId()
     {
-        return $this->channelId;
+        return $this->id;
     }
 
     /**
-     * @param int $channelId
+     * @param int $id
      */
-    public function setChannelId($channelId)
+    public function setId(int $id)
     {
-        $this->channelId = $channelId;
+        $this->id = $id;
     }
 
     /**
@@ -284,7 +284,7 @@ class Channel
      */
     public function copyFrom(Channel $channel)
     {
-        $this->setChannelId($channel->getChannelId());
+        $this->setId($channel->getId());
         $this->setBank($channel->getBank());
         $this->setProgram($channel->getProgram());
         $this->setVolume($channel->getVolume());
@@ -297,8 +297,7 @@ class Channel
 
         $this->parameters = array(); 
 
-        for ($i = 0; $i < $channel->countParameters(); $i++)
-        {
+        for ($i = 0; $i < $channel->countParameters(); $i++) {
             $this->addParameter(clone $channel->getParameter($i));
         }
     }

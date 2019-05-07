@@ -16,7 +16,7 @@ use PhpTabs\Music\Channel;
 class ChannelParser extends ParserBase
 {
     protected $required = [
-      'channelId',
+      'id',
       'name',
       'bank',
       'program',
@@ -39,7 +39,7 @@ class ChannelParser extends ParserBase
         $this->checkKeys($data, $this->required);
 
         $channel = new Channel();
-        $channel->setChannelId($data['channelId']);
+        $channel->setId($data['id']);
         $channel->setName($data['name']);
         $channel->setBank($data['bank']);
         $channel->setProgram($data['program']);

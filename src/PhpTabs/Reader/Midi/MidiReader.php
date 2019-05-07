@@ -191,7 +191,7 @@ class MidiReader extends MidiReaderBase
                 for ($c = 0; $c < count($this->channels); $c++)
                 {
                     $channel = $this->channels[$c];
-                    $channelRoute = $this->channelRouter->getRoute($channel->getChannelId());
+                    $channelRoute = $this->channelRouter->getRoute($channel->getId());
                     if ($channelRoute !== null) {
                         if ($channelRoute->getChannel1() == $tempChannel->getChannel() 
                             || $channelRoute->getChannel2() == $tempChannel->getChannel()
@@ -203,17 +203,17 @@ class MidiReader extends MidiReaderBase
 
                 if (!$channelExists) {
                     $channel = new Channel();
-                    $channel->setChannelId(count($this->channels) + 1);
+                    $channel->setId(count($this->channels) + 1);
                     $channel->setProgram($tempChannel->getInstrument());
                     $channel->setVolume($tempChannel->getVolume());
                     $channel->setBalance($tempChannel->getBalance());
-                    $channel->setName(('#' . $channel->getChannelId()));
+                    $channel->setName(('#' . $channel->getId()));
                     $channel->setBank(
                         $tempChannel->getChannel() == 9
                         ? Channel::DEFAULT_PERCUSSION_BANK : Channel::DEFAULT_BANK
                     );
 
-                    $channelRoute = new ChannelRoute($channel->getChannelId());
+                    $channelRoute = new ChannelRoute($channel->getId());
                     $channelRoute->setChannel1($tempChannel->getChannel());
                     $channelRoute->setChannel2($tempChannel->getChannel());
 
@@ -248,7 +248,7 @@ class MidiReader extends MidiReaderBase
                         if ($tempChannel->getTrack() == $track->getNumber()) {
                             array_walk(
                                 $this->channels, function ($channel) use (&$tempChannel, &$trackChannel) {
-                                    $channelRoute = $this->channelRouter->getRoute($channel->getChannelId());
+                                    $channelRoute = $this->channelRouter->getRoute($channel->getId());
 
                                     if ($channelRoute !== null && $tempChannel->getChannel() == $channelRoute->getChannel1()) {
                                         $trackChannel = $channel;
@@ -260,7 +260,7 @@ class MidiReader extends MidiReaderBase
                 );
 
                 if ($trackChannel !== null) {
-                    $track->setChannelId($trackChannel->getChannelId());
+                    $track->setChannelId($trackChannel->getId());
                 }
 
                 if ($trackChannel !== null && $trackChannel->isPercussionChannel()) {

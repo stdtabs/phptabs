@@ -179,7 +179,7 @@ class MidiSequenceParser
         if ($channel !== null) {
             $previous = null;
 
-            $this->addBend($helper, $track->getNumber(), Duration::QUARTER_TIME, self::DEFAULT_BEND, $channel->getChannelId(), false);
+            $this->addBend($helper, $track->getNumber(), Duration::QUARTER_TIME, self::DEFAULT_BEND, $channel->getId(), false);
             $this->makeChannel($helper, $channel, $track->getNumber());
 
             $mCount = count($helper->getMeasureHelpers());
@@ -259,7 +259,7 @@ class MidiSequenceParser
                     $duration = $this->applyStrokeDuration($note, $this->getRealNoteDuration($sHelper, $track, $note, $tempo, $tickHelper->getDuration(), $mIndex, $bIndex), $stroke);
 
                     $velocity = $this->getRealVelocity($sHelper, $note, $track, $channel, $mIndex, $bIndex);
-                    $channelId = $channel->getChannelId();
+                    $channelId = $channel->getId();
                     $midiVoice = $note->getString();
                     $bendMode = false;
 
@@ -407,7 +407,7 @@ class MidiSequenceParser
     private function makeChannel(MidiSequenceHelper $sHelper, Channel $channel, $track)
     {
         if (($this->flags & MidiWriter::ADD_MIXER_MESSAGES) != 0) {
-            $channelId = $channel->getChannelId();
+            $channelId = $channel->getId();
             $tick = $this->getTick(Duration::QUARTER_TIME);
             $sHelper->getSequence()->addControlChange($tick, $track, $channelId, MidiWriter::VOLUME, $this->fix($channel->getVolume()));
             $sHelper->getSequence()->addControlChange($tick, $track, $channelId, MidiWriter::BALANCE, $this->fix($channel->getBalance()));
@@ -637,7 +637,7 @@ class MidiSequenceParser
         if (($this->flags & MidiWriter::ADD_DEFAULT_CONTROLS) != 0) {
             $channels = $song->getChannels();
             foreach ($channels as $channel) {
-                $channelId = $channel->getChannelId();
+                $channelId = $channel->getId();
                 $sHelper->getSequence()->addControlChange($this->getTick(Duration::QUARTER_TIME), $this->getInfoTrack(), $channelId, MidiWriter::RPN_MSB, 0);
                 $sHelper->getSequence()->addControlChange($this->getTick(Duration::QUARTER_TIME), $this->getInfoTrack(), $channelId, MidiWriter::RPN_LSB, 0);
                 $sHelper->getSequence()->addControlChange($this->getTick(Duration::QUARTER_TIME), $this->getInfoTrack(), $channelId, MidiWriter::DATA_ENTRY_MSB, 12);

@@ -10,7 +10,7 @@
         "channels": [
             {
                 "channel": {
-                    "channelId": 1,
+                    "id": 1,
                     "name": "Clean Guitar 1",
                     "bank": 0,
                     "program": 27,
@@ -34,7 +34,7 @@
             },
             {
                 "channel": {
-                    "channelId": 2,
+                    "id": 2,
                     "name": "Syn Choir 1",
                     "bank": 0,
                     "program": 54,

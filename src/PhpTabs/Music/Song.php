@@ -183,7 +183,7 @@ class Song extends SongBase
         $channels = $this->getChannels();
 
         foreach ($channels as $channel) {
-            if ($channel->getChannelId() == $channelId) {
+            if ($channel->getId() == $channelId) {
                 return $channel;
             }
         }

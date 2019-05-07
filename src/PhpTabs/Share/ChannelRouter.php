@@ -46,8 +46,7 @@ class ChannelRouter
     }
 
     /**
-     * @param int $channelId
-     * 
+     * @param  int $channelId
      * @return int
      */
     public function getRoute($channelId)

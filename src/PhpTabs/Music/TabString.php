@@ -14,14 +14,14 @@ namespace PhpTabs\Music;
 class TabString
 {
     /**
-     * 
+     * String number
      *
      * @var int $number 
      */
     private $number;
   
     /**
-     * 
+     * String value
      *
      * @var int $value 
      */
@@ -79,7 +79,7 @@ class TabString
     public function isEqual(TabString $string)
     {
         return $this->getNumber() == $string->getNumber() 
-        && $this->getValue()  == $string->getValue();
+            && $this->getValue()  == $string->getValue();
     }
 
     /**

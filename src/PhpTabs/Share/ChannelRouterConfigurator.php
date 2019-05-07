@@ -34,7 +34,7 @@ class ChannelRouterConfigurator
 
         array_walk(
             $channels, function ($channel) {
-                $channelRoute = new ChannelRoute($channel->getChannelId());
+                $channelRoute = new ChannelRoute($channel->getId());
 
                 $channelRoute->setChannel1(
                     $this->getIntegerChannelParameter($channel, ChannelRoute::PARAMETER_CHANNEL_1)

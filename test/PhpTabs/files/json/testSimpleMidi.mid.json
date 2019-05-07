@@ -10,7 +10,7 @@
         "channels": [
             {
                 "channel": {
-                    "channelId": 1,
+                    "id": 1,
                     "name": "#1",
                     "bank": 0,
                     "program": 27,
@@ -25,7 +25,7 @@
             },
             {
                 "channel": {
-                    "channelId": 2,
+                    "id": 2,
                     "name": "#2",
                     "bank": 0,
                     "program": 54,
