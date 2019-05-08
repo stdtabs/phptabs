@@ -93,7 +93,7 @@ class PhpTabs
         $importer = new Importer($data);
 
         $this ->setTablature(new Tablature())
-            ->setSong($importer->getSong());
+              ->setSong($importer->getSong());
 
         return $this;
     }
@@ -126,18 +126,13 @@ class PhpTabs
      * Overloads with $tablature methods
      * 
      * @param  string $name      A method name
-     * @param  array  $arguments Some arguments for the method
+     * @param  array  $arguments Optional arguments for the method
      * @return mixed
      */
     public function __call($name, array $arguments = [])
     {
-        switch (count($arguments)) {
-        case 0:
-            return $this->tablature->$name();
-        case 1:
-            return $this->tablature->$name($arguments[0]);
-        case 2:
-            return $this->tablature->$name($arguments[0], $arguments[1]);
+        if (count($arguments) < 3) {
+            return $this->tablature->$name(...$arguments);
         }
 
         $message = sprintf(

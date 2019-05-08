@@ -70,34 +70,31 @@ abstract class ParserBase
      */
     public function __call($name, array $arguments = [])
     {
-        if (strpos($name, 'parse') === 0) {
-            $parserName = 
+        if (strpos($name, 'parse') !== 0) {
+            throw new Exception(
+                sprintf(
+                    "Method '%s()' is not supported",
+                    $name
+                )
+            );
+        }
+        
+        $parserName = 
             __NAMESPACE__
             . '\\'
             . str_replace('parse', '', $name) 
             . 'Parser';
 
-            switch (count($arguments)) {
-            case 1:
-                return (new $parserName($arguments[0]))->parse();
-            case 2:
-                return (new $parserName($arguments[0], $arguments[1]))->parse();
-            }
-
-            $message = sprintf(
-                '%s method does not support %d arguments',
-                __METHOD__,
-                count($arguments)
-            );
-
-            throw new Exception($message);
+        if (count($arguments) > 0 && count($arguments) < 3) {
+            return (new $parserName(...$arguments))->parse();
         }
-    
-        throw new Exception(
-            sprintf(
-                "Method '%s()' is not supported",
-                $name
-            )
+
+        $message = sprintf(
+            '%s method does not support %d arguments',
+            __METHOD__,
+            count($arguments)
         );
+
+        throw new Exception($message);
     }
 }

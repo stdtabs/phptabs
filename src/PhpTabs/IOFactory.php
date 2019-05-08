@@ -49,14 +49,14 @@ abstract class IOFactory
         self::checkFile($pathname);
 
         $type = $type === null || !is_string($type)
-        ? pathinfo($pathname, PATHINFO_EXTENSION)
-        : $type;
+            ? pathinfo($pathname, PATHINFO_EXTENSION)
+            : $type;
 
         switch (strtolower($type)) {
-        case 'json':
-            return self::fromJsonFile($pathname);
-        case 'ser':
-            return self::fromSerializedFile($pathname);
+            case 'json':
+                return self::fromJsonFile($pathname);
+            case 'ser':
+                return self::fromSerializedFile($pathname);
         }
 
         return self::create($pathname);
@@ -108,13 +108,9 @@ abstract class IOFactory
             );
         }
 
-        $data = version_compare(PHP_VERSION, '7.0.0', '>=')
-        ? @unserialize( // Skip warning
+        $data = @unserialize( // Skip warning
             $data,
             ['allowed_classes' => false]
-        )
-        : @unserialize( // Skip warning
-            $data
         );
 
         // unserialize failed
@@ -146,10 +142,7 @@ abstract class IOFactory
             $message = sprintf(
                 'JSON_DECODE_FAILURE: Error number %d - %s', 
                 json_last_error(),
-                function_exists('json_last_error_msg') // >= PHP 5.5.0
-                ? json_last_error_msg()
-                : 'See http://php.net/manual/en/function.json-last-error.php '
-                . 'with your error code for more information'
+                json_last_error_msg()
             );
 
             throw new Exception($message);

@@ -22,21 +22,21 @@ class Tablature
     const DEFAULT_FILE_FORMAT = 'gp3';
 
     /**
-     * 
+     * An error message 
      *
-     * @var string An error message 
+     * @var string
      */
     private $error = '';
 
     /**
-     * 
+     * Entry point of the music model
      *
      * @var \PhpTabs\Music\Song
      */
     private $song;
 
     /**
-     * 
+     * Tablature original format
      *
      * @var string $format 
      */
@@ -210,7 +210,7 @@ class Tablature
     }
 
     /**
-     * Builds a binary starting from Music DOM
+     * Builds a binary starting from Music model
      *
      * @param  string $format
      * @return string A binary chain
@@ -242,20 +242,17 @@ class Tablature
             trigger_error($message, E_USER_ERROR);
         }
 
-        switch (count($arguments)) {
-        case 0: 
-            return $this->song->$name();
-        case 1: 
-            return $this->song->$name($arguments[0]);
-        default:
-            $message = sprintf(
-                '%s method does not support %d arguments',
-                __METHOD__,
-                count($arguments)
-            );
-
-            trigger_error($message, E_USER_ERROR);
+        if (count($arguments) < 2) {
+            return $this->song->$name(...$arguments);
         }
+
+        $message = sprintf(
+            '%s method does not support %d arguments',
+            __METHOD__,
+            count($arguments)
+        );
+
+        trigger_error($message, E_USER_ERROR);
     }
 
     /**
