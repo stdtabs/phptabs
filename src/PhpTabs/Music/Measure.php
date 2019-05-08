@@ -300,9 +300,13 @@ class Measure
         }
     }
 
+    /**
+     * @return
+     */
     public function __clone()
     {
-        $measure = new Measure($this->getHeader());
-        $measure->copyFrom($this);
+        foreach ($this->beats as $index => $item) {
+            $this->beats[$index] = clone $item;
+        }
     }
 }

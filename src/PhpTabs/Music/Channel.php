@@ -269,10 +269,14 @@ class Channel
         return $this->getBank() === Channel::DEFAULT_PERCUSSION_BANK;
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $channel = new Channel();
-        $channel->copyFrom($this);
+        foreach ($this->parameters as $index => $parameter) {
+            $this->parameters[$index] = clone $parameter;
+        }
     }
 
     /**

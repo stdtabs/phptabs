@@ -56,15 +56,11 @@ class EffectTrill
         $this->duration = $duration;
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $effect = new EffectTrill();
-
-        $effect->setFret($this->getFret());
-        $effect->getDuration()->setValue($this->getDuration()->getValue());
-        $effect->getDuration()->setDotted($this->getDuration()->isDotted());
-        $effect->getDuration()->setDoubleDotted($this->getDuration()->isDoubleDotted());
-        $effect->getDuration()->getDivision()->setEnters($this->getDuration()->getDivision()->getEnters());
-        $effect->getDuration()->getDivision()->setTimes($this->getDuration()->getDivision()->getTimes());
+        $this->duration = clone $this->duration;
     }
 }

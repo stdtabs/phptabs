@@ -17,16 +17,14 @@ namespace PhpTabs\Music;
 class Tempo
 {
     /**
-* 
-     *
- * @const SECOND_IN_MILLIS 
-*/
+     * @const SECOND_IN_MILLIS 
+     */
     const SECOND_IN_MILLIS = 1000;
 
     /**
-     * 
+     * Current value of the tempo 
      *
-     * @var int $value Current value of the tempo 
+     * @var int $value
      */
     private $value = 120;
 

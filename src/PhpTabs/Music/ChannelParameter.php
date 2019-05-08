@@ -16,6 +16,9 @@ namespace PhpTabs\Music;
  */
 class ChannelParameter
 {
+    /**
+     * @var int|string
+     */
     private $key;
   
     /**
@@ -62,13 +65,5 @@ class ChannelParameter
     {
         $this->setKey($channelParameter->getKey());
         $this->setValue($channelParameter->getValue());
-    }
-
-    /**
-     * @return \PhpTabs\Music\ChannelParameter
-     */
-    public function __clone()
-    {
-        return (new ChannelParameter())->copyFrom($this);
     }
 }

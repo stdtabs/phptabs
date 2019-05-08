@@ -170,15 +170,4 @@ class Chord
     {
         $this->name = $name;
     }
-
-    public function __clone()
-    {
-        $chord = new Chord(count($this->strings));
-        $chord->setName($this->getName());
-        $chord->setFirstFret($this->getFirstFret());
-
-        for ($i = 0; $i < count($chord->strings); $i++) {
-            $chord->strings[$i] = $this->strings[$i];
-        }
-    }
 }

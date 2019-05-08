@@ -164,7 +164,8 @@ class MidiReader extends MidiReaderBase
                 $start = Duration::QUARTER_TIME;
 
                 $lastMeasure = $track->countMeasures() > 0
-                ? $track->getMeasure($track->countMeasures() - 1) : null;
+                    ? $track->getMeasure($track->countMeasures() - 1)
+                    : null;
 
                 if ($lastMeasure !== null) {
                     $start = $lastMeasure->getStart() + $lastMeasure->getLength();
@@ -299,7 +300,7 @@ class MidiReader extends MidiReaderBase
     private function getHeader($tick)
     {
         $realTick = $tick >= Duration::QUARTER_TIME
-        ? $tick : Duration::QUARTER_TIME;
+                  ? $tick : Duration::QUARTER_TIME;
 
         foreach ($this->headers as $header)
         {

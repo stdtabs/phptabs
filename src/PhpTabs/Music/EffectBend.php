@@ -47,12 +47,13 @@ class EffectBend
         return count($this->points);
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $effect = new EffectBend();
-
-        foreach ($this->getPoints() as $point) {
-            $effect->addPoint($point->getPosition(), $point->getValue());
+        foreach ($this->points as $index => $item) {
+            $this->points[$index] = clone $item;
         }
     }
 }

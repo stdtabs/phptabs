@@ -79,7 +79,7 @@ class ChannelRoute
     public function equals(ChannelRoute $route)
     {
         return $this->channelId == $route->getChannelId()
-        && $this->channel1  == $route->getChannel1()
-        && $this->channel2  == $route->getChannel2();
+            && $this->channel1  == $route->getChannel1()
+            && $this->channel2  == $route->getChannel2();
     }
 }

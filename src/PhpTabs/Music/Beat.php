@@ -206,22 +206,25 @@ class Beat
         return true;
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $beat = new Beat();
-        $beat->setStart($this->getStart());
-        $beat->getStroke()->copyFrom($this->getStroke());
-
-        for ($i = 0; $i < count($this->voices); $i++) {
-            $beat->setVoice($i, clone $this->voices[$i]);
-        }
-    
-        if ($this->chord !== null) {
-            $beat->setChord(clone $this->chord);
+        if (!is_null($this->chord)) {
+            $this->chord = clone $this->chord;    
         }
 
-        if ($this->text !== null) {
-            $beat->setText(clone $this->text);
+        if (!is_null($this->text)) {
+            $this->text = clone $this->text;    
+        }
+
+        if (!is_null($this->stroke)) {
+            $this->stroke = clone $this->stroke;    
+        }
+
+        foreach ($this->voices as $index => $item) {
+            $this->voices[$index] = clone $item;
         }
     }
 }

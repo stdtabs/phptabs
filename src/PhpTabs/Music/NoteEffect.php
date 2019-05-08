@@ -351,20 +351,33 @@ class NoteEffect extends NoteEffectBase
         $this->fadeIn = $fadeIn;
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $effect = new NoteEffect();
-        $attrs = get_object_vars($this);
+        if (!is_null($this->bend)) {
+            $this->bend = clone $this->bend;
+        }
 
-        foreach ($attrs as $attr => $value) {
-            $setter = sprintf('set%s', ucfirst($attr));
-            $getter = sprintf('is%s', ucfirst($attr));
+        if (!is_null($this->harmonic)) {
+            $this->harmonic = clone $this->harmonic;
+        }
 
-            $effect->$setter(
-                in_array($attr, array('bend', 'tremoloBar', 'harmonic', 'grace', 'trill', 'tremoloPicking'))
-                    ? ($this->$getter() ? clone $value : null)
-                     : $effect->$setter($this->$getter())
-            );
+        if (!is_null($this->grace)) {
+            $this->grace = clone $this->grace;
+        }
+
+        if (!is_null($this->trill)) {
+            $this->trill = clone $this->trill;
+        }
+
+        if (!is_null($this->tremoloBar)) {
+            $this->tremoloBar = clone $this->tremoloBar;
+        }
+
+        if (!is_null($this->tremoloPicking)) {
+            $this->tremoloPicking = clone $this->tremoloPicking;
         }
     }    
 }

@@ -39,15 +39,11 @@ class EffectTremoloPicking
         $this->duration = $duration;
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $effect = new EffectTremoloPicking();
-
-        $effect->getDuration()->setValue($this->getDuration()->getValue());
-        $effect->getDuration()->setDotted($this->getDuration()->isDotted());
-        $effect->getDuration()->setDoubleDotted($this->getDuration()->isDoubleDotted());
-        $effect->getDuration()->getDivision()->setEnters($this->getDuration()->getDivision()->getEnters());
-        $effect->getDuration()->getDivision()->setTimes($this->getDuration()->getDivision()->getTimes());
+        $this->duration = clone $this->duration;
     }
-    
 }

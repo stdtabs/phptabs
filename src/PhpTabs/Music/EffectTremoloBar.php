@@ -38,12 +38,13 @@ class EffectTremoloBar
         return $this->points;
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $effect = new EffectTremoloBar();
-
-        foreach ($this->points as $point) {
-            $effect->addPoint($point->getPosition(), $point->getValue());
+        foreach ($this->points as $index => $item) {
+            $this->points[$index] = clone $item;
         }
     }
 }

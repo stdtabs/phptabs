@@ -247,9 +247,12 @@ class MeasureHeader
         $this->checkMarker();
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $measureHeader = new MeasureHeader();
-        $measureHeader->copyFrom($this);
+        $this->timeSignature = clone $this->timeSignature;
+        $this->tempo         = clone $this->tempo ;
     }
 }

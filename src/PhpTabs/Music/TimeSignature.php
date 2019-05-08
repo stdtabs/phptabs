@@ -56,10 +56,12 @@ class TimeSignature
         $this->denominator = $denominator;
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $timeSignature = new TimeSignature();
-        $timeSignature->copyFrom($this);
+        //$this->denominator = clone $this->denominator;
     }
 
     /**
@@ -78,6 +80,8 @@ class TimeSignature
     public function isEqual(TimeSignature $timeSignature)
     {
         return $this->getNumerator() == $timeSignature->getNumerator()
-        && $this->getDenominator()->isEqual($timeSignature->getDenominator());
+            && $this->getDenominator()->isEqual(
+                $timeSignature->getDenominator()
+            );
     }
 }

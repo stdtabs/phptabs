@@ -295,10 +295,26 @@ class Track
         $this->measures = array();
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $track = new Track();
-        $track->copyFrom($this);
+        if (!is_null($this->color)) {
+            $this->color = clone $this->color;
+        }
+        
+        if (!is_null($this->lyrics)) {
+            $this->lyrics = clone $this->lyrics;
+        }
+        
+        foreach ($this->strings as $index => $item) {
+            $this->strings[$index] = clone $item;
+        }
+
+        foreach ($this->measures as $index => $item) {
+            $this->measures[$index] = clone $item;
+        }
     }
 
     /**

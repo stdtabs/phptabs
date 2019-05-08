@@ -111,11 +111,4 @@ class EffectHarmonic
     {
         return $this->type == EffectHarmonic::TYPE_SEMI;
     }
-
-    public function __clone()
-    {
-        $effect = new EffectHarmonic();
-        $effect->setType($this->getType());
-        $effect->setData($this->getData());
-    }
 }

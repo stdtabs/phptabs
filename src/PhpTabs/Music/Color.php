@@ -18,44 +18,42 @@ namespace PhpTabs\Music;
 class Color
 {
     /**
-     * 
+     * RGB red value
      *
-     * @var array $red RGB red value 
+     * @var array $red
      */
     public static $red = array(255,0,0);
   
     /**
-     * 
+     *  RGB green value 
      *
-     * @var array $green RGB green value 
+     * @var array $green
      */
     public static $green = array(0,255,0);
   
     /**
-     * 
+     * RGB blue value 
      *
-     * @var array $blue RGB blue value 
+     * @var array $blue
      */
     public static $blue = array(0,0,255);
   
     /**
-     * 
+     * RGB white value 
      *
-     * @var array $white RGB white value 
+     * @var array $white
      */
     public static $white = array(255,255,255);
   
     /**
-     * 
+     * RGB black value 
      *
-     * @var array $black RGB black value 
+     * @var array $black
      */
     public static $black = array(0,0,0);
 
     /**
-     * 
-     *
-     * @var array of RGB code 
+     * @var array
      */
     private $value = array();
 
@@ -139,15 +137,6 @@ class Color
         return $this->getR() == $color->getR() 
         && $this->getG() == $color->getG()
         && $this->getB() == $color->getB();
-    }
-
-    /**
-     * Clones current color
-     */
-    public function __clone()
-    {
-        $color = new Color;
-        $color->copyFrom($this);
     }
 
     /**

@@ -199,9 +199,21 @@ class Song extends SongBase
         return $this->channels;
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $song = new Song();
-        $song->copyFrom($this);
+        foreach ($this->measureHeaders as $index => $header) {
+            $this->measureHeaders[$index] = clone $header;
+        }
+
+        foreach ($this->channels as $index => $channel) {
+            $this->channels[$index] = clone $channel;
+        }
+
+        foreach ($this->tracks as $index => $track) {
+            $this->tracks[$index] = clone $track;
+        }
     }
 }

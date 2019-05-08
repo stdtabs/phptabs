@@ -43,7 +43,7 @@ class Marker
     /**
      * @param int $measure
      */
-    public function setMeasure($measure)
+    public function setMeasure(int $measure)
     {
         $this->measure = $measure;
     }
@@ -78,12 +78,6 @@ class Marker
     public function setColor(Color $color)
     {
         $this->color = $color;
-    }
-
-    public function __clone()
-    {
-        $marker = new Marker();
-        $marker->copyFrom($this);
     }
 
     /**

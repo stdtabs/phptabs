@@ -243,17 +243,17 @@ class Voice
         };
     }
 
+    /**
+     * @return void
+     */
     public function __clone()
     {
-        $voice = new Voice($this->getIndex());
-        $voice->setEmpty($this->isEmpty());
-        $voice->setDirection($this->getDirection());
-        $voice->getDuration()->copyFrom($this->getDuration());
+        if (!is_null($this->duration)) {
+            $this->duration = clone $this->duration;    
+        }
 
-        for ($i = 0; $i < $this->countNotes(); $i++) {
-            $note = $this->notes[$i];
-
-            $voice->addNote(clone $note);
+        foreach ($this->notes as $index => $item) {
+            $this->notes[$index] = clone $item;
         }
     }
 }

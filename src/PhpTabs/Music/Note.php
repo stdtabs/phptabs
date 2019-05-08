@@ -127,13 +127,11 @@ class Note
         $this->voice = $voice;
     }
 
+    /**
+     * return void
+     */
     public function __clone()
     {
-        $note = new Note();
-        $note->setValue($this->getValue());
-        $note->setVelocity($this->getVelocity());
-        $note->setString($this->getString());
-        $note->setTiedNote($this->isTiedNote());
-        $note->setEffect(clone $this->getEffect());
+        $this->effect = clone $this->effect;
     }
 }

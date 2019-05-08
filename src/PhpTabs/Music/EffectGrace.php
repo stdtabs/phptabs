@@ -140,15 +140,4 @@ class EffectGrace
             (Duration::QUARTER_TIME / 16.00 ) * $this->getDuration()
         );
     }
-
-    public function __clone()
-    {
-        $effect = new EffectGrace();
-        $effect->setFret($this->getFret());
-        $effect->setDuration($this->getDuration());
-        $effect->setDynamic($this->getDynamic());
-        $effect->setTransition($this->getTransition());
-        $effect->setOnBeat($this->isOnBeat());
-        $effect->setDead($this->isDead());
-    }
 }

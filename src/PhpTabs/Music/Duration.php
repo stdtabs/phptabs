@@ -98,8 +98,7 @@ class Duration
 
         if ($this->dotted) {
             $time += $time / 2;
-        }
-        elseif ($this->doubleDotted) {
+        } elseif ($this->doubleDotted) {
             $time += ($time / 4) * 3;
         }
 
@@ -172,8 +171,7 @@ class Duration
     {
         $index = 0;
         $value = $this->value;
-        while (($value = ($value >> 1) ) > 0)
-        {
+        while (($value = ($value >> 1) ) > 0) {
             $index++;
         }
 
@@ -187,16 +185,19 @@ class Duration
      */
     public function isEqual(Duration $duration)
     {
-        return ($this->getValue() == $duration->getValue() 
-        && $this->isDotted() == $duration->isDotted() 
-        && $this->isDoubleDotted() == $duration->isDoubleDotted()
-        && $this->getDivision()->isEqual($duration->getDivision()));
+        return $this->getValue() == $duration->getValue() 
+            && $this->isDotted() == $duration->isDotted() 
+            && $this->isDoubleDotted() == $duration->isDoubleDotted()
+            && $this->getDivision()->isEqual($duration->getDivision());
     }
 
+    /**
+     * @return void
+     * @todo fix this clone method that makes bugs into MidiReader
+     */
     public function __clone()
     {
-        $duration = new Duration();
-        $duration->copyFrom($this);
+        // $this->divisionType = clone $this->divisionType;
     }
 
     /**

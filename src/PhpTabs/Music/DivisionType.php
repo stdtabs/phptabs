@@ -20,7 +20,7 @@ class DivisionType
     private $times  = 1;
 
     /**
-     * @return array
+     * @return int
      */
     public function getEnters()
     {
@@ -28,7 +28,7 @@ class DivisionType
     }
 
     /**
-     * @param array $enters
+     * @param int $enters
      */
     public function setEnters($enters)
     {
@@ -36,7 +36,7 @@ class DivisionType
     }
 
     /**
-     * @return array
+     * @return int
      */
     public function getTimes()
     {
@@ -44,7 +44,7 @@ class DivisionType
     }
 
     /**
-     * @param array $times
+     * @param int $times
      */
     public function setTimes($times)
     {
@@ -65,14 +65,8 @@ class DivisionType
      */
     public function isEqual(DivisionType $divisionType)
     {
-        return ($divisionType->getEnters() == $this->getEnters()) 
-        && ($divisionType->getTimes()  == $this->getTimes());
-    }
-
-    public function __clone()
-    {
-        $divisionType = new DivisionType();
-        $divisionType->copyFrom($this);
+        return $divisionType->getEnters() == $this->getEnters() 
+            && $divisionType->getTimes()  == $this->getTimes();
     }
 
     /**
@@ -106,22 +100,22 @@ class DivisionType
     public static function alteredDivisionTypes()
     {
         return array(
-        self::newDivisionType(3, 2),
-        self::newDivisionType(5, 4),
-        self::newDivisionType(6, 4),
-        self::newDivisionType(7, 4),
-        self::newDivisionType(9, 8),
-        self::newDivisionType(10, 8),
-        self::newDivisionType(11, 8),
-        self::newDivisionType(12, 8),
-        self::newDivisionType(13, 8),
+            self::newDivisionType(3, 2),
+            self::newDivisionType(5, 4),
+            self::newDivisionType(6, 4),
+            self::newDivisionType(7, 4),
+            self::newDivisionType(9, 8),
+            self::newDivisionType(10, 8),
+            self::newDivisionType(11, 8),
+            self::newDivisionType(12, 8),
+            self::newDivisionType(13, 8),
         );
     }
 
     /**
      * @return \PhpTabs\Music\DivisionType
      */
-    private static function newDivisionType($enters, $times)
+    private static function newDivisionType(int $enters, int $times)
     {
         $divisionType = new DivisionType();
         $divisionType->setEnters($enters);
