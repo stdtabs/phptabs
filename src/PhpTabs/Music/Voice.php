@@ -243,9 +243,6 @@ class Voice
         };
     }
 
-    /**
-     * @return \PhpTabs\Music\Voice
-     */
     public function __clone()
     {
         $voice = new Voice($this->getIndex());
@@ -253,13 +250,10 @@ class Voice
         $voice->setDirection($this->getDirection());
         $voice->getDuration()->copyFrom($this->getDuration());
 
-        for ($i = 0; $i < $this->countNotes(); $i++)
-        {
+        for ($i = 0; $i < $this->countNotes(); $i++) {
             $note = $this->notes[$i];
 
             $voice->addNote(clone $note);
         }
-
-        return $voice;
     }
 }

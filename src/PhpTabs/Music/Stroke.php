@@ -91,14 +91,10 @@ class Stroke
         : 0;
     }
 
-    /**
-     * @return \PhpTabs\Music\Stroke
-     */
     public function __clone()
     {
         $stroke = new Stroke();
         $stroke->copyFrom($this);
-        return $stroke;
     }
 
     /**

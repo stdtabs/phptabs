@@ -141,9 +141,6 @@ class EffectGrace
         );
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectGrace
-     */
     public function __clone()
     {
         $effect = new EffectGrace();
@@ -153,7 +150,5 @@ class EffectGrace
         $effect->setTransition($this->getTransition());
         $effect->setOnBeat($this->isOnBeat());
         $effect->setDead($this->isDead());
-
-        return $effect;
     }
 }

@@ -127,9 +127,6 @@ class Note
         $this->voice = $voice;
     }
 
-    /**
-     * @return \PhpTabs\Music\Note
-     */
     public function __clone()
     {
         $note = new Note();
@@ -138,7 +135,5 @@ class Note
         $note->setString($this->getString());
         $note->setTiedNote($this->isTiedNote());
         $note->setEffect(clone $this->getEffect());
-
-        return $note;
     }
 }

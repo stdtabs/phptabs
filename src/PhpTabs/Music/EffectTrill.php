@@ -56,9 +56,6 @@ class EffectTrill
         $this->duration = $duration;
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectTrill
-     */
     public function __clone()
     {
         $effect = new EffectTrill();
@@ -69,7 +66,5 @@ class EffectTrill
         $effect->getDuration()->setDoubleDotted($this->getDuration()->isDoubleDotted());
         $effect->getDuration()->getDivision()->setEnters($this->getDuration()->getDivision()->getEnters());
         $effect->getDuration()->getDivision()->setTimes($this->getDuration()->getDivision()->getTimes());
-
-        return $effect;
     }
 }

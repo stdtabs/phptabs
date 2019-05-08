@@ -86,18 +86,6 @@ class Tempo
     }
 
     /**
-     * Clones current tempo
-     *
-     * @return \PhpTabs\Music\Tempo
-     */
-    public function __clone()
-    {
-        $tempo = new Tempo();
-        $tempo->copyFrom($this);
-        return $tempo;
-    }
-
-    /**
      * Copies a tempo from another one
      *
      * @param \PhpTabs\Music\Tempo $tempo

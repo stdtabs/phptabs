@@ -351,9 +351,6 @@ class NoteEffect extends NoteEffectBase
         $this->fadeIn = $fadeIn;
     }
 
-    /**
-     * @return \PhpTabs\Music\NoteEffect
-     */
     public function __clone()
     {
         $effect = new NoteEffect();
@@ -365,11 +362,9 @@ class NoteEffect extends NoteEffectBase
 
             $effect->$setter(
                 in_array($attr, array('bend', 'tremoloBar', 'harmonic', 'grace', 'trill', 'tremoloPicking'))
-                ? ($this->$getter() ? clone $value : null)
-                : $effect->$setter($this->$getter())
+                    ? ($this->$getter() ? clone $value : null)
+                     : $effect->$setter($this->$getter())
             );
         }
-
-        return $effect;
     }    
 }

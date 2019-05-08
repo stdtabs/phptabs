@@ -80,14 +80,10 @@ class Marker
         $this->color = $color;
     }
 
-    /**
-     * @return \PhpTabs\Music\Marker
-     */
     public function __clone()
     {
         $marker = new Marker();
         $marker->copyFrom($this);
-        return $marker;
     }
 
     /**

@@ -26,12 +26,12 @@ abstract class SerializerBase
 
                     $this->appendNodes($node);
 
-                    // Node
+                // Node
                 } elseif (is_array($node) && !is_int($index)) {
 
                     $this->appendNode($index, $node);
 
-                    // Text
+                // Text
                 } elseif (!is_array($node)) {
 
                     $this->appendText($index, $node);

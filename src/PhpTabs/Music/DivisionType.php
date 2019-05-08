@@ -69,14 +69,10 @@ class DivisionType
         && ($divisionType->getTimes()  == $this->getTimes());
     }
 
-    /**
-     * @return \PhpTabs\Music\DivisionType
-     */
     public function __clone()
     {
         $divisionType = new DivisionType();
         $divisionType->copyFrom($this);
-        return $divisionType;
     }
 
     /**

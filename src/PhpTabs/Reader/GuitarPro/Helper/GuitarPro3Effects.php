@@ -33,11 +33,11 @@ class GuitarPro3Effects extends AbstractReader
         $effect->setLetRing((($flags & 0x08) != 0));
 
         if (($flags & 0x01) != 0) {
-            $this->readBend($effect, $this->reader);
+            $this->readBend($effect);
         }
 
         if (($flags & 0x10) != 0) {
-            $this->readGrace($effect, $this->reader);
+            $this->readGrace($effect);
         }
     }
 
@@ -52,8 +52,7 @@ class GuitarPro3Effects extends AbstractReader
         $this->reader->skip(5);
         $points = $this->reader->readInt();
 
-        for ($i = 0; $i < $points; $i++)
-        {
+        for ($i = 0; $i < $points; $i++) {
             $bendPosition = $this->reader->readInt();
             $bendValue = $this->reader->readInt();
             $this->reader->readByte(); //vibrato
@@ -85,14 +84,11 @@ class GuitarPro3Effects extends AbstractReader
 
         if ($transition == 0) {
             $grace->setTransition(EffectGrace::TRANSITION_NONE);
-        }
-        elseif ($transition == 1) {
+        } elseif ($transition == 1) {
             $grace->setTransition(EffectGrace::TRANSITION_SLIDE);
-        }
-        elseif ($transition == 2) {
+        } elseif ($transition == 2) {
             $grace->setTransition(EffectGrace::TRANSITION_BEND);
-        }
-        elseif ($transition == 3) {
+        } elseif ($transition == 3) {
             $grace->setTransition(EffectGrace::TRANSITION_HAMMER);
         }
 

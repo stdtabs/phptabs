@@ -38,9 +38,6 @@ class EffectTremoloBar
         return $this->points;
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectTremoloBar
-     */
     public function __clone()
     {
         $effect = new EffectTremoloBar();
@@ -48,8 +45,6 @@ class EffectTremoloBar
         foreach ($this->points as $point) {
             $effect->addPoint($point->getPosition(), $point->getValue());
         }
-
-        return $effect;
     }
 }
 
@@ -68,13 +63,5 @@ class TremoloBarPoint extends EffectPointsBase
             $duration * $this->getPosition()
             / EffectTremoloBar::MAX_POSITION_LENGTH
         );
-    }
-
-    /**
-     * @return \PhpTabs\Music\TremoloBarPoint
-     */
-    public function __clone()
-    {
-        return new TremoloBarPoint($this->getPosition(), $this->getValue());
     }
 }

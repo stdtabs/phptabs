@@ -89,14 +89,4 @@ class Lyric
         $this->setFrom($lyric->getFrom());
         $this->setLyrics($lyric->getLyrics());
     }
-
-    /**
-     * @return \PhpTabs\Music\Lyric
-     */
-    public function __clone()
-    {
-        $lyric = new Lyric();
-        $lyric->copyFrom($this);
-        return $lyric;
-    }
 }

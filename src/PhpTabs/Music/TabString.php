@@ -83,19 +83,6 @@ class TabString
     }
 
     /**
-     * Clones current string
-     * 
-     * @return \PhpTabs\Music\TabString
-     */
-    public function __clone()
-    {
-        $string = new TabString();
-        $string->copyFrom($this);
-
-        return $string;
-    }
-
-    /**
      * Copies a string from another one
      *
      * @param \PhpTabs\Music\TabString $string

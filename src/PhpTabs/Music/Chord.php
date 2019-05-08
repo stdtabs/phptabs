@@ -171,22 +171,14 @@ class Chord
         $this->name = $name;
     }
 
-    /**
-     * Clone current Chord
-     * 
-     * @return \PhpTabs\Music\Chord clone
-     */
     public function __clone()
     {
         $chord = new Chord(count($this->strings));
         $chord->setName($this->getName());
         $chord->setFirstFret($this->getFirstFret());
 
-        for ($i = 0; $i < count($chord->strings); $i++)
-        {
+        for ($i = 0; $i < count($chord->strings); $i++) {
             $chord->strings[$i] = $this->strings[$i];
         }
-
-        return $chord;
     }
 }

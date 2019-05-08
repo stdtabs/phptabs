@@ -11,7 +11,7 @@
 
 namespace PhpTabs\Music;
 
-class SongBase
+abstract class SongBase
 {
     protected $name;
     protected $artist;

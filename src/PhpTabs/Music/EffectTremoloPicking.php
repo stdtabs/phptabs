@@ -39,9 +39,6 @@ class EffectTremoloPicking
         $this->duration = $duration;
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectTremoloPicking
-     */
     public function __clone()
     {
         $effect = new EffectTremoloPicking();
@@ -51,8 +48,6 @@ class EffectTremoloPicking
         $effect->getDuration()->setDoubleDotted($this->getDuration()->isDoubleDotted());
         $effect->getDuration()->getDivision()->setEnters($this->getDuration()->getDivision()->getEnters());
         $effect->getDuration()->getDivision()->setTimes($this->getDuration()->getDivision()->getTimes());
-
-        return $effect;
     }
     
 }

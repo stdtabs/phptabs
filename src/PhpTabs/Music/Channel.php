@@ -269,14 +269,10 @@ class Channel
         return $this->getBank() === Channel::DEFAULT_PERCUSSION_BANK;
     }
 
-    /**
-     * @return \PhpTabs\Music\Channel
-     */
     public function __clone()
     {
         $channel = new Channel();
         $channel->copyFrom($this);
-        return $channel; 
     }
 
     /**

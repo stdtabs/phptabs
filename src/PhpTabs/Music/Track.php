@@ -295,14 +295,10 @@ class Track
         $this->measures = array();
     }
 
-    /**
-     * @return \PhpTabs\Music\Track
-     */
     public function __clone()
     {
         $track = new Track();
         $track->copyFrom($this);
-        return $track;
     }
 
     /**

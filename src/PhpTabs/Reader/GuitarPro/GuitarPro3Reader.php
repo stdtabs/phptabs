@@ -22,6 +22,11 @@ use PhpTabs\Music\TimeSignature;
 class GuitarPro3Reader extends GuitarProReaderBase
 {
     /**
+     * @var \PhpTabs\Component\Tablature
+     */
+    protected $tablature;
+
+    /**
      * 
      *
      * @var array $supportedVersions 

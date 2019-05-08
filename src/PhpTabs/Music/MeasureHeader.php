@@ -243,17 +243,13 @@ class MeasureHeader
         $this->setTripletFeel($header->getTripletFeel());
         $this->getTimeSignature()->copyFrom($header->getTimeSignature());
         $this->getTempo()->copyFrom($header->getTempo());
-        $this->setMarker($header->hasMarker() ? clone $header->getMarker() : null);
+        $this->setMarker($header->hasMarker() ? (clone $header->getMarker()) : null);
         $this->checkMarker();
     }
 
-    /**
-     * @return \PhpTabs\Music\MeasureHeader
-     */
     public function __clone()
     {
         $measureHeader = new MeasureHeader();
         $measureHeader->copyFrom($this);
-        return $measureHeader;
     }
 }

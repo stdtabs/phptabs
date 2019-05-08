@@ -63,14 +63,4 @@ class Text
     {
         $this->setValue($text->getValue());
     }
-
-    /**
-     * @return \PhpTabs\Music\Text
-     */
-    public function __clone()
-    {
-        $text = new Text();
-        $text->copyFrom($this);
-        return $text;
-    }
 }

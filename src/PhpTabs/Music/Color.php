@@ -143,14 +143,11 @@ class Color
 
     /**
      * Clones current color
-     *
-     * @return \PhpTabs\Music\Color
      */
     public function __clone()
     {
         $color = new Color;
         $color->copyFrom($this);
-        return $color;
     }
 
     /**

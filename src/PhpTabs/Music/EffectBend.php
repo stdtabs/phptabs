@@ -47,9 +47,6 @@ class EffectBend
         return count($this->points);
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectBend
-     */
     public function __clone()
     {
         $effect = new EffectBend();
@@ -57,8 +54,6 @@ class EffectBend
         foreach ($this->getPoints() as $point) {
             $effect->addPoint($point->getPosition(), $point->getValue());
         }
-
-        return $effect;
     }
 }
 
@@ -79,13 +74,5 @@ class BendPoint extends EffectPointsBase
             $duration * $this->getPosition() 
             / EffectBend::MAX_POSITION_LENGTH
         );
-    }
-
-    /**
-     * @return \PhpTabs\Music\BendPoint
-     */
-    public function __clone()
-    {
-        return new BendPoint($this->getPosition(), $this->getValue());
     }
 }

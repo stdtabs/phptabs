@@ -206,9 +206,6 @@ class Beat
         return true;
     }
 
-    /**
-     * @return \PhpTabs\Music\Beat
-     */
     public function __clone()
     {
         $beat = new Beat();
@@ -226,7 +223,5 @@ class Beat
         if ($this->text !== null) {
             $beat->setText(clone $this->text);
         }
-
-        return $beat;
     }
 }

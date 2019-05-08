@@ -112,14 +112,10 @@ class EffectHarmonic
         return $this->type == EffectHarmonic::TYPE_SEMI;
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectHarmonic
-     */
     public function __clone()
     {
         $effect = new EffectHarmonic();
         $effect->setType($this->getType());
         $effect->setData($this->getData());
-        return $effect;
     }
 }

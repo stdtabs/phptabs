@@ -300,14 +300,9 @@ class Measure
         }
     }
 
-    /**
-     * @return \PhpTabs\Music\Measure
-     */
     public function __clone()
     {
         $measure = new Measure($this->getHeader());
         $measure->copyFrom($this);
-
-        return $measure;
     }
 }

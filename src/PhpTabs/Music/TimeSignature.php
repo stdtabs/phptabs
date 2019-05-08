@@ -56,14 +56,10 @@ class TimeSignature
         $this->denominator = $denominator;
     }
 
-    /**
-     * @return \PhpTabs\Music\TimeSignature
-     */
     public function __clone()
     {
         $timeSignature = new TimeSignature();
         $timeSignature->copyFrom($this);
-        return $timeSignature;
     }
 
     /**

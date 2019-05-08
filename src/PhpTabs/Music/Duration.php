@@ -193,14 +193,10 @@ class Duration
         && $this->getDivision()->isEqual($duration->getDivision()));
     }
 
-    /**
-     * @return \PhpTabs\Music\Duration
-     */
     public function __clone()
     {
         $duration = new Duration();
         $duration->copyFrom($this);
-        return $duration;
     }
 
     /**

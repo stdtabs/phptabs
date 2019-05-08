@@ -199,14 +199,9 @@ class Song extends SongBase
         return $this->channels;
     }
 
-    /**
-     * @return \PhpTabs\Music\Song
-     */
     public function __clone()
     {
         $song = new Song();
         $song->copyFrom($this);
-
-        return $song;
     }
 }
