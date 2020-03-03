@@ -7,7 +7,7 @@
     "homepage": "https://stdtabs.github.io/",
     "license": "LGPL-2.1+",
     "require": {
-        "php": "^7.1"
+        "php": "^7.2"
     },
     "autoload": {
         "psr-4": {
@@ -16,6 +16,5 @@
         }
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.4"
     }
 }
