@@ -19,7 +19,7 @@ class TablatureTest extends TestCase
 {
     public function testUnexistingMethod()
     {
-        $this->expectException(Error::class);
+        $this->expectError();
 
         // Method does not exist
         (new Tablature())->undefinedMethod();
@@ -27,7 +27,7 @@ class TablatureTest extends TestCase
 
     public function testException()
     {
-        $this->expectException(Error::class);
+        $this->expectError();
 
         // Not a valid number of params
         (new Tablature())->getChannels('param1', 'param2', 'param3');
