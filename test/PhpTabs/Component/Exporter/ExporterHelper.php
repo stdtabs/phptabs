@@ -138,7 +138,14 @@ class ExporterHelper extends XmlTestCaseHelper
     public function testExporterText($text)
     {
         $pattern = sprintf('/%s/', $text);
-        $this->assertRegexp($pattern, self::$plainText);
+
+        // PHPUnit >= 9
+        if (method_exists($this, 'assertMatchesRegularExpression')) {
+            $this->assertMatchesRegularExpression($pattern, self::$plainText);
+        // PHPUnit < 9
+        } else {
+            $this->assertRegExp($pattern, self::$plainText);
+        }
     }
 
     /**
@@ -149,7 +156,14 @@ class ExporterHelper extends XmlTestCaseHelper
     public function testExporterYaml($text)
     {
         $pattern = sprintf('/%s/', $text);
-        $this->assertRegexp($pattern, self::$plainText);
+
+        // PHPUnit >= 9
+        if (method_exists($this, 'assertMatchesRegularExpression')) {
+            $this->assertMatchesRegularExpression($pattern, self::$plainText);
+        // PHPUnit < 9
+        } else {
+            $this->assertRegExp($pattern, self::$plainText);
+        }
     }
 
     public function getYamlScenarios()

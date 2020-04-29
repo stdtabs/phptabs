@@ -33,10 +33,25 @@ class PhpTabsTest extends TestCase
    */
     public function testGetVersion()
     {
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/\d.\d.\d/',
             IOFactory::create()->getVersion(),
             'getVersion failed'
         );
+        // PHPUnit >= 9
+        if (method_exists($this, 'assertMatchesRegularExpression')) {
+            $this->assertMatchesRegularExpression(
+                '/\d.\d.\d/',
+                IOFactory::create()->getVersion(),
+                'getVersion failed'
+            );
+        // PHPUnit < 9
+        } else {
+            $this->assertRegExp(
+                '/\d.\d.\d/',
+                IOFactory::create()->getVersion(),
+                'getVersion failed'
+            );
+        }
     }
 }
