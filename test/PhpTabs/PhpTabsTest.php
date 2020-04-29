@@ -33,11 +33,6 @@ class PhpTabsTest extends TestCase
    */
     public function testGetVersion()
     {
-        $this->assertMatchesRegularExpression(
-            '/\d.\d.\d/',
-            IOFactory::create()->getVersion(),
-            'getVersion failed'
-        );
         // PHPUnit >= 9
         if (method_exists($this, 'assertMatchesRegularExpression')) {
             $this->assertMatchesRegularExpression(
