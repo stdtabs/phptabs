@@ -148,14 +148,14 @@ class AsciiBase
         return $this->y;
     }
 
-  /**
-   * Write a string
-   *
-   * @param string $data
-   */
+   /**
+    * Write a string
+    *
+    * @param string $data
+    */
     public function append($data)
     {
-      // Try to find a better X (min)
+        // Try to find a better X (min)
         $x = $this->getPosX();
         while ($x >= 0) {
             if (isset($this->content[$this->getPosY()][$x])) {
@@ -168,7 +168,11 @@ class AsciiBase
         $this->movePoint($x + 1, $this->getPosY());
 
         for ($i = 0; $i < mb_strlen($data); $i++) {
-            $this->write($this->getPosX() + $i, $this->getPosY(), $data{$i});
+            $this->write(
+                $this->getPosX() + $i,
+                $this->getPosY(),
+                mb_substr($data, $i, 1)
+            );
         }
     }
 
