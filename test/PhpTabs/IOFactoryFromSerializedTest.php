@@ -26,7 +26,6 @@ class IOFactoryFromSerializedTest extends TestCase
     public function getExceptionScenarios()
     {
         return [
-        [['ee']], // Array as data
         [1.25],   // Float as data
         ];
     }

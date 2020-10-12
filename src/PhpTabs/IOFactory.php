@@ -17,34 +17,27 @@ abstract class IOFactory
 {
     /**
      * Create a PhpTabs instance
-     * 
-     * @param  string $pathname
-     * @return \PhpTabs\PhpTabs
      */
-    public static function create($pathname = null)
+    public static function create(string $pathname = null): PhpTabs
     {
         return new PhpTabs($pathname);
     }
 
     /**
      * Create a PhpTabs instance from an array
-     * 
-     * @param  array $data
-     * @return \PhpTabs\PhpTabs
      */
-    public static function fromArray(array $data)
+    public static function fromArray(array $data): PhpTabs
     {
         return self::create()->import($data);
     }
 
     /**
      * Load data from a file
-     * 
+     *
      * @param  string $pathname A complete pathname
      * @param  string $type     Force a file type read
-     * @return \PhpTabs\PhpTabs
      */
-    public static function fromFile($pathname, $type = null)
+    public static function fromFile(string $pathname, string $type = null): PhpTabs
     {
         self::checkFile($pathname);
 
@@ -64,12 +57,10 @@ abstract class IOFactory
 
     /**
      * Import a tablature from a PHP serialized file
-     * 
-     * @param  string $filename
-     * @return \PhpTabs\PhpTabs
+     *
      * @throws \Exception if unserialize method failed
      */
-    public static function fromSerializedFile($filename)
+    public static function fromSerializedFile(string $filename): PhpTabs
     {
         self::checkFile($filename);
 
@@ -80,12 +71,10 @@ abstract class IOFactory
 
     /**
      * Import a tablature from a JSON file
-     * 
-     * @param  string $filename
-     * @return \PhpTabs\PhpTabs
+     *
      * @throws \Exception if JSON decode failed
      */
-    public static function fromJsonFile($filename)
+    public static function fromJsonFile(string $filename): PhpTabs
     {
         self::checkFile($filename);
 
@@ -96,11 +85,8 @@ abstract class IOFactory
 
     /**
      * Import a tabs from a PHP serialized string
-     * 
-     * @param  string $data
-     * @return \PhpTabs\PhpTabs
      */
-    public static function fromSerialized($data)
+    public static function fromSerialized(string $data): PhpTabs
     {
         if (!is_string($data)) {
             throw new Exception(
@@ -125,11 +111,8 @@ abstract class IOFactory
 
     /**
      * Import a tabs from a PHP serialized string
-     * 
-     * @param  string $data
-     * @return \PhpTabs\PhpTabs
      */
-    public static function fromJson($data)
+    public static function fromJson(string $data): PhpTabs
     {
         if (!is_string($data)) {
             throw new Exception('fromJson() parameter must be a string');
@@ -140,7 +123,7 @@ abstract class IOFactory
         // JSON decoding error
         if (json_last_error() !== JSON_ERROR_NONE) {
             $message = sprintf(
-                'JSON_DECODE_FAILURE: Error number %d - %s', 
+                'JSON_DECODE_FAILURE: Error number %d - %s',
                 json_last_error(),
                 json_last_error_msg()
             );
@@ -153,13 +136,13 @@ abstract class IOFactory
 
     /**
      * Check that given filename is a string and is readable
-     * 
+     *
      * @param  mixed $filename
-     * @throws \Exception if filename is not a string 
+     * @throws \Exception if filename is not a string
      *  or if filename is not a file
      *  or if file is not readable
      */
-    public static function checkFile($filename)
+    public static function checkFile($filename): void
     {
         // Must be a string
         if (!is_string($filename)) {

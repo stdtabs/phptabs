@@ -26,8 +26,6 @@ class IOFactoryFromJsonTest extends TestCase
     public function getExceptionScenarios()
     {
         return [
-        [['ee']], // Array as filename
-        [1.25],   // Float as filename
         [PHPTABS_TEST_BASEDIR . '/sample'],   // Unreadable filename
         [PHPTABS_TEST_BASEDIR . '/samples/'],  // Dir as filename
         [PHPTABS_TEST_BASEDIR . '/samples/testSimpleMidi.mid']  // Not a valid JSON file
