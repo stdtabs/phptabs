@@ -24,10 +24,8 @@ class GuitarPro5Track extends AbstractReader
      * @param \PhpTabs\Music\Song  $song
      * @param array                $channels an array of Channel objects
      * @param \PhpTabs\Music\Lyric $lyrics
-     *
-     * @return \PhpTabs\Music\Track
      */
-    public function readTrack(Song $song, array $channels = [], Lyric $lyrics)
+    public function readTrack(Song $song, array $channels, Lyric $lyrics): Track
     {
         $this->reader->readUnsignedByte();
 
