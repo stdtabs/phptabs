@@ -19,72 +19,54 @@ use Exception;
 class File
 {
     /**
-     * 
-     *
-     * @var string Path to the file 
+     * @var string Path to the file
      */
     private $path;
 
     /**
-     * 
-     *
-     * @var bool|string error message 
+     * @var bool|string error message
      */
     private $error = false;
 
     /**
-     * 
-     *
-     * @var string dirname of the file 
+     * @var string dirname of the file
      */
     private $dirname;
 
     /**
-     * 
-     *
-     * @var string extension of the file 
+     * @var string extension of the file
      */
     private $extension;
 
     /**
-     * 
-     *
-     * @var string basename of the file 
+     * @var string basename of the file
      */
     private $basename;
 
     /**
-     * 
-     *
-     * @var int File size in bytes 
+     * @var int File size in bytes
      */
     private $size = 0;
 
     /**
-     * 
-     *
-     * @var int A file system pointer 
+     * @var int A file system pointer
      */
     private $handle = 0;
 
     /**
-     * 
-     *
-     * @var string file content 
+     * @var string file content
      */
     private $content = '';
 
     /**
-     * 
-     *
-     * @var string current segment 
+     * @var string current segment
      */
     private $stream = '';
 
     /**
      * @param string $path Path to the file
      */
-    public function __construct($path)
+    public function __construct(string $path)
     {
         $this->setPath($path);
 
@@ -115,7 +97,7 @@ class File
     /**
      * @param string $path Path to the file passed as a parameter
      */
-    private function setPath($path)
+    private function setPath(string $path): void
     {
         $this->path = $path;
     }
@@ -123,7 +105,7 @@ class File
     /**
      * @return string Path to the file as it was passed as a parameter
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -131,7 +113,7 @@ class File
     /**
      * @param string $name Directory of the path
      */
-    private function setDirname($name)
+    private function setDirname(string $name): void
     {
         $this->dirname = $name;
     }
@@ -139,7 +121,7 @@ class File
     /**
      * @return string Directory of the path
      */
-    public function getDirname()
+    public function getDirname(): string
     {
         return $this->dirname;
     }
@@ -147,7 +129,7 @@ class File
     /**
      * @param string $name Extension of the path
      */
-    private function setExtension($name)
+    private function setExtension(string $name): void
     {
         $this->extension = $name;
     }
@@ -155,7 +137,7 @@ class File
     /**
      * @return string Extension of the path
      */
-    public function getExtension()
+    public function getExtension(): string
     {
         return $this->extension;
     }
@@ -163,7 +145,7 @@ class File
     /**
      * @param string $name Basename of the path
      */
-    private function setBasename($name)
+    private function setBasename(string $name): void
     {
         $this->basename = $name;
     }
@@ -171,7 +153,7 @@ class File
     /**
      * @return string Basename of the path
      */
-    public function getBasename()
+    public function getBasename(): string
     {
         return $this->basename;
     }
@@ -179,7 +161,7 @@ class File
     /**
      * @param int $size size of the file (bytes)
      */
-    private function setSize($size)
+    private function setSize(int $size): void
     {
         $this->size = $size;
     }
@@ -187,22 +169,22 @@ class File
     /**
      * @return int size of the file (bytes)
      */
-    public function getSize()
+    public function getSize(): int
     {
         return $this->size;
     }
 
     /**
      * Streams a binary file
-     * 
+     *
      * @param int $bytes
      * @param int $offset
-     * 
+     *
      * @return null|string A file segment
-     * 
+     *
      * @throws Exception If asked position is larger than the file size
      */
-    public function getStream($bytes = 1, $offset = null)
+    public function getStream(int $bytes = 1, int $offset = null): ?string
     {
         if ($this->handle + $bytes > $this->getSize()) {
             throw new Exception('Pointer');
@@ -210,7 +192,7 @@ class File
 
         // Nothing to read
         if ($bytes <= 0) {
-            return;
+            return null;
         }
 
         // Read $bytes with no offset
@@ -233,7 +215,7 @@ class File
      *
      * @return int Position of the pointer.
      */
-    public function getStreamPosition()
+    public function getStreamPosition(): int
     {
         return $this->handle;
     }
@@ -241,17 +223,17 @@ class File
     /**
      * Close stream
      */
-    public function closeStream()
+    public function closeStream(): void
     {
         $this->handle = 0;
     }
 
     /**
      * @param string $message Error during file read operations
-     * 
+     *
      * @throws \Exception when an error occurred
      */
-    private function setError($message)
+    private function setError($message): void
     {
         $this->error = $message;
 
@@ -270,7 +252,7 @@ class File
      * @return boolean true if an error occurred when try to read a file
      *  false otherwise.
      */
-    public function hasError()
+    public function hasError(): bool
     {
         return $this->error !== false;
     }

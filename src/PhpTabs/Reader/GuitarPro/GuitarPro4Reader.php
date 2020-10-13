@@ -28,16 +28,16 @@ use PhpTabs\Music\Velocities;
 class GuitarPro4Reader extends GuitarProReaderBase
 {
     /**
-     * 
      *
-     * @var array $supportedVersions 
+     *
+     * @var array $supportedVersions
      */
     private static $supportedVersions = array('FICHIER GUITAR PRO v4.00', 'FICHIER GUITAR PRO v4.06', 'FICHIER GUITAR PRO L4.06');
 
     /**
      * @var int $tripletFeel
      * @var int $keySignature
-     */  
+     */
     protected $tripletFeel, $keySignature;
 
     /**
@@ -116,7 +116,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
     /**
      * {@inheritdoc}
      */
-    public function getTablature()
+    public function getTablature(): Tablature
     {
         return !is_null($this->tablature)
         ? $this->tablature : new Tablature();
@@ -143,7 +143,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     /**
      * Reads GraceEffect
-     * 
+     *
      * @param \PhpTabs\Music\NoteEffect $effect
      */
     public function readGrace(NoteEffect $effect)
@@ -175,7 +175,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     /**
      * Loops on mesure headers to read
-     * 
+     *
      * @param \PhpTabs\Music\Song $song
      *
      * @param integer             $count
@@ -184,7 +184,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
     {
         $timeSignature = new TimeSignature();
 
-        for ($i = 0; $i < $count; $i++) 
+        for ($i = 0; $i < $count; $i++)
         {
             $song->addMeasureHeader($this->factory('GuitarPro3MeasureHeader')->readMeasureHeader(($i + 1), $song, $timeSignature));
         }
@@ -192,7 +192,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     /**
      * Loops on tracks to read
-     * 
+     *
      * @param \PhpTabs\Music\Song  $song
      * @param int                  $count
      * @param array                $channels   Current array of channels

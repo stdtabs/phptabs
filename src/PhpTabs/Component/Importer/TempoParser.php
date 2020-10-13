@@ -17,10 +17,10 @@ class TempoParser extends ParserBase
 {
     /**
      * Parse a tempo array
-     * 
+     *
      * @param int $data
      */
-    public function __construct($data)
+    public function __construct(int $data)
     {
         $tempo = new Tempo();
         $tempo->setValue($data);

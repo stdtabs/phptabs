@@ -11,14 +11,19 @@
 
 namespace PhpTabs\Component\Exporter;
 
+use PhpTabs\Music\{
+    Beat, Chord, Duration, Marker, Measure, MeasureHeader, Note,
+    TabString, Text, TimeSignature, Voice
+};
+
 abstract class ExporterBase extends ExporterEffects
 {
     /**
-     * @return array
+     * Export all song as an array
      */
-    protected function exportSong()
+    protected function exportSong(): array
     {
-        $content = array(
+        $content = [
             'name'          => $this->song->getName(),
             'artist'        => $this->song->getArtist(),
             'album'         => $this->song->getAlbum(),
@@ -26,10 +31,10 @@ abstract class ExporterBase extends ExporterEffects
             'copyright'     => $this->song->getCopyright(),
             'writer'        => $this->song->getWriter(),
             'comments'      => $this->song->getComments(),
-            'channels'      => array(),
-            'measureHeaders'=> array(),
-            'tracks'        => array()
-        );
+            'channels'      => [],
+            'measureHeaders'=> [],
+            'tracks'        => []
+        ];
 
         $countChannels = $this->song->countChannels();
 
@@ -62,10 +67,8 @@ abstract class ExporterBase extends ExporterEffects
 
     /**
      * @param int $index
-     * 
-     * @return array
      */
-    protected function exportTrack($index)
+    protected function exportTrack(int $index): array
     {
         $track = $this->song->getTrack($index);
 
@@ -85,8 +88,8 @@ abstract class ExporterBase extends ExporterEffects
               'from'    => $track->getLyrics()->getFrom(),
               'lyrics'  => $track->getLyrics()->getLyrics()
             ),
-            'measures'  => array(),
-            'strings'   => array()
+            'measures'  => [],
+            'strings'   => []
         );
 
         $countMeasures = $track->countMeasures();
@@ -108,11 +111,9 @@ abstract class ExporterBase extends ExporterEffects
     }
 
     /**
-     * @param int $index
-     * 
-     * @return array
+     * Export a channel as an array
      */
-    protected function exportChannel($index)
+    protected function exportChannel(int $index): array
     {
         $channel = $this->song->getChannel($index);
 
@@ -127,15 +128,15 @@ abstract class ExporterBase extends ExporterEffects
             'reverb'    => $channel->getReverb(),
             'phaser'    => $channel->getPhaser(),
             'tremolo'   => $channel->getTremolo(),
-            'parameters'=> array()
+            'parameters'=> []
         );
 
         $countParameters = $channel->countParameters();
 
         for ($i = 0; $i < $countParameters; $i++) {
             $content['parameters'][$i] = array(
-            'key'   => $channel->getParameter($i)->getKey(),
-            'value' => $channel->getParameter($i)->getValue()
+                'key'   => $channel->getParameter($i)->getKey(),
+                'value' => $channel->getParameter($i)->getValue()
             );
         }
 
@@ -143,19 +144,16 @@ abstract class ExporterBase extends ExporterEffects
     }
 
     /**
-     * @param \PhpTabs\Music\Measure       $measure
-     * @param \PhpTabs\Music\MeasureHeader $measureHeader
-     * 
-     * @return array
+     * Export a measure as an array
      */
-    protected function exportMeasure($measure, $measureHeader)
+    protected function exportMeasure(Measure $measure, MeasureHeader $measureHeader): array
     {
         $content = array(
-        'channelId'     => $measure->getTrack()->getChannelId(),
-        'clef'          => $measure->getClef(),
-        'keySignature'  => $measure->getKeySignature(),
-        'header'        => $this->exportMeasureHeader($measureHeader)['header'],
-        'beats'         => array()
+            'channelId'     => $measure->getTrack()->getChannelId(),
+            'clef'          => $measure->getClef(),
+            'keySignature'  => $measure->getKeySignature(),
+            'header'        => $this->exportMeasureHeader($measureHeader)['header'],
+            'beats'         => []
         );
 
         $countBeats = $measure->countBeats();
@@ -168,21 +166,19 @@ abstract class ExporterBase extends ExporterEffects
     }
 
     /**
-     * @param \PhpTabs\Music\Beat $beat
-     * 
-     * @return array
+     * Export a beat as an array
      */
-    protected function exportBeat($beat)
+    protected function exportBeat(Beat $beat): array
     {
         $content = array(
-        'start'     => $beat->getStart(),
-        'chord'     => $this->exportChord($beat->getChord()),
-        'text'      => $this->exportText($beat->getText()),
-        'voices'    => array(),
-        'stroke'    => array(
-        'direction' => $beat->getStroke()->getDirection(),
-        'value'     => $beat->getStroke()->getValue()
-        )
+            'start'     => $beat->getStart(),
+            'chord'     => $this->exportChord($beat->getChord()),
+            'text'      => $this->exportText($beat->getText()),
+            'voices'    => [],
+            'stroke'    => array(
+                'direction' => $beat->getStroke()->getDirection(),
+                'value'     => $beat->getStroke()->getValue()
+            )
         );
 
         $countVoices = $beat->countVoices();
@@ -195,18 +191,16 @@ abstract class ExporterBase extends ExporterEffects
     }
 
     /**
-     * @param \PhpTabs\Music\Voice $voice
-     * 
-     * @return array
+     * Export a voice as an array
      */
-    protected function exportVoice($voice)
+    protected function exportVoice(Voice $voice): array
     {
         $content = array(
-        'duration' => $this->exportDuration($voice->getDuration()),
-        'index'    => $voice->getIndex(),
-        'empty'    => $voice->isEmpty(),
-        'direction'=> $voice->getDirection(),
-        'notes'    => array()
+            'duration' => $this->exportDuration($voice->getDuration()),
+            'index'    => $voice->getIndex(),
+            'empty'    => $voice->isEmpty(),
+            'direction'=> $voice->getDirection(),
+            'notes'    => []
         );
 
         $countNotes = $voice->countNotes();
@@ -219,11 +213,9 @@ abstract class ExporterBase extends ExporterEffects
     }
 
     /**
-     * @param \PhpTabs\Music\Duration $duration
-     * 
-     * @return array
+     * Export a duration as an array
      */
-    protected function exportDuration($duration)
+    protected function exportDuration(Duration $duration): array
     {
         return array(
             'value'        => $duration->getValue(),
@@ -237,13 +229,11 @@ abstract class ExporterBase extends ExporterEffects
     }
 
     /**
-     * @param \PhpTabs\Music\Note $note
-     * 
-     * @return array
+     * Export a note as an array
      */
-    protected function exportNote($note)
+    protected function exportNote(Note $note): array
     {
-        return array('note' => 
+        return array('note' =>
             array(
             'value'     => $note->getValue(),
             'velocity'  => $note->getVelocity(),
@@ -255,11 +245,9 @@ abstract class ExporterBase extends ExporterEffects
     }
 
     /**
-     * @param \PhpTabs\Music\TabString $string
-     * 
-     * @return array
+     * Export a TabString as an array
      */
-    protected function exportString($string)
+    protected function exportString(TabString $string): ?array
     {
         return is_object($string) ? array('string' => array(
             'number'  => $string->getNumber(),
@@ -268,11 +256,9 @@ abstract class ExporterBase extends ExporterEffects
     }
 
     /**
-     * @param \PhpTabs\Music\MeasureHeader $header
-     * 
-     * @return array
+     * Export a measure header as an array
      */
-    protected function exportMeasureHeader($header)
+    protected function exportMeasureHeader(MeasureHeader $header): array
     {
         return array('header' => array(
             'number'        => $header->getNumber(),
@@ -289,11 +275,9 @@ abstract class ExporterBase extends ExporterEffects
     }
 
     /**
-     * @param \PhpTabs\Music\Chord $chord
-     * 
-     * @return array
+     * Export a Chord as an array
      */
-    protected function exportChord($chord)
+    protected function exportChord(Chord $chord = null): ?array
     {
         if (!is_object($chord)) {
             return null;
@@ -302,7 +286,7 @@ abstract class ExporterBase extends ExporterEffects
         $content = array(
             'firstFret'  => $chord->getFirstFret(),
             'name'       => $chord->getName(),
-            'strings'    => array()
+            'strings'    => []
         );
 
         $countStrings = $chord->countStrings();
@@ -316,27 +300,23 @@ abstract class ExporterBase extends ExporterEffects
     }
 
     /**
-     * @param \PhpTabs\Music\TimeSignature $timeSignature
-     * 
-     * @return array
+     * Export a time signature as an array
      */
-    protected function exportTimeSignature($timeSignature)
+    protected function exportTimeSignature(TimeSignature $timeSignature): array
     {
         return array(
-            'numerator'   => $timeSignature->getNumerator(), 
+            'numerator'   => $timeSignature->getNumerator(),
             'denominator' => $this->exportDuration($timeSignature->getDenominator())
         );
     }
 
     /**
-     * @param \PhpTabs\Music\Marker $marker
-     * 
-     * @return array
+     * Export a marker as an array
      */
-    protected function exportMarker($marker)
+    protected function exportMarker(Marker $marker = null): ?array
     {
         return is_object($marker) ? array(
-                'measure' => $marker->getMeasure(), 
+                'measure' => $marker->getMeasure(),
                 'title'   => $marker->getTitle(),
                 'color'   => array(
                 'R' => $marker->getColor()->getR(),
@@ -347,11 +327,9 @@ abstract class ExporterBase extends ExporterEffects
     }
 
     /**
-     * @param \PhpTabs\Music\Text $text
-     * 
-     * @return array
+     * Export a text as an array
      */
-    protected function exportText($text)
+    protected function exportText(Text $text = null): ?array
     {
         return is_object($text) ? array(
             'value' => $text->getValue()

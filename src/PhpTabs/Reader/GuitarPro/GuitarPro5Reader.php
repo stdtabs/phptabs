@@ -22,17 +22,17 @@ use PhpTabs\Music\TimeSignature;
 class GuitarPro5Reader extends GuitarProReaderBase
 {
     /**
-     * 
      *
-     * @var array $supportedVersions 
+     *
+     * @var array $supportedVersions
      */
     private static $supportedVersions = array('FICHIER GUITAR PRO v5.00', 'FICHIER GUITAR PRO v5.10');
 
     /**
-     * 
      *
-     * @var integer $keySignature 
-     */  
+     *
+     * @var integer $keySignature
+     */
     protected $keySignature;
 
     /**
@@ -117,7 +117,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     /**
      * {@inheritdoc}
      */
-    public function getTablature()
+    public function getTablature(): Tablature
     {
         return isset($this->tablature)
         ? $this->tablature : new Tablature();
@@ -144,7 +144,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     /**
      * Loops on mesure headers to read
-     * 
+     *
      * @param \PhpTabs\Music\Song $song
      * @param integer             $count
      */
@@ -152,7 +152,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     {
         $timeSignature = new TimeSignature();
 
-        for ($i = 0; $i < $count; $i++) 
+        for ($i = 0; $i < $count; $i++)
         {
             if ($i > 0) {
                 $this->skip();
@@ -179,7 +179,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     /**
      * Loops on tracks to read
-     * 
+     *
      * @param \PhpTabs\Music\Song  $song
      * @param int                  $count
      * @param array                $channels   array of channels

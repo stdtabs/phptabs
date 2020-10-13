@@ -38,10 +38,8 @@ class Importer extends ParserBase
 
     /**
      * Get built song object
-     * 
-     * @return \PhpTabs\Music\Song
      */
-    public function getSong()
+    public function getSong(): Song
     {
         return $this->song;
     }

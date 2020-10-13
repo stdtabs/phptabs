@@ -27,16 +27,16 @@ class GuitarPro3Reader extends GuitarProReaderBase
     protected $tablature;
 
     /**
-     * 
      *
-     * @var array $supportedVersions 
+     *
+     * @var array $supportedVersions
      */
     private static $supportedVersions = array('FICHIER GUITAR PRO v3.00');
 
     /**
      * @var boolean $tripletFeel
      * @var integer $keySignature
-     */  
+     */
     protected $tripletFeel, $keySignature;
 
     /**
@@ -103,7 +103,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     /**
      * {@inheritdoc}
      */
-    public function getTablature()
+    public function getTablature(): Tablature
     {
         return isset($this->tablature)
              ? $this->tablature : new Tablature();
@@ -130,7 +130,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     /**
      * Loops on mesure headers to read
-     * 
+     *
      * @param \PhpTabs\Music\Song $song
      * @param integer             $count
      */
@@ -148,7 +148,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     /**
      * Loops on tracks to read
-     * 
+     *
      * @param \PhpTabs\Music\Song $song
      * @param int                 $count
      * @param array               $channels Current array of channels

@@ -19,5 +19,5 @@ interface ReaderInterface
     /**
      * @return \PhpTabs\Component\Tablature built from file read
      */
-    public function getTablature();
+    public function getTablature(): Tablature;
 }

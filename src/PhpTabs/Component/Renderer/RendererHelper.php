@@ -20,30 +20,29 @@ abstract class RendererHelper implements RendererInterface
 
     /**
      * Get an option
-     * 
+     *
      * @param  string     $name
      * @param  int|string $default
      * @return null|int|string
      * @api
      * @since  0.5.0
      */
-    public function getOption($name, $default = null)
+    public function getOption(string $name, $default = null)
     {
         return isset($this->options[$name])
-        ? $this->options[$name]
-        : $default;
+            ? $this->options[$name]
+            : $default;
     }
 
     /**
      * Set an option
-     * 
+     *
      * @param  string     $name
      * @param  int|string $value
-     * @return \PhpTabs\Component\Renderer\RendererInterface
      * @api
      * @since  0.5.0
      */
-    public function setOption($name, $value)
+    public function setOption(string $name, $value): self
     {
         $this->options[$name] = $value;
 
@@ -52,13 +51,12 @@ abstract class RendererHelper implements RendererInterface
 
     /**
      * Set all options
-     * 
+     *
      * @param  array $options
-     * @return \PhpTabs\Component\Renderer\RendererInterface
      * @api
      * @since  0.5.0
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): self
     {
         foreach ($options as $name => $value) {
             $this->setOption($name, $value);
@@ -69,12 +67,11 @@ abstract class RendererHelper implements RendererInterface
 
     /**
      * Get all options
-     * 
-     * @return array
+     *
      * @api
      * @since  0.5.0
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }

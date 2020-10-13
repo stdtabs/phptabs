@@ -16,38 +16,32 @@ use Exception;
 class Reader
 {
     /**
-     * 
-     *
-     * @var Tablature object 
+     * @var Tablature object
      */
     private $tablature;
 
     /**
-     * 
-     *
-     * @var ReaderInterface bridge 
+     * @var ReaderInterface bridge
      */
     private $bridge;
 
     /**
-     * 
-     *
-     * @var array List of extensions 
+     * @var array List of extensions
      */
     private $extensions = array(
-    'gp3'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro3Reader',
-    'gp4'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro4Reader',
-    'gp5'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro5Reader',
-    'mid'   => 'PhpTabs\\Reader\\Midi\\MidiReader',
-    'midi'  => 'PhpTabs\\Reader\\Midi\\MidiReader'
+        'gp3'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro3Reader',
+        'gp4'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro4Reader',
+        'gp5'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro5Reader',
+        'mid'   => 'PhpTabs\\Reader\\Midi\\MidiReader',
+        'midi'  => 'PhpTabs\\Reader\\Midi\\MidiReader'
     );
 
     /**
      * Instanciates tablature container
      * Try to load the right dedicated reader
-     * 
+     *
      * @param \PhpTabs\Component\File $file file which should contain a tablature
-     * 
+     *
      * @throws \Exception If file format is not supported
      */
     public function __construct(File $file)
@@ -75,18 +69,18 @@ class Reader
 
             $this->tablature->setError($message);
 
-            throw new Exception($message); 
+            throw new Exception($message);
         }
     }
 
     /**
      * @return Tablature A tablature read from file.
      *  Otherwise, an empty tablature with some error information
-     * 
+     *
      * @return \PhpTabs\Component\Tablature
      */
-    public function getTablature()
-    {   
+    public function getTablature(): Tablature
+    {
         if ($this->bridge instanceof ReaderInterface) {
             return $this->bridge->getTablature();
         }

@@ -40,7 +40,7 @@ class Exporter extends ExporterBase
 
     /**
      * Returns a representation of the song into a desired format
-     * 
+     *
      * @param  null|string $format
      *  - array       : a raw PHP array
      *  - xml         : an XML string
@@ -83,13 +83,10 @@ class Exporter extends ExporterBase
 
     /**
      * Export to JSON string
-     * 
-     * @param  int $flags
-     * @return string
      */
-    private function toJson($flags)
+    private function toJson(int $flags): string
     {
-        // >=PHP 5.5.0, export Skip JSON error 5 Malformed UTF-8 
+        // >=PHP 5.5.0, export Skip JSON error 5 Malformed UTF-8
         // characters, possibly incorrectly encoded
         if (defined('JSON_PARTIAL_OUTPUT_ON_ERROR')) {
             $flags |= JSON_PARTIAL_OUTPUT_ON_ERROR;
@@ -100,11 +97,11 @@ class Exporter extends ExporterBase
 
     /**
      * Set a filter before exporting
-     * 
+     *
      * @param string $type
      * @param mixed  $filter
      */
-    public function setFilter($type, $filter)
+    public function setFilter(string $type, $filter): void
     {
         $this->filters[$type] = $filter;
     }

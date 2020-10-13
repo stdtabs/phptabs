@@ -11,20 +11,17 @@
 
 namespace PhpTabs\Component\Exporter;
 
-use PhpTabs\Music\EffectBend;
-use PhpTabs\Music\EffectGrace;
-use PhpTabs\Music\EffectHarmonic;
-use PhpTabs\Music\EffectTremoloPicking;
-use PhpTabs\Music\EffectTrill;
-use PhpTabs\Music\NoteEffect;
+use PhpTabs\Music\{
+    EffectBend, EffectGrace, EffectHarmonic,
+    EffectTremoloPicking, EffectTrill, NoteEffect
+};
 
 abstract class ExporterEffects
 {
     /**
-     * @param  \PhpTabs\Music\NoteEffect $effect
-     * @return array
+     * Export a note effect as an array
      */
-    protected function exportEffect(NoteEffect $effect)
+    protected function exportEffect(NoteEffect $effect): array
     {
         return array(
             'bend'            => $this->exportBend($effect->getBend()),
@@ -51,35 +48,32 @@ abstract class ExporterEffects
     }
 
     /**
-     * @param  null|\PhpTabs\Music\EffectBend $effect
-     * @return null|array
+     * Export a bend effect as an array
      */
-    protected function exportBend(EffectBend $effect = null)
+    protected function exportBend(EffectBend $effect = null): ?array
     {
         return $this->exportTremoloBar($effect);
     }
 
     /**
-     * @param  null|\PhpTabs\Music\EffectGrace $effect
-     * @return null|array
+     * Export a grace effect as an array
      */
-    protected function exportGrace(EffectGrace $effect= null)
+    protected function exportGrace(EffectGrace $effect= null): ?array
     {
         return is_object($effect) ? array(
-            'fret'       => $effect->getFret(), 
-            'duration'   => $effect->getDuration(), 
-            'dynamic'    => $effect->getDynamic(), 
-            'transition' => $effect->getTransition(), 
-            'onBeat'     => $effect->isOnBeat(), 
+            'fret'       => $effect->getFret(),
+            'duration'   => $effect->getDuration(),
+            'dynamic'    => $effect->getDynamic(),
+            'transition' => $effect->getTransition(),
+            'onBeat'     => $effect->isOnBeat(),
             'dead'       => $effect->isDead()
         ) : null;
     }
 
     /**
-     * @param  null|\PhpTabs\Music\EffectTremoloBar $effect
-     * @return null|array
+     * Export a tremolo bar as an array
      */
-    protected function exportTremoloBar($effect = null)
+    protected function exportTremoloBar($effect = null): ?array
     {
         return !is_object($effect)
             ? null
@@ -87,39 +81,36 @@ abstract class ExporterEffects
     }
 
     /**
-     * @param  null|\PhpTabs\Music\EffectHarmonic $effect
-     * @return null|array
+     * Export an harmonic effect as an array
      */
-    protected function exportHarmonic(EffectHarmonic $effect = null)
+    protected function exportHarmonic(EffectHarmonic $effect = null): ?array
     {
         return is_object($effect) ? array(
-            'type'         => $effect->getType(), 
-            'data'         => $effect->getData(), 
-            'isNatural'    => $effect->isNatural(), 
-            'isArtificial' => $effect->isArtificial(), 
-            'isTapped'     => $effect->isTapped(), 
-            'isPinch'      => $effect->isPinch(), 
+            'type'         => $effect->getType(),
+            'data'         => $effect->getData(),
+            'isNatural'    => $effect->isNatural(),
+            'isArtificial' => $effect->isArtificial(),
+            'isTapped'     => $effect->isTapped(),
+            'isPinch'      => $effect->isPinch(),
             'isSemi'       => $effect->isSemi()
         ) : null;
     }
 
     /**
-     * @param  null|\PhpTabs\Music\EffectTrill $effect
-     * @return null|array
+     * Export a trill as an array
      */
-    protected function exportTrill(EffectTrill $effect = null)
+    protected function exportTrill(EffectTrill $effect = null): ?array
     {
         return is_object($effect) ? array(
-            'fret'      => $effect->getFret(), 
+            'fret'      => $effect->getFret(),
             'duration'  => $this->exportDuration($effect->getDuration())
         ) : null;
     }
 
     /**
-     * @param  null|\PhpTabs\Music\EffectTremoloPicking $effect
-     * @return null|array
+     * Export a tremolo pocking as an array
      */
-    protected function exportTremoloPicking(EffectTremoloPicking $effect = null)
+    protected function exportTremoloPicking(EffectTremoloPicking $effect = null): ?array
     {
         return is_object($effect) ? array(
             'duration'  => $this->exportDuration($effect->getDuration())
@@ -127,16 +118,15 @@ abstract class ExporterEffects
     }
 
     /**
-     * @param  array $points
-     * @return array
+     * Export an array of points as an array (Formatted for export)
      */
-    protected function exportPoints(array $points)
+    protected function exportPoints(array $points): array
     {
         return array_reduce(
             $points,
             function ($carry, $point) {
                 $carry[] = array(
-                'position'  => $point->getPosition(), 
+                'position'  => $point->getPosition(),
                 'value'     => $point->getValue()
                 );
                 return $carry;

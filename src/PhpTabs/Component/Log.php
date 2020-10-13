@@ -17,19 +17,17 @@ namespace PhpTabs\Component;
 abstract class Log
 {
     /**
-     * 
-     *
-     * @var array config options 
+     * @var array config options
      */
     private static $data = array();
 
     /**
      * Adds a log event
-     * 
+     *
      * @param string $message Text message to log
      * @param string $type    optional type of log NOTICE | WARNING | ERROR
      */
-    public static function add($message, $type = 'NOTICE')
+    public static function add(string $message, string $type = 'NOTICE'): void
     {
         if (Config::get('verbose')) {
             echo PHP_EOL . "[$type] $message";
@@ -40,12 +38,12 @@ abstract class Log
 
     /**
      * Counts log messages
-     * 
+     *
      * @param string $type An optional string to filter by type
-     * 
+     *
      * @return integer Number of messages
      */
-    public static function countLogs($type = null)
+    public static function countLogs(string $type = null): int
     {
         $count = 0;
 
@@ -61,13 +59,13 @@ abstract class Log
 
     /**
      * Gets last logged messages
-     * 
+     *
      * @param integer $count Number of messages to get
      * @param string  $type  Used to filter messages
      *
      * @return array A list of messages
      */
-    public static function tail($count = 50, $type = null)
+    public static function tail(int $count = 50, string $type = null): array
     {
         $messages = array();
 
@@ -90,7 +88,7 @@ abstract class Log
     /**
      * Drops all logged messages
      */
-    public static function clear()
+    public static function clear(): void
     {
         self::$data = array();
     }

@@ -28,7 +28,7 @@ class PhpTabs
     /**
      * @param string $pathname A complete pathname
      */
-    public function __construct($pathname = null)
+    public function __construct(string $pathname = null)
     {
         try {
             if (null === $pathname) {
@@ -61,21 +61,16 @@ class PhpTabs
 
     /**
      * Gets the tablature instance
-     *
-     * @return \PhpTabs\Component\Tablature
      */
-    public function getTablature()
+    public function getTablature(): Tablature
     {
         return $this->tablature;
     }
 
     /**
      * Sets the tablature instance
-     *
-     * @param  \PhpTabs\Component\Tablature $tablature a tablature instance
-     * @return \PhpTabs\PhpTabs
      */
-    protected function setTablature(Tablature $tablature)
+    protected function setTablature(Tablature $tablature): self
     {
         $this->tablature = $tablature;
 
@@ -84,11 +79,10 @@ class PhpTabs
 
     /**
      * Import a tablature from an array
-     * 
+     *
      * @param  array $data A set of data that has been exported
-     * @return \PhpTabs\PhpTabs
      */
-    public function import(array $data)
+    public function import(array $data): self
     {
         $importer = new Importer($data);
 
@@ -100,10 +94,8 @@ class PhpTabs
 
     /**
      * Get PhpTabs version
-     * 
-     * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         $filename = dirname(dirname(__DIR__)) . '/composer.json';
 
@@ -124,7 +116,7 @@ class PhpTabs
 
     /**
      * Overloads with $tablature methods
-     * 
+     *
      * @param  string $name      A method name
      * @param  array  $arguments Optional arguments for the method
      * @return mixed

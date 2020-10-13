@@ -24,14 +24,14 @@ interface RendererInterface
      * @param  int|string $value
      * @return \PhpTabs\Component\Renderer\RendererInterface
      */
-    public function setOption($name, $value);
+    public function setOption(string $name, $value);
 
     /**
      * @param  string     $name
      * @param  int|string $default
      * @return int|string
      */
-    public function getOption($name, $default);
+    public function getOption(string $name, $default);
 
     /**
      * @param  array $options
@@ -42,5 +42,5 @@ interface RendererInterface
     /**
      * @return array
      */
-    public function getOptions();
+    public function getOptions(): array;
 }

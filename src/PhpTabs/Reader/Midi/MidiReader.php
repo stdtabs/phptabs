@@ -42,9 +42,9 @@ class MidiReader extends MidiReaderBase
     const STATUS_META = 4;
 
     /**
-     * 
      *
-     * @var integer resolution 
+     *
+     * @var integer resolution
      */
     private $resolution;
     private $channels;
@@ -113,16 +113,16 @@ class MidiReader extends MidiReaderBase
     /**
      * {@inheritdoc}
      */
-    public function getTablature()
+    public function getTablature(): Tablature
     {
         return isset($this->tablature)
-        ? $this->tablature 
-        : new Tablature();
+            ? $this->tablature
+            : new Tablature();
     }
 
     /**
      * Initializes Tablature with read Song
-     * 
+     *
      * @param \PhpTabs\Music\Song $song as read from file
      */
     private function setTablature(Song $song)
@@ -194,7 +194,7 @@ class MidiReader extends MidiReaderBase
                     $channel = $this->channels[$c];
                     $channelRoute = $this->channelRouter->getRoute($channel->getId());
                     if ($channelRoute !== null) {
-                        if ($channelRoute->getChannel1() == $tempChannel->getChannel() 
+                        if ($channelRoute->getChannel1() == $tempChannel->getChannel()
                             || $channelRoute->getChannel2() == $tempChannel->getChannel()
                         ) {
                               $channelExists = true;
@@ -265,7 +265,7 @@ class MidiReader extends MidiReaderBase
                 }
 
                 if ($trackChannel !== null && $trackChannel->isPercussionChannel()) {
-                    $track->setStrings($this->createPercussionStrings(6)); 
+                    $track->setStrings($this->createPercussionStrings(6));
                 }
                 else
                 {
@@ -277,7 +277,7 @@ class MidiReader extends MidiReaderBase
 
     /**
      * Create percussion strings
-     * 
+     *
      * @param  int $stringCount
      * @return array
      */
@@ -294,7 +294,7 @@ class MidiReader extends MidiReaderBase
 
     /**
      * @param mixed $tick
-     * 
+     *
      * @return \PhpTabs\Music\MeasureHeader
      */
     private function getHeader($tick)
@@ -320,7 +320,7 @@ class MidiReader extends MidiReaderBase
         );
 
         $header->setStart(
-            $last !== null 
+            $last !== null
             ? ($last->getStart() + $last->getLength())
             : Duration::QUARTER_TIME
         );
@@ -339,7 +339,7 @@ class MidiReader extends MidiReaderBase
 
         $this->headers[] = $header;
 
-        if ($realTick >= $header->getStart() 
+        if ($realTick >= $header->getStart()
             && $realTick < ($header->getStart() + $header->getLength())
         ) {
             return $header;
@@ -363,7 +363,7 @@ class MidiReader extends MidiReaderBase
     /**
      * @param \PhpTabs\Music\Track $track
      * @param mixed                $tick
-     * 
+     *
      * @return \PhpTabs\Music\Measure
      */
     private function getMeasure(Track $track, $tick)
@@ -416,7 +416,7 @@ class MidiReader extends MidiReaderBase
 
     /**
      * @param integer $channel
-     * 
+     *
      * @return \PhpTabs\Reader\Midi\MidiChannel
      */
     public function getTempChannel($channel)
@@ -438,7 +438,7 @@ class MidiReader extends MidiReaderBase
      * @param int   $channel
      * @param mixed $value
      * @param bool  $purge
-     * 
+     *
      * @return null|\PhpTabs\Reader\Midi\MidiNote
      */
     private function getTempNote($track, $channel, $value, $purge)
@@ -449,7 +449,7 @@ class MidiReader extends MidiReaderBase
             $note = $this->tempNotes[$i];
 
             if ($note->getTrack()    == $track
-                && $note->getChannel()  == $channel 
+                && $note->getChannel()  == $channel
                 && $note->getValue()    == $value
             ) {
                 if ($purge) {
@@ -465,7 +465,7 @@ class MidiReader extends MidiReaderBase
 
     /**
      * @param int $track
-     * 
+     *
      * @return \PhpTabs\Reader\Midi\MidiTrackTuningHelper
      */
     private function getTrackTuningHelper($track)
@@ -640,7 +640,7 @@ class MidiReader extends MidiReaderBase
 
     /**
      * @param mixed $statusByte
-     * 
+     *
      * @return mixed
      */
     private function getType($statusByte)
@@ -756,7 +756,7 @@ class MidiReader extends MidiReaderBase
 
         $note->getEffect()->setBend($bend);
     }
-  
+
     /**
      * @param mixed $tick
      * @param int   $track

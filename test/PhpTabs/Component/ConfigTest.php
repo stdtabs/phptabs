@@ -23,21 +23,15 @@ class ConfigTest extends TestCase
     {
         Config::clear();
 
-        // bad key format scenario
-        $this->assertEquals(null, Config::get(array(42)));
-    
-        Config::set(array(42), 42);
-
-        $this->assertEquals(null, Config::get(array(42)));
-    
         // sets a good key
         Config::set('Sense', 42);
         $this->assertEquals(42, Config::get('Sense'));
-    
+
         // Gets all configs
         $expected = array(
-        'Sense' => 42
+            'Sense' => 42
         );
+
         $this->assertEquals($expected, Config::getAll());
     }
 }
