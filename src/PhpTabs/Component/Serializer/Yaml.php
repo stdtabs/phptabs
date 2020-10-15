@@ -27,12 +27,9 @@ class Yaml extends SerializerBase
     protected $content;
 
     /**
-     * Serializes a document
-     * 
-     * @param  array $document
-     * @return string
+     * Serialize a document
      */
-    public function serialize(array $document)
+    public function serialize(array $document): string
     {
         $this->depth = 0;
         $this->appendNodes($document);
@@ -40,11 +37,7 @@ class Yaml extends SerializerBase
         return $this->content;
     }
 
-    /**
-     * @param string $index
-     * @param array  $element
-     */
-    protected function appendNode($index, array $element)
+    protected function appendNode(string $index, array $element): void
     {
         $this->content .= sprintf(
             '%s%s:%s',
@@ -62,7 +55,7 @@ class Yaml extends SerializerBase
      * @param string          $index
      * @param string|int|bool $value
      */
-    protected function appendText($index, $value)
+    protected function appendText(string $index, $value): void
     {
         $this->content .= sprintf(
             '%s%s: %s%s',
@@ -75,31 +68,28 @@ class Yaml extends SerializerBase
 
     /**
      * Format a string value
-     * 
+     *
      * @param  string|int|bool $value
-     * @return string
      */
-    private function formatValue($value)
+    private function formatValue($value): string
     {
         switch (true) {
-        case ($value === false):
-            return 'false';
-        case ($value === true):
-            return 'true';
-        case is_string($value):
-            return sprintf('"%s"', $value);
-        case is_numeric($value):
-            return "{$value}";
-        case (strpos($value, PHP_EOL) !== false):
-            return $this->getMultilineString($value);
+            case ($value === false):
+                return 'false';
+            case ($value === true):
+                return 'true';
+            case is_string($value):
+                return sprintf('"%s"', $value);
+            case is_numeric($value):
+                return "{$value}";
+            case (strpos($value, PHP_EOL) !== false):
+                return $this->getMultilineString($value);
         }
+
+        return '';
     }
 
-    /**
-     * @param  string $value
-     * @return string
-     */
-    private function getMultilineString($value)
+    private function getMultilineString(string $value): string
     {
         $this->depth++;
 
@@ -121,10 +111,7 @@ class Yaml extends SerializerBase
         return $content;
     }
 
-    /**
-     * @return string
-     */
-    protected function indent()
+    protected function indent(): string
     {
         return str_repeat(Text::INDENT_CHAR, $this->depth * Text::INDENT_STEP);
     }

@@ -27,13 +27,9 @@ class Text extends SerializerBase
     protected $content;
 
     /**
-     * Serializes a document
-     * 
-     * @param array $document
-     *
-     * @return string
+     * Serialize a document
      */
-    public function serialize(array $document)
+    public function serialize(array $document): string
     {
         $this->depth = 0;
         $this->appendNodes($document);
@@ -42,10 +38,9 @@ class Text extends SerializerBase
     }
 
     /**
-     * @param int   $index
-     * @param array $element
+     * Append a node
      */
-    protected function appendNode($index, array $element)
+    protected function appendNode(string $index, array $element): void
     {
         $this->content .= sprintf('%s%s:%s', $this->indent(), $index, PHP_EOL);
         $this->depth++;
@@ -55,25 +50,21 @@ class Text extends SerializerBase
 
     /**
      * @param int $index
-     * @param int $value
+     * @param bool|int|float|string $value
      */
-    protected function appendText($index, $value)
+    protected function appendText(string $index, $value): void
     {
         $this->content .= sprintf('%s%s:', $this->indent(), $index);
 
         if ($value === false) {
             $this->content .= 'false';
-        }
-        elseif ($value === true) {
+        } elseif ($value === true) {
             $this->content .= 'true';
-        }
-        elseif (strpos($value, PHP_EOL) !== false) {
+        } elseif (strpos($value, PHP_EOL) !== false) {
             $this->writeMultilineString($value);
-        }
-        elseif (is_string($value)) {
+        } elseif (is_string($value)) {
             $this->content .= sprintf('"%s"', $value);
-        }
-        elseif (is_numeric($value)) {
+        } elseif (is_numeric($value)) {
             $this->content .= $value;
         }
 
@@ -81,16 +72,15 @@ class Text extends SerializerBase
     }
 
     /**
-     * @param int $value
+     * Write a multiline string
      */
-    protected function writeMultilineString($value)
+    protected function writeMultilineString(string $value): void
     {
         $this->depth++;
 
         $strings = explode(PHP_EOL, $value);
 
-        foreach ($strings as $string)
-        {
+        foreach ($strings as $string) {
             $this->content .= sprintf('%s%s%s', PHP_EOL, $this->indent(), $string);
         }
 
@@ -98,9 +88,9 @@ class Text extends SerializerBase
     }
 
     /**
-     * @return string
+     * Get a normalized indent
      */
-    protected function indent()
+    protected function indent(): string
     {
         return str_repeat(Text::INDENT_CHAR, $this->depth * Text::INDENT_STEP);
     }

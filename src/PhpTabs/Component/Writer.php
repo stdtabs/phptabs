@@ -17,35 +17,26 @@ use PhpTabs\Component\Tablature;
 class Writer
 {
     /**
-     * 
-     *
-     * @var string $path 
+     * @var string $path
      */
     private $path;
 
     /**
-     * 
-     *
-     * @var Tablature 
+     * @var Tablature
      */
     private $tablature;
 
     /**
-     * 
-     *
-     * @var array A list of supported writers 
+     * @var array A list of supported writers
      */
     private $writers = array(
-    'gp3' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro3Writer',
-    'gp4' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro4Writer',
-    'gp5' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro5Writer',
-    'mid' => 'PhpTabs\\Writer\\Midi\\MidiWriter',
-    'midi'=> 'PhpTabs\\Writer\\Midi\\MidiWriter'
+        'gp3' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro3Writer',
+        'gp4' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro4Writer',
+        'gp5' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro5Writer',
+        'mid' => 'PhpTabs\\Writer\\Midi\\MidiWriter',
+        'midi'=> 'PhpTabs\\Writer\\Midi\\MidiWriter'
     );
 
-    /**
-     * @param \PhpTabs\Component\Tablature $tablature
-     */
     public function __construct(Tablature $tablature)
     {
         $this->tablature = $tablature;
@@ -53,14 +44,10 @@ class Writer
 
     /**
      * Builds content in $format
-     * 
-     * @param string $format
      *
-     * @return string A binary chain
-     * 
      * @throws \Exception if output format is not supported
      */
-    public function build($format)
+    public function build(string $format): string
     {
         if (!isset($this->writers[$format])) {
             $message = sprintf('Output format %s is not supported', $format);
@@ -74,23 +61,19 @@ class Writer
     /**
      * Outputs internal model into buffer or a file
      *
-     * @param string $path
-     * 
      * @return mixed boolean|string
-     * 
+     *
      * @throws \Exception if an incorrect destination path is supplied
      */
-    public function save($path = null)
+    public function save(string $path = null)
     {
         if ($path == 'php://output') {
             print($this->build($this->tablature->getFormat()));
 
             return true;
-        }
-        elseif (null === $path) {
+        } elseif (null === $path) {
             return $this->build($this->tablature->getFormat());
-        }
-        elseif (is_string($path)) {
+        } elseif (is_string($path)) {
             $parts = pathinfo($path);
 
             if (!isset($parts['basename'], $parts['extension'])) {
@@ -109,12 +92,10 @@ class Writer
 
     /**
      * Records $content into a file
-     * 
-     * @param string $content binary chain
-     * 
+     *
      * @throws \Exception If content can not be written
      */
-    private function record($content)
+    private function record(string $content): void
     {
         $dir = pathinfo($this->path, PATHINFO_DIRNAME);
 

@@ -12,6 +12,7 @@
 namespace PhpTabs\Component;
 
 use Exception;
+use PhpTabs\Component\Renderer\RendererInterface;
 use PhpTabs\PhpTabs;
 use PhpTabs\Music\Channel;
 use PhpTabs\Music\ChannelNames;
@@ -22,7 +23,7 @@ class Tablature
     const DEFAULT_FILE_FORMAT = 'gp3';
 
     /**
-     * An error message 
+     * An error message
      *
      * @var string
      */
@@ -38,7 +39,7 @@ class Tablature
     /**
      * Tablature original format
      *
-     * @var string $format 
+     * @var string $format
      */
     private $format;
 
@@ -50,10 +51,8 @@ class Tablature
 
     /**
      * Sets an error message
-     *
-     * @param string $message
      */
-    public function setError($message)
+    public function setError(string $message): void
     {
         $this->error = $message;
     }
@@ -61,7 +60,7 @@ class Tablature
     /**
      * @return string An error set during build operations
      */
-    public function getError()
+    public function getError(): string
     {
         return $this->error;
     }
@@ -69,37 +68,31 @@ class Tablature
     /**
      * @return bool true if there was an error. Otherwise, false.
      */
-    public function hasError()
+    public function hasError(): string
     {
         return $this->error !== '';
     }
 
     /**
      * Sets Song wrapper
-     *
-     * @param \PhpTabs\Music\Song $song
      */
-    public function setSong(Song $song)
+    public function setSong(Song $song): void
     {
         $this->song = $song;
     }
 
     /**
      * Gets a Song
-     *
-     * @return \PhpTabs\Music\Song
      */
-    public function getSong()
+    public function getSong(): Song
     {
         return $this->song;
     }
 
     /**
      * Gets the list of instruments
-     * 
-     * @return array
      */
-    public function getInstruments()
+    public function getInstruments(): array
     {
         if (!($count = $this->countChannels())) {
             return array();
@@ -109,8 +102,8 @@ class Tablature
 
         for ($i = 0; $i < $count; $i++) {
             $instruments[$i] = array(
-            'id'    => $this->getChannel($i)->getProgram(),
-            'name'  => ChannelNames::$defaultNames[$this->getChannel($i)->getProgram()]
+                'id'    => $this->getChannel($i)->getProgram(),
+                'name'  => ChannelNames::$defaultNames[$this->getChannel($i)->getProgram()]
             );
         }
 
@@ -119,21 +112,16 @@ class Tablature
 
     /**
      * Counts instruments
-     *
-     * @return int
      */
-    public function countInstruments()
+    public function countInstruments(): int
     {
         return $this->countChannels();
     }
 
     /**
      * Gets an instrument by channelId
-     *
-     * @param  int $index
-     * @return null|array
      */
-    public function getInstrument($index)
+    public function getInstrument(int $index): ?array
     {
         return $this->getChannel($index) instanceof Channel
         ? array(
@@ -144,13 +132,13 @@ class Tablature
 
     /**
      * Export a song into an array
-     * 
+     *
      * @param  string $format
      * @param  mixed  $options Flags for some exported formats
      * @return array|string
      */
-    public function export($format = null, $options = null)
-    { 
+    public function export(string $format = null, $options = null)
+    {
         $exporter = new Exporter($this);
 
         return $exporter->export($format, $options);
@@ -158,13 +146,13 @@ class Tablature
 
     /**
      * Export one track + song context
-     * 
+     *
      * @param  int    $index   Target track
      * @param  string $format  Desired format
      * @param  int    $options Export options
      * @return string|array
      */
-    public function exportTrack($index, $format = null, $options = null)
+    public function exportTrack(int $index, string $format = null, $options = null)
     {
         if (null === $this->getSong()->getTrack($index)) {
             throw new Exception("Track n°$index does not exist");
@@ -178,23 +166,19 @@ class Tablature
 
     /**
      * Render a song into a string
-     * 
-     * @param  string $format
-     * @return \PhpTabs\Component\Renderer\RendererInterface
      */
-    public function getRenderer($format = null)
+    public function getRenderer(string $format = null): RendererInterface
     {
         return (new Renderer($this))->setFormat($format);
     }
 
     /**
      * Writes a song into a file
-     * 
-     * @param  string $filename
+     *
      * @return mixed bool|string
      * @throws \Exception If tablature container contains error
      */
-    public function save($filename = null)
+    public function save(string $filename = null)
     {
         if ($this->hasError()) {
             $message = sprintf(
@@ -211,11 +195,8 @@ class Tablature
 
     /**
      * Builds a binary starting from Music model
-     *
-     * @param  string $format
-     * @return string A binary chain
      */
-    public function convert($format = null)
+    public function convert(string $format = null): string
     {
         if (null === $format) {
             $format = $this->getFormat();
@@ -226,7 +207,7 @@ class Tablature
 
     /**
      * Overloads with $song methods
-     * 
+     *
      * @param  string $name      method
      * @param  array  $arguments
      * @return mixed
@@ -257,20 +238,16 @@ class Tablature
 
     /**
      * Memorize original format
-     * 
-     * @param string $format
      */
-    public function setFormat($format)
+    public function setFormat(string $format): void
     {
         $this->format = $format;
     }
 
     /**
      * Returns orignal format
-     * 
-     * @return string $format
      */
-    public function getFormat()
+    public function getFormat(): string
     {
         return $this->format;
     }

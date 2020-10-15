@@ -16,5 +16,5 @@ interface WriterInterface
     /**
      * @return string Data built from a writer
      */
-    public function getContent();
+    public function getContent(): string;
 }

@@ -11,34 +11,33 @@
 
 namespace PhpTabs\Component;
 
+use PhpTabs\Component\Renderer\RendererInterface;
 use Exception;
 
 class Renderer
 {
-    /** 
+    /**
      * @var \PhpTabs\Component\Tablature
      */
     private $tablature;
 
-    /** 
+    /**
      * @var \PhpTabs\Component\Renderer\RendererInterface
      */
     private $bridge;
 
     /**
-     * List of supported types of renders 
+     * List of supported types of renders
      *
      * @var array
      */
-    private $formats = array(
-    'vextab'  => 'PhpTabs\\Renderer\\VexTab\\VexTabRenderer',
-    'ascii'   => 'PhpTabs\\Renderer\\Ascii\\AsciiRenderer',
-    );
+    private $formats = [
+        'vextab'  => 'PhpTabs\\Renderer\\VexTab\\VexTabRenderer',
+        'ascii'   => 'PhpTabs\\Renderer\\Ascii\\AsciiRenderer',
+    ];
 
     /**
      * Instanciates tablature container
-     * 
-     * @param \PhpTabs\Component\Tablature $tablature
      */
     public function __construct(Tablature $tablature)
     {
@@ -47,11 +46,8 @@ class Renderer
 
     /**
      * Set renderer format
-     * 
-     * @param  string $format
-     * @return \PhpTabs\Component\Renderer\RendererInterface
      */
-    public function setFormat($format = null)
+    public function setFormat(string $format = null): RendererInterface
     {
         if (!isset($this->formats[$format])) {
 

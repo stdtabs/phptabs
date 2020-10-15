@@ -29,8 +29,8 @@ abstract class GuitarProWriterBase implements WriterInterface
     public function __construct()
     {
         $this->name = str_replace(
-            __NAMESPACE__ . '\\', 
-            '', 
+            __NAMESPACE__ . '\\',
+            '',
             get_class($this)
         );
 
@@ -98,7 +98,7 @@ abstract class GuitarProWriterBase implements WriterInterface
 
     /**
      * Get a dedicated writer
-     * 
+     *
      * @param  string $name
      * @return mixed
      */
@@ -114,7 +114,7 @@ abstract class GuitarProWriterBase implements WriterInterface
 
     /**
      * Get name
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -122,10 +122,7 @@ abstract class GuitarProWriterBase implements WriterInterface
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -243,7 +240,7 @@ abstract class GuitarProWriterBase implements WriterInterface
     public function writeStringByte($string, $size)
     {
         $this->writeByte(
-            $size == 0 || $size > strlen($string) 
+            $size == 0 || $size > strlen($string)
             ? strlen($string) : $size
         );
 

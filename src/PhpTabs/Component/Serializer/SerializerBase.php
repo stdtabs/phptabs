@@ -14,9 +14,9 @@ namespace PhpTabs\Component\Serializer;
 abstract class SerializerBase
 {
     /**
-     * @param array $nodes
+     * Walk a node list and append them
      */
-    protected function appendNodes(array $nodes)
+    protected function appendNodes(array $nodes): void
     {
         array_walk(
             $nodes,

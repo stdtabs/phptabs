@@ -28,12 +28,9 @@ class Xml extends SerializerBase
     }
 
     /**
-     * Serializes a document
-     * 
-     * @param  array $document
-     * @return string
+     * Serialize a document
      */
-    public function serialize(array $document)
+    public function serialize(array $document): string
     {
         $this->writer->flush();
         $this->writer->startDocument('1.0', 'UTF-8');
@@ -42,22 +39,18 @@ class Xml extends SerializerBase
         return $this->writer->outputMemory();
     }
 
-    /**
-     * @param int   $index
-     * @param array $node
-     */
-    protected function appendNode($index, array $node)
+    protected function appendNode(string $index, array $node): void
     {
         $this->writer->startElement($index);
         $this->appendNodes($node);
-        $this->writer->endElement(); 
+        $this->writer->endElement();
     }
 
     /**
      * @param int $index
-     * @param int $value
+     * @param int|bool|float|string $value
      */
-    protected function appendText($index, $value)
+    protected function appendText(string $index, $value): void
     {
         $this->writer->startElement($index);
 
@@ -71,6 +64,6 @@ class Xml extends SerializerBase
             $this->writer->text($value);
         }
 
-        $this->writer->endElement(); 
+        $this->writer->endElement();
     }
 }

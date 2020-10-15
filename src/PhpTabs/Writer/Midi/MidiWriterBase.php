@@ -22,10 +22,7 @@ class MidiWriterBase implements WriterInterface
         $this->content = '';
     }
 
-    /**
-     * @return string
-     */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -68,7 +65,7 @@ class MidiWriterBase implements WriterInterface
 
     /**
      * @param int $value
-     * 
+     *
      * @param int $value
      */
     protected function writeVariableLengthQuantity($value)
