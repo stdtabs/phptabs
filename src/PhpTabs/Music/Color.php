@@ -23,30 +23,30 @@ class Color
      * @var array $red
      */
     public static $red = array(255,0,0);
-  
+
     /**
-     *  RGB green value 
+     *  RGB green value
      *
      * @var array $green
      */
     public static $green = array(0,255,0);
-  
+
     /**
-     * RGB blue value 
+     * RGB blue value
      *
      * @var array $blue
      */
     public static $blue = array(0,0,255);
-  
+
     /**
-     * RGB white value 
+     * RGB white value
      *
      * @var array $white
      */
     public static $white = array(255,255,255);
-  
+
     /**
-     * RGB black value 
+     * RGB black value
      *
      * @var array $black
      */
@@ -67,84 +67,66 @@ class Color
 
     /**
      * Gets RGB blue value
-     *
-     * @return int Blue index
      */
-    public function getB()
+    public function getB(): int
     {
         return $this->value[2];
     }
 
     /**
      * Sets RGB blue value
-     *
-     * @param int $blue Blue index
      */
-    public function setB($blue)
+    public function setB(int $blue): void
     {
         $this->value[2] = $blue;
     }
 
     /**
      * Gets RGB green value
-     *
-     * @return int Green index
      */
-    public function getG()
+    public function getG(): int
     {
         return $this->value[1];
     }
 
     /**
      * Sets RGB green value
-     * 
-     * @param int $green Green index 
      */
-    public function setG($green)
+    public function setG(int $green): void
     {
         $this->value[1] = $green;
     }
 
     /**
      * Gets RGB red value
-     *
-     * @return int Red index
      */
-    public function getR()
+    public function getR(): int
     {
         return $this->value[0];
     }
 
     /**
      * Sets RGB red value
-     *
-     * @param int $red Red index 
      */
-    public function setR($red)
+    public function setR(int $red): void
     {
         $this->value[0] = $red;
     }
 
     /**
      * Compares two colors
-     *
-     * @param \PhpTabs\Music\Color $color A color to compare with current color
-     * 
-     * @return bool Result of the comparison
      */
-    public function isEqual(Color $color)
+    public function isEqual(Color $color): bool
     {
-        return $this->getR() == $color->getR() 
-        && $this->getG() == $color->getG()
-        && $this->getB() == $color->getB();
+        return $this->getR() == $color->getR()
+            && $this->getG() == $color->getG()
+            && $this->getB() == $color->getB();
     }
 
     /**
      * Copies a color from another one
-     * 
-     * @param \PhpTabs\Music\Color $color
      */
-    public function copyFrom(Color $color)
+    public function copyFrom(Color $color): void
     {
         $this->setR($color->getR());
         $this->setG($color->getG());
@@ -153,14 +135,8 @@ class Color
 
     /**
      * Transforms a list of RGB codes into an array
-     *
-     * @param int $red   red value
-     * @param int $green green value
-     * @param int $blue  blue value
-     *
-     * @return array RGB array
      */
-    public static function toArray($red, $green, $blue)
+    public static function toArray(int $red, int $green, int $blue): array
     {
         $color = new Color();
         $color->setR($red);

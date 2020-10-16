@@ -17,27 +17,21 @@ namespace PhpTabs\Music;
 class ChannelParameter
 {
     /**
-     * @var int|string
+     * @var string
      */
     private $key;
-  
+
     /**
      * @var null|int|string
      */
     private $value;
 
-    /**
-     * @return int|string
-     */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @param int|string $key
-     */
-    public function setKey($key)
+    public function setKey(string $key): void
     {
         $this->key = $key;
     }
@@ -53,7 +47,7 @@ class ChannelParameter
     /**
      * @param null|int|string $value
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = $value;
     }
@@ -61,7 +55,7 @@ class ChannelParameter
     /**
      * @param \PhpTabs\Music\ChannelParameter $channelParameter
      */
-    public function copyFrom(ChannelParameter $channelParameter)
+    public function copyFrom(ChannelParameter $channelParameter): void
     {
         $this->setKey($channelParameter->getKey());
         $this->setValue($channelParameter->getValue());

@@ -50,228 +50,142 @@ class Channel
         $this->tremolo = Channel::DEFAULT_TREMOLO;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return int
-     */
-    public function getBalance()
+    public function getBalance(): int
     {
         return $this->balance;
     }
 
-    /**
-     * @param int $balance
-     */
-    public function setBalance($balance)
+    public function setBalance(int $balance): void
     {
         $this->balance = $balance;
     }
 
-    /**
-     * @return int
-     */
-    public function getChorus()
+    public function getChorus(): int
     {
         return $this->chorus;
     }
 
-    /**
-     * @param int $chorus
-     */
-    public function setChorus($chorus)
+    public function setChorus(int $chorus): void
     {
         $this->chorus = $chorus;
     }
 
-    /**
-     * @return int
-     */
-    public function getBank()
+    public function getBank(): int
     {
         return $this->bank;
     }
 
-    /**
-     * @param int $bank
-     */
-    public function setBank($bank)
+    public function setBank(int $bank): void
     {
         $this->bank = $bank;
     }
 
-    /**
-     * @return int
-     */
-    public function getProgram()
+    public function getProgram(): int
     {
         return $this->program;
     }
 
-    /**
-     * @param int $program
-     */
-    public function setProgram($program)
+    public function setProgram(int $program): void
     {
         $this->program = $program;
     }
 
-    /**
-     * @return int
-     */
-    public function getPhaser()
+    public function getPhaser(): int
     {
         return $this->phaser;
     }
 
-    /**
-     * @param int $phaser
-     */
-    public function setPhaser($phaser)
+    public function setPhaser(int $phaser): void
     {
         $this->phaser = $phaser;
     }
 
-    /**
-     * @return int
-     */
-    public function getReverb()
+    public function getReverb(): int
     {
         return $this->reverb;
     }
 
-    /**
-     * @param int $reverb
-     */
-    public function setReverb($reverb)
+    public function setReverb(int $reverb): void
     {
         $this->reverb = $reverb;
     }
 
-    /**
-     * @return int
-     */
-    public function getTremolo()
+    public function getTremolo(): int
     {
         return $this->tremolo;
     }
 
-    /**
-     * @param int $tremolo
-     */
-    public function setTremolo($tremolo)
+    public function setTremolo(int $tremolo): void
     {
         $this->tremolo = $tremolo;
     }
 
-    /**
-     * @return int
-     */
-    public function getVolume()
+    public function getVolume(): int
     {
         return $this->volume;
     }
 
-    /**
-     * @param int $volume
-     */
-    public function setVolume($volume)
+    public function setVolume($volume): void
     {
         $this->volume = $volume;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return array
-     */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
 
-    /**
-     * @param \PhpTabs\Music\ChannelParameter $parameter
-     */
-    public function addParameter(ChannelParameter $parameter)
+    public function addParameter(ChannelParameter $parameter): void
     {
         $this->parameters[] = $parameter;
     }
 
-    /**
-     * @param int                             $index
-     * @param \PhpTabs\Music\ChannelParameter $parameter
-     */
-    public function setParameter($index, ChannelParameter $parameter)
+    public function setParameter(int $index, ChannelParameter $parameter): void
     {
         $this->parameters[$index] = $parameter;
     }
 
-    /**
-     * @param  int $index
-     * @return \PhpTabs\Music\ChannelParameter
-     */
-    public function getParameter($index)
+    public function getParameter(int $index): ?ChannelParameter
     {
         return isset($this->parameters[$index])
          ? $this->parameters[$index] : null;
     }
 
-    /**
-     * @param int $index
-     */
-    public function removeParameter($index)
+    public function removeParameter(int $index): void
     {
         array_splice($this->parameters, $index, 1);
     }
 
-    /**
-     * @return int
-     */
-    public function countParameters()
+    public function countParameters(): int
     {
         return count($this->parameters);
     }
 
-    /**
-     * @return bool
-     */
-    public function isPercussionChannel()
+    public function isPercussionChannel(): bool
     {
         return $this->getBank() === Channel::DEFAULT_PERCUSSION_BANK;
     }
 
-    /**
-     * @return void
-     */
     public function __clone()
     {
         foreach ($this->parameters as $index => $parameter) {
@@ -279,10 +193,7 @@ class Channel
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Channel $channel
-     */
-    public function copyFrom(Channel $channel)
+    public function copyFrom(Channel $channel): void
     {
         $this->setId($channel->getId());
         $this->setBank($channel->getBank());
@@ -295,7 +206,7 @@ class Channel
         $this->setTremolo($channel->getTremolo());
         $this->setName($channel->getName());
 
-        $this->parameters = array(); 
+        $this->parameters = array();
 
         for ($i = 0; $i < $channel->countParameters(); $i++) {
             $this->addParameter(clone $channel->getParameter($i));

@@ -22,10 +22,10 @@ namespace PhpTabs\Music;
 class Beat
 {
     /**
-* 
+     * Number of voices to set
      *
- * @const MAX_VOICES Number of voices to set 
-*/
+     * @const MAX_VOICES
+     */
     const MAX_VOICES = 2;
 
     private $start = Duration::QUARTER_TIME;
@@ -45,42 +45,32 @@ class Beat
     }
 
     /**
-     * @return \PhpTabs\Music\Measure
+     * Get parent Measure
      */
-    public function getMeasure()
+    public function getMeasure(): Measure
     {
         return $this->measure;
     }
 
     /**
-     * @param \PhpTabs\Music\Measure $measure
+     * Set parent measure
      */
-    public function setMeasure(Measure $measure)
+    public function setMeasure(Measure $measure): void
     {
         $this->measure = $measure;
     }
 
-    /**
-     * @return int
-     */
-    public function getStart()
+    public function getStart(): int
     {
         return $this->start;
     }
 
-    /**
-     * @param int $start
-     */
-    public function setStart($start)
+    public function setStart(int $start): void
     {
         $this->start = $start;
     }
 
-    /**
-     * @param int                  $index
-     * @param \PhpTabs\Music\Voice $voice
-     */
-    public function setVoice($index, Voice $voice)
+    public function setVoice(int $index, Voice $voice): void
     {
         if ($index >= 0) {
             $this->voices[$index] = $voice;
@@ -88,11 +78,7 @@ class Beat
         }
     }
 
-    /**
-     * @param  int $index
-     * @return \PhpTabs\Music\Voice
-     */
-    public function getVoice($index)
+    public function getVoice(int $index): Voice
     {
         if (isset($this->voices[$index])) {
             return $this->voices[$index];
@@ -106,94 +92,64 @@ class Beat
         );
     }
 
-    /**
-     * @return \PhpTabs\Music\Voice[]
-     */
-    public function getVoices()
+    public function getVoices(): array
     {
         return $this->voices;
     }
 
-    /**
-     * @return int
-     */
-    public function countVoices()
+    public function countVoices(): int
     {
         return count($this->voices);
     }
 
-    /**
-     * @param \PhpTabs\Music\Chord $chord
-     */
-    public function setChord(Chord $chord)
+    public function setChord(Chord $chord): void
     {
         $this->chord = $chord;
         $this->chord->setBeat($this);
     }
 
-    /**
-     * @return \PhpTabs\Music\Chord
-     */
-    public function getChord()
+    public function getChord(): ?Chord
     {
         return $this->chord;
     }
 
-    public function removeChord()
+    public function removeChord(): void
     {
         $this->chord = null;
     }
 
-    /**
-     * @return \PhpTabs\Music\Text
-     */
-    public function getText()
+    public function getText(): ?Text
     {
         return $this->text;
     }
 
-    /**
-     * @param \PhpTabs\Music\Text $text
-     */
-    public function setText(Text $text)
+    public function setText(Text $text): void
     {
         $this->text = $text;
         $this->text->setBeat($this);
     }
 
-    public function removeText()
+    public function removeText(): void
     {
         $this->text = null;
     }
 
-    /**
-     * @return bool
-     */
-    public function isChordBeat()
+    public function isChordBeat(): bool
     {
         return $this->chord !== null;
     }
 
-    /**
-     * @return bool
-     */
-    public function isTextBeat()
+    public function isTextBeat(): bool
     {
         return $this->text !== null;
     }
 
-    /**
-     * @return \PhpTabs\Music\Stroke
-     */
-    public function getStroke()
+    public function getStroke(): Stroke
     {
         return $this->stroke;
     }
 
-    /**
-     * @return bool
-     */
-    public function isRestBeat()
+    public function isRestBeat(): bool
     {
         for ($v = 0; $v < $this->countVoices(); $v++) {
             $voice = $this->getVoice($v);
@@ -206,21 +162,18 @@ class Beat
         return true;
     }
 
-    /**
-     * @return void
-     */
     public function __clone()
     {
         if (!is_null($this->chord)) {
-            $this->chord = clone $this->chord;    
+            $this->chord = clone $this->chord;
         }
 
         if (!is_null($this->text)) {
-            $this->text = clone $this->text;    
+            $this->text = clone $this->text;
         }
 
         if (!is_null($this->stroke)) {
-            $this->stroke = clone $this->stroke;    
+            $this->stroke = clone $this->stroke;
         }
 
         foreach ($this->voices as $index => $item) {
