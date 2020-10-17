@@ -29,44 +29,27 @@ class Stroke
         $this->direction = Stroke::STROKE_NONE;
     }
 
-    /**
-     * @return int
-     */
-    public function getDirection()
+    public function getDirection(): int
     {
         return $this->direction;
     }
 
-    /**
-     * @param int $direction
-     */
-    public function setDirection($direction)
+    public function setDirection(int $direction): void
     {
         $this->direction = $direction;
     }
 
-    /**
-     * @return int $value
-     */
-    public function getValue()
+    public function getValue(): ?int
     {
         return $this->value;
     }
 
-    /**
-     * @param int $value
-     */
-    public function setValue($value)
+    public function setValue(int $value = null): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @param \PhpTabs\Music\Beat $beat
-     * 
-     * @return int
-     */
-    public function getIncrementTime(Beat $beat)
+    public function getIncrementTime(Beat $beat): int
     {
         if ($this->value <= 0) {
             return 0;
@@ -87,14 +70,11 @@ class Stroke
         }
 
         return $duration > 0
-        ? round(($duration / 8.0) * (4.0 / $this->value))
-        : 0;
+            ? round(($duration / 8.0) * (4.0 / $this->value))
+            : 0;
     }
 
-    /**
-     * @param \PhpTabs\Music\Stroke $stroke
-     */
-    public function copyFrom(Stroke $stroke)
+    public function copyFrom(Stroke $stroke): void
     {
         $this->setValue($stroke->getValue());
         $this->setDirection($stroke->getDirection());

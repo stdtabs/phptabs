@@ -17,12 +17,12 @@ namespace PhpTabs\Music;
 class Tempo
 {
     /**
-     * @const SECOND_IN_MILLIS 
+     * @const SECOND_IN_MILLIS
      */
     const SECOND_IN_MILLIS = 1000;
 
     /**
-     * Current value of the tempo 
+     * Current value of the tempo
      *
      * @var int $value
      */
@@ -30,52 +30,40 @@ class Tempo
 
     /**
      * Gets tempo value
-     *
-     * @return int
      */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }
 
     /**
      * Sets tempo value
-     *
-     * @param int $value
      */
-    public function setValue($value)
+    public function setValue(int $value): void
     {
         $this->value = $value;
     }
 
     /**
      * Gets a tick in millisecond
-     *
-     * @return int Number of milliseconds
      */
-    public function getInMillis()
+    public function getInMillis(): int
     {
         return intval(60 / $this->getValue() * Tempo::SECOND_IN_MILLIS);
     }
 
     /**
      * Gets a tick in time per quarter
-     * 
-     * @return int
      */
-    public function getInTPQ()
+    public function getInTPQ(): int
     {
         return intval((60 / $this->getValue() * Tempo::SECOND_IN_MILLIS) * 1000);
     }
 
     /**
      * Creates a tempo from TPQ
-     * 
-     * @param int $tpq
-     * 
-     * @return \PhpTabs\Music\Tempo
      */
-    public static function fromTPQ($tpq)
+    public static function fromTPQ(int $tpq): Tempo
     {
         $value = intval((60 * Tempo::SECOND_IN_MILLIS) / ($tpq / 1000));
         $tempo = new Tempo();
@@ -85,10 +73,8 @@ class Tempo
 
     /**
      * Copies a tempo from another one
-     *
-     * @param \PhpTabs\Music\Tempo $tempo
      */
-    public function copyFrom(Tempo $tempo)
+    public function copyFrom(Tempo $tempo): void
     {
         $this->setValue($tempo->getValue());
     }

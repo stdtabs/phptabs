@@ -32,58 +32,37 @@ class Marker
         $this->color = $color;
     }
 
-    /**
-     * @return int
-     */
-    public function getMeasure()
+    public function getMeasure(): int
     {
         return $this->measure;
     }
 
-    /**
-     * @param int $measure
-     */
-    public function setMeasure(int $measure)
+    public function setMeasure(int $measure): void
     {
         $this->measure = $measure;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return \PhpTabs\Music\Color
-     */
-    public function getColor()
+    public function getColor(): Color
     {
         return $this->color;
     }
 
-    /**
-     * @param \PhpTabs\Music\Color $color
-     */
-    public function setColor(Color $color)
+    public function setColor(Color $color): void
     {
         $this->color = $color;
     }
 
-    /**
-     * @param \PhpTabs\Music\Marker $marker
-     */
-    public function copyFrom(Marker $marker)
+    public function copyFrom(Marker $marker): void
     {
         $this->setMeasure($marker->getMeasure());
         $this->setTitle($marker->getTitle());

@@ -15,29 +15,18 @@ use Exception;
 
 class Song extends SongBase
 {
-    /**
-     * @param \PhpTabs\Music\MeasureHeader $measureHeader
-     */
-    public function addMeasureHeader(MeasureHeader $measureHeader)
+    public function addMeasureHeader(MeasureHeader $measureHeader): void
     {
         $measureHeader->setSong($this);
         $this->measureHeaders[] = $measureHeader;
     }
 
-    /**
-     * @param int $index
-     */
-    public function removeMeasureHeader($index)
+    public function removeMeasureHeader(int $index): void
     {
         array_splice($this->measureHeaders, $index, 1);
     }
 
-    /**
-     * @param int $index
-     * 
-     * @return \PhpTabs\Music\MeasureHeader
-     */
-    public function getMeasureHeader($index)
+    public function getMeasureHeader(int $index): MeasureHeader
     {
         if (isset($this->measureHeaders[$index])) {
             return $this->measureHeaders[$index];
@@ -51,18 +40,12 @@ class Song extends SongBase
         );
     }
 
-    /**
-     * @return array
-     */
-    public function getMeasureHeaders()
+    public function getMeasureHeaders(): array
     {
         return $this->measureHeaders;
     }
 
-    /**
-     * @param \PhpTabs\Music\Track $track
-     */
-    public function addTrack(Track $track)
+    public function addTrack(Track $track): void
     {
         $track->setSong($this);
         $this->tracks[] = $track;
@@ -72,20 +55,13 @@ class Song extends SongBase
         }
     }
 
-    /**
-     * @param int                  $index
-     * @param \PhpTabs\Music\Track $track
-     */
-    public function moveTrack($index, Track $track)
+    public function moveTrack(int $index, Track $track): void
     {
         $this->removeTrack($track);
         $this->tracks[$index] = $track;
     }
 
-    /**
-     * @param \PhpTabs\Music\Track $track
-     */
-    public function removeTrack(Track $track)
+    public function removeTrack(Track $track): void
     {
         foreach ($this->tracks as $index => $track) {
             if ($track->getNumber() == $track->getNumber()) {
@@ -95,12 +71,7 @@ class Song extends SongBase
         }
     }
 
-    /**
-     * @param int $index
-     *
-     * @return \PhpTabs\Music\Track
-     */
-    public function getTrack($index)
+    public function getTrack(int $index): Track
     {
         if (isset($this->tracks[$index])) {
             return $this->tracks[$index];
@@ -111,13 +82,10 @@ class Song extends SongBase
                 'Index %s does not exist',
                 $index
             )
-        );    
+        );
     }
 
-    /**
-     * @return array
-     */
-    public function getTracks()
+    public function getTracks(): array
     {
         return $this->tracks;
     }
@@ -126,7 +94,7 @@ class Song extends SongBase
      * @param int|\PhpTabs\Music\Channel $index
      * @param \PhpTabs\Music\Channel     $channel
      */
-    public function addChannel($index, Channel $channel = null)
+    public function addChannel($index, Channel $channel = null): void
     {
         if ($index instanceof Channel) {
             $this->channels[] = $index;
@@ -135,19 +103,12 @@ class Song extends SongBase
         }
     }
 
-    /**
-     * @param int                    $index
-     * @param \PhpTabs\Music\Channel $channel
-     */
-    public function moveChannel($index, Channel $channel)
+    public function moveChannel(int $index, Channel $channel): void
     {
         $this->addChannel($index, $channel);
     }
 
-    /**
-     * @param \PhpTabs\Music\Channel $channel
-     */
-    public function removeChannel(Channel $channel)
+    public function removeChannel(Channel $channel): void
     {
         foreach ($this->channels as $index => $chan) {
             if ($chan == $channel) {
@@ -157,10 +118,7 @@ class Song extends SongBase
         }
     }
 
-    /**
-     * @return \PhpTabs\Music\Channel
-     */
-    public function getChannel($index)
+    public function getChannel(int $index): Channel
     {
         if (isset($this->channels[$index])) {
             return $this->channels[$index];
@@ -174,11 +132,7 @@ class Song extends SongBase
         );
     }
 
-    /**
-     * @param  int $channelId
-     * @return null|\PhpTabs\Music\Channel
-     */
-    public function getChannelById($channelId)
+    public function getChannelById(int $channelId): ?Channel
     {
         $channels = $this->getChannels();
 
@@ -191,17 +145,11 @@ class Song extends SongBase
         return null;
     }
 
-    /**
-     * @return array
-     */
-    public function getChannels()
+    public function getChannels(): array
     {
         return $this->channels;
     }
 
-    /**
-     * @return void
-     */
     public function __clone()
     {
         foreach ($this->measureHeaders as $index => $header) {

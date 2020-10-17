@@ -19,87 +19,56 @@ class DivisionType
     private $enters = 1;
     private $times  = 1;
 
-    /**
-     * @return int
-     */
-    public function getEnters()
+    public function getEnters(): int
     {
         return $this->enters;
     }
 
-    /**
-     * @param int $enters
-     */
-    public function setEnters($enters)
+    public function setEnters(int $enters): void
     {
         $this->enters = $enters;
     }
 
-    /**
-     * @return int
-     */
-    public function getTimes()
+    public function getTimes(): int
     {
         return $this->times;
     }
 
-    /**
-     * @param int $times
-     */
-    public function setTimes($times)
+    public function setTimes(int $times): void
     {
         $this->times = $times;
     }
 
-    /**
-     * @return int
-     */
-    public function convertTime($time)
+    public function convertTime(int $time): int
     {
         return intval($time * $this->times / $this->enters);
     }
 
-    /**
-     * @param  \PhpTabs\Music\DivisionType $divisionType
-     * @return bool
-     */
-    public function isEqual(DivisionType $divisionType)
+    public function isEqual(DivisionType $divisionType): bool
     {
-        return $divisionType->getEnters() == $this->getEnters() 
+        return $divisionType->getEnters() == $this->getEnters()
             && $divisionType->getTimes()  == $this->getTimes();
     }
 
-    /**
-     * @param \PhpTabs\Music\DivisionType $divisionType
-     */
-    public function copyFrom(DivisionType $divisionType)
+    public function copyFrom(DivisionType $divisionType): void
     {
         $this->setEnters($divisionType->getEnters());
         $this->setTimes($divisionType->getTimes());
     }
 
-    /**
-     * @return \PhpTabs\Music\DivisionType
-     */
-    public static function normal()
+    public static function normal(): DivisionType
     {
         return self::newDivisionType(1, 1);
     }
 
-    /**
-     * @return \PhpTabs\Music\DivisionType
-     */
-    public static function triplet()
+    public static function triplet(): DivisionType
     {
         return self::newDivisionType(3, 2);
     }
 
-    /**
-     * @return array
-     */
-    public static function alteredDivisionTypes()
+    public static function alteredDivisionTypes(): array
     {
-        return array(
+        return [
             self::newDivisionType(3, 2),
             self::newDivisionType(5, 4),
             self::newDivisionType(6, 4),
@@ -109,18 +78,14 @@ class DivisionType
             self::newDivisionType(11, 8),
             self::newDivisionType(12, 8),
             self::newDivisionType(13, 8),
-        );
+        ];
     }
 
-    /**
-     * @return \PhpTabs\Music\DivisionType
-     */
-    private static function newDivisionType(int $enters, int $times)
+    private static function newDivisionType(int $enters, int $times): DivisionType
     {
         $divisionType = new DivisionType();
         $divisionType->setEnters($enters);
         $divisionType->setTimes($times);
         return $divisionType;
     }
-
 }

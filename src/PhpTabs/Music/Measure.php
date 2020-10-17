@@ -34,9 +34,6 @@ class Measure
     private $keySignature;
     private $beats = [];
 
-    /**
-     * @param \PhpTabs\Music\MeasureHeader $header
-     */
     public function __construct(MeasureHeader $header)
     {
         $this->header = $header;
@@ -44,90 +41,58 @@ class Measure
         $this->keySignature = self::DEFAULT_KEY_SIGNATURE;
     }
 
-    /**
-     * @return \PhpTabs\Music\Track
-     */
-    public function getTrack()
+    public function getTrack(): Track
     {
         return $this->track;
     }
 
-    /**
-     * @param \PhpTabs\Music\Track $track
-     */
-    public function setTrack(Track $track)
+    public function setTrack(Track $track): void
     {
         $this->track = $track;
     }
 
-    /**
-     * @return int
-     */
-    public function getClef()
+    public function getClef(): int
     {
         return $this->clef;
     }
 
-    /**
-     * @param int $clef
-     */
-    public function setClef($clef)
+    public function setClef(int $clef): void
     {
         $this->clef = $clef;
     }
 
-    /**
-     * @return int
-     */
-    public function getKeySignature()
+    public function getKeySignature(): int
     {
         return $this->keySignature;
     }
 
-    /**
-     * @param int $keySignature
-     */
-    public function setKeySignature($keySignature)
+    public function setKeySignature(int $keySignature): void
     {
         $this->keySignature = $keySignature;
     }
 
-    /**
-     * @return array
-     */
-    public function getBeats()
+    public function getBeats(): array
     {
         return $this->beats;
     }
 
-    /**
-     * @return \PhpTabs\Music\Measure
-     */
-    public function addBeat(Beat $beat)
+    public function addBeat(Beat $beat): void
     {
         $beat->setMeasure($this);
 
         $this->beats[] = $beat;
     }
 
-    /**
-     * @param int                 $index
-     * @param \PhpTabs\Music\Beat $beat
-     */
-    public function moveBeat($index, Beat $beat)
+    public function moveBeat(int $index, Beat $beat): void
     {
         $this->removeBeat($beat);
 
         array_splice($this->beats, $index, 0, array($beat));
     }
 
-    /**
-     * @param \PhpTabs\Music\Beat $beat
-     */
-    public function removeBeat(Beat $beat)
+    public function removeBeat(Beat $beat): void
     {
-        foreach ($this->beats as $k => $v)
-        {
+        foreach ($this->beats as $k => $v) {
             if ($v == $beat) {
                 array_splice($this->beats, $k, 1);
 
@@ -137,15 +102,14 @@ class Measure
     }
 
     /**
-     * @param  int $index
-     * @return \PhpTabs\Music\Beat
+     * @throw Exception if beat does not exist
      */
-    public function getBeat($index)
+    public function getBeat(int $index): Beat
     {
         if (isset($this->beats[$index])) {
             return $this->beats[$index];
         }
-    
+
         throw new Exception(
             sprintf(
                 'Index %s does not exist',
@@ -154,126 +118,83 @@ class Measure
         );
     }
 
-    /**
-     * @return int
-     */
-    public function countBeats()
+    public function countBeats(): int
     {
         return count($this->beats);
     }
 
-    /**
-     * @return \PhpTabs\Music\MeasureHeader
-     */
-    public function getHeader()
+    public function getHeader(): MeasureHeader
     {
         return $this->header;
     }
 
-    /**
-     * @param \PhpTabs\Music\MeasureHeader $header
-     */
-    public function setHeader(MeasureHeader $header)
+    public function setHeader(MeasureHeader $header): void
     {
         $this->header = $header;
     }
 
-    /**
-     * @return int
-     */
-    public function getNumber()
+    public function getNumber(): int
     {
         return $this->header->getNumber();
     }
 
-    /**
-     * @return int
-     */
-    public function getRepeatClose()
+    public function getRepeatClose(): int
     {
         return $this->header->getRepeatClose();
     }
 
-    /**
-     * @return int
-     */
-    public function getStart()
+    public function getStart(): int
     {
         return intval($this->header->getStart());
     }
 
-    /**
-     * @return \PhpTabs\Music\Tempo
-     */
-    public function getTempo()
+    public function getTempo(): Tempo
     {
         return $this->header->getTempo();
     }
 
-    /**
-     * @return \PhpTabs\Music\TimeSignature
-     */
-    public function getTimeSignature()
+    public function getTimeSignature(): TimeSignature
     {
         return $this->header->getTimeSignature();
     }
 
-    /**
-     * @return bool
-     */
-    public function isRepeatOpen()
+    public function isRepeatOpen(): bool
     {
         return $this->header->isRepeatOpen();
     }
 
-    /**
-     * @return bool
-     */
-    public function getTripletFeel()
+    public function getTripletFeel(): int
     {
         return $this->header->getTripletFeel();
     }
 
-    /**
-     * @return int
-     */
-    public function getLength()
+    public function getLength(): int
     {
         return $this->header->getLength();
     }
 
-    /**
-     * @return \PhpTabs\Music\Marker
-     */
-    public function getMarker()
+    public function getMarker(): Marker
     {
         return $this->header->getMarker();
     }
 
-    /**
-     * @return bool
-     */
-    public function hasMarker()
+    public function hasMarker(): bool
     {
         return $this->header->hasMarker();
     }
 
-    public function clear()
+    public function clear(): void
     {
-        $this->beats = array();
+        $this->beats = [];
     }
 
-    /**
-     * @param  int $start
-     * @return \PhpTabs\Music\Beat
-     */
-    public function getBeatByStart($start)
+    public function getBeatByStart(int $start): Beat
     {
         $beat = array_reduce(
             $this->beats,
             function ($carry, $beat) use ($start) {
                 return $beat->getStart() == $start
-                ? $beat : $carry;
+                    ? $beat : $carry;
             }
         );
 
@@ -286,10 +207,7 @@ class Measure
         return $beat;
     }
 
-    /**
-     * @param \PhpTabs\Music\Measure $measure
-     */
-    public function copyFrom(Measure $measure)
+    public function copyFrom(Measure $measure): void
     {
         $this->clear();
         $this->clef         = $measure->getClef();
@@ -300,9 +218,6 @@ class Measure
         }
     }
 
-    /**
-     * @return
-     */
     public function __clone()
     {
         foreach ($this->beats as $index => $item) {

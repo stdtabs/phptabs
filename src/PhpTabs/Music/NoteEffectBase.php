@@ -28,191 +28,129 @@ abstract class NoteEffectBase
     protected $accentuatedNote      = false;
     protected $heavyAccentuatedNote = false;
 
-    /**
-     * @return bool
-     */
-    public function isDeadNote()
+    public function isDeadNote(): bool
     {
         return $this->deadNote;
     }
 
-    /**
-     * @return bool
-     */
-    public function isVibrato()
+    public function isVibrato(): bool
     {
         return $this->vibrato;
     }
 
-    /**
-     * @return bool
-     */
-    public function isBend()
+    public function isBend(): bool
     {
-        return $this->bend !== null && $this->bend->countPoints();
+        return $this->bend !== null
+            && $this->bend->countPoints();
     }
 
-    /**
-     * @return bool
-     */
-    public function isTremoloBar()
+    public function isTremoloBar(): bool
     {
         return $this->tremoloBar !== null;
     }
 
-    /**
-     * @return bool
-     */
-    public function isTrill()
+    public function isTrill(): bool
     {
         return $this->trill !== null;
     }
 
-    /**
-     * @return bool
-     */
-    public function isTremoloPicking()
+    public function isTremoloPicking(): bool
     {
         return $this->tremoloPicking !== null;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHammer()
+    public function isHammer(): bool
     {
         return $this->hammer;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSlide()
+    public function isSlide(): bool
     {
         return $this->slide;
     }
 
-    /**
-     * @return bool
-     */
-    public function isGhostNote()
+    public function isGhostNote(): bool
     {
         return $this->ghostNote;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAccentuatedNote()
+    public function isAccentuatedNote(): bool
     {
         return $this->accentuatedNote;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHeavyAccentuatedNote()
+    public function isHeavyAccentuatedNote(): bool
     {
         return $this->heavyAccentuatedNote;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHarmonic()
+    public function isHarmonic(): bool
     {
         return $this->harmonic !== null;
     }
 
-    /**
-     * @return bool
-     */
-    public function isGrace()
+    public function isGrace(): bool
     {
         return $this->grace !== null;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPalmMute()
+    public function isPalmMute(): bool
     {
         return $this->palmMute;
     }
 
-    /**
-     * @return bool
-     */
-    public function isStaccato()
+    public function isStaccato(): bool
     {
         return $this->staccato;
     }
 
-    /**
-     * @return bool
-     */
-    public function isLetRing()
+    public function isLetRing(): bool
     {
         return $this->letRing;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPopping()
+    public function isPopping(): bool
     {
         return $this->popping;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSlapping()
+    public function isSlapping(): bool
     {
         return $this->slapping;
     }
 
-    /**
-     * @return bool
-     */
-    public function isTapping()
+    public function isTapping(): bool
     {
         return $this->tapping;
     }
 
-    /**
-     * @return bool
-     */
-    public function isFadeIn()
+    public function isFadeIn(): bool
     {
         return $this->fadeIn;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAnyEffect()
+    public function hasAnyEffect(): bool
     {
         return
-        $this->isBend()                 ||
-        $this->isTremoloBar()           ||
-        $this->isHarmonic()             ||
-        $this->isGrace()                ||
-        $this->isTrill()                ||
-        $this->isTremoloPicking()       ||
-        $this->isVibrato()              ||
-        $this->isDeadNote()             ||
-        $this->isSlide()                ||
-        $this->isHammer()               ||
-        $this->isGhostNote()            ||
-        $this->isAccentuatedNote()      ||
-        $this->isHeavyAccentuatedNote() ||
-        $this->isPalmMute()             ||
-        $this->isLetRing()              ||
-        $this->isStaccato()             ||
-        $this->isTapping()              ||
-        $this->isSlapping()             ||
-        $this->isPopping()              ||
-        $this->isFadeIn();
+            $this->isBend()                 ||
+            $this->isTremoloBar()           ||
+            $this->isHarmonic()             ||
+            $this->isGrace()                ||
+            $this->isTrill()                ||
+            $this->isTremoloPicking()       ||
+            $this->isVibrato()              ||
+            $this->isDeadNote()             ||
+            $this->isSlide()                ||
+            $this->isHammer()               ||
+            $this->isGhostNote()            ||
+            $this->isAccentuatedNote()      ||
+            $this->isHeavyAccentuatedNote() ||
+            $this->isPalmMute()             ||
+            $this->isLetRing()              ||
+            $this->isStaccato()             ||
+            $this->isTapping()              ||
+            $this->isSlapping()             ||
+            $this->isPopping()              ||
+            $this->isFadeIn();
     }
 }

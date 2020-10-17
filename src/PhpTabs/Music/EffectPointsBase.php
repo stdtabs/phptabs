@@ -16,28 +16,18 @@ class EffectPointsBase
     protected $position;
     protected $value;
 
-    /**
-     * @param int $position
-     * @param int $value
-     */
-    public function __construct($position, $value)
+    public function __construct(int $position, int $value)
     {
         $this->position = $position;
         $this->value = $value;
     }
 
-    /**
-     * @return int $position
-     */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
 
-    /**
-     * @return int $value
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }

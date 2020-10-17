@@ -35,106 +35,67 @@ class EffectGrace
         $this->transition = EffectGrace::TRANSITION_NONE;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDead()
+    public function isDead(): bool
     {
         return $this->dead;
     }
 
-    /**
-     * @param bool $dead
-     */
-    public function setDead($dead)
+    public function setDead(bool $dead): void
     {
         $this->dead = $dead;
     }
 
-    /**
-     * @return int
-     */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    /**
-     * @param int $duration
-     */
-    public function setDuration($duration)
+    public function setDuration(int $duration): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * @return int
-     */
-    public function getDynamic()
+    public function getDynamic(): int
     {
         return $this->dynamic;
     }
 
-    /**
-     * @param int $dynamic
-     */
-    public function setDynamic($dynamic)
+    public function setDynamic(int $dynamic): void
     {
         $this->dynamic = $dynamic;
     }
 
-    /**
-     * @return int
-     */
-    public function getFret()
+    public function getFret(): int
     {
         return $this->fret;
     }
 
-    /**
-     * @param int $fret
-     */
-    public function setFret($fret)
+    public function setFret(int $fret): void
     {
         $this->fret = $fret;
     }
 
-    /**
-     * @return bool
-     */
-    public function isOnBeat()
+    public function isOnBeat(): bool
     {
         return $this->onBeat;
     }
 
-    /**
-     * @param bool $onBeat
-     */
-    public function setOnBeat($onBeat)
+    public function setOnBeat(bool $onBeat): void
     {
         $this->onBeat = $onBeat;
     }
 
-    /**
-     * @return int
-     */
-    public function getTransition()
+    public function getTransition(): int
     {
         return $this->transition;
     }
 
-    /**
-     * @param int $transition
-     */
-    public function setTransition($transition)
+    public function setTransition(int $transition): void
     {
         $this->transition = $transition;
     }
 
-    /**
-     * @return int
-     */
-    public function getDurationTime()
+    public function getDurationTime(): int
     {
         return intval(
             (Duration::QUARTER_TIME / 16.00 ) * $this->getDuration()

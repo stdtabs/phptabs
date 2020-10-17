@@ -42,43 +42,28 @@ class MeasureHeader
         $this->checkMarker();
     }
 
-    /**
-     * @return int
-     */
-    public function getNumber()
+    public function getNumber(): int
     {
         return $this->number;
     }
 
-    /**
-     * @param int $number
-     */
-    public function setNumber($number)
+    public function setNumber(int $number): void
     {
         $this->number = $number;
         $this->checkMarker();
     }
 
-    /**
-     * @return int
-     */
-    public function getRepeatClose()
+    public function getRepeatClose(): int
     {
         return $this->repeatClose;
     }
 
-    /**
-     * @param int $repeatClose
-     */
-    public function setRepeatClose($repeatClose)
+    public function setRepeatClose(int $repeatClose): void
     {
         $this->repeatClose = $repeatClose;
     }
 
-    /**
-     * @return int
-     */
-    public function getRepeatAlternative()
+    public function getRepeatAlternative(): int
     {
         return $this->repeatAlternative;
     }
@@ -86,18 +71,13 @@ class MeasureHeader
     /**
      * bitwise value 1 TO 8.
      * (1 << AlternativeNumber)
-     * 
-     * @param int $repeatAlternative
      */
-    public function setRepeatAlternative($repeatAlternative)
+    public function setRepeatAlternative(int $repeatAlternative): void
     {
         $this->repeatAlternative = $repeatAlternative;
     }
 
-    /**
-     * @return bool
-     */
-    public function isRepeatOpen()
+    public function isRepeatOpen(): bool
     {
         return $this->repeatOpen;
     }
@@ -105,135 +85,90 @@ class MeasureHeader
     /**
      * @param bool|int $repeatOpen
      */
-    public function setRepeatOpen($repeatOpen)
+    public function setRepeatOpen(int $repeatOpen): void
     {
         $this->repeatOpen = (boolean)$repeatOpen;
     }
 
-    /**
-     * @return int
-     */
-    public function getStart()
+    public function getStart(): int
     {
         return $this->start;
     }
 
-    /**
-     * @param int $start
-     */
-    public function setStart($start)
+    public function setStart(int $start): void
     {
         $this->start = $start;
     }
 
-    /**
-     * @return int
-     */
-    public function getTripletFeel()
+    public function getTripletFeel(): int
     {
         return $this->tripletFeel;
     }
 
-    /**
-     * @param int $tripletFeel
-     */
-    public function setTripletFeel($tripletFeel)
+    public function setTripletFeel(int $tripletFeel): void
     {
         $this->tripletFeel = intval($tripletFeel);
     }
 
-    /**
-     * @return \PhpTabs\Music\Tempo
-     */
-    public function getTempo()
+    public function getTempo(): Tempo
     {
         return $this->tempo;
     }
 
-    /**
-     * @param \PhpTabs\Music\Tempo $tempo
-     */
-    public function setTempo(Tempo $tempo)
+    public function setTempo(Tempo $tempo): void
     {
         $this->tempo = $tempo;
     }
 
-    /**
-     * @return \PhpTabs\Music\TimeSignature
-     */
-    public function getTimeSignature()
+    public function getTimeSignature(): TimeSignature
     {
         return $this->timeSignature;
     }
 
-    /**
-     * @param \PhpTabs\Music\TimeSignature $timeSignature
-     */
-    public function setTimeSignature(TimeSignature $timeSignature)
+    public function setTimeSignature(TimeSignature $timeSignature): void
     {
         $this->timeSignature = $timeSignature;
     }
 
-    /**
-     * @return null|\PhpTabs\Music\Marker
-     */
-    public function getMarker()
+    public function getMarker(): ?Marker
     {
         return $this->marker;
     }
 
-    /**
-     * @param null|\PhpTabs\Music\Marker $marker
-     */
-    public function setMarker(Marker $marker = null)
+    public function setMarker(Marker $marker): void
     {
         $this->marker = $marker;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasMarker()
+    public function hasMarker(): bool
     {
         return $this->getMarker() !== null;
     }
 
-    private function checkMarker()
+    private function checkMarker(): void
     {
         if ($this->hasMarker()) {
             $this->marker->setMeasure($this->getNumber());
         }
     }
 
-    /**
-     * @return int
-     */
-    public function getLength()
+    public function getLength(): int
     {
         return $this->getTimeSignature()->getNumerator()
          * $this->getTimeSignature()->getDenominator()->getTime();
     }
 
-    /**
-     * @return \PhpTabs\Music\Song
-     */
-    public function getSong()
+    public function getSong(): Song
     {
         return $this->song;
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    public function setSong(Song $song)
+    public function setSong(Song $song): void
     {
         $this->song = $song;
     }
 
-    /**
-     * @param \PhpTabs\Music\MeasureHeader $header
-     */
-    public function copyFrom(MeasureHeader $header)
+    public function copyFrom(MeasureHeader $header): void
     {
         $this->setNumber($header->getNumber());
         $this->setStart($header->getStart());
@@ -247,9 +182,6 @@ class MeasureHeader
         $this->checkMarker();
     }
 
-    /**
-     * @return void
-     */
     public function __clone()
     {
         $this->timeSignature = clone $this->timeSignature;

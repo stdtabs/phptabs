@@ -28,10 +28,7 @@ class NoteEffect extends NoteEffectBase
     protected $tremoloBar     = null;
     protected $tremoloPicking = null;
 
-    /**
-     * @param bool $deadNote
-     */
-    public function setDeadNote($deadNote)
+    public function setDeadNote(bool $deadNote): void
     {
         $this->deadNote = $deadNote;
 
@@ -45,10 +42,7 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $vibrato
-     */
-    public function setVibrato($vibrato)
+    public function setVibrato(bool $vibrato): void
     {
         $this->vibrato = $vibrato;
 
@@ -58,18 +52,12 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectBend
-     */
-    public function getBend()
+    public function getBend(): ?EffectBend
     {
         return $this->bend;
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectBend $bend
-     */
-    public function setBend(EffectBend $bend = null)
+    public function setBend(EffectBend $bend): void
     {
         $this->bend = $bend;
 
@@ -83,18 +71,12 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectTremoloBar
-     */
-    public function getTremoloBar()
+    public function getTremoloBar(): ?EffectTremoloBar
     {
         return $this->tremoloBar;
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectTremoloBar $tremoloBar
-     */
-    public function setTremoloBar(EffectTremoloBar $tremoloBar = null)
+    public function setTremoloBar(EffectTremoloBar $tremoloBar): void
     {
         $this->tremoloBar = $tremoloBar;
 
@@ -108,18 +90,12 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectTrill
-     */
-    public function getTrill()
+    public function getTrill(): ?EffectTrill
     {
         return $this->trill;
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectTrill $trill
-     */
-    public function setTrill(EffectTrill $trill = null)
+    public function setTrill(EffectTrill $trill): void
     {
         $this->trill = $trill;
 
@@ -134,18 +110,12 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectTremoloPicking
-     */
-    public function getTremoloPicking()
+    public function getTremoloPicking(): ?EffectTremoloPicking
     {
         return $this->tremoloPicking;
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectTremoloPicking $tremoloPicking
-     */
-    public function setTremoloPicking(EffectTremoloPicking $tremoloPicking = null)
+    public function setTremoloPicking(EffectTremoloPicking $tremoloPicking): void
     {
         $this->tremoloPicking = $tremoloPicking;
 
@@ -160,10 +130,7 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $hammer
-     */
-    public function setHammer($hammer)
+    public function setHammer(bool $hammer): void
     {
         $this->hammer = $hammer;
 
@@ -177,10 +144,7 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $slide
-     */
-    public function setSlide($slide)
+    public function setSlide(bool $slide): void
     {
         $this->slide = $slide;
 
@@ -194,10 +158,7 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $ghostNote
-     */
-    public function setGhostNote($ghostNote)
+    public function setGhostNote(bool $ghostNote): void
     {
         $this->ghostNote = $ghostNote;
 
@@ -207,10 +168,7 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $accentuatedNote
-     */
-    public function setAccentuatedNote($accentuatedNote)
+    public function setAccentuatedNote(bool $accentuatedNote): void
     {
         $this->accentuatedNote = $accentuatedNote;
 
@@ -220,10 +178,7 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $heavyAccentuatedNote
-     */
-    public function setHeavyAccentuatedNote($heavyAccentuatedNote)
+    public function setHeavyAccentuatedNote(bool $heavyAccentuatedNote): void
     {
         $this->heavyAccentuatedNote = $heavyAccentuatedNote;
 
@@ -233,42 +188,27 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectHarmonic $harmonic
-     */
-    public function setHarmonic(EffectHarmonic $harmonic = null)
+    public function setHarmonic(EffectHarmonic $harmonic): void
     {
         $this->harmonic = $harmonic;
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectHarmonic
-     */
-    public function getHarmonic()
+    public function getHarmonic(): ?EffectHarmonic
     {
         return $this->harmonic;
     }
 
-    /**
-     * @return \PhpTabs\Music\EffectGrace
-     */
-    public function getGrace()
+    public function getGrace(): ?EffectGrace
     {
         return $this->grace;
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectGrace $grace
-     */
-    public function setGrace(EffectGrace $grace = null)
+    public function setGrace(EffectGrace $grace): void
     {
         $this->grace = $grace;
     }
 
-    /**
-     * @param bool $palmMute
-     */
-    public function setPalmMute($palmMute)
+    public function setPalmMute(bool $palmMute): void
     {
         $this->palmMute = $palmMute;
 
@@ -278,10 +218,7 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $staccato
-     */
-    public function setStaccato($staccato)
+    public function setStaccato(bool $staccato): void
     {
         $this->staccato = $staccato;
 
@@ -291,10 +228,7 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $letRing
-     */
-    public function setLetRing($letRing)
+    public function setLetRing(bool $letRing): void
     {
         $this->letRing = $letRing;
 
@@ -304,10 +238,7 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $popping
-     */
-    public function setPopping($popping)
+    public function setPopping(bool $popping): void
     {
         $this->popping = $popping;
 
@@ -317,10 +248,7 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $slapping
-     */
-    public function setSlapping($slapping)
+    public function setSlapping(bool $slapping): void
     {
         $this->slapping = $slapping;
 
@@ -330,10 +258,7 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $tapping
-     */
-    public function setTapping($tapping)
+    public function setTapping(bool $tapping): void
     {
         $this->tapping = $tapping;
 
@@ -343,17 +268,11 @@ class NoteEffect extends NoteEffectBase
         }
     }
 
-    /**
-     * @param bool $fadeIn
-     */
-    public function setFadeIn($fadeIn)
+    public function setFadeIn(bool $fadeIn): void
     {
         $this->fadeIn = $fadeIn;
     }
 
-    /**
-     * @return void
-     */
     public function __clone()
     {
         if (!is_null($this->bend)) {
@@ -379,5 +298,5 @@ class NoteEffect extends NoteEffectBase
         if (!is_null($this->tremoloPicking)) {
             $this->tremoloPicking = clone $this->tremoloPicking;
         }
-    }    
+    }
 }

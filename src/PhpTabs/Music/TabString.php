@@ -16,78 +16,56 @@ class TabString
     /**
      * String number
      *
-     * @var int $number 
+     * @var int $number
      */
     private $number;
-  
+
     /**
      * String value
      *
-     * @var int $value 
+     * @var int $value
      */
     private $value;
 
-    /**
-     * @param int $number
-     * @param int $value
-     */
-    public function __construct($number = 0, $value = 0)
+    public function __construct(int $number = 0, int $value = 0)
     {
         $this->number = $number;
         $this->value  = $value;
     }
 
-    /**
-     * @return int
-     */
-    public function getNumber()
+    public function getNumber(): int
     {
         return $this->number;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue() 
+    public function getValue(): int
     {
         return $this->value;
     }
 
-    /**
-     * @param int $number
-     */
-    public function setNumber($number)
+    public function setNumber(int $number): void
     {
         $this->number = $number;
     }
 
-    /**
-     * @param int $value
-     */
-    public function setValue($value)
+    public function setValue(int $value): void
     {
         $this->value = $value;
     }
 
     /**
-     * Compares two strings
-     *
-     * @param \PhpTabs\Music\TabString $string the string to compare with current one
-     * 
-     * @return bool Result of the comparison
+     * Compare two strings
      */
-    public function isEqual(TabString $string)
+    public function isEqual(TabString $string): bool
     {
-        return $this->getNumber() == $string->getNumber() 
+        return $this->getNumber() == $string->getNumber()
             && $this->getValue()  == $string->getValue();
     }
 
     /**
-     * Copies a string from another one
-     *
-     * @param \PhpTabs\Music\TabString $string
+     * Copy a string from another one
      */
-    public function copyFrom(TabString $string)
+    public function copyFrom(TabString $string): void
     {
         $this->setNumber($string->getNumber());
         $this->setValue($string->getValue());

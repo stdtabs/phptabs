@@ -21,26 +21,16 @@ class EffectTremoloBar
 
     private $points = [];
 
-    /**
-     * @param int $position
-     * @param int $value
-     */
-    public function addPoint($position, $value)
+    public function addPoint(int $position, int $value): void
     {
         $this->points[] = new TremoloBarPoint($position, $value);
     }
 
-    /**
-     * @return array
-     */
-    public function getPoints()
+    public function getPoints(): array
     {
         return $this->points;
     }
 
-    /**
-     * @return void
-     */
     public function __clone()
     {
         foreach ($this->points as $index => $item) {
@@ -54,11 +44,7 @@ class EffectTremoloBar
  */
 class TremoloBarPoint extends EffectPointsBase
 {
-    /**
-     * @param  int $duration
-     * @return int
-     */
-    public function getTime($duration)
+    public function getTime(int $duration): int
     {
         return intval(
             $duration * $this->getPosition()

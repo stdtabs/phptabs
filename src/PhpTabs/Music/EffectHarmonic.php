@@ -28,86 +28,59 @@ class EffectHarmonic
     const MAX_ARTIFICIAL_OFFSET = 24;
     const MAX_TAPPED_OFFSET     = 24;
 
-    public static $naturalFrequencies = array(
-    array(12, 12), //AH12 (+12 frets)
-    array(9, 28), //AH9 (+28 frets)
-    array(5, 24), //AH5 (+24 frets)
-    array(7, 19), //AH7 (+19 frets)
-    array(4, 28), //AH4 (+28 frets)
-    array(3, 31)  //AH3 (+31 frets)
-    );
+    public static $naturalFrequencies = [
+        array(12, 12), //AH12 (+12 frets)
+        array(9, 28), //AH9 (+28 frets)
+        array(5, 24), //AH5 (+24 frets)
+        array(7, 19), //AH7 (+19 frets)
+        array(4, 28), //AH4 (+28 frets)
+        array(3, 31)  //AH3 (+31 frets)
+    ];
 
     private $type = 0;
     private $data = 0;
 
-    /**
-     * @return int
-     */
-    public function getData()
+    public function getData(): int
     {
         return $this->data;
     }
 
-    /**
-     * @param int $data
-     */
-    public function setData($data)
+    public function setData(int $data): void
     {
         $this->data = $data;
     }
 
-    /**
-     * @return int
-     */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
 
-    /**
-     * @param int $type
-     */
-    public function setType($type)
+    public function setType(int $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return bool
-     */
-    public function isNatural()
+    public function isNatural(): bool
     {
         return $this->type == EffectHarmonic::TYPE_NATURAL;
     }
 
-    /**
-     * @return bool
-     */
-    public function isArtificial()
+    public function isArtificial(): bool
     {
         return $this->type == EffectHarmonic::TYPE_ARTIFICIAL;
     }
 
-    /**
-     * @return bool
-     */
-    public function isTapped()
+    public function isTapped(): bool
     {
         return $this->type == EffectHarmonic::TYPE_TAPPED;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPinch()
+    public function isPinch(): bool
     {
         return $this->type == EffectHarmonic::TYPE_PINCH;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSemi()
+    public function isSemi(): bool
     {
         return $this->type == EffectHarmonic::TYPE_SEMI;
     }

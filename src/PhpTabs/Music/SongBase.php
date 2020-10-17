@@ -26,180 +26,116 @@ abstract class SongBase
     protected $measureHeaders = array();
     protected $channels       = array();
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getAlbum()
+    public function getAlbum(): ?string
     {
         return $this->album;
     }
 
-    /**
-     * @param string $album
-     */
-    public function setAlbum($album)
+    public function setAlbum(?string $album): void
     {
         $this->album = $album;
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthor()
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
 
-    /**
-     * @param string $author
-     */
-    public function setAuthor($author)
+    public function setAuthor(?string $author): void
     {
         $this->author = $author;
     }
 
-    /**
-     * @return string
-     */
-    public function getArtist()
+    public function getArtist(): ?string
     {
         return $this->artist;
     }
 
-    /**
-     * @param string $artist
-     */
-    public function setArtist($artist)
+    public function setArtist(?string $artist): void
     {
         $this->artist = $artist;
     }
 
-    /**
-     * @return string
-     */
-    public function getDate()
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
-    /**
-     * @param string $date
-     */
-    public function setDate($date)
+    public function setDate(?string $date): void
     {
         $this->date = $date;
     }
 
-    /**
-     * @return string
-     */
-    public function getCopyright()
+    public function getCopyright(): ?string
     {
         return $this->copyright;
     }
 
-    /**
-     * @param string $copyright
-     */
-    public function setCopyright($copyright)
+    public function setCopyright(?string $copyright): void
     {
         $this->copyright = $copyright;
     }
 
-    /**
-     * @return string
-     */
-    public function getWriter()
+    public function getWriter(): ?string
     {
         return $this->writer;
     }
 
-    /**
-     * @param string $writer
-     */
-    public function setWriter($writer)
+    public function setWriter(?string $writer): void
     {
         $this->writer = $writer;
     }
 
-    /**
-     * @return string
-     */
-    public function getTranscriber()
+    public function getTranscriber(): ?string
     {
         return $this->transcriber;
     }
 
-    /**
-     * @param string $transcriber
-     */
-    public function setTranscriber($transcriber)
+    public function setTranscriber(?string $transcriber): void
     {
         $this->transcriber = $transcriber;
     }
 
-    /**
-     * @return string
-     */
-    public function getComments()
+    public function getComments(): ?string
     {
         return $this->comments;
     }
 
-    /**
-     * @param string $comments
-     */
-    public function setComments($comments)
+    public function setComments(?string $comments): void
     {
         $this->comments = $comments;
     }
 
-    /**
-     * @return int
-     */
-    public function countChannels()
+    public function countChannels(): int
     {
         return count($this->channels);
     }
 
-    /**
-     * @return int
-     */
-    public function countTracks()
+    public function countTracks(): int
     {
         return count($this->tracks);
     }
 
-    /**
-     * @return int
-     */
-    public function countMeasureHeaders()
+    public function countMeasureHeaders(): int
     {
         return count($this->measureHeaders);
     }
 
-    public function clear()
+    public function clear(): void
     {
         $tracks = $this->getTracks();
 
-        foreach ($tracks as $track)
-        {
+        foreach ($tracks as $track) {
             $track->clear();
         }
 
@@ -208,18 +144,13 @@ abstract class SongBase
         $this->measureHeaders = array();
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
-        return $this->countMeasureHeaders() == 0 || $this->countTracks() == 0;
+        return $this->countMeasureHeaders() == 0
+            || $this->countTracks() == 0;
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    public function copyFrom(Song $song)
+    public function copyFrom(Song $song): void
     {
         $this->clear();
         $this->setName($song->getName());
@@ -233,20 +164,17 @@ abstract class SongBase
         $this->setComments($song->getComments());
 
         $headers = $song->getMeasureHeaders();
-        foreach ($headers as $header)
-        {
+        foreach ($headers as $header) {
             $this->addMeasureHeader(clone $header);
         }
 
         $channels = $song->getChannels();
-        foreach ($channels as $channel)
-        {
+        foreach ($channels as $channel) {
             $this->addChannel(clone $channel);
         }
 
         $tracks = $song->getTracks();
-        foreach ($tracks as $track)
-        {
+        foreach ($tracks as $track) {
             $this->addTrack(clone $track);
         }
     }

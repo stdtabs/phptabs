@@ -23,25 +23,16 @@ class EffectTremoloPicking
         $this->duration = new Duration();
     }
 
-    /**
-     * @return \PhpTabs\Music\Duration
-     */
-    public function getDuration()
+    public function getDuration(): Duration
     {
         return $this->duration;
     }
 
-    /**
-     * @param \PhpTabs\Music\Duration $duration
-     */
-    public function setDuration(Duration $duration)
+    public function setDuration(Duration $duration): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * @return void
-     */
     public function __clone()
     {
         $this->duration = clone $this->duration;

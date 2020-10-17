@@ -24,67 +24,49 @@ class Lyric
         $this->lyrics = [];
     }
 
-    /**
-     * @return int
-     */
-    public function getFrom()
+    public function getFrom(): int
     {
         return $this->from;
     }
 
-    /**
-     * @param int $from
-     */
-    public function setFrom($from)
+    public function setFrom(int $from): void
     {
         $this->from = $from;
     }
 
-    /**
-     * @return array
-     */
-    public function getLyrics()
+    public function getLyrics(): array
     {
         return $this->lyrics;
     }
 
     /**
-     * @param string $lyrics
+     * @param array|string $lyrics
+     * @todo Fix given type either string or array
      */
-    public function setLyrics($lyrics)
+    public function setLyrics($lyrics): void
     {
         $this->lyrics = $lyrics;
     }
 
-    /**
-     * @return array
-     */
-    public function getLyricBeats()
+    public function getLyricBeats(): array
     {
         $lyrics = $this->getLyrics();
 
         $str = '';
 
-        foreach ($lyrics as $value)
-        {
-            $str .= str_replace(array("\n", "\r"), Lyric::REGEX, $value) . Lyric::REGEX; 
+        foreach ($lyrics as $value) {
+            $str .= str_replace(array("\n", "\r"), Lyric::REGEX, $value) . Lyric::REGEX;
         }
 
         return explode(Lyric::REGEX, $str);
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return count($this->getLyrics()) == 0;
     }
 
-    /**
-     * @param \PhpTabs\Music\Lyric $lyric
-     */
-    public function copyFrom(Lyric $lyric)
+    public function copyFrom(Lyric $lyric): void
     {
         $this->setFrom($lyric->getFrom());
         $this->setLyrics($lyric->getLyrics());

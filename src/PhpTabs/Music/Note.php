@@ -31,105 +31,66 @@ class Note
         $this->effect   = new NoteEffect();
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }
 
-    /**
-     * @param int $value
-     */
-    public function setValue($value)
+    public function setValue(int $value): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return int
-     */
-    public function getVelocity()
+    public function getVelocity(): int
     {
         return $this->velocity;
     }
 
-    /**
-     * @param int $velocity
-     */
-    public function setVelocity($velocity)
+    public function setVelocity(int $velocity): void
     {
         $this->velocity = $velocity;
     }
 
-    /**
-     * @return int
-     */
-    public function getString()
+    public function getString(): int
     {
         return $this->string;
     }
 
-    /**
-     * @param int $string
-     */
-    public function setString($string)
+    public function setString(int $string): void
     {
         $this->string = $string;
     }
 
-    /**
-     * @return bool
-     */
-    public function isTiedNote()
+    public function isTiedNote(): bool
     {
         return $this->tiedNote;
     }
 
-    /**
-     * @param bool $tiedNote
-     */
-    public function setTiedNote($tiedNote)
+    public function setTiedNote(bool $tiedNote): void
     {
         $this->tiedNote = $tiedNote;
     }
 
-    /**
-     * @return \PhpTabs\Music\NoteEffect
-     */
-    public function getEffect()
+    public function getEffect(): NoteEffect
     {
         return $this->effect;
     }
 
-    /**
-     * @param \PhpTabs\Music\NoteEffect $effect
-     */
-    public function setEffect(NoteEffect $effect)
+    public function setEffect(NoteEffect $effect): void
     {
         $this->effect = $effect;
     }
 
-    /**
-     * @return \PhpTabs\Music\Voice
-     */
-    public function getVoice()
+    public function getVoice(): Voice
     {
         return $this->voice;
     }
 
-    /**
-     * @param \PhpTabs\Music\Voice $voice
-     */
-    public function setVoice(Voice $voice)
+    public function setVoice(Voice $voice): void
     {
         $this->voice = $voice;
     }
 
-    /**
-     * return void
-     */
     public function __clone()
     {
         $this->effect = clone $this->effect;

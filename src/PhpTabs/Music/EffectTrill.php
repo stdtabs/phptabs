@@ -24,41 +24,26 @@ class EffectTrill
         $this->duration = new Duration();
     }
 
-    /**
-     * @return int
-     */
-    public function getFret()
+    public function getFret(): int
     {
         return $this->fret;
     }
 
-    /**
-     * @param int $fret
-     */
-    public function setFret($fret)
+    public function setFret(int $fret): void
     {
         $this->fret = $fret;
     }
 
-    /**
-     * @return \PhpTabs\Music\Duration
-     */
-    public function getDuration()
+    public function getDuration(): Duration
     {
         return $this->duration;
     }
 
-    /**
-     * @param \PhpTabs\Music\Duration $duration
-     */
-    public function setDuration(Duration $duration)
+    public function setDuration(Duration $duration): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * @return void
-     */
     public function __clone()
     {
         $this->duration = clone $this->duration;

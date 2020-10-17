@@ -33,66 +33,42 @@ class Duration
         $this->divisionType = new DivisionType();
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }
 
-    /**
-     * @param int $value
-     */
-    public function setValue($value)
+    public function setValue(int $value): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDotted()
+    public function isDotted(): bool
     {
         return $this->dotted;
     }
 
-    /**
-     * @param bool $dotted
-     */
-    public function setDotted($dotted)
+    public function setDotted(bool $dotted): void
     {
         $this->dotted = (boolean)$dotted;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDoubleDotted()
+    public function isDoubleDotted(): bool
     {
         return (boolean)$this->doubleDotted;
     }
 
-    /**
-     * @param bool $doubleDotted
-     */
-    public function setDoubleDotted($doubleDotted)
+    public function setDoubleDotted(bool $doubleDotted): void
     {
         $this->doubleDotted = (boolean)$doubleDotted;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDivision()
+    public function getDivision(): DivisionType
     {
         return $this->divisionType;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTime()
+    public function getTime(): int
     {
         $time = Duration::QUARTER_TIME * (4.0 / $this->value);
 
@@ -106,13 +82,9 @@ class Duration
     }
 
     /**
-     * @param int                          $time
-     * @param null|\PhpTabs\Music\Duration $minDuration
-     * @param null|int                     $diff
-     * 
-     * @return int
+     * Get a Duration object from time
      */
-    public static function fromTime($time, Duration $minDuration = null, $diff = null)
+    public static function fromTime(int $time, Duration $minDuration = null, int $diff = null): Duration
     {
         if (is_null($minDuration)) {
             $duration = new Duration();
@@ -143,13 +115,10 @@ class Duration
 
             if ($tmpDuration->isDotted()) {
                 $tmpDuration->setDotted(false);
-            }
-            elseif ($tmpDuration->getDivision()->isEqual(DivisionType::normal())) {
+            } elseif ($tmpDuration->getDivision()->isEqual(DivisionType::normal())) {
                 $tmpDuration->getDivision()->setEnters(3);
                 $tmpDuration->getDivision()->setTimes(2);
-            }
-            else
-            {
+            } else {
                 $tmpDuration->setValue($tmpDuration->getValue() * 2);
                 $tmpDuration->setDotted(true);
                 $tmpDuration->getDivision()->setEnters(1);
@@ -164,10 +133,7 @@ class Duration
         return $duration;
     }
 
-    /**
-     * @return int
-     */
-    public function getIndex()
+    public function getIndex(): int
     {
         $index = 0;
         $value = $this->value;
@@ -178,15 +144,10 @@ class Duration
         return $index;
     }
 
-    /**
-     * @param \PhpTabs\Music\Duration $duration
-     * 
-     * @return bool
-     */
-    public function isEqual(Duration $duration)
+    public function isEqual(Duration $duration): bool
     {
-        return $this->getValue() == $duration->getValue() 
-            && $this->isDotted() == $duration->isDotted() 
+        return $this->getValue() == $duration->getValue()
+            && $this->isDotted() == $duration->isDotted()
             && $this->isDoubleDotted() == $duration->isDoubleDotted()
             && $this->getDivision()->isEqual($duration->getDivision());
     }
@@ -200,10 +161,7 @@ class Duration
         // $this->divisionType = clone $this->divisionType;
     }
 
-    /**
-     * @param \PhpTabs\Music\Duration $duration
-     */
-    public function copyFrom(Duration $duration)
+    public function copyFrom(Duration $duration): void
     {
         $this->setValue($duration->getValue());
         $this->setDotted($duration->isDotted());
