@@ -20,10 +20,6 @@ class GuitarPro4Track extends AbstractReader
 {
     /**
      * Reads track informations
-     *
-     * @param \PhpTabs\Music\Song  $song
-     * @param array                $channels an array of Channel objects
-     * @param \PhpTabs\Music\Lyric $lyrics
      */
     public function readTrack(Song $song, array $channels, Lyric $lyrics): Track
     {

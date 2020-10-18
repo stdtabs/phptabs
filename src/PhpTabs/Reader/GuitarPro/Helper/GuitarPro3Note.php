@@ -20,15 +20,9 @@ use PhpTabs\Music\Velocities;
 class GuitarPro3Note extends AbstractReader
 {
     /**
-     * Reads a note
-     * 
-     * @param \PhpTabs\Music\TabString  $string
-     * @param \PhpTabs\Music\Track      $track
-     * @param \PhpTabs\Music\NoteEffect $effect
-     *
-     * @return \PhpTabs\Music\Note
+     * Read a note
      */
-    public function readNote(TabString $string, Track $track, NoteEffect $effect)
+    public function readNote(TabString $string, Track $track, NoteEffect $effect): Note
     {
         $flags = $this->reader->readUnsignedByte();
         $note = new Note();

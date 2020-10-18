@@ -22,7 +22,7 @@ interface GuitarProReaderInterface extends ReaderInterface
     const GP_BEND_POSITION = 60;
 
     /**
-     * @return array of supported versions
+     * An array of supported versions
      */
     public function getSupportedVersions(): array;
 }

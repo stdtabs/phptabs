@@ -19,13 +19,8 @@ class GuitarPro3Track extends AbstractReader
 {
     /**
      * Reads track informations
-     * 
-     * @param \PhpTabs\Music\Song $song
-     * @param array               $channels An array of Channel objects
-     * 
-     * @return Track
      */
-    public function readTrack(Song $song, array $channels = [])
+    public function readTrack(Song $song, array $channels = []): Track
     {
         $track = new Track();
         $this->reader->readUnsignedByte();

@@ -16,18 +16,15 @@ use PhpTabs\Music\Lyric;
 class GuitarProLyric extends AbstractReader
 {
     /**
-     * Reads lyrics informations
-     * 
-     * @return \PhpTabs\Music\Lyric
+     * Read lyrics informations
      */
-    public function readLyrics()
+    public function readLyrics(): Lyric
     {
         $lyric = new Lyric();
         $lyric->setFrom($this->reader->readInt());
         $lyric->setLyrics($this->reader->readStringInteger());
 
-        for ($i = 0; $i < 4; $i++)
-        {
+        for ($i = 0; $i < 4; $i++) {
             $this->reader->readInt();
             $this->reader->readStringInteger();
         }

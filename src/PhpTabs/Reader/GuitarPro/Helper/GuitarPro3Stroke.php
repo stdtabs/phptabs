@@ -17,10 +17,7 @@ use PhpTabs\Music\Stroke;
 
 class GuitarPro3Stroke extends AbstractReader
 {
-    /**
-     * @param \PhpTabs\Music\Beat $beat
-     */
-    public function readStroke(Beat $beat)
+    public function readStroke(Beat $beat): void
     {
         $strokeDown = $this->reader->readByte();
         $strokeUp = $this->reader->readByte();
@@ -28,8 +25,7 @@ class GuitarPro3Stroke extends AbstractReader
         if ($strokeDown > 0 ) {
             $beat->getStroke()->setDirection(Stroke::STROKE_DOWN);
             $beat->getStroke()->setValue($this->toStrokeValue($strokeDown));
-        }
-        elseif ($strokeUp > 0) {
+        } elseif ($strokeUp > 0) {
             $beat->getStroke()->setDirection(Stroke::STROKE_UP);
             $beat->getStroke()->setValue($this->toStrokeValue($strokeUp));
         }
@@ -37,11 +33,10 @@ class GuitarPro3Stroke extends AbstractReader
 
     /**
      * Get stroke value
-     * 
-     * @param  integer $value
-     * @return integer stroke value
+     *
+     * @return int stroke value
      */
-    public function toStrokeValue($value)
+    public function toStrokeValue(int $value): int
     {
         if ($value == 1 || $value == 2) {
             return Duration::SIXTY_FOURTH;

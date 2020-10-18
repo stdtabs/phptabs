@@ -22,10 +22,8 @@ class GuitarPro3Effects extends AbstractReader
 {
     /**
      * Reads a note effect
-     * 
-     * @param \PhpTabs\Music\NoteEffect $noteEffect
      */
-    public function readNoteEffects(NoteEffect $effect)
+    public function readNoteEffects(NoteEffect $effect): void
     {
         $flags = $this->reader->readUnsignedByte();
         $effect->setHammer((($flags & 0x02) != 0));
@@ -43,10 +41,8 @@ class GuitarPro3Effects extends AbstractReader
 
     /**
      * Reads bend
-     *
-     * @param \PhpTabs\Music\NoteEffect $effect
      */
-    public function readBend(NoteEffect $effect)
+    public function readBend(NoteEffect $effect): void
     {
         $bend = new EffectBend();
         $this->reader->skip(5);
@@ -69,10 +65,8 @@ class GuitarPro3Effects extends AbstractReader
 
     /**
      * Reads grace
-     * 
-     * @param \PhpTabs\Music\NoteEffect $effect
      */
-    private function readGrace(NoteEffect $effect)
+    private function readGrace(NoteEffect $effect): void
     {
         $fret = $this->reader->readUnsignedByte();
         $grace = new EffectGrace();
@@ -98,10 +92,8 @@ class GuitarPro3Effects extends AbstractReader
 
     /**
      * Reads tremolo bar
-     * 
-     * @param \PhpTabs\Music\NoteEffect $noteEffect
      */
-    public function readTremoloBar(NoteEffect $noteEffect)
+    public function readTremoloBar(NoteEffect $noteEffect): void
     {
         $value = $this->reader->readInt();
         $effect = new EffectTremoloBar();

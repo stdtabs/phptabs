@@ -19,15 +19,8 @@ class GuitarPro3MeasureHeader extends AbstractReader
 {
     /**
      * Reads a mesure header
-     * 
-     * @param integer                      $number
-     * @param \PhpTabs\Music\Song          $song
-     * @param \PhpTabs\Music\TimeSignature $timeSignature
-     * @param integer                      $tempoValue
-     * 
-     * @return \PhpTabs\Music\MeasureHeader
      */
-    public function readMeasureHeader($number, Song $song, TimeSignature $timeSignature, $tempoValue = 120)
+    public function readMeasureHeader(int $number, Song $song, TimeSignature $timeSignature, $tempoValue = 120): MeasureHeader
     {
         $flags = $this->reader->readUnsignedByte();
         $header = new MeasureHeader();

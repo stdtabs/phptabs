@@ -18,34 +18,26 @@ use PhpTabs\Music\Track;
 class GuitarPro5Measure extends AbstractReader
 {
     /**
-     * Reads a Measure
-     * 
-     * @param \PhpTabs\Music\Measure $measure
-     * @param \PhpTabs\Music\Track   $track
-     * @param \PhpTabs\Music\Tempo   $tempo
+     * Read a Measure
      */
-    public function readMeasure(Measure $measure, Track $track, Tempo $tempo)
+    public function readMeasure(Measure $measure, Track $track, Tempo $tempo): void
     {
-        for ($voice = 0; $voice < 2; $voice++)
-        {
+        for ($voice = 0; $voice < 2; $voice++) {
             $nextNoteStart = intval($measure->getStart());
             $numberOfBeats = $this->reader->readInt();
 
-            for ($i = 0; $i < $numberOfBeats; $i++)
-            {
+            for ($i = 0; $i < $numberOfBeats; $i++) {
                 $nextNoteStart += $this->reader->factory('GuitarPro5Beat')->readBeat($nextNoteStart, $measure, $track, $tempo, $voice);
             }
         }
 
         $emptyBeats = array();
 
-        for ($i = 0; $i < $measure->countBeats(); $i++)
-        {
+        for ($i = 0; $i < $measure->countBeats(); $i++) {
             $beat = $measure->getBeat($i);
             $empty = true;
 
-            for ($v = 0; $v < $beat->countVoices(); $v++)
-            {
+            for ($v = 0; $v < $beat->countVoices(); $v++) {
                 if (!$beat->getVoice($v)->isEmpty()) {
                     $empty = false;
                 }
@@ -56,8 +48,7 @@ class GuitarPro5Measure extends AbstractReader
             }
         }
 
-        foreach ($emptyBeats as $beat)
-        {
+        foreach ($emptyBeats as $beat) {
             $measure->removeBeat($beat);
         }
 

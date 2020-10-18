@@ -20,11 +20,9 @@ use PhpTabs\Music\Velocities;
 class GuitarPro5NoteEffects extends AbstractReader
 {
     /**
-     * Reads note effects
-     * 
-     * @param \PhpTabs\Music\NoteEffect $noteEffect
+     * Read note effects
      */
-    public function readNoteEffects(NoteEffect $noteEffect)
+    public function readNoteEffects(NoteEffect $noteEffect): void
     {
         $flags1 = $this->reader->readUnsignedByte();
         $flags2 = $this->reader->readUnsignedByte();
@@ -62,11 +60,9 @@ class GuitarPro5NoteEffects extends AbstractReader
     }
 
     /**
-     * Reads an artificial harmonic
-     * 
-     * @param \PhpTabs\Music\NoteEffect $effect
+     * Read an artificial harmonic
      */
-    private function readArtificialHarmonic(NoteEffect $effect)
+    private function readArtificialHarmonic(NoteEffect $effect): void
     {
         $type = $this->reader->readByte();
         $harmonic = new EffectHarmonic();
@@ -75,33 +71,27 @@ class GuitarPro5NoteEffects extends AbstractReader
         if ($type == 1) {
             $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
             $effect->setHarmonic($harmonic);
-        }
-        elseif ($type == 2) {
+        } elseif ($type == 2) {
             $this->reader->skip(3);
             $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
             $effect->setHarmonic($harmonic);
-        }
-        elseif ($type == 3) {
+        } elseif ($type == 3) {
             $this->reader->skip(1);
             $harmonic->setType(EffectHarmonic::TYPE_TAPPED);
             $effect->setHarmonic($harmonic);
-        }
-        elseif ($type == 4) {
+        } elseif ($type == 4) {
             $harmonic->setType(EffectHarmonic::TYPE_PINCH);
             $effect->setHarmonic($harmonic);
-        }
-        elseif ($type == 5) {
+        } elseif ($type == 5) {
             $harmonic->setType(EffectHarmonic::TYPE_SEMI);
             $effect->setHarmonic($harmonic);
         }
     }
 
     /**
-     * Reads EffectGrace
-     * 
-     * @param \PhpTabs\Music\NoteEffect $effect
+     * Read EffectGrace
      */
-    private function readGrace(NoteEffect $effect)
+    private function readGrace(NoteEffect $effect): void
     {
         $fret = $this->reader->readUnsignedByte();
         $dynamic = $this->reader->readUnsignedByte();
@@ -112,7 +102,7 @@ class GuitarPro5NoteEffects extends AbstractReader
         $grace = new EffectGrace();
         $grace->setFret($fret);
         $grace->setDynamic(
-            (Velocities::MIN_VELOCITY 
+            (Velocities::MIN_VELOCITY
             + (Velocities::VELOCITY_INCREMENT * $dynamic))
             - Velocities::VELOCITY_INCREMENT
         );
@@ -122,14 +112,11 @@ class GuitarPro5NoteEffects extends AbstractReader
 
         if ($transition == 0) {
             $grace->setTransition(EffectGrace::TRANSITION_NONE);
-        }
-        elseif ($transition == 1) {
+        } elseif ($transition == 1) {
             $grace->setTransition(EffectGrace::TRANSITION_SLIDE);
-        }
-        elseif ($transition == 2) {
+        } elseif ($transition == 2) {
             $grace->setTransition(EffectGrace::TRANSITION_BEND);
-        }
-        elseif ($transition == 3) {
+        } elseif ($transition == 3) {
             $grace->setTransition(EffectGrace::TRANSITION_HAMMER);
         }
 

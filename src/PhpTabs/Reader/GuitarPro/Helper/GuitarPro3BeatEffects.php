@@ -19,11 +19,8 @@ class GuitarPro3BeatEffects extends AbstractReader
 {
     /**
      * Reads beat effects
-     * 
-     * @param \PhpTabs\Music\Beat       $beat
-     * @param \PhpTabs\Music\NoteEffect $effect
      */
-    public function readBeatEffects(Beat $beat, NoteEffect $effect)
+    public function readBeatEffects(Beat $beat, NoteEffect $effect): void
     {
         $flags = $this->reader->readUnsignedByte();
         $effect->setVibrato(
@@ -36,9 +33,7 @@ class GuitarPro3BeatEffects extends AbstractReader
             $type = $this->reader->readUnsignedByte();
             if ($type == 0) {
                 $this->reader->factory('GuitarPro3Effects')->readTremoloBar($effect);
-            }
-            else
-            {
+            } else {
                 $effect->setTapping($type == 1);
                 $effect->setSlapping($type == 2);
                 $effect->setPopping($type == 3);

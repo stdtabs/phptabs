@@ -17,11 +17,9 @@ use PhpTabs\Music\Text;
 class GuitarProText extends AbstractReader
 {
     /**
-     * Reads some text
-     * 
-     * @param \PhpTabs\Music\Beat $beat
+     * Read some text
      */
-    public function readText(Beat $beat)
+    public function readText(Beat $beat): void
     {
         $text = new Text();
 

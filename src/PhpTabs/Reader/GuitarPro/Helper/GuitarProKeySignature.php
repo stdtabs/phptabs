@@ -14,13 +14,11 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 class GuitarProKeySignature extends AbstractReader
 {
     /**
-     * Reads the key signature
-     * 
-     * 0: C 1: G, -1: F
+     * Read the key signature as an integer
      *
-     * @return integer Key signature
+     * 0: C 1: G, -1: F
      */
-    public function readKeySignature()
+    public function readKeySignature(): int
     {
         $keySignature = $this->reader->readByte();
 

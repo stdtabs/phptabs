@@ -22,19 +22,13 @@ class MidiAdjuster
     private $minDurationTime;
     private $song;
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
     public function __construct(Song $song)
     {
         $this->song = $song;
         $this->minDurationTime = 40;
     }
-    
-    /**
-     * @return \PhpTabs\Music\Song
-     */
-    public function adjustSong()
+
+    public function adjustSong(): Song
     {
         $tracks = $this->song->getTracks();
 
@@ -46,11 +40,8 @@ class MidiAdjuster
 
         return $this->song;
     }
-    
-    /**
-     * @param \PhpTabs\Music\Track $track
-     */
-    private function adjustTrack(Track $track)
+
+    private function adjustTrack(Track $track): void
     {
         $measures = $track->getMeasures();
 
@@ -61,29 +52,22 @@ class MidiAdjuster
         );
     }
 
-    /**
-     * @param \PhpTabs\Music\Measure $measure
-     */
-    private function process(Measure $measure)
+    private function process(Measure $measure): void
     {
         $this->orderBeats($measure);
         $this->joinBeats($measure);
         $this->adjustBeatsStrings($measure);
     }
 
-    /**
-     * @param \PhpTabs\Music\Measure $measure
-     */
-    private function joinBeats(Measure $measure)
+    private function joinBeats(Measure $measure): void
     {
         $previous = null;
         $finish = true;
 
         $measureStart = $measure->getStart();
         $measureEnd = $measureStart + $measure->getLength();
-    
-        for ($i = 0; $i < $measure->countBeats(); $i++)
-        {
+
+        for ($i = 0; $i < $measure->countBeats(); $i++) {
             $beat = $measure->getBeat($i);
             $beatStart = $beat->getStart();
             $beatLength = $beat->getVoice(0)->getDuration()->getTime();
@@ -94,8 +78,7 @@ class MidiAdjuster
 
                 if ($beatStart >= $previousStart && ($previousStart + $this->minDurationTime) > $beatStart) {
                     // add beat notes to previous
-                    for ($n = 0; $n < $beat->getVoice(0)->countNotes(); $n++)
-                    {
+                    for ($n = 0; $n < $beat->getVoice(0)->countNotes(); $n++) {
                         $note = $beat->getVoice(0)->getNote($n);
                         $previous->getVoice(0)->addNote($note);
                     }
@@ -118,8 +101,7 @@ class MidiAdjuster
                     $measure->removeBeat($beat);
                     $finish = false;
                     break;
-                }
-                elseif ($previousStart < $beatStart && ($previousStart + $previousLength) > $beatStart) {
+                } elseif ($previousStart < $beatStart && ($previousStart + $previousLength) > $beatStart) {
                     if ($beat->getVoice(0)->isRestVoice()) {
                         $measure->removeBeat($beat);
                         $finish = false;
@@ -151,17 +133,12 @@ class MidiAdjuster
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Measure $measure
-     */
-    private function orderBeats(Measure $measure)
+    private function orderBeats(Measure $measure): void
     {
-        for ($i = 0; $i < $measure->countBeats(); $i++)
-        {
+        for ($i = 0; $i < $measure->countBeats(); $i++) {
             $minBeat = null;
 
-            for ($j = $i; $j < $measure->countBeats(); $j++)
-            {
+            for ($j = $i; $j < $measure->countBeats(); $j++) {
                 $beat = $measure->getBeat($j);
 
                 if ($minBeat === null || $beat->getStart() < $minBeat->getStart()) {
@@ -173,23 +150,16 @@ class MidiAdjuster
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Measure $measure
-     */
-    private function adjustBeatsStrings(Measure $measure)
+    private function adjustBeatsStrings(Measure $measure): void
     {
-        for ($i = 0; $i < $measure->countBeats(); $i++)
-        {
+        for ($i = 0; $i < $measure->countBeats(); $i++) {
             $beat = $measure->getBeat($i);
 
             $this->adjustStrings($beat);
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Beat $beat
-     */
-    private function adjustStrings(Beat $beat)
+    private function adjustStrings(Beat $beat): void
     {
         $track = $beat->getMeasure()->getTrack();
         $freeStrings = $track->getStrings();
@@ -200,9 +170,8 @@ class MidiAdjuster
         array_walk(
             $notes, function ($note) use (&$freeStrings, &$notesToRemove) {
                 $string = $this->getStringForValue($freeStrings, $note->getValue());
-      
-                for ($j = 0; $j < count($freeStrings); $j++)
-                {
+
+                for ($j = 0; $j < count($freeStrings); $j++) {
                     $tempString = $freeStrings[$j];
 
                     if ($tempString->getNumber() == $string) {
@@ -214,7 +183,7 @@ class MidiAdjuster
                     }
                 }
 
-                //Cannot have more notes on same string 
+                //Cannot have more notes on same string
                 if ($note->getString() < 1) {
                     $notesToRemove[] = $note;
                 }
@@ -222,21 +191,14 @@ class MidiAdjuster
         );
 
         // Remove notes
-        while (count($notesToRemove))
-        {
+        while (count($notesToRemove)) {
             $beat->getVoice(0)->removeNote($notesToRemove[0]);
 
             array_splice($notesToRemove, 0, 1);
         }
     }
 
-    /**
-     * @param array $strings
-     * @param int   $value
-     * 
-     * @return int
-     */
-    private function getStringForValue($strings, $value)
+    private function getStringForValue(array $strings, int $value): int
     {
         $minFret = -1;
         $stringForValue = 0;

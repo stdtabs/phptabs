@@ -19,10 +19,7 @@ class MidiChannel
     private $balance;
     private $track;
 
-    /**
-     * @param int $channel
-     */
-    public function __construct($channel)
+    public function __construct(int $channel)
     {
         $this->channel = $channel;
         $this->instrument = 0;
@@ -31,74 +28,47 @@ class MidiChannel
         $this->track = -1;
     }
 
-    /**
-     * @return int
-     */
-    public function getBalance() 
+    public function getBalance(): int
     {
         return $this->balance;
     }
 
-    /**
-     * @param int $balance
-     */
-    public function setBalance($balance)
+    public function setBalance(int $balance): void
     {
         $this->balance = $balance;
     }
 
-    /**
-     * @return int $channel
-     */
-    public function getChannel()
+    public function getChannel(): int
     {
         return $this->channel;
     }
 
-    /**
-     * @return int $channel
-     */
-    public function getInstrument()
+    public function getInstrument(): int
     {
         return $this->instrument;
     }
 
-    /**
-     * @param int $instrument
-     */
-    public function setInstrument($instrument)
+    public function setInstrument(int $instrument): void
     {
         $this->instrument = $instrument;
     }
 
-    /**
-     * @return int $channel
-     */
-    public function getTrack()
+    public function getTrack(): int
     {
         return $this->track;
     }
 
-    /**
-     * @param int $track
-     */
-    public function setTrack($track)
+    public function setTrack(int $track): void
     {
         $this->track = $track;
     }
 
-    /**
-     * @return int $channel
-     */
-    public function getVolume()
+    public function getVolume(): int
     {
         return $this->volume;
     }
 
-    /**
-     * @param int $volume
-     */
-    public function setVolume($volume)
+    public function setVolume(int $volume): void
     {
         $this->volume = $volume;
     }

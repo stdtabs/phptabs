@@ -17,18 +17,15 @@ use PhpTabs\Music\Track;
 class GuitarProClef extends AbstractReader
 {
     /**
-     * @param  \PhpTabs\Music\Track $track
-     * @return int                  The Clef of $track
+     * Get the Clef for $track
      */
-    public function getClef(Track $track)
+    public function getClef(Track $track): int
     {
-        if (!$track            ->getSong()            ->getChannelById($track->getChannelId())            ->isPercussionChannel()
-        ) {
+        if (!$track->getSong()->getChannelById($track->getChannelId())->isPercussionChannel()) {
 
             $strings = $track->getStrings();
 
-            foreach ($strings as $string)
-            {
+            foreach ($strings as $string) {
                 if ($string->getValue() <= 34) {
                     return Measure::CLEF_BASS;
                 }

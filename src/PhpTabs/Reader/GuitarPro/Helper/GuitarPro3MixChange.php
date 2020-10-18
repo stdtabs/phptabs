@@ -17,10 +17,8 @@ class GuitarPro3MixChange extends AbstractReader
 {
     /**
      * Reads mix change informations
-     * 
-     * @param \PhpTabs\Music\Tempo $tempo
      */
-    public function readMixChange(Tempo $tempo)
+    public function readMixChange(Tempo $tempo): void
     {
         $this->reader->readByte(); //instrument
         $volume = $this->reader->readByte();

@@ -16,16 +16,13 @@ use PhpTabs\Music\Channel;
 class GuitarProChannels extends AbstractReader
 {
     /**
-     * Reads channels informations
-     * 
-     * @return array $channels
+     * Read channels informations
      */
-    public function readChannels()
+    public function readChannels(): array
     {
-        $channels = array();
+        $channels = [];
 
-        for ($i = 0; $i < 64; $i++)
-        {
+        for ($i = 0; $i < 64; $i++) {
             $channel = new Channel();
             $channel->setProgram($this->reader->readInt());
             $channel->setVolume($this->toChannelShort($this->reader->readByte()));
@@ -36,7 +33,8 @@ class GuitarProChannels extends AbstractReader
             $channel->setTremolo($this->toChannelShort($this->reader->readByte()));
             $channel->setBank(
                 $i == 9
-                ? Channel::DEFAULT_PERCUSSION_BANK : Channel::DEFAULT_BANK
+                    ? Channel::DEFAULT_PERCUSSION_BANK
+                    : Channel::DEFAULT_BANK
             );
 
             if ($channel->getProgram() < 0) {
@@ -52,13 +50,9 @@ class GuitarProChannels extends AbstractReader
     }
 
     /**
-     * Formats an integer
-     * 
-     * @param byte $bytes
-     *
-     * @return integer between 0 and 32767
+     * Formats an integer between 0 and 32767 from bytes
      */
-    protected function toChannelShort($bytes)
+    protected function toChannelShort(int $bytes): int
     {
         $value = ($bytes * 8) - 1;
 

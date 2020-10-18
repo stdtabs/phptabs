@@ -17,15 +17,9 @@ use PhpTabs\Music\TimeSignature;
 class GuitarPro5MeasureHeader extends AbstractReader
 {
     /**
-     * Reads a mesure header
-     * 
-     * @param integer                      $number
-     * @param \PhpTabs\Music\TimeSignature $timeSignature
-     * @param integer                      $tempoValue
-     * 
-     * @return MeasureHeader
+     * Read a measure header
      */
-    public function readMeasureHeader($index, TimeSignature $timeSignature, $tempoValue = 120)
+    public function readMeasureHeader(int $index, TimeSignature $timeSignature, int $tempoValue = 120): MeasureHeader
     {
         $flags = $this->reader->readUnsignedByte();
         $header = new MeasureHeader();
@@ -73,12 +67,9 @@ class GuitarPro5MeasureHeader extends AbstractReader
 
         if ($tripletFeel == 1) {
             $header->setTripletFeel(MeasureHeader::TRIPLET_FEEL_EIGHTH);
-        }
-        elseif ($tripletFeel == 2) {
+        } elseif ($tripletFeel == 2) {
             $header->setTripletFeel(MeasureHeader::TRIPLET_FEEL_SIXTEENTH);
-        }
-        else
-        {
+        } else {
             $header->setTripletFeel(MeasureHeader::TRIPLET_FEEL_NONE);
         }
 

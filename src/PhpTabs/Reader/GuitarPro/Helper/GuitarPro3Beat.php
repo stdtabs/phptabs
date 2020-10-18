@@ -21,15 +21,10 @@ class GuitarPro3Beat extends AbstractReader
 {
     /**
      * Reads some Beat informations
-     * 
-     * @param integer                $start
-     * @param \PhpTabs\Music\Measure $measure
-     * @param \PhpTabs\Music\Track   $track
-     * @param \PhpTabs\Music\Tempo   $tempo
-     * 
-     * @return integer $time duration time
+     *
+     * @return int duration time
      */
-    public function readBeat($start, Measure $measure, Track $track, Tempo $tempo)
+    public function readBeat(int $start, Measure $measure, Track $track, Tempo $tempo): int
     {
         $flags = $this->reader->readUnsignedByte();
 

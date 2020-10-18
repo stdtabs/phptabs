@@ -16,13 +16,9 @@ use PhpTabs\Music\Marker;
 class GuitarProMarker extends AbstractReader
 {
     /**
-     * Reads a measure marker
-     * 
-     * @param integer $measure
-     *
-     * @return \PhpTabs\Music\Marker
+     * Read a measure marker
      */
-    public function readMarker($measure)
+    public function readMarker(int $measure): Marker
     {
         $marker = new Marker();
 

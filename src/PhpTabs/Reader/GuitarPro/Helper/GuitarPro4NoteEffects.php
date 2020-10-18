@@ -20,10 +20,8 @@ class GuitarPro4NoteEffects extends AbstractReader
 {
     /**
      * Reads NoteEffect
-     * 
-     * @param \PhpTabs\Music\NoteEffect $noteEffect
      */
-    public function readNoteEffects(NoteEffect $noteEffect)
+    public function readNoteEffects(NoteEffect $noteEffect): void
     {
         $flags1 = intval($this->reader->readUnsignedByte());
         $flags2 = intval($this->reader->readUnsignedByte());
@@ -59,10 +57,7 @@ class GuitarPro4NoteEffects extends AbstractReader
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\NoteEffect $noteEffect
-     */
-    public function readTrill(NoteEffect $noteEffect)
+    public function readTrill(NoteEffect $noteEffect): void
     {
         $fret = $this->reader->readByte();
         $period = $this->reader->readByte();
@@ -73,46 +68,35 @@ class GuitarPro4NoteEffects extends AbstractReader
         if ($period == 1) {
             $trill->getDuration()->setValue(Duration::SIXTEENTH);
             $noteEffect->setTrill($trill);
-        }
-        elseif ($period == 2) {
+        } elseif ($period == 2) {
             $trill->getDuration()->setValue(Duration::THIRTY_SECOND);
             $noteEffect->setTrill($trill);
-        }
-        elseif ($period == 3) {
+        } elseif ($period == 3) {
             $trill->getDuration()->setValue(Duration::SIXTY_FOURTH);
             $noteEffect->setTrill($trill);
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\NoteEffect $noteEffect
-     */
-    private function readHarmonic(NoteEffect $noteEffect)
+    private function readHarmonic(NoteEffect $noteEffect): void
     {
         $harmonic = new EffectHarmonic();
         $type = intval($this->reader->readByte());
 
         if ($type == 1) {
             $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
-        }
-        elseif ($type == 3) {
+        } elseif ($type == 3) {
             $harmonic->setType(EffectHarmonic::TYPE_TAPPED);
-        }
-        elseif ($type == 4) {
+        } elseif ($type == 4) {
             $harmonic->setType(EffectHarmonic::TYPE_PINCH);
-        }
-        elseif ($type == 5) {
+        } elseif ($type == 5) {
             $harmonic->setType(EffectHarmonic::TYPE_SEMI);
-        }
-        elseif ($type == 15) {
+        } elseif ($type == 15) {
             $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
             $harmonic->setData(2);
-        }
-        elseif ($type == 17) {
+        } elseif ($type == 17) {
             $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
             $harmonic->setData(3);
-        }
-        elseif ($type == 22) {
+        } elseif ($type == 22) {
             $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
             $harmonic->setData(0);
         }

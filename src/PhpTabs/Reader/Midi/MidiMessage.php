@@ -29,81 +29,48 @@ class MidiMessage
     private $command;
     private $data;
 
-    /**
-     * @param int    $message
-     * @param string $command
-     */
-    public function __construct($message, $command) 
+    public function __construct(int $message, string $command)
     {
         $this->message = $message;
         $this->command = $command;
     }
 
-    /**
-     * @param array $data
-     */
-    public function setData($data)
+    public function setData(array $data): void
     {
         $this->data = $data;
     }
 
-    /**
-     * @return array
-     */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->message;
     }
 
-    /**
-     * @return string
-     */
-    public function getCommand()
+    public function getCommand(): string
     {
         return $this->command;
     }
 
-    /**
-     * @param string $command
-     * @param int    $channel
-     * @param array  $data1
-     * @param array  $data2
-     * 
-     * @return \PhpTabs\Reader\Midi\MidiMessage
-     */
-    public static function shortMessage($command, $channel = null, $data1 = null, $data2 = null)
+    public static function shortMessage(string $command, int $channel = null, int $data1 = null, int $data2 = null): MidiMessage
     {
         $message = new MidiMessage(self::TYPE_SHORT, $command);
 
         if ($channel === null && $data1 === null && $data2 === null) {
             $message->setData(array($command));
-        }
-        elseif ($data2 === null) {
+        } elseif ($data2 === null) {
             $message->setData(array(($command & 0xF0) | ($channel & 0x0F), $data1));
-        }
-        else
-        {
+        } else {
             $message->setData(array(($command & 0xF0) | ($channel & 0x0F), $data1, $data2));
         }
 
         return $message;
     }
 
-    /**
-     * @param int   $command
-     * @param array $data
-     *
-     * @return \PhpTabs\Reader\Midi\MidiMessage
-     */
-    public static function metaMessage($command, $data)
+    public static function metaMessage(int $command, array $data): MidiMessage
     {
         $message = new MidiMessage(self::TYPE_META, $command);
         $message->setData($data);

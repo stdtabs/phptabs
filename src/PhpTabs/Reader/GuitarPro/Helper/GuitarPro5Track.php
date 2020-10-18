@@ -19,11 +19,7 @@ use PhpTabs\Music\Track;
 class GuitarPro5Track extends AbstractReader
 {
     /**
-     * Reads track informations
-     *
-     * @param \PhpTabs\Music\Song  $song
-     * @param array                $channels an array of Channel objects
-     * @param \PhpTabs\Music\Lyric $lyrics
+     * Read track informations
      */
     public function readTrack(Song $song, array $channels, Lyric $lyrics): Track
     {

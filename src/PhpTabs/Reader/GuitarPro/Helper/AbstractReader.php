@@ -18,26 +18,17 @@ abstract class AbstractReader
     protected $reader;
     protected $parserName;
 
-    /**
-     * @param \PhpTabs\Reader\GuitarPro\GuitarProReaderInterface $reader
-     */
-    public function setReader(GuitarProReaderInterface $reader)
+    public function setReader(GuitarProReaderInterface $reader): void
     {
         $this->reader = $reader;
     }
 
-    /**
-     * @param string $parserName
-     */
-    public function setParserName($parserName)
+    public function setParserName(string $parserName): void
     {
         $this->parserName = $parserName;
     }
 
-    /**
-     * @return string $parserName
-     */
-    public function getParserName()
+    public function getParserName(): string
     {
         return $this->parserName;
     }

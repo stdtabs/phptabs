@@ -20,13 +20,9 @@ use PhpTabs\Music\Track;
 class GuitarProChannel extends AbstractReader
 {
     /**
-     * Reads Channel informations
-     * 
-     * @param \PhpTabs\Music\Song  $song
-     * @param \PhpTabs\Music\Track $track
-     * @param array                $channels
+     * Read Channel informations
      */
-    public function readChannel(Song $song, Track $track, array $channels)
+    public function readChannel(Song $song, Track $track, array $channels): void
     {
         $gChannel1 = $this->reader->readInt() - 1;
         $gChannel2 = $this->reader->readInt() - 1;
@@ -46,12 +42,10 @@ class GuitarProChannel extends AbstractReader
 
             $channel->copyFrom($channels[$gChannel1]);
 
-            for ($i = 0; $i < $song->countChannels(); $i++)
-            {
+            for ($i = 0; $i < $song->countChannels(); $i++) {
                   $channelAux = $song->getChannel($i);
 
-                for ($n = 0; $n < $channelAux->countParameters(); $n++)
-                  {
+                for ($n = 0; $n < $channelAux->countParameters(); $n++) {
                     $channelParameter = $channelAux->getParameter($n);
 
                     if ($channelParameter->getKey() == "$gChannel1") {
@@ -76,14 +70,9 @@ class GuitarProChannel extends AbstractReader
     }
 
     /**
-     * Creates a channel name with a program
-     * 
-     * @param \PhpTabs\Music\Song    $song
-     * @param \PhpTabs\Music\Channel $channel
-     *
-     * @return string a new channel name
+     * Creates a unique channel name with a program
      */
-    protected function createChannelNameFromProgram(Song $song, $channel)
+    protected function createChannelNameFromProgram(Song $song, Channel $channel): string
     {
         $names = ChannelNames::$defaultNames;
 
@@ -95,32 +84,22 @@ class GuitarProChannel extends AbstractReader
     }
 
     /**
-     * Creates a channel
-     * 
-     * @param \PhpTabs\Music\Song $song
-     *
-     * @return string a generated channel name
+     * Create a default channel name
      */
-    protected function createDefaultChannelName(Song $song)
+    protected function createDefaultChannelName(Song $song): string
     {
         return $this->createChannelName($song, 'Unnamed');
     }
 
     /**
-     * Generates a channel name
-     * 
-     * @param \PhpTabs\Music\Song $song
-     * @param string              $prefix
-     *
-     * @return string channel name
+     * Generate a unique channel name
      */
-    protected function createChannelName(Song $song, $prefix)
+    protected function createChannelName(Song $song, string $prefix): string
     {
         $number = 0;
         $unusedName = null;
 
-        while ($unusedName === null)
-        {
+        while ($unusedName === null) {
             $number ++;
             $name = $prefix . ' ' . $number;
 
@@ -133,19 +112,13 @@ class GuitarProChannel extends AbstractReader
     }
 
     /**
-     * Checks if a channel is still defined
-     *
-     * @param \PhpTabs\Music\Song $song
-     * @param string              $name
-     *
-     * @return boolean Result of the search
+     * Checks if a channel name is already affected
      */
-    protected function findChannelsByName(Song $song, $name)
+    protected function findChannelsByName(Song $song, string $name): bool
     {
         $channels = $song->getChannels();
 
-        foreach ($channels as $v)
-        {
+        foreach ($channels as $v) {
             if ($v->getName() == $name) {
                 return true;
             }

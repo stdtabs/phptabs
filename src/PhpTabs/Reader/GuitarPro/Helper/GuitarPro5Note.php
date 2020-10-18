@@ -20,15 +20,9 @@ use PhpTabs\Music\Velocities;
 class GuitarPro5Note extends AbstractReader
 {
     /**
-     * Reads a note
-     * 
-     * @param \PhpTabs\Music\TabString  $string
-     * @param \PhpTabs\Music\Track      $track
-     * @param \PhpTabs\Music\NoteEffect $effect
-     *
-     * @return \PhpTabs\Music\Note
+     * Read a note
      */
-    public function readNote(TabString $string, Track $track, NoteEffect $effect)
+    public function readNote(TabString $string, Track $track, NoteEffect $effect): Note
     {
         $flags = $this->reader->readUnsignedByte();
         $note = new Note();
@@ -54,7 +48,7 @@ class GuitarPro5Note extends AbstractReader
         if (($flags & 0x20) != 0) {
             $fret = $this->reader->readByte();
 
-            $value = $note->isTiedNote() ? 
+            $value = $note->isTiedNote() ?
             $this->reader->factory('GuitarPro5TiedNote')->getTiedNoteValue($string->getNumber(), $track)
             : $fret;
 
@@ -68,9 +62,9 @@ class GuitarPro5Note extends AbstractReader
         if (($flags & 0x01) != 0) {
             $this->reader->skip(8);
         }
-    
+
         $this->reader->skip();
-    
+
         if (($flags & 0x08) != 0) {
             $this->reader->factory('GuitarPro5NoteEffects')->readNoteEffects($note->getEffect());
         }

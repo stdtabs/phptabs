@@ -18,11 +18,8 @@ class GuitarPro4BeatEffects extends AbstractReader
 {
     /**
      * Reads some beat effects
-     * 
-     * @param \PhpTabs\Music\Beat       $beat
-     * @param \PhpTabs\Music\NoteEffect $effect
      */
-    public function readBeatEffects(Beat $beat, NoteEffect $noteEffect)
+    public function readBeatEffects(Beat $beat, NoteEffect $noteEffect): void
     {
         $flags1 = $this->reader->readUnsignedByte();
         $flags2 = $this->reader->readUnsignedByte();

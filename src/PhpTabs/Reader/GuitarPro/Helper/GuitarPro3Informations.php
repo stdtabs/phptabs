@@ -17,10 +17,8 @@ class GuitarPro3Informations extends AbstractReader
 {
     /**
      * Reads meta informations about tablature
-     * 
-     * @param \PhpTabs\Music\Song $song
      */
-    public function readInformations(Song $song)
+    public function readInformations(Song $song): void
     {
         $song->setName($this->reader->readStringByteSizeOfInteger());
         $this->reader->readStringByteSizeOfInteger();
@@ -33,8 +31,7 @@ class GuitarPro3Informations extends AbstractReader
 
         $comments = $this->reader->readInt();
 
-        for ($i = 0; $i < $comments; $i++)
-        {
+        for ($i = 0; $i < $comments; $i++) {
             $song->setComments($song->getComments() . $this->reader->readStringByteSizeOfInteger());
         }
     }

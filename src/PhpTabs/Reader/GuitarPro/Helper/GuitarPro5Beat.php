@@ -21,16 +21,10 @@ class GuitarPro5Beat extends AbstractReader
 {
     /**
      * Reads some Beat informations
-     * 
-     * @param integer                $start
-     * @param \PhpTabs\Music\Measure $measure
-     * @param \PhpTabs\Music\Track   $track
-     * @param \PhpTabs\Music\Tempo   $tempo
-     * @param integer                $voiceIndex
-     * 
+     *
      * @return integer $time A duration time
      */
-    public function readBeat($start, Measure $measure, Track $track, Tempo $tempo, $voiceIndex)
+    public function readBeat(int $start, Measure $measure, Track $track, Tempo $tempo, int $voiceIndex): int
     {
         $flags = $this->reader->readUnsignedByte();
 
@@ -63,8 +57,7 @@ class GuitarPro5Beat extends AbstractReader
 
         $stringFlags = $this->reader->readUnsignedByte();
 
-        for ($i = 6; $i >= 0; $i--)
-        {
+        for ($i = 6; $i >= 0; $i--) {
             if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->countStrings()) {
                 $string = clone $track->getString((6 - $i) + 1);
                 $note = $this->reader->factory('GuitarPro5Note')->readNote($string, $track, clone $effect);

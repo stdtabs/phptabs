@@ -17,21 +17,15 @@ class Factory
 {
     private $reader;
 
-    /**
-     * @param \PhpTabs\Reader\GuitarPro\GuitarProReaderInterface $reader
-     */
     public function __construct(GuitarProReaderInterface $reader)
     {
         $this->reader = $reader;
     }
 
     /**
-     * @param string $name
-     * @param string $parserName
-     * 
      * @return mixed
      */
-    public function get($name, $parserName)
+    public function get(string $name, string $parserName)
     {
         $name = __NAMESPACE__ . '\\' . $name;
 

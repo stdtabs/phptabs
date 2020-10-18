@@ -16,11 +16,9 @@ use PhpTabs\Music\Color;
 class GuitarProColor extends AbstractReader
 {
     /**
-     * Reads color informations
-     * 
-     * @param \PhpTabs\Music\Color $color
+     * Read color informations
      */
-    public function readColor(Color $color)
+    public function readColor(Color $color): void
     {
         $color->setR($this->reader->readUnsignedByte());
         $color->setG($this->reader->readUnsignedByte());
