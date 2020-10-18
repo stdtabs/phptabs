@@ -13,7 +13,7 @@ namespace PhpTabs\Music;
 
 /**
  * @uses Duration
- */ 
+ */
 class TimeSignature
 {
     private $numerator = 4;
@@ -24,60 +24,33 @@ class TimeSignature
         $this->denominator = new Duration();
     }
 
-    /**
-     * @return int
-     */
-    public function getNumerator()
+    public function getNumerator(): int
     {
         return $this->numerator;
     }
 
-    /**
-     * @param int $numerator
-     */
-    public function setNumerator($numerator)
+    public function setNumerator(int $numerator): void
     {
         $this->numerator = $numerator;
     }
 
-    /**
-     * @return \PhpTabs\Music\Duration
-     */
-    public function getDenominator()
+    public function getDenominator(): Duration
     {
         return $this->denominator;
     }
 
-    /**
-     * @param \PhpTabs\Music\Duration $denominator
-     */
-    public function setDenominator(Duration $denominator)
+    public function setDenominator(Duration $denominator): void
     {
         $this->denominator = $denominator;
     }
 
-    /**
-     * @return void
-     */
-    public function __clone()
-    {
-        //$this->denominator = clone $this->denominator;
-    }
-
-    /**
-     * @param \PhpTabs\Music\TimeSignature $timeSignature
-     */
-    public function copyFrom(TimeSignature $timeSignature)
+    public function copyFrom(TimeSignature $timeSignature): void
     {
         $this->setNumerator($timeSignature->getNumerator());
         $this->getDenominator()->copyFrom($timeSignature->getDenominator());
     }
 
-    /**
-     * @param  \PhpTabs\Music\TimeSignature $timeSignature
-     * @return bool
-     */
-    public function isEqual(TimeSignature $timeSignature)
+    public function isEqual(TimeSignature $timeSignature): bool
     {
         return $this->getNumerator() == $timeSignature->getNumerator()
             && $this->getDenominator()->isEqual(

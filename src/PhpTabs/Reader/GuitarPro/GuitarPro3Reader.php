@@ -27,11 +27,9 @@ class GuitarPro3Reader extends GuitarProReaderBase
     protected $tablature;
 
     /**
-     *
-     *
      * @var array $supportedVersions
      */
-    private static $supportedVersions = array('FICHIER GUITAR PRO v3.00');
+    private static $supportedVersions = ['FICHIER GUITAR PRO v3.00'];
 
     /**
      * @var boolean $tripletFeel
@@ -93,9 +91,9 @@ class GuitarPro3Reader extends GuitarProReaderBase
     }
 
     /**
-     * @return array An array of supported versions
+     * Get an array of supported versions
      */
-    public function getSupportedVersions()
+    public function getSupportedVersions(): array
     {
         return self::$supportedVersions;
     }
@@ -106,15 +104,14 @@ class GuitarPro3Reader extends GuitarProReaderBase
     public function getTablature(): Tablature
     {
         return isset($this->tablature)
-             ? $this->tablature : new Tablature();
+            ? $this->tablature
+            : new Tablature();
     }
 
     /**
      * Initializes Tablature with read Song
-     *
-     * @param \PhpTabs\Music\Song $song as read from file
      */
-    private function setTablature(Song $song)
+    private function setTablature(Song $song): void
     {
         if (!isset($this->tablature)) {
             $this->tablature = new Tablature();
@@ -130,11 +127,8 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     /**
      * Loops on mesure headers to read
-     *
-     * @param \PhpTabs\Music\Song $song
-     * @param integer             $count
      */
-    private function readMeasureHeaders(Song $song, $count)
+    private function readMeasureHeaders(Song $song, int $count): void
     {
         $timeSignature = new TimeSignature();
 
@@ -148,12 +142,8 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     /**
      * Loops on tracks to read
-     *
-     * @param \PhpTabs\Music\Song $song
-     * @param int                 $count
-     * @param array               $channels Current array of channels
      */
-    private function readTracks(Song $song, $count, array $channels)
+    private function readTracks(Song $song, $count, array $channels): void
     {
         for ($number = 0; $number < $count; $number++) {
             $song->addTrack(

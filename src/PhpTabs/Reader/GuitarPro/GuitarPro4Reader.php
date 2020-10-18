@@ -28,11 +28,9 @@ use PhpTabs\Music\Velocities;
 class GuitarPro4Reader extends GuitarProReaderBase
 {
     /**
-     *
-     *
      * @var array $supportedVersions
      */
-    private static $supportedVersions = array('FICHIER GUITAR PRO v4.00', 'FICHIER GUITAR PRO v4.06', 'FICHIER GUITAR PRO L4.06');
+    private static $supportedVersions = ['FICHIER GUITAR PRO v4.00', 'FICHIER GUITAR PRO v4.06', 'FICHIER GUITAR PRO L4.06'];
 
     /**
      * @var int $tripletFeel
@@ -67,8 +65,8 @@ class GuitarPro4Reader extends GuitarProReaderBase
         $this->factory('GuitarPro3Informations')->readInformations($song);
 
         $this->tripletFeel = $this->readBoolean()
-        ? MeasureHeader::TRIPLET_FEEL_EIGHTH
-        : MeasureHeader::TRIPLET_FEEL_NONE;
+            ? MeasureHeader::TRIPLET_FEEL_EIGHTH
+            : MeasureHeader::TRIPLET_FEEL_NONE;
 
         // Meta only
         if (Config::get('type') == 'meta') {
@@ -106,9 +104,9 @@ class GuitarPro4Reader extends GuitarProReaderBase
     }
 
     /**
-     * @return array An array of supported versions
+     * Get an array of supported versions
      */
-    public function getSupportedVersions()
+    public function getSupportedVersions(): array
     {
         return self::$supportedVersions;
     }
@@ -119,15 +117,14 @@ class GuitarPro4Reader extends GuitarProReaderBase
     public function getTablature(): Tablature
     {
         return !is_null($this->tablature)
-        ? $this->tablature : new Tablature();
+            ? $this->tablature
+            : new Tablature();
     }
 
     /**
-     * Initializes Tablature with read Song
-     *
-     * @param \PhpTabs\Music\Song $song as read from file
+     * Initialize Tablature with read Song
      */
-    private function setTablature(Song $song)
+    private function setTablature(Song $song): void
     {
         if (is_null($this->tablature)) {
             $this->tablature = new Tablature();
@@ -146,26 +143,23 @@ class GuitarPro4Reader extends GuitarProReaderBase
      *
      * @param \PhpTabs\Music\NoteEffect $effect
      */
-    public function readGrace(NoteEffect $effect)
+    public function readGrace(NoteEffect $effect): void
     {
         $fret = $this->readUnsignedByte();
         $grace = new EffectGrace();
         $grace->setOnBeat(false);
         $grace->setDead(($fret == 255));
-        $grace->setFret(((!$grace->isDead()) ? $fret : 0));
+        $grace->setFret(!$grace->isDead() ? $fret : 0);
         $grace->setDynamic((Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->readUnsignedByte())) - Velocities::VELOCITY_INCREMENT);
         $transition = $this->readUnsignedByte();
 
         if ($transition == 0) {
             $grace->setTransition(EffectGrace::TRANSITION_NONE);
-        }
-        elseif ($transition == 1) {
+        } elseif ($transition == 1) {
             $grace->setTransition(EffectGrace::TRANSITION_SLIDE);
-        }
-        elseif ($transition == 2) {
+        } elseif ($transition == 2) {
             $grace->setTransition(EffectGrace::TRANSITION_BEND);
-        }
-        elseif ($transition == 3) {
+        } elseif ($transition == 3) {
             $grace->setTransition(EffectGrace::TRANSITION_HAMMER);
         }
 
@@ -174,32 +168,21 @@ class GuitarPro4Reader extends GuitarProReaderBase
     }
 
     /**
-     * Loops on mesure headers to read
-     *
-     * @param \PhpTabs\Music\Song $song
-     *
-     * @param integer             $count
+     * Loop on measure headers to read
      */
-    private function readMeasureHeaders(Song $song, $count)
+    private function readMeasureHeaders(Song $song, int $count): void
     {
         $timeSignature = new TimeSignature();
 
-        for ($i = 0; $i < $count; $i++)
-        {
+        for ($i = 0; $i < $count; $i++) {
             $song->addMeasureHeader($this->factory('GuitarPro3MeasureHeader')->readMeasureHeader(($i + 1), $song, $timeSignature));
         }
     }
 
     /**
-     * Loops on tracks to read
-     *
-     * @param \PhpTabs\Music\Song  $song
-     * @param int                  $count
-     * @param array                $channels   Current array of channels
-     * @param \PhpTabs\Music\Lyric $lyric
-     * @param integer              $lyricTrack
+     * Loop on tracks to read
      */
-    private function readTracks(Song $song, $count, array $channels, Lyric $lyric, $lyricTrack)
+    private function readTracks(Song $song, int $count, array $channels, Lyric $lyric, int $lyricTrack): void
     {
         for ($number = 0; $number < $count; $number++) {
             $track = $this->factory('GuitarPro4Track')->readTrack(

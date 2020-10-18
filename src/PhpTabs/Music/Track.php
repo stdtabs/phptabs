@@ -43,44 +43,31 @@ class Track
         $this->lyrics = new Lyric();
     }
 
-    /**
-     * @return int
-     */
-    public function getNumber()
+    public function getNumber(): int
     {
         return $this->number;
     }
 
-    /**
-     * @param int $number
-     */
-    public function setNumber($number)
+    public function setNumber(int $number): void
     {
         $this->number = $number;
     }
 
-    /**
-     * @return array
-     */
-    public function getMeasures()
+    public function getMeasures(): array
     {
         return $this->measures;
     }
 
-    /**
-     * @param \PhpTabs\Music\Measure $measure
-     */
-    public function addMeasure(Measure $measure)
+    public function addMeasure(Measure $measure): void
     {
         $measure->setTrack($this);
         $this->measures[] = $measure;
     }
 
     /**
-     * @param  int $index
-     * @return \PhpTabs\Music\Measure
+     * @throws Exception when measure is not set for given index
      */
-    public function getMeasure($index)
+    public function getMeasure(int $index): Measure
     {
         if (!isset($this->measures[$index])) {
             $message = "Track #%d, Measure is not set at index '%s'";
@@ -96,196 +83,127 @@ class Track
         return $this->measures[$index];
     }
 
-    /**
-     * @param int $index
-     */
-    public function removeMeasure($index)
+    public function removeMeasure(int $index): void
     {
         array_splice($this->measures, $index, 1);
     }
 
-    /**
-     * @return int
-     */
-    public function countMeasures()
+    public function countMeasures(): int
     {
         return count($this->measures);
     }
 
-    /**
-     * @return \PhpTabs\Music\TabString[]
-     */
-    public function getStrings()
+    public function getStrings(): array
     {
         return $this->strings;
     }
 
-    /**
-     * @param \PhpTabs\Music\TabString $string
-     */
-    public function addString(TabString $string)
+    public function addString(TabString $string): void
     {
         $this->strings[] = $string;
     }
 
-    /**
-     * @param array $strings
-     */
-    public function setStrings(array $strings)
+    public function setStrings(array $strings): void
     {
         foreach ($strings as $string) {
             $this->addString($string);
         }
     }
 
-    /**
-     * @return \PhpTabs\Music\Color
-     */
-    public function getColor()
+    public function getColor(): Color
     {
         return $this->color;
     }
 
-    /**
-     * @param \PhpTabs\Music\Color $color
-     */
-    public function setColor(Color $color)
+    public function setColor(Color $color): void
     {
         $this->color = $color;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return int
-     */
-    public function getOffset()
+    public function getOffset(): int
     {
         return $this->offset;
     }
 
-    /**
-     * @param int $offset
-     */
-    public function setOffset($offset)
+    public function setOffset(int $offset): void
     {
         $this->offset = $offset;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSolo()
+    public function isSolo(): bool
     {
         return $this->solo;
     }
 
-    /**
-     * @param bool $solo
-     */
-    public function setSolo($solo)
+    public function setSolo(bool $solo): void
     {
         $this->solo = $solo;
     }
 
-    /**
-     * @return bool
-     */
-    public function isMute()
+    public function isMute(): bool
     {
         return $this->mute;
     }
 
-    /**
-     * @param bool $mute
-     */
-    public function setMute($mute)
+    public function setMute(bool $mute): void
     {
         $this->mute = $mute;
     }
 
-    /**
-     * @return int
-     */
-    public function getChannelId()
+    public function getChannelId(): int
     {
         return $this->channelId;
     }
 
-    /**
-     * @param int $channelId
-     */
-    public function setChannelId($channelId)
+    public function setChannelId(int $channelId): void
     {
         $this->channelId = $channelId;
     }
 
-    /**
-     * @return \PhpTabs\Music\Lyric
-     */
-    public function getLyrics()
+    public function getLyrics(): Lyric
     {
         return $this->lyrics;
     }
 
-    /**
-     * @param \PhpTabs\Music\Lyric $lyrics
-     */
-    public function setLyrics(Lyric $lyrics)
+    public function setLyrics(Lyric $lyrics): void
     {
         $this->lyrics = $lyrics;
     }
 
-    /**
-     * @return \PhpTabs\Music\TabString
-     */
-    public function getString($number)
+    public function getString(int $number): TabString
     {
         return $this->strings[$number - 1];
     }
 
-    /**
-     * @return int
-     */
-    public function countStrings()
+    public function countStrings(): int
     {
         return count($this->strings);
     }
 
-    /**
-     * @return \PhpTabs\Music\Song
-     */
-    public function getSong()
+    public function getSong(): Song
     {
         return $this->song;
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    public function setSong(Song $song)
+    public function setSong(Song $song): void
     {
         $this->song = $song;
     }
 
-    public function clear()
+    public function clear(): void
     {
         $measureCount = $this->countMeasures();
-    
+
         for ($i = 0; $i < $measureCount; $i++) {
             $measure = $this->getMeasure($i);
             $measure->clear();
@@ -295,19 +213,16 @@ class Track
         $this->measures = array();
     }
 
-    /**
-     * @return void
-     */
     public function __clone()
     {
         if (!is_null($this->color)) {
             $this->color = clone $this->color;
         }
-        
+
         if (!is_null($this->lyrics)) {
             $this->lyrics = clone $this->lyrics;
         }
-        
+
         foreach ($this->strings as $index => $item) {
             $this->strings[$index] = clone $item;
         }
@@ -317,10 +232,7 @@ class Track
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Track $track
-     */
-    public function copyFrom(Track $track)
+    public function copyFrom(Track $track): void
     {
         $this->clear();
         $this->setNumber($track->getNumber());

@@ -21,7 +21,6 @@ abstract class Velocities
     const MEZZO_PIANO        = 63;
     const MEZZO_FORTE        = 79;
     const FORTE              = 95;
-    const FORTISSIMO         = 111;
     const FORTE_FORTISSIMO   = 127;
     const _DEFAULT           = 95; // FORTE
 }

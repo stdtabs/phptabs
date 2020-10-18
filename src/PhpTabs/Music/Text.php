@@ -16,50 +16,33 @@ class Text
     private $value;
     private $beat;
 
-    /**
-     * @return \PhpTabs\Music\Beat
-     */
-    public function getBeat()
+    public function getBeat(): ?Beat
     {
         return $this->beat;
     }
 
-    /**
-     * @param \PhpTabs\Music\Beat $beat
-     */
-    public function setBeat(Beat $beat)
+    public function setBeat(Beat $beat): void
     {
         $this->beat = $beat;
     }
 
-    /**
-     * @return string
-     */
-    public function getValue()
+    public function getValue(): ?string
     {
         return $this->value;
     }
 
-    /**
-     * @param string $value
-     */
-    public function setValue($value)
+    public function setValue(string $value): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
-        return ($this->value == null || strlen($this->value) == 0);
+        return $this->value === null
+            || strlen($this->value) == 0;
     }
 
-    /**
-     * @param \PhpTabs\Music\Text $text
-     */
-    public function copyFrom(Text $text)
+    public function copyFrom(Text $text): void
     {
         $this->setValue($text->getValue());
     }

@@ -29,132 +29,85 @@ class Voice
     private $notes = [];
     private $empty = true;
 
-    /**
-     * @param int $index
-     */
-    public function __construct($index)
+    public function __construct(int $index)
     {
         $this->duration  = new Duration();
         $this->index     = $index;
         $this->direction = Voice::DIRECTION_NONE;
     }
 
-    /**
-     * @return int
-     */
-    public function getIndex()
+    public function getIndex(): int
     {
         return $this->index;
     }
 
-    /**
-     * @param int $index
-     */
-    public function setIndex($index)
+    public function setIndex(int $index): void
     {
         $this->index = $index;
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return $this->empty;
     }
 
-    /**
-     * @param bool $empty
-     */
-    public function setEmpty($empty)
+    public function setEmpty(bool $empty): void
     {
         $this->empty = $empty;
     }
 
-    /**
-     * @return int
-     */
-    public function getDirection()
+    public function getDirection(): int
     {
         return $this->direction;
     }
 
-    /**
-     * @param int $direction
-     */
-    public function setDirection($direction)
+    public function setDirection(int $direction): void
     {
         $this->direction = $direction;
     }
 
-    /**
-     * @return \PhpTabs\Music\Duration
-     */
-    public function getDuration()
+    public function getDuration(): Duration
     {
         return $this->duration;
     }
 
-    /**
-     * @param \PhpTabs\Music\Duration $duration
-     */
-    public function setDuration(Duration $duration)
+    public function setDuration(Duration $duration): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * @return \PhpTabs\Music\Beat
-     */
-    public function getBeat()
+    public function getBeat(): Beat
     {
         return $this->beat;
     }
 
-    /**
-     * @param \PhpTabs\Music\Beat $beat
-     */
-    public function setBeat(Beat $beat)
+    public function setBeat(Beat $beat): void
     {
         $this->beat = $beat;
     }
 
-    /**
-     * @return array
-     */
-    public function getNotes()
+    public function getNotes(): array
     {
         return $this->notes;
     }
 
-    /**
-     * @param \PhpTabs\Music\Note $note
-     */
-    public function addNote(Note $note)
+    public function addNote(Note $note): void
     {
         $note->setVoice($this);
         $this->notes[] = $note;
         $this->setEmpty(false);
     }
 
-    /**
-     * @param int                 $index
-     * @param \PhpTabs\Music\Note $note
-     */
-    public function moveNote($index, Note $note)
+    public function moveNote(int $index, Note $note): void
     {
         $this->removeNote($note);
 
         array_splice($this->notes, $index, 0, $note);
     }
 
-    /**
-     * @param \PhpTabs\Music\Note $note
-     */
-    public function removeNote(Note $note)
+    public function removeNote(Note $note): void
     {
-        foreach ($this->notes as $k => $v)
-        {
+        foreach ($this->notes as $k => $v) {
             if ($v == $note) {
                 array_splice($this->notes, $k, 1);
 
@@ -167,58 +120,43 @@ class Voice
         }
     }
 
-    /**
-     * @param int $index
-     *
-     * @return \PhpTabs\Music\Note
-     */
-    public function getNote($index)
+    public function getNote(int $index): ?Note
     {
         return isset($this->notes[$index])
-         ? $this->notes[$index] : null;
+            ? $this->notes[$index]
+            : null;
     }
 
-    /**
-     * @return int
-     */
-    public function countNotes()
+    public function countNotes(): int
     {
         return count($this->notes);
     }
 
-    /**
-     * @return bool
-     */
-    public function isRestVoice()
+    public function isRestVoice(): bool
     {
         return count($this->notes) == 0;
     }
 
     /**
      * Get duration in seconds
-     * 
-     * @return float
      */
-    public function getTime()
+    public function getTime(): float
     {
         $measure = $this->getBeat()->getMeasure();
 
-        $time = 60 
-        * $measure->getTimeSignature()->getNumerator()
-        / $measure->getTempo()->getValue();
+        $time = 60
+            * $measure->getTimeSignature()->getNumerator()
+            / $measure->getTempo()->getValue();
 
-        return $time 
-         * $this->getDuration()->getTime()
-         / $this->getMeasureDuration($measure); 
+        return $time
+             * $this->getDuration()->getTime()
+             / $this->getMeasureDuration($measure);
     }
 
     /**
      * Calculate total measure duration
-     * 
-     * @param  \PhpTabs\Music\Measure $measure
-     * @return int
      */
-    private function getMeasureDuration(Measure $measure)
+    private function getMeasureDuration(Measure $measure): int
     {
         return array_reduce(
             $measure->getBeats(),
@@ -229,27 +167,22 @@ class Voice
 
     /**
      * Provides a closure helper for measure time calculation
-     * 
-     * @return \Closure
      */
-    private function getMeasureTimeHelper()
+    private function getMeasureTimeHelper(): callable
     {
         return function ($carry, $item) {
             return $carry
-             + $item
-                ->getVoice($this->getIndex())
-                ->getDuration()
-                ->getTime();
+                 + $item
+                    ->getVoice($this->getIndex())
+                    ->getDuration()
+                    ->getTime();
         };
     }
 
-    /**
-     * @return void
-     */
     public function __clone()
     {
         if (!is_null($this->duration)) {
-            $this->duration = clone $this->duration;    
+            $this->duration = clone $this->duration;
         }
 
         foreach ($this->notes as $index => $item) {

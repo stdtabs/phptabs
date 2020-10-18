@@ -18,30 +18,22 @@ use PhpTabs\Component\Log;
 abstract class GuitarProReaderBase implements GuitarProReaderInterface
 {
     /**
-     * 
-     *
-     * @var int 
+     * @var int
      */
     private $versionIndex;
 
     /**
-     * 
-     *
-     * @var string 
+     * @var string
      */
     private $version;
 
     /**
-     * 
-     *
-     * @var string 
+     * @var string
      */
     private $parserName;
 
     /**
-     * 
-     *
-     * @var \PhpTabs\Component\File 
+     * @var \PhpTabs\Component\File
      */
     private $file;
 
@@ -57,54 +49,41 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
         $this->parserName = str_replace('Reader', '', $xpt[count($xpt)-1]);
     }
 
-    /**
-     * @return integer
-     */
-    public function getKeySignature()
+    public function getKeySignature(): int
     {
         return $this->keySignature;
     }
 
-    /**
-     * @param integer $value
-     */
-    public function setKeySignature($value)
+    public function setKeySignature(int $value): int
     {
         return $this->keySignature = $value;
     }
 
-    /**
-     * @return boolean
-     */
-    public function getTripletFeel()
+    public function getTripletFeel(): int
     {
         return $this->tripletFeel;
     }
 
     /**
-     * Gets version
-     * 
-     * @return string Version
+     * Get guitar pro version
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
     /**
-     * Gets version index
-     * 
-     * @return integer
+     * Get version index
      */
-    public function getVersionIndex()
+    public function getVersionIndex(): int
     {
         return $this->versionIndex;
     }
 
     /**
-     * Reads Guitar Pro version
+     * Read Guitar Pro version
      */
-    protected function readVersion()
+    protected function readVersion(): void
     {
         if ($this->version === null) {
             $this->version = $this->readStringByte(30, 'UTF-8');
@@ -114,18 +93,13 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     }
 
     /**
-     * Checks if dedicated readed supports the read version
-     * 
-     * @param string $version
-     *
-     * @return boolean true if supported, otherwise false
+     * Check if dedicated readed supports the read version
      */
-    public function isSupportedVersion($version)
+    public function isSupportedVersion(string $version): bool
     {
         $versions = $this->getSupportedVersions();
 
-        foreach ($versions as $k => $v)
-        {
+        foreach ($versions as $k => $v) {
             if ($version == $v) {
                 $this->versionIndex = $k;
 
@@ -137,36 +111,29 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     }
 
     /**
-     * Reads a boolean
-     * 
-     * @return boolean
+     * Read a boolean
      */
-    protected function readBoolean()
+    protected function readBoolean(): bool
     {
-        return ord($this->file->getStream()) == 1; 
+        return ord($this->file->getStream()) == 1;
     }
 
     /**
-     * Reads a byte
-     * 
-     * @return byte
+     * Read a byte
      */
-    public function readByte()
+    public function readByte(): string
     {
         return unpack('c', $this->file->getStream())[1];
     }
 
     /**
-     * Reads an integer
-     * 
-     * @return integer
+     * Read an integer
      */
-    public function readInt()
+    public function readInt(): int
     {
         $bytes = array();
 
-        for ($i = 0; $i <= 3; $i++)
-        {
+        for ($i = 0; $i <= 3; $i++) {
             $bytes[$i] = unpack('C', $this->file->getStream())[1];
         }
 
@@ -181,20 +148,17 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     }
 
     /**
-     * Reads a string
-     * 
+     * Read a string
+     *
      * @param integer        $size    Size to read in stream
      * @param integer|string $length  Length to return or charset
      * @param string         $charset
-     *
-     * @return string
      */
-    protected function readString($size, $length = null, $charset = null)
+    protected function readString(int $size, $length = null, $charset = null): string
     {
         if (null === $length && null === $charset) {
             return $this->readString($size, $size);
-        }
-        else if (is_string($length)) {
+        } else if (is_string($length)) {
             return $this->readString($size, $size, $length); // $length is charset
         }
 
@@ -212,46 +176,33 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     }
 
     /**
-     * Reads string bytes
-     *
-     * @param integer $size
-     * @param string  $charset
-     * 
-     * @return string
+     * Read string bytes
      */
-    public function readStringByte($size, $charset = 'UTF-8')
-    { 
+    public function readStringByte(int $size, string $charset = 'UTF-8'): string
+    {
         return $this->readString($size, $this->readUnsignedByte(), $charset);
     }
 
     /**
-     * Reads a sequence of an integer and string
-     * 
-     * @param string charset
-     *
-     * @return string
+     * Read a sequence of an integer and string
      */
-    public function readStringByteSizeOfInteger($charset = 'UTF-8')
+    public function readStringByteSizeOfInteger(string $charset = 'UTF-8'): string
     {
         return $this->readStringByte(($this->readInt() - 1), $charset);
     }
 
     /**
      * Reads a string
-     *
-     * @param string $charset
-     *
-     * @return string
      */
-    public function readStringInteger($charset = 'UTF-8')
+    public function readStringInteger(string $charset = 'UTF-8'): string
     {
         return $this->readString($this->readInt(), $charset);
     }
 
     /**
      * Reads an unsigned byte
-     * 
-     * @return byte
+     *
+     * @return string|false
      */
     public function readUnsignedByte()
     {
@@ -260,28 +211,28 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
 
     /**
      * Skips a sequence
-     * 
+     *
      * @param integer $num
      */
-    public function skip($num = 1)
+    public function skip(int $num = 1): void
     {
-        $this->file->getStream($num); 
+        $this->file->getStream($num);
     }
 
     /**
      * Closes the File read
      */
-    protected function closeStream()
+    protected function closeStream(): void
     {
-        $this->file->closeStream(); 
+        $this->file->closeStream();
     }
 
     /**
-     * @param string $name
-     * 
+     * Get a subparser
+     *
      * @return mixed
      */
-    public function factory($name)
+    public function factory(string $name)
     {
         return (new Factory($this))->get($name, $this->parserName);
     }

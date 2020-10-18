@@ -22,15 +22,14 @@ use PhpTabs\Music\TimeSignature;
 class GuitarPro5Reader extends GuitarProReaderBase
 {
     /**
-     *
-     *
      * @var array $supportedVersions
      */
-    private static $supportedVersions = array('FICHIER GUITAR PRO v5.00', 'FICHIER GUITAR PRO v5.10');
+    private static $supportedVersions = [
+        'FICHIER GUITAR PRO v5.00',
+        'FICHIER GUITAR PRO v5.10'
+    ];
 
     /**
-     *
-     *
      * @var integer $keySignature
      */
     protected $keySignature;
@@ -107,9 +106,9 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
 
     /**
-     * @return array An array of supported versions
+     * @Get an array of supported versions
      */
-    public function getSupportedVersions()
+    public function getSupportedVersions(): array
     {
         return self::$supportedVersions;
     }
@@ -120,15 +119,14 @@ class GuitarPro5Reader extends GuitarProReaderBase
     public function getTablature(): Tablature
     {
         return isset($this->tablature)
-        ? $this->tablature : new Tablature();
+            ? $this->tablature
+            : new Tablature();
     }
 
     /**
-     * Initializes Tablature with read Song
-     *
-     * @param \PhpTabs\Music\Song $song as read from file
+     * Initialize Tablature with a Song
      */
-    private function setTablature(Song $song)
+    private function setTablature(Song $song): void
     {
         if (is_null($this->tablature)) {
             $this->tablature = new Tablature();
@@ -143,17 +141,13 @@ class GuitarPro5Reader extends GuitarProReaderBase
     * -----------------------------------------------------------------*/
 
     /**
-     * Loops on mesure headers to read
-     *
-     * @param \PhpTabs\Music\Song $song
-     * @param integer             $count
+     * Loop on measure headers to read
      */
-    private function readMeasureHeaders(Song $song, $count)
+    private function readMeasureHeaders(Song $song, int $count): void
     {
         $timeSignature = new TimeSignature();
 
-        for ($i = 0; $i < $count; $i++)
-        {
+        for ($i = 0; $i < $count; $i++) {
             if ($i > 0) {
                 $this->skip();
             }
@@ -167,26 +161,19 @@ class GuitarPro5Reader extends GuitarProReaderBase
     /**
      * Reads setup informations
      */
-    private function readSetup()
+    private function readSetup(): void
     {
         $this->skip($this->getVersionIndex() > 0 ? 49 : 30);
-        for ($i = 0; $i < 11; $i++)
-        {
+        for ($i = 0; $i < 11; $i++) {
             $this->skip(4);
             $this->readStringByte(0);
         }
     }
 
     /**
-     * Loops on tracks to read
-     *
-     * @param \PhpTabs\Music\Song  $song
-     * @param int                  $count
-     * @param array                $channels   array of channels
-     * @param \PhpTabs\Music\Lyric $lyric
-     * @param integer              $lyricTrack
+     * Loop on tracks to read
      */
-    private function readTracks(Song $song, $count, array $channels, Lyric $lyric, $lyricTrack)
+    private function readTracks(Song $song, int $count, array $channels, Lyric $lyric, int $lyricTrack): void
     {
         for ($number = 0; $number < $count; $number++) {
             $track = $this->factory('GuitarPro5Track')->readTrack(
