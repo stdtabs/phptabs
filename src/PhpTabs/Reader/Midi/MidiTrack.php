@@ -19,37 +19,23 @@ class MidiTrack
     private $ticks;
     private $events = array();
 
-    /**
-     * @param \PhpTabs\Reader\Midi\MidiEvent $event
-     */
-    public function add(MidiEvent $event)
+    public function add(MidiEvent $event): void
     {
         $this->events[] = $event;
         $this->ticks = max($this->ticks, $event->getTick());
     }
 
-    /**
-     * @param int $index
-     *
-     * @return \PhpTabs\Reader\Midi\MidiEvent $event
-     */
-    public function get($index)
+    public function get(int $index): MidiEvent
     {
         return $this->events[$index];
     }
 
-    /**
-     * @return int
-     */
-    public function countEvents()
+    public function countEvents(): int
     {
         return count($this->events);
     }
 
-    /**
-     * @return int
-     */
-    public function ticks()
+    public function ticks(): int
     {
         return $this->ticks;
     }

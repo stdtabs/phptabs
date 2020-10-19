@@ -42,8 +42,6 @@ class MidiReader extends MidiReaderBase
     const STATUS_META = 4;
 
     /**
-     *
-     *
      * @var integer resolution
      */
     private $resolution;
@@ -121,11 +119,9 @@ class MidiReader extends MidiReaderBase
     }
 
     /**
-     * Initializes Tablature with read Song
-     *
-     * @param \PhpTabs\Music\Song $song as read from file
+     * Initialize Tablature with read Song
      */
-    private function setTablature(Song $song)
+    private function setTablature(Song $song): void
     {
         if (!isset($this->tablature)) {
             $this->tablature = new Tablature();
@@ -139,15 +135,15 @@ class MidiReader extends MidiReaderBase
     * Private methods are below
     * -----------------------------------------------------------------*/
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    private function adjust(Song $song)
+    private function adjust(Song $song): void
     {
         (new MidiAdjuster($song))->adjustSong();
     }
 
-    private function checkAll()
+    /**
+     * @throws \Exception if measure headers or track are not defined
+     */
+    private function checkAll(): void
     {
         $this->checkChannels();
         $this->checkTracks();
@@ -180,17 +176,15 @@ class MidiReader extends MidiReaderBase
         }
     }
 
-    private function checkChannels()
+    private function checkChannels(): void
     {
-        for ($tc = 0; $tc < count($this->tempChannels); $tc++)
-        {
+        for ($tc = 0; $tc < count($this->tempChannels); $tc++) {
             $tempChannel = $this->tempChannels[$tc];
 
             if ($tempChannel->getTrack() > 0) {
                 $channelExists = false;
 
-                for ($c = 0; $c < count($this->channels); $c++)
-                {
+                for ($c = 0; $c < count($this->channels); $c++) {
                     $channel = $this->channels[$c];
                     $channelRoute = $this->channelRouter->getRoute($channel->getId());
                     if ($channelRoute !== null) {
@@ -218,8 +212,7 @@ class MidiReader extends MidiReaderBase
                     $channelRoute->setChannel1($tempChannel->getChannel());
                     $channelRoute->setChannel2($tempChannel->getChannel());
 
-                    for ($tcAux = ($tc + 1); $tcAux < count($this->tempChannels); $tcAux++)
-                    {
+                    for ($tcAux = ($tc + 1); $tcAux < count($this->tempChannels); $tcAux++) {
                         $tempChannelAux = $this->tempChannels[$tcAux];
 
                         if ($tempChannel->getTrack() == $tempChannelAux->getTrack()) {
@@ -238,7 +231,7 @@ class MidiReader extends MidiReaderBase
         }
     }
 
-    private function checkTracks()
+    private function checkTracks(): void
     {
         array_walk(
             $this->tracks, function ($track) {
@@ -266,9 +259,7 @@ class MidiReader extends MidiReaderBase
 
                 if ($trackChannel !== null && $trackChannel->isPercussionChannel()) {
                     $track->setStrings($this->createPercussionStrings(6));
-                }
-                else
-                {
+                } else {
                     $track->setStrings($this->getTrackTuningHelper($track->getNumber())->getStrings());
                 }
             }
@@ -277,11 +268,8 @@ class MidiReader extends MidiReaderBase
 
     /**
      * Create percussion strings
-     *
-     * @param  int $stringCount
-     * @return array
      */
-    private function createPercussionStrings($stringCount)
+    private function createPercussionStrings(int $stringCount): array
     {
         $strings = array();
 
@@ -292,18 +280,13 @@ class MidiReader extends MidiReaderBase
         return $strings;
     }
 
-    /**
-     * @param mixed $tick
-     *
-     * @return \PhpTabs\Music\MeasureHeader
-     */
-    private function getHeader($tick)
+    private function getHeader(int $tick): MeasureHeader
     {
         $realTick = $tick >= Duration::QUARTER_TIME
-                  ? $tick : Duration::QUARTER_TIME;
+                  ? $tick
+                  : Duration::QUARTER_TIME;
 
-        foreach ($this->headers as $header)
-        {
+        foreach ($this->headers as $header) {
             if ($realTick >= $header->getStart()
                 && $realTick < ($header->getStart() + $header->getLength())
             ) {
@@ -348,33 +331,21 @@ class MidiReader extends MidiReaderBase
         return $this->getHeader($realTick);
     }
 
-    /**
-     * @return null|\PhpTabs\Music\MeasureHeader
-     */
-    private function getLastHeader()
+    private function getLastHeader(): ?MeasureHeader
     {
-        if (count($this->headers)) {
-            return $this->headers[count($this->headers) - 1];
-        }
-
-        return null;
+        return count($this->headers)
+            ? $this->headers[count($this->headers) - 1]
+            : null;
     }
 
-    /**
-     * @param \PhpTabs\Music\Track $track
-     * @param mixed                $tick
-     *
-     * @return \PhpTabs\Music\Measure
-     */
-    private function getMeasure(Track $track, $tick)
+    private function getMeasure(Track $track, int $tick): Measure
     {
         $realTick = $tick >= Duration::QUARTER_TIME
         ? $tick : Duration::QUARTER_TIME;
 
         $measures = $track->getMeasures();
 
-        foreach ($measures as $measure)
-        {
+        foreach ($measures as $measure) {
             if ($realTick >= $measure->getStart() && $realTick < $measure->getStart() + $measure->getLength()) {
                 return $measure;
             }
@@ -382,14 +353,12 @@ class MidiReader extends MidiReaderBase
 
         $this->getHeader($realTick);
 
-        for ($i = 0; $i < count($this->headers); $i++)
-        {
+        for ($i = 0; $i < count($this->headers); $i++) {
             $exist = false;
             $header = $this->headers[$i];
             $measureCount = $track->countMeasures();
 
-            for ($j = 0; $j < $measureCount; $j++)
-            {
+            for ($j = 0; $j < $measureCount; $j++) {
                 $measure = $track->getMeasure($j);
 
                 if ($measure->getHeader() == $header) {
@@ -406,20 +375,12 @@ class MidiReader extends MidiReaderBase
         return $this->getMeasure($track, $realTick);
     }
 
-    /**
-     * @return int
-     */
-    private function getNextTrackNumber()
+    private function getNextTrackNumber(): int
     {
         return count($this->tracks) + 1;
     }
 
-    /**
-     * @param integer $channel
-     *
-     * @return \PhpTabs\Reader\Midi\MidiChannel
-     */
-    public function getTempChannel($channel)
+    public function getTempChannel(int $channel): MidiChannel
     {
         foreach ($this->tempChannels as $tempChannel) {
             if ($tempChannel->getChannel() == $channel) {
@@ -433,15 +394,7 @@ class MidiReader extends MidiReaderBase
         return $tempChannel;
     }
 
-    /**
-     * @param int   $track
-     * @param int   $channel
-     * @param mixed $value
-     * @param bool  $purge
-     *
-     * @return null|\PhpTabs\Reader\Midi\MidiNote
-     */
-    private function getTempNote($track, $channel, $value, $purge)
+    private function getTempNote(int $track, int $channel, int $value, bool $purge): ?MidiNote
     {
         $countTempNotes = count($this->tempNotes);
 
@@ -463,12 +416,7 @@ class MidiReader extends MidiReaderBase
         return null;
     }
 
-    /**
-     * @param int $track
-     *
-     * @return \PhpTabs\Reader\Midi\MidiTrackTuningHelper
-     */
-    private function getTrackTuningHelper($track)
+    private function getTrackTuningHelper(int $track): MidiTrackTuningHelper
     {
         foreach ($this->trackTuningHelpers as $helper) {
             if ($helper->getTrack() == $track) {
@@ -482,12 +430,7 @@ class MidiReader extends MidiReaderBase
         return $helper;
     }
 
-    /**
-     * @param int                              $trackNumber
-     * @param mixed                            $tick
-     * @param \PhpTabs\Reader\Midi\MidiMessage $message
-     */
-    private function parseMessage($trackNumber, $tick, MidiMessage $message)
+    private function parseMessage(int $trackNumber, int $tick, MidiMessage $message): void
     {
         $parsedTick = $this->parseTick($tick + $this->resolution);
 
@@ -520,8 +463,7 @@ class MidiReader extends MidiReaderBase
             $this->parseTempo($parsedTick, $message->getData());
         }
         // SKIPPED MESSAGES (Undefined commands)
-        else
-        {
+        else {
             $logMessage = sprintf(
                 'track=%d, tick=%d, type=%s, command=%x, data=array(%s)',
                 $trackNumber,
@@ -535,10 +477,7 @@ class MidiReader extends MidiReaderBase
         }
     }
 
-    /**
-     * @return \PhpTabs\Reader\Midi\MidiSequence $sequence
-     */
-    private function getSequence()
+    private function getSequence(): MidiSequence
     {
         if ($this->readInt() != MidiReaderInterface::HEADER_MAGIC) {
             throw new Exception('Not a MIDI file: wrong header magic');
@@ -614,11 +553,7 @@ class MidiReader extends MidiReaderBase
         return $sequence;
     }
 
-    /**
-     * @param  int $number
-     * @return \PhpTabs\Music\Track
-     */
-    private function getTrack($number)
+    private function getTrack(int $number): Track
     {
         foreach ($this->tracks as $track) {
             if ($track->getNumber() == $number) {
@@ -638,44 +573,36 @@ class MidiReader extends MidiReaderBase
         return $track;
     }
 
-    /**
-     * @param mixed $statusByte
-     *
-     * @return mixed
-     */
-    private function getType($statusByte)
+    private function getType(int $statusByte): int
     {
         if ($statusByte < 0xf0) {
             $command = $statusByte & 0xf0;
 
             switch ($command) {
-            case 0x80:
-            case 0x90:
-            case 0xa0:
-            case 0xb0:
-            case 0xe0:
-                return MidiReader::STATUS_TWO_BYTES;
-            case 0xc0:
-            case 0xd0:
-                return MidiReader::STATUS_ONE_BYTE;
+                case 0x80:
+                case 0x90:
+                case 0xa0:
+                case 0xb0:
+                case 0xe0:
+                    return MidiReader::STATUS_TWO_BYTES;
+                case 0xc0:
+                case 0xd0:
+                    return MidiReader::STATUS_ONE_BYTE;
             }
         }
 
         switch ($statusByte) {
-        case 0xf0:
-        case 0xf7:
-            return MidiReader::STATUS_SYSEX;
-        case 0xff:
-            return MidiReader::STATUS_META;
+            case 0xf0:
+            case 0xf7:
+                return MidiReader::STATUS_SYSEX;
+            case 0xff:
+                return MidiReader::STATUS_META;
         }
 
         return MidiReader::STATUS_NONE;
     }
 
-    /**
-     * @param \PhpTabs\Reader\Midi\MidiSequence $sequence
-     */
-    private function initFields(MidiSequence $sequence)
+    private function initFields(MidiSequence $sequence): void
     {
         $this->resolution = $sequence->getResolution();
         $this->channels = array();
@@ -687,13 +614,7 @@ class MidiReader extends MidiReaderBase
         $this->channelRouter = new ChannelRouter();
     }
 
-    /**
-     * @param mixed $tick
-     * @param int   $track
-     * @param int   $channel
-     * @param byte  $value
-     */
-    private function makeNote($tick, $track, $channel, $value)
+    private function makeNote(int $tick, int $track, int $channel, int $value): void
     {
         $tempNote = $this->getTempNote($track, $channel, $value, true);
 
@@ -725,11 +646,7 @@ class MidiReader extends MidiReaderBase
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Note $note
-     * @param array               $pitchBends
-     */
-    private function makeNoteEffect(Note $note, array $pitchBends)
+    private function makeNoteEffect(Note $note, array $pitchBends): void
     {
         $tmp = array();
 
@@ -757,11 +674,7 @@ class MidiReader extends MidiReaderBase
         $note->getEffect()->setBend($bend);
     }
 
-    /**
-     * @param mixed $tick
-     * @param int   $track
-     */
-    private function makeTempNotesBefore($tick, $track)
+    private function makeTempNotesBefore(int $tick, int $track): void
     {
         $nextTick = $tick;
 
@@ -778,10 +691,7 @@ class MidiReader extends MidiReaderBase
         }
     }
 
-    /**
-     * @param array $data
-     */
-    private function parseControlChange(array $data)
+    private function parseControlChange(array $data): void
     {
         $length = count($data);
         $channel = ($length > 0)?(($data[0] & 0xff) & 0x0f):-1;
@@ -797,12 +707,7 @@ class MidiReader extends MidiReaderBase
         }
     }
 
-    /**
-     * @param int   $track
-     * @param mixed $tick
-     * @param array $data
-     */
-    private function parseNoteOff($track, $tick, array $data)
+    private function parseNoteOff(int $track, int $tick, array $data): void
     {
         $length = count($data);
 
@@ -812,12 +717,7 @@ class MidiReader extends MidiReaderBase
         $this->makeNote($tick, $track, $channel, $value);
     }
 
-    /**
-     * @param int   $track
-     * @param mixed $tick
-     * @param array $data
-     */
-    private function parseNoteOn($track, $tick, array $data)
+    private function parseNoteOn(int $track, int $tick, array $data): void
     {
         $length = count($data);
         $channel = $length > 0 ? (($data[0] & 0xff) & 0x0f) : 0;
@@ -835,10 +735,7 @@ class MidiReader extends MidiReaderBase
         }
     }
 
-    /**
-     * @param array $data
-     */
-    private function parsePitchBend(array $data)
+    private function parsePitchBend(array $data): void
     {
         $length = count($data);
 
@@ -852,10 +749,7 @@ class MidiReader extends MidiReaderBase
         }
     }
 
-    /**
-     * @param array $data
-     */
-    private function parseProgramChange(array $data)
+    private function parseProgramChange(array $data): void
     {
         $length = count($data);
         $channel = $length > 0 ? (($data[0] & 0xff) & 0x0f) : -1;
@@ -866,11 +760,7 @@ class MidiReader extends MidiReaderBase
         }
     }
 
-    /**
-     * @param mixed $tick
-     * @param array $data
-     */
-    private function parseTempo($tick, array $data)
+    private function parseTempo(int $tick, array $data): void
     {
         if (count($data) >= 3) {
             $tempo = Tempo::fromTPQ(($data[2] & 0xff) | (($data[1] & 0xff) << 8) | (($data[0] & 0xff) << 16));
@@ -879,19 +769,12 @@ class MidiReader extends MidiReaderBase
         }
     }
 
-    /**
-     * @param mixed $tick
-     */
-    private function parseTick($tick)
+    private function parseTick(int $tick): int
     {
         return abs(Duration::QUARTER_TIME * $tick / $this->resolution);
     }
 
-    /**
-     * @param mixed $tick
-     * @param array $data
-     */
-    private function parseTimeSignature($tick, array $data)
+    private function parseTimeSignature(int $tick, array $data): void
     {
         if (count($data) >= 2) {
             $timeSignature = new TimeSignature();
@@ -899,34 +782,31 @@ class MidiReader extends MidiReaderBase
             $timeSignature->getDenominator()->setValue(Duration::QUARTER);
 
             switch ($data[1]) {
-            case 0:
-                $timeSignature->getDenominator()->setValue(Duration::WHOLE);
-                break;
-            case 1:
-                $timeSignature->getDenominator()->setValue(Duration::HALF);
-                break;
-            case 2:
-                $timeSignature->getDenominator()->setValue(Duration::QUARTER);
-                break;
-            case 3:
-                $timeSignature->getDenominator()->setValue(Duration::EIGHTH);
-                break;
-            case 4:
-                $timeSignature->getDenominator()->setValue(Duration::SIXTEENTH);
-                break;
-            case 5:
-                $timeSignature->getDenominator()->setValue(Duration::THIRTY_SECOND);
-                break;
+                case 0:
+                    $timeSignature->getDenominator()->setValue(Duration::WHOLE);
+                    break;
+                case 1:
+                    $timeSignature->getDenominator()->setValue(Duration::HALF);
+                    break;
+                case 2:
+                    $timeSignature->getDenominator()->setValue(Duration::QUARTER);
+                    break;
+                case 3:
+                    $timeSignature->getDenominator()->setValue(Duration::EIGHTH);
+                    break;
+                case 4:
+                    $timeSignature->getDenominator()->setValue(Duration::SIXTEENTH);
+                    break;
+                case 5:
+                    $timeSignature->getDenominator()->setValue(Duration::THIRTY_SECOND);
+                    break;
             }
 
             $this->getHeader($tick)->setTimeSignature($timeSignature);
         }
     }
 
-    /**
-     * @param \PhpTabs\Reader\Midi\MidiTrackReaderHelper $helper
-     */
-    private function readEvent(MidiTrackReaderHelper $helper)
+    private function readEvent(MidiTrackReaderHelper $helper): ?MidiEvent
     {
         $statusByte = $this->readUnsignedByte();
         $helper->remainingBytes--;
@@ -935,14 +815,14 @@ class MidiReader extends MidiReaderBase
 
         if ($statusByte < 0x80) {
             switch ($helper->runningStatusByte) {
-            case -1:
-                throw new Exception('Corrupted MIDI file: status byte is missing');
-              break;
-            default:
-                $runningStatusApplies = true;
-                $savedByte = $statusByte;
-                $statusByte = $helper->runningStatusByte;
-                break;
+                case -1:
+                    throw new Exception('Corrupted MIDI file: status byte is missing');
+                  break;
+                default:
+                    $runningStatusApplies = true;
+                    $savedByte = $statusByte;
+                    $statusByte = $helper->runningStatusByte;
+                    break;
             }
         }
 
@@ -1010,10 +890,7 @@ class MidiReader extends MidiReaderBase
         return null;
     }
 
-    /**
-     * @param \PhpTabs\Reader\Midi\MidiTrack $track
-     */
-    private function readTrack(MidiTrack $track)
+    private function readTrack(MidiTrack $track): void
     {
         while (true) {
             if ($this->readInt() == MidiReaderInterface::TRACK_MAGIC) {

@@ -19,20 +19,14 @@ class MidiTrackTuningHelper
     private $maxValue;
     private $minValue;
 
-    /**
-     * @param int $track
-     */
-    public function __construct($track)
+    public function __construct(int $track)
     {
         $this->track = $track;
         $this->maxValue = -1;
         $this->minValue = -1;
     }
 
-    /**
-     * @param int $value
-     */
-    public function checkValue($value)
+    public function checkValue(int $value): void
     {
         if ($this->minValue < 0 || $value < $this->minValue) {
             $this->minValue = $value;
@@ -43,10 +37,7 @@ class MidiTrackTuningHelper
         }
     }
 
-    /**
-     * @return array
-     */
-    public function getStrings()
+    public function getStrings(): array
     {
         $strings = array();
 
@@ -59,16 +50,14 @@ class MidiTrackTuningHelper
             $strings[] = new TabString(4, 50);
             $strings[] = new TabString(5, 45);
             $strings[] = new TabString(6, 40);
-        }
-        elseif ($this->minValue >= 38 && $this->maxValue <= 64 + $maxFret) {
+        } elseif ($this->minValue >= 38 && $this->maxValue <= 64 + $maxFret) {
             $strings[] = new TabString(1, 64);
             $strings[] = new TabString(2, 59);
             $strings[] = new TabString(3, 55);
             $strings[] = new TabString(4, 50);
             $strings[] = new TabString(5, 45);
             $strings[] = new TabString(6, 38);
-        }
-        elseif ($this->minValue >= 35 && $this->maxValue <= 64 + $maxFret) {
+        } elseif ($this->minValue >= 35 && $this->maxValue <= 64 + $maxFret) {
             $strings[] = new TabString(1, 64);
             $strings[] = new TabString(2, 59);
             $strings[] = new TabString(3, 55);
@@ -76,22 +65,18 @@ class MidiTrackTuningHelper
             $strings[] = new TabString(5, 45);
             $strings[] = new TabString(6, 40);
             $strings[] = new TabString(7, 35);
-        }
-        elseif ($this->minValue >= 28 && $this->maxValue <= 43 + $maxFret) {
+        } elseif ($this->minValue >= 28 && $this->maxValue <= 43 + $maxFret) {
             $strings[] = new TabString(1, 43);
             $strings[] = new TabString(2, 38);
             $strings[] = new TabString(3, 33);
             $strings[] = new TabString(4, 28);
-        }
-        elseif ($this->minValue >= 23 && $this->maxValue <= 43 + $maxFret) {
+        } elseif ($this->minValue >= 23 && $this->maxValue <= 43 + $maxFret) {
             $strings[] = new TabString(1, 43);
             $strings[] = new TabString(2, 38);
             $strings[] = new TabString(3, 33);
             $strings[] = new TabString(4, 28);
             $strings[] = new TabString(5, 23);
-        }
-        else
-        {
+        } else {
             $stringCount = 6;
             $stringSpacing = intval(($this->maxValue - ($maxFret - 4) - $this->minValue) / $stringCount);
 
@@ -102,8 +87,7 @@ class MidiTrackTuningHelper
 
             $maxStringValue = $this->minValue + ($stringCount * $stringSpacing);
 
-            while (count($strings) < $stringCount)
-            {
+            while (count($strings) < $stringCount) {
                 $maxStringValue -= $stringSpacing;
                 $strings[] = new TabString(count($strings) + 1, $maxStringValue);
             }
@@ -112,10 +96,7 @@ class MidiTrackTuningHelper
         return $strings;
     }
 
-    /**
-     * @return int
-     */
-    public function getTrack()
+    public function getTrack(): int
     {
         return $this->track;
     }

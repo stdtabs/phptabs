@@ -20,12 +20,7 @@ class MidiTrackReaderHelper
     public $remainingBytes;
     public $runningStatusByte;
 
-    /**
-     * @param int   $ticks
-     * @param array $remainingBytes
-     * @param byte  $runningStatusByte
-     */
-    public function __construct($ticks, $remainingBytes, $runningStatusByte)
+    public function __construct(int $ticks, int $remainingBytes, int $runningStatusByte)
     {
         $this->ticks = $ticks;
         $this->remainingBytes = $remainingBytes;

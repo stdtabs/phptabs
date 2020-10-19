@@ -23,9 +23,8 @@ interface MidiReaderInterface extends ReaderInterface
     const TRACK_MAGIC = 0x4d54726b;
 
     /**
-* 
- * Sequence 
-*/
+     * Sequence
+     */
     const PPQ = 0.0;
     const SMPTE_24 = 24.0;
     const SMPTE_25 = 25.0;

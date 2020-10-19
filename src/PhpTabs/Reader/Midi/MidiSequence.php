@@ -14,9 +14,8 @@ namespace PhpTabs\Reader\Midi;
 class MidiSequence
 {
     /**
-* 
- * Sequence 
-*/
+     * Sequence
+     */
     const PPQ = 0.0;
     const SMPTE_24 = 24.0;
     const SMPTE_25 = 25.0;
@@ -31,7 +30,7 @@ class MidiSequence
      * @param mixed $divisionType
      * @param mixed $resolution
      */
-    public function __construct($divisionType, $resolution)
+    public function __construct(int $divisionType, int $resolution)
     {
         $this->divisionType = $divisionType;
         $this->resolution = $resolution;
@@ -41,52 +40,39 @@ class MidiSequence
     /**
      * @param \PhpTabs\Reader\Midi\MidiTrack $track
      */
-    public function addTrack(MidiTrack $track)
+    public function addTrack(MidiTrack $track): void
     {
         $this->tracks[] = $track;
     }
 
-    /**
-     * @param integer $index
-     *
-     * @return \PhpTabs\Reader\Midi\MidiTrack
-     */
-    public function getTrack($index)
+    public function getTrack(int $index): ?MidiTrack
     {
         return isset($this->tracks[$index])
-        ? $this->tracks[$index] : null;
+            ? $this->tracks[$index]
+            : null;
     }
 
     /**
      * Counts MIDI tracks
-     *
-     * @return integer
      */
-    public function countTracks()
+    public function countTracks(): int
     {
         return count($this->tracks);
     }
 
-    /**
-     * @return float
-     */
-    public function getDivisionType()
+    public function getDivisionType(): int
     {
         return $this->divisionType;
     }
 
-    /**
-     * @return integer
-     */
-    public function getResolution()
+    public function getResolution(): int
     {
         return $this->resolution;
     }
 
-    public function finish()
+    public function finish(): void
     {
-        for ($i = 0; $i < count($this->tracks); $i++)
-        {
+        for ($i = 0; $i < count($this->tracks); $i++) {
             $track = $this->tracks[$i];
 
             $track->add(new MidiEvent(MidiMessage::metaMessage(47, 1), $track->ticks()));

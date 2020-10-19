@@ -17,9 +17,7 @@ use PhpTabs\Component\File;
 abstract class MidiReaderBase implements MidiReaderInterface
 {
     /**
-     * 
-     *
-     * @var \PhpTabs\Component\File 
+     * @var \PhpTabs\Component\File
      */
     private $file;
 
@@ -32,26 +30,22 @@ abstract class MidiReaderBase implements MidiReaderInterface
     }
 
     /**
-     * Reads a 32 bit integer big endian
-     * 
-     * @return int
+     * Read a 32 bit integer big endian
      */
-    protected function readInt()
+    protected function readInt(): int
     {
         $bytes = $this->readBytesBigEndian(4);
 
         return ($bytes[3] & 0xff)
-        | (($bytes[2] & 0xff) << 8)
-        | (($bytes[1] & 0xff) << 16)
-        | (($bytes[0] & 0xff) << 24);
+            | (($bytes[2] & 0xff) << 8)
+            | (($bytes[1] & 0xff) << 16)
+            | (($bytes[0] & 0xff) << 24);
     }
 
     /**
-     * Reads a 16 bit integer big endian
-     * 
-     * @return int
+     * Read a 16 bit integer big endian
      */
-    protected function readShort()
+    protected function readShort(): int
     {
         $bytes = $this->readBytesBigEndian(2);
 
@@ -59,11 +53,9 @@ abstract class MidiReaderBase implements MidiReaderInterface
     }
 
     /**
-     * Reads an unsigned 16 bit integer big endian
-     * 
-     * @return int
+     * Read an unsigned 16 bit integer big endian
      */
-    protected function readUnsignedShort()
+    protected function readUnsignedShort(): int
     {
         $bytes = $this->readBytesBigEndian(2);
 
@@ -71,11 +63,9 @@ abstract class MidiReaderBase implements MidiReaderInterface
     }
 
     /**
-     * @param  \PhpTabs\Reader\Midi\MidiTrackReaderHelper $helper
-     * @return int
      * @throws \Exception if variable length is not readable
      */
-    public function readVariableLengthQuantity(MidiTrackReaderHelper $helper)
+    public function readVariableLengthQuantity(MidiTrackReaderHelper $helper): int
     {
         $count = 0;
         $value = 0;
@@ -95,32 +85,25 @@ abstract class MidiReaderBase implements MidiReaderInterface
     }
 
     /**
-     * Reads an unsigned byte
-     * 
-     * @return byte
+     * Read an unsigned byte
      */
-    protected function readUnsignedByte()
+    protected function readUnsignedByte(): int
     {
         return unpack('C', $this->file->getStream())[1];
     }
 
     /**
-     * Skips a sequence
-     * 
-     * @param int $num
+     * Skip a sequence
      */
-    protected function skip($num = 1)
+    protected function skip(int $num = 1): void
     {
-        $this->file->getStream($num); 
+        $this->file->getStream($num);
     }
 
     /**
-     * Reads bytes
-     * 
-     * @param  int $num
-     * @return array An array of bytes
+     * Read and return an array of bytes
      */
-    protected function readBytesBigEndian($num = 1)
+    protected function readBytesBigEndian(int $num = 1): array
     {
         $bytes = array();
 
@@ -134,8 +117,8 @@ abstract class MidiReaderBase implements MidiReaderInterface
     /**
      * Closes \PhpTabs\Component\File read process
      */
-    protected function closeStream()
+    protected function closeStream(): void
     {
-        $this->file->closeStream(); 
+        $this->file->closeStream();
     }
 }
