@@ -19,48 +19,44 @@ use PhpTabs\Music\Song;
 
 class AsciiRenderer extends RendererHelper
 {
-  /**
-   * Characters
-   */
+    /**
+     * Characters
+     */
     const DEADNOTE_CHR       = 'X';
     const RESTBEAT_CHR       = '%';
     const BAR_SEGMENT_CHR    = '|';
     const STRING_SEGMENT_CHR = '-';
 
-  /**
-   * Song container
-   *
-   * @var \PhpTabs\Music\Song
-   */
+    /**
+     * Song container
+     *
+     * @var \PhpTabs\Music\Song
+     */
     private $song;
 
-  /**
-   * Writer
-   *
-   * @var \PhpTabs\Renderer\Ascii\AsciiBase
-   */
+    /**
+     * Writer
+     *
+     * @var \PhpTabs\Renderer\Ascii\AsciiBase
+     */
     private $writer;
 
-  /**
-   * Constructor
-   *
-   * @param  \PhpTabs\Music\Song $song
-   */
+    /**
+     * Constructor
+     */
     public function __construct(Song $song)
     {
         $this->song   = $song;
         $this->writer = new AsciiBase();
     }
 
-  /**
-   * Draw a song, ASCII formatted
-   *
-   * @param  null|int $trackIndex
-   * @return string A list of tabstaves, ASCII formatted
-   * @api
-   * @since 0.6.0
-   */
-    public function render($trackIndex = null)
+    /**
+     * Draw a song, a list of staves, ASCII formatted
+     *
+     * @api
+     * @since 0.6.0
+     */
+    public function render(int $trackIndex = null): string
     {
         if (null !== $trackIndex && $this->song->getTrack($trackIndex) === null) {
             throw new Exception(
@@ -86,24 +82,19 @@ class AsciiRenderer extends RendererHelper
         return $this->writer->output();
     }
 
-  /**
-   * Get writer
-   *
-   * @return \PhpTabs\Renderer\Ascii\AsciiBase
-   */
-    public function getWriter()
+    /**
+     * Get writer
+     */
+    public function getWriter(): AsciiBase
     {
         return $this->writer;
     }
 
-  /**
-   * Convert a track as a VexTab text
-   *
-   * @param  \PhpTabs\Music\Track $track
-   * @return string
-   */
-    private function writeTrack(Track $track)
+    /**
+     * Convert a track as a VexTab text
+     */
+    private function writeTrack(Track $track): void
     {
-        return (new AsciiTrackRenderer($this, $track))->render();
+        (new AsciiTrackRenderer($this, $track))->render();
     }
 }

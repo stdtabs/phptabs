@@ -19,21 +19,19 @@ class AsciiBase
     private $x = 0;
     private $y = 0;
 
-  /**
-   * Draw a bar segment
-   */
-    public function drawBarSegment()
+    /**
+     * Draw a bar segment
+     */
+    public function drawBarSegment(): void
     {
         $this->movePoint($this->getPosX() + 1, $this->getPosY());
         $this->append(AsciiRenderer::BAR_SEGMENT_CHR);
     }
 
-  /**
-   * Draw a note
-   *
-   * @param string $fret
-   */
-    public function drawNote($fret)
+    /**
+     * Draw a note
+     */
+    public function drawNote(string $fret): void
     {
         $this->movePoint(
             $this->getPosX() + mb_strlen(strval($fret)),
@@ -43,32 +41,28 @@ class AsciiBase
         $this->append(strval($fret));
     }
 
-  /**
-   * Draw a space
-   */
-    public function drawSpace()
+    /**
+     * Draw a space
+     */
+    public function drawSpace(): void
     {
         $this->movePoint($this->getPosX() + 1, $this->getPosY());
         $this->append(" ");
     }
 
-  /**
-   * Draw a string line
-   *
-   * @param string $string
-   */
-    public function drawStringLine($string)
+    /**
+     * Draw a string line
+     */
+    public function drawStringLine(string $string): void
     {
         $this->movePoint(0, $this->getPosY() + 1);
         $this->writeLn($string);
     }
 
-  /**
-   * Draw a string segment
-   *
-   * @param int $count
-   */
-    public function drawStringSegments($count)
+    /**
+     * Draw a string segment
+     */
+    public function drawStringSegments(int $count): void
     {
         for ($i = 0; $i < $count; $i++) {
             $this->movePoint($this->getPosX() + $i + 1 + $count, $this->getPosY());
@@ -76,13 +70,10 @@ class AsciiBase
         }
     }
 
-  /**
-   * Draw a tune segment
-   *
-   * @param string $tune
-   * @param int    $maxLength
-   */
-    public function drawTuneSegment($tune, $maxLength)
+    /**
+     * Draw a tune segment
+     */
+    public function drawTuneSegment(string $tune, int $maxLength): void
     {
         for ($i = mb_strlen($tune); $i < $maxLength; $i++) {
             $this->drawSpace();
@@ -93,12 +84,10 @@ class AsciiBase
         $this->append($tune);
     }
 
-  /**
-   * Write a string in the current buffer
-   *
-   * @param string $string
-   */
-    public function writeLn($string)
+    /**
+     * Write a string in the current buffer
+     */
+    public function writeLn(string $string): void
     {
         $length = mb_strlen($string);
 
@@ -107,53 +96,44 @@ class AsciiBase
         }
     }
 
-  /**
-   * Move buffer cursor
-   *
-   * @param int $x
-   * @param int $y
-   */
-    private function movePoint($x, $y)
+    /**
+     * Move buffer cursor
+     */
+    private function movePoint(int $x, int $y): void
     {
         $this->x = $x;
         $this->y = $y;
     }
 
-  /**
-   * Apped a new empty line
-   */
-    public function nextLine()
+    /**
+     * Append a new empty line
+     */
+    public function nextLine(): void
     {
         $this->movePoint(0, $this->getPosY() + 1);
         $this->writeLn("");
     }
 
-  /**
-   * Get X position
-   *
-   * @return int
-   */
-    public function getPosX()
+    /**
+     * Get X position
+     */
+    public function getPosX(): int
     {
         return $this->x;
     }
 
-  /**
-   * Get Y position
-   *
-   * @return int
-   */
-    public function getPosY()
+    /**
+     * Get Y position
+     */
+    public function getPosY(): int
     {
         return $this->y;
     }
 
-   /**
-    * Write a string
-    *
-    * @param string $data
-    */
-    public function append($data)
+     /**
+      * Write a string
+      */
+    public function append(string $data): void
     {
         // Try to find a better X (min)
         $x = $this->getPosX();
@@ -176,16 +156,12 @@ class AsciiBase
         }
     }
 
-  /**
-   * Write a character into the buffer
-   *
-   * @param int    $x
-   * @param int    $y
-   * @param string $char
-   */
-    public function write($x, $y, $char)
+    /**
+     * Write a character into the buffer
+     */
+    public function write(int $x, int $y, string $char): void
     {
-      // Slot must be empty, throw exception on overwrite attempts
+        // Slot must be empty, throw exception on overwrite attempts
         if (isset($this->content[$y], $this->content[$y][$x])) {
             throw new Exception(
                 sprintf(
@@ -201,12 +177,10 @@ class AsciiBase
         $this->content[$y][$x] = $char;
     }
 
-  /**
-   * Return all buffered data as a string
-   *
-   * @return string
-   */
-    public function output()
+    /**
+     * Return all buffered data as a string
+     */
+    public function output(): string
     {
         $maxLines = max(array_keys($this->content));
         $maxCols  = $this->findMaxValue();
@@ -226,12 +200,10 @@ class AsciiBase
         return $content;
     }
 
-  /**
-   * Find maximum column index
-   *
-   * @return int
-   */
-    private function findMaxValue()
+    /**
+     * Find maximum column index
+     */
+    private function findMaxValue(): int
     {
         return array_reduce($this->content, function ($carry, $item) {
             return max($carry, max(array_keys($item)));

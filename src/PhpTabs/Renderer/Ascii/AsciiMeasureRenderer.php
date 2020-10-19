@@ -23,31 +23,27 @@ class AsciiMeasureRenderer
 {
     /**
      * Measure container
-     * 
+     *
      * @var \PhpTabs\Music\Measure
      */
     private $measure;
 
     /**
      * String container
-     * 
+     *
      * @var \PhpTabs\Music\TabString
      */
     private $string;
 
     /**
      * Global writer
-     * 
+     *
      * @var \PhpTabs\Renderer\Ascii\AsciiBase
      */
     private $writer;
 
     /**
      * Constructor
-     *
-     * @param \PhpTabs\Renderer\Ascii\AsciiBase $writer
-     * @param \PhpTabs\Music\Measure            $measure
-     * @param \PhpTabs\Music\TabString          $string
      */
     public function __construct(AsciiBase $writer, Measure $measure, TabString $string)
     {
@@ -59,7 +55,7 @@ class AsciiMeasureRenderer
     /**
      * Append a measure, ASCII formatted
      */
-    public function render()
+    public function render(): void
     {
         $this->writer->drawBarSegment();
         $this->writer->drawStringSegments(1);
@@ -89,8 +85,8 @@ class AsciiMeasureRenderer
 
             $nextBeat = $this->getNextBeat($this->measure->getBeats(), $beat);
 
-            $length = ($nextBeat !== null 
-                ? $nextBeat->getStart() - $beat->getStart() 
+            $length = ($nextBeat !== null
+                ? $nextBeat->getStart() - $beat->getStart()
                 : ($this->measure->getStart() + $this->measure->getLength()) - $beat->getStart()
             );
 
@@ -102,17 +98,12 @@ class AsciiMeasureRenderer
 
     /**
      * Get following beat
-     * 
-     * @param  \PhpTabs\Music\Beat[] $beats
-     * @param  \PhpTabs\Music\Beat   $beat  The current beat
-     * @return null|\PhpTabs\Music\Beat
      */
-    public function getNextBeat(array $beats, Beat $beat)
+    public function getNextBeat(array $beats, Beat $beat): ?Beat
     {
         $next = null;
 
         foreach ($beats as $current) {
-
             if ($current->getStart() > $beat->getStart()) {
                 if ($next === null) {
                     return $current;
@@ -127,11 +118,8 @@ class AsciiMeasureRenderer
 
     /**
      * Get note value
-     * 
-     * @param  \PhpTabs\Music\Note $note
-     * @return string
      */
-    private function getNoteValue(Note $note)
+    private function getNoteValue(Note $note): string
     {
         if ($note->getEffect()->isDeadNote()) {
             return AsciiRenderer::DEADNOTE_CHR;
@@ -142,48 +130,40 @@ class AsciiMeasureRenderer
 
     /**
      * Get corresponding note for a beat
-     * 
-     * @param  \PhpTabs\Music\Beat $beat
-     * @param  int                 $stringNumber
-     * @return null|\PhpTabs\Music\Note
      */
-    private function getNote(Beat $beat, $stringNumber)
+    private function getNote(Beat $beat, int $stringNumber): ?Note
     {
         foreach ($beat->getVoices() as $voice) {
-
             if (!$voice->isEmpty()) {
                 $note = $this->getNoteByVoice($voice, $stringNumber);
 
-                if($note !== null) {
+                if ($note !== null) {
                     return $note;
                 }
             }
         }
+
+        return null;
     }
 
     /**
-     * Get corresponding note for a Voice
-     * 
-     * @param  \PhpTabs\Music\Voice $voice
-     * @param  int                  $stringNumber
-     * @return null|\PhpTabs\Music\Note
+     * Get related note for a Voice
      */
-    private function getNoteByVoice(Voice $voice, $stringNumber)
+    private function getNoteByVoice(Voice $voice, int $stringNumber): ?Note
     {
         foreach ($voice->getNotes() as $note) {
             if ($note->getString() === $stringNumber) {
                 return $note;
             }
         }
+
+        return null;
     }
 
     /**
      * Get duration number of spaces
-     * 
-     * @param  int $length
-     * @return int
      */
-    private function getDurationScaping($length)
+    private function getDurationScaping(int $length): int
     {
         switch (true) {
             case $length <= (Duration::QUARTER_TIME / 8):

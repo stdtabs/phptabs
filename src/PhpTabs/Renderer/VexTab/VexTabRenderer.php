@@ -21,15 +21,13 @@ class VexTabRenderer extends RendererHelper
 {
     /**
      * Song container
-     * 
+     *
      * @var \PhpTabs\Music\Song
      */
     private $song;
 
     /**
      * Constructor
-     *
-     * @param \PhpTabs\Music\Song $song
      */
     public function __construct(Song $song)
     {
@@ -38,13 +36,11 @@ class VexTabRenderer extends RendererHelper
 
     /**
      * Dump a track, VexTab formatted
-     * 
-     * @param  int $index
-     * @return string A list of tabstaves, VexTab formatted
+     *
      * @api
      * @since  0.5.0
      */
-    public function render($index)
+    public function render(int $index): string
     {
         $track = $this->song->getTrack($index);
 
@@ -59,11 +55,8 @@ class VexTabRenderer extends RendererHelper
 
     /**
      * Convert a track as a VexTab text
-     * 
-     * @param  \PhpTabs\Music\Track $track
-     * @return string
      */
-    private function writeTrack(Track $track)
+    private function writeTrack(Track $track): string
     {
         return (new VexTabTrackRenderer($this, $track))->render();
     }

@@ -14,17 +14,15 @@ namespace PhpTabs\Component\Renderer;
 interface RendererInterface
 {
     /**
-     * @param  int $index Track index
-     * @return string
+     * Render a track stored at the given index
      */
-    public function render($index);
+    public function render(int $index): string;
 
     /**
      * @param  string     $name
      * @param  int|string $value
-     * @return \PhpTabs\Component\Renderer\RendererInterface
      */
-    public function setOption(string $name, $value);
+    public function setOption(string $name, $value): self;
 
     /**
      * @param  string     $name
@@ -33,14 +31,7 @@ interface RendererInterface
      */
     public function getOption(string $name, $default);
 
-    /**
-     * @param  array $options
-     * @return \PhpTabs\Component\Renderer\RendererInterface
-     */
-    public function setOptions(array $options);
+    public function setOptions(array $options): self;
 
-    /**
-     * @return array
-     */
     public function getOptions(): array;
 }

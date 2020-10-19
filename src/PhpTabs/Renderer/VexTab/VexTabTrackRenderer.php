@@ -24,84 +24,80 @@ class VexTabTrackRenderer
 {
     /**
      * A basic stave template
-     * 
+     *
      * @var string
      */
     private $staveTpl = "tabstave%s";
 
     /**
      * Global options template
-     * 
+     *
      * @var string
      */
     private $optionsTpl = "options%s\n\n";
 
     /**
      * Durations translation
-     * 
+     *
      * @var array
      */
     private $defDuration = [
-    1   => 'w',
-    2   => 'h',
-    4   => 'q',
-    8   => '8',
-    16  => '16',
-    32  => '32',
-    64  => '64'
+        1   => 'w',
+        2   => 'h',
+        4   => 'q',
+        8   => '8',
+        16  => '16',
+        32  => '32',
+        64  => '64'
     ];
 
     /**
      * Clefs translation
-     * 
+     *
      * @var array
      */
     private $defClef = [
-    1   => 'treble',
-    2   => 'bass',
-    3   => 'tenor',
-    4   => 'alto'
+        1   => 'treble',
+        2   => 'bass',
+        3   => 'tenor',
+        4   => 'alto'
     ];
 
     /**
      * Global renderer
-     * 
+     *
      * @var \PhpTabs\Component\Renderer\RendererInterface
      */
     private $renderer;
 
     /**
      * Stave content
-     * 
+     *
      * @var string
      */
     private $staves;
 
     /**
      * Track
-     * 
+     *
      * @var \PhpTabs\Music\Track
      */
     private $track;
 
     /**
      * Options
-     * 
+     *
      * @var \PhpTabs\Renderer\VexTab\VexTabOptions
      */
     private $options;
 
     /**
      * Channel
-     * 
+     *
      * @var \PhpTabs\Music\Channel
      */
     private $channel;
 
-    /**
-     * @param \PhpTabs\Component\Renderer\RendererInterface $renderer
-     * @param \PhpTabs\Music\Track                          $track
-     */
     public function __construct(RendererInterface $renderer, Track $track)
     {
         if (!$track->countMeasures()) {
@@ -138,30 +134,25 @@ class VexTabTrackRenderer
 
     /**
      * Get a stave string
-     *
-     * @return string
      */
-    public function render()
+    public function render(): string
     {
         return $this->staves;
     }
 
     /**
      * Append a measure
-     * 
-     * @param \PhpTabs\Music\Measure $measure
      */
-    private function renderMeasure(Measure $measure)
+    private function renderMeasure(Measure $measure): void
     {
-        if (($measure->getNumber() - 1) %          $this->renderer->getOption('measures_per_stave', 1) == 0
-        ) {
+        if (($measure->getNumber() - 1) % $this->renderer->getOption('measures_per_stave', 1) == 0) {
 
             $this->line++;
-            $this->staves .= $measure->getNumber() > 1 
+            $this->staves .= $measure->getNumber() > 1
             ? sprintf(
-                "\n\n{$this->staveTpl}", 
+                "\n\n{$this->staveTpl}",
                 $this->options->render('stave')
-            ) 
+            )
             : '';
 
             $this->staves .= "\nnotes ";
@@ -175,7 +166,7 @@ class VexTabTrackRenderer
 
         $this->writeMeasure($measure);
 
-        // ./ bar / repeat 
+        // ./ bar / repeat
         if (($measure->getRepeatClose() > 0 || $this->isLastMeasure($measure))
             && $this->repeatOpen
         ) {
@@ -188,28 +179,23 @@ class VexTabTrackRenderer
             $this->doubleRepeatOpen = false;
         } else {
             // bugfix: time notation creates an offset which is not
-            //         represented in a tab 
-            $this->staves .= $this->line > 1 
+            //         represented in a tab
+            $this->staves .= $this->line > 1
             || $measure->getNumber() !== $this->renderer->getOption('measures_per_stave', 1)
-            ? '|' : ''; 
+                ? '|'
+                : '';
         }
     }
 
-    /**
-     * @param  \PhpTabs\Music\Measure $measure
-     * @return bool
-     */
-    private function isLastMeasure(Measure $measure)
+    private function isLastMeasure(Measure $measure): bool
     {
         return $measure->getNumber() == $this->track->countMeasures();
     }
 
     /**
      * Start a list of staves
-     * 
-     * @param \PhpTabs\Music\Measure $measure
      */
-    private function initStaves(Measure $measure)
+    private function initStaves(Measure $measure): void
     {
         $numerator    = $measure->getTimeSignature()->getNumerator();
         $denominator  = $measure->getTimeSignature()->getDenominator()->getValue();
@@ -233,10 +219,8 @@ class VexTabTrackRenderer
 
     /**
      * Write a measure
-     * 
-     * @param \PhpTabs\Music\Measure $measure
      */
-    private function writeMeasure(Measure $measure)
+    private function writeMeasure(Measure $measure): void
     {
         $this->lastDuration   = '';
 
@@ -256,7 +240,7 @@ class VexTabTrackRenderer
     /**
      * Write a beat
      */
-    private function writeBeat()
+    private function writeBeat(): void
     {
         $this->renderDuration();
 
@@ -266,16 +250,16 @@ class VexTabTrackRenderer
         if ($this->beatContext->isChordBeat()) {
             $this->staves .= $this->renderChordBeat();
 
-            /**
-             * Single note beat
-             */
+        /**
+         * Single note beat
+         */
         } elseif (!$this->beat->isRestBeat()) {
             $this->staves .= $this->renderSingleNoteBeat(
                 $this->beat->getVoice(0)->getNote(0)
             );
-            /**
-             * Rest beat
-             */
+        /**
+         * Rest beat
+         */
         } elseif ($this->beat->isRestBeat()) {
             $this->staves .= $this->renderRestBeat();
         }
@@ -286,7 +270,7 @@ class VexTabTrackRenderer
     /**
      * Append duration if there is any change
      */
-    private function renderDuration()
+    private function renderDuration(): void
     {
         if ($this->lastDuration == ''
             || $this->lastDuration !== $this->tmpDuration
@@ -299,20 +283,16 @@ class VexTabTrackRenderer
 
     /**
      * Render a rest beat
-     * 
-     * @return string
      */
-    protected function renderRestBeat()
+    protected function renderRestBeat(): string
     {
         return '## ';
     }
 
     /**
      * Render a chord beat
-     * 
-     * @return string
      */
-    private function renderChordBeat()
+    private function renderChordBeat(): string
     {
         $stack = [];
 
@@ -330,35 +310,29 @@ class VexTabTrackRenderer
 
     /**
      * Render a note value and effects
-     * 
-     * @param  \PhpTabs\Music\Note $note
-     * @return string
      */
-    private function renderSingleNoteBeat(Note $note)
+    private function renderSingleNoteBeat(Note $note): string
     {
         return sprintf(
             '%s%s%s%s/%s%s%s',
             $this->lastBeatContext->getPrevPrefix($note),
-            $this->lastBeatContext->getPrevPrefix($note) == '' 
+            $this->lastBeatContext->getPrevPrefix($note) == ''
             ? $this->beatContext->getPrefix($note) : '',
             $note->getEffect()->isDeadNote()? 'X' : $note->getValue(),
             $this->beatContext->getSuffix($note),
             $note->getString(),
             !$this->beatContext->isChordBeat() ? ' ' : '',
-            !$this->beatContext->isChordBeat() 
+            !$this->beatContext->isChordBeat()
             ? $this->beatContext->getTuplet($this->lastBeatContext) : ''
         );
     }
 
     /**
      * Get corresponding clef name
-     * 
-     * @param  \PhpTabs\Music\Measure $measure
-     * @return string
-     * 
+     *
      * @throws \Exception if clef name does not exist
      */
-    private function getClefName(Measure $measure)
+    private function getClefName(Measure $measure): string
     {
         if ($this->channel->isPercussionChannel()) {
             return 'percussion';
@@ -376,11 +350,8 @@ class VexTabTrackRenderer
 
     /**
      * Format a VexTab duration
-     * 
-     * @param  \PhpTabs\Music\Duration $duration
-     * @return string
      */
-    private function getDuration(Duration $duration)
+    private function getDuration(Duration $duration): string
     {
         if (!isset($this->defDuration[$duration->getValue()])) {
             throw new Exception(

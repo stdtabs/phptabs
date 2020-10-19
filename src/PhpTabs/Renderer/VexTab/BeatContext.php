@@ -19,14 +19,14 @@ class BeatContext
 {
     /**
      * Referenced Beat
-     * 
+     *
      * @var \PhpTabs\Music\Beat
      */
     private $beat;
 
     /**
      * Tuplet counter
-     * 
+     *
      * @var int
      */
     private $tupletCounter = 0;
@@ -39,8 +39,6 @@ class BeatContext
     /**
      * Constructor
      * Parse beat informations for current and later usage
-     * 
-     * @param \PhpTabs\Music\Beat $beat
      */
     public function __construct(Beat $beat)
     {
@@ -49,10 +47,8 @@ class BeatContext
 
     /**
      * Should be processed as a Chord beat
-     * 
-     * @return bool
      */
-    public function isChordBeat()
+    public function isChordBeat(): bool
     {
         if (!is_null($this->isChordBeat)) {
             return $this->isChordBeat;
@@ -68,11 +64,13 @@ class BeatContext
             return ($this->isChordBeat = true);
         }
 
-        if ($voice->getNote(0)->getEffect()->isVibrato() 
+        if ($voice->getNote(0)->getEffect()->isVibrato()
             && $this->beat->getStroke()->getDirection() !== Stroke::STROKE_NONE
         ) {
             return ($this->isChordBeat = true);
         }
+
+        return ($this->isChordBeat = false);
     }
 
     /**
@@ -80,28 +78,22 @@ class BeatContext
      *  - s
      *  - h
      *  - p
-     *
-     * @param  \PhpTabs\Music\Note $note
-     * @return string
      */
-    public function getPrevPrefix(Note $note)
+    public function getPrevPrefix(Note $note): string
     {
         return $this->getSlide($note)
-         . $this->getHammer($note);    
+             . $this->getHammer($note);
     }
 
     /**
      * Get effects that have to be prefixed for current note
      *  - t
      *  - T
-     *
-     * @param  \PhpTabs\Music\Note $note
-     * @return string
      */
-    public function getPrefix(Note $note)
+    public function getPrefix(Note $note): string
     {
         return $this->getTied($note)
-         . $this->getTapping($note);    
+             . $this->getTapping($note);
     }
 
     /**
@@ -112,36 +104,29 @@ class BeatContext
      * If it's a single note
      * - u
      * - d
-     *
-     * @param  \PhpTabs\Music\Note $note
-     * @return string
      */
-    public function getSuffix(Note $note)
+    public function getSuffix(Note $note): string
     {
         return $this->getBend($note)
-         . $this->getVibrato($note)
-         // . $this->getHarshVibrato($note)
-         . (!$this->isChordBeat() ? $this->getStroke() : '');   
+             . $this->getVibrato($note)
+          // . $this->getHarshVibrato($note)
+             . (!$this->isChordBeat() ? $this->getStroke() : '');
     }
 
     /**
      * Get suffix for a chord beat
      * - u
      * - d
-     *
-     * @return string
      */
-    public function getChordSuffix()
+    public function getChordSuffix(): string
     {
-        return $this->getStroke();    
+        return $this->getStroke();
     }
 
     /**
      * return a tuplet symbol
-     * 
-     * @return string
      */
-    public function getTuplet(BeatContext $lastBeatContext)
+    public function getTuplet(BeatContext $lastBeatContext): string
     {
         $enters = $this->beat
             ->getVoice(0)
@@ -163,85 +148,78 @@ class BeatContext
         }
 
         $this->tupletCounter = $lastCounter;
+
+        return '';
     }
 
     /**
      * Get tuplet counter
-     * 
-     * @return int
      */
-    public function getTupletCounter()
+    public function getTupletCounter(): int
     {
         return $this->tupletCounter;
     }
 
     /**
      * Find corresponding string and return a slide effect if existing
-     * 
-     * @param  \PhpTabs\Music\Note $note
-     * @return string
      */
-    private function getSlide(Note $note)
+    private function getSlide(Note $note): string
     {
         foreach ($this->beat->getVoice(0)->getNotes() as $prevNote) {
             if ($prevNote->getString() == $note->getString()) {
                 return $prevNote->getEffect()->isSlide()
-                ? 's' : '';
+                    ? 's'
+                    : '';
             }
         }
+
+        return '';
     }
 
     /**
      * Find corresponding string and return a hammer-on or a pull-off
      *  effect if existing
-     * 
-     * @param  \PhpTabs\Music\Note $note
-     * @return string
      */
-    private function getHammer(Note $note)
+    private function getHammer(Note $note): string
     {
         foreach ($this->beat->getVoice(0)->getNotes() as $prevNote) {
             if ($prevNote->getString() == $note->getString()
                 && $prevNote->getEffect()->isHammer()
             ) {
                 return $prevNote->getValue() >= $note->getValue()
-                ? 'p' : 'h';
+                    ? 'p'
+                    : 'h';
             }
         }
+
+        return '';
     }
 
     /**
      * Return a tied symbol if existing
-     * 
-     * @param  \PhpTabs\Music\Note $note
-     * @return string
      */
-    private function getTied(Note $note)
+    private function getTied(Note $note): string
     {
         return $note->isTiedNote()
-          ? 'T' : '';
+            ? 'T'
+            : '';
     }
 
     /**
      * Return a tapping symbol if existing
-     * 
-     * @param  \PhpTabs\Music\Note $note
-     * @return string
      */
-    private function getTapping(Note $note)
+    private function getTapping(Note $note): string
     {
         return $note->getEffect()->isTapping()
-          ? 't' : '';
+            ? 't'
+            : '';
     }
 
 
     /**
      * Return a bend symbol if existing
-     * 
-     * @param  \PhpTabs\Music\Note $note
-     * @return string
      */
-    private function getBend(Note $note)
+    private function getBend(Note $note): string
     {
         if (!$note->getEffect()->isBend()) {
             return '';
@@ -260,7 +238,7 @@ class BeatContext
                 $lastBendValue = $bendValue;
 
                 $value .= sprintf(
-                    'b%d', 
+                    'b%d',
                     $bendValue
                 );
             }
@@ -271,40 +249,35 @@ class BeatContext
 
     /**
      * Return a vibrato symbol if existing
-     * 
-     * @param  \PhpTabs\Music\Note $note
-     * @return string
      */
-    private function getVibrato(Note $note)
+    private function getVibrato(Note $note): string
     {
         return $note->getEffect()->isVibrato()
-          ? 'v' : '';
+            ? 'v'
+            : '';
     }
 
     /**
      * Return a harsh vibrato symbol if existing
-     * 
+     *
      * @todo implement this feature
-     * 
-     * @return string
      */
-    private function getHarshVibrato()
+    private function getHarshVibrato(): string
     {
         return '';
     }
 
     /**
      * Return a stroke symbol if existing
-     * 
-     * @return string
      */
-    private function getStroke()
+    private function getStroke(): string
     {
         if ($this->beat->getStroke()->getDirection() == Stroke::STROKE_NONE) {
             return '';
         }
 
         return $this->beat->getStroke()->getDirection() == Stroke::STROKE_UP
-        ? 'u' : 'd';
+            ? 'u'
+            : 'd';
     }
 }

@@ -25,30 +25,27 @@ class AsciiTrackRenderer
 
     /**
      * Global track container
-     * 
+     *
      * @var \PhpTabs\Music\Track
      */
     private $track;
 
     /**
      * Global writer
-     * 
+     *
      * @var \PhpTabs\Renderer\Ascii\AsciiBase
      */
     private $writer;
 
     /**
      * Parent renderer
-     * 
+     *
      * @var \PhpTabs\Renderer\Ascii\AsciiRenderer
      */
     private $parent;
 
     /**
      * Constructor
-     *
-     * @param \PhpTabs\Renderer\Ascii\AsciiRenderer $renderer
-     * @param \PhpTabs\Music\Track                  $track
      */
     public function __construct(AsciiRenderer $renderer, Track $track)
     {
@@ -63,13 +60,11 @@ class AsciiTrackRenderer
 
     /**
      * Dump a track, ASCII formatted
-     * 
-     * @param  int $index
-     * @return string A list of tabstaves, ASCII formatted
+     *
      * @api
      * @since  0.6.0
      */
-    public function render($index = 0)
+    public function render(int $index = 0): void
     {
         $this->writer->nextLine();
 
@@ -125,11 +120,10 @@ class AsciiTrackRenderer
     }
 
     /**
-     * Get tuning params
-     * 
-     * @return array($tuning, $maxTuningLength)
+     * Get tuning params as an array
+     * [$tuning, $maxTuningLength]
      */
-    private function getTuning()
+    private function getTuning(): array
     {
         $tuning = array_fill(0, $this->track->countStrings(), null);
         $maxTuningLength = 1;
@@ -146,11 +140,8 @@ class AsciiTrackRenderer
 
     /**
      * Write a measure as an ASCII text
-     * 
-     * @param \PhpTabs\Music\Measure   $measure
-     * @param \PhpTabs\Music\TabString $string
      */
-    private function writeMeasure(Measure $measure, TabString $string)
+    private function writeMeasure(Measure $measure, TabString $string): void
     {
         (new AsciiMeasureRenderer($this->writer, $measure, $string))->render();
     }
