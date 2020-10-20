@@ -12,23 +12,18 @@
 namespace PhpTabs\Share;
 
 use PhpTabs\Music\Channel;
+use PhpTabs\Music\ChannelParameter;
 
 class ChannelRouterConfigurator
 {
     private $router;
 
-    /**
-     * @param \PhpTabs\Share\ChannelRouter $router
-     */
     public function __construct(ChannelRouter $router)
     {
         $this->router = $router;
     }
 
-    /**
-     * @param array $channels
-     */
-    public function configureRouter(array $channels)
+    public function configureRouter(array $channels): void
     {
         $this->router->resetRoutes();
 
@@ -49,13 +44,7 @@ class ChannelRouterConfigurator
         );
     }
 
-    /**
-     * @param \PhpTabs\Music\Channel $channel
-     * @param string                 $key
-     * 
-     * @return int
-     */
-    private function getIntegerChannelParameter(Channel $channel, $key)
+    private function getIntegerChannelParameter(Channel $channel, string $key): int
     {
         $channelParameter = $this->findChannelParameter($channel, $key);
 
@@ -66,13 +55,7 @@ class ChannelRouterConfigurator
         return ChannelRoute::NULL_VALUE;
     }
 
-    /**
-     * @param \PhpTabs\Music\Channel $channel
-     * @param string                 $key
-     *
-     * @return null|\PhpTabs\Music\ChannelParameter
-     */
-    private function findChannelParameter(Channel $channel, $key)
+    private function findChannelParameter(Channel $channel, string $key): ?ChannelParameter
     {
         $parameters = $channel->getParameters();
 

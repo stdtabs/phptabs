@@ -22,61 +22,40 @@ class ChannelRoute
     private $channel1;
     private $channel2;
 
-    /**
-     * @param int $channelId
-     */
-    public function __construct($channelId)
+    public function __construct(int $channelId)
     {
         $this->channelId = $channelId;
     }
 
-    /**
-     * @return int
-     */
-    public function getChannelId()
+    public function getChannelId(): int
     {
         return $this->channelId;
     }
 
-    /**
-     * @return int
-     */
-    public function getChannel1()
+    public function getChannel1(): ?string
     {
         return $this->channel1;
     }
 
-    /**
-     * @param int $channel1
-     */
-    public function setChannel1($channel1)
+    public function setChannel1(string $channel1)
     {
         $this->channel1 = $channel1;
     }
 
-    /**
-     * @return int
-     */
-    public function getChannel2()
+    public function getChannel2(): ?string
     {
         return $this->channel2;
     }
 
-    /**
-     * @param int $channel2
-     */
-    public function setChannel2($channel2)
+    public function setChannel2(string $channel2)
     {
         $this->channel2 = $channel2;
     }
 
     /**
      * Compare current channel route with a given channel route
-     * 
-     * @param  \PhpTabs\Share\ChannelRoute $route
-     * @return bool
      */
-    public function equals(ChannelRoute $route)
+    public function equals(ChannelRoute $route): bool
     {
         return $this->channelId == $route->getChannelId()
             && $this->channel1  == $route->getChannel1()

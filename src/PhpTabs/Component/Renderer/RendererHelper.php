@@ -42,7 +42,7 @@ abstract class RendererHelper implements RendererInterface
      * @api
      * @since  0.5.0
      */
-    public function setOption(string $name, $value): self
+    public function setOption(string $name, $value): RendererInterface
     {
         $this->options[$name] = $value;
 
@@ -56,7 +56,7 @@ abstract class RendererHelper implements RendererInterface
      * @api
      * @since  0.5.0
      */
-    public function setOptions(array $options): self
+    public function setOptions(array $options): RendererInterface
     {
         foreach ($options as $name => $value) {
             $this->setOption($name, $value);

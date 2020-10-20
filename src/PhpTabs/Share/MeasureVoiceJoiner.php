@@ -18,19 +18,13 @@ class MeasureVoiceJoiner
 {
     private $measure;
 
-    /**
-     * @param \PhpTabs\Music\Measure $measure
-     */
     public function __construct(Measure $measure)
     {
         $this->measure = clone $measure;
         $this->measure->setTrack($measure->getTrack());
     }
 
-    /**
-     * @return \PhpTabs\Music\Measure
-     */
-    public function process()
+    public function process(): Measure
     {
         $this->orderBeats();
         $this->joinBeats();
@@ -38,7 +32,7 @@ class MeasureVoiceJoiner
         return $this->measure;
     }
 
-    public function joinBeats()
+    public function joinBeats(): void
     {
         $previous = null;
         $finish = true;
@@ -132,7 +126,7 @@ class MeasureVoiceJoiner
         }
     }
 
-    public function orderBeats()
+    public function orderBeats(): void
     {
         for ($i = 0; $i < $this->measure->countBeats(); $i++) {
             $minBeat = null;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -20,20 +22,17 @@ class ChannelRouter
 
     public function __construct()
     {
-        $this->midiChannels = array();
+        $this->midiChannels = [];
     }
 
-    public function resetRoutes()
+    public function resetRoutes(): void
     {
         for ($i = 0; $i < count($this->midiChannels); $i++) {
             $this->midiChannels[$i]->clear();
         }
     }
 
-    /**
-     * @param \PhpTabs\Share\ChannelRoute $route
-     */
-    public function removeRoute(ChannelRoute $route)
+    public function removeRoute(ChannelRoute $route): void
     {
         array_walk(
             $this->midiChannels,
@@ -45,31 +44,23 @@ class ChannelRouter
         );
     }
 
-    /**
-     * @param  int $channelId
-     * @return int
-     */
-    public function getRoute($channelId)
+    public function getRoute(int $channelId): ?ChannelRoute
     {
         return array_reduce($this->midiChannels, $this->reducer($channelId));
     }
 
-    private function reducer($channelId)
+    private function reducer(int $channelId): callable
     {
         return function ($carry, $item) use ($channelId) {
             if ($item->getChannelId() == $channelId) {
                 $carry = $item;
             }
-  
+
             return $carry;
         };
     }
 
-    /**
-     * @param \PhpTabs\Share\ChannelRoute $route
-     * @param bool                        $percussionChannel
-     */
-    public function configureRoutes(ChannelRoute $route, $percussionChannel)
+    public function configureRoutes(ChannelRoute $route, bool $percussionChannel): void
     {
         $conflictingRoutes = null;
 
@@ -84,7 +75,7 @@ class ChannelRouter
             $route->setChannel1(ChannelRouter::PERCUSSION_CHANNEL);
             $route->setChannel2(ChannelRouter::PERCUSSION_CHANNEL);
         } else {
-            // Use custom routes 
+            // Use custom routes
             if ($route->getChannel1() >= 0) {
                 if ($route->getChannel2() < 0) {
                     $route->setChannel2($route->getChannel1());
@@ -111,14 +102,9 @@ class ChannelRouter
         }
     }
 
-    /**
-     * @param \PhpTabs\Share\ChannelRoute $channelRoute
-     * 
-     * @return array
-     */
-    public function findConflictingRoutes(ChannelRoute $channelRoute)
+    public function findConflictingRoutes(ChannelRoute $channelRoute): array
     {
-        $routes = array();
+        $routes = [];
 
         foreach ($this->midiChannels as $route) {
             if ($route != $channelRoute) {
@@ -135,14 +121,9 @@ class ChannelRouter
         return $routes;
     }
 
-    /**
-     * @param \PhpTabs\Share\ChannelRoute $forRoute
-     * 
-     * @return array
-     */
-    public function getFreeChannels($forRoute = null)
+    public function getFreeChannels(ChannelRoute $forRoute = null): array
     {
-        $freeChannels = array();
+        $freeChannels = [];
 
         for ($ch = 0; $ch < ChannelRouter::MAX_CHANNELS; $ch++) {
             if ($ch != ChannelRouter::PERCUSSION_CHANNEL) {
