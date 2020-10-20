@@ -33,29 +33,24 @@ use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface as GprInterface;
 class GuitarPro5Writer extends GuitarProWriterBase
 {
     /**
-* 
-     *
- * @constant version 
-*/
+     * @constant version
+     */
     const VERSION = 'FICHIER GUITAR PRO v5.00';
 
-    private $setUpLines = array(
-    '%TITLE%',
-    '%SUBTITLE%',
-    '%ARTIST%',
-    '%ALBUM%',
-    'Words by %WORDS%',
-    'Music by %MUSIC%',
-    'Words & Music by %WORDSMUSIC%',
-    'Copyright %COPYRIGHT%',
-    'All Rights Reserved - International Copyright Secured',
-    'Page %N%/%P%',
-    'Moderate'
-    );
+    private $setUpLines = [
+        '%TITLE%',
+        '%SUBTITLE%',
+        '%ARTIST%',
+        '%ALBUM%',
+        'Words by %WORDS%',
+        'Music by %MUSIC%',
+        'Words & Music by %WORDSMUSIC%',
+        'Copyright %COPYRIGHT%',
+        'All Rights Reserved - International Copyright Secured',
+        'Page %N%/%P%',
+        'Moderate'
+    ];
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
     public function __construct(Song $song)
     {
         parent::__construct();
@@ -84,16 +79,10 @@ class GuitarPro5Writer extends GuitarProWriterBase
         $this->writeMeasureHeaders($song);
         $this->writeTracks($song);
         $this->skipBytes(2);
-        $this->writeMeasures($song, clone $header->getTempo());   
+        $this->writeMeasures($song, clone $header->getTempo());
     }
 
-    /**
-     * @param \PhpTabs\Music\Voice   $voice
-     * @param \PhpTabs\Music\Beat    $beat
-     * @param \PhpTabs\Music\Measure $measure
-     * @param bool                   $changeTempo
-     */
-    private function writeBeat(Voice $voice, Beat $beat, Measure $measure, $changeTempo)
+    private function writeBeat(Voice $voice, Beat $beat, Measure $measure, bool $changeTempo): void
     {
         $duration = $voice->getDuration();
 
@@ -115,10 +104,10 @@ class GuitarPro5Writer extends GuitarProWriterBase
 
         if ($beat->getStroke()->getDirection() != Stroke::STROKE_NONE) {
             $flags |= 0x08;
-        } elseif ($effect->isTremoloBar() 
-            || $effect->isTapping() 
-            || $effect->isSlapping() 
-            || $effect->isPopping() 
+        } elseif ($effect->isTremoloBar()
+            || $effect->isTapping()
+            || $effect->isSlapping()
+            || $effect->isPopping()
             || $effect->isFadeIn()
         ) {
             $flags |= 0x08;
@@ -190,10 +179,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         $this->skipBytes(2);
     }
 
-    /**
-     * @param \PhpTabs\Music\Chord $chord
-     */
-    private function writeChord(Chord $chord)
+    private function writeChord(Chord $chord): void
     {
         $this->writeBytes(
             array(
@@ -213,10 +199,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         $this->skipBytes(32);
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    private function writeInformations(Song $song)
+    private function writeInformations(Song $song): void
     {
         $this->writeStringByteSizeOfInteger($song->getName());
         $this->writeStringByteSizeOfInteger('');
@@ -235,10 +218,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    private function writeLyrics(Song $song)
+    private function writeLyrics(Song $song): void
     {
         $lyricTrack = null;
         $tracks = $song->getTracks();
@@ -262,20 +242,13 @@ class GuitarPro5Writer extends GuitarProWriterBase
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Marker $marker
-     */
-    private function writeMarker(Marker $marker)
+    private function writeMarker(Marker $marker): void
     {
         $this->writeStringByteSizeOfInteger($marker->getTitle());
         $this->writeColor($marker->getColor());
     }
 
-    /**
-     * @param \PhpTabs\Music\Measure $measure
-     * @param bool                   $changeTempo
-     */
-    private function writeMeasure(Measure $measure, $changeTempo)
+    private function writeMeasure(Measure $measure, bool $changeTempo): void
     {
         for ($v = 0; $v < 2; $v++) {
             $voices = [];
@@ -297,7 +270,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
                         $voice->getBeat(),
                         $measure,
                         $changeTempo && $index == 0
-                    );                    
+                    );
                 }
             } else {
                 $count = $measure->getTimeSignature()->getNumerator();
@@ -317,11 +290,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\MeasureHeader $measure
-     * @param \PhpTabs\Music\TimeSignature $timeSignature
-     */
-    private function writeMeasureHeader(MeasureHeader $measure, TimeSignature $timeSignature)
+    private function writeMeasureHeader(MeasureHeader $measure, TimeSignature $timeSignature): void
     {
         $flags = 0;
 
@@ -397,10 +366,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    private function writeMeasureHeaders(Song $song)
+    private function writeMeasureHeaders(Song $song): void
     {
         $timeSignature = new TimeSignature();
 
@@ -418,11 +384,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Song  $song
-     * @param \PhpTabs\Music\Tempo $tempo
-     */
-    private function writeMeasures(Song $song, Tempo $tempo)
+    private function writeMeasures(Song $song, Tempo $tempo): void
     {
         foreach ($song->getMeasureHeaders() as $index => $header) {
 
@@ -440,10 +402,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Tempo $tempo
-     */
-    private function writeMixChange(Tempo $tempo)
+    private function writeMixChange(Tempo $tempo): void
     {
         for ($i = 0; $i < 23; $i++) {
             $this->writeByte(0xff);
@@ -460,11 +419,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         $this->writeByte(0xff);
     }
 
-    /**
-     * @param  \PhpTabs\Music\TimeSignature $timeSignature
-     * @return array
-     */
-    private function makeEighthNoteBytes(TimeSignature $timeSignature)
+    private function makeEighthNoteBytes(TimeSignature $timeSignature): array
     {
         $bytes = array(0, 0, 0, 0);
 
@@ -486,11 +441,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         return $bytes;
     }
 
-    /**
-     * @param  string $comments
-     * @return array
-     */
-    private function toCommentLines($comments)
+    private function toCommentLines(string $comments): array
     {
         $lines = [];
 
@@ -505,7 +456,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         return $lines;
     }
 
-    private function writeSetup()
+    private function writeSetup(): void
     {
         $this->writeInt(210);
         $this->writeInt(297);
@@ -524,24 +475,17 @@ class GuitarPro5Writer extends GuitarProWriterBase
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Text $text
-     */
-    private function writeText(Text $text)
+    private function writeText(Text $text): void
     {
         $this->writeStringByteSizeOfInteger($text->getValue());
     }
 
-    /**
-     * @param \PhpTabs\Music\Track $track
-     */
-    private function writeTrack(Track $track)
+    private function writeTrack(Track $track): void
     {
         $channel = $this->getChannelRoute($track->getChannelId());
 
         $flags = 0;
-        if ($track          ->getSong()          ->getChannelById($track->getChannelId())          ->isPercussionChannel()
-        ) {
+        if ($track->getSong()->getChannelById($track->getChannelId())->isPercussionChannel()) {
             $flags |= 0x01;
         }
 
@@ -582,10 +526,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         );
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    private function writeTracks(Song $song) 
+    private function writeTracks(Song $song): void
     {
         foreach ($song->getTracks() as $track) {
             $this->writeTrack($track);

@@ -30,9 +30,6 @@ class GuitarPro4Writer extends GuitarProWriterBase
      */
     const VERSION = 'FICHIER GUITAR PRO v4.00';
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
     public function __construct(Song $song)
     {
         parent::__construct();
@@ -57,13 +54,10 @@ class GuitarPro4Writer extends GuitarProWriterBase
         $this->writeInt($song->countTracks());
         $this->getWriter('MeasureHeaderWriter')->writeMeasureHeaders($song);
         $this->getWriter('TrackWriter')->writeTracks($song);
-        $this->getWriter('MeasureWriter')->writeMeasures($song, clone $header->getTempo());   
+        $this->getWriter('MeasureWriter')->writeMeasures($song, clone $header->getTempo());
     }
 
-    /**
-     * @param \PhpTabs\Music\Chord $chord
-     */
-    public function writeChord(Chord $chord)
+    public function writeChord(Chord $chord): void
     {
         $this->writeUnsignedByte(0x01);
         $this->skipBytes(16);
@@ -78,10 +72,7 @@ class GuitarPro4Writer extends GuitarProWriterBase
         $this->skipBytes(32);
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    private function writeInformations(Song $song)
+    private function writeInformations(Song $song): void
     {
         $this->writeStringByteSizeOfInteger($song->getName());
         $this->writeStringByteSizeOfInteger("");
@@ -100,19 +91,13 @@ class GuitarPro4Writer extends GuitarProWriterBase
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\Marker $marker
-     */
-    public function writeMarker(Marker $marker)
+    public function writeMarker(Marker $marker): void
     {
         $this->writeStringByteSizeOfInteger($marker->getTitle());
         $this->writeColor($marker->getColor());
     }
 
-    /**
-     * @param \PhpTabs\Music\Tempo $tempo
-     */
-    public function writeMixChange(Tempo $tempo)
+    public function writeMixChange(Tempo $tempo): void
     {
         for ($i = 0; $i < 7; $i++) {
             $this->writeByte(-1);
@@ -123,11 +108,7 @@ class GuitarPro4Writer extends GuitarProWriterBase
         $this->writeUnsignedByte(1);
     }
 
-    /**
-     * @param  string $comments
-     * @return array
-     */
-    private function toCommentLines($comments)
+    private function toCommentLines(string $comments): array
     {
         $lines = array();
         $line  = $comments;
@@ -142,10 +123,7 @@ class GuitarPro4Writer extends GuitarProWriterBase
         return $lines;
     }
 
-    /**
-     * @param \PhpTabs\Music\Text $text
-     */
-    public function writeText(Text $text)
+    public function writeText(Text $text): void
     {
         $this->writeStringByteSizeOfInteger($text->getValue());
     }

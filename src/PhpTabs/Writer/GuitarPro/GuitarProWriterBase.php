@@ -37,10 +37,7 @@ abstract class GuitarProWriterBase implements WriterInterface
         $this->channelRouter = new ChannelRouter();
     }
 
-    /**
-     * @param \PhpTabs\Music\Color $color
-     */
-    public function writeColor(Color $color)
+    public function writeColor(Color $color): void
     {
         $this->writeUnsignedByte($color->getR());
         $this->writeUnsignedByte($color->getG());
@@ -48,61 +45,52 @@ abstract class GuitarProWriterBase implements WriterInterface
         $this->writeByte(0);
     }
 
-    /**
-     * @param  \PhpTabs\Music\Duration $duration
-     * @return int
-     */
-    public function parseDuration(Duration $duration)
+    public function parseDuration(Duration $duration): int
     {
         switch ($duration->getValue()) {
-        case Duration::WHOLE:
-            return -2;
-        case Duration::HALF:
-            return -1;
-        case Duration::QUARTER:
-            return 0;
-        case Duration::EIGHTH:
-            return 1;
-        case Duration::SIXTEENTH:
-            return 2;
-        case Duration::THIRTY_SECOND:
-            return 3;
-        case Duration::SIXTY_FOURTH:
-            return 4;
+            case Duration::WHOLE:
+                return -2;
+            case Duration::HALF:
+                return -1;
+            case Duration::QUARTER:
+                return 0;
+            case Duration::EIGHTH:
+                return 1;
+            case Duration::SIXTEENTH:
+                return 2;
+            case Duration::THIRTY_SECOND:
+                return 3;
+            case Duration::SIXTY_FOURTH:
+                return 4;
         }
 
         return 0;
     }
 
-    /**
-     * @param  \PhpTabs\Music\Stroke $stroke
-     * @return int
-     */
-    public function toStrokeValue(Stroke $stroke)
+    public function toStrokeValue(Stroke $stroke): int
     {
         switch ($stroke->getValue()) {
-        case Duration::SIXTY_FOURTH:
-            return 2;
-        case Duration::THIRTY_SECOND:
-            return 3;
-        case Duration::SIXTEENTH:
-            return 4;
-        case Duration::EIGHTH:
-            return 5;
-        case Duration::QUARTER:
-            return 6;
-        default:
-            return 2;
+            case Duration::SIXTY_FOURTH:
+                return 2;
+            case Duration::THIRTY_SECOND:
+                return 3;
+            case Duration::SIXTEENTH:
+                return 4;
+            case Duration::EIGHTH:
+                return 5;
+            case Duration::QUARTER:
+                return 6;
+            default:
+                return 2;
         }
     }
 
     /**
      * Get a dedicated writer
      *
-     * @param  string $name
      * @return mixed
      */
-    public function getWriter($name)
+    public function getWriter(string $name)
     {
         if (!isset($this->writers[$name])) {
             $classname = __NAMESPACE__ . '\\Writers\\' . ucfirst($name);
@@ -114,10 +102,8 @@ abstract class GuitarProWriterBase implements WriterInterface
 
     /**
      * Get name
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -127,11 +113,7 @@ abstract class GuitarProWriterBase implements WriterInterface
         return $this->content;
     }
 
-    /**
-     * @param  int $channelId
-     * @return \PhpTabs\Share\ChannelRoute
-     */
-    public function getChannelRoute($channelId)
+    public function getChannelRoute(int $channelId): ChannelRoute
     {
         $channelRoute = $this->channelRouter->getRoute($channelId);
 
@@ -144,10 +126,7 @@ abstract class GuitarProWriterBase implements WriterInterface
         return $channelRoute;
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    protected function configureChannelRouter(Song $song)
+    protected function configureChannelRouter(Song $song): void
     {
         $this->channelRouter = new ChannelRouter();
 
@@ -155,36 +134,24 @@ abstract class GuitarProWriterBase implements WriterInterface
         $routerConfigurator->configureRouter($song->getChannels());
     }
 
-    /**
-     * @param int $count
-     */
-    public function skipBytes($count)
+    public function skipBytes(int $count): void
     {
         for ($i = 0; $i < $count; $i++) {
             $this->writeByte(0);
         }
     }
 
-    /**
-     * @param bool $boolean
-     */
-    public function writeBoolean($boolean)
+    public function writeBoolean(bool $boolean): void
     {
         $this->writeByte($boolean ? 1 : 0);
     }
 
-    /**
-     * @param byte $byte
-     */
-    public function writeByte($byte)
+    public function writeByte($byte): void
     {
         $this->content .= pack('c', $byte);
     }
 
-    /**
-     * @param array $bytes
-     */
-    public function writeBytes(array $bytes)
+    public function writeBytes(array $bytes): void
     {
         array_walk(
             $bytes, function ($byte) {
@@ -193,65 +160,47 @@ abstract class GuitarProWriterBase implements WriterInterface
         );
     }
 
-    /**
-     * @param int $integer
-     */
-    public function writeInt($integer)
+    public function writeInt(int $integer): void
     {
         $this->content .= pack('V', $integer);
     }
 
-    /**
-     * @param string $string
-     */
-    public function writeStringByteSizeOfInteger($string)
+    public function writeStringByteSizeOfInteger(string $string): void
     {
         $this->writeInt(strlen($string) + 1);
         $this->writeStringByte($string, strlen($string));
     }
 
-    /**
-     * @param string $bytes
-     * @param int    $maximumLength
-     */
-    public function writeString($bytes, $maximumLength)
+    public function writeString(string $bytes, int $maximumLength): void
     {
         $length = $maximumLength == 0 || $maximumLength > strlen($bytes)
-        ? strlen($bytes) : $maximumLength;
+            ? strlen($bytes)
+            : $maximumLength;
 
         for ($i = 0 ; $i < $length; $i++) {
             $this->content .= $bytes[$i];
         }
     }
 
-    /**
-     * @param string $string
-     */
-    public function writeStringInteger($string)
+    public function writeStringInteger(string $string): void
     {
         $this->writeInt(strlen($string));
         $this->writeString($string, 0);
     }
 
-    /**
-     * @param string $string
-     * @param int    $size
-     */
-    public function writeStringByte($string, $size)
+    public function writeStringByte(string $string, int $size): void
     {
         $this->writeByte(
             $size == 0 || $size > strlen($string)
-            ? strlen($string) : $size
+                ? strlen($string)
+                : $size
         );
 
         $this->writeString($string, $size);
         $this->skipBytes($size - strlen($string));
     }
 
-    /**
-     * @param byte $byte
-     */
-    public function writeUnsignedByte($byte)
+    public function writeUnsignedByte(int $byte): void
     {
         $this->content .= pack('C', $byte);
     }
