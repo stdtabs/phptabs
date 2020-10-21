@@ -11,6 +11,7 @@
 
 namespace PhpTabs\Writer\GuitarPro\Writers;
 
+use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Stroke;
@@ -20,16 +21,12 @@ class BeatEffectWriter
 {
     private $writer;
 
-    public function __construct($writer)
+    public function __construct(WriterInterface $writer)
     {
         $this->writer = $writer;
     }
 
-    /**
-     * @param \PhpTabs\Music\Beat       $beat
-     * @param \PhpTabs\Music\NoteEffect $noteEffect
-     */
-    public function writeBeatEffects(Beat $beat, NoteEffect $noteEffect)
+    public function writeBeatEffects(Beat $beat, NoteEffect $noteEffect): void
     {
         $flags1 = $this->createFlags1($noteEffect, $beat);
         $flags2 = $this->createFlags2($noteEffect);
@@ -63,11 +60,8 @@ class BeatEffectWriter
 
     /**
      * Create flag1
-     * 
-     * @param  \PhpTabs\Music\NoteEffect 
-     * @return int
      */
-    public function createFlags1(NoteEffect $effect, Beat $beat)
+    public function createFlags1(NoteEffect $effect, Beat $beat): int
     {
         $flags1 = 0;
 
@@ -88,11 +82,8 @@ class BeatEffectWriter
 
     /**
      * Create flag2
-     * 
-     * @param  \PhpTabs\Music\NoteEffect $effect
-     * @return int
      */
-    public function createFlags2(NoteEffect $effect)
+    public function createFlags2(NoteEffect $effect): int
     {
         $flags2 = 0;
 
@@ -105,21 +96,19 @@ class BeatEffectWriter
 
     /**
      * Write stroke values
-     * 
-     * @param \PhpTabs\Music\Beat $beat
-     * @param int                 $firstTest
-     * @param int                 $secondTest
      */
-    public function writeStroke(Beat $beat, $firstTest, $secondTest)
+    public function writeStroke(Beat $beat, int $firstTest, int $secondTest): void
     {
         $this->writer->writeUnsignedByte(
             $beat->getStroke()->getDirection() == $firstTest
-            ? $this->writer->toStrokeValue($beat->getStroke()) : 0
+                ? $this->writer->toStrokeValue($beat->getStroke())
+                : 0
         );
 
         $this->writer->writeUnsignedByte(
             $beat->getStroke()->getDirection() == $secondTest
-            ? $this->writer->toStrokeValue($beat->getStroke()) : 0
+                ? $this->writer->toStrokeValue($beat->getStroke())
+                : 0
         );
     }
 }

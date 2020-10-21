@@ -11,6 +11,7 @@
 
 namespace PhpTabs\Writer\GuitarPro\Writers;
 
+use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\DivisionType;
 use PhpTabs\Music\Measure;
@@ -23,23 +24,18 @@ class BeatWriter
 {
     private $writer;
 
-    public function __construct($writer)
+    public function __construct(WriterInterface $writer)
     {
         $this->writer = $writer;
     }
 
-    /**
-     * @param \PhpTabs\Music\Beat    $beat
-     * @param \PhpTabs\Music\Measure $measure
-     * @param bool                   $changeTempo
-     */
-    public function writeBeat(Beat $beat, Measure $measure, $changeTempo)
+    public function writeBeat(Beat $beat, Measure $measure, bool $changeTempo): void
     {
         $voice = $beat->getVoice(0);
         $duration = $voice->getDuration();
-    
+
         $effect = $this->createEffect($voice);
-    
+
         $flags = 0;
 
         if ($duration->isDotted() || $duration->isDoubleDotted()) {
@@ -57,10 +53,10 @@ class BeatWriter
         if ($beat->getStroke()->getDirection() != Stroke::STROKE_NONE) {
             $flags |= 0x08;
         }
-        elseif ($effect->isTremoloBar() 
-            || $effect->isTapping() 
-            || $effect->isSlapping() 
-            || $effect->isPopping() 
+        elseif ($effect->isTremoloBar()
+            || $effect->isTapping()
+            || $effect->isSlapping()
+            || $effect->isPopping()
             || $effect->isFadeIn()
         ) {
             $flags |= 0x08;
@@ -77,7 +73,7 @@ class BeatWriter
         if ($voice->isRestVoice()) {
             $flags |= 0x40;
         }
-    
+
         $this->writer->writeUnsignedByte($flags);
 
         if (($flags & 0x40) != 0) {
@@ -133,11 +129,8 @@ class BeatWriter
 
     /**
      * Create a NoteEffect for handling beat effect
-     * 
-     * @param  \PhpTabs\Music\Voice $voice
-     * @return \PhpTabs\Music\NoteEffect
      */
-    public function createEffect(Voice $voice)
+    public function createEffect(Voice $voice): NoteEffect
     {
         $effect = new NoteEffect();
 

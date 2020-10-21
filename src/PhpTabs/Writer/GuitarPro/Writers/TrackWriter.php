@@ -11,6 +11,7 @@
 
 namespace PhpTabs\Writer\GuitarPro\Writers;
 
+use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\Track;
 
@@ -18,21 +19,17 @@ class TrackWriter
 {
     private $writer;
 
-    public function __construct($writer)
+    public function __construct(WriterInterface $writer)
     {
         $this->writer = $writer;
     }
 
-    /**
-     * @param \PhpTabs\Music\Track $track
-     */
-    private function writeTrack(Track $track)
+    private function writeTrack(Track $track): void
     {
         $channel = $this->writer->getChannelRoute($track->getChannelId());
 
         $flags = 0;
-        if ($track            ->getSong()            ->getChannelById($track->getChannelId())            ->isPercussionChannel()
-        ) {
+        if ($track->getSong()->getChannelById($track->getChannelId())->isPercussionChannel()) {
             $flags |= 0x01;
         }
 
@@ -57,10 +54,7 @@ class TrackWriter
         $this->writer->writeColor($track->getColor());
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    public function writeTracks(Song $song)
+    public function writeTracks(Song $song): void
     {
         foreach ($song->getTracks() as $track) {
             $this->writeTrack($track);

@@ -11,21 +11,19 @@
 
 namespace PhpTabs\Writer\GuitarPro\Writers;
 
+use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\Song;
 
 class LyricsWriter
 {
     private $writer;
 
-    public function __construct($writer)
+    public function __construct(WriterInterface $writer)
     {
         $this->writer = $writer;
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    public function writeLyrics(Song $song)
+    public function writeLyrics(Song $song): void
     {
         $lyricTrack = null;
         $tracks = $song->getTracks();

@@ -11,6 +11,7 @@
 
 namespace PhpTabs\Writer\GuitarPro\Writers;
 
+use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\Channel;
 use PhpTabs\Music\Song;
 
@@ -18,15 +19,12 @@ class ChannelWriter
 {
     private $writer;
 
-    public function __construct($writer)
+    public function __construct(WriterInterface $writer)
     {
         $this->writer = $writer;
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    public function writeChannels(Song $song)
+    public function writeChannels(Song $song): void
     {
         $channels = $this->makeChannels($song);
 
@@ -44,11 +42,7 @@ class ChannelWriter
         );
     }
 
-    /**
-     * @param  \PhpTabs\Music\Song $song
-     * @return array
-     */
-    private function makeChannels(Song $song)
+    private function makeChannels(Song $song): array
     {
         $channels = [];
 
@@ -80,10 +74,7 @@ class ChannelWriter
         return $channels;
     }
 
-    /**
-     * @param int $short
-     */
-    private function toChannelByte($short)
+    private function toChannelByte(int $short): int
     {
         return intval(($short + 1) / 8);
     }

@@ -11,6 +11,7 @@
 
 namespace PhpTabs\Writer\GuitarPro\Writers;
 
+use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\EffectGrace;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Velocities;
@@ -19,15 +20,12 @@ class NoteEffect5Writer
 {
     private $writer;
 
-    public function __construct($writer)
+    public function __construct(WriterInterface $writer)
     {
         $this->writer = $writer;
     }
 
-    /**
-     * @param \PhpTabs\Music\NoteEffect $effect
-     */
-    public function writeNoteEffects(NoteEffect $effect)
+    public function writeNoteEffects(NoteEffect $effect): void
     {
         $flags1 = $this->writer->getWriter('NoteEffectWriter')->parseFlag1($effect);
         $flags2 = $this->writer->getWriter('NoteEffectWriter')->parseFlag2($effect);
@@ -60,10 +58,7 @@ class NoteEffect5Writer
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectGrace $grace
-     */
-    private function writeGrace(EffectGrace $grace)
+    private function writeGrace(EffectGrace $grace): void
     {
         $this->writer->writeUnsignedByte($grace->getFret());
 

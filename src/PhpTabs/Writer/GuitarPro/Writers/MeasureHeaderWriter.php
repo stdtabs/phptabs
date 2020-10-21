@@ -11,6 +11,7 @@
 
 namespace PhpTabs\Writer\GuitarPro\Writers;
 
+use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\TimeSignature;
@@ -19,15 +20,12 @@ class MeasureHeaderWriter
 {
     private $writer;
 
-    public function __construct($writer)
+    public function __construct(WriterInterface $writer)
     {
         $this->writer = $writer;
     }
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
-    public function writeMeasureHeaders(Song $song)
+    public function writeMeasureHeaders(Song $song): void
     {
         $timeSignature = new TimeSignature();
 
@@ -42,11 +40,7 @@ class MeasureHeaderWriter
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\MeasureHeader $measure
-     * @param \PhpTabs\Music\TimeSignature $timeSignature
-     */
-    private function writeMeasureHeader(MeasureHeader $measure, TimeSignature $timeSignature)
+    private function writeMeasureHeader(MeasureHeader $measure, TimeSignature $timeSignature): void
     {
         $flags = 0;
 

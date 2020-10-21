@@ -11,6 +11,7 @@
 
 namespace PhpTabs\Writer\GuitarPro\Writers;
 
+use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\Note;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Velocities;
@@ -19,15 +20,12 @@ class Note5Writer
 {
     private $writer;
 
-    public function __construct($writer)
+    public function __construct(WriterInterface $writer)
     {
         $this->writer = $writer;
     }
 
-    /**
-     * @param \PhpTabs\Music\Note $note
-     */
-    public function writeNote(Note $note)
+    public function writeNote(Note $note): void
     {
         $effect = $note->getEffect();
 
@@ -37,13 +35,13 @@ class Note5Writer
 
         if (($flags & 0x20) != 0) {
             $typeHeader = 0x01;
-  
+
             if ($note->isTiedNote()) {
                 $typeHeader = 0x02;
             } elseif ($effect->isDeadNote()) {
                 $typeHeader = 0x03;
             }
-  
+
             $this->writer->writeUnsignedByte($typeHeader);
         }
 
@@ -64,17 +62,14 @@ class Note5Writer
 
     /**
      * Create flags
-     * 
-     * @param  \PhpTabs\Music\NoteEffect $effect
-     * @return int
      */
-    private function createFlags(NoteEffect $effect)
+    private function createFlags(NoteEffect $effect): int
     {
         $flags = 0x20 | 0x10;
 
         if ($effect->isVibrato()
             || $effect->isBend()
-            || $effect->isGrace() 
+            || $effect->isGrace()
             || $effect->isSlide()
             || $effect->isHammer()
             || $effect->isLetRing()

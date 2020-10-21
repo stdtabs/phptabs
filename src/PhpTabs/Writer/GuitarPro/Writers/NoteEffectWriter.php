@@ -11,6 +11,7 @@
 
 namespace PhpTabs\Writer\GuitarPro\Writers;
 
+use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\EffectBend;
 use PhpTabs\Music\EffectGrace;
@@ -27,15 +28,12 @@ class NoteEffectWriter
 {
     private $writer;
 
-    public function __construct($writer)
+    public function __construct(WriterInterface $writer)
     {
         $this->writer = $writer;
     }
 
-    /**
-     * @param \PhpTabs\Music\NoteEffect $effect
-     */
-    public function writeNoteEffects(NoteEffect $effect)
+    public function writeNoteEffects(NoteEffect $effect): void
     {
         $flags1 = $this->parseFlag1($effect);
         $flags2 = $this->parseFlag2($effect);
@@ -62,21 +60,21 @@ class NoteEffectWriter
         if (($flags2 & 0x10) != 0) {
 
             switch ($effect->getHarmonic()->getType()) {
-            case EffectHarmonic::TYPE_NATURAL:
-                $this->writer->writeByte(1);
-                break;
-            case EffectHarmonic::TYPE_TAPPED:
-                $this->writer->writeByte(3);
-                break;
-            case EffectHarmonic::TYPE_PINCH:
-                $this->writer->writeByte(4);
-                break;
-            case EffectHarmonic::TYPE_SEMI:
-                $this->writer->writeByte(5);
-                break;
-            case EffectHarmonic::TYPE_ARTIFICIAL:
-                $this->writer->writeByte(15);
-                break;
+                case EffectHarmonic::TYPE_NATURAL:
+                    $this->writer->writeByte(1);
+                    break;
+                case EffectHarmonic::TYPE_TAPPED:
+                    $this->writer->writeByte(3);
+                    break;
+                case EffectHarmonic::TYPE_PINCH:
+                    $this->writer->writeByte(4);
+                    break;
+                case EffectHarmonic::TYPE_SEMI:
+                    $this->writer->writeByte(5);
+                    break;
+                case EffectHarmonic::TYPE_ARTIFICIAL:
+                    $this->writer->writeByte(15);
+                    break;
             }
         }
 
@@ -85,26 +83,23 @@ class NoteEffectWriter
             $this->writer->writeByte($effect->getTrill()->getFret());
 
             switch ($effect->getTrill()->getDuration()->getValue()) {
-            case Duration::SIXTEENTH:
-                $this->writer->writeByte(1);
-                break;
-            case Duration::THIRTY_SECOND:
-                $this->writer->writeByte(2);
-                break;
-            case Duration::SIXTY_FOURTH:
-                $this->writer->writeByte(3);
-                break;
+                case Duration::SIXTEENTH:
+                    $this->writer->writeByte(1);
+                    break;
+                case Duration::THIRTY_SECOND:
+                    $this->writer->writeByte(2);
+                    break;
+                case Duration::SIXTY_FOURTH:
+                    $this->writer->writeByte(3);
+                    break;
             }
         }
     }
 
     /**
      * Parse flag 1 for GuitarPro 4
-     * 
-     * @param  \PhpTabs\Music\NoteEffect $effect
-     * @return int
      */
-    public function parseFlag1(NoteEffect $effect)
+    public function parseFlag1(NoteEffect $effect): int
     {
         $flags1 = 0;
 
@@ -129,11 +124,8 @@ class NoteEffectWriter
 
     /**
      * Parse flag 2 for GuitarPro 4, 5
-     * 
-     * @param  \PhpTabs\Music\NoteEffect $effect
-     * @return int
      */
-    public function parseFlag2(NoteEffect $effect)
+    public function parseFlag2(NoteEffect $effect): int
     {
         $flags2 = 0;
 
@@ -168,10 +160,7 @@ class NoteEffectWriter
         return $flags2;
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectBend $bend
-     */
-    public function writeBend(EffectBend $bend)
+    public function writeBend(EffectBend $bend): void
     {
         $points = count($bend->getPoints());
         $this->writer->writeByte(1);
@@ -190,10 +179,7 @@ class NoteEffectWriter
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectGrace $grace
-     */
-    public function writeGrace(EffectGrace $grace)
+    public function writeGrace(EffectGrace $grace): void
     {
         if ($grace->isDead()) {
             $this->writer->writeUnsignedByte(0xff);
@@ -214,43 +200,38 @@ class NoteEffectWriter
 
     /**
      * Write a Grace transition byte
-     * 
-     * @param int $transition
      */
-    public function writeTransition($transition)
+    public function writeTransition(int $transition): void
     {
         switch ($transition) {
-        case EffectGrace::TRANSITION_NONE:
-            $this->writer->writeUnsignedByte(0);
-            break;
-        case EffectGrace::TRANSITION_SLIDE:
-            $this->writer->writeUnsignedByte(1);
-            break;
-        case EffectGrace::TRANSITION_BEND:
-            $this->writer->writeUnsignedByte(2);
-            break;
-        case EffectGrace::TRANSITION_HAMMER:
-            $this->writer->writeUnsignedByte(3);
-            break;
+            case EffectGrace::TRANSITION_NONE:
+                $this->writer->writeUnsignedByte(0);
+                break;
+            case EffectGrace::TRANSITION_SLIDE:
+                $this->writer->writeUnsignedByte(1);
+                break;
+            case EffectGrace::TRANSITION_BEND:
+                $this->writer->writeUnsignedByte(2);
+                break;
+            case EffectGrace::TRANSITION_HAMMER:
+                $this->writer->writeUnsignedByte(3);
+                break;
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectTremoloBar $effect
-     */
-    public function writeTremoloBar(EffectTremoloBar $effect)
+    public function writeTremoloBar(EffectTremoloBar $effect): void
     {
         $points = $effect->getPoints();
 
         switch(str_replace('PhpTabs\\Writer\\GuitarPro\\', '', get_class($this->writer))) {
-        case 'GuitarPro5Writer':
-            $this->writer->writeByte(1);
-            break;
-        default:
-            $this->writer->writeByte(6);
-            break;
+            case 'GuitarPro5Writer':
+                $this->writer->writeByte(1);
+                break;
+            default:
+                $this->writer->writeByte(6);
+                break;
         }
-    
+
         $this->writer->writeInt(0);
         $this->writer->writeInt(count($points));
 
@@ -261,41 +242,35 @@ class NoteEffectWriter
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectTremoloPicking $effect
-     */
-    public function writeTremoloPicking(EffectTremoloPicking $effect)
+    public function writeTremoloPicking(EffectTremoloPicking $effect): void
     {
         switch ($effect->getDuration()->getValue()) {
-        case Duration::EIGHTH:
-            $this->writer->writeUnsignedByte(1);
-            break;
-        case Duration::SIXTEENTH:
-            $this->writer->writeUnsignedByte(2);
-            break;
-        case Duration::THIRTY_SECOND:
-            $this->writer->writeUnsignedByte(3);
-            break;
+            case Duration::EIGHTH:
+                $this->writer->writeUnsignedByte(1);
+                break;
+            case Duration::SIXTEENTH:
+                $this->writer->writeUnsignedByte(2);
+                break;
+            case Duration::THIRTY_SECOND:
+                $this->writer->writeUnsignedByte(3);
+                break;
         }
     }
 
-    /**
-     * @param \PhpTabs\Music\EffectTrill $effect
-     */
-    public function writeTrill(EffectTrill $effect)
+    public function writeTrill(EffectTrill $effect): void
     {
         $this->writer->writeByte($effect->getFret());
 
         switch ($effect->getDuration()->getValue()) {
-        case Duration::SIXTEENTH:
-            $this->writer->writeByte(1);
-            break;
-        case Duration::THIRTY_SECOND:
-            $this->writer->writeByte(2);
-            break;
-        case Duration::SIXTY_FOURTH:
-            $this->writer->writeByte(3);
-            break;
+            case Duration::SIXTEENTH:
+                $this->writer->writeByte(1);
+                break;
+            case Duration::THIRTY_SECOND:
+                $this->writer->writeByte(2);
+                break;
+            case Duration::SIXTY_FOURTH:
+                $this->writer->writeByte(3);
+                break;
         }
     }
 }
