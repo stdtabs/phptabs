@@ -75,7 +75,7 @@ class MidiSequence
         for ($i = 0; $i < count($this->tracks); $i++) {
             $track = $this->tracks[$i];
 
-            $track->add(new MidiEvent(MidiMessage::metaMessage(47, 1), $track->ticks()));
+            $track->add(new MidiEvent(MidiMessage::metaMessage(47, [1]), $track->ticks()));
         }
     }
 }

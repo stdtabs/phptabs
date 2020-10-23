@@ -18,7 +18,7 @@ use PhpTabs\Component\ReaderInterface;
  */
 interface MidiReaderInterface extends ReaderInterface
 {
-    const    HEADER_LENGTH = 6;
+    const HEADER_LENGTH = 6;
     const HEADER_MAGIC = 0x4d546864;
     const TRACK_MAGIC = 0x4d54726b;
 

@@ -16,13 +16,13 @@ namespace PhpTabs\Reader\Midi;
  */
 class MidiTrack
 {
-    private $ticks;
-    private $events = array();
+    private $ticks = 0;
+    private $events = [];
 
     public function add(MidiEvent $event): void
     {
         $this->events[] = $event;
-        $this->ticks = max($this->ticks, $event->getTick());
+        $this->ticks = max([$this->ticks, $event->getTick()]);
     }
 
     public function get(int $index): MidiEvent
