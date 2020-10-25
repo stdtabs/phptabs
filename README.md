@@ -26,13 +26,14 @@ Table of contents
 =================
 
 __The documentation below contains only basic examples. If you want to 
-fully exploit the library, read the 
+see more examples and the complete API behind the library, read the 
 [PhpTabs Manual](https://stdtabs.github.io/).__
 
 - [Requirements](#requirements)
 - [Installation](#installation)
   - [Composer](#composer)
   - [Alternative](#alternative)
+- [Testing](#testing)
 - [Basic Usage](#basic-usage)
 - [Options](#options)
   - [type](#type)
@@ -78,7 +79,9 @@ ________________________________________________________________________
 Requirements
 ------------
 
-PhpTabs requires PHP 7+.
+PhpTabs requires PHP 7.2+ and 8.0.
+
+Until PhpTabs 0.6.1, it was maintained for PHP versions 7.0 and 7.1.
 
 Until PhpTabs 0.6.0, it was maintained for PHP versions 5.4, 5.5, 5.6
 and HHVM.
@@ -105,6 +108,22 @@ Then add this PHP line before usage:
 require_once 'src/PhpTabs/bootstrap.php';
 ```
 
+________________________________________________________________________
+
+Testing
+-------
+
+To run tests, you should install PHPUnit first.
+
+```sh
+composer require phpunit/phpunit
+```
+
+Then run the test suite with:
+
+```sh
+vendor/bin/phpunit
+```
 ________________________________________________________________________
 
 Basic Usage
