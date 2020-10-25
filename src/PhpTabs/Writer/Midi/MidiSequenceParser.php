@@ -39,7 +39,6 @@ class MidiSequenceParser
 
     private $song;
     private $flags;
-    // @todo check that this test value fix
     private $infoTrack;
     private $metronomeTrack;
     private $metronomeChannelId;
@@ -145,7 +144,7 @@ class MidiSequenceParser
         if ($channel !== null) {
             $previous = null;
 
-            $this->addBend($helper, $track->getNumber(), Duration::QUARTER_TIME, self::DEFAULT_BEND, $channel->getId(), false);
+            $this->addBend($helper, $track->getNumber(), Duration::QUARTER_TIME, self::DEFAULT_BEND, $track->getChannelId(), false);
             $this->makeChannel($helper, $channel, $track->getNumber());
 
             $mCount = count($helper->getMeasureHelpers());
@@ -255,7 +254,7 @@ class MidiSequenceParser
                         $tick = $start;
                         while (true) {
                             if ($tick + 10 >= ($start + $duration)) {
-                                break ;
+                                break;
                             } elseif (($tick + $tpLength) >= ($start + $duration)) {
                                       $tpLength = ((($start + $duration) - $tick) - 1);
                             }

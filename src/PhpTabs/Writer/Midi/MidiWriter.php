@@ -115,10 +115,17 @@ class MidiWriter extends MidiWriterBase
      */
     private function writeEvent(MidiEvent $event, MidiEvent $previous = null, $out = null): int
     {
+        // @todo Remove this lines when timing will be patched
+        // time should not be < 0
+        $time = $previous !== null
+            ? ($event->getTick() - $previous->getTick())
+            : 0;
+        if ($time < 0) {
+            $time = abs($event->getTick() - $previous->getTick());
+        }
+
         $length = $this->writeVariableLengthQuantity(
-            $previous !== null
-                ? ($event->getTick() - $previous->getTick())
-                : 0,
+            $time,
             $out
         );
 
