@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -19,8 +21,8 @@ class MidiRepeatController
     private $song;
     private $count;
     private $index;
-    private $lastIndex;    
-    private $shouldPlay;    
+    private $lastIndex;
+    private $shouldPlay;
     private $repeatOpen;
     private $repeatStart;
     private $repeatEnd;
@@ -36,7 +38,7 @@ class MidiRepeatController
      * @param mixed               $sHeader
      * @param mixed               $eHeader
      */
-    public function __construct(Song $song, $sHeader, $eHeader)
+    public function __construct(Song $song, int $sHeader, int $eHeader)
     {
         $this->song = $song;
         $this->sHeader = $sHeader;
@@ -54,7 +56,7 @@ class MidiRepeatController
         $this->repeatNumber = 0;
     }
 
-    public function process()
+    public function process(): void
     {
         $header = $this->song->getMeasureHeader($this->index);
 
@@ -86,9 +88,7 @@ class MidiRepeatController
                 $this->repeatNumber = 0;
                 $this->repeatAlternative = 0;
             }
-        }
-        else
-        {
+        } else {
             // Checks if an alternative has been opened
             if ($this->repeatAlternative == 0) {
                 $this->repeatAlternative = $header->getRepeatAlternative();
@@ -117,9 +117,7 @@ class MidiRepeatController
                 $this->repeatMove += $this->repeatEnd - $this->repeatStart;
                 $this->index = $this->repeatStartIndex - 1;
                 $this->repeatNumber++;
-            }
-            else
-            {
+            } else {
                 $this->repeatStart = 0;
                 $this->repeatNumber = 0;
                 $this->repeatEnd = 0;
@@ -132,34 +130,22 @@ class MidiRepeatController
         $this->index++;
     }
 
-    /**
-     * @return bool
-     */
-    public function finished()
+    public function finished(): bool
     {
-        return ($this->index >= $this->count);
+        return $this->index >= $this->count;
     }
 
-    /**
-     * @return bool
-     */
-    public function shouldPlay()
+    public function shouldPlay(): bool
     {
         return $this->shouldPlay;
     }
 
-    /**
-     * @return int
-     */
-    public function getIndex()
+    public function getIndex(): int
     {
         return $this->index;
     }
 
-    /**
-     * @return int
-     */
-    public function getRepeatMove()
+    public function getRepeatMove(): int
     {
         return $this->repeatMove;
     }

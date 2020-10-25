@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -26,20 +28,13 @@ class MidiSequence
     protected $resolution;
     private $tracks;
 
-    /**
-     * @param mixed $divisionType
-     * @param mixed $resolution
-     */
-    public function __construct(int $divisionType, int $resolution)
+    public function __construct(float $divisionType, int $resolution)
     {
         $this->divisionType = $divisionType;
         $this->resolution = $resolution;
         $this->tracks = array();
     }
 
-    /**
-     * @param \PhpTabs\Reader\Midi\MidiTrack $track
-     */
     public function addTrack(MidiTrack $track): void
     {
         $this->tracks[] = $track;
@@ -60,7 +55,7 @@ class MidiSequence
         return count($this->tracks);
     }
 
-    public function getDivisionType(): int
+    public function getDivisionType(): float
     {
         return $this->divisionType;
     }

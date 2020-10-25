@@ -27,6 +27,7 @@ class ChannelRouter
 
     public function resetRoutes(): void
     {
+        $this->midiChannels = [];
         for ($i = 0; $i < count($this->midiChannels); $i++) {
             $this->midiChannels[$i]->clear();
         }

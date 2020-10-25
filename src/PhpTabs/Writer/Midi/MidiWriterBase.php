@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -27,77 +29,67 @@ class MidiWriterBase implements WriterInterface
         return $this->content;
     }
 
-    /**
-     * @param int $integer
-     */
-    protected function writeInt($integer)
+    protected function writeInt(int $integer): void
     {
         $this->content .= pack('N', $integer);
     }
 
-    /**
-     * @param int $integer
-     */
-    protected function writeShort($integer)
+    protected function writeShort(int $integer): void
     {
         $this->content .= pack('n', $integer);
     }
 
-    /**
-     * @param array $bytes
-     */
-    protected function writeBytes(array $bytes)
+    protected function writeBytes(array $bytes): void
     {
         foreach ($bytes as $byte) {
             $this->content .= pack('c', $byte);
         }
     }
 
-    /**
-     * @param array $bytes
-     */
-    protected function writeUnsignedBytes(array $bytes)
+    protected function writeUnsignedBytes(array $bytes): void
     {
         foreach ($bytes as $byte) {
             $this->content .= pack('C', $byte);
         }
     }
 
-    /**
-     * @param int $value
-     *
-     * @param int $value
-     */
-    protected function writeVariableLengthQuantity($value)
+    protected function writeVariableLengthQuantity(int $value, string $out = null): int
     {
         $started = false;
         $length = 0;
-        $data = intval(($value >> 21) & 0x7f);
+        $data = (($value >> 21) & 0x7f);
 
         if ($data != 0) {
-            $this->writeUnsignedBytes(array($data | 0x80));
+            if ($out !== null) {
+                $this->writeUnsignedBytes([$data | 0x80]);
+            }
             $length++;
             $started = true;
         }
 
-        $data = intval(($value >> 14) & 0x7f);
+        $data = (($value >> 14) & 0x7f);
 
         if ($data != 0 || $started) {
-            $this->writeUnsignedBytes(array($data | 0x80));
+            if ($out !== null) {
+                $this->writeUnsignedBytes([$data | 0x80]);
+            }
             $length++;
             $started = true;
         }
 
-        $data = intval(($value >> 7) & 0x7f);
+        $data = (($value >> 7) & 0x7f);
 
         if ($data != 0 || $started) {
-            $this->writeUnsignedBytes(array($data | 0x80));
+            if ($out !== null) {
+                $this->writeUnsignedBytes([$data | 0x80]);
+            }
             $length++;
         }
 
-        $data = intval($value & 0x7f);
-
-        $this->writeUnsignedBytes(array($data));
+        $data = ($value & 0x7f);
+        if ($out !== null) {
+            $this->writeUnsignedBytes([$data]);
+        }
         $length++;
 
         return $length;

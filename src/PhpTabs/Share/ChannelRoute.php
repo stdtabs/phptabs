@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -25,6 +27,8 @@ class ChannelRoute
     public function __construct(int $channelId)
     {
         $this->channelId = $channelId;
+        $this->channel1 = self::NULL_VALUE;
+        $this->channel2 = self::NULL_VALUE;
     }
 
     public function getChannelId(): int
@@ -32,22 +36,22 @@ class ChannelRoute
         return $this->channelId;
     }
 
-    public function getChannel1(): ?string
+    public function getChannel1(): int
     {
         return $this->channel1;
     }
 
-    public function setChannel1(string $channel1)
+    public function setChannel1(int $channel1)
     {
         $this->channel1 = $channel1;
     }
 
-    public function getChannel2(): ?string
+    public function getChannel2(): int
     {
         return $this->channel2;
     }
 
-    public function setChannel2(string $channel2)
+    public function setChannel2(int $channel2)
     {
         $this->channel2 = $channel2;
     }

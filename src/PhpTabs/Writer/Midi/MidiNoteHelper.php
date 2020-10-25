@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -25,28 +27,18 @@ class MidiNoteHelper
      */
     private $note;
 
-    /**
-     * @param \PhpTabs\Writer\Midi\MidiMeasureHelper $measure
-     * @param \PhpTabs\Music\Note                    $note
-     */
     public function __construct(MidiMeasureHelper $measure, Note $note)
     {
         $this->measure = $measure;
         $this->note = $note;
     }
 
-    /**
-     * @return \PhpTabs\Writer\Midi\MidiMeasureHelper $measure
-     */
-    public function getMeasure()
+    public function getMeasure(): MidiMeasureHelper
     {
         return $this->measure;
     }
 
-    /**
-     * @return \PhpTabs\Music\Note
-     */
-    public function getNote()
+    public function getNote(): Note
     {
         return $this->note;
     }

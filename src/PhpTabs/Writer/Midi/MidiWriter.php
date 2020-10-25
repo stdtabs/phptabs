@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -25,8 +27,6 @@ use PhpTabs\Share\ChannelRouterConfigurator;
 
 class MidiWriter extends MidiWriterBase
 {
-
-  
     const ADD_DEFAULT_CONTROLS = 0x01;
     const ADD_MIXER_MESSAGES = 0x02;
     const ADD_METRONOME = 0x04;
@@ -45,9 +45,6 @@ class MidiWriter extends MidiWriterBase
     const RPN_MSB = 0x65 ;
     const ALL_NOTES_OFF = 0x7B;
 
-    /**
-     * @param \PhpTabs\Music\Song $song
-     */
     public function __construct(Song $song)
     {
         parent::__construct();
@@ -59,7 +56,7 @@ class MidiWriter extends MidiWriterBase
         $settings = (new MidiSettings())->getDefaults();
 
         $midiSequenceParser = new MidiSequenceParser(
-            $song, 
+            $song,
             (self::ADD_FIRST_TICK_MOVE | self::ADD_DEFAULT_CONTROLS | self::ADD_MIXER_MESSAGES)
         );
         $midiSequenceParser->setTranspose($settings->getTranspose());
@@ -68,48 +65,45 @@ class MidiWriter extends MidiWriterBase
 
     /**
      * Starts write process
-     * 
-     * @param \PhpTabs\Reader\Midi\MidiSequence $sequence
-     * 
-     * @param int                               $type
      */
-    public function write(MidiSequence $sequence, $type)
+    public function write(MidiSequence $sequence, int $type): void
     {
         $this->writeInt(MidiReaderInterface::HEADER_MAGIC);
         $this->writeInt(MidiReaderInterface::HEADER_LENGTH);
         $this->writeShort($type);
 
-        // Write sequences
+        // Write tracks
         $this->writeShort($sequence->countTracks());
         $this->writeShort(
             $sequence->getDivisionType() == MidiSequence::PPQ
             ? ($sequence->getResolution() & 0x7fff) : 0
         );
 
-        for ($i = 0; $i < $sequence->countTracks(); $i++)
-        {
-            $this->writeTrack($sequence->getTrack($i));
+        for ($i = 0; $i < $sequence->countTracks(); $i++) {
+            $this->writeTrack($sequence->getTrack($i), 'ok');
         }
     }
 
     /**
-     * Writes a track
-     * 
-     * @param \PhpTabs\Reader\Midi\MidiTrack $track
-     * 
-     * @return int
+     * Write a track
      */
-    private function writeTrack(MidiTrack $track)
+    private function writeTrack(MidiTrack $track, $out): int
     {
         $length = 0;
-        $this->writeInt(MidiReader::TRACK_MAGIC);
+        if ($out !== null) {
+            $this->writeInt(MidiReader::TRACK_MAGIC);
+        }
+
+        if ($out !== null) {
+            $this->writeInt($this->writeTrack($track, null));
+        }
+
         $previous = null;
 
-        for ($i = 0; $i < $track->countEvents(); $i++)
-        {
+        // Bon jusqu'à l'écriture du 1er événement
+        for ($i = 0; $i < $track->countEvents(); $i++) {
             $event = $track->get($i);
-      
-            $length += $this->writeEvent($event, $previous);
+            $length += $this->writeEvent($event, $previous, $out);
             $previous = $event;
         }
 
@@ -117,28 +111,23 @@ class MidiWriter extends MidiWriterBase
     }
 
     /**
-     * Writes a MIDI event
-     * 
-     * @param \PhpTabs\Reader\Midi\MidiEvent $event
-     * 
-     * @param \PhpTabs\Reader\Midi\MidiEvent $previous
-     * 
-     * @return int
+     * Write a MIDI event
      */
-    private function writeEvent(MidiEvent $event, MidiEvent $previous = null)
+    private function writeEvent(MidiEvent $event, MidiEvent $previous = null, $out = null): int
     {
         $length = $this->writeVariableLengthQuantity(
             $previous !== null
-            ? ($event->getTick() - $previous->getTick()) : 0
+                ? ($event->getTick() - $previous->getTick())
+                : 0,
+            $out
         );
 
         $message = $event->getMessage();
 
         if ($message->getType() == MidiMessage::TYPE_SHORT) {
-            $length += $this->writeShortMessage($message);
-        }
-        elseif ($message->getType() == MidiMessage::TYPE_META) {
-            $length += $this->writeMetaMessage($message);
+            $length += $this->writeShortMessage($message, $out);
+        } elseif ($message->getType() == MidiMessage::TYPE_META) {
+            $length += $this->writeMetaMessage($message, $out);
         }
 
         return $length;
@@ -146,50 +135,43 @@ class MidiWriter extends MidiWriterBase
 
     /**
      * Writes a short MIDI message
-     * 
+     *
      * @param \PhpTabs\Reader\Midi\MidiMessage $message
-     * 
-     * @return int
      */
-    private function writeShortMessage(MidiMessage $message)
+    private function writeShortMessage(MidiMessage $message, $out): int
     {
         $data = $message->getData();
 
         $length = count($data);
-        $this->writeUnsignedBytes($message->getData());
-
+        if ($out !== null) {
+            // Attention aux paramètres de write en java
+            $this->writeUnsignedBytes($message->getData());
+        }
         return $length;
     }
 
     /**
      * Writes a meta MIDI message
-     * 
+     *
      * @param \PhpTabs\Reader\Midi\MidiMessage $message
-     * 
-     * @return int
      */
-    protected function writeMetaMessage(MidiMessage $message)
+    protected function writeMetaMessage(MidiMessage $message, $out): int
     {
         $length = 0;
         $data = $message->getData();
-    
-        if ($this->getContent() != '') {
-            $this->writeUnsignedBytes(array(255));
-            $this->writeUnsignedBytes(array($message->getCommand()));
-        }
-        $length += 2;
 
-        if (is_array($data)) {
-            $length += $this->writeVariableLengthQuantity(count($data));
+        if ($out !== null) {
+            $this->writeUnsignedBytes([0xFF]);
+            $this->writeUnsignedBytes([$message->getCommand()]);
+        }
+        
+        $length += 2;
+        $length += $this->writeVariableLengthQuantity(count($data), $out);
+
+        if ($out !== null) {
             $this->writeUnsignedBytes($data);
-            $length += count($data);
         }
-        else
-        {
-            $length += $this->writeVariableLengthQuantity(strlen($data));
-            $this->writeUnsignedBytes(array($data));
-            $length += strlen($data);
-        }
+        $length += count($data);
 
         return $length;
     }

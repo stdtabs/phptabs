@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -16,28 +18,18 @@ class MidiMeasureHelper
     private $index;
     private $move;
 
-    /**
-     * @param int $index
-     * @param int $move
-     */
-    public function __construct($index, $move)
+    public function __construct(int $index, int $move)
     {
         $this->index = $index;
         $this->move = $move;
     }
 
-    /**
-     * @return int
-     */
-    public function getIndex()
+    public function getIndex(): int
     {
         return $this->index;
     }
 
-    /**
-     * @return int
-     */
-    public function getMove()
+    public function getMove(): int
     {
         return $this->move;
     }

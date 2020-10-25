@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -16,28 +18,18 @@ class MidiTickHelper
     private $start;
     private $duration;
 
-    /**
-     * @param int $start
-     * @param int $duration
-     */
-    public function __construct($start, $duration)
+    public function __construct(int $start, int $duration)
     {
         $this->start = $start;
         $this->duration = $duration;
     }
 
-    /**
-     * @return int
-     */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    /**
-     * @return int
-     */
-    public function getStart()
+    public function getStart(): int
     {
         return $this->start;
     }

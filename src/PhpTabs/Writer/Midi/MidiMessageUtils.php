@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -18,12 +20,7 @@ class MidiMessageUtils
 {
     const TICK_MOVE = 0x01;
 
-    /**
-     * @param int $value
-     * 
-     * @return int
-     */
-    private static function fixValue($value)
+    private static function fixValue(int $value): int
     {
         $fixedValue = $value;
         $fixedValue = min($fixedValue, 127);
@@ -32,12 +29,7 @@ class MidiMessageUtils
         return $fixedValue;
     }
 
-    /**
-     * @param int $channels
-     * 
-     * @return int
-     */    
-    private static function fixChannel($channel)
+    private static function fixChannel(int $channel): int
     {
         $fixedChannel = $channel;
         $fixedChannel = min($fixedChannel, 15);
@@ -46,100 +38,51 @@ class MidiMessageUtils
         return $fixedChannel;
     }
 
-    /**
-     * @param int $channel
-     * @param int $note
-     * @param int $velocity
-     * 
-     * @return \PhpTabs\Reader\Midi\MidiMessage
-     */
-    public static function noteOn($channel, $note, $velocity)
+    public static function noteOn(int $channel, int $note, int $velocity): MidiMessage
     {
         return MidiMessage::shortMessage(MidiMessage::NOTE_ON, self::fixChannel($channel), self::fixValue($note), self::fixValue($velocity));
     }
 
-    /**
-     * @param int $channel
-     * @param int $note
-     * @param int $velocity
-     * 
-     * @return \PhpTabs\Reader\Midi\MidiMessage
-     */
-    public static function noteOff($channel, $note, $velocity)
+    public static function noteOff(int $channel, int $note, int $velocity): MidiMessage
     {
         return MidiMessage::shortMessage(MidiMessage::NOTE_OFF, self::fixChannel($channel), self::fixValue($note), self::fixValue($velocity));
     }
 
-    /**
-     * @param int $channel
-     * @param int $controller
-     * @param int $value
-     * 
-     * @return \PhpTabs\Reader\Midi\MidiMessage
-     */
-    public static function controlChange($channel, $controller, $value)
+    public static function controlChange(int $channel, int $controller, int $value): MidiMessage
     {
         return MidiMessage::shortMessage(MidiMessage::CONTROL_CHANGE, self::fixChannel($channel), self::fixValue($controller), self::fixValue($value));
     }
 
-    /**
-     * @param int $channel
-     * @param int $instrument
-     * 
-     * @return \PhpTabs\Reader\Midi\MidiMessage
-     */
-    public static function programChange($channel, $instrument)
+    public static function programChange(int $channel, int $instrument): MidiMessage
     {
         return MidiMessage::shortMessage(MidiMessage::PROGRAM_CHANGE, self::fixChannel($channel), self::fixValue($instrument));
     }
 
-    /**
-     * @param int $channel
-     * @param int $value
-     * 
-     * @return \PhpTabs\Reader\Midi\MidiMessage
-     */    
-    public static function pitchBend($channel, $value)
+    public static function pitchBend(int $channel, int $value): MidiMessage
     {
         return MidiMessage::shortMessage(MidiMessage::PITCH_BEND, self::fixChannel($channel), 0, self::fixValue($value));
     }
 
-    /**
-     * @return \PhpTabs\Reader\Midi\MidiMessage
-     */
-    public static function systemReset()
+    public static function systemReset(): MidiMessage
     {
         return MidiMessage::shortMessage(MidiMessage::SYSTEM_RESET);
     }
 
-    /**
-     * @param byte $usq
-     * 
-     * @return \PhpTabs\Reader\Midi\MidiMessage
-     */
-    public static function tempoInUSQ($usq)
+    public static function tempoInUSQ(int $usq): MidiMessage
     {
         $message = new MidiMessage(MidiMessage::TYPE_META, MidiMessage::TEMPO_CHANGE);
         $message->setData(array( (($usq >> 16) & 0xff), (($usq >> 8) & 0xff),(($usq) & 0xff) ));
         return $message;
     }
 
-    /**
-     * @param \PhpTabs\Music\TimeSignature $timeSignature
-     * 
-     * @return \PhpTabs\Reader\Midi\MidiMessage
-     */
-    public static function timeSignature(TimeSignature $timeSignature)
+    public static function timeSignature(TimeSignature $timeSignature): MidiMessage
     {
         $message = new MidiMessage(MidiMessage::TYPE_META, MidiMessage::TIME_SIGNATURE_CHANGE);
         $message->setData(array( $timeSignature->getNumerator(), $timeSignature->getDenominator()->getIndex(), (96 / $timeSignature->getDenominator()->getValue()), 8));
         return $message;
     }
 
-    /**
-     * @return \PhpTabs\Reader\Midi\MidiMessage
-     */
-    public static function endOfTrack()
+    public static function endOfTrack(): MidiMessage
     {
         return MidiMessage::metaMessage(47, array());
     }

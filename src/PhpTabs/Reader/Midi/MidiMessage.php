@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -29,7 +31,7 @@ class MidiMessage
     private $command;
     private $data;
 
-    public function __construct(int $message, string $command)
+    public function __construct(int $message, int $command)
     {
         $this->message = $message;
         $this->command = $command;
@@ -45,17 +47,17 @@ class MidiMessage
         return $this->data;
     }
 
-    public function getType(): string
+    public function getType(): int
     {
         return $this->message;
     }
 
-    public function getCommand(): string
+    public function getCommand(): int
     {
         return $this->command;
     }
 
-    public static function shortMessage(string $command, int $channel = null, int $data1 = null, int $data2 = null): MidiMessage
+    public static function shortMessage(int $command, int $channel = null, int $data1 = null, int $data2 = null): MidiMessage
     {
         $message = new MidiMessage(self::TYPE_SHORT, $command);
 

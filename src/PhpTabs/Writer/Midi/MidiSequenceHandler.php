@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -26,12 +28,7 @@ class MidiSequenceHandler
     private $tracks;
     private $writer;
 
-    /**
-     * @param int                          $tracks
-     * @param \PhpTabs\Music\ChannelRouter $router
-     * @param \PhpTabs\Model\MidiWriter    $writer
-     */
-    public function __construct($tracks, ChannelRouter $router, MidiWriter $writer)
+    public function __construct(int $tracks, ChannelRouter $router, MidiWriter $writer)
     {
         $this->router = $router;
         $this->tracks = $tracks;
@@ -39,7 +36,7 @@ class MidiSequenceHandler
         $this->init();
     }
 
-    private function init()
+    private function init(): void
     {
         $this->sequence = new MidiSequence(MidiSequence::PPQ, Duration::QUARTER_TIME);
 
@@ -48,53 +45,31 @@ class MidiSequenceHandler
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getSequence()
+    public function getSequence(): MidiSequence
     {
         return $this->sequence;
     }
 
-    /**
-     * @return int
-     */
-    public function getTracks()
+    public function getTracks(): int
     {
         return $this->tracks;
     }
 
-    /**
-     * @param \PhpTabs\Music\ChannelRoute $channel
-     * @param bool                        $bendMode
-     * 
-     * @return \PhpTabs\Music\Channel
-     */
-    private function resolveChannel(ChannelRoute $channel, $bendMode)
+    private function resolveChannel(ChannelRoute $channel, bool $bendMode): int
     {
-        return $bendMode ? $channel->getChannel2() : $channel->getChannel1();
+        return $bendMode
+            ? $channel->getChannel2()
+            : $channel->getChannel1();
     }
 
-    /**
-     * @param int                            $track
-     * @param \PhpTabs\Reader\Midi\MidiEvent $event
-     */
-    public function addEvent($track, MidiEvent $event)
+    public function addEvent(int $track, MidiEvent $event): void
     {
         if ($track >= 0 && $track < $this->getSequence()->countTracks()) {
             $this->getSequence()->getTrack($track)->add($event);
         }
     }
 
-    /**
-     * @param int  $tick
-     * @param int  $track
-     * @param int  $channelId
-     * @param int  $note
-     * @param int  $velocity
-     * @param bool $bendMode
-     */
-    public function addNoteOff($tick, $track, $channelId, $note, $velocity, $bendMode)
+    public function addNoteOff(int $tick, int $track, int $channelId, int $note, int $velocity, bool $bendMode): void
     {
         $channel = $this->router->getRoute($channelId);
 
@@ -103,15 +78,7 @@ class MidiSequenceHandler
         }
     }
 
-    /**
-     * @param int  $tick
-     * @param int  $track
-     * @param int  $channelId
-     * @param int  $note
-     * @param int  $velocity
-     * @param bool $bendMode
-     */
-    public function addNoteOn($tick, $track, $channelId, $note, $velocity, $bendMode)
+    public function addNoteOn(int $tick, int $track, int $channelId, int $note, int $velocity, bool $bendMode): void
     {
         $channel = $this->router->getRoute($channelId);
 
@@ -120,14 +87,7 @@ class MidiSequenceHandler
         }
     }
 
-    /**
-     * @param int  $tick
-     * @param int  $track
-     * @param int  $channelId
-     * @param int  $value
-     * @param bool $bendMode
-     */
-    public function addPitchBend($tick, $track, $channelId, $value, $bendMode)
+    public function addPitchBend(int $tick, int $track, int $channelId, int $value, bool $bendMode): void
     {
         $channel = $this->router->getRoute($channelId);
 
@@ -136,14 +96,7 @@ class MidiSequenceHandler
         }
     }
 
-    /**
-     * @param int $tick
-     * @param int $track
-     * @param int $channelId
-     * @param int $controller
-     * @param int $value
-     */
-    public function addControlChange($tick, $track, $channelId, $controller, $value)
+    public function addControlChange(int $tick, int $track, int $channelId, int $controller, int $value): void
     {
         $channel = $this->router->getRoute($channelId);
 
@@ -156,13 +109,7 @@ class MidiSequenceHandler
         }
     }
 
-    /**
-     * @param int $tick
-     * @param int $track
-     * @param int $channelId
-     * @param int $instrument
-     */
-    public function addProgramChange($tick, $track, $channelId, $instrument)
+    public function addProgramChange(int $tick, int $track, int $channelId, int $instrument): void
     {
         $channel = $this->router->getRoute($channelId);
 
@@ -175,27 +122,17 @@ class MidiSequenceHandler
         }
     }
 
-    /**
-     * @param int $tick
-     * @param int $track
-     * @param int $usq
-     */
-    public function addTempoInUSQ($tick, $track, $usq)
+    public function addTempoInUSQ(int $tick, int $track, int $usq): void
     {
         $this->addEvent($track, new MidiEvent(MidiMessageUtils::tempoInUSQ($usq), $tick));
     }
 
-    /**
-     * @param int                          $tick
-     * @param int                          $track
-     * @param \Phptabs\Model\TimeSignature $timeSignature)
-     */
-    public function addTimeSignature($tick, $track, TimeSignature $timeSignature)
+    public function addTimeSignature(int $tick, int $track, TimeSignature $timeSignature): void
     {
         $this->addEvent($track, new MidiEvent(MidiMessageUtils::timeSignature($timeSignature), $tick));
     }
 
-    public function notifyFinish()
+    public function notifyFinish(): void
     {
         $this->getSequence()->finish();
         $this->writer->write($this->getSequence(), 1);

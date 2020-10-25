@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -16,43 +18,28 @@ class MidiSequenceHelper
     private $measureHeaderHelpers;
     private $sequence;
 
-    /**
-     * @param \PhpTabs\Writer\Midi\MidiSequenceHandler $sequence
-     */
     public function __construct(MidiSequenceHandler $sequence)
     {
         $this->sequence = $sequence;
-        $this->measureHeaderHelpers = array();
+        $this->measureHeaderHelpers = [];
     }
 
-    /**
-     * @return \PhpTabs\Writer\Midi\MidiSequenceHandler
-     */
-    public function getSequence()
+    public function getSequence(): MidiSequenceHandler
     {
         return $this->sequence;
     }
 
-    /**
-     * @param \PhpTabs\Writer\Midi\MidiMeasureHelper $helper
-     */
-    public function addMeasureHelper(MidiMeasureHelper $helper)
+    public function addMeasureHelper(MidiMeasureHelper $helper): void
     {
         $this->measureHeaderHelpers[] = $helper;
     }
 
-    /**
-     * @return array
-     */
-    public function getMeasureHelpers()
+    public function getMeasureHelpers(): array
     {
         return $this->measureHeaderHelpers;
     }
 
-    /**
-     * @return \PhpTabs\Writer\Midi\MidiMeasureHelper $helper
-     */
-    public function getMeasureHelper($index)
+    public function getMeasureHelper(int $index): MidiMeasureHelper
     {
         return $this->measureHeaderHelpers[$index];
     }
