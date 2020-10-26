@@ -266,16 +266,16 @@ class GuitarPro3Writer extends GuitarProWriterBase
 
     private function writeInformations(Song $song): void
     {
-        $this->writeStringByteSizeOfInteger($song->getName());
+        $this->writeStringByteSizeOfInteger((string)$song->getName());
         $this->writeStringByteSizeOfInteger("");
-        $this->writeStringByteSizeOfInteger($song->getArtist());
-        $this->writeStringByteSizeOfInteger($song->getAlbum());
-        $this->writeStringByteSizeOfInteger($song->getAuthor());
-        $this->writeStringByteSizeOfInteger($song->getCopyright());
-        $this->writeStringByteSizeOfInteger($song->getWriter());
+        $this->writeStringByteSizeOfInteger((string)$song->getArtist());
+        $this->writeStringByteSizeOfInteger((string)$song->getAlbum());
+        $this->writeStringByteSizeOfInteger((string)$song->getAuthor());
+        $this->writeStringByteSizeOfInteger((string)$song->getCopyright());
+        $this->writeStringByteSizeOfInteger((string)$song->getWriter());
         $this->writeStringByteSizeOfInteger("");
 
-        $comments = $this->toCommentLines($song->getComments());
+        $comments = $this->toCommentLines((string)$song->getComments());
         $this->writeInt(count($comments));
         foreach ($comments as $comment) {
             $this->writeStringByteSizeOfInteger($comment);

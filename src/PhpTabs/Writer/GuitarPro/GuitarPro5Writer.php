@@ -201,17 +201,17 @@ class GuitarPro5Writer extends GuitarProWriterBase
 
     private function writeInformations(Song $song): void
     {
-        $this->writeStringByteSizeOfInteger($song->getName());
+        $this->writeStringByteSizeOfInteger((string)$song->getName());
         $this->writeStringByteSizeOfInteger('');
-        $this->writeStringByteSizeOfInteger($song->getArtist());
-        $this->writeStringByteSizeOfInteger($song->getAlbum());
-        $this->writeStringByteSizeOfInteger($song->getAuthor());
+        $this->writeStringByteSizeOfInteger((string)$song->getArtist());
+        $this->writeStringByteSizeOfInteger((string)$song->getAlbum());
+        $this->writeStringByteSizeOfInteger((string)$song->getAuthor());
         $this->writeStringByteSizeOfInteger('');
-        $this->writeStringByteSizeOfInteger($song->getCopyright());
-        $this->writeStringByteSizeOfInteger($song->getWriter());
+        $this->writeStringByteSizeOfInteger((string)$song->getCopyright());
+        $this->writeStringByteSizeOfInteger((string)$song->getWriter());
         $this->writeStringByteSizeOfInteger('');
 
-        $comments = $this->toCommentLines($song->getComments());
+        $comments = $this->toCommentLines((string)$song->getComments());
         $this->writeInt(count($comments));
         for ($i = 0; $i < count($comments); $i++) {
             $this->writeStringByteSizeOfInteger($comments[$i]);
@@ -354,15 +354,15 @@ class GuitarPro5Writer extends GuitarProWriterBase
         }
 
         switch ($measure->getTripletFeel()) {
-        case MeasureHeader::TRIPLET_FEEL_NONE:
-            $this->writeByte(0);
-            break;
-        case MeasureHeader::TRIPLET_FEEL_EIGHTH:
-            $this->writeByte(1);
-            break;
-        case MeasureHeader::TRIPLET_FEEL_SIXTEENTH:
-            $this->writeByte(2);
-            break;
+            case MeasureHeader::TRIPLET_FEEL_NONE:
+                $this->writeByte(0);
+                break;
+            case MeasureHeader::TRIPLET_FEEL_EIGHTH:
+                $this->writeByte(1);
+                break;
+            case MeasureHeader::TRIPLET_FEEL_SIXTEENTH:
+                $this->writeByte(2);
+                break;
         }
     }
 
@@ -510,19 +510,19 @@ class GuitarPro5Writer extends GuitarProWriterBase
         $this->writeInt($track->getOffset());
         $this->writeColor($track->getColor());
         $this->writeBytes(
-            array(
-            67, 1, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 100, 0, 0,
-            0, 1, 2, 3,
-            4, 5, 6, 7,
-            8, 9, 10, -1,
-            3, -1, -1, -1,
-            -1, -1, -1, -1,
-            -1, -1, -1, -1,
-            -1, -1, -1, -1
-            )
+            [
+                67, 1, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 100, 0, 0,
+                0, 1, 2, 3,
+                4, 5, 6, 7,
+                8, 9, 10, -1,
+                3, -1, -1, -1,
+                -1, -1, -1, -1,
+                -1, -1, -1, -1,
+                -1, -1, -1, -1
+            ]
         );
     }
 

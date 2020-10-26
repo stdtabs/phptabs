@@ -32,7 +32,7 @@ class MidiSequence
     {
         $this->divisionType = $divisionType;
         $this->resolution = $resolution;
-        $this->tracks = array();
+        $this->tracks = [];
     }
 
     public function addTrack(MidiTrack $track): void
