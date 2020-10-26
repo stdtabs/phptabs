@@ -97,7 +97,7 @@ class PhpTabs
      */
     public function getVersion(): string
     {
-        $filename = dirname(dirname(__DIR__)) . '/composer.json';
+        $filename = dirname(__DIR__, 2) . '/composer.json';
 
         IOFactory::checkFile($filename);
 
