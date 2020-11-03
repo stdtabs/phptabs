@@ -1,0 +1,19 @@
+markdown: kramdown
+highlighter: rouge
+pygments: true
+
+enableRobotsTXT: true
+
+# Site name (head)
+name: PhpTabs Documentation
+
+# Site description (head)
+description: PhpTabs is a PHP library for reading and writing scores (GuitarPro) and MIDI files. It provides direct methods to read a song name, get a list of instruments or whatever be your needs.
+
+# Github repositories and download URLs
+repository_url    : https://github.com/stdtabs/phptabs
+doc_repository_url: https://github.com/stdtabs/phptabs/tree/master/docs
+github_author_url : https://github.com/landrok
+doc_baseurl       : https://stdtabs.github.io/
+github_author_name: landrok
+
