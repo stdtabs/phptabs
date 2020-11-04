@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -41,7 +43,7 @@ abstract class IOFactory
     {
         self::checkFile($pathname);
 
-        $type = $type === null || !is_string($type)
+        $type = is_null($type)
             ? pathinfo($pathname, PATHINFO_EXTENSION)
             : $type;
 
@@ -88,12 +90,6 @@ abstract class IOFactory
      */
     public static function fromSerialized(string $data): PhpTabs
     {
-        if (!is_string($data)) {
-            throw new Exception(
-                'fromSerialized() parameter must be a string'
-            );
-        }
-
         $data = @unserialize( // Skip warning
             $data,
             ['allowed_classes' => false]
@@ -114,10 +110,6 @@ abstract class IOFactory
      */
     public static function fromJson(string $data): PhpTabs
     {
-        if (!is_string($data)) {
-            throw new Exception('fromJson() parameter must be a string');
-        }
-
         $data = json_decode($data, true);
 
         // JSON decoding error
@@ -137,21 +129,11 @@ abstract class IOFactory
     /**
      * Check that given filename is a string and is readable
      *
-     * @param  mixed $filename
-     * @throws \Exception if filename is not a string
-     *  or if filename is not a file
-     *  or if file is not readable
+     * @throws \Exception if filename is not a file
+     *                 or if file is not readable
      */
-    public static function checkFile($filename): void
+    public static function checkFile(string $filename): void
     {
-        // Must be a string
-        if (!is_string($filename)) {
-            throw new Exception(
-                "FILE_ERROR Filename must be a string. Given: "
-                . gettype($filename)
-            );
-        }
-
         // Must be readable
         if (!is_readable($filename)) {
             throw new Exception(

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -71,23 +73,26 @@ class Writer
             print($this->build($this->tablature->getFormat()));
 
             return true;
-        } elseif (null === $path) {
-            return $this->build($this->tablature->getFormat());
-        } elseif (is_string($path)) {
-            $parts = pathinfo($path);
-
-            if (!isset($parts['basename'], $parts['extension'])) {
-                $message = sprintf('Destination path %s is not complete', $path);
-
-                throw new Exception($message);
-            }
-
-            $this->path = $path;
-
-            return $this->record($this->build($parts['extension']));
         }
 
-        throw new Exception('Save path is not allowed');
+        if (is_null($path)) {
+            return $this->build($this->tablature->getFormat());
+        }
+
+        $parts = pathinfo($path);
+
+        if (!isset($parts['basename'], $parts['extension'])) {
+            $message = sprintf(
+                'Destination path %s is not complete',
+                $path
+            );
+
+            throw new Exception($message);
+        }
+
+        $this->path = $path;
+
+        return $this->record($this->build($parts['extension']));
     }
 
     /**
@@ -101,9 +106,11 @@ class Writer
 
         if (!is_dir($dir) || !is_writable($dir)) {
             throw new Exception('Save directory error');
-        }
-        elseif (is_file($this->path) && !is_writable($this->path)) {
-            $message = sprintf('File "%s" still exists and is not writable', $this->path);
+        } elseif (is_file($this->path) && !is_writable($this->path)) {
+            $message = sprintf(
+                'File "%s" already exists and is not writable',
+                $this->path
+            );
 
             throw new Exception($message);
         }
