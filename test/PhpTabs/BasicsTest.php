@@ -63,25 +63,10 @@ class BasicsTest extends TestCase
      */
     public function testReadModeWithNonReadableFile()
     {
+        $this->expectException(Exception::class);
+
         // Path not reachable
         $tablature = new PhpTabs('thisFileDoesNotExist.gp3');
-
-        // Errors
-        $this->assertEquals(true, $tablature->hasError());
-        $this->assertEquals(
-            'Path thisFileDoesNotExist.gp3 is not readable',
-            $tablature->getError()
-        );
-
-        // Given path is a directory
-        $tablature = new PhpTabs(__DIR__);
-
-        // Errors
-        $this->assertEquals(true, $tablature->hasError());
-        $this->assertEquals(
-            'Path must be a file. "' . __DIR__ . '" given',
-            $tablature->getError()
-        );
     }
 
     public function testExceptionTrackNotDefined()

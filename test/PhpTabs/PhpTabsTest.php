@@ -23,7 +23,7 @@ class PhpTabsTest extends TestCase
 {
     public function testException()
     {
-        $this->expectError();
+        $this->expectException(Exception::class);
         # Not a valid number of params
         IOFactory::create()->export('param1', 'param2', 'param3');
     }

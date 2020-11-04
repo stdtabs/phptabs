@@ -321,7 +321,7 @@ class GuitarPro3Writer extends GuitarProWriterBase
             $flags |= 0x04;
         }
 
-        if ($measure->getRepeatClose()) {
+        if ($measure->getRepeatClose() > 0) {
             $flags |= 0x08;
         }
 

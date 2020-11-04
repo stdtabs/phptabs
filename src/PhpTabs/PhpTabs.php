@@ -12,7 +12,6 @@
 namespace PhpTabs;
 
 use Exception;
-use PhpTabs\Component\Config;
 use PhpTabs\Component\File;
 use PhpTabs\Component\Importer;
 use PhpTabs\Component\Reader;
@@ -30,37 +29,19 @@ class PhpTabs
      */
     public function __construct(string $pathname = null)
     {
-        try {
-            if (null === $pathname) {
-                $this->setTablature(new Tablature());
-            } else {
-                $reader = new Reader(new File($pathname));
-
-                $this->setTablature($reader->getTablature());
-            }
-        } catch (Exception $e) {
-            $message = sprintf(
-                "%s in %s on line %d\n%s\n",
-                $e->getMessage(),
-                $e->getFile(),
-                $e->getLine(),
-                $e->getTraceAsString()
-            );
-
-            // if debug mode, an error kills the process
-            if (Config::get('debug')) {
-                trigger_error($message, E_USER_ERROR);
-
-                return;
-            }
-
+        // Create an emty tabs
+        if (is_null($pathname)) {
             $this->setTablature(new Tablature());
-            $this->getTablature()->setError($e->getMessage());
-        }
+        // It's a pathname
+        } else {
+            $reader = new Reader(new File($pathname));
+
+            $this->setTablature($reader->getTablature());
+        }     
     }
 
     /**
-     * Gets the tablature instance
+     * Get the tablature instance
      */
     public function getTablature(): Tablature
     {
@@ -68,7 +49,7 @@ class PhpTabs
     }
 
     /**
-     * Sets the tablature instance
+     * Set the tablature instance
      */
     protected function setTablature(Tablature $tablature): self
     {
@@ -133,6 +114,6 @@ class PhpTabs
             count($arguments)
         );
 
-        trigger_error($message, E_USER_ERROR);
+        throw new Exception($message);
     }
 }
