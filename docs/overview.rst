@@ -31,9 +31,12 @@ PhpTabs currently supports the following file formats:
 Contribution and Support
 ========================
 
-If you have any questions, please [open an issue]({{ site.github_repository_url }}/issues).
+If you have any questions, please `open an issue<{{ site.github_repository_url }}/issues>`_.
 
-You want to write another parser, to fix a bug? Please open [a pull request]({{ site.github_repository_url }}).
+You want to write another parser, to fix a bug? Please open `a pull request<{{ site.github_repository_url }}>`_.
+
+To discuss new features, make feedback or simply to share ideas, you can
+contact me on Mastodon at `https://cybre.space/@landrok <https://cybre.space/@landrok>`_
 
 
 Running the test suite
@@ -50,71 +53,4 @@ Running the test suite
 License
 =======
 
-PhpTabs is licensed under [LGPL2.1+]({{ site.github_repository_url }}/blob/master/LICENSE).
-
-
-
-
-
-
-
-
-
-
-
-
-Staging environment
--------------------
-
-.. code-block:: php
-
-    use Yousign\YousignApi;
-
-    /*
-     * token
-     */
-    $token = '123456789';
-
-    /*
-     * production flag
-     */
-    $production = false;
-
-    $yousign = new YousignApi($token, $production);
-
-
-Production environment
-----------------------
-
-.. code-block:: php
-
-    use Yousign\YousignApi;
-
-    /*
-     * token
-     */
-    $token = '123456789';
-
-    /*
-     * production flag
-     */
-    $production = true;
-
-    $yousign = new YousignApi($token, $production);
-
-
-Contributing
-============
-
-All subsequent types (Member, Procedure, File, FileObject, etc...) are implemented too.
-
-- `Contribute on Github <https://github.com/landrok/yousign-api>`_
-
-- To discuss new features, make feedback or simply to share ideas, you
-  can contact me on Mastodon at
-  `https://cybre.space/@landrok <https://cybre.space/@landrok>`_
-
-Yousign API manual
-==================
-
-`Official Yousign API manual <https://dev.yousign.com/?version=latest>`_
+PhpTabs is licensed under `LGPL2.1+<{{ site.github_repository_url }}/blob/master/LICENSE>`_.

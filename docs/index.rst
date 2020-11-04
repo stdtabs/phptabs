@@ -34,16 +34,19 @@ User Guide
     :maxdepth: 3
 
     overview
-    quickstart
+    architecture
     basic-methods
-
+    reading-files
+    recording-files
+    rendering-files
+    traversing-song-model
+    tabs-from-scratch
+    api-reference
+    
+    
 
 - [Features](#features)
 - [Manual](#manual)
-- [Supported formats](#supported-formats)
-- [Requirements](#requirements)
-- [Contribution and Support](#contribution-and-support)
-- [License](#license)
 
 ------------------------------------------------------------------------
 

@@ -21,3 +21,6 @@ checks:
   file-lines:
     config:
       threshold: 500
+exclude_patterns:
+- "test/"
+- "docs/"
