@@ -1,4 +1,5 @@
 .. title:: PhpTabs manual
+.. description: PhpTabs is a PHP library for reading, writing and rendering Guitar Pro tabs and MIDI files.
 
 =====================
 PhpTabs Documentation
@@ -14,6 +15,28 @@ get a list of instruments or whatever be your needs.
 
 Phptabs is built on the top of a [music stack](phptabs.html) that lets
 you create or modify your songs.
+
+.. code-block:: php
+
+    use PhpTabs\PhpTabs;
+
+    $filename = 'my-file.gp5';
+
+    $song = new PhpTabs($filename);
+
+    echo $song->getName();
+
+
+User Guide
+==========
+
+.. toctree::
+    :maxdepth: 3
+
+    overview
+    quickstart
+    basic-methods
+
 
 - [Features](#features)
 - [Manual](#manual)
@@ -69,37 +92,6 @@ you create or modify your songs.
   - Read notes for a particular measure
 
   - [Create a tab from scratch (An empty song)](create-a-tablature-from-scratch.html)
-
-------------------------------------------------------------------------
-
-## Supported formats
-
-PhpTabs currently supports the following file formats:
-
-- GuitarPro 3 (.gp3)
-- GuitarPro 4 (.gp4)
-- GuitarPro 5 (.gp5)
-- MIDI files (.mid, .midi)
-
-------------------------------------------------------------------------
-
-## Requirements
-
-Support for PHP 7.2+ and 8.0
-
-------------------------------------------------------------------------
-
-## Contribution and Support
-
-If you have any questions, please [open an issue]({{ site.github_repository_url }}/issues).
-
-You want to write another parser, to fix a bug? Please open [a pull request]({{ site.github_repository_url }}).
-
-------------------------------------------------------------------------
-
-## License
-
-PhpTabs is licensed under [LGPL2.1+]({{ site.github_repository_url }}/blob/master/LICENSE).
 
 
 ________________________________________________________________________
