@@ -31,9 +31,9 @@ PhpTabs currently supports the following file formats:
 Contribution and Support
 ========================
 
-If you have any questions, please `open an issue<{{ site.github_repository_url }}/issues>`_.
+If you have any questions, please `open an issue<https://github.com/stdtabs/phptabs/issues>`_.
 
-You want to write another parser, to fix a bug? Please open `a pull request<{{ site.github_repository_url }}>`_.
+You want to write another parser, to fix a bug? Please open `a pull request<https://github.com/stdtabs/phptabs>`_.
 
 To discuss new features, make feedback or simply to share ideas, you can
 contact me on Mastodon at `https://cybre.space/@landrok <https://cybre.space/@landrok>`_
@@ -53,4 +53,4 @@ Running the test suite
 License
 =======
 
-PhpTabs is licensed under `LGPL2.1+<{{ site.github_repository_url }}/blob/master/LICENSE>`_.
+PhpTabs is licensed under `LGPL2.1+<https://github.com/stdtabs/phptabs/blob/master/LICENSE>`_.

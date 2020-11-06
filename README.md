@@ -37,7 +37,6 @@ see more examples and the complete API behind the library, read the
 - [Basic Usage](#basic-usage)
 - [Options](#options)
   - [type](#type)
-  - [debug](#debug)
   - [verbose](#verbose)
 - [Methods](#methods)
   - [Error handling](#error-handling)
