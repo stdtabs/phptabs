@@ -14,7 +14,7 @@ declare(strict_types = 1);
 namespace PhpTabs;
 
 use Exception;
-use PhpTabs\Component\File;
+use PhpTabs\Component\FileInput;
 use PhpTabs\Component\Importer;
 use PhpTabs\Component\Reader;
 use PhpTabs\Component\Tablature;
@@ -36,7 +36,8 @@ class PhpTabs
             $this->setTablature(new Tablature());
         // It's a pathname
         } else {
-            $reader = new Reader(new File($pathname));
+            $file = new FileInput($pathname);
+            $reader = new Reader($file);
 
             $this->setTablature($reader->getTablature());
         }     

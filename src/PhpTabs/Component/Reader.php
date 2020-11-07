@@ -44,7 +44,7 @@ class Reader
      *
      * @throws \Exception If file format is not supported
      */
-    public function __construct(File $file)
+    public function __construct(FileInput $file)
     {
         $this->tablature = new Tablature();
 

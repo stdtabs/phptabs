@@ -14,7 +14,7 @@ namespace PhpTabsTest\Component;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\Component\Reader;
-use PhpTabs\Component\File;
+use PhpTabs\Component\FileInput;
 
 class ReaderTest extends TestCase
 {
@@ -23,6 +23,6 @@ class ReaderTest extends TestCase
         $this->expectException(Exception::class);
 
         $filename = PHPTABS_TEST_BASEDIR . '/samples/testNotAllowedExtension.xxx';
-        new Reader(new File($filename));
+        new Reader(new FileInput($filename));
     }
 }

@@ -16,7 +16,7 @@ use Exception;
 /**
  * File wrapper class
  */
-class File
+class FileInput
 {
     /**
      * @var string Path to the file

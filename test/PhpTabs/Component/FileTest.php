@@ -13,7 +13,7 @@ namespace PhpTabsTest\Component;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
-use PhpTabs\Component\File;
+use PhpTabs\Component\FileInput;
 
 class FileTest extends TestCase
 {
@@ -27,7 +27,7 @@ class FileTest extends TestCase
      */
     public function testPathParts()
     {
-        $file = new File($this->filename);
+        $file = new FileInput($this->filename);
 
         $this->assertEquals($this->filename, $file->getPath());
         $this->assertEquals(dirname($this->filename), $file->getDirname());
@@ -37,13 +37,13 @@ class FileTest extends TestCase
     public function testStreamMethods()
     {
         // Reads stream position when stream has been closed
-        $file = new File($this->filename);
+        $file = new FileInput($this->filename);
         $file->closeStream();
 
         $this->assertEquals(false, $file->getStreamPosition());
 
         // Reads stream read with offset
-        $file = new File($this->filename);
+        $file = new FileInput($this->filename);
         $this->assertEquals('IER G', $file->getStream(5, 5));
 
         // Tests empty error
@@ -57,7 +57,7 @@ class FileTest extends TestCase
     {
         $this->expectException(Exception::class);
 
-        $file = new File($this->filename);
+        $file = new FileInput($this->filename);
         $file->getStream(1);
         $file->getStream(50000000);
     }
