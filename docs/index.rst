@@ -34,11 +34,12 @@ User Guide
     :maxdepth: 3
 
     overview
-    reading-files
+    read-parse-files
     reading-strings
+    convert-record-files
+    rendering-songs
     exporting-tabs
-    recording-files
-    rendering-files
+    
     slicing-songs
     traversing-song-model
     tabs-from-scratch
