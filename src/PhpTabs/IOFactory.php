@@ -14,6 +14,8 @@ declare(strict_types = 1);
 namespace PhpTabs;
 
 use Exception;
+use PhpTabs\Component\InputStream;
+use PhpTabs\Component\Reader;
 
 abstract class IOFactory
 {
@@ -55,6 +57,18 @@ abstract class IOFactory
         }
 
         return self::create($pathname);
+    }
+
+    /**
+     * Load and parse from a string
+     */
+    public static function fromString(string $content, string $type): PhpTabs
+    {
+        $inputStream = new InputStream($content);
+
+        $reader = new Reader($inputStream, $type);
+
+        return self::create()->setTablature($reader->getTablature());
     }
 
     /**

@@ -57,7 +57,7 @@ class PhpTabs
     /**
      * Set the tablature instance
      */
-    protected function setTablature(Tablature $tablature): self
+    public function setTablature(Tablature $tablature): self
     {
         $this->tablature = $tablature;
 
