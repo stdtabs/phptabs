@@ -13,7 +13,7 @@ namespace PhpTabs\Reader\GuitarPro;
 
 use Exception;
 use PhpTabs\Component\Config;
-use PhpTabs\Component\FileInput;
+use PhpTabs\Component\InputStream;
 use PhpTabs\Component\Tablature;
 use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\Song;
@@ -38,9 +38,9 @@ class GuitarPro3Reader extends GuitarProReaderBase
     protected $tripletFeel, $keySignature;
 
     /**
-     * @param \PhpTabs\Component\FileInput $file An input file to read
+     * @param \PhpTabs\Component\InputStream $file An input file to read
      */
-    public function __construct(FileInput $file)
+    public function __construct(InputStream $file)
     {
         parent::__construct($file);
 

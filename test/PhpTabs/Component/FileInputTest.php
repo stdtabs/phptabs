@@ -38,13 +38,13 @@ class FileInputTest extends TestCase
     {
         // Reads stream position when stream has been closed
         $file = new FileInput($this->filename);
-        $file->closeStream();
+        $file->getInputStream()->closeStream();
 
-        $this->assertEquals(false, $file->getStreamPosition());
+        $this->assertEquals(false, $file->getInputStream()->getStreamPosition());
 
         // Reads stream read with offset
         $file = new FileInput($this->filename);
-        $this->assertEquals('IER G', $file->getStream(5, 5));
+        $this->assertEquals('IER G', $file->getInputStream()->getStream(5, 5));
     }
 
     /**
@@ -55,8 +55,8 @@ class FileInputTest extends TestCase
         $this->expectException(Exception::class);
 
         $file = new FileInput($this->filename);
-        $file->getStream(1);
-        $file->getStream(50000000);
+        $file->getInputStream()->getStream(1);
+        $file->getInputStream()->getStream(50000000);
     }
 
     /**

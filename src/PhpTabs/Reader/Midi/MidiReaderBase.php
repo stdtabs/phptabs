@@ -14,19 +14,19 @@ declare(strict_types=1);
 namespace PhpTabs\Reader\Midi;
 
 use Exception;
-use PhpTabs\Component\FileInput;
+use PhpTabs\Component\InputStream;
 
 abstract class MidiReaderBase implements MidiReaderInterface
 {
     /**
-     * @var \PhpTabs\Component\FileInput
+     * @var \PhpTabs\Component\InputStream
      */
     private $file;
 
     /**
-     * @param \PhpTabs\Component\FileInput $file input file to read
+     * @param \PhpTabs\Component\InputStream $file input file to read
      */
-    public function __construct(FileInput $file)
+    public function __construct(InputStream $file)
     {
         $this->file = $file;
     }

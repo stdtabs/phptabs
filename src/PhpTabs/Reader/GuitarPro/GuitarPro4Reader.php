@@ -13,7 +13,7 @@ namespace PhpTabs\Reader\GuitarPro;
 
 use Exception;
 use PhpTabs\Component\Config;
-use PhpTabs\Component\FileInput;
+use PhpTabs\Component\InputStream;
 use PhpTabs\Component\Tablature;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\EffectGrace;
@@ -44,9 +44,9 @@ class GuitarPro4Reader extends GuitarProReaderBase
     protected $tablature;
 
     /**
-     * @param \PhpTabs\Component\FileInput $file An input file to read
+     * @param \PhpTabs\Component\InputStream $file An input file to read
      */
-    public function __construct(FileInput $file)
+    public function __construct(InputStream $file)
     {
         parent::__construct($file);
 

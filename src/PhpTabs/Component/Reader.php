@@ -40,18 +40,18 @@ class Reader
      * Instanciates tablature container
      * Try to load the right dedicated reader
      *
-     * @param \PhpTabs\Component\File $file file which should contain a tablature
+     * @param \PhpTabs\Component\InputStream $file file which should contain a tablature
      *
      * @throws \Exception If file format is not supported
      */
-    public function __construct(FileInput $file)
+    public function __construct(InputStream $file, string $extension)
     {
         $this->tablature = new Tablature();
 
-        if (isset($this->extensions[ $file->getExtension() ])) {
-            $name = $this->extensions[ $file->getExtension() ];
+        if (isset($this->extensions[ $extension ])) {
+            $name = $this->extensions[ $extension ];
 
-            $this->tablature->setFormat($file->getExtension());
+            $this->tablature->setFormat($extension);
 
             $this->bridge = new $name($file);
         }
@@ -60,7 +60,7 @@ class Reader
         if (!($this->bridge instanceof ReaderInterface)) {
             $message = sprintf(
                 'No reader has been found for "%s" type of file',
-                $file->getExtension()
+                $extension
             );
 
             $this->tablature->setError($message);

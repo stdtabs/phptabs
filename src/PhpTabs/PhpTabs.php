@@ -37,7 +37,10 @@ class PhpTabs
         // It's a pathname
         } else {
             $file = new FileInput($pathname);
-            $reader = new Reader($file);
+            $reader = new Reader(
+                $file->getInputStream(),
+                $file->getExtension()
+            );
 
             $this->setTablature($reader->getTablature());
         }     

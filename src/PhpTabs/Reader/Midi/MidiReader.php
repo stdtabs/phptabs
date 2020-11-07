@@ -16,7 +16,7 @@ namespace PhpTabs\Reader\Midi;
 use Exception;
 use PhpTabs\Component\Config;
 use PhpTabs\Component\Log;
-use PhpTabs\Component\FileInput;
+use PhpTabs\Component\InputStream;
 use PhpTabs\Component\Tablature;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\Channel;
@@ -56,9 +56,9 @@ class MidiReader extends MidiReaderBase
     private $settings;
 
     /**
-     * @param \PhpTabs\Component\FileInput $file An input file to read
+     * @param \PhpTabs\Component\InputStream $file An input file to read
      */
-    public function __construct(FileInput $file)
+    public function __construct(InputStream $file)
     {
         parent::__construct($file);
 

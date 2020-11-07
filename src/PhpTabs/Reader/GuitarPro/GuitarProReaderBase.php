@@ -12,7 +12,7 @@
 namespace PhpTabs\Reader\GuitarPro;
 
 use PhpTabs\Reader\GuitarPro\Helper\Factory;
-use PhpTabs\Component\FileInput;
+use PhpTabs\Component\InputStream;
 use PhpTabs\Component\Log;
 
 abstract class GuitarProReaderBase implements GuitarProReaderInterface
@@ -33,14 +33,14 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     private $parserName;
 
     /**
-     * @var \PhpTabs\Component\FileInput
+     * @var \PhpTabs\Component\InputStream
      */
     private $file;
 
     /**
-     * @param \PhpTabs\Component\File $file An input file to read
+     * @param \PhpTabs\Component\InputStream $file An input file to read
      */
-    public function __construct(FileInput $file)
+    public function __construct(InputStream $file)
     {
         $this->file = $file;
 

@@ -23,6 +23,7 @@ class ReaderTest extends TestCase
         $this->expectException(Exception::class);
 
         $filename = PHPTABS_TEST_BASEDIR . '/samples/testNotAllowedExtension.xxx';
-        new Reader(new FileInput($filename));
+        $file = new FileInput($filename);
+        new Reader($file->getInputStream(), $file->getExtension());
     }
 }
