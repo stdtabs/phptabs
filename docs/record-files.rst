@@ -22,7 +22,7 @@ The `toFile` method may be used to store file contents on a disk.
 
 
 The destination format is recognized with extension (gp3, gp4, gp5, mid,
- midi, json, ser) and the song is implicitly converted to this format.
+midi, json, ser) and the song is implicitly converted to this format.
 
 If the file extension is not recognized, a format may be passed as the
 second parameter.
@@ -41,7 +41,7 @@ Of course, you may read, convert and save in one line.
                      ->toFile('my-file.dat', 'ser');
 
 
-See `all available options <convert-methods>` for explicit conversions.
+See :ref:`all available options <convert-methods>` for explicit conversions.
 
 
 PhpTabs::save($filename)

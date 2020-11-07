@@ -23,7 +23,7 @@ whole song or a single track as an ASCII string.
 
 There are a couple of options that can be passed to `toAscii` method.
 
-See :ref:`renderer.ascii` for more options.
+See :ref:`ASCII renderer <renderer.ascii>` for more options.
 
 
 Vextab rendering
@@ -43,4 +43,4 @@ PhpTabs (>= 0.5.0) can render a track as a VexTab string.
 
 Some options can be passed to `toVextab` method.
 
-See :ref:`renderer.vextab` for more options.
+See :ref:`Vextab renderer <renderer.vextab>` for more options.
