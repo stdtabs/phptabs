@@ -1,5 +1,5 @@
 .. title:: PhpTabs manual
-.. description: PhpTabs is a PHP library for reading, writing and rendering Guitar Pro tabs and MIDI files.
+.. :description: PhpTabs is a PHP library for reading, writing and rendering Guitar Pro tabs and MIDI files.
 
 =====================
 PhpTabs Documentation
@@ -10,11 +10,11 @@ PhpTabs Documentation
 PhpTabs is a PHP library for reading, writing and rendering tabs and
 MIDI files.
 
-It provides direct methods to [read a song name](music-song.html#getname),
+It provides direct methods to :ref:`read a song name <api.music-song>`,
 get a list of instruments or whatever be your needs.
 
-Phptabs is built on the top of a [music stack](phptabs.html) that lets
-you create or modify your songs.
+Phptabs is built on the top of a :ref:`music stack <api.phptabs>` that
+lets you create or modify your songs.
 
 .. code-block:: php
 
@@ -36,17 +36,18 @@ User Guide
     overview
     read-parse-files
     reading-strings
-    convert-record-files
+    record-files
+    convert-methods
     render-tabs-and-songs
     exporting-tabs
-    
+
     slicing-songs
     traversing-song-model
     tabs-from-scratch
     architecture
     iofactory
-    vextab
-    ascii-tabs
+    renderer.vextab
+    renderer.ascii
     api-reference
     
 ________________________________________________________________________

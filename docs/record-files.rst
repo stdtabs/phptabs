@@ -1,6 +1,8 @@
-=========================
-Convert and save to files
-=========================
+.. _save-files:
+
+=============
+Save to files
+=============
 
 PhpTabs::toFile($filename)
 ==========================
@@ -39,24 +41,7 @@ Of course, you may read, convert and save in one line.
                      ->toFile('my-file.dat', 'ser');
 
 
-PhpTabs::convert($format)
-=======================
-
-Sometimes, for debugging or to store content another way, you may want
-to output a converted string to a variable.
-
-You may do that with the `build` method.
-
-.. code-block:: php
-
-    use PhpTabs\IOFactory;
-
-    $filename = 'my-file.gp5';
-
-    // The Guitar Pro file is parsed, converted and returned as MIDI
-    // content
-    $midi = IOFactory::fromFile($filename)->convert('mid');
-
+See `all available options <convert-methods>` for explicit conversions.
 
 
 PhpTabs::save($filename)
