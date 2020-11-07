@@ -18,6 +18,7 @@ The `toFile` method may be used to store file contents on a disk.
 
     $song->toFile('my-file.mid');
 
+
 The destination format is recognized with extension (gp3, gp4, gp5, mid,
  midi, json, ser) and the song is implicitly converted to this format.
 
@@ -35,10 +36,10 @@ Of course, you may read, convert and save in one line.
     // The Guitar Pro file is parsed, converted and recorded into
     // PHP serialized
     $song = IOFactory::fromFile($filename)
-                     ->toFile('my-file.dat, 'ser');
+                     ->toFile('my-file.dat', 'ser');
 
 
-PhpTabs::build($format)
+PhpTabs::convert($format)
 =======================
 
 Sometimes, for debugging or to store content another way, you may want
@@ -54,7 +55,7 @@ You may do that with the `build` method.
 
     // The Guitar Pro file is parsed, converted and returned as MIDI
     // content
-    $midi = IOFactory::fromFile($filename)->build('mid');
+    $midi = IOFactory::fromFile($filename)->convert('mid');
 
 
 
@@ -71,5 +72,5 @@ This way only works for Guitar Pro 3, 4 and 5, MIDI files.
 
     $song = new PhpTabs($filename);
 
-    $song->save('my-file.mid);
+    $song->save('my-file.mid');
 

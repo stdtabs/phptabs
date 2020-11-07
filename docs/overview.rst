@@ -53,4 +53,4 @@ Running the test suite
 License
 =======
 
-PhpTabs is licensed under `LGPL2.1+<https://github.com/stdtabs/phptabs/blob/master/LICENSE>`_.
+PhpTabs is licensed under `LGPL2.1+ <https://github.com/stdtabs/phptabs/blob/master/LICENSE>`_.

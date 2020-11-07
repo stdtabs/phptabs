@@ -37,13 +37,16 @@ User Guide
     read-parse-files
     reading-strings
     convert-record-files
-    rendering-songs
+    render-tabs-and-songs
     exporting-tabs
     
     slicing-songs
     traversing-song-model
     tabs-from-scratch
     architecture
+    iofactory
+    vextab
+    ascii-tabs
     api-reference
     
 ________________________________________________________________________
