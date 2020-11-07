@@ -12,6 +12,7 @@
 namespace PhpTabs\Component;
 
 use Exception;
+use PhpTabs\IOFactory;
 
 /**
  * File wrapper class
@@ -22,11 +23,6 @@ class FileInput
      * @var string Path to the file
      */
     private $path;
-
-    /**
-     * @var bool|string error message
-     */
-    private $error = false;
 
     /**
      * @var string dirname of the file
@@ -70,20 +66,7 @@ class FileInput
     {
         $this->setPath($path);
 
-        if (!is_readable($path)) {
-            $this->setError(
-                sprintf('Path %s is not readable', $path)
-            );
-            return;
-        }
-
-        // Is a file
-        if (!is_file($path)) {
-            $this->setError(
-                sprintf('Path must be a file. "%s" given', $path)
-            );
-            return;
-        }
+        IOFactory::checkFile($path);
 
         $informations = pathinfo($path);
 
@@ -226,34 +209,5 @@ class FileInput
     public function closeStream(): void
     {
         $this->handle = 0;
-    }
-
-    /**
-     * @param string $message Error during file read operations
-     *
-     * @throws \Exception when an error occurred
-     */
-    private function setError($message): void
-    {
-        $this->error = $message;
-
-        throw new Exception($message);
-    }
-
-    /**
-     * @return bool|string Error set during file read operations
-     */
-    public function getError()
-    {
-        return $this->error;
-    }
-
-    /**
-     * @return boolean true if an error occurred when try to read a file
-     *  false otherwise.
-     */
-    public function hasError(): bool
-    {
-        return $this->error !== false;
     }
 }

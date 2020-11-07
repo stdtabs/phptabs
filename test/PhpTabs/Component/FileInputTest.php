@@ -15,7 +15,7 @@ use Exception;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\Component\FileInput;
 
-class FileTest extends TestCase
+class FileInputTest extends TestCase
 {
     public function setUp() : void
     {
@@ -45,9 +45,6 @@ class FileTest extends TestCase
         // Reads stream read with offset
         $file = new FileInput($this->filename);
         $this->assertEquals('IER G', $file->getStream(5, 5));
-
-        // Tests empty error
-        $this->assertEquals(false, $file->getError());
     }
 
     /**
@@ -60,5 +57,25 @@ class FileTest extends TestCase
         $file = new FileInput($this->filename);
         $file->getStream(1);
         $file->getStream(50000000);
+    }
+
+    /**
+     * File does not exists exception
+     */
+    public function testFileDoesNotExistException()
+    {
+        $this->expectException(Exception::class);
+
+        $file = new FileInput($this->filename . 't');
+    }
+
+    /**
+     * Given path is a folder exception
+     */
+    public function testGivenPathIsFolderException()
+    {
+        $this->expectException(Exception::class);
+
+        $file = new FileInput('/docs');
     }
 }

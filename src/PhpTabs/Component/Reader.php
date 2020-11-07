@@ -48,10 +48,6 @@ class Reader
     {
         $this->tablature = new Tablature();
 
-        if ($file->hasError()) {
-            return;
-        }
-
         if (isset($this->extensions[ $file->getExtension() ])) {
             $name = $this->extensions[ $file->getExtension() ];
 
