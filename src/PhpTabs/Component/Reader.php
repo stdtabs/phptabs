@@ -28,13 +28,14 @@ class Reader
     /**
      * @var array List of extensions
      */
-    private $extensions = array(
+    private $extensions = [
         'gp3'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro3Reader',
         'gp4'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro4Reader',
         'gp5'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro5Reader',
+        'json'  => 'PhpTabs\\Reader\\Json\\JsonReader',
         'mid'   => 'PhpTabs\\Reader\\Midi\\MidiReader',
-        'midi'  => 'PhpTabs\\Reader\\Midi\\MidiReader'
-    );
+        'midi'  => 'PhpTabs\\Reader\\Midi\\MidiReader',
+    ];
 
     /**
      * Instanciates tablature container and try to load the dedicated

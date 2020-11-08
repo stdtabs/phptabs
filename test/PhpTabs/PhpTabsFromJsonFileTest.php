@@ -11,37 +11,15 @@
 
 namespace PhpTabsTest;
 
-use Exception;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\IOFactory;
+use PhpTabs\PhpTabs;
 
 /**
- * Tests IOFactory::fromJsonFile()
+ * Tests new PhpTabs('filename.json')
  */
-class IOFactoryFromJsonFileTest extends TestCase
+class PhpTabsFromJsonFileTest extends TestCase
 {
-    /**
-     * A provider for various scenarios that throw \Exception
-     */
-    public function getExceptionScenarios()
-    {
-        return [
-            [1.25],   // Float as filename
-            [PHPTABS_TEST_BASEDIR . '/sample'],   // Unreadable filename
-            [PHPTABS_TEST_BASEDIR . '/samples/'],  // Dir as filename
-        ];
-    }
-
-    /**
-     * @dataProvider      getExceptionScenarios
-     */
-    public function testExceptionScenario($filename)
-    {
-        $this->expectException(Exception::class);
-
-        IOFactory::fromJsonFile($filename);
-    }
-
     /**
      * Provide all JSON & source files
      */
@@ -75,7 +53,7 @@ class IOFactoryFromJsonFileTest extends TestCase
     {
         $tabs     = IOFactory::fromFile($filename);
         $expected = $tabs->export();
-        $import   = IOFactory::fromJsonFile($jsonFilename);
+        $import   = new PhpTabs($jsonFilename);
 
         $this->assertEquals(
             $expected,

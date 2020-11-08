@@ -89,9 +89,7 @@ abstract class IOFactory
     {
         self::checkFile($filename);
 
-        return self::fromJson(
-            file_get_contents($filename)
-        );
+        return self::create($filename);
     }
 
     /**
@@ -119,20 +117,7 @@ abstract class IOFactory
      */
     public static function fromJson(string $data): PhpTabs
     {
-        $data = json_decode($data, true);
-
-        // JSON decoding error
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            $message = sprintf(
-                'JSON_DECODE_FAILURE: Error number %d - %s',
-                json_last_error(),
-                json_last_error_msg()
-            );
-
-            throw new Exception($message);
-        }
-
-        return self::fromArray($data);
+        return self::fromString($data, 'json');
     }
 
     /**
