@@ -37,27 +37,15 @@ class Reader
     );
 
     /**
-     * Instanciates tablature container
-     * Try to load the right dedicated reader
-     *
-     * @param \PhpTabs\Component\InputStream $file file which should contain a tablature
+     * Instanciates tablature container and try to load the dedicated
+     * parser.
      *
      * @throws \Exception If file format is not supported
      */
-    public function __construct(InputStream $file, string $extension)
+    public function __construct(InputStream $input, string $extension)
     {
-        $this->tablature = new Tablature();
-
-        if (isset($this->extensions[ $extension ])) {
-            $name = $this->extensions[ $extension ];
-
-            $this->tablature->setFormat($extension);
-
-            $this->bridge = new $name($file);
-        }
-
-        // Bridge not found
-        if (!($this->bridge instanceof ReaderInterface)) {
+        // Bridge is not defined
+        if (!isset($this->extensions[$extension])) {
             $message = sprintf(
                 'No reader has been found for "%s" type of file',
                 $extension
@@ -65,20 +53,21 @@ class Reader
 
             throw new Exception($message);
         }
+
+        $this->tablature = new Tablature();
+
+        $name = $this->extensions[$extension];
+
+        $this->bridge = new $name($input);
+
+        $this->bridge->getTablature()->setFormat($extension);
     }
 
     /**
-     * @return Tablature A tablature read from file.
-     *  Otherwise, an empty tablature with some error information
-     *
-     * @return \PhpTabs\Component\Tablature
+     * Get bridge tablature instance
      */
     public function getTablature(): Tablature
     {
-        if ($this->bridge instanceof ReaderInterface) {
-            return $this->bridge->getTablature();
-        }
-
-        return $this->tablature;  // Fallback
+        return $this->bridge->getTablature();
     }
 }
