@@ -35,6 +35,7 @@ class Reader
         'json'  => 'PhpTabs\\Reader\\Json\\JsonReader',
         'mid'   => 'PhpTabs\\Reader\\Midi\\MidiReader',
         'midi'  => 'PhpTabs\\Reader\\Midi\\MidiReader',
+        'ser'   => 'PhpTabs\\Reader\\Serialized\\SerializedReader',
     ];
 
     /**

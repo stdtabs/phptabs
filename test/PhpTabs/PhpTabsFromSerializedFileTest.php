@@ -14,34 +14,13 @@ namespace PhpTabsTest;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\IOFactory;
+use PhpTabs\PhpTabs;
 
 /**
- * Tests IOFactory::fromSerializedFile()
+ * Tests new PhpTabs('filename.ser')
  */
-class IOFactoryFromSerializedFileTest extends TestCase
+class PhpTabsFromSerializedFileTest extends TestCase
 {
-    /**
-     * A provider for various scenarios that throw \Exception
-     */
-    public function getExceptionScenarios()
-    {
-        return [
-            [1.25],   // Float as filename
-            [PHPTABS_TEST_BASEDIR . '/sample'],   // Unreadable filename
-            [PHPTABS_TEST_BASEDIR . '/samples/'], // Dir as filename
-        ];
-    }
-
-    /**
-     * @dataProvider      getExceptionScenarios
-     */
-    public function testExceptionScenario($filename)
-    {
-        $this->expectException(Exception::class);
-
-        IOFactory::fromSerializedFile($filename);
-    }
-
     /**
      * Provide all serialized & source files
      */
@@ -75,7 +54,7 @@ class IOFactoryFromSerializedFileTest extends TestCase
     {
         $tabs     = IOFactory::fromFile($filename);
         $expected = $tabs->export();
-        $import   = IOFactory::fromSerializedFile($serFilename);
+        $import   = new PhpTabs($serFilename);
 
         $this->assertEquals(
             $expected,

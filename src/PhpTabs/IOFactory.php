@@ -14,6 +14,7 @@ declare(strict_types = 1);
 namespace PhpTabs;
 
 use Exception;
+use PhpTabs\Component\FileInput;
 
 abstract class IOFactory
 {
@@ -47,14 +48,16 @@ abstract class IOFactory
             ? pathinfo($pathname, PATHINFO_EXTENSION)
             : $type;
 
-        switch (strtolower($type)) {
-            case 'json':
-                return self::fromJsonFile($pathname);
-            case 'ser':
-                return self::fromSerializedFile($pathname);
-        }
+        $file = new FileInput($pathname);
 
-        return self::create($pathname);
+        // Force $type parser
+        return self::fromString(
+            $file->getInputStream()
+                 ->getStream(
+                    $file->getInputStream()->getSize()
+                ),
+            $type
+        );
     }
 
     /**
@@ -75,9 +78,7 @@ abstract class IOFactory
     {
         self::checkFile($filename);
 
-        return self::fromSerialized(
-            file_get_contents($filename)
-        );
+        return self::create($filename);
     }
 
     /**
@@ -97,19 +98,7 @@ abstract class IOFactory
      */
     public static function fromSerialized(string $data): PhpTabs
     {
-        $data = @unserialize( // Skip warning
-            $data,
-            ['allowed_classes' => false]
-        );
-
-        // unserialize failed
-        if ($data === false) {
-            $message = sprintf('UNSERIALIZE_FAILURE');
-
-            throw new Exception($message);
-        }
-
-        return self::fromArray($data);
+        return self::fromString($data, 'ser');
     }
 
     /**

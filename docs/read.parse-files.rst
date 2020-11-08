@@ -9,8 +9,8 @@ There are 2 ways to parse a file.
 IOFactory
 =========
 
-This is the preferred method as it can parse more file formats (Guitar
-Pro 3, 4 and 5, MIDI, JSON, PHP serialized).
+This is the preferred way as it can parse more file formats (Guitar Pro
+3, 4 and 5, MIDI, JSON, PHP serialized).
 
 After a read operation, a `PhpTabs` containing the entire song is
 returned.
@@ -28,7 +28,7 @@ returned.
 The file format is recognized with extension (gp3, gp4, gp5, mid, midi,
 json, ser).
 
-If the file extension is not generic, a parser can be passed as the
+If the file extension is not standard, a parser can be specified as the
 second parameter to force a file format.
 
 .. code-block:: php
@@ -58,7 +58,8 @@ second parameter to force a file format.
 PhpTabs
 =======
 
-This way only works for Guitar Pro 3, 4 and 5, MIDI files.
+This way works as well as IOFactory ones but you may not specify a
+parser.
 
 .. code-block:: php
 
