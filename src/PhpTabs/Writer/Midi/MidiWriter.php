@@ -49,6 +49,10 @@ class MidiWriter extends MidiWriterBase
     {
         parent::__construct();
 
+        if ($song->isEmpty()) {
+            throw new Exception('Song is empty');
+        }
+
         // Build sequence
         $channelRouter = new ChannelRouter();
         $channelRouterConfigurator = new ChannelRouterConfigurator($channelRouter);
