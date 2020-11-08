@@ -28,10 +28,6 @@ class PhpTabsMidiTest extends TestCase
      */
     public function testReadModeWithSimpleMidiFile()
     {
-        // Errors
-        $this->assertEquals(false, $this->tablature->hasError());
-        $this->assertEquals(null, $this->tablature->getError());
-    
         // Meta attributes
         $this->assertEquals('', $this->tablature->getName());       // Not supported by Midi
         $this->assertEquals('', $this->tablature->getArtist());     // Not supported by Midi

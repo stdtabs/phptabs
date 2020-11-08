@@ -24,10 +24,6 @@ class BasicsTest extends TestCase
     {
         $tablature = new PhpTabs();
 
-        // Errors
-        $this->assertEquals(false, $tablature->hasError());
-        $this->assertEquals(null, $tablature->getError());
-
         // Meta attributes
         $this->assertEquals('', $tablature->getName());
         $this->assertEquals('', $tablature->getArtist());

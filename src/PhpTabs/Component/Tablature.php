@@ -23,13 +23,6 @@ class Tablature
     const DEFAULT_FILE_FORMAT = 'gp3';
 
     /**
-     * An error message
-     *
-     * @var string
-     */
-    private $error = '';
-
-    /**
      * Entry point of the music model
      *
      * @var \PhpTabs\Music\Song
@@ -50,30 +43,6 @@ class Tablature
     }
 
     /**
-     * Sets an error message
-     */
-    public function setError(string $message): void
-    {
-        $this->error = $message;
-    }
-
-    /**
-     * @return string An error set during build operations
-     */
-    public function getError(): string
-    {
-        return $this->error;
-    }
-
-    /**
-     * @return bool true if there was an error. Otherwise, false.
-     */
-    public function hasError(): string
-    {
-        return $this->error !== '';
-    }
-
-    /**
      * Sets Song wrapper
      */
     public function setSong(Song $song): void
@@ -82,7 +51,7 @@ class Tablature
     }
 
     /**
-     * Gets a Song
+     * Get a Song
      */
     public function getSong(): Song
     {
@@ -90,21 +59,21 @@ class Tablature
     }
 
     /**
-     * Gets the list of instruments
+     * Get the list of instruments
      */
     public function getInstruments(): array
     {
         if (!($count = $this->countChannels())) {
-            return array();
+            return [];
         }
 
-        $instruments = array();
+        $instruments = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $instruments[$i] = array(
+            $instruments[$i] = [
                 'id'    => $this->getChannel($i)->getProgram(),
                 'name'  => ChannelNames::$defaultNames[$this->getChannel($i)->getProgram()]
-            );
+            ];
         }
 
         return $instruments;
@@ -124,10 +93,10 @@ class Tablature
     public function getInstrument(int $index): ?array
     {
         return $this->getChannel($index) instanceof Channel
-        ? array(
-        'id'    => $this->getChannel($index)->getProgram(),
-        'name'  => ChannelNames::$defaultNames[$this->getChannel($index)->getProgram()]
-        ) : null;
+            ? [ 'id'    => $this->getChannel($index)->getProgram(),
+                'name'  => ChannelNames::$defaultNames[$this->getChannel($index)->getProgram()]
+            ]
+            : null;
     }
 
     /**
@@ -176,20 +145,9 @@ class Tablature
      * Writes a song into a file
      *
      * @return mixed bool|string
-     * @throws \Exception If tablature container contains error
      */
     public function save(string $filename = null)
     {
-        if ($this->hasError()) {
-            $message = sprintf(
-                '%s(): %s',
-                __METHOD__,
-                'Current data cannot be saved because parsing has encountered an error'
-            );
-
-            throw new Exception($message);
-        }
-
         return (new Writer($this))->save($filename);
     }
 

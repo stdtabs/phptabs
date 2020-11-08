@@ -63,8 +63,6 @@ class Reader
                 $extension
             );
 
-            $this->tablature->setError($message);
-
             throw new Exception($message);
         }
     }

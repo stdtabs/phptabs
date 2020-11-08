@@ -28,10 +28,6 @@ class GuitarPro4ReaderTest extends TestCase
      */
     public function testReadModeWithSimpleGuitarPro4Tab()
     {
-        // Errors
-        $this->assertEquals(false, $this->tablature->hasError());
-        $this->assertEquals(null, $this->tablature->getError());
-
         // Meta attributes
         $this->assertEquals('Testing name', $this->tablature->getName());
         $this->assertEquals('Testing artist', $this->tablature->getArtist());

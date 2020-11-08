@@ -40,7 +40,7 @@ class FileInput
     private $basename;
 
     /**
-     * @var string file content
+     * @var InputStream file content
      */
     private $content = '';
 
@@ -57,7 +57,7 @@ class FileInput
         $this->setDirname(isset($informations['dirname']) ? $informations['dirname'] : '');
         $this->setBasename(isset($informations['basename']) ? $informations['basename'] : '');
         $this->setExtension(isset($informations['extension']) ? $informations['extension'] : '');
-        $this->content = file_get_contents($path);
+        $this->content = new InputStream(file_get_contents($path));
     }
 
     /**
@@ -124,8 +124,11 @@ class FileInput
         return $this->basename;
     }
 
+    /**
+     * Get content as an input stream
+     */
     public function getInputStream(): InputStream
     {
-        return new InputStream($this->content);
+        return $this->content;
     }
 }

@@ -16,6 +16,7 @@ namespace PhpTabs;
 use Exception;
 use PhpTabs\Component\FileInput;
 use PhpTabs\Component\Importer;
+use PhpTabs\Component\InputStream;
 use PhpTabs\Component\Reader;
 use PhpTabs\Component\Tablature;
 
@@ -37,13 +38,25 @@ class PhpTabs
         // It's a pathname
         } else {
             $file = new FileInput($pathname);
-            $reader = new Reader(
-                $file->getInputStream(),
+            $this->fromString(
+                $file->getInputStream()
+                     ->getStream($file->getInputStream()->getSize()),
                 $file->getExtension()
             );
-
-            $this->setTablature($reader->getTablature());
         }     
+    }
+
+    /**
+     * Instanciate from string
+     */
+    public function fromString(string $string, string $extension = null): self
+    {
+        $reader = new Reader(
+            new InputStream($string),
+            $extension
+        );
+
+        return $this->setTablature($reader->getTablature());
     }
 
     /**
