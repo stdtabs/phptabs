@@ -1,3 +1,5 @@
+.. _read.parse-files:
+
 ====================
 Read and parse files
 ====================

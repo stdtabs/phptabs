@@ -34,8 +34,8 @@ User Guide
     :maxdepth: 3
 
     overview
-    read-parse-files
-    reading-strings
+    read.parse-files
+    read.parse-strings
     record-files
     convert-methods
     render-tabs-and-songs
