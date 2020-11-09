@@ -134,7 +134,17 @@ class Tablature
     }
 
     /**
-     * Render a song into a string
+     * Render a song as an ASCII tabs
+     */
+    public function toAscii(array $options = []): string
+    {
+        return $this->getRenderer('ascii')
+                    ->setOptions($options)
+                    ->render();
+    }
+
+    /**
+     * Prepare a renderer
      */
     public function getRenderer(string $format = null): RendererInterface
     {
@@ -178,7 +188,7 @@ class Tablature
                 $name
             );
 
-            trigger_error($message, E_USER_ERROR);
+            throw new Exception($message);
         }
 
         if (count($arguments) < 2) {
@@ -191,7 +201,7 @@ class Tablature
             count($arguments)
         );
 
-        trigger_error($message, E_USER_ERROR);
+        throw new Exception($message);
     }
 
     /**
