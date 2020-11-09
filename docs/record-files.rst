@@ -35,8 +35,8 @@ Of course, you may read, convert and save in one line.
 
     $filename = 'my-file.gp5';
 
-    // The Guitar Pro file is parsed, converted and recorded into
-    // PHP serialized
+    // The Guitar Pro file is parsed, converted
+    // and recorded into as a PHP serialized string
     $song = IOFactory::fromFile($filename)
                      ->toFile('my-file.dat', 'ser');
 
@@ -47,7 +47,7 @@ See :ref:`all available options <convert-methods>` for explicit conversions.
 PhpTabs::save($filename)
 ========================
 
-This way wokrs too but does not accept a specific parser as second
+This way works too but does not accept a specific parser as second
 parameter.
 
 .. code-block:: php

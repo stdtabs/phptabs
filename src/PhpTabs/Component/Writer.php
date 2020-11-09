@@ -31,14 +31,15 @@ class Writer
     /**
      * @var array A list of supported writers
      */
-    private $writers = array(
+    private $writers = [
         'gp3' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro3Writer',
         'gp4' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro4Writer',
         'gp5' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro5Writer',
         'mid' => 'PhpTabs\\Writer\\Midi\\MidiWriter',
         'midi'=> 'PhpTabs\\Writer\\Midi\\MidiWriter',
-        'json'=> 'PhpTabs\\Writer\\Json\\JsonWriter'
-    );
+        'json'=> 'PhpTabs\\Writer\\Json\\JsonWriter',
+        'ser' => 'PhpTabs\\Writer\\Serialized\\SerializedWriter',
+    ];
 
     public function __construct(Tablature $tablature)
     {

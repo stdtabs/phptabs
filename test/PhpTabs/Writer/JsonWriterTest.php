@@ -14,7 +14,7 @@ namespace PhpTabsTest\Writer;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 
-class GuitarJsonWriterTest extends TestCase
+class JsonWriterTest extends TestCase
 {
     public function getWriterScenario() : array
     {

@@ -51,6 +51,9 @@ class Exporter extends ExporterBase
      *  - txt         : same as text
      *  - yaml        : a YAML representation
      *  - yml         : same as yaml
+     *
+     * @todo Depreciate all formats that do not return array
+     * 
      * @param  mixed       $options Some flags for exported formats
      * @return string|array
      * @throws \Exception if format is not supported
@@ -68,7 +71,7 @@ class Exporter extends ExporterBase
             case 'var_export':
                 return var_export($this->exportSong(), true);
             case 'serialize':
-                return serialize($this->exportSong());
+                return $this->toSerialized();
             case 'text':
             case 'txt':
                 return (new Text())->serialize($this->exportSong());
@@ -84,7 +87,7 @@ class Exporter extends ExporterBase
     /**
      * Export to JSON string
      */
-    public function toJson(int $flags): string
+    public function toJson(int $flags = 0): string
     {
         // >=PHP 5.5.0, export Skip JSON error 5 Malformed UTF-8
         // characters, possibly incorrectly encoded
@@ -93,6 +96,14 @@ class Exporter extends ExporterBase
         }
 
         return json_encode($this->export(), $flags);
+    }
+
+    /**
+     * Export to PHP serialized string string
+     */
+    public function toSerialized(): string
+    {
+        return serialize($this->export());
     }
 
     /**
