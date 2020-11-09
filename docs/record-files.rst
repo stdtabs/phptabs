@@ -47,7 +47,8 @@ See :ref:`all available options <convert-methods>` for explicit conversions.
 PhpTabs::save($filename)
 ========================
 
-This way only works for Guitar Pro 3, 4 and 5, MIDI files.
+This way wokrs too but does not accept a specific parser as second
+parameter.
 
 .. code-block:: php
 

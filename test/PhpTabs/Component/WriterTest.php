@@ -74,6 +74,16 @@ class WriterTest extends TestCase
     }
 
     /**
+     * JSON
+     */
+    public function testEmptySongJsonException()
+    {
+        $this->expectException(Exception::class);
+
+        (new Writer(new Tablature()))->build('json');
+    }
+
+    /**
      * Trying to write a non writable directory
      */
     public function testNonWritableDirectoryException()

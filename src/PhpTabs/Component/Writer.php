@@ -36,7 +36,8 @@ class Writer
         'gp4' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro4Writer',
         'gp5' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro5Writer',
         'mid' => 'PhpTabs\\Writer\\Midi\\MidiWriter',
-        'midi'=> 'PhpTabs\\Writer\\Midi\\MidiWriter'
+        'midi'=> 'PhpTabs\\Writer\\Midi\\MidiWriter',
+        'json'=> 'PhpTabs\\Writer\\Json\\JsonWriter'
     );
 
     public function __construct(Tablature $tablature)

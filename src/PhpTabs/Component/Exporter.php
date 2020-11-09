@@ -84,7 +84,7 @@ class Exporter extends ExporterBase
     /**
      * Export to JSON string
      */
-    private function toJson(int $flags): string
+    public function toJson(int $flags): string
     {
         // >=PHP 5.5.0, export Skip JSON error 5 Malformed UTF-8
         // characters, possibly incorrectly encoded
