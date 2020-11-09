@@ -64,7 +64,15 @@ class Song extends SongBase
 
     public function removeMeasureHeader(int $index): void
     {
-        array_splice($this->measureHeaders, $index, 1);
+        $this->measureHeaders = array_filter(
+            $this->measureHeaders,
+            function ($key) use ($index) {
+                return $key != $index;
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+
+        $this->measureHeaders = array_values($this->measureHeaders);
     }
 
     public function getMeasureHeader(int $index): MeasureHeader
@@ -110,6 +118,8 @@ class Song extends SongBase
                 return $item->getNumber() != $track->getNumber();
             }
         );
+
+        $this->tracks = array_values($this->tracks);
     }
 
     public function getTrack(int $index): Track
@@ -151,12 +161,14 @@ class Song extends SongBase
 
     public function removeChannel(Channel $channel): void
     {
-        foreach ($this->channels as $index => $chan) {
-            if ($chan == $channel) {
-                array_splice($this->channels, $index, 1);
-                break;
+        $this->channels = array_filter(
+            $this->channels,
+            function ($item) use ($channel) {
+                return $item->getId() != $channel->getId();
             }
-        }
+        );
+
+        $this->channels = array_values($this->channels);
     }
 
     public function getChannel(int $index): Channel

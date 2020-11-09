@@ -38,7 +38,7 @@ PhpTabs (>= 0.5.0) can render a track as a VexTab string.
     $filename = 'my-file.gp5';
 
     // Render the first track
-    echo $song->toVextab(0);
+    echo $song->toVextab();
 
 
 Some options can be passed to `toVextab` method.

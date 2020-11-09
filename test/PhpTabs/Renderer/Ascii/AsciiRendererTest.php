@@ -138,6 +138,8 @@ E|------------------------|-----------------------------------------------------
     /**
      * Test ASCII renderers
      *
+     * @todo rewrite this test when toAscii and onlyTrack() will be
+     *       implemented
      * @dataProvider getScenarios()
      */
     public function testScenarios($trackIndex, $options, $expected)
@@ -156,6 +158,28 @@ E|------------------------|-----------------------------------------------------
         $lineBreaks = "/\r?\n/"; // take care of newline-encodings
         $expected = preg_replace($lineBreaks, PHP_EOL, $expected);
         $this->assertEquals($expected, $renderer->render($trackIndex));
+    }
+
+    /**
+     * Test ASCII shortcuts
+     *
+     * @todo rewrite this test when toAscii and onlyTrack() will be
+     *       implemented
+     *
+     * @dataProvider getScenarios()
+     */
+    public function testShortcut($trackIndex, $options, $expected)
+    {
+        $tabs = clone $this->tablature;
+        if (!is_null($trackIndex)) {
+            $tabs = $this->tablature->onlyTrack($trackIndex);
+        }
+        $content = $tabs->toAscii($options);
+
+        # Check output
+        $lineBreaks = "/\r?\n/"; // take care of newline-encodings
+        //$expected = preg_replace($lineBreaks, PHP_EOL, $expected);
+        $this->assertEquals($expected, $content);
     }
 
     /**

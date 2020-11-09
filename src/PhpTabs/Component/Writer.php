@@ -110,12 +110,14 @@ class Writer
         if (!is_dir($dir) || !is_writable($dir)) {
             throw new Exception('Save directory error');
         } elseif (is_file($this->path) && !is_writable($this->path)) {
+            // @codeCoverageIgnoreStart
             $message = sprintf(
                 'File "%s" already exists and is not writable',
                 $this->path
             );
 
             throw new Exception($message);
+            // @codeCoverageIgnoreEnd
         }
 
         file_put_contents($this->path, $content);

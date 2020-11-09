@@ -41,7 +41,8 @@ User Guide
     render-tabs-and-songs
     exporting-tabs
 
-    slicing-songs
+    target-track-measure
+    slice-tracks-measures
     traversing-song-model
     tabs-from-scratch
     architecture

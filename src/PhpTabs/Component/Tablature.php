@@ -59,47 +59,6 @@ class Tablature
     }
 
     /**
-     * Get the list of instruments
-     */
-    public function getInstruments(): array
-    {
-        if (!($count = $this->countChannels())) {
-            return [];
-        }
-
-        $instruments = [];
-
-        for ($i = 0; $i < $count; $i++) {
-            $instruments[$i] = [
-                'id'    => $this->getChannel($i)->getProgram(),
-                'name'  => ChannelNames::$defaultNames[$this->getChannel($i)->getProgram()]
-            ];
-        }
-
-        return $instruments;
-    }
-
-    /**
-     * Counts instruments
-     */
-    public function countInstruments(): int
-    {
-        return $this->countChannels();
-    }
-
-    /**
-     * Gets an instrument by channelId
-     */
-    public function getInstrument(int $index): ?array
-    {
-        return $this->getChannel($index) instanceof Channel
-            ? [ 'id'    => $this->getChannel($index)->getProgram(),
-                'name'  => ChannelNames::$defaultNames[$this->getChannel($index)->getProgram()]
-            ]
-            : null;
-    }
-
-    /**
      * Export a song into an array
      *
      * @param  string $format
@@ -141,6 +100,33 @@ class Tablature
         return $this->getRenderer('ascii')
                     ->setOptions($options)
                     ->render();
+    }
+
+    /**
+     * Rebuild a new PhpTabs with only the targeted track
+     */
+    public function onlyTrack(int $trackIndex): PhpTabs
+    {
+        $tabs = new PhpTabs();
+        $tabs->copyFrom($this->getSong());
+
+        // Clean tracks
+        $keepTrack = $tabs->getTrack($trackIndex);
+
+        foreach ($tabs->getTracks() as $track) {
+            if ($track->getNumber() != $keepTrack->getNumber()) {
+                $tabs->removeTrack($track);
+            }
+        }
+
+        // Clean channels
+        foreach ($tabs->getChannels() as $channel) {
+            if ($channel->getId() != $keepTrack->getChannelId()) {
+                $tabs->removeChannel($channel);
+            }
+        }
+
+        return $tabs;
     }
 
     /**
@@ -191,17 +177,17 @@ class Tablature
             throw new Exception($message);
         }
 
-        if (count($arguments) < 2) {
-            return $this->song->$name(...$arguments);
+        if (count($arguments) > 2) {
+            $message = sprintf(
+                '%s method does not support %d arguments',
+                __METHOD__,
+                count($arguments)
+            );
+
+            throw new Exception($message);
         }
 
-        $message = sprintf(
-            '%s method does not support %d arguments',
-            __METHOD__,
-            count($arguments)
-        );
-
-        throw new Exception($message);
+        return $this->song->$name(...$arguments);
     }
 
     /**
