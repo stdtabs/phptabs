@@ -15,6 +15,47 @@ use Exception;
 
 class Song extends SongBase
 {
+    /**
+     * Get the list of instruments
+     */
+    public function getInstruments(): array
+    {
+        if (!($count = $this->countChannels())) {
+            return [];
+        }
+
+        $instruments = [];
+
+        for ($i = 0; $i < $count; $i++) {
+            $instruments[$i] = [
+                'id'    => $this->getChannel($i)->getProgram(),
+                'name'  => ChannelNames::$defaultNames[$this->getChannel($i)->getProgram()]
+            ];
+        }
+
+        return $instruments;
+    }
+
+    /**
+     * Counts instruments
+     */
+    public function countInstruments(): int
+    {
+        return $this->countChannels();
+    }
+
+    /**
+     * Gets an instrument by channelId
+     */
+    public function getInstrument(int $index): ?array
+    {
+        return $this->getChannel($index) instanceof Channel
+            ? [ 'id'    => $this->getChannel($index)->getProgram(),
+                'name'  => ChannelNames::$defaultNames[$this->getChannel($index)->getProgram()]
+            ]
+            : null;
+    }
+
     public function addMeasureHeader(MeasureHeader $measureHeader): void
     {
         $measureHeader->setSong($this);
@@ -63,12 +104,12 @@ class Song extends SongBase
 
     public function removeTrack(Track $track): void
     {
-        foreach ($this->tracks as $index => $track) {
-            if ($track->getNumber() == $track->getNumber()) {
-                array_splice($this->tracks, $index, 1);
-                break;
+        $this->tracks = array_filter(
+            $this->tracks,
+            function ($item) use ($track) {
+                return $item->getNumber() != $track->getNumber();
             }
-        }
+        );
     }
 
     public function getTrack(int $index): Track
