@@ -14,7 +14,7 @@ measure and to obtain a new PhpTabs instance.
 onlyTrack
 =========
 
-The method `onlyTrack` returns a new `PhpTabs` with only the targeted
+The method `onlyTrack` returns a new `PhpTabs` only with the targeted
 track. It accepts a track index as parameter.
 
 .. code-block:: php
@@ -30,7 +30,7 @@ track. It accepts a track index as parameter.
     $new = $song->onlyTrack(2);
 
     // Saving to Guitar Pro 5 file
-    $new->save('3rd-measure-of-my-file.gp5'); 
+    $new->save('3rd-track-of-my-file.gp5'); 
 
 If you only want to work with a particular track without generating a
 new song, you may need to have a look to `PhpTabs->getTrack()` method.
@@ -63,8 +63,8 @@ Chaining onlyTrack and onlyMeasure
 ==================================
 
 You may want to display only one measure for a particular track. In the
-example below, we'll render the first measure of of the first track as
-an ASCII tab.
+example below, we'll render the first measure of the first track as an
+ASCII tab.
 
 .. code-block:: php
 

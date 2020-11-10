@@ -18,7 +18,6 @@ The method `sliceTracks` returns a new `PhpTabs` with the targeted
 tracks.
 
 It accepts 2 parameters :
-
 - fromTrackIndex
 - toTrackIndex
 
@@ -35,7 +34,7 @@ It accepts 2 parameters :
     $new = $song->sliceTracks(2, 3);
 
     // Saving to Guitar Pro 5 file
-    $new->save('3rd-measure-of-my-file.gp5'); 
+    $new->save('3rd-and-4th-tracks-of-my-file.gp5'); 
 
 If you only want to work with tracks without generating a new song, you
 may need to have a look to `PhpTabs->getTracks()` method.
@@ -48,7 +47,6 @@ The method `sliceMeasures` returns a new `PhpTabs` with the targeted
 measures for each track.
 
 It accepts 2 parameters :
-
 - fromMeasureIndex
 - toMeasureIndex
 

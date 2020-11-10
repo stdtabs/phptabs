@@ -26,11 +26,6 @@ class Exporter extends ExporterBase
     protected $song;
 
     /**
-     * @var array $filters
-     */
-    protected $filters = [];
-
-    /**
      * @param \PhpTabs\Component\Tablature $tablature The tablature to export
      */
     public function __construct(Tablature $tablature)
@@ -104,16 +99,5 @@ class Exporter extends ExporterBase
     public function toSerialized(): string
     {
         return serialize($this->export());
-    }
-
-    /**
-     * Set a filter before exporting
-     *
-     * @param string $type
-     * @param mixed  $filter
-     */
-    public function setFilter(string $type, $filter): void
-    {
-        $this->filters[$type] = $filter;
     }
 }

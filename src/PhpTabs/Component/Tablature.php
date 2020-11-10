@@ -75,26 +75,6 @@ class Tablature
     }
 
     /**
-     * Export one track + song context
-     *
-     * @param  int    $index   Target track
-     * @param  string $format  Desired format
-     * @param  int    $options Export options
-     * @return string|array
-     */
-    public function exportTrack(int $index, string $format = null, $options = null)
-    {
-        if (null === $this->getSong()->getTrack($index)) {
-            throw new Exception("Track n°$index does not exist");
-        }
-
-        $exporter = new Exporter($this);
-        $exporter->setFilter('trackIndex', $index);
-
-        return $exporter->export($format, $options);
-    }
-
-    /**
      * Render a song as an ASCII tabs
      */
     public function toAscii(array $options = []): string

@@ -12,8 +12,10 @@
 namespace PhpTabs\Component\Exporter;
 
 use PhpTabs\Music\{
-    Beat, Chord, Duration, Marker, Measure, MeasureHeader, Note,
-    TabString, Text, TimeSignature, Voice
+    Beat, Chord, Duration, Marker,
+    Measure, MeasureHeader, Note,
+    TabString, Text, TimeSignature,
+    Voice
 };
 
 abstract class ExporterBase extends ExporterEffects
@@ -53,16 +55,10 @@ abstract class ExporterBase extends ExporterEffects
         $countTracks = $this->song->countTracks();
 
         for ($i = 0; $i < $countTracks; $i++) {
-            if (isset($this->filters['trackIndex'])
-                && $this->filters['trackIndex'] !== $i
-            ) {
-                continue;
-            }
-
             $content['tracks'][] = $this->exportTrack($i);
         }
 
-        return array('song' => $content);
+        return ['song' => $content];
     }
 
     /**
@@ -72,25 +68,25 @@ abstract class ExporterBase extends ExporterEffects
     {
         $track = $this->song->getTrack($index);
 
-        $content = array(
+        $content = [
             'number'    => $track->getNumber(),
             'offset'    => $track->getOffset(),
             'channelId' => $track->getChannelId(),
             'solo'      => $track->isSolo(),
             'mute'      => $track->isMute(),
             'name'      => $track->getName(),
-            'color'     => array(
-              'R' => $track->getColor()->getR(),
-              'G' => $track->getColor()->getG(),
-              'B' => $track->getColor()->getB()
-            ),
-            'lyrics'    => array(
-              'from'    => $track->getLyrics()->getFrom(),
-              'lyrics'  => $track->getLyrics()->getLyrics()
-            ),
+            'color'     => [
+                'R' => $track->getColor()->getR(),
+                'G' => $track->getColor()->getG(),
+                'B' => $track->getColor()->getB()
+            ],
+            'lyrics'    => [
+                'from'    => $track->getLyrics()->getFrom(),
+                'lyrics'  => $track->getLyrics()->getLyrics()
+            ],
             'measures'  => [],
             'strings'   => []
-        );
+        ];
 
         $countMeasures = $track->countMeasures();
 
@@ -107,7 +103,7 @@ abstract class ExporterBase extends ExporterEffects
             $content['strings'][$i] = $this->exportString($track->getString($i+1));
         }
 
-        return array('track' => $content);
+        return ['track' => $content];
     }
 
     /**
@@ -117,7 +113,7 @@ abstract class ExporterBase extends ExporterEffects
     {
         $channel = $this->song->getChannel($index);
 
-        $content = array(
+        $content = [
             'id'        => $channel->getId(),
             'name'      => $channel->getName(),
             'bank'      => $channel->getBank(),
@@ -129,18 +125,18 @@ abstract class ExporterBase extends ExporterEffects
             'phaser'    => $channel->getPhaser(),
             'tremolo'   => $channel->getTremolo(),
             'parameters'=> []
-        );
+        ];
 
         $countParameters = $channel->countParameters();
 
         for ($i = 0; $i < $countParameters; $i++) {
-            $content['parameters'][$i] = array(
+            $content['parameters'][$i] = [
                 'key'   => $channel->getParameter($i)->getKey(),
                 'value' => $channel->getParameter($i)->getValue()
-            );
+            ];
         }
 
-        return array('channel' => $content);
+        return ['channel' => $content];
     }
 
     /**
@@ -148,13 +144,13 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportMeasure(Measure $measure, MeasureHeader $measureHeader): array
     {
-        $content = array(
+        $content = [
             'channelId'     => $measure->getTrack()->getChannelId(),
             'clef'          => $measure->getClef(),
             'keySignature'  => $measure->getKeySignature(),
             'header'        => $this->exportMeasureHeader($measureHeader)['header'],
             'beats'         => []
-        );
+        ];
 
         $countBeats = $measure->countBeats();
 
@@ -162,7 +158,7 @@ abstract class ExporterBase extends ExporterEffects
             $content['beats'][$i] = $this->exportBeat($measure->getBeat($i));
         }
 
-        return array('measure' => $content);
+        return ['measure' => $content];
     }
 
     /**
@@ -170,16 +166,16 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportBeat(Beat $beat): array
     {
-        $content = array(
+        $content = [
             'start'     => $beat->getStart(),
             'chord'     => $this->exportChord($beat->getChord()),
             'text'      => $this->exportText($beat->getText()),
             'voices'    => [],
-            'stroke'    => array(
+            'stroke'    => [
                 'direction' => $beat->getStroke()->getDirection(),
                 'value'     => $beat->getStroke()->getValue()
-            )
-        );
+            ]
+        ];
 
         $countVoices = $beat->countVoices();
 
@@ -187,7 +183,7 @@ abstract class ExporterBase extends ExporterEffects
             $content['voices'][$i] = $this->exportVoice($beat->getVoice($i));
         }
 
-        return array('beat' => $content);
+        return ['beat' => $content];
     }
 
     /**
@@ -195,13 +191,13 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportVoice(Voice $voice): array
     {
-        $content = array(
+        $content = [
             'duration' => $this->exportDuration($voice->getDuration()),
             'index'    => $voice->getIndex(),
             'empty'    => $voice->isEmpty(),
             'direction'=> $voice->getDirection(),
             'notes'    => []
-        );
+        ];
 
         $countNotes = $voice->countNotes();
 
@@ -209,7 +205,7 @@ abstract class ExporterBase extends ExporterEffects
             $content['notes'][$i] = $this->exportNote($voice->getNote($i));
         }
 
-        return array('voice' => $content);
+        return ['voice' => $content];
     }
 
     /**
@@ -217,15 +213,15 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportDuration(Duration $duration): array
     {
-        return array(
+        return [
             'value'        => $duration->getValue(),
             'dotted'       => $duration->isDotted(),
             'doubleDotted' => $duration->isDoubleDotted(),
-            'divisionType' => array(
+            'divisionType' => [
               'enters'  => $duration->getDivision()->getEnters(),
               'times'   => $duration->getDivision()->getTimes()
-            )
-        );
+            ]
+        ];
     }
 
     /**
@@ -233,15 +229,15 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportNote(Note $note): array
     {
-        return array('note' =>
-            array(
-            'value'     => $note->getValue(),
-            'velocity'  => $note->getVelocity(),
-            'string'    => $note->getString(),
-            'tiedNote'  => $note->isTiedNote(),
-            'effect'    => $this->exportEffect($note->getEffect())
-            )
-        );
+        return [
+            'note' => [
+                'value'     => $note->getValue(),
+                'velocity'  => $note->getVelocity(),
+                'string'    => $note->getString(),
+                'tiedNote'  => $note->isTiedNote(),
+                'effect'    => $this->exportEffect($note->getEffect())
+            ]
+        ];
     }
 
     /**
@@ -249,10 +245,14 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportString(TabString $string): ?array
     {
-        return is_object($string) ? array('string' => array(
-            'number'  => $string->getNumber(),
-            'value'   => $string->getValue()
-        )) : null;
+        return is_object($string)
+            ? [
+                'string' => [
+                    'number'  => $string->getNumber(),
+                    'value'   => $string->getValue()
+                ]
+            ]
+            : null;
     }
 
     /**
@@ -260,18 +260,20 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportMeasureHeader(MeasureHeader $header): array
     {
-        return array('header' => array(
-            'number'        => $header->getNumber(),
-            'start'         => $header->getStart(),
-            'length'        => $header->getLength(),
-            'timeSignature' => $this->exportTimeSignature($header->getTimeSignature()),
-            'tempo'         => $header->getTempo()->getValue(),
-            'marker'        => $this->exportMarker($header->getMarker()),
-            'repeatOpen'     => $header->isRepeatOpen(),
-            'repeatAlternative' => $header->getRepeatAlternative(),
-            'repeatClose'   => $header->getRepeatClose(),
-            'tripletFeel'   => $header->getTripletFeel()
-        ));
+        return [
+            'header' => [
+                'number'        => $header->getNumber(),
+                'start'         => $header->getStart(),
+                'length'        => $header->getLength(),
+                'timeSignature' => $this->exportTimeSignature($header->getTimeSignature()),
+                'tempo'         => $header->getTempo()->getValue(),
+                'marker'        => $this->exportMarker($header->getMarker()),
+                'repeatOpen'     => $header->isRepeatOpen(),
+                'repeatAlternative' => $header->getRepeatAlternative(),
+                'repeatClose'   => $header->getRepeatClose(),
+                'tripletFeel'   => $header->getTripletFeel()
+            ]
+        ];
     }
 
     /**
@@ -283,17 +285,17 @@ abstract class ExporterBase extends ExporterEffects
             return null;
         }
 
-        $content = array(
+        $content = [
             'firstFret'  => $chord->getFirstFret(),
             'name'       => $chord->getName(),
             'strings'    => []
-        );
+        ];
 
         $countStrings = $chord->countStrings();
-        $strings = $chord->getStrings();
+        $strings      = $chord->getStrings();
 
         for ($i = 0; $i < $countStrings; $i++) {
-            $content['strings'][] = array('string' => $strings[$i]);
+            $content['strings'][] = ['string' => $strings[$i]];
         }
 
         return $content;
@@ -304,10 +306,10 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportTimeSignature(TimeSignature $timeSignature): array
     {
-        return array(
+        return [
             'numerator'   => $timeSignature->getNumerator(),
             'denominator' => $this->exportDuration($timeSignature->getDenominator())
-        );
+        ];
     }
 
     /**
@@ -315,15 +317,17 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportMarker(Marker $marker = null): ?array
     {
-        return is_object($marker) ? array(
+        return is_object($marker)
+            ? [
                 'measure' => $marker->getMeasure(),
                 'title'   => $marker->getTitle(),
-                'color'   => array(
-                'R' => $marker->getColor()->getR(),
-                'G' => $marker->getColor()->getG(),
-                'B' => $marker->getColor()->getB()
-            )
-        ) : null;
+                'color'   => [
+                    'R' => $marker->getColor()->getR(),
+                    'G' => $marker->getColor()->getG(),
+                    'B' => $marker->getColor()->getB()
+                ]
+            ]
+            : null;
     }
 
     /**
@@ -331,8 +335,8 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportText(Text $text = null): ?array
     {
-        return is_object($text) ? array(
-            'value' => $text->getValue()
-        ) : null;
+        return is_object($text)
+            ? ['value' => $text->getValue()]
+            : null;
     }
 }
