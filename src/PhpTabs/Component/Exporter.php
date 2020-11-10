@@ -86,11 +86,10 @@ class Exporter extends ExporterBase
     {
         // >=PHP 5.5.0, export Skip JSON error 5 Malformed UTF-8
         // characters, possibly incorrectly encoded
-        if (defined('JSON_PARTIAL_OUTPUT_ON_ERROR')) {
-            $flags |= JSON_PARTIAL_OUTPUT_ON_ERROR;
-        }
-
-        return json_encode($this->export(), $flags);
+        return json_encode(
+            $this->export(),
+            $flags | JSON_PARTIAL_OUTPUT_ON_ERROR
+        );
     }
 
     /**
