@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -103,26 +105,75 @@ class Tablature
     }
 
     /**
-     * Rebuild a new PhpTabs with only the targeted track
+     * Rebuild a new PhpTabs with only the targeted tracks
      */
-    public function onlyTrack(int $trackIndex): PhpTabs
+    public function sliceTracks(int $fromTrackIndex, int $toTrackIndex): PhpTabs
     {
         $tabs = new PhpTabs();
         $tabs->copyFrom($this->getSong());
 
-        // Clean tracks
-        $keepTrack = $tabs->getTrack($trackIndex);
+        $keepTracks   = [];
+        $keepChannels = [];
 
+        for ($i = 0; $i < $tabs->countTracks(); $i++) {
+            if ($i >= $fromTrackIndex && $i <= $toTrackIndex) {
+                array_push($keepTracks, $tabs->getTrack($i)->getNumber());
+                array_push($keepChannels, $tabs->getTrack($i)->getChannelId());
+            }
+        }
+
+        // Clean tracks
         foreach ($tabs->getTracks() as $track) {
-            if ($track->getNumber() != $keepTrack->getNumber()) {
+            if (!in_array($track->getNumber(), $keepTracks)) {
                 $tabs->removeTrack($track);
             }
         }
 
         // Clean channels
         foreach ($tabs->getChannels() as $channel) {
-            if ($channel->getId() != $keepTrack->getChannelId()) {
+            if (!in_array($channel->getId(), $keepChannels)) {
                 $tabs->removeChannel($channel);
+            }
+        }
+
+        return $tabs;
+    }
+
+    /**
+     * Rebuild a new PhpTabs with only the targeted track
+     */
+    public function onlyTrack(int $trackIndex): PhpTabs
+    {
+        return $this->sliceTracks($trackIndex, $trackIndex);
+    }
+
+    /**
+     * Rebuild a new PhpTabs with only the targeted measures
+     */
+    public function sliceMeasures(int $fromMeasureIndex, int $toMeasureIndex): PhpTabs
+    {
+        $tabs = new PhpTabs();
+        $tabs->copyFrom($this->getSong());
+
+        $keepMeasures = [];
+
+        // Get the measures to keep
+        for ($i = 0; $i < $tabs->countMeasureHeaders(); $i++) {
+            if ($i >= $fromMeasureIndex && $i <= $toMeasureIndex) {
+                array_push($keepMeasures, $tabs->getMeasureHeader($i)->getNumber());
+            }
+        }
+
+        // Clean measure headers
+        foreach ($tabs->getMeasureHeaders() as $measureHeader) {
+
+            if (!in_array($measureHeader->getNumber(), $keepMeasures)) {
+                $tabs->removeMeasureHeader($measureHeader);
+
+                // Clean measure for each track
+                foreach ($tabs->getTracks() as $track) {
+                    $track->removeMeasure($measureHeader->getNumber());
+                }
             }
         }
 
@@ -135,26 +186,7 @@ class Tablature
      */
     public function onlyMeasure(int $measureIndex): PhpTabs
     {
-        $tabs = new PhpTabs();
-        $tabs->copyFrom($this->getSong());
-
-        // Get the measure to keep
-        $keepMeasure = $tabs->getMeasureHeader($measureIndex);
-
-        // Clean measure headers
-        foreach ($tabs->getMeasureHeaders() as $measureHeader) {
-
-            if ($measureHeader->getNumber() != $keepMeasure->getNumber()) {
-                $tabs->removeMeasureHeader($measureHeader);
-
-                // Clean tracks measure
-                foreach ($tabs->getTracks() as $track) {
-                    $track->removeMeasure($measureHeader->getNumber());
-                }
-            }
-        }
-
-        return $tabs;
+        return $this->sliceMeasures($measureIndex, $measureIndex);
     }
 
     /**

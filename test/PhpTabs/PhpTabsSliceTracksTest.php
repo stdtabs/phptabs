@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Create tabs from scratch
  */
-class PhpTabsOnlyTrackTest extends TestCase
+class PhpTabsSliceTracksTest extends TestCase
 {
     /**
      * Create a 5 tracks / 5 measures song that will be dispatched
@@ -87,32 +87,35 @@ class PhpTabsOnlyTrackTest extends TestCase
         }
 
         return [
-            'only-1st' => [clone $song, 0],
-            'only-3rd' => [clone $song, 2],
-            'only-5th' => [clone $song, 4],
+            'only-1st' => [clone $song, 0, 0],
+            'only-3rd-and-fourth' => [clone $song, 2, 3],
+            'only-5th' => [clone $song, 4, 4],
         ];
     }
 
     /**
-     * We check that there is on only one track and that it's the good one
+     * We check that there is only a certain count of tracks
+     * and that they're the right ones
      *
      * @dataProvider getScenarios
      */
-    public function testOnlyOneTrack($song, $trackIndex)
+    public function testSliceTracks($song, $fromTrackIndex, $toTrackIndex)
     {
-        $expectedTrackName = 'Track ' . $trackIndex;
-        $onlySong = $song->onlyTrack($trackIndex);
+        $beforeCount = $song->countTracks();
+        $slicedSong = $song->sliceTracks($fromTrackIndex, $toTrackIndex);
 
-        // track count
+        // Track count
         $this->assertEquals(
-            1,
-            $onlySong->countTracks()
+            $toTrackIndex - $fromTrackIndex + 1,
+            $slicedSong->countTracks()
         );
 
-        // track name
-        $this->assertEquals(
-            $expectedTrackName,
-            $onlySong->getTrack(0)->getName()
-        );
+        // Track names
+        for ($i = 0; $i < $slicedSong->countTracks(); $i++) {
+            $this->assertEquals(
+                'Track ' . ($fromTrackIndex + $i),
+                $slicedSong->getTrack($i)->getName()
+            );
+        }
     }
 }

@@ -25,9 +25,9 @@ use PhpTabs\PhpTabs;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Create tabs from scratch
+ * Create a new song from a sliced one
  */
-class PhpTabsOnlyTrackTest extends TestCase
+class PhpTabsSliceMeasuresTest extends TestCase
 {
     /**
      * Create a 5 tracks / 5 measures song that will be dispatched
@@ -87,32 +87,41 @@ class PhpTabsOnlyTrackTest extends TestCase
         }
 
         return [
-            'only-1st' => [clone $song, 0],
-            'only-3rd' => [clone $song, 2],
-            'only-5th' => [clone $song, 4],
+            'only-1st' => [clone $song, 0, 0],
+            'only-3rd-and-fourth' => [clone $song, 2, 3],
+            'only-5th' => [clone $song, 4, 4],
         ];
     }
 
     /**
-     * We check that there is on only one track and that it's the good one
+     * We check that there is only a certain count of tracks
+     * and that they're the right ones
      *
      * @dataProvider getScenarios
      */
-    public function testOnlyOneTrack($song, $trackIndex)
+    public function testSliceMeasures($song, $fromMeasureIndex, $toMeasureIndex)
     {
-        $expectedTrackName = 'Track ' . $trackIndex;
-        $onlySong = $song->onlyTrack($trackIndex);
+        $sliced = $song->sliceMeasures($fromMeasureIndex, $toMeasureIndex);
 
-        // track count
+        // Measure count
         $this->assertEquals(
-            1,
-            $onlySong->countTracks()
+            $toMeasureIndex - $fromMeasureIndex + 1,
+            $sliced->countMeasureHeaders()
         );
 
-        // track name
-        $this->assertEquals(
-            $expectedTrackName,
-            $onlySong->getTrack(0)->getName()
-        );
+        // Measures tempo
+        foreach ($sliced->getTracks() as $track) {
+            $this->assertEquals(
+                $toMeasureIndex - $fromMeasureIndex + 1,
+                $track->countMeasures()
+            );
+
+            for ($i = 0; $i < $track->countMeasures(); $i++) {
+                $this->assertEquals(
+                    180 + ($fromMeasureIndex + $i),
+                    $track->getMeasure($i)->getTempo()->getValue()
+                );
+            }
+        }
     }
 }

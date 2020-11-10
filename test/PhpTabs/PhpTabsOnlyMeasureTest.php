@@ -94,7 +94,7 @@ class PhpTabsOnlyMeasureTest extends TestCase
     }
 
     /**
-     * We check that there is on only one measure per track
+     * We check that there is only one measure per track
      * and that it's the good one
      *
      * @dataProvider getScenarios
@@ -104,7 +104,7 @@ class PhpTabsOnlyMeasureTest extends TestCase
         $expectedTempo = 180 + $measureIndex;
         $onlySong = $song->onlyMeasure($measureIndex);
 
-        // track count
+        // Measure count
         $this->assertEquals(
             1,
             $onlySong->countMeasureHeaders()
