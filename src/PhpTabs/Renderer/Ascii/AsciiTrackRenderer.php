@@ -100,7 +100,7 @@ class AsciiTrackRenderer
                     $nextMeasure = $j + 1;
 
                     // Last measure
-                    $eof = $measureCount === $measure->getNumber();
+                    $eof = $measureCount === $j+1; // $measure->getNumber();
 
                     // Break line
                     if ($this->writer->getPosX() > $this->parent->getOption('maxLineLength')) {

@@ -83,9 +83,19 @@ class Track
         return $this->measures[$index];
     }
 
-    public function removeMeasure(int $index): void
+    /**
+     * Remove a measure by measure number
+     */
+    public function removeMeasure(int $number): void
     {
-        array_splice($this->measures, $index, 1);
+        $this->measures = array_filter(
+            $this->measures,
+            function ($item) use ($number) {
+                return $item->getNumber() != $number;
+            }
+        );
+
+        $this->measures = array_values($this->measures);
     }
 
     public function countMeasures(): int

@@ -130,6 +130,34 @@ class Tablature
     }
 
     /**
+     * Rebuild a new PhpTabs with only the targeted measure
+     * for each track
+     */
+    public function onlyMeasure(int $measureIndex): PhpTabs
+    {
+        $tabs = new PhpTabs();
+        $tabs->copyFrom($this->getSong());
+
+        // Get the measure to keep
+        $keepMeasure = $tabs->getMeasureHeader($measureIndex);
+
+        // Clean measure headers
+        foreach ($tabs->getMeasureHeaders() as $measureHeader) {
+
+            if ($measureHeader->getNumber() != $keepMeasure->getNumber()) {
+                $tabs->removeMeasureHeader($measureHeader);
+
+                // Clean tracks measure
+                foreach ($tabs->getTracks() as $track) {
+                    $track->removeMeasure($measureHeader->getNumber());
+                }
+            }
+        }
+
+        return $tabs;
+    }
+
+    /**
      * Prepare a renderer
      */
     public function getRenderer(string $format = null): RendererInterface

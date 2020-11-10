@@ -62,14 +62,13 @@ class Song extends SongBase
         $this->measureHeaders[] = $measureHeader;
     }
 
-    public function removeMeasureHeader(int $index): void
+    public function removeMeasureHeader(MeasureHeader $measureHeader): void
     {
         $this->measureHeaders = array_filter(
             $this->measureHeaders,
-            function ($key) use ($index) {
-                return $key != $index;
-            },
-            ARRAY_FILTER_USE_KEY
+            function ($item) use ($measureHeader) {
+                return $item->getNumber() != $measureHeader->getNumber();
+            }
         );
 
         $this->measureHeaders = array_values($this->measureHeaders);
@@ -83,7 +82,7 @@ class Song extends SongBase
 
         throw new Exception(
             sprintf(
-                'Index %s does not exist',
+                'MeasureHeader at index "%s" does not exist',
                 $index
             )
         );
