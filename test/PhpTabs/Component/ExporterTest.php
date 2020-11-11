@@ -47,7 +47,7 @@ class ExporterTest extends TestCase
             'yaml',
             'yml',
             'serialize',
-            'json',
+          //  'json',
             'var_export',
           //  'xml'
         ] as $format) {

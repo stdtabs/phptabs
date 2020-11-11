@@ -38,8 +38,6 @@ class Exporter extends ExporterBase
      *
      * @param  null|string $format
      *  - array       : a raw PHP array
-     *  - xml         : an XML string
-     *  - json        : a JSON string
      *  - var_export  : a raw PHP array as string
      *  - serialize   : a PHP serialized
      *  - text        : a non standardized text
@@ -59,8 +57,6 @@ class Exporter extends ExporterBase
             case null:
             case 'array':
                 return $this->exportSong();
-            case 'json':
-                return $this->toJson(is_int($options) ? $options : 0);
             case 'var_export':
                 return var_export($this->exportSong(), true);
             case 'serialize':

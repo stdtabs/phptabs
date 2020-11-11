@@ -93,7 +93,15 @@ class Tablature
     }
 
     /**
-     * Export as XML
+     * Get a JSON representation
+     */
+    public function toJson(int $flags = 0): string
+    {
+        return $this->getExporter()->toJson($flags);
+    }
+
+    /**
+     * Get an XML representation
      */
     public function toXml(): string
     {

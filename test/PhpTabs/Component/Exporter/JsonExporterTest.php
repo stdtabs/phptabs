@@ -27,8 +27,8 @@ class JsonExporterTest extends TestCase
 
         foreach ($files as $filename) {
             $filenames[] = [
-            $filename,
-            str_replace('samples', 'files/json', $filename) . '.json'
+                $filename,
+                str_replace('samples', 'files/json', $filename) . '.json'
             ];
         }
 
@@ -43,7 +43,7 @@ class JsonExporterTest extends TestCase
     public function testJsonExporter($source, $result)
     {
         $tabs     = new PhpTabs($source);
-        $text     = $tabs->export('json', JSON_PRETTY_PRINT);
+        $text     = $tabs->toJson(JSON_PRETTY_PRINT);
         $expected = file_get_contents($result);
         $this->assertEquals(
             $expected,
@@ -58,7 +58,7 @@ class JsonExporterTest extends TestCase
     public function testEmptyTabsJsonExporter()
     {
         $tabs     = new PhpTabs();
-        $text     = $tabs->export('json');
+        $text     = $tabs->toJson();
         $expected = file_get_contents(PHPTABS_TEST_BASEDIR . '/files/json/empty-tabs.json');
         $this->assertEquals(
             $expected,
