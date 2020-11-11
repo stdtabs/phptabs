@@ -39,6 +39,7 @@ class Writer
         'midi'=> 'PhpTabs\\Writer\\Midi\\MidiWriter',
         'json'=> 'PhpTabs\\Writer\\Json\\JsonWriter',
         'ser' => 'PhpTabs\\Writer\\Serialized\\SerializedWriter',
+        'xml' => 'PhpTabs\\Writer\\Xml\\XmlWriter',
     ];
 
     public function __construct(Tablature $tablature)

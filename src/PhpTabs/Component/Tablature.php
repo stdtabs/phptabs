@@ -75,6 +75,14 @@ class Tablature
     }
 
     /**
+     * Get exporter tool
+     */
+    public function getExporter(): Exporter
+    {
+        return new Exporter($this);
+    }
+
+    /**
      * Render a song as an ASCII tabs
      */
     public function toAscii(array $options = []): string
@@ -82,6 +90,14 @@ class Tablature
         return $this->getRenderer('ascii')
                     ->setOptions($options)
                     ->render();
+    }
+
+    /**
+     * Export as XML
+     */
+    public function toXml(): string
+    {
+        return $this->getExporter()->toXml();
     }
 
     /**
