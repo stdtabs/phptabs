@@ -58,9 +58,6 @@ class Exporter extends ExporterBase
             case 'text':
             case 'txt':
                 return (new Text())->serialize($this->exportSong());
-            case 'yaml':
-            case 'yml':
-                return (new Yaml())->serialize($this->exportSong());
         }
 
         $message = sprintf('%s does not support "%s" format', __METHOD__, $format);
@@ -94,5 +91,13 @@ class Exporter extends ExporterBase
     public function toXml(): string
     {
         return (new Xml())->serialize($this->exportSong());
+    }
+
+    /**
+     * Export to YAML string
+     */
+    public function toYaml(): string
+    {
+        return (new Yaml())->serialize($this->exportSong());
     }
 }

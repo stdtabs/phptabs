@@ -117,6 +117,14 @@ class Tablature
     }
 
     /**
+     * Get a YAML representation
+     */
+    public function toYaml(): string
+    {
+        return $this->convert('yml');
+    }
+
+    /**
      * Rebuild a new PhpTabs with only the targeted tracks
      */
     public function sliceTracks(int $fromTrackIndex, int $toTrackIndex): PhpTabs

@@ -1,0 +1,4137 @@
+song:
+  name: "Testing name"
+  artist: "Testing artist"
+  album: "Testing album"
+  author: "Testing author"
+  copyright: "Testing copyright"
+  writer: "Testing writer"
+  comments: "Testing comments line 1
+Testing comments line 2"
+  channels:
+    channel:
+      id: 1
+      name: "Clean Guitar 1"
+      bank: 0
+      program: 27
+      volume: 103
+      balance: 63
+      chorus: 0
+      reverb: 0
+      phaser: 0
+      tremolo: 0
+      parameters:
+        key: "channel-1"
+        value: "0"
+        key: "channel-2"
+        value: "1"
+    channel:
+      id: 2
+      name: "Syn Choir 1"
+      bank: 0
+      program: 54
+      volume: 103
+      balance: 63
+      chorus: 0
+      reverb: 0
+      phaser: 0
+      tremolo: 0
+      parameters:
+        key: "channel-1"
+        value: "2"
+        key: "channel-2"
+        value: "3"
+  measureHeaders:
+    header:
+      number: 1
+      start: 960
+      length: 5760
+      timeSignature:
+        numerator: 12
+        denominator:
+          value: 8
+          dotted: false
+          doubleDotted: false
+          divisionType:
+            enters: 1
+            times: 1
+      tempo: 66
+      marker:
+        measure: 1
+        title: "Untitled"
+        color:
+          R: 139
+          G: 105
+          B: 20
+      repeatOpen: true
+      repeatAlternative: 0
+      repeatClose: 0
+      tripletFeel: 2
+    header:
+      number: 2
+      start: 6720
+      length: 5760
+      timeSignature:
+        numerator: 12
+        denominator:
+          value: 8
+          dotted: false
+          doubleDotted: false
+          divisionType:
+            enters: 1
+            times: 1
+      tempo: 88
+      marker: 
+      repeatOpen: false
+      repeatAlternative: 0
+      repeatClose: 0
+      tripletFeel: 2
+    header:
+      number: 3
+      start: 12480
+      length: 5760
+      timeSignature:
+        numerator: 12
+        denominator:
+          value: 8
+          dotted: false
+          doubleDotted: false
+          divisionType:
+            enters: 1
+            times: 1
+      tempo: 88
+      marker: 
+      repeatOpen: false
+      repeatAlternative: 0
+      repeatClose: 0
+      tripletFeel: 2
+    header:
+      number: 4
+      start: 18240
+      length: 5760
+      timeSignature:
+        numerator: 12
+        denominator:
+          value: 8
+          dotted: false
+          doubleDotted: false
+          divisionType:
+            enters: 1
+            times: 1
+      tempo: 88
+      marker: 
+      repeatOpen: false
+      repeatAlternative: 0
+      repeatClose: 0
+      tripletFeel: 2
+  tracks:
+    track:
+      number: 1
+      offset: 0
+      channelId: 1
+      solo: false
+      mute: false
+      name: "Guitar"
+      color:
+        R: 255
+        G: 0
+        B: 0
+      lyrics:
+        from: 1
+        lyrics:
+      measures:
+        measure:
+          channelId: 1
+          clef: 1
+          keySignature: 0
+          header:
+            number: 1
+            start: 960
+            length: 5760
+            timeSignature:
+              numerator: 12
+              denominator:
+                value: 8
+                dotted: false
+                doubleDotted: false
+                divisionType:
+                  enters: 1
+                  times: 1
+            tempo: 66
+            marker:
+              measure: 1
+              title: "Untitled"
+              color:
+                R: 139
+                G: 105
+                B: 20
+            repeatOpen: true
+            repeatAlternative: 0
+            repeatClose: 0
+            tripletFeel: 2
+          beats:
+            beat:
+              start: 960
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 1
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 4800
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: true
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 6240
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 16
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 11
+                      velocity: 95
+                      string: 3
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: true
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: true
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 6480
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 16
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 0
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: true
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+        measure:
+          channelId: 1
+          clef: 1
+          keySignature: 0
+          header:
+            number: 2
+            start: 6720
+            length: 5760
+            timeSignature:
+              numerator: 12
+              denominator:
+                value: 8
+                dotted: false
+                doubleDotted: false
+                divisionType:
+                  enters: 1
+                  times: 1
+            tempo: 88
+            marker: 
+            repeatOpen: false
+            repeatAlternative: 0
+            repeatClose: 0
+            tripletFeel: 2
+          beats:
+            beat:
+              start: 6720
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: true
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 1
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: true
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 8160
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 1
+                      tiedNote: true
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 8640
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 13
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 9120
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 95
+                      string: 3
+                      tiedNote: false
+                      effect:
+                        bend:
+                          points:
+                            position: 0
+                            value: 0
+                            position: 6
+                            value: 4
+                            position: 12
+                            value: 4
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 9600
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 16
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 3
+                      times: 2
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 95
+                      string: 3
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: true
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 9760
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 16
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 3
+                      times: 2
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 3
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 9920
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 16
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 3
+                      times: 2
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 95
+                      string: 4
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: true
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 10080
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: true
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 95
+                      string: 4
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: true
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 10800
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 16
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 3
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 11040
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 16
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 95
+                      string: 4
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: true
+                        ghostNote: true
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 11280
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 16
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 4
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 11520
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 16
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 11760
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: true
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 95
+                      string: 4
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: true
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+        measure:
+          channelId: 1
+          clef: 1
+          keySignature: 0
+          header:
+            number: 3
+            start: 12480
+            length: 5760
+            timeSignature:
+              numerator: 12
+              denominator:
+                value: 8
+                dotted: false
+                doubleDotted: false
+                divisionType:
+                  enters: 1
+                  times: 1
+            tempo: 88
+            marker: 
+            repeatOpen: false
+            repeatAlternative: 0
+            repeatClose: 0
+            tripletFeel: 2
+          beats:
+            beat:
+              start: 12480
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 16
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 3
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic:
+                          type: 1
+                          data: 0
+                          isNatural: true
+                          isArtificial: false
+                          isTapped: false
+                          isPinch: false
+                          isSemi: false
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 12720
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 16
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 95
+                      string: 3
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic:
+                          type: 1
+                          data: 0
+                          isNatural: true
+                          isArtificial: false
+                          isTapped: false
+                          isPinch: false
+                          isSemi: false
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 12960
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 95
+                      string: 3
+                      tiedNote: false
+                      effect:
+                        bend:
+                          points:
+                            position: 0
+                            value: 0
+                            position: 6
+                            value: 4
+                            position: 12
+                            value: 4
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 13440
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic:
+                          type: 1
+                          data: 0
+                          isNatural: true
+                          isArtificial: false
+                          isTapped: false
+                          isPinch: false
+                          isSemi: false
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: true
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 13920
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 2
+                      tiedNote: true
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 14880
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic:
+                          type: 1
+                          data: 0
+                          isNatural: true
+                          isArtificial: false
+                          isTapped: false
+                          isPinch: false
+                          isSemi: false
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 15360
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace:
+                          fret: 10
+                          duration: 1
+                          dynamic: 95
+                          transition: 0
+                          onBeat: false
+                          dead: false
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 15840
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace:
+                          fret: 12
+                          duration: 1
+                          dynamic: 95
+                          transition: 0
+                          onBeat: false
+                          dead: false
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 16320
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 13
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 16800
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 14
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 17280
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 15
+                      velocity: 15
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 17760
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: true
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+        measure:
+          channelId: 1
+          clef: 1
+          keySignature: 0
+          header:
+            number: 4
+            start: 18240
+            length: 5760
+            timeSignature:
+              numerator: 12
+              denominator:
+                value: 8
+                dotted: false
+                doubleDotted: false
+                divisionType:
+                  enters: 1
+                  times: 1
+            tempo: 88
+            marker: 
+            repeatOpen: false
+            repeatAlternative: 0
+            repeatClose: 0
+            tripletFeel: 2
+          beats:
+            beat:
+              start: 18240
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 13
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend:
+                          points:
+                            position: 0
+                            value: 0
+                            position: 6
+                            value: 4
+                            position: 12
+                            value: 4
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: true
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 18720
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: true
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 19680
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: true
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: true
+                        fadeIn: true
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 21120
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 10
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 21600
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 22080
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 95
+                      string: 1
+                      tiedNote: false
+                      effect:
+                        bend:
+                          points:
+                            position: 0
+                            value: 0
+                            position: 6
+                            value: 4
+                            position: 12
+                            value: 4
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 22560
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 12
+                      velocity: 63
+                      string: 1
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: true
+                        hammer: false
+                        ghostNote: true
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 23040
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 23520
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+      strings:
+        string:
+          number: 1
+          value: 64
+        string:
+          number: 2
+          value: 59
+        string:
+          number: 3
+          value: 55
+        string:
+          number: 4
+          value: 50
+        string:
+          number: 5
+          value: 45
+        string:
+          number: 6
+          value: 40
+    track:
+      number: 2
+      offset: 1
+      channelId: 2
+      solo: false
+      mute: false
+      name: "Voice"
+      color:
+        R: 255
+        G: 0
+        B: 0
+      lyrics:
+        from: 1
+        lyrics:
+      measures:
+        measure:
+          channelId: 2
+          clef: 1
+          keySignature: 0
+          header:
+            number: 1
+            start: 960
+            length: 5760
+            timeSignature:
+              numerator: 12
+              denominator:
+                value: 8
+                dotted: false
+                doubleDotted: false
+                divisionType:
+                  enters: 1
+                  times: 1
+            tempo: 66
+            marker:
+              measure: 1
+              title: "Untitled"
+              color:
+                R: 139
+                G: 105
+                B: 20
+            repeatOpen: true
+            repeatAlternative: 0
+            repeatClose: 0
+            tripletFeel: 2
+          beats:
+            beat:
+              start: 960
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: true
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 1920
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: true
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 2880
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 3840
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: true
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 4800
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 5760
+              chord:
+                firstFret: 1
+                name: "E5"
+                strings:
+                  string: -1
+                  string: 5
+                  string: -1
+                  string: -1
+                  string: -1
+                  string: -1
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: true
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+        measure:
+          channelId: 2
+          clef: 1
+          keySignature: 0
+          header:
+            number: 2
+            start: 6720
+            length: 5760
+            timeSignature:
+              numerator: 12
+              denominator:
+                value: 8
+                dotted: false
+                doubleDotted: false
+                divisionType:
+                  enters: 1
+                  times: 1
+            tempo: 88
+            marker: 
+            repeatOpen: false
+            repeatAlternative: 0
+            repeatClose: 0
+            tripletFeel: 2
+          beats:
+            beat:
+              start: 6720
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 0
+                      velocity: 95
+                      string: 1
+                      tiedNote: true
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace:
+                          fret: 0
+                          duration: 1
+                          dynamic: 95
+                          transition: 0
+                          onBeat: false
+                          dead: false
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 7680
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 8640
+              chord: 
+              text:
+                value: "text"
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 3
+                      velocity: 95
+                      string: 1
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 3
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 4
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                    note:
+                      value: 3
+                      velocity: 95
+                      string: 5
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                    note:
+                      value: 3
+                      velocity: 95
+                      string: 6
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 9600
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 10560
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: true
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 11520
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+        measure:
+          channelId: 2
+          clef: 1
+          keySignature: 0
+          header:
+            number: 3
+            start: 12480
+            length: 5760
+            timeSignature:
+              numerator: 12
+              denominator:
+                value: 8
+                dotted: false
+                doubleDotted: false
+                divisionType:
+                  enters: 1
+                  times: 1
+            tempo: 88
+            marker: 
+            repeatOpen: false
+            repeatAlternative: 0
+            repeatClose: 0
+            tripletFeel: 2
+          beats:
+            beat:
+              start: 12480
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill:
+                          fret: 5
+                          duration:
+                            value: 16
+                            dotted: false
+                            doubleDotted: false
+                            divisionType:
+                              enters: 1
+                              times: 1
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 13440
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: -1
+                value: 16
+            beat:
+              start: 14400
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 15360
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend:
+                          points:
+                            position: 0
+                            value: 4
+                            position: 12
+                            value: 8
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: true
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 1
+                value: 16
+            beat:
+              start: 16320
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 17280
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+        measure:
+          channelId: 2
+          clef: 1
+          keySignature: 0
+          header:
+            number: 4
+            start: 18240
+            length: 5760
+            timeSignature:
+              numerator: 12
+              denominator:
+                value: 8
+                dotted: false
+                doubleDotted: false
+                divisionType:
+                  enters: 1
+                  times: 1
+            tempo: 88
+            marker: 
+            repeatOpen: false
+            repeatAlternative: 0
+            repeatClose: 0
+            tripletFeel: 2
+          beats:
+            beat:
+              start: 18240
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking:
+                          duration:
+                            value: 8
+                            dotted: false
+                            doubleDotted: false
+                            divisionType:
+                              enters: 1
+                              times: 1
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 19200
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: true
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 19680
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 8
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 20160
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 21120
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 22080
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 95
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar:
+                          points:
+                            position: 0
+                            value: 0
+                            position: 6
+                            value: -2
+                            position: 12
+                            value: 0
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+            beat:
+              start: 23040
+              chord: 
+              text: 
+              voices:
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 0
+                  empty: false
+                  direction: 0
+                  notes:
+                    note:
+                      value: 5
+                      velocity: 15
+                      string: 2
+                      tiedNote: false
+                      effect:
+                        bend: 
+                        tremoloBar: 
+                        harmonic: 
+                        grace: 
+                        trill: 
+                        tremoloPicking: 
+                        vibrato: false
+                        deadNote: false
+                        slide: false
+                        hammer: false
+                        ghostNote: false
+                        accentuatedNote: false
+                        heavyAccentuatedNote: false
+                        palmMute: false
+                        staccato: false
+                        tapping: false
+                        slapping: false
+                        popping: false
+                        fadeIn: false
+                        letRing: false
+                voice:
+                  duration:
+                    value: 4
+                    dotted: false
+                    doubleDotted: false
+                    divisionType:
+                      enters: 1
+                      times: 1
+                  index: 1
+                  empty: true
+                  direction: 0
+                  notes:
+              stroke:
+                direction: 0
+                value: 
+      strings:
+        string:
+          number: 1
+          value: 64
+        string:
+          number: 2
+          value: 59
+        string:
+          number: 3
+          value: 55
+        string:
+          number: 4
+          value: 50
+        string:
+          number: 5
+          value: 45
+        string:
+          number: 6
+          value: 40

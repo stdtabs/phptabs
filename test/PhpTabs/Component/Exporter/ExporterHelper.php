@@ -39,7 +39,7 @@ class ExporterHelper extends XmlTestCaseHelper
         // Text
         self::$plainText = self::$tablature->export('text');
         // YAML
-        self::$yamlText = self::$tablature->export('yaml');
+        self::$yamlText = self::$tablature->toYaml();
 
         // XML
         $xmlString = self::$tablature->toXml();

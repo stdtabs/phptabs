@@ -40,6 +40,8 @@ class Writer
         'json'=> 'PhpTabs\\Writer\\Json\\JsonWriter',
         'ser' => 'PhpTabs\\Writer\\Serialized\\SerializedWriter',
         'xml' => 'PhpTabs\\Writer\\Xml\\XmlWriter',
+        'yaml'=> 'PhpTabs\\Writer\\Yaml\\YamlWriter',
+        'yml' => 'PhpTabs\\Writer\\Yaml\\YamlWriter',
     ];
 
     public function __construct(Tablature $tablature)

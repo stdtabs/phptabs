@@ -32,16 +32,12 @@ class ExporterTest extends TestCase
      * Following exports must be a string
      * - text
      * - txt
-     * - yaml
-     * - yml
      */
     public function testStringFormats()
     {
         foreach ([
             'text',
             'txt',
-            'yaml',
-            'yml',
         ] as $format) {
             $this->assertTrue(
                 is_string(
@@ -83,8 +79,8 @@ class ExporterTest extends TestCase
         );
     
         $this->assertSame(
-            $this->tablature->export('yaml'),
-            $this->tablature->export('yml')
+            $this->tablature->convert('yaml'),
+            $this->tablature->convert('yml')
         );
     }
 
