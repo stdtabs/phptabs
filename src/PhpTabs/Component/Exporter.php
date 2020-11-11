@@ -38,8 +38,6 @@ class Exporter extends ExporterBase
      *
      * @param  null|string $format
      *  - array       : a raw PHP array
-     *  - var_export  : a raw PHP array as string
-     *  - serialize   : a PHP serialized
      *  - text        : a non standardized text
      *  - txt         : same as text
      *  - yaml        : a YAML representation
@@ -57,8 +55,6 @@ class Exporter extends ExporterBase
             case null:
             case 'array':
                 return $this->exportSong();
-            case 'var_export':
-                return var_export($this->exportSong(), true);
             case 'text':
             case 'txt':
                 return (new Text())->serialize($this->exportSong());

@@ -34,10 +34,6 @@ class ExporterTest extends TestCase
      * - txt
      * - yaml
      * - yml
-     * - serialize
-     * - json
-     * - var_export
-     * - xml
      */
     public function testStringFormats()
     {
@@ -46,10 +42,6 @@ class ExporterTest extends TestCase
             'txt',
             'yaml',
             'yml',
-          // 'serialize',
-          //  'json',
-            'var_export',
-          //  'xml'
         ] as $format) {
             $this->assertTrue(
                 is_string(
