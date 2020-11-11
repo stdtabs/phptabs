@@ -72,13 +72,6 @@ class Writer
      */
     public function save(string $path = null)
     {
-        if ($path == 'php://output') {
-            // @codeCoverageIgnoreStart
-            print($this->build($this->tablature->getFormat()));
-            return true;
-            // @codeCoverageIgnoreEnd
-        }
-
         if (is_null($path)) {
             return $this->build($this->tablature->getFormat());
         }
