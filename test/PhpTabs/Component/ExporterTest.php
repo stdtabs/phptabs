@@ -49,7 +49,7 @@ class ExporterTest extends TestCase
             'serialize',
             'json',
             'var_export',
-            'xml'
+          //  'xml'
         ] as $format) {
             $this->assertTrue(
                 is_string(

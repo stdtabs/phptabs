@@ -42,7 +42,7 @@ class ExporterHelper extends XmlTestCaseHelper
         self::$yamlText = self::$tablature->export('yaml');
 
         // XML
-        $xmlString = self::$tablature->export('xml');
+        $xmlString = self::$tablature->toXml();
         $document = new DOMDocument();
         $document->loadXML($xmlString);
         self::$xmlDoc = $document;

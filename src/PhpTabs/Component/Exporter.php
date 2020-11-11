@@ -59,8 +59,6 @@ class Exporter extends ExporterBase
             case null:
             case 'array':
                 return $this->exportSong();
-            case 'xml':
-                return (new Xml())->serialize($this->exportSong());
             case 'json':
                 return $this->toJson(is_int($options) ? $options : 0);
             case 'var_export':
@@ -93,10 +91,18 @@ class Exporter extends ExporterBase
     }
 
     /**
-     * Export to PHP serialized string string
+     * Export to PHP serialized string
      */
     public function toSerialized(): string
     {
         return serialize($this->export());
+    }
+
+    /**
+     * Export to XML string
+     */
+    public function toXml(): string
+    {
+        return (new Xml())->serialize($this->exportSong());
     }
 }
