@@ -34,34 +34,11 @@ class Exporter extends ExporterBase
     }
 
     /**
-     * Returns a representation of the song into a desired format
-     *
-     * @param  null|string $format
-     *  - array       : a raw PHP array
-     *  - text        : a non standardized text
-     *  - txt         : same as text
-     *  - yaml        : a YAML representation
-     *  - yml         : same as yaml
-     *
-     * @todo Depreciate all formats that do not return array
-     * 
-     * @param  mixed       $options Some flags for exported formats
-     * @return string|array
-     * @throws \Exception if format is not supported
+     * Export to a PHP array
      */
-    public function export($format = null, $options = null)
+    public function toArray(): array
     {
-        switch ($format) {
-            case null:
-            case 'array':
-                return $this->exportSong();
-            case 'text':
-            case 'txt':
-                return (new Text())->serialize($this->exportSong());
-        }
-
-        $message = sprintf('%s does not support "%s" format', __METHOD__, $format);
-        throw new Exception($message);
+        return $this->exportSong();
     }
 
     /**
@@ -83,6 +60,14 @@ class Exporter extends ExporterBase
     public function toSerialized(): string
     {
         return serialize($this->exportSong());
+    }
+
+    /**
+     * Export to a TXT string
+     */
+    public function toText(): string
+    {
+        return (new Text())->serialize($this->exportSong());
     }
 
     /**

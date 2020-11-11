@@ -61,17 +61,13 @@ class Tablature
     }
 
     /**
-     * Export a song into an array
-     *
-     * @param  string $format
-     * @param  mixed  $options Flags for some exported formats
-     * @return array|string
+     * Export a song as a PHP array
      */
-    public function export(string $format = null, $options = null)
+    public function toArray(): array
     {
         $exporter = new Exporter($this);
 
-        return $exporter->export($format, $options);
+        return $exporter->toArray();
     }
 
     /**
@@ -106,6 +102,14 @@ class Tablature
     public function toSerialized(): string
     {
         return $this->getExporter()->toSerialized();
+    }
+
+    /**
+     * Get a TEXT representation
+     */
+    public function toText(): string
+    {
+        return $this->convert('txt');
     }
 
     /**

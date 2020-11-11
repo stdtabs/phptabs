@@ -21,13 +21,6 @@ use PhpTabs\IOFactory;
  */
 class PhpTabsTest extends TestCase
 {
-    public function testException()
-    {
-        $this->expectException(Exception::class);
-        # Not a valid number of params
-        IOFactory::create()->export('param1', 'param2', 'param3');
-    }
-
   /**
    * Test getVersion()
    */

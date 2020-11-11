@@ -1,8 +1,8 @@
-.. _convert-methods:
+.. _export.strings:
 
-===============
-Convert methods
-===============
+===================
+Export to variables
+===================
 
 
 Phptabs::convert($format)

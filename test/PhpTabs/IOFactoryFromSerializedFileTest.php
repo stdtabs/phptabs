@@ -74,12 +74,12 @@ class IOFactoryFromSerializedFileTest extends TestCase
     public function testSimpleTabsBijection($filename, $serFilename)
     {
         $tabs     = IOFactory::fromFile($filename);
-        $expected = $tabs->export();
+        $expected = $tabs->toArray();
         $import   = IOFactory::fromSerializedFile($serFilename);
 
         $this->assertEquals(
             $expected,
-            $import->export(),
+            $import->toArray(),
             "Simple tabs '$filename' fromSerializedFile() fails"
         );
     }

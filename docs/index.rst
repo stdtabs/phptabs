@@ -24,27 +24,42 @@ lets you create or modify your songs.
 
     $song = new PhpTabs($filename);
 
+    // Display some metadata
     echo $song->getName();
 
+    // Count measures for the first track
+    echo $song->getTrack(0)->countMeasures();
 
-User Guide
-==========
 
 .. toctree::
-    :maxdepth: 3
+    :caption: Install
+    :maxdepth: 2
 
     overview
-    read.parse-files
-    read.parse-strings
-    record-files
-    convert-methods
+
+.. toctree::
+    :caption: Parse, save and render
+    :maxdepth: 1
+
+    parse.files
+    parse.strings
+    export.files
+    export.strings
     render-tabs-and-songs
-    exporting-tabs
+
+.. toctree::
+    :caption: Traverse and slice songs
+    :maxdepth: 1
 
     target-track-measure
     slice-tracks-measures
     traversing-song-model
     tabs-from-scratch
+
+.. toctree::
+    :caption: Reference
+    :maxdepth: 1
+
     architecture
     iofactory
     renderer.vextab

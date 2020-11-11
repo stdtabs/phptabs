@@ -61,12 +61,12 @@ class IOFactoryFromStringTest extends TestCase
     {
         $content = file_get_contents($filename);
         $file = new FileInput($filename);
-        $expected = IOFactory::fromFile($filename)->export();
+        $expected = IOFactory::fromFile($filename)->toArray();
         $import   = IOFactory::fromString($content, $file->getExtension());
 
         $this->assertEquals(
             $expected,
-            $import->export(),
+            $import->toArray(),
             "Simple tabs '$filename' fromString() fails"
         );
     }

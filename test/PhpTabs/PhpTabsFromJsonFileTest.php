@@ -52,12 +52,12 @@ class PhpTabsFromJsonFileTest extends TestCase
     public function testSimpleTabsBijection($filename, $jsonFilename)
     {
         $tabs     = IOFactory::fromFile($filename);
-        $expected = $tabs->export();
+        $expected = $tabs->toArray();
         $import   = new PhpTabs($jsonFilename);
 
         $this->assertEquals(
             $expected,
-            $import->export(),
+            $import->toArray(),
             "Simple tabs '$filename' fromJsonFile() fails"
         );
     }

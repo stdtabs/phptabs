@@ -39,6 +39,8 @@ class Writer
         'midi'=> 'PhpTabs\\Writer\\Midi\\MidiWriter',
         'json'=> 'PhpTabs\\Writer\\Json\\JsonWriter',
         'ser' => 'PhpTabs\\Writer\\Serialized\\SerializedWriter',
+        'txt' => 'PhpTabs\\Writer\\Text\\TextWriter',
+        'text'=> 'PhpTabs\\Writer\\Text\\TextWriter',
         'xml' => 'PhpTabs\\Writer\\Xml\\XmlWriter',
         'yaml'=> 'PhpTabs\\Writer\\Yaml\\YamlWriter',
         'yml' => 'PhpTabs\\Writer\\Yaml\\YamlWriter',

@@ -74,12 +74,12 @@ class IOFactoryFromJsonFileTest extends TestCase
     public function testSimpleTabsBijection($filename, $jsonFilename)
     {
         $tabs     = IOFactory::fromFile($filename);
-        $expected = $tabs->export();
+        $expected = $tabs->toArray();
         $import   = IOFactory::fromJsonFile($jsonFilename);
 
         $this->assertEquals(
             $expected,
-            $import->export(),
+            $import->toArray(),
             "Simple tabs '$filename' fromJsonFile() fails"
         );
     }

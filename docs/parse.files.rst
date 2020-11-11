@@ -1,8 +1,8 @@
-.. _read.parse-files:
+.. _parse.files:
 
-====================
-Read and parse files
-====================
+===========
+Parse files
+===========
 
 There are 2 ways to parse a file.
 

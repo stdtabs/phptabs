@@ -34,8 +34,8 @@ class ImporterTest extends TestCase
     public function testEmptyTabsBijection()
     {
         $tabs     = new PhpTabs();
-        $expected = $tabs->export();
-        $result   = $tabs->import($tabs->export())->export();
+        $expected = $tabs->toArray();
+        $result   = $tabs->import($tabs->toArray())->toArray();
 
         $this->assertEquals(
             $expected,
@@ -71,12 +71,12 @@ class ImporterTest extends TestCase
     public function testSimpleTabsBijection($filename)
     {
         $tabs     = new PhpTabs($filename);
-        $expected = $tabs->export();
+        $expected = $tabs->toArray();
         $import   = (new PhpTabs())->import($expected);
 
         $this->assertEquals(
             $expected,
-            $import->export(),
+            $import->toArray(),
             "Simple tabs '$filename' export-import fails"
         );
     }

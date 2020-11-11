@@ -1,4 +1,4 @@
-.. _read.parse-strings:
+.. _parse.strings:
 
 ======================
 Read and parse strings

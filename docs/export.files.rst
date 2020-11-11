@@ -1,8 +1,8 @@
-.. _save-files:
+.. _export.files:
 
-=============
-Save to files
-=============
+===============
+Export to files
+===============
 
 PhpTabs::toFile($filename)
 ==========================

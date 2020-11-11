@@ -79,12 +79,12 @@ class IOFactoryFromFileTest extends TestCase
      */
     public function testSimpleTabsBijection($filename, $destFilename, $type)
     {
-        $expected = IOFactory::fromFile($filename)->export();
+        $expected = IOFactory::fromFile($filename)->toArray();
         $import   = IOFactory::fromFile($destFilename);
 
         $this->assertEquals(
             $expected,
-            $import->export(),
+            $import->toArray(),
             "Simple tabs '$filename' fromFile() fails"
         );
     }
@@ -97,12 +97,12 @@ class IOFactoryFromFileTest extends TestCase
      */
     public function testSimpleTabsBijectionWithType($filename, $destFilename, $type)
     {
-        $expected = IOFactory::fromFile($filename)->export();
+        $expected = IOFactory::fromFile($filename)->toArray();
         $import   = IOFactory::fromFile($destFilename, $type);
 
         $this->assertEquals(
             $expected,
-            $import->export(),
+            $import->toArray(),
             "Simple tabs '$filename' fromFile() fails"
         );
     }

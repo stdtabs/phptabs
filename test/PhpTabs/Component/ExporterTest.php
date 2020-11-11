@@ -29,44 +29,6 @@ class ExporterTest extends TestCase
     }
 
     /**
-     * Following exports must be a string
-     * - text
-     * - txt
-     */
-    public function testStringFormats()
-    {
-        foreach ([
-            'text',
-            'txt',
-        ] as $format) {
-            $this->assertTrue(
-                is_string(
-                    $this->tablature->export($format)
-                )
-            );
-        }
-    }
-
-    /**
-     * Following exports must be an array
-     * - array
-     * - none
-     */
-    public function testArrayFormats()
-    {
-        foreach ([
-                'array',
-                null
-            ] as $format) {
-            $this->assertTrue(
-                is_array(
-                    $this->tablature->export($format)
-                )
-            );
-        }
-    }
-
-    /**
      * Some export format parameters have aliases
      * - text = txt
      * - yaml = yml
@@ -74,21 +36,13 @@ class ExporterTest extends TestCase
     public function testAliases()
     {
         $this->assertSame(
-            $this->tablature->export('text'),
-            $this->tablature->export('txt')
+            $this->tablature->convert('text'),
+            $this->tablature->convert('txt')
         );
     
         $this->assertSame(
             $this->tablature->convert('yaml'),
             $this->tablature->convert('yml')
         );
-    }
-
-    public function testException()
-    {
-        $this->expectException(Exception::class);
-
-        // Not a valid export format
-        (new PhpTabs())->export('exception');
     }
 }
