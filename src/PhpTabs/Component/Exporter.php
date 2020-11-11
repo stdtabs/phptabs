@@ -59,8 +59,6 @@ class Exporter extends ExporterBase
                 return $this->exportSong();
             case 'var_export':
                 return var_export($this->exportSong(), true);
-            case 'serialize':
-                return $this->toSerialized();
             case 'text':
             case 'txt':
                 return (new Text())->serialize($this->exportSong());
@@ -81,7 +79,7 @@ class Exporter extends ExporterBase
         // >=PHP 5.5.0, export Skip JSON error 5 Malformed UTF-8
         // characters, possibly incorrectly encoded
         return json_encode(
-            $this->export(),
+            $this->exportSong(),
             $flags | JSON_PARTIAL_OUTPUT_ON_ERROR
         );
     }
@@ -91,7 +89,7 @@ class Exporter extends ExporterBase
      */
     public function toSerialized(): string
     {
-        return serialize($this->export());
+        return serialize($this->exportSong());
     }
 
     /**

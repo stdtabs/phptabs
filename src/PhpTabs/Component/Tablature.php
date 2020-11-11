@@ -101,6 +101,14 @@ class Tablature
     }
 
     /**
+     * Get a PHP serialized representation
+     */
+    public function toSerialized(): string
+    {
+        return $this->getExporter()->toSerialized();
+    }
+
+    /**
      * Get an XML representation
      */
     public function toXml(): string

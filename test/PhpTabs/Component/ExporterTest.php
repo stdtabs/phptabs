@@ -46,7 +46,7 @@ class ExporterTest extends TestCase
             'txt',
             'yaml',
             'yml',
-            'serialize',
+          // 'serialize',
           //  'json',
             'var_export',
           //  'xml'
