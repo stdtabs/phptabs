@@ -25,8 +25,9 @@ abstract class XmlTestCaseHelper extends TestCase
         $xpathDom = new DOMXPath($dom);
 
         $context = $context === null
-        ? $dom->documentElement : $context;
-
+            ? $dom->documentElement
+            : $context;
+    
         $result = $xpathDom->evaluate($xpath, $context);
 
         $this->assertEquals($expected, $result, $message);
