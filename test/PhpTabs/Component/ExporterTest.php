@@ -37,12 +37,12 @@ class ExporterTest extends TestCase
     {
         $this->assertSame(
             $this->tablature->convert('text'),
-            $this->tablature->convert('txt')
+            $this->tablature->toText()
         );
     
         $this->assertSame(
             $this->tablature->convert('yaml'),
-            $this->tablature->convert('yml')
+            $this->tablature->toYaml()
         );
     }
 }

@@ -2,16 +2,16 @@ version: "2"
 checks:
   complex-logic:
     config:
-      threshold: 10
+      threshold: 20
   method-complexity:
     config:
-      threshold: 10
+      threshold: 20
   method-count:
     config:
       threshold: 20
   method-lines:
     config:
-      threshold: 25
+      threshold: 40
   nested-control-flow:
     config:
       threshold: 4
@@ -21,6 +21,12 @@ checks:
   file-lines:
     config:
       threshold: 500
+  similar-code:
+    config:
+      threshold: 35
+  identical-code:
+    config:
+      threshold: 20
 exclude_patterns:
 - "test/"
 - "docs/"

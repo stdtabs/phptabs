@@ -84,6 +84,46 @@ class WriterTest extends TestCase
     }
 
     /**
+     * PHP serialized
+     */
+    public function testEmptySongSerializedException()
+    {
+        $this->expectException(Exception::class);
+
+        (new Writer(new Tablature()))->build('ser');
+    }
+
+    /**
+     * TEXT
+     */
+    public function testEmptySongTxtException()
+    {
+        $this->expectException(Exception::class);
+
+        (new Writer(new Tablature()))->build('txt');
+    }
+
+    /**
+     * XML
+     */
+    public function testEmptySongXmlException()
+    {
+        $this->expectException(Exception::class);
+
+        (new Writer(new Tablature()))->build('xml');
+    }
+
+    /**
+     * YAML
+     */
+    public function testEmptySongYamlException()
+    {
+        $this->expectException(Exception::class);
+
+        (new Writer(new Tablature()))->build('yml');
+    }
+
+    /**
      * Trying to write a non writable directory
      */
     public function testNonWritableDirectoryException()
