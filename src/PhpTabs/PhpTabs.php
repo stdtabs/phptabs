@@ -123,14 +123,27 @@ class PhpTabs
      */
     public function __call($name, array $arguments = [])
     {
-        if (count($arguments) < 3) {
+        if (count($arguments) > 2) {
+            $message = sprintf(
+                '%s method does not support %d arguments',
+                __METHOD__,
+                count($arguments)
+            );
+
+            throw new Exception($message);
+        }
+
+        if (method_exists($this->tablature, $name)) {
             return $this->tablature->$name(...$arguments);
         }
 
+        if (method_exists($this->tablature->getSong(), $name)) {
+            return $this->tablature->getSong()->$name(...$arguments);
+        }
+
         $message = sprintf(
-            '%s method does not support %d arguments',
-            __METHOD__,
-            count($arguments)
+            '%s method does not exist',
+            __METHOD__
         );
 
         throw new Exception($message);

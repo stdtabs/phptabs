@@ -52,7 +52,7 @@ class Writer
     }
 
     /**
-     * Builds content in $format
+     * Build content in $format
      *
      * @throws \Exception if output format is not supported
      */
@@ -64,7 +64,8 @@ class Writer
             throw new Exception($message);
         }
 
-        return (new $this->writers[$format]($this->tablature->getSong()))->getContent();
+        $writer = new $this->writers[$format]($this->tablature->getSong());
+        return $writer->getContent();
     }
 
     /**

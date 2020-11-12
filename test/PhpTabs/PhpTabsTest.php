@@ -42,4 +42,20 @@ class PhpTabsTest extends TestCase
             );
         }
     }
+
+    public function testUnexistingMethod()
+    {
+        $this->expectException(Exception::class);
+
+        // Method does not exist
+        IOFactory::create()->undefinedMethod();
+    }
+
+    public function testMaxParametersNumberExceeded()
+    {
+        $this->expectException(Exception::class);
+
+        // Not a valid number of params
+        IOFactory::create()->getChannels('param1', 'param2', 'param3');
+    }
 }

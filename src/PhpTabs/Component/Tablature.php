@@ -16,8 +16,6 @@ namespace PhpTabs\Component;
 use Exception;
 use PhpTabs\Component\Renderer\RendererInterface;
 use PhpTabs\PhpTabs;
-use PhpTabs\Music\Channel;
-use PhpTabs\Music\ChannelNames;
 use PhpTabs\Music\Song;
 
 class Tablature
@@ -45,7 +43,7 @@ class Tablature
     }
 
     /**
-     * Sets Song wrapper
+     * Sets= Song wrapper
      */
     public function setSong(Song $song): void
     {
@@ -254,7 +252,7 @@ class Tablature
     }
 
     /**
-     * Writes a song into a file
+     * Write a song into a file
      *
      * @return mixed bool|string
      */
@@ -264,7 +262,7 @@ class Tablature
     }
 
     /**
-     * Builds a binary starting from Music model
+     * Build a binary starting from Music model
      */
     public function convert(string $format = null): string
     {
@@ -276,37 +274,6 @@ class Tablature
     }
 
     /**
-     * Overloads with $song methods
-     *
-     * @param  string $name      method
-     * @param  array  $arguments
-     * @return mixed
-     */
-    public function __call($name, $arguments)
-    {
-        if (!method_exists($this->song, $name)) {
-            $message = sprintf(
-                'Song has no method called "%s"',
-                $name
-            );
-
-            throw new Exception($message);
-        }
-
-        if (count($arguments) > 2) {
-            $message = sprintf(
-                '%s method does not support %d arguments',
-                __METHOD__,
-                count($arguments)
-            );
-
-            throw new Exception($message);
-        }
-
-        return $this->song->$name(...$arguments);
-    }
-
-    /**
      * Memorize original format
      */
     public function setFormat(string $format): void
@@ -315,7 +282,7 @@ class Tablature
     }
 
     /**
-     * Returns orignal format
+     * Return orignal format
      */
     public function getFormat(): string
     {
