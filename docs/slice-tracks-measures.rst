@@ -14,7 +14,7 @@ obtain a new PhpTabs instance.
 sliceTracks
 ===========
 
-The method `sliceTracks` returns a new `PhpTabs` with the targeted
+The method ``sliceTracks`` returns a new ``PhpTabs`` with the targeted
 tracks.
 
 It accepts 2 parameters :
@@ -37,13 +37,13 @@ It accepts 2 parameters :
     $new->save('3rd-and-4th-tracks-of-my-file.gp5'); 
 
 If you only want to work with tracks without generating a new song, you
-may need to have a look to `PhpTabs->getTracks()` method.
+may need to have a look to ``PhpTabs->getTracks()`` method.
 
 
 sliceMeasures
 =============
 
-The method `sliceMeasures` returns a new `PhpTabs` with the targeted
+The method ``sliceMeasures`` returns a new ``PhpTabs`` with the targeted
 measures for each track.
 
 It accepts 2 parameters :
@@ -65,15 +65,16 @@ It accepts 2 parameters :
 
 If you only want to work with measures without generating a new song,
 you may need to have a look to
-`PhpTabs->getTrack(0)->getMeasures()` method.
+``PhpTabs->getTrack(0)->getMeasures()`` method.
 
 
 Chaining sliceTracks and sliceMeasures
 ======================================
 
-You may want to display only 2 measures from particular tracks. In the
-example below, we'll render the first and second measures of the first
-and second tracks as an ASCII tab.
+You may want to display only some measures from particular tracks. 
+
+In the example below, we'll render the first and second measures 
+of the first and second tracks as an ASCII tab.
 
 .. code-block:: php
 
@@ -86,3 +87,13 @@ and second tracks as an ASCII tab.
 
     // Display tracks #0 and #1, measures #0 and #1 as ASCII
     echo $song->sliceTracks(0, 1)->sliceMeasures(0, 1)->toAscii();
+
+You may do the same thing in one line (Parse file, slice tracks, 
+slice measures and render).
+
+.. code-block:: php
+
+    echo PhpTabs\IOFactory::fromFile('my-file.gp5')
+                   ->sliceTracks(0, 1) 
+                   ->sliceMeasures(0, 1)
+                   ->toAscii();

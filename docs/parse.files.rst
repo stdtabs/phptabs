@@ -10,9 +10,9 @@ IOFactory
 =========
 
 This is the preferred way as it can parse more file formats (Guitar Pro
-3, 4 and 5, MIDI, JSON, PHP serialized).
+3, 4 and 5, MIDI, JSON, PHP serialized, XML).
 
-After a read operation, a `PhpTabs` containing the entire song is
+After a read operation, a ``PhpTabs`` containing the entire song is
 returned.
 
 .. code-block:: php
@@ -26,7 +26,7 @@ returned.
     echo $song->getName();
 
 The file format is recognized with extension (gp3, gp4, gp5, mid, midi,
-json, ser).
+json, ser, xml).
 
 If the file extension is not standard, a parser can be specified as the
 second parameter to force a file format.
@@ -42,7 +42,7 @@ second parameter to force a file format.
 
     echo $song->getName();
 
-`IOFactory` offers some other shortcuts to force a parser.
+``IOFactory`` offers some other shortcuts to load from a specified parser.
 
 .. code-block:: php
 
@@ -58,7 +58,7 @@ second parameter to force a file format.
 PhpTabs
 =======
 
-This way works as well as IOFactory ones but you may not specify a
+This way works as well as IOFactory but you may not specify a
 parser.
 
 .. code-block:: php

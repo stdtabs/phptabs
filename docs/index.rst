@@ -27,12 +27,12 @@ lets you create or modify your songs.
     // Display some metadata
     echo $song->getName();
 
-    // Count measures for the first track
+    // Display the number of measures
+    // for the first track
     echo $song->getTrack(0)->countMeasures();
 
 
 .. toctree::
-    :caption: Install
     :maxdepth: 2
 
     overview
@@ -45,7 +45,7 @@ lets you create or modify your songs.
     parse.strings
     export.files
     export.strings
-    render-tabs-and-songs
+    render.songs
 
 .. toctree::
     :caption: Traverse and slice songs

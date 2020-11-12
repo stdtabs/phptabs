@@ -21,7 +21,7 @@ whole song or a single track as an ASCII string.
     echo $song->toAscii();
 
 
-There are a couple of options that can be passed to `toAscii` method.
+There are a couple of options that can be passed to the ``toAscii`` method.
 
 See :ref:`ASCII renderer <renderer.ascii>` for more options.
 
@@ -41,6 +41,6 @@ PhpTabs (>= 0.5.0) can render a track as a VexTab string.
     echo $song->toVextab();
 
 
-Some options can be passed to `toVextab` method.
+Some options can be passed to the ``toVextab`` method.
 
 See :ref:`Vextab renderer <renderer.vextab>` for more options.

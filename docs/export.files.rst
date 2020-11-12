@@ -7,7 +7,7 @@ Export to files
 PhpTabs::toFile($filename)
 ==========================
 
-The `toFile` method may be used to store file contents on a disk.
+The ``toFile()`` method may be used to store file contents on a disk.
 
 .. code-block:: php
 
@@ -42,7 +42,7 @@ Of course, you may read, convert and save in one line.
                      ->toFile('my-file.dat', 'ser');
 
 
-See :ref:`all available options <convert-methods>` for explicit conversions.
+See :ref:`available formats <export.strings>`.
 
 
 PhpTabs::save($filename)

@@ -11,7 +11,7 @@ Phptabs::convert($format)
 Sometimes, to debug or store content another way, you may want to output
 a converted string to a variable.
 
-You may make an explicit conversion with the `convert` method.
+You may make an explicit conversion with the ``convert`` method.
 
 .. code-block:: php
 
@@ -26,15 +26,15 @@ You may make an explicit conversion with the `convert` method.
 
 The following parameters are available:
 
-- `gp3` for Guitar Pro 3
-- `gp4` for Guitar Pro 4
-- `gp5` for Guitar Pro 5
-- `mid` or `midi` for MIDI
-- `json`
-- `xml`
-- `ser` for PHP serialized string
-- `txt` or `text` for a textual representation
-- `yml` or `yaml`
+- ``gp3`` for Guitar Pro 3
+- ``gp4`` for Guitar Pro 4
+- ``gp5`` for Guitar Pro 5
+- ``mid`` or `midi` for MIDI
+- ``json``
+- ``xml``
+- ``ser`` for PHP serialized string
+- ``txt`` or ``text`` for a textual representation
+- ``yml`` or ``yaml``
 
 
 Shortcuts
