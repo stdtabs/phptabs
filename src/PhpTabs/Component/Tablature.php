@@ -89,6 +89,30 @@ class Tablature
     }
 
     /**
+     * Get a Guitar Pro 3 representation
+     */
+    public function toGuitarPro3(): string
+    {
+        return $this->convert('gp3');
+    }
+
+    /**
+     * Get a Guitar Pro 4 representation
+     */
+    public function toGuitarPro4(): string
+    {
+        return $this->convert('gp4');
+    }
+
+    /**
+     * Get a Guitar Pro 5 representation
+     */
+    public function toGuitarPro5(): string
+    {
+        return $this->convert('gp5');
+    }
+
+    /**
      * Get a JSON representation
      */
     public function toJson(int $flags = 0): string
@@ -97,11 +121,19 @@ class Tablature
     }
 
     /**
+     * Get a MIDI representation
+     */
+    public function toMidi(): string
+    {
+        return $this->convert('mid');
+    }
+
+    /**
      * Get a PHP serialized representation
      */
     public function toSerialized(): string
     {
-        return $this->getExporter()->toSerialized();
+        return $this->convert('ser');
     }
 
     /**
@@ -117,7 +149,7 @@ class Tablature
      */
     public function toXml(): string
     {
-        return $this->getExporter()->toXml();
+        return $this->convert('xml');
     }
 
     /**

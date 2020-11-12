@@ -40,21 +40,21 @@ class GuitarPro5WriterTest extends TestCase
         // Converts to gp5 format
         $this->assertEquals(
             file_get_contents(PHPTABS_TEST_BASEDIR . $this->path),
-            $this->tablature->convert('gp5'),
+            $this->tablature->toGuitarPro5(),
             'GP5 build content should be the same as file content'
         );
 
         // Converts to gp4 format
         $this->assertEquals(
             file_get_contents(PHPTABS_TEST_BASEDIR . $this->pathGp4),
-            $this->tablature->convert('gp4'),
+            $this->tablature->toGuitarPro4(),
             'GP4 build content should be the same as file content'
         );
 
         // Converts to gp3 format
         $this->assertEquals(
             file_get_contents(PHPTABS_TEST_BASEDIR . $this->pathGp3),
-            $this->tablature->convert('gp3'),
+            $this->tablature->toGuitarPro3(),
             'GP3 build content should be the same as file content'
         );
     }
