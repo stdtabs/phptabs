@@ -31,7 +31,7 @@ abstract class IOFactory
      */
     public static function fromArray(array $data): PhpTabs
     {
-        return self::create()->import($data);
+        return self::create()->fromArray($data);
     }
 
     /**

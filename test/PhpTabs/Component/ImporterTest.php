@@ -35,7 +35,7 @@ class ImporterTest extends TestCase
     {
         $tabs     = new PhpTabs();
         $expected = $tabs->toArray();
-        $result   = $tabs->import($tabs->toArray())->toArray();
+        $result   = $tabs->fromArray($tabs->toArray())->toArray();
 
         $this->assertEquals(
             $expected,
@@ -72,7 +72,7 @@ class ImporterTest extends TestCase
     {
         $tabs     = new PhpTabs($filename);
         $expected = $tabs->toArray();
-        $import   = (new PhpTabs())->import($expected);
+        $import   = (new PhpTabs())->fromArray($expected);
 
         $this->assertEquals(
             $expected,
@@ -86,6 +86,6 @@ class ImporterTest extends TestCase
         $this->expectException(Exception::class);
 
         // Not a valid import format
-        (new PhpTabs())->import([]);
+        (new PhpTabs())->fromArray([]);
     }
 }

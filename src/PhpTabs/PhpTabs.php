@@ -82,7 +82,7 @@ class PhpTabs
      *
      * @param  array $data A set of data that has been exported
      */
-    public function import(array $data): self
+    public function fromArray(array $data): self
     {
         $importer = new Importer($data);
 
@@ -126,7 +126,7 @@ class PhpTabs
         if (count($arguments) > 2) {
             $message = sprintf(
                 '%s method does not support %d arguments',
-                __METHOD__,
+                $name,
                 count($arguments)
             );
 
@@ -143,7 +143,7 @@ class PhpTabs
 
         $message = sprintf(
             '%s method does not exist',
-            __METHOD__
+            $name
         );
 
         throw new Exception($message);
