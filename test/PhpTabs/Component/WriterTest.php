@@ -19,18 +19,18 @@ use PhpTabs\PhpTabs;
 
 class WriterTest extends TestCase
 {
-    public function testNotAllowedFormatException()
+    public function testNotAllowedFilenameFormatException()
     {
         $this->expectException(Exception::class);
 
         (new Writer(new Tablature()))->save('xxx');
     }
 
-    public function testEmptySongDefaultException()
+    public function testNotAllowedConvertFormatException()
     {
         $this->expectException(Exception::class);
 
-        (new Writer(new Tablature()))->save();
+        (new Writer(new Tablature()))->build('xxx');
     }
 
     /**
@@ -132,7 +132,7 @@ class WriterTest extends TestCase
 
         $song = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/testSimpleTab.gp3');
 
-        (new Writer($song->getTablature()))->save('/tabs.gp3');
+        $song->save('/tabs.gp3');
     }
 
     /**
@@ -146,7 +146,7 @@ class WriterTest extends TestCase
 
         $song = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/testSimpleTab.gp3');
 
-        (new Writer($song->getTablature()))->save(PHPTABS_TEST_BASEDIR . '/samples/nonWritableFile.gp5');
+        $song->writer()->save(PHPTABS_TEST_BASEDIR . '/samples/nonWritableFile.gp5');
     }
     */
 
@@ -159,7 +159,7 @@ class WriterTest extends TestCase
 
         $song = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/testSimpleTab.gp3');
 
-        (new Writer($song->getTablature()))->build('gp42');
+        $song->build('gp42');
     }
 
     /**
@@ -169,10 +169,8 @@ class WriterTest extends TestCase
     {
         $song = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/testSimpleTab.gp3');
 
-        $writer = new Writer($song->getTablature());
-
         // Writing to disk
-        $writer->save(PHPTABS_TEST_BASEDIR . '/samples/newFile.gp5');
+        $song->save(PHPTABS_TEST_BASEDIR . '/samples/newFile.gp5');
 
         $this->assertFileExists(PHPTABS_TEST_BASEDIR . '/samples/newFile.gp5');
         unlink(PHPTABS_TEST_BASEDIR . '/samples/newFile.gp5');

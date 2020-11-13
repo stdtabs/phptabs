@@ -32,7 +32,7 @@ class Tablature
     /**
      * Tablature original format
      *
-     * @var string $format
+     * @var string
      */
     private $format;
 
@@ -43,7 +43,7 @@ class Tablature
     }
 
     /**
-     * Sets= Song wrapper
+     * Set Song wrapper
      */
     public function setSong(Song $song): void
     {
@@ -63,9 +63,7 @@ class Tablature
      */
     public function toArray(): array
     {
-        $exporter = new Exporter($this);
-
-        return $exporter->toArray();
+        return $this->getExporter()->toArray();
     }
 
     /**
@@ -252,13 +250,19 @@ class Tablature
     }
 
     /**
-     * Write a song into a file
-     *
-     * @return mixed bool|string
+     * Prepare a writer
      */
-    public function save(string $filename = null)
+    public function writer(): Writer
     {
-        return (new Writer($this))->save($filename);
+        return new Writer($this);
+    }
+
+    /**
+     * Write a song into a file
+     */
+    public function save(string $filename): bool
+    {
+        return $this->writer()->save($filename);
     }
 
     /**
@@ -270,7 +274,7 @@ class Tablature
             $format = $this->getFormat();
         }
 
-        return (new Writer($this))->build($format);
+        return $this->writer()->build($format);
     }
 
     /**

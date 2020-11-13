@@ -59,19 +59,6 @@ class GuitarPro5WriterTest extends TestCase
         );
     }
 
-    /**
-     * Save method
-     */
-    public function testSave()
-    {
-        // Converts to default format (not specified)
-        $this->assertEquals(
-            file_get_contents(PHPTABS_TEST_BASEDIR . $this->path),
-            $this->tablature->save(),
-            'Default save content should be the same as file content'
-        );
-    }
-
     public function tearDown() : void
     {
         unset($this->tablature);

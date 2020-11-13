@@ -71,16 +71,10 @@ class Writer
     /**
      * Outputs internal model into buffer or a file
      *
-     * @return mixed boolean|string
-     *
      * @throws \Exception if an incorrect destination path is supplied
      */
-    public function save(string $path = null)
+    public function save(string $path): bool
     {
-        if (is_null($path)) {
-            return $this->build($this->tablature->getFormat());
-        }
-
         $parts = pathinfo($path);
 
         if (!isset($parts['basename'], $parts['extension'])) {
@@ -102,7 +96,7 @@ class Writer
      *
      * @throws \Exception If content can not be written
      */
-    private function record(string $content): void
+    private function record(string $content): bool
     {
         $dir = pathinfo($this->path, PATHINFO_DIRNAME);
 
@@ -119,6 +113,6 @@ class Writer
             // @codeCoverageIgnoreEnd
         }
 
-        file_put_contents($this->path, $content);
+        return file_put_contents($this->path, $content) !== false;
     }
 }
