@@ -142,123 +142,8 @@ echo $tablature->getName();
 
 ________________________________________________________________________
 
-Options
--------
-
-You can get or set options before instanciating PhpTabs object with the Config component.
-
-```php
-use PhpTabs\Component\Config;
-
-// Setting option value
-Config::set('<option name>', '<option value>');
-
-// Getting option value
-Config::get('<option name>');
-```
-________________________________________________________________________
-### type
-Useful to set one specific type of analyse
-
-__Values__
-
-- __meta__
-
-  Only meta informations are read from the tablature file.
-  
-  Analyse is very fast.
-
-- __channels__
-
-  Only meta informations and channels are read from the tablature file.
-  
-  Analyse is fast.
- 
-- __default__ or  anything else
-  
-  The file is fully analyzed. 
-
-__Example__
-
-```php
-// Setting type to meta will accelerate analyses
-Config::set("type", "meta");
-```
-________________________________________________________________________
-### debug
-Useful to manage Exceptions
-
-__Values__
-
-- __true__
-
-  The application stops.
-
-  An exception message and a stack trace are printed.
-  
-- __default__ or  anything else
-
-  Nothing is printed and the application continues.
-
-__Example__
-
-```php
-// Setting debug to true makes Exceptions as blocking events
-Config::set("debug", true);
-
-```
-
-________________________________________________________________________
-### verbose
-Useful to print all logged events such as stream reads, internal notices
-and warnings.
-
-__Values__
-
-- __true__
-
-  The application prints all events.
- 
-- __default__ or  anything else
-  
-  Nothing is printed.
-
-__Example__
-
-```php
-// Setting verbose to true 
-Config::set("debug", true);
-```
-
-
-________________________________________________________________________
-
 Methods
 -------
-
-### Error handling
-________________________________________________________________________
-#### hasError()
-
-__Type__ *boolean*
-
-It returns true if an error has been set, otherwise false.
-
-```php
-$tablature->hasError();
-```
-________________________________________________________________________
-#### getError()
-
-__Type__ *string*
-
-It returns the last error message or an empty string if no error has been set.
-
-```php
-$tablature->getError();
-```
-________________________________________________________________________
-
 
 ### Accessing metadata
 ________________________________________________________________________
@@ -577,7 +462,7 @@ ________________________________________________________________________
 
 #### save($filename)
 
-__Type__ *string|bool*
+__Type__ *bool*
 
 __Parameter__ *string* $filename 
 
@@ -585,12 +470,10 @@ This method records data as binary to the disk or buffer.
 It implicitly converts filetype if the specified file extension is
 different from the original (see examples below).
 
-Following formats are allowed:
+Following parameters are allowed:
 
 | Parameter        | Type      | Description                      |
 |:-----------------|:----------|:---------------------------------|
-| php://output     | *string*  | A binary string into the buffer  |
-| null             | *string*  | Same as php://output             |
 | filename.ext     | *bool*    | A file_put_contents() return     |
 
 __Example__
@@ -605,84 +488,7 @@ $tab->save('newfile.gp3');
 // Convert and save as GP5
 $tab->save('newfile.gp5');
 
-// Dump the binary into the buffer
-echo $tab->save();
-
 ```
-________________________________________________________________________
-
-#### export($format)
-
-__Type__ *string|array*
-
-__Parameter__ *string* $format 
-
-Dumps are made to visualize the internal music-tree or to communicate 
-with a third-party application.
-
-Following formats are allowed:
-
-| Parameter        | Type      | Description                  |
-|:-----------------|:----------|:-----------------------------|
-| array            | *array*   | a raw PHP array              |
-| xml              | *string*  | an XML string                |
-| json             | *string*  | a JSON string                |
-| var_export       | *string*  | a raw PHP array as string    |
-| serialize        | *string*  | a PHP serialized             |
-| text             | *string*  | a non standardized text      |
-| txt              | *string*  | same as text                 |
-| yaml             | *string*  | a YAML representation        |
-| yml              | *string*  | same as yaml                 |
-
-__Example__
-
-```php
-// Dump content into a file as XML
-file_put_contents(
-  'tab.xml',
-  $tab->export('xml')
-);
-
-// Dump into a variable as PHP array
-$data = $tab->export(); // array is the default format
-
-```
-
-After an export has been made, you can import data with `import()` method.
-
-- It's an array export:
-
-```php
-use PhpTabs\IOFactory;
-
-$song = IOFactory::create()->import($data);
-```
-
-- It's an JSON export:
-
-```php
-use PhpTabs\IOFactory;
-
-// With a JSON string
-$song = IOFactory::fromJson($json);
-
-// With a JSON file
-$song = IOFactory::fromJsonFile($filename);
-```
-
-- It's an PHP serialized export:
-
-```php
-use PhpTabs\IOFactory;
-
-// With a Serialized string
-$song = IOFactory::fromSerialized($json);
-
-// With a Serialized file
-$song = IOFactory::fromSerializedFile($filename);
-```
-
-
 ________________________________________________________________________
 
 #### convert($type)
