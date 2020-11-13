@@ -1,3 +1,5 @@
+.. _render.songs:
+
 =============
 Render a song
 =============
