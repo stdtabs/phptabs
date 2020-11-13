@@ -16,5 +16,6 @@
         }
     },
     "require-dev": {
+        "symfony/thanks": "^1.2"
     }
 }
