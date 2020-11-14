@@ -1,8 +1,8 @@
 .. _parse.strings:
 
-======================
-Read and parse strings
-======================
+==================
+Parse from strings
+==================
 
 Sometimes, you may need to parse a song from a string. 
 

@@ -1,8 +1,8 @@
 .. _parse.files:
 
-===========
-Parse files
-===========
+================
+Parse from files
+================
 
 There are 2 ways to parse a file.
 
@@ -25,8 +25,8 @@ returned.
 
     echo $song->getName();
 
-The file format is recognized with extension (gp3, gp4, gp5, mid, midi,
-json, ser, xml).
+The file format is recognized by the file extension (gp3, gp4, gp5, mid,
+midi, json, ser).
 
 If the file extension is not standard, a parser can be specified as the
 second parameter to force a file format.

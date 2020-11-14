@@ -273,9 +273,9 @@ class Tablature
     /**
      * Write a song into a file
      */
-    public function save(string $filename): bool
+    public function save(string $filename, string $format = null): bool
     {
-        return $this->writer()->save($filename);
+        return $this->writer()->save($filename, $format);
     }
 
     /**

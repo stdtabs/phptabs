@@ -175,4 +175,24 @@ class WriterTest extends TestCase
         $this->assertFileExists(PHPTABS_TEST_BASEDIR . '/samples/newFile.gp5');
         unlink(PHPTABS_TEST_BASEDIR . '/samples/newFile.gp5');
     }
+
+    /**
+     * Let's record a file with a non-standard extension
+     */
+    public function testRecordFileWithNonStandardExtensionOk()
+    {
+        $song = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/testSimpleTab.gp3');
+
+        // Writing to disk
+        $song->save(PHPTABS_TEST_BASEDIR . '/samples/newFile.gpp', 'gp5');
+
+        $this->assertFileExists(PHPTABS_TEST_BASEDIR . '/samples/newFile.gpp');
+
+        // File has been converted to Guitar Pro 5
+        $this->assertSame(
+            file_get_contents(PHPTABS_TEST_BASEDIR . '/samples/newFile.gpp'),
+            $song->convert('gp5')
+        );        
+        unlink(PHPTABS_TEST_BASEDIR . '/samples/newFile.gpp');
+    }
 }

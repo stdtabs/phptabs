@@ -73,7 +73,7 @@ class Writer
      *
      * @throws \Exception if an incorrect destination path is supplied
      */
-    public function save(string $path): bool
+    public function save(string $path, string $format = null): bool
     {
         $parts = pathinfo($path);
 
@@ -88,7 +88,13 @@ class Writer
 
         $this->path = $path;
 
-        return $this->record($this->build($parts['extension']));
+        return $this->record(
+            $this->build(
+                is_null($format)
+                    ? $parts['extension']
+                    : $format
+            )
+        );
     }
 
     /**

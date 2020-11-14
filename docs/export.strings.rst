@@ -29,7 +29,7 @@ The following parameters are available:
 - ``gp3`` for Guitar Pro 3
 - ``gp4`` for Guitar Pro 4
 - ``gp5`` for Guitar Pro 5
-- ``mid`` or `midi` for MIDI
+- ``mid`` or ``midi`` for MIDI
 - ``json``
 - ``xml``
 - ``ser`` for PHP serialized string

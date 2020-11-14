@@ -6,7 +6,7 @@ Render a song as Vextab
 
 VexTab format is provided by vexflow.com. If you want to know more about
 VexTab format, there is a
-:ref:`good tutorial <http://www.vexflow.com/vextab/tutorial.html>`_.
+`good tutorial <http://www.vexflow.com/vextab/tutorial.html>`_.
 
 PhpTabs (>= 0.5.0) can render a track as a VexTab string.
 
@@ -38,7 +38,7 @@ This example will ouput something like:
 
 With a bit of VexFlow JS, that renders:
 
-.. figure:: _static/vextab-renderer-ex01.png
+.. figure:: /_static/images/vextab-renderer-ex01.png
     :width: 100%
     :alt: Vextab rendering with PhpTabs
     :align: middle
@@ -101,7 +101,7 @@ Will ouput something like:
 
 That renders:
 
-.. figure:: _static/vextab-renderer-ex02.png
+.. figure:: /_static/images/vextab-renderer-ex02.png
     :width: 100%
     :alt: Vextab rendering with PhpTabs
     :align: middle
