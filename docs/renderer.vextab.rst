@@ -41,7 +41,7 @@ With a bit of VexFlow JS, that renders:
 .. figure:: /_static/images/vextab-renderer-ex01.png
     :width: 100%
     :alt: Vextab rendering with PhpTabs
-    :align: middle
+    :align: center
 
     Ex1: Rendering with defaults
 
@@ -104,7 +104,7 @@ That renders:
 .. figure:: /_static/images/vextab-renderer-ex02.png
     :width: 100%
     :alt: Vextab rendering with PhpTabs
-    :align: middle
+    :align: center
 
     Ex2: Rendering with custom options
 
@@ -166,7 +166,7 @@ Bar                       |                              OK
 Double Bar                ||                             @todo     
 Repeat Begin              =|:                            OK        
 Repeat End                =:|                            OK        
-Double Repeat             =::                            @todo     
+Double Repeat             =:\:                            @todo     
 End Bar                   =|=                            @todo     
 ========================= ============================== ===============
 
@@ -200,8 +200,8 @@ marcato                   $a^/bottom.$                   @todo
 LH pizzicato              $a+/bottom.$                   @todo     
 snap pizzicato            $ao/bottom.$                   @todo     
 open note                 $ah/bottom.$                   @todo     
-up fermata                $a@a/bottom.$                  @todo     
-down fermata              $a@u/bottom.$                  @todo     
+up fermata                $a\@a/bottom.$                  @todo     
+down fermata              $a\@u/bottom.$                  @todo     
 bow up                    $a|/bottom.$                   @todo     
 bow down                  $am/bottom.$                   @todo     
 ========================= ============================== ===============

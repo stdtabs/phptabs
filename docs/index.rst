@@ -59,8 +59,6 @@ lets you create or modify your songs.
     target-track-measure
     slice-tracks-measures
     traversing-song-model
-    tabs-from-scratch
-
 
 .. toctree::
     :caption: Render songs
@@ -70,13 +68,20 @@ lets you create or modify your songs.
     renderer.ascii
     renderer.vextab
 
+.. toctree::
+    :caption: Examples
+    :maxdepth: 1
+
+    ex.tabs-from-scratch
+    ex.calculate-measure-and-beat-durations-in-seconds
+    
 
 .. toctree::
     :caption: Reference
     :maxdepth: 1
 
     architecture
-    iofactory
+    api.iofactory
     api-reference
     
 ________________________________________________________________________
