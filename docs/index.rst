@@ -72,9 +72,9 @@ lets you create or modify your songs.
     :caption: Examples
     :maxdepth: 1
 
-    ex.tabs-from-scratch
     ex.calculate-measure-and-beat-durations-in-seconds
-    
+    ex.tabs-from-scratch
+
 
 .. toctree::
     :caption: Reference
