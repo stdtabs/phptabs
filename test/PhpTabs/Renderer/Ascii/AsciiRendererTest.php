@@ -163,9 +163,6 @@ E|------------------------|-----------------------------------------------------
     /**
      * Test ASCII shortcuts
      *
-     * @todo rewrite this test when toAscii and onlyTrack() will be
-     *       implemented
-     *
      * @dataProvider getScenarios()
      */
     public function testShortcut($trackIndex, $options, $expected)

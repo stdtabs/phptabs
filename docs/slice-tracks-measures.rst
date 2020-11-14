@@ -17,7 +17,8 @@ sliceTracks
 The method ``sliceTracks`` returns a new ``PhpTabs`` with the targeted
 tracks.
 
-It accepts 2 parameters :
+It requires 2 parameters :
+
 - fromTrackIndex
 - toTrackIndex
 
@@ -47,6 +48,7 @@ The method ``sliceMeasures`` returns a new ``PhpTabs`` with the targeted
 measures for each track.
 
 It accepts 2 parameters :
+
 - fromMeasureIndex
 - toMeasureIndex
 

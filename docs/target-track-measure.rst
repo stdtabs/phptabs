@@ -7,7 +7,7 @@ Target a track or a measure
 You may need to target a track or a measure to generate a new complete
 song.
 
-PhpTabs provides 2 methods to extract a particular track or a particular
+PhpTabs provides 2 methods to extract a single track or a single
 measure and obtain a new PhpTabs instance.
 
 
@@ -39,8 +39,9 @@ new song, you may need to have a look to ``PhpTabs->getTrack()`` method.
 onlyMeasure
 ===========
 
-The method ``onlyMeasure`` returns a new ``PhpTabs`` only with the targeted
-measure for each track. It accepts a measure index as parameter.
+The method ``onlyMeasure`` returns a new ``PhpTabs`` only with the
+targeted measure for each track. It accepts a measure index as
+parameter.
 
 .. code-block:: php
 

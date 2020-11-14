@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -71,8 +73,7 @@ abstract class Log
 
         $ptrLogs = self::countLogs() - 1;
 
-        for ($i = $ptrLogs; $i >= 0; $i--)
-        {
+        for ($i = $ptrLogs; $i >= 0; $i--) {
             if (null === $type || $type == self::$data[$i]['type']) {
                 array_push($messages, self::$data[$i]);
 

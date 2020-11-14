@@ -34,11 +34,11 @@ class VexTabRendererTest extends TestCase
     public function testRenderer()
     {
         $options = [
-        'player'              => false,
-        'font-face'           => 'times',
-        'notation'            => true,
-        'tablature'           => 'true',
-        'measures_per_stave'  => 2
+            'player'              => false,
+            'font-face'           => 'times',
+            'notation'            => true,
+            'tablature'           => 'true',
+            'measures_per_stave'  => 2
         ];
 
         $renderer = $this->tablature
@@ -74,6 +74,45 @@ notes =|: :q 5/2 5/2 5/2 5/2 5/2 T5/2 |:q (T0/1.5/2) 5/2 (3/1.5/2.5/3.5/4.3/5.3/
 tabstave notation=true
 notes :q 5/2 5d/2 5/2 (5b7b9v/2)u 5/2 5/2 |:q 5/2 :8 5v/2 ## :q 5/2 5/2 5/2 5/2 =:|',
             $renderer->render(1)
+        );
+    }
+
+    /**
+     * Testing shortcut
+     */
+    public function testShortcut()
+    {
+        $options = [
+            'player'              => false,
+            'font-face'           => 'times',
+            'notation'            => true,
+            'tablature'           => 'true',
+            'measures_per_stave'  => 2
+        ];
+
+        // Render 2 tracks
+        $this->assertEquals(
+            'options scale=1 space=16 width=520 font-face=times tempo=66
+
+tabstave notation=true time=12/8
+
+notes =|: :w ## :qd ## :16 t11/3 X/2 |:qd 10v/1 :8 T10/1 13/2 12b14/3 :16 12/3 p10/3 12/4 ^3^ :8d s12v/4 :16 10/3 12/4 p10/4 ## :8d 12v/4 
+
+tabstave notation=true
+notes :16 10/3 12/3 :8 12b14/3 10v/2 :q T10/2 :8 10/2 10/2 12/2 13/2 14/2 15/2 t10/2 |:8 13b15/2 :q 12/2 :qd 10/2 :8 10/2 ## 12b14/1 12/1 ## ## =:|',
+            $this->tablature->toVextab($options)
+        );
+
+        $this->assertEquals(
+            'options scale=1 space=16 width=520 font-face=times tempo=66
+
+tabstave notation=true time=12/8
+
+notes =|: :q 5/2 5/2 5/2 5/2 5/2 T5/2 |:q (T0/1.5/2) 5/2 (3/1.5/2.5/3.5/4.3/5.3/6) 5/2 5/2 5/2 
+
+tabstave notation=true
+notes :q 5/2 5d/2 5/2 (5b7b9v/2)u 5/2 5/2 |:q 5/2 :8 5v/2 ## :q 5/2 5/2 5/2 5/2 =:|',
+            $this->tablature->onlyTrack(1)->toVextab($options)
         );
     }
 

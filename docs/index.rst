@@ -62,8 +62,8 @@ lets you create or modify your songs.
 
     architecture
     iofactory
-    renderer.vextab
     renderer.ascii
+    renderer.vextab
     api-reference
     
 ________________________________________________________________________

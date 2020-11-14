@@ -85,6 +85,19 @@ class Tablature
     }
 
     /**
+     * Render a song as a Vexab string
+     *
+     * Only one track is supported by this format.
+     * Default rendered track is #0.
+     */
+    public function toVextab(array $options = []): string
+    {
+        return $this->getRenderer('vextab')
+                    ->setOptions($options)
+                    ->render(0);
+    }
+
+    /**
      * Get a Guitar Pro 3 representation
      */
     public function toGuitarPro3(): string
