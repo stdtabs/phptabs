@@ -8,7 +8,7 @@ checks:
       threshold: 20
   method-count:
     config:
-      threshold: 20
+      threshold: 25
   method-lines:
     config:
       threshold: 40
@@ -23,10 +23,10 @@ checks:
       threshold: 500
   similar-code:
     config:
-      threshold: 35
+      threshold: 40
   identical-code:
     config:
-      threshold: 20
+      threshold: 40
 exclude_patterns:
 - "test/"
 - "docs/"
