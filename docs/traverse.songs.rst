@@ -148,4 +148,3 @@ Let's rewrite the printNote function in a more readable way.
 
 This example does not take into account some aspects of the referential
 such as rest beats, durations, dead notes, note effects and chord beats.
-
