@@ -20,7 +20,7 @@ IOFactory is done in order to:
 
     $song = IOFactory::fromFile($filename);
 
-    $song = IOFactory::fromString(``string``, $format);
+    $song = IOFactory::fromString($string, $format);
 
     $song = IOFactory::fromJsonFile($jsonFile);
 
@@ -147,6 +147,44 @@ In case you need to force a parser type, use the second parameter.
     echo "Track count=" . $tab->countTracks();
 
     // Should return "Track count=2"
+
+
+------------------------------------------------------------------------
+
+fromString($content, $type)
+===========================
+
+This method returns a ``PhpTabs`` instance, loaded from a string (binary
+or not).
+
+Parameters
+----------
+
+**string** ``$content`` 
+**string** ``$type``
+
+Type
+----
+
+``PhpTabs\PhpTabs``
+
+Example
+-------
+
+.. code-block:: php
+
+    use PhpTabs\IOFactory;
+
+    $content = file_get_contents('mytabs.gp4');
+
+    // Create a PhpTabs instance
+    $song = IOFactory::fromString($content, 'gp4');
+
+    // Work with the song
+    echo $song->getName();
+
+In case you need to force a parser type, use the second parameter.
+
 
 ------------------------------------------------------------------------
 

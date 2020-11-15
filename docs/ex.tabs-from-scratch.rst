@@ -240,5 +240,5 @@ Some important things to keep in mind:
   number 1, and so on for all measures
 - To understand how elements are built on each other and how to be on
   the right scope to interact with them, refer to the
-  `Music stack tree <api.phptabs>` and to the
-  `getting/setting/counting rules <traversing-song-model>`.
+  :ref:`Music stack tree <api.phptabs>` and to the
+  :ref:`getting/setting/counting rules <traversing-songs>`.

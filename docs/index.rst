@@ -56,9 +56,10 @@ lets you create or modify your songs.
     :caption: Traverse and slice songs
     :maxdepth: 1
 
+    traverse.songs
     target-track-measure
     slice-tracks-measures
-    traversing-song-model
+    
 
 .. toctree::
     :caption: Render songs
@@ -82,8 +83,8 @@ lets you create or modify your songs.
 
     architecture
     api.iofactory
-    api-reference
-    
+    api.phptabs
+
 ________________________________________________________________________
 
 .. |build-status| image:: https://api.travis-ci.org/stdtabs/phptabs.svg?branch=master
