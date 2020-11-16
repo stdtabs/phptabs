@@ -49,7 +49,7 @@ lets you create or modify your songs.
     parse.files
     parse.strings
     export.files
-    export.strings
+    export.variables
 
 
 .. toctree::
@@ -75,17 +75,18 @@ lets you create or modify your songs.
 
     ex.calculate-measure-and-beat-durations-in-seconds
     ex.tabs-from-scratch
+    ex.performance-caching
 
 
 .. toctree::
     :caption: Reference
     :maxdepth: 1
 
-    architecture
-    api.iofactory
+    ref.architecture
+    ref.iofactory
     api.phptabs
 
-________________________________________________________________________
+
 
 .. |build-status| image:: https://api.travis-ci.org/stdtabs/phptabs.svg?branch=master
     :alt: Build status

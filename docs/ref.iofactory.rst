@@ -1,4 +1,4 @@
-.. _api.iofactory:
+.. _ref.iofactory:
 
 =========
 IOFactory

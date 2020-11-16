@@ -42,7 +42,7 @@ json, ser).
     $song = IOFactory::fromSerialized($content);
 
 
-See :ref:`all available shortcuts for IOFactory <api.iofactory>`.
+See :ref:`all available shortcuts for IOFactory <ref.iofactory>`.
 
 
 PhpTabs

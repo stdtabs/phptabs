@@ -9,15 +9,16 @@ Very minimalistic tablature
 
 The shortest way to create a tablature is to instanciate a PhpTabs.
 
-```php
-use PhpTabs\PhpTabs;
+.. code-block:: php
 
-// Instanciate a tablature
-$song = new PhpTabs();
+    use PhpTabs\PhpTabs;
 
-// Read some information
-echo $song->getName();
-```
+    // Instanciate a tablature
+    $song = new PhpTabs();
+
+    // Read some information
+    echo $song->getName();
+
 
 This is only sufficient to make basic operations but it failed if we
 want to save it as Guitar Pro or MIDI format.
@@ -241,4 +242,4 @@ Some important things to keep in mind:
 - To understand how elements are built on each other and how to be on
   the right scope to interact with them, refer to the
   :ref:`Music stack tree <api.phptabs>` and to the
-  :ref:`getting/setting/counting rules <traversing-songs>`.
+  :ref:`getting/setting/counting rules <traverse.songs>`.

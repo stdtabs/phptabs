@@ -1,0 +1,289 @@
+.. _ex.performance-caching:
+
+=====================
+Performance & caching
+=====================
+
+There are some cases where it's useful to increase performance.
+
+If largely depends on the context but it may be good to know that
+PhpTabs provides some tools for this purpose.
+
+We can often summarize the performance issues in 2 points:
+
+- IO struggling
+- Software issues
+
+To fix IO issues, we'll try to put in cache (memory) some data.
+
+But, first, let's look at what we will cache.
+
+Problems
+========
+
+For this example, we'll take a real-life GuitarPro file.
+
+Characteristics:
+
+- 6 tracks (OK)
+- 849 measures (Oh!)
+- A little bit less than 1MB
+
+Let's parse it !
+
+.. code-block:: php
+
+    $filename = 'big-file.gp5';
+
+    // Start
+    $start = microtime(true);
+
+    // Parse
+    $song = new PhpTabs($filename);
+
+    // Stop
+    $stopParsing = microtime(true);
+
+    // Display parsing time
+    echo "Read/Parse: " . round($stopParsing - $start, 2) . 's';
+
+And the result is:
+
+.. code-block:: console
+
+    5.78s
+
+Woh! I don't know what the subject of your app is but you can tell it's
+going to be slow.
+
+As usual for performance issues, you have to make choices.  
+
+We have ``6 tracks * 849 measures = 5094 measures``. Do you want to
+display all of these in a webpage ? In a mobile app ?
+
+Let's say that we only want to display one track.
+
+PhpTabs provides features to target a single track and to generate a new
+file.
+
+Target tracks
+=============
+
+In this example, starting from the whole file, we'll create 6 files with
+only one track in each.
+
+.. code-block:: php
+
+    $filename = 'big-file.gp5';
+
+    // Start
+    $start = microtime(true);
+
+    // Parse
+    $song = new PhpTabs($filename);
+
+    $stopParsing = microtime(true);
+
+    // Display parsing time
+    echo "\nParsing whole file: " . round($stopParsing - $start, 2) . 's';
+
+    // Generate one file per track
+    for ($i = 0; $i < $song->countTracks(); $i++) {
+        $song->onlyTrack($i)->save("track-{$i}-{$filename}");
+    }
+
+    $stopSlicing = microtime(true);
+
+    // Display parsing time
+    echo "\nSlicing per track: " . round($stopSlicing - $stopParsing, 2) . 's';
+
+Now, we're going to test parsing for one of these files.
+
+
+.. code-block:: php
+    $filename = 'track-0-big-file.gp5';
+
+    // Start
+    $start = microtime(true);
+
+    // Parse
+    $song = new PhpTabs($filename);
+
+    // Stop
+    $stopParsing = microtime(true);
+
+    // Display parsing time
+    echo "\nParsing a track file: " . round($stopParsing - $start, 2) . 's';
+    echo "\n" . $song->getName();
+
+
+.. code-block:: console
+
+    Parsing a track file: 0.52s
+    My song title
+
+Ok, that's better. At the end of this script, you may have seen that
+we've printed out the song title. Indeed, slicing a track does not loose
+global song informations.
+
+JSON export
+===========
+
+Is it possible to make it faster ?
+
+We're going to make the same thing than before but instead of saving
+the track into in Guitar Pro file, we're going to save it in JSON.
+
+You may see where we're going to.
+
+We are going to slice this track per 50 measures slices.
+
+.. code-block:: php
+
+    $filename = 'big-file.gp5';
+
+    // Start
+    $start = microtime(true);
+
+    // Parse
+    $song = new PhpTabs($filename);
+
+    $stopParsing = microtime(true);
+
+    // Display parsing time
+    echo "\nParsing whole file: " . round($stopParsing - $start, 2) . 's';
+
+    // Generate one file per track
+    for ($i = 0; $i < $song->countTracks(); $i++) {
+        $song->onlyTrack($i)->save("track-{$i}-{$filename}.json");
+    }
+
+    $stopSlicing = microtime(true);
+
+    // Display parsing time
+    echo "\nSlicing per track: " . round($stopSlicing - $stopParsing, 2) . 's';
+
+Now, we're going to test parsing for one of these files.
+
+
+.. code-block:: php
+
+    $filename = 'track-0-big-file.gp5.json';
+
+    // Start
+    $start = microtime(true);
+
+    // Parse
+    $song = new PhpTabs($filename);
+
+    // Stop
+    $stopParsing = microtime(true);
+
+    // Display parsing time
+    echo "\nParsing a track file: " . round($stopParsing - $start, 2) . 's';
+    echo "\n" . $song->getName();
+
+
+.. code-block:: console
+
+    Parsing a track file: 0.21s
+    My song title
+
+It's good for the moment.
+
+JSON file is bigger than Guitar Pro file. As data is stored in a native
+Phptabs export, it makes it faster.
+
+Under the hood, it makes a ``PhpTabs::toArray()`` call, then it converts
+it to JSON.
+
+The idea here was to parse the whole song only once and split it into
+several files with sliced tracks. 
+
+The new problem is that we have 6 files for tracks.
+
+What about pushing ``toArray()`` results into a cache system ?
+
+------------------------------------------------------------------------
+
+Caching
+=======
+
+We're going to take all the work done before in order to keep only the
+best parts.
+
+Best parts are:
+
+- Parsing only once the whole song
+- Splitting tracks and into smaller units for later use
+
+What we're introducing here is:
+
+- Exporting tracks to arrays
+- Saving them into cache
+- Importing an array into PhpTabs
+
+Importing from an array is blazingly fast. There is no parsing time,
+it's like re-importing a part already analyzed previously.
+
+You may have to install Memcache server and client before. Of course,
+you may use another caching system.
+
+.. code-block:: php
+
+    use PhpTabs\IOFactory;
+
+    $memcache = new Memcache;
+    $memcache->connect('localhost', 11211)
+            or die ("Connection failed");
+
+    $filename = 'track-0-big-file.gp5';
+
+    // Parse
+    $song = IOFactory::create($filename);
+
+    // Generate one array for this track
+    $array = $song->toArray();
+
+    // Put in cache
+    $memcache->set($filename, $array);
+
+And now, we may load this track from cache.
+
+.. code-block:: php
+
+    use PhpTabs\IOFactory;
+
+    $memcache = new Memcache;
+    $memcache->connect('localhost', 11211)
+            or die ("Connection failed");
+
+    $filename = 'track-0-big-file.gp5';
+
+    // Start
+    $start = microtime(true);
+
+    // Get from cache
+    $song = IOFactory::fromArray(
+        $memcache->get($filename)
+    );
+
+    $stop = microtime(true);
+
+    // Display loading time
+    echo "\nLoading time : " . round($stop - $start, 2) . 's';
+
+
+.. code-block:: console
+
+    Loading time : 0.2s
+
+
+It's a quick example on how to tackle some performance issues. You may
+not use these scripts without adapting them to your proper context.
+
+However, with these in mind, you may have an idea to cope with
+production constraints.
+
+If you have any questions or some feedback, feel free to open issues
+or contribute to this manual.

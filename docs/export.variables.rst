@@ -1,4 +1,4 @@
-.. _export.strings:
+.. _export.variables:
 
 ===================
 Export to variables
@@ -76,3 +76,37 @@ There are some shortcuts to do that.
     // PHP Serialized
     $ser = $song->toSerialized();
 
+
+All these methods return strings (binary or not).
+
+PHP array
+=========
+
+You may export a whole song as a PHP array with the ``toArray()``
+method.
+
+.. code-block:: php
+
+    use PhpTabs\IOFactory;
+
+    $filename = 'my-file.gp5';
+    $song = IOFactory::fromFile($filename);
+
+    $array = $song->toArray();
+
+Exports are made to visualize the internal music-tree or to communicate
+with a third-party application.
+
+Exported arrays may be imported with ``fromArray()`` method.
+
+.. code-block:: php
+
+    use PhpTabs\IOFactory;
+
+    $song = IOFactory::fromArray($array);
+
+This way of reading data is bypassing entire parsing and may lead to
+better performances for large files.
+
+For those who are interested, there is a manual dedicated to improving
+performance.

@@ -104,6 +104,7 @@ all beats, the goal is to print all notes.
 will output something like
 
 .. code-block:: console
+
     Track 1 - Measure 1 - Beat 6240 - Voice 0 - Note 11/3
     Track 1 - Measure 1 - Beat 6480 - Voice 0 - Note 0/2
 

@@ -42,4 +42,4 @@ Of course, you may read, convert and save in one line.
              ->save('my-file.dat', 'ser');
 
 
-See :ref:`available formats <export.strings>`.
+See :ref:`available formats <export.variables>`.
