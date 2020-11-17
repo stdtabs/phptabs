@@ -31,7 +31,7 @@ class ChordParser extends ParserBase
         $chord->setFirstFret($data['firstFret']);
 
         foreach ($data['strings'] as $index => $string) {
-            $this->checkKeys($string, 'string');
+            $this->checkKeys($string, ['string']);
             $chord->addFretValue($index, $string['string']);
         }
 
