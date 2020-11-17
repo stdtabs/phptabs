@@ -57,8 +57,6 @@ trackHeader    false       Display track number and name
 maxLineLength  80          Max length for staves in characters
 =============  =========== =============================================
 
-Let's see them in action.
-
 Track informations can be printed with ``trackHeader`` option.
 
 .. code-block:: php
@@ -174,7 +172,9 @@ This example will ouput something like:
 Slice and render
 ================
 
-By default, the whole song is rendered. Using ``slice`` and ``only``
+By default, the whole song is rendered. Using
+:ref:`slice <slice-tracks-measures>` and
+:ref:`only <only-track-measure>`
 methods may be useful to target only what you want to display.
 
 Let's see how to render only the first track.

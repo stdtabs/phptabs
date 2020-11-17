@@ -94,6 +94,7 @@ method.
 
     $array = $song->toArray();
 
+
 Exports are made to visualize the internal music-tree or to communicate
 with a third-party application.
 
@@ -105,8 +106,9 @@ Exported arrays may be imported with ``fromArray()`` method.
 
     $song = IOFactory::fromArray($array);
 
+
 This way of reading data is bypassing entire parsing and may lead to
 better performances for large files.
 
-For those who are interested, there is a manual dedicated to improving
-performance.
+For those who are interested, there is a
+:ref:`manual dedicated to performances <ex.performance-caching>` issues.

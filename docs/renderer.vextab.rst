@@ -85,7 +85,7 @@ If the value is the same as VexTab defaults, it won’t be printed.
     ];
 
     // Rendering
-    echo $song->toAscii($options);
+    echo $song->toVextab($options);
 
 
 Will ouput something like:

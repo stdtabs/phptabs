@@ -25,7 +25,19 @@ The destination format is recognized by the file extension (gp3, gp4,
 gp5, mid, midi, json, ser, yml, xml) and the song is implicitly
 converted to this format.
 
-If the file extension is not recognized, a format may be passed as the
+The following formats are available:
+
+- ``gp3`` for Guitar Pro 3
+- ``gp4`` for Guitar Pro 4
+- ``gp5`` for Guitar Pro 5
+- ``mid`` or ``midi`` for MIDI
+- ``json``
+- ``xml``
+- ``ser`` for PHP serialized string
+- ``txt`` or ``text`` for a textual representation
+- ``yml`` or ``yaml``
+
+If the file extension is not standard, a format may be passed as the
 second parameter.
 
 Of course, you may read, convert and save in one line.
@@ -37,9 +49,7 @@ Of course, you may read, convert and save in one line.
     $filename = 'my-file.gp5';
 
     // The Guitar Pro file is parsed, converted
-    // and recorded as a PHP serialized string
+    // and recorded as a JSON string
     IOFactory::fromFile($filename)
-             ->save('my-file.dat', 'ser');
+             ->save('my-file.dat', 'json');
 
-
-See :ref:`available formats <export.variables>`.
