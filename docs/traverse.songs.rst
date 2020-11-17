@@ -1,15 +1,15 @@
 .. _traverse.songs:
 
-=======================
-Traversing a whole song
-=======================
+=====================
+Traverse a whole song
+=====================
 
 PhpTabs makes a song fully-traversable.
 
-Starting from one point, you can find your way with the
+Starting from one point, you may find your way with the
 :ref:`Music tree <api.phptabs>`.
 
-Traversing data is made by getter/setter/counter methods.
+Traversing data is made with getter/setter/counter methods.
 
 A traversal is done in read-write mode
 
@@ -21,26 +21,32 @@ There are 4 rules for getter names:
 1. ``get + {objectName} + ()``
 
    It's a ``property getter`` method.
-   ie: there can be only one Tempo per MeasureHeader, 
+   
+   ie: a measure header may only one Tempo, 
    so the method name to get the tempo for a given measure is
    ``$header->getTempo()``.
 
 2. ``count + {objectName} + s()``
 
    It's a ``child nodes counter`` method.
-   ie: there can be several measures per Track,
+   
+   ie: a track may contain several measures,
    so the method name to count them is ``$track->countMeasures()``
   
 3. ``get + {objectName} + s()``
-   It's a ``children-nodes getter`` method, it returns an array with all
+
+   It's a collection getter method, it returns an array with all
    nodes.
-   ie: there can be several measures per Track, so the method name to
+   
+   ie: a track may contain several measures, so the method name to
    get them is ``$track->getMeasures()``.
 
 4. ``get + {objectName} + ($index)``
-   It's a child-node getter by index, it returns one child resource.
+
+   It gets a nodes from a collection by its index by index.
    ``$index`` is starting from 0 to n-1, with n=child count (returned by
    the counter method)
+   
    ie: there can be several measures per Track, so the method name to
    get one measure(the first) is ``$track->getMeasure(0)``
 
