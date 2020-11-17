@@ -2,13 +2,15 @@ import sys, os
 from sphinx.highlighting import lexers
 from pygments.lexers.web import PhpLexer
 
+extensions = [
+    'sphinxcontrib.phpdomain'
+]
 
 lexers['php'] = PhpLexer(startinline=True)
 lexers['php-annotations'] = PhpLexer(startinline=True)
 primary_domain = 'php'
 highlight_language = 'php'
 
-extensions = []
 templates_path = ['_templates']
 source_suffix = '.rst'
 master_doc = 'index'

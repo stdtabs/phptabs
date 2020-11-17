@@ -171,6 +171,7 @@ Now, we read all the beats for the first measure of all tracks.
 Outputs:
 
 .. code-block:: console
+
     Track 1 - Beat 0 - Note: -/0 
     Track 1 - Beat 1 - Note: -/0 
     Track 1 - Beat 2 - Note: 11/3 

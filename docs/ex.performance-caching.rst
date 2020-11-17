@@ -6,7 +6,7 @@ Performance & caching
 
 There are some cases where it's useful to increase performance.
 
-If largely depends on the context but it may be good to know that
+It largely depends on the context but it may be good to know that
 PhpTabs provides some tools for this purpose.
 
 We can often summarize the performance issues in 2 points:
@@ -18,10 +18,10 @@ To fix IO issues, we'll try to put in cache (memory) some data.
 
 But, first, let's look at what we will cache.
 
-Problems
-========
+Context
+=======
 
-For this example, we'll take a real-life GuitarPro file.
+For this example, we'll take a real-life Guitar Pro file.
 
 Characteristics:
 
@@ -53,7 +53,7 @@ And the result is:
 
     5.78s
 
-Woh! I don't know what the subject of your app is but you can tell it's
+Woh! I don't know what the subject of your app is but we can tell it's
 going to be slow.
 
 As usual for performance issues, you have to make choices.  
@@ -66,8 +66,8 @@ Let's say that we only want to display one track.
 PhpTabs provides features to target a single track and to generate a new
 file.
 
-Target tracks
-=============
+Slicing tracks
+==============
 
 In this example, starting from the whole file, we'll create 6 files with
 only one track in each.
@@ -76,31 +76,20 @@ only one track in each.
 
     $filename = 'big-file.gp5';
 
-    // Start
-    $start = microtime(true);
-
     // Parse
     $song = new PhpTabs($filename);
-
-    $stopParsing = microtime(true);
-
-    // Display parsing time
-    echo "\nParsing whole file: " . round($stopParsing - $start, 2) . 's';
 
     // Generate one file per track
     for ($i = 0; $i < $song->countTracks(); $i++) {
         $song->onlyTrack($i)->save("track-{$i}-{$filename}");
     }
 
-    $stopSlicing = microtime(true);
-
-    // Display parsing time
-    echo "\nSlicing per track: " . round($stopSlicing - $stopParsing, 2) . 's';
 
 Now, we're going to test parsing for one of these files.
 
 
 .. code-block:: php
+
     $filename = 'track-0-big-file.gp5';
 
     // Start
@@ -123,20 +112,16 @@ Now, we're going to test parsing for one of these files.
     My song title
 
 Ok, that's better. At the end of this script, you may have seen that
-we've printed out the song title. Indeed, slicing a track does not loose
-global song informations.
+we've printed out the song title. Indeed, slicing or targetting a track
+does not loose global song informations.
 
-JSON export
-===========
+Exporting to JSON
+=================
 
 Is it possible to make it faster ?
 
 We're going to make the same thing than before but instead of saving
 the track into in Guitar Pro file, we're going to save it in JSON.
-
-You may see where we're going to.
-
-We are going to slice this track per 50 measures slices.
 
 .. code-block:: php
 
@@ -148,20 +133,10 @@ We are going to slice this track per 50 measures slices.
     // Parse
     $song = new PhpTabs($filename);
 
-    $stopParsing = microtime(true);
-
-    // Display parsing time
-    echo "\nParsing whole file: " . round($stopParsing - $start, 2) . 's';
-
-    // Generate one file per track
+    // Generate one JSON file per track
     for ($i = 0; $i < $song->countTracks(); $i++) {
         $song->onlyTrack($i)->save("track-{$i}-{$filename}.json");
     }
-
-    $stopSlicing = microtime(true);
-
-    // Display parsing time
-    echo "\nSlicing per track: " . round($stopSlicing - $stopParsing, 2) . 's';
 
 Now, we're going to test parsing for one of these files.
 
@@ -177,10 +152,10 @@ Now, we're going to test parsing for one of these files.
     $song = new PhpTabs($filename);
 
     // Stop
-    $stopParsing = microtime(true);
+    $stop = microtime(true);
 
     // Display parsing time
-    echo "\nParsing a track file: " . round($stopParsing - $start, 2) . 's';
+    echo "\nParsing a JSON file: " . round($stop - $start, 2) . 's';
     echo "\n" . $song->getName();
 
 
@@ -215,7 +190,7 @@ best parts.
 Best parts are:
 
 - Parsing only once the whole song
-- Splitting tracks and into smaller units for later use
+- Splitting tracks into smaller units for later use
 
 What we're introducing here is:
 
@@ -248,7 +223,9 @@ you may use another caching system.
     // Put in cache
     $memcache->set($filename, $array);
 
+
 And now, we may load this track from cache.
+
 
 .. code-block:: php
 
@@ -276,14 +253,14 @@ And now, we may load this track from cache.
 
 .. code-block:: console
 
-    Loading time : 0.2s
+    Loading time : 0.13s
 
 
 It's a quick example on how to tackle some performance issues. You may
-not use these scripts without adapting them to your proper context.
+not use these scripts without adapting them to your own context.
 
-However, with these in mind, you may have an idea to cope with
-production constraints.
+However, with that in mind, you have an idea of how to successfully
+meet production constraints.
 
 If you have any questions or some feedback, feel free to open issues
 or contribute to this manual.
