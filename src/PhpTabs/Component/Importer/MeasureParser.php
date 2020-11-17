@@ -33,7 +33,7 @@ class MeasureParser extends ParserBase
         $measure->setKeySignature($data['keySignature']);
 
         foreach ($data['beats'] as $beat) {
-            $this->checkKeys($beat, 'beat');
+            $this->checkKeys($beat, ['beat']);
             $measure->addBeat(
                 $this->parseBeat($beat['beat'])
             );

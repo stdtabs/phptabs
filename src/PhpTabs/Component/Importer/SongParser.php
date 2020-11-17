@@ -45,24 +45,24 @@ class SongParser extends ParserBase
         $song->setWriter($data['writer']);
         $song->setComments($data['comments']);
 
-        $channelCount = count($data['channels']);
+        // $channelCount = count($data['channels']);
 
         foreach ($data['channels'] as $channel) {
-            $this->checkKeys($channel, 'channel');
+            $this->checkKeys($channel, ['channel']);
             $song->addChannel(
                 $this->parseChannel($channel['channel'])
             );
         }
 
         foreach ($data['measureHeaders'] as $header) {
-            $this->checkKeys($header, 'header');
+            $this->checkKeys($header, ['header']);
             $song->addMeasureHeader(
                 $this->parseMeasureHeader($header['header'])
             );
         }
 
         foreach ($data['tracks'] as $track) {
-            $this->checkKeys($track, 'track');
+            $this->checkKeys($track, ['track']);
             $song->addTrack(
                 $this->parseTrack($track['track'], $song)
             );

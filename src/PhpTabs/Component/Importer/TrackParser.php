@@ -56,7 +56,7 @@ class TrackParser extends ParserBase
         );
 
         foreach ($data['measures'] as $index => $item) {
-            $this->checkKeys($item, 'measure');
+            $this->checkKeys($item, ['measure']);
             $track->addMeasure(
                 $this->parseMeasure(
                     $item['measure'],
@@ -66,7 +66,7 @@ class TrackParser extends ParserBase
         }
 
         foreach ($data['strings'] as $string) {
-            $this->checkKeys($string, 'string');
+            $this->checkKeys($string, ['string']);
             $track->addString(
                 $this->parseString($string['string'])
             );

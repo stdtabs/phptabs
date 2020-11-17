@@ -36,7 +36,7 @@ class VoiceParser extends ParserBase
         $voice->setDirection($data['direction']);
 
         foreach ($data['notes'] as $note) {
-            $this->checkKeys($note, 'note');
+            $this->checkKeys($note, ['note']);
             $voice->addNote(
                 $this->parseNote($note['note'])
             );

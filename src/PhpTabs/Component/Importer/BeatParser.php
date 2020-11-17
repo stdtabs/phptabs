@@ -46,7 +46,7 @@ class BeatParser extends ParserBase
         $beat->getStroke()->setValue($data['stroke']['value']);
 
         foreach ($data['voices'] as $index => $voice) {
-            $this->checkKeys($voice, 'voice');
+            $this->checkKeys($voice, ['voice']);
             $beat->setVoice(
                 $index,
                 $this->parseVoice($index, $voice['voice'])
