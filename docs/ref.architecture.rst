@@ -47,5 +47,5 @@ Component roles
 - **Exporter** exports data as PHP arrays for caching or various usages
 - **Importer** imports data from internal exports (array)
 
-With the :ref:`internal music model <api.phptabs>`, you can easily
+With the :ref:`internal music model <ref.music-model>`, you can easily
 convert files from one type to another.

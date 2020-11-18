@@ -7,7 +7,7 @@ Traverse a whole song
 PhpTabs makes a song fully-traversable.
 
 Starting from one point, you may find your way with the
-:ref:`Music tree <api.phptabs>`.
+:ref:`Music tree <ref.music-model>`.
 
 Traversing data is made with getter/setter/counter methods.
 
@@ -51,7 +51,7 @@ There are 4 rules for getter names:
    get one measure(the first) is ``$track->getMeasure(0)``
 
 When in doubt, reference should be made to the
-:ref:`Music-Model reference <api.phptabs>`
+:ref:`Music-Model reference <ref.music-model>`
 
 ------------------------------------------------------------------------
 

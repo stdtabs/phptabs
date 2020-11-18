@@ -14,10 +14,10 @@ PhpTabs Documentation
 PhpTabs is a PHP library for reading, writing and rendering tabs and
 MIDI files.
 
-It provides direct methods to :ref:`read a song name <api.music-song>`,
+It provides direct methods to :ref:`read a song name <api.phptabs>`,
 get a list of instruments or whatever be your needs.
 
-Phptabs is built on the top of a :ref:`music stack <api.phptabs>` that
+Phptabs is built on the top of a :ref:`music stack <ref.music-model>` that
 lets you create or modify your songs.
 
 .. code-block:: php
