@@ -1,68 +1,66 @@
 .. _ref.music-model:
 
-=======
-PhpTabs
-=======
-
-PhpTabs makes a song fully-traversable.
-
-It builds a musical tree which is called the **Music-Model** (MM).
-
-
-Music Model
+===========
+Music model
 ===========
 
-:ref:`Song <api.music-song>` (= A PhpTabs instance)
+PhpTabs builds a musical tree which is called the **Music-Model** (MM).
 
-- :ref:`[]Channel <api.music-channel>`
 
-  - :ref:`[]ChannelParameter <api.music-channelparameter>`
+Tree
+====
+
+:ref:`Song <api.music.song>` (= A PhpTabs instance)
+
+- :ref:`[]Channel <api.music.channel>`
+
+  - :ref:`[]ChannelParameter <api.music.channelparameter>`
 
   *[... channels]*
 
-- :ref:`[]MeasureHeader <api.music-measureheader>`
+- :ref:`[]MeasureHeader <api.music.measureheader>`
 
-  - :ref:`Song <api.music-song>` [parent]
-  - :ref:`Tempo <api.music-tempo>` 
-  - :ref:`TimeSignature <api.music-timesignature>` 
+  - :ref:`Song <api.music.song>` [parent]
+  - :ref:`Tempo <api.music.tempo>` 
+  - :ref:`TimeSignature <api.music.timesignature>` 
 
-    - :ref:`Duration <api.music-duration>` 
+    - :ref:`Duration <api.music.duration>` 
 
-      - :ref:`DivisionType <api.music-divisiontype>` 
+      - :ref:`DivisionType <api.music.divisiontype>` 
 
   *[... measureHeaders ]*
 
-- :ref:`[]Track <api.music-track>`
+- :ref:`[]Track <api.music.track>`
 
-  - :ref:`Song <api.music-song>` [parent]
-  - :ref:`Color <api.music-color>`
-  - :ref:`Lyric <api.music-lyric>`
-  - :ref:`[]Measure <api.music-measure>`
+  - :ref:`Song <api.music.song>` [parent]
+  - :ref:`Color <api.music.color>`
+  - :ref:`Lyric <api.music.lyric>`
+  - :ref:`[]Measure <api.music.measure>`
 
-    - :ref:`Track <api.music-track>` [parent]
-    - :ref:`Marker <api.music-marker>`
-    - :ref:`MeasureHeader <api.music-measureheader>`
-    - :ref:`[]Beat <api.music-beat>`
+    - :ref:`Track <api.music.track>` [parent]
+    - :ref:`Marker <api.music.marker>`
+    - :ref:`MeasureHeader <api.music.measureheader>`
+    - :ref:`[]Beat <api.music.beat>`
 
-      - :ref:`Measure <api.music-measure>` [parent]
-      - :ref:`Stroke <api.music-stroke>`
-      - :ref:`Chord <api.music-chord>`
-      - :ref:`Text <api.music-text>`
-      - :ref:`[]Voice <api.music-voice>`
+      - :ref:`Measure <api.music.measure>` [parent]
+      - :ref:`Stroke <api.music.stroke>`
+      - :ref:`Chord <api.music.chord>`
+      - :ref:`Text <api.music.text>`
+      - :ref:`[]Voice <api.music.voice>`
 
-        - :ref:`Beat <api.music-beat>` [parent]
-        - :ref:`Duration <api.music-duration>`
-        - :ref:`[]Note <api.music-note>`
+        - :ref:`Beat <api.music.beat>` [parent]
+        - :ref:`Duration <api.music.duration>`
+        - :ref:`[]Note <api.music.note>`
 
-          - :ref:`Voice <api.music-voice>` [parent]
-          - :ref:`NoteEffect <api.music-noteeffect>`
+          - :ref:`Voice <api.music.voice>` [parent]
+          - :ref:`NoteEffect <api.music.noteeffect>`
 
-            - :ref:`EffectBend <api.music-effectbend>`
-            - :ref:`EffectGrace <api.music-effectgrace>`
-            - :ref:`EffectHarmonic <api.music-effectharmonic>`
-            - :ref:`EffectTremoloBar <api.music-effecttremolobar>`
-            - :ref:`EffectTremoloPicking <api.music-effecttremolopicking>`
-            - :ref:`EffectTrill <api.music-effecttrill>`
+            - :ref:`EffectBend <api.music.effectbend>`
+            - :ref:`EffectGrace <api.music.effectgrace>`
+            - :ref:`EffectHarmonic <api.music.effectharmonic>`
+            - :ref:`EffectTremoloBar <api.music.effecttremolobar>`
+            - :ref:`EffectTremoloPicking <api.music.effecttremolopicking>`
+            - :ref:`EffectTrill <api.music.effecttrill>`
         
         *[... notes ]*
       
@@ -72,7 +70,7 @@ Music Model
 
   *[... measures ]*
 
-  - :ref:`[]TabString <api.music-tabstring>`
+  - :ref:`[]TabString <api.music.tabstring>`
 
 *[... tracks ]*
 
@@ -187,17 +185,17 @@ Note the first two beats, they must be rest beats.
 
 A short but useful view of the MOM is :
 
-- :ref:`Song <api.music-song>`
+- :ref:`Song <api.music.song>`
 
-  - :ref:`Track <api.music-track>`
+  - :ref:`Track <api.music.track>`
 
-    - :ref:`Measure  <api.music-measure>`
+    - :ref:`Measure  <api.music.measure>`
 
-      - :ref:`Beat <api.music-beat>`
+      - :ref:`Beat <api.music.beat>`
 
-        - :ref:`Voice <api.music-voice>`
+        - :ref:`Voice <api.music.voice>`
 
-          - :ref:`Note <api.music-note>`
+          - :ref:`Note <api.music.note>`
 
 You can traverse it this way:
 

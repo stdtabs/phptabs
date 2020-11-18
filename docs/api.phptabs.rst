@@ -97,6 +97,12 @@ You may handle :ref:`channels <api.music.channel>`.
     // Get a single channel by its id (integer)
     $channel = $song->getChannelById(1);
 
+    // Remove a channel
+    $song->removeChannel($channel);
+
+    // Add a channel
+    $song->addChannel($channel);
+
 ------------------------------------------------------------------------
 
 Measure headers
@@ -115,6 +121,12 @@ You may handle :ref:`measure headers <api.music.measureheader>`.
     // Get a single measure header by its index
     // starting from 0 to n-1
     $measureHeader = $song->getMeasureHeader(0);
+
+    // Remove a measure header
+    $song->removeMeasureHeader($measureHeader);
+
+    // Add a measure header
+    $song->addMeasureHeader($measureHeader);
 
 ------------------------------------------------------------------------
 
@@ -135,3 +147,8 @@ You may handle :ref:`tracks <api.music.track>`.
     // starting from 0 to n-1
     $track = $song->getTrack(0);
 
+    // Remove a track
+    $song->removetrack($track);
+
+    // Add a track
+    $song->addTrack($track);
