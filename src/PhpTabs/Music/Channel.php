@@ -168,7 +168,8 @@ class Channel
     public function getParameter(int $index): ?ChannelParameter
     {
         return isset($this->parameters[$index])
-         ? $this->parameters[$index] : null;
+            ? $this->parameters[$index]
+            : null;
     }
 
     public function removeParameter(int $index): void

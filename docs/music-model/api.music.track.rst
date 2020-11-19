@@ -12,7 +12,7 @@ Read track informations
 
 .. code-block:: php
 
-use PhpTabs\PhpTabs;
+    use PhpTabs\PhpTabs;
 
     $song = new PhpTabs('my-song.gp5');
 
@@ -21,13 +21,13 @@ use PhpTabs\PhpTabs;
 
     // Informations
     echo sprintf("
-Track name: %s
-Track number: %s
-Channel id: %s
-Offset: %s
-Is solo: %s
-Is muted: %s
-",
+    Track name: %s
+    Track number: %s
+    Channel id: %s
+    Offset: %s
+    Is solo: %s
+    Is muted: %s
+    ",
 
         $track->getName(),
         $track->getNumber(),
