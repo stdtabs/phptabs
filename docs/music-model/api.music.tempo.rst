@@ -4,7 +4,7 @@
 Tempo
 =====
 
-Tempo's parent is :ref:`PhpTabs <api.measureheader>`.
+Tempo's parent is :ref:`MeasureHeader <api.music.measureheader>`.
 
 Read tempo informations
 =======================
