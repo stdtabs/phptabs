@@ -4,7 +4,7 @@
 ChannelParameter
 ================
 
-ChannelParameter's parent is :ref:`PhpTabs <api.music.channel>`.
+ChannelParameter's parent is :ref:`Channel <api.music.channel>`.
 
 Read channel parameter informations
 ===================================
