@@ -88,7 +88,7 @@ You may compare current duration to another one.
 
 .. code-block:: php
 
-    $bool = $newDuration>isEqual($duration);
+    $bool = $newDuration->isEqual($duration);
 
 ------------------------------------------------------------------------
 
@@ -101,4 +101,4 @@ You may copy all attributes from another duration.
 .. code-block:: php
 
     // Copy from another duration
-    $newDuration>copyFrom($duration);
+    $newDuration->copyFrom($duration);
