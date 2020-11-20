@@ -16,7 +16,7 @@ Read color informations
     $song = new PhpTabs('my-song.gp5');
 
     // Get first track's color
-    $color = $song->gettrack(0)->getColor();
+    $color = $song->getTrack(0)->getColor();
 
     echo sprintf("
     Color
