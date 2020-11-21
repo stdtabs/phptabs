@@ -66,4 +66,4 @@ You may copy all attributes from another lyric.
 .. code-block:: php
 
     // Copy from another lyric
-    $newLyric>copyFrom($lyric);
+    $newLyric->copyFrom($lyric);
