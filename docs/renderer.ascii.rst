@@ -174,7 +174,7 @@ Slice and render
 
 By default, the whole song is rendered. Using
 :ref:`slice <slice-tracks-measures>` and
-:ref:`only <only-track-measure>`
+:ref:`only <target-track-measure>`
 methods may be useful to target only what you want to display.
 
 Let's see how to render only the first track.

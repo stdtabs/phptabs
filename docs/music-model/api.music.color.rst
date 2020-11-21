@@ -4,7 +4,8 @@
 Color
 =====
 
-Color's parent is :ref:`Track <api.music.track>`.
+Color's parents are :ref:`Track <api.music.track>`
+or :ref:`Marker <api.music.marker>`.
 
 Read color informations
 =======================
