@@ -4,7 +4,8 @@
 Track
 =====
 
-PhpTabs provides some methods to access metadata, attributes and nodes.
+Track's parents are :ref:`Song <api.music.song>`
+and :ref:`PhpTabs <api.phptabs>`.
 
 
 Read track informations
@@ -26,7 +27,7 @@ Read track informations
     Channel id: %s
     Offset: %s
     Is solo: %s
-    Is muted: %s
+    Is mute: %s
     ",
 
         $track->getName(),
@@ -47,7 +48,7 @@ It will ouput something like:
     Channel id: 1
     Offset: 0
     Is solo: false
-    Is muted: false
+    Is mute: false
 
 ------------------------------------------------------------------------
 
