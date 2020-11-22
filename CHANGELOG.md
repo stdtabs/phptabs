@@ -15,6 +15,9 @@ fixes in the core and removals.
 - `PhpTabs::onlyTrack()` and `PhpTabs::sliceTracks()`
 - `PhpTabs::onlyMeasure()` and `PhpTabs::sliceMeasures()`
 
+Special thanks to @MrChros who asked and gave an implementation for this
+feature.
+
 See manuals for
 [slice methods](https://phptabs.readthedocs.io/en/latest/slice-tracks-measures.html)
 and
