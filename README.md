@@ -17,17 +17,19 @@ PhpTabs currently supports the following file formats:
 
 Any questions?
 
-- Read the [PhpTabs Manual](https://stdtabs.github.io/)
+- Read the [PhpTabs Manual](https://phptabs.readthedocs.io/)
 - [Open an issue on github](https://github.com/stdtabs/phptabs/issues)
 - [Contribute code](https://github.com/stdtabs/phptabs/pulls)
-- [Contribute documentation](https://github.com/stdtabs/stdtabs.github.io)
+- Contribute documentation in the /docs
 
 Table of contents
 =================
 
 __The documentation below contains only basic examples. If you want to 
 see more examples and the complete API behind the library, read the 
-[PhpTabs Manual](https://stdtabs.github.io/).__
+[PhpTabs Manual](https://phptabs.readthedocs.io/).__
+
+Before version 1.0.0, the old manual [PhpTabs Manual](https://stdtabs.github.io/)
 
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -35,13 +37,7 @@ see more examples and the complete API behind the library, read the
   - [Alternative](#alternative)
 - [Testing](#testing)
 - [Basic Usage](#basic-usage)
-- [Options](#options)
-  - [type](#type)
-  - [verbose](#verbose)
 - [Methods](#methods)
-  - [Error handling](#error-handling)
-    - [hasError()](#haserror)
-    - [getError()](#geterror)
   - [Accessing metadata](#accessing-metadata)
     - [getName()](#getname)
     - [getArtist()](#getartist)
@@ -532,4 +528,4 @@ echo $tab->convert();
 
 ```
 
-A lot more examples on [PhpTabs Manual](https://stdtabs.github.io/).
+A lot more examples on [PhpTabs Manual](https://phptabs.readthedocs.io/).

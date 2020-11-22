@@ -222,10 +222,10 @@ Let's set our goals:
      | -------------------------------------------------- */
 
     // Render the first track as a vextab string
-    echo $tablature->getRenderer('vextab')->render(0);
+    echo $tablature->toVextab();
 
     // Render the second track as an ASCII string
-    echo $tablature->getRenderer('ascii')->render(1);
+    echo $tablature->onlyTrack(1)->toAscii();
 
     // Save it as a Guitar Pro 5 file
     $tablature->save('song-2-tracks-2-measures.gp5');

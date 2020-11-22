@@ -4,7 +4,7 @@
 Voice
 =====
 
-Voice's parent is :ref:`Voice <api.music.voice>`.
+Voice's parent is :ref:`Beat <api.music.beat>`.
 
 Read voice informations
 =======================

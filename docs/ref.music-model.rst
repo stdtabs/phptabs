@@ -10,7 +10,7 @@ PhpTabs builds a musical tree which is called the **Music-Model** (MM).
 Tree
 ====
 
-:ref:`Song <api.music.song>` (= A PhpTabs instance)
+:ref:`Song <api.music.song>` (= A :ref:`PhpTabs <api.phptabs>` instance)
 
 - :ref:`[]Channel <api.music.channel>`
 
