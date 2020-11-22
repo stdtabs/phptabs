@@ -48,8 +48,7 @@ See :ref:`all available shortcuts for IOFactory <ref.iofactory>`.
 PhpTabs
 =======
 
-After PhpTabs has been instanciated, you may call a parser. Be careful,
-allwork that you made before will be erased.
+After PhpTabs has been instanciated, you may call a parser.
 
 .. code-block:: php
 
@@ -63,6 +62,11 @@ allwork that you made before will be erased.
     $song->fromString($content, 'gp5');
 
     echo $song->getName();
+
+
+.. warning ::
+    All modifications that you made before a ``fromArray()`` call will
+    be erased, including meta informations.
 
 
 The `fromString()` method returns a PhpTabs instance.
