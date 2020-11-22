@@ -1,13 +1,14 @@
 {
     "name": "stdtabs/phptabs",
     "type": "library",
-    "version": "0.6.4",
+    "version": "1.0.0",
     "description": "A PHP library for reading, writing and rendering Guitar Pro and MIDI files",
     "keywords": ["tablature", "guitar", "tabs", "MIDI", "music"],
     "homepage": "https://stdtabs.github.io/",
     "license": "LGPL-2.1+",
     "require": {
-        "php": ">=7.2"
+        "php": ">=7.2",
+        "phpunit/phpunit": "^9.4"
     },
     "autoload": {
         "psr-4": {
