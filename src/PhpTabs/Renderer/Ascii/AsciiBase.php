@@ -182,7 +182,9 @@ class AsciiBase
      */
     public function output(): string
     {
-        $maxLines = max(array_keys($this->content));
+        $maxLines = count($this->content) 
+            ? max(array_keys($this->content))
+            : 0;
         $maxCols  = $this->findMaxValue();
 
         $content = '';
