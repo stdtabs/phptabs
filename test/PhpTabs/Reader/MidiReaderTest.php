@@ -14,7 +14,7 @@ namespace PhpTabsTest\Reader;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 
-class PhpTabsMidiTest extends TestCase
+class MidiReaderTest extends TestCase
 {
     public function setUp() : void
     {
