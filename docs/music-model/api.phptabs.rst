@@ -52,9 +52,10 @@ It will ouput something like:
     Author: Me and my band too
     Writer: A writer
     Date: A long time ago
-    Transcriber: 
     Copyright: So cheap
+    Transcriber: 
     Comments: Some multiline comments
+
 
 ------------------------------------------------------------------------
 
