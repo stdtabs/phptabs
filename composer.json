@@ -7,7 +7,8 @@
     "homepage": "https://stdtabs.github.io/",
     "license": "LGPL-2.1+",
     "require": {
-        "php": ">=7.2"
+        "php": ">=7.2",
+        "symfony/thanks": "^1.2"
     },
     "autoload": {
         "psr-4": {
@@ -16,6 +17,5 @@
         }
     },
     "require-dev": {
-        "symfony/thanks": "^1.2"
     }
 }
