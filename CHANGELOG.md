@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1 - 2020-11-25 ##################################################
+
+- Fix a warning when rendering an empty tabs
+- Fix a malformed class name in the test suite
+- Add symfony/thanks dependency
+- Docs - Reorganize folders
 
 ## 1.0.0 - 2020-11-22 ##################################################
 
