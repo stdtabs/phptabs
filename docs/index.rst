@@ -46,46 +46,46 @@ lets you create or modify your songs.
     :caption: Parse and save songs
     :maxdepth: 1
 
-    parse.files
-    parse.strings
-    export.files
-    export.variables
+    /parse-export/parse.files
+    /parse-export/parse.strings
+    /parse-export/export.files
+    /parse-export/export.variables
 
 
 .. toctree::
     :caption: Traverse and slice songs
     :maxdepth: 1
 
-    traverse.songs
-    target-track-measure
-    slice-tracks-measures
+    /traverse-slice-target/traverse.songs
+    /traverse-slice-target/target-track-measure
+    /traverse-slice-target/slice-tracks-measures
     
 
 .. toctree::
     :caption: Render songs
     :maxdepth: 1
 
-    render.songs
-    renderer.ascii
-    renderer.vextab
+    /render/render.songs
+    /render/renderer.ascii
+    /render/renderer.vextab
 
 .. toctree::
     :caption: Examples
     :maxdepth: 1
 
-    ex.calculate-measure-and-beat-durations-in-seconds
-    ex.tabs-from-scratch
-    ex.performance-caching
+    /examples/ex.calculate-measure-and-beat-durations-in-seconds
+    /examples/ex.tabs-from-scratch
+    /examples/ex.performance-caching
 
 
 .. toctree::
     :caption: Reference
     :maxdepth: 1
 
-    ref.architecture
-    ref.iofactory
-    api.phptabs
-    ref.music-model
+    /reference/ref.architecture
+    /reference/ref.iofactory
+    /music-model/api.phptabs
+    /reference/ref.music-model
 
 
 
