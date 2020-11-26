@@ -11,6 +11,8 @@
 
 namespace PhpTabs\Music;
 
+use Exception;
+
 /**
  * @uses Chord
  * @uses Duration
