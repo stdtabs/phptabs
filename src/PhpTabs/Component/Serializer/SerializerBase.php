@@ -39,4 +39,7 @@ abstract class SerializerBase
             }
         );
     }
+
+    protected abstract function appendNode(string $index, array $element): void;
+    protected abstract function appendText(string $index, array $element): void;
 }
