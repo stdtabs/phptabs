@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -33,7 +35,7 @@ class Scale
 
     /**
      * @param int         $note
-     * @param int|boolean $on
+     * @param boolean $on
      */
     public function setNote(int $note, bool $on): void
     {

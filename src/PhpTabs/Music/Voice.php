@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -22,11 +24,34 @@ class Voice
     const DIRECTION_UP   = 1;
     const DIRECTION_DOWN = 2;
 
+    /**
+     * @var Beat
+     */
     private $beat;
+
+    /**
+     * @var Duration
+     */
     private $duration;
+
+    /**
+     * @var int
+     */
     private $index;
+    
+    /**
+     * @var int
+     */
     private $direction;
+
+    /**
+     * @var array<Note>
+     */
     private $notes = [];
+
+    /**
+     * @var bool
+     */
     private $empty = true;
 
     public function __construct(int $index)
@@ -86,6 +111,9 @@ class Voice
         $this->beat = $beat;
     }
 
+    /**
+     * @return array<Note>
+     */
     public function getNotes(): array
     {
         return $this->notes;
@@ -102,7 +130,7 @@ class Voice
     {
         $this->removeNote($note);
 
-        array_splice($this->notes, $index, 0, $note);
+        array_splice($this->notes, $index, 0, [$note]);
     }
 
     public function removeNote(Note $note): void
@@ -181,9 +209,7 @@ class Voice
 
     public function __clone()
     {
-        if (!is_null($this->duration)) {
-            $this->duration = clone $this->duration;
-        }
+        $this->duration = clone $this->duration;
 
         foreach ($this->notes as $index => $item) {
             $this->notes[$index] = clone $item;

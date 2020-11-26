@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -16,7 +18,14 @@ namespace PhpTabs\Music;
  */
 class TimeSignature
 {
+    /**
+     * @var int
+     */
     private $numerator = 4;
+
+    /**
+     * @var Duration
+     */
     private $denominator;
 
     public function __construct()
