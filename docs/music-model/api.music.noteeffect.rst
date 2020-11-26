@@ -1,8 +1,8 @@
 .. _api.music.noteeffect:
 
-=====
+==========
 NoteEffect
-=====
+==========
 
 NoteEffect's parent is :ref:`Note <api.music.note>`.
 
