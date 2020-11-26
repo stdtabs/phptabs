@@ -6,11 +6,34 @@ Parse from files
 
 There are 2 ways to parse a file.
 
+PhpTabs
+=======
+
+The easiest is to instanciate a PhpTabs with a filename as 
+first argument.
+
+.. code-block:: php
+
+    use PhpTabs\PhpTabs;
+
+    $filename = 'my-file.gp5';
+
+    $song = new PhpTabs($filename);
+
+    echo $song->getName();
+
+It supports Guitar Pro 3, 4 and 5, MIDI, JSON and PHP 
+serialized files.
+
+The file format is recognized by the file extension (gp3, gp4, gp5, mid,
+midi, json, ser).
+
+See :ref:`all available PhpTabs methods <api.phptabs>`.
+
 IOFactory
 =========
 
-This is the preferred way as it can parse more file formats (Guitar Pro
-3, 4 and 5, MIDI, JSON, PHP serialized, XML).
+If you need more control, IOFactory is preferred.
 
 After a read operation, a ``PhpTabs`` containing the entire song is
 returned.
@@ -24,9 +47,6 @@ returned.
     $song = IOFactory::fromFile($filename);
 
     echo $song->getName();
-
-The file format is recognized by the file extension (gp3, gp4, gp5, mid,
-midi, json, ser).
 
 If the file extension is not standard, a parser can be specified as the
 second parameter to force a file format.
@@ -55,19 +75,4 @@ second parameter to force a file format.
     $tab = IOFactory::fromSerializedFile('mytabs.dat');
 
 
-PhpTabs
-=======
-
-This way works as well as IOFactory but you may not specify a
-parser.
-
-.. code-block:: php
-
-    use PhpTabs\PhpTabs;
-
-    $filename = 'my-file.gp5';
-
-    $song = new PhpTabs($filename);
-
-    echo $song->getName();
-
+See :ref:`all available shortcuts for IOFactory <ref.iofactory>`.
