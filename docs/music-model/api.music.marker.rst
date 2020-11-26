@@ -1,8 +1,8 @@
 .. _api.music.marker:
 
-=====
+======
 Marker
-=====
+======
 
 Marker's parent is :ref:`Measure <api.music.measure>`.
 
