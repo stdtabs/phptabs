@@ -79,10 +79,10 @@ You may handle its :ref:`voice <api.music.voice>`.
 
 ------------------------------------------------------------------------
 
-Effect
-======
+NoteEffect
+==========
 
-You may handle its :ref:`effect <api.music.effect>`.
+You may handle its :ref:`effect <api.music.noteeffect>`.
 
 .. code-block:: php
 
