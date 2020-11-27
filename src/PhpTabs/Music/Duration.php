@@ -80,7 +80,7 @@ class Duration
             $time += ($time / 4) * 3;
         }
 
-        return $this->getDivision()->convertTime($time);
+        return $this->getDivision()->convertTime((int)$time);
     }
 
     /**

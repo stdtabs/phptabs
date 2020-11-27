@@ -21,7 +21,14 @@ class GuitarProDuration extends AbstractReader
     public function readDuration(int $flags): Duration
     {
         $duration = new Duration();
-        $duration->setValue(intval(pow(2, ($this->reader->readByte() + 4)) / 4));
+
+        $value = $this->reader->readByte();
+
+        // @todo Fix this
+        // Sometimes, it overrides PHP_INT_SIZE resulting to 0
+        // when casting to int
+        $tempValue = pow(2, ($value + 4)) / 4;
+        $duration->setValue(intval($tempValue));
         $duration->setDotted(($flags & 0x01) != 0);
 
         if (($flags & 0x20) != 0) {
