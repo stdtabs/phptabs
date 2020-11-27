@@ -122,7 +122,7 @@ song:
         B: 0
       lyrics:
         from: 1
-        lyrics:
+        lyrics: ""
       measures:
         measure:
           channelId: 1
@@ -2412,7 +2412,7 @@ song:
         B: 0
       lyrics:
         from: 1
-        lyrics:
+        lyrics: ""
       measures:
         measure:
           channelId: 2

@@ -137,7 +137,7 @@ Testing comments line 2"
         B: 0
       lyrics:
         from: 1
-        lyrics:
+        lyrics: ""
       measures:
         measure:
           channelId: 1
@@ -2389,7 +2389,7 @@ Testing comments line 2"
         B: 0
       lyrics:
         from: 1
-        lyrics:
+        lyrics: ""
       measures:
         measure:
           channelId: 2

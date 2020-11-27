@@ -157,7 +157,7 @@
                     },
                     "lyrics": {
                         "from": 1,
-                        "lyrics": []
+                        "lyrics": ""
                     },
                     "measures": [
                         {
@@ -3196,7 +3196,7 @@
                     },
                     "lyrics": {
                         "from": 1,
-                        "lyrics": []
+                        "lyrics": ""
                     },
                     "measures": [
                         {

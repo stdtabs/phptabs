@@ -17,13 +17,20 @@ class Lyric
 {
     const REGEX = " ";
 
+    /**
+     * @var int
+     */
     private $from;
+
+    /**
+     * @var string
+     */
     private $lyrics;
 
     public function __construct()
     {
         $this->from   = 1;
-        $this->lyrics = [];
+        $this->lyrics = '';
     }
 
     public function getFrom(): int
@@ -36,16 +43,12 @@ class Lyric
         $this->from = $from;
     }
 
-    public function getLyrics(): array
+    public function getLyrics(): string
     {
         return $this->lyrics;
     }
 
-    /**
-     * @param array|string $lyrics
-     * @todo Fix given type either string or array
-     */
-    public function setLyrics($lyrics): void
+    public function setLyrics(string $lyrics): void
     {
         $this->lyrics = $lyrics;
     }
@@ -65,7 +68,7 @@ class Lyric
 
     public function isEmpty(): bool
     {
-        return count($this->getLyrics()) == 0;
+        return strlen($this->getLyrics()) === 0;
     }
 
     public function copyFrom(Lyric $lyric): void

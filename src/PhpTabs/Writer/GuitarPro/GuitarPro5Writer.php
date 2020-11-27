@@ -230,14 +230,14 @@ class GuitarPro5Writer extends GuitarProWriterBase
             }
         }
 
-        $this->writeInt($lyricTrack == null ? 0 : $lyricTrack->getNumber());
-        $this->writeInt($lyricTrack == null ? 0 : $lyricTrack->getLyrics()->getFrom());
+        $this->writeInt(is_null($lyricTrack) ? 0 : $lyricTrack->getNumber());
+        $this->writeInt(is_null($lyricTrack) ? 0 : $lyricTrack->getLyrics()->getFrom());
         $this->writeStringInteger(
-            $lyricTrack == null ? '' : $lyricTrack->getLyrics()->getLyrics()
+            is_null($lyricTrack) ? '' : $lyricTrack->getLyrics()->getLyrics()
         );
 
         for ($i = 0; $i < 4; $i++) {
-            $this->writeInt($lyricTrack === null ? 0 : 1);
+            $this->writeInt(is_null($lyricTrack) ? 0 : 1);
             $this->writeStringInteger('');
         }
     }
