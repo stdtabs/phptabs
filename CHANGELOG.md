@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.2 - 2020-11-27 ##################################################
+
+- All musics models now work with strict types
+- `PhpTabs\Music\Lyric::getLyrics()` now returns a string (before an array of strings)
+- `PhpTabs\Music\Beat` - Fix missing import for `Exception`
+- `PhpTabs\Component\Serializer` Enforce implementation with abstract methods
+- Docs : fix some typos and missing labels
+
 ## 1.0.1 - 2020-11-25 ##################################################
 
 - Fix a warning when rendering an empty tabs
