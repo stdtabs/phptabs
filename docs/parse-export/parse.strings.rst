@@ -4,13 +4,12 @@
 Parse from strings
 ==================
 
-Sometimes, you may need to parse a song from a string. 
+Sometimes, you may need to parse a song from a string (binary or not). 
 
 IOFactory
 =========
 
-This is the preferred method as it can parse more file formats (Guitar
-Pro 3, 4 and 5, MIDI, JSON, PHP serialized).
+It's made with the ``fromString()`` method.
 
 After a read operation, a `PhpTabs` containing the entire song is
 returned.
@@ -25,7 +24,7 @@ returned.
 
     echo $song->getName();
 
-The file format is passed as second parameter (gp3, gp4, gp5, mid, midi,
+The file format is given as second parameter (gp3, gp4, gp5, mid, midi,
 json, ser).
 
 
@@ -65,7 +64,7 @@ After PhpTabs has been instanciated, you may call a parser.
 
 
 .. warning ::
-    All modifications that you made before a ``fromArray()`` call will
+    All modifications that you made before a ``fromString()`` call will
     be erased, including meta informations.
 
 

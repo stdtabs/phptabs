@@ -9,7 +9,7 @@ There are 2 ways to parse a file.
 PhpTabs
 =======
 
-The easiest is to instanciate a PhpTabs with a filename as 
+The easiest way is to instanciate a PhpTabs with a filename as 
 first argument.
 
 .. code-block:: php
@@ -29,6 +29,8 @@ The file format is recognized by the file extension (gp3, gp4, gp5, mid,
 midi, json, ser).
 
 See :ref:`all available PhpTabs methods <api.phptabs>`.
+
+________________________________________________________________________
 
 IOFactory
 =========

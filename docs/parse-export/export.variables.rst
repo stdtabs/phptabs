@@ -8,10 +8,10 @@ Export to variables
 Phptabs::convert($format)
 =========================
 
-Sometimes, to debug or store content another way, you may want to output
-a converted string to a variable.
+Sometimes, for debugging or storing contents another way, you may want
+to output a song to a variable.
 
-You may make an explicit conversion with the ``convert`` method.
+You may make an explicit conversion with the ``convert()`` method.
 
 .. code-block:: php
 
@@ -36,18 +36,19 @@ The following parameters are available:
 - ``txt`` or ``text`` for a textual representation
 - ``yml`` or ``yaml``
 
+________________________________________________________________________
 
-Shortcuts
-=========
+PhpTabs shortcuts
+=================
 
 There are some shortcuts to do that.
 
 .. code-block:: php
 
-    use PhpTabs\IOFactory;
+    use PhpTabs\PhpTabs;
 
     $filename = 'my-file.gp5';
-    $song = IOFactory::fromFile($filename);
+    $song = new PhpTabs($filename);
 
     // Guitar Pro 3
     $gp3 = $song->toGuitarPro3();
@@ -78,6 +79,8 @@ There are some shortcuts to do that.
 
 
 All these methods return strings (binary or not).
+
+________________________________________________________________________
 
 PHP array
 =========
@@ -112,3 +115,7 @@ better performances for large files.
 
 For those who are interested, there is a
 :ref:`manual dedicated to performances <ex.performance-caching>` issues.
+
+.. warning ::
+    All modifications that you made before a ``fromArray()`` call will
+    be erased, including meta informations.
