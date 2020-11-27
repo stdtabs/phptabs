@@ -28,7 +28,7 @@ Read lyric informations
     ",
 
     $lyric->getFrom(),
-    implode(' | ', $lyric->getLyrics()),
+    $lyric->getLyrics(),
     $lyric->isEmpty() ? 'true' : 'false'
     );
 

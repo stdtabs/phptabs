@@ -21,7 +21,7 @@ class GuitarProDuration extends AbstractReader
     public function readDuration(int $flags): Duration
     {
         $duration = new Duration();
-        $duration->setValue(pow(2, ($this->reader->readByte() + 4)) / 4);
+        $duration->setValue(intval(pow(2, ($this->reader->readByte() + 4)) / 4));
         $duration->setDotted(($flags & 0x01) != 0);
 
         if (($flags & 0x20) != 0) {

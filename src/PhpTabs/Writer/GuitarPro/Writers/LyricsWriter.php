@@ -35,14 +35,14 @@ class LyricsWriter
             }
         }
 
-        $this->writer->writeInt($lyricTrack == null ? 0 : $lyricTrack->getNumber());
-        $this->writer->writeInt($lyricTrack == null ? 0 : $lyricTrack->getLyrics()->getFrom());
+        $this->writer->writeInt(is_null($lyricTrack) ? 0 : $lyricTrack->getNumber());
+        $this->writer->writeInt(is_null($lyricTrack) ? 0 : $lyricTrack->getLyrics()->getFrom());
         $this->writer->writeStringInteger(
-            $lyricTrack == null ? '' : $lyricTrack->getLyrics()->getLyrics()
+            is_null($lyricTrack) ? '' : $lyricTrack->getLyrics()->getLyrics()
         );
 
         for ($i = 0; $i < 4; $i++) {
-            $this->writer->writeInt($lyricTrack === null ? 0 : 1);
+            $this->writer->writeInt(is_null($lyricTrack) ? 0 : 1);
             $this->writer->writeStringInteger('');
         }
     }
