@@ -45,7 +45,7 @@ class TrackParser extends ParserBase
         $track->setChannelId($data['channelId']);
         $track->setSolo($data['solo']);
         $track->setMute($data['mute']);
-        $track->setName($data['name']);
+        $track->setName((string)$data['name']);
 
         $track->setColor(
             $this->parseColor($data['color'])
