@@ -43,7 +43,7 @@ class DivisionType
 
     public function convertTime(int $time): int
     {
-        return intval($time * $this->times / $this->enters);
+        return $time * $this->times / $this->enters;
     }
 
     public function isEqual(DivisionType $divisionType): bool

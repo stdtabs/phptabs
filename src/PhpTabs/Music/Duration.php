@@ -72,7 +72,7 @@ class Duration
 
     public function getTime(): int
     {
-        $time = Duration::QUARTER_TIME * (4.0 / $this->value);
+        $time = (int)(Duration::QUARTER_TIME * (4.0 / $this->value));
 
         if ($this->dotted) {
             $time += $time / 2;

@@ -157,7 +157,7 @@ class MeasureHeader
     public function getLength(): int
     {
         return $this->getTimeSignature()->getNumerator()
-         * $this->getTimeSignature()->getDenominator()->getTime();
+             * $this->getTimeSignature()->getDenominator()->getTime();
     }
 
     public function getSong(): Song
