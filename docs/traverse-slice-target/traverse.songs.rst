@@ -9,12 +9,12 @@ PhpTabs makes a song fully-traversable.
 Starting from one point, you may find your way with the
 :ref:`Music tree <ref.music-model>`.
 
-Traversing data is made with getter/setter/counter methods.
+Traversing data is made with getter and counter methods.
 
 A traversal is done in read-write mode
 
-Getter/setter/counter rules
-===========================
+Getter and counter rules
+========================
 
 There are 4 rules for getter names:
 
@@ -22,13 +22,13 @@ There are 4 rules for getter names:
 
    It's a ``property getter`` method.
    
-   ie: a measure header may only one Tempo, 
+   ie: a measure header may only contain one Tempo, 
    so the method name to get the tempo for a given measure is
    ``$header->getTempo()``.
 
 2. ``count + {objectName} + s()``
 
-   It's a ``child nodes counter`` method.
+   It's a ``nodes counter`` method.
    
    ie: a track may contain several measures,
    so the method name to count them is ``$track->countMeasures()``
@@ -43,12 +43,12 @@ There are 4 rules for getter names:
 
 4. ``get + {objectName} + ($index)``
 
-   It gets a nodes from a collection by its index by index.
+   It gets a node from a collection by its index.
    ``$index`` is starting from 0 to n-1, with n=child count (returned by
    the counter method)
    
    ie: there can be several measures per Track, so the method name to
-   get one measure(the first) is ``$track->getMeasure(0)``
+   get one measure (the first) is ``$track->getMeasure(0)``
 
 When in doubt, reference should be made to the
 :ref:`Music-Model reference <ref.music-model>`
