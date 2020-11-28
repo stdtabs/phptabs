@@ -13,15 +13,6 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-use Exception;
-
-/**
- * @uses Measure
- * @uses TabString
- * @uses Color
- * @uses Lyric
- * @uses Song
- */
 class Track
 {
     const MAX_OFFSET = 24;
@@ -66,23 +57,11 @@ class Track
         $this->measures[] = $measure;
     }
 
-    /**
-     * @throws Exception when measure is not set for given index
-     */
-    public function getMeasure(int $index): Measure
+    public function getMeasure(int $index): ?Measure
     {
-        if (!isset($this->measures[$index])) {
-            $message = "Track #%d, Measure is not set at index '%s'";
-            throw new Exception(
-                sprintf(
-                    $message,
-                    $this->getNumber(),
-                    $index
-                )
-            );
-        }
-
-        return $this->measures[$index];
+        return isset($this->measures[$index])
+            ? $this->measures[$index]
+            : null;
     }
 
     /**

@@ -13,13 +13,6 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-use Exception;
-
-/**
- * @uses Beat
- * @uses MeasureHeader
- * @uses Track
- */
 class Measure
 {
     const CLEF_TREBLE = 1;
@@ -103,21 +96,11 @@ class Measure
         }
     }
 
-    /**
-     * @throw Exception if beat does not exist
-     */
-    public function getBeat(int $index): Beat
+    public function getBeat(int $index): ?Beat
     {
-        if (isset($this->beats[$index])) {
-            return $this->beats[$index];
-        }
-
-        throw new Exception(
-            sprintf(
-                'Index %s does not exist',
-                $index
-            )
-        );
+        return isset($this->beats[$index])
+            ? $this->beats[$index]
+            : null;
     }
 
     public function countBeats(): int
