@@ -1,11 +1,22 @@
 # Changelog
 
+## 1.0.3 - 2020-11-28 ##################################################
+
+- Music models - Enforce types
+- Music models - Remove Exception when getting non existing beats and
+measures
+- Importer - Fix bad type for track name
+- Fix bad type for division time conversion
+- 
+
 ## 1.0.2 - 2020-11-27 ##################################################
 
 - All musics models now work with strict types
-- `PhpTabs\Music\Lyric::getLyrics()` now returns a string (before an array of strings)
+- `PhpTabs\Music\Lyric::getLyrics()` now returns a string (before an
+array of strings)
 - `PhpTabs\Music\Beat` - Fix missing import for `Exception`
-- `PhpTabs\Component\Serializer` Enforce implementation with abstract methods
+- `PhpTabs\Component\Serializer` Enforce implementation with abstract
+methods
 - Docs : fix some typos and missing labels
 
 ## 1.0.1 - 2020-11-25 ##################################################
@@ -68,7 +79,8 @@ for all available formats.
 #### Saving to files supports new file formats
 
 - `Phptabs::save('filename.json')` will implicitly convert to JSON
-- `PhpTabs::save('filename.ser')` will implicitly convert to PHP serialized
+- `PhpTabs::save('filename.ser')` will implicitly convert to PHP
+serialized
 - `PhpTabs::save('filename.txt')` will implicitly convert to TEXT
 - `PhpTabs::save('filename.xml')` will implicitly convert to XML
 - `PhpTabs::save('filename.yml')` will implicitly convert to YAML
