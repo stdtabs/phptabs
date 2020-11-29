@@ -31,7 +31,7 @@ class Measure
 
     public function __construct(MeasureHeader $header)
     {
-        $this->header = $header;
+        $this->setHeader($header);
         $this->clef = self::DEFAULT_CLEF;
         $this->keySignature = self::DEFAULT_KEY_SIGNATURE;
     }
@@ -91,7 +91,7 @@ class Measure
             if ($v == $beat) {
                 array_splice($this->beats, $k, 1);
 
-                return;
+                break;
             }
         }
     }
@@ -130,7 +130,7 @@ class Measure
 
     public function getStart(): int
     {
-        return intval($this->header->getStart());
+        return $this->header->getStart();
     }
 
     public function getTempo(): Tempo

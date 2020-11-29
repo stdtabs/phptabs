@@ -162,11 +162,11 @@ All options rendered as ``notes ...``.
 ========================= ============================== ===============
 Feature                   Notation                        Supported
 ========================= ============================== ===============
-Bar                       |                              OK        
+Bar                       \                              OK        
 Double Bar                ||                             @todo     
 Repeat Begin              =|:                            OK        
 Repeat End                =:|                            OK        
-Double Repeat             =:\:                            @todo     
+Double Repeat             =:\:                           @todo     
 End Bar                   =|=                            @todo     
 ========================= ============================== ===============
 
@@ -200,8 +200,8 @@ marcato                   $a^/bottom.$                   @todo
 LH pizzicato              $a+/bottom.$                   @todo     
 snap pizzicato            $ao/bottom.$                   @todo     
 open note                 $ah/bottom.$                   @todo     
-up fermata                $a\@a/bottom.$                  @todo     
-down fermata              $a\@u/bottom.$                  @todo     
+up fermata                $a\@a/bottom.$                 @todo     
+down fermata              $a\@u/bottom.$                 @todo     
 bow up                    $a|/bottom.$                   @todo     
 bow down                  $am/bottom.$                   @todo     
 ========================= ============================== ===============
