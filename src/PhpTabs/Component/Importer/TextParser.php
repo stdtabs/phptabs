@@ -19,15 +19,16 @@ class TextParser extends ParserBase
 
     /**
      * Parse a text array
-     * 
-     * @param array $data
      */
     public function __construct(array $data)
     {
         $this->checkKeys($data, $this->required);
 
         $text = new Text();
-        $text->setValue($data['value']);
+
+        if (!is_null($data['value'])) {
+            $text->setValue($data['value']);
+        }
 
         $this->item = $text;
     }
