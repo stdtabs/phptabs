@@ -18,17 +18,18 @@ class LyricsParser extends ParserBase
     protected $required = ['from', 'lyrics'];
 
     /**
-     * Parse a color array
-     * 
-     * @param array $data
+     * Parse a lyrics array
      */
     public function __construct(array $data)
     {
         $this->checkKeys($data, $this->required);
 
         $lyric = new Lyric();
-        $lyric->setFrom($data['from']);
-        $lyric->setLyrics($data['lyrics']);
+
+        if (!is_null($data['lyrics'])) {
+            $lyric->setFrom($data['from']);
+            $lyric->setLyrics($data['lyrics']);
+        }
 
         $this->item = $lyric;
     }
