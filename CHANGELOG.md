@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4 - 2020-11-30 ##################################################
+
+- Music/Measure: refactor some methods
+- Importer: fix exporting lyrics to JSON and import with `fromString`
+causes warnings with null values in Lyric, Marker and Text.
+
 ## 1.0.3 - 2020-11-28 ##################################################
 
 - Music models - Enforce types
