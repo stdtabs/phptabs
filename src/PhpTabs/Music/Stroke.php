@@ -66,13 +66,14 @@ class Stroke
 
                 if ($duration == 0 || $currentDuration < $duration) {
                     $duration = $currentDuration <= Duration::QUARTER_TIME
-                    ? $currentDuration : Duration::QUARTER_TIME;
+                        ? $currentDuration
+                        : Duration::QUARTER_TIME;
                 }
             }
         }
 
         return $duration > 0
-            ? round(($duration / 8.0) * (4.0 / $this->value))
+            ? intval(round(($duration / 8.0) * (4.0 / $this->value)))
             : 0;
     }
 
