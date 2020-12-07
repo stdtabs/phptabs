@@ -52,7 +52,7 @@ class Exporter extends ExporterBase
         // characters, possibly incorrectly encoded
         return json_encode(
             $this->exportSong(),
-            $flags | JSON_PARTIAL_OUTPUT_ON_ERROR
+            $flags | JSON_INVALID_UTF8_SUBSTITUTE | JSON_UNESCAPED_UNICODE 
         );
     }
 
