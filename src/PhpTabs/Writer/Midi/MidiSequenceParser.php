@@ -459,7 +459,7 @@ class MidiSequenceParser
         $value = $tempo->getValue() * $duration / 60;
 
         return $value < $maximum
-            ? $value
+            ? intval($value)
             : $maximum;
     }
 
