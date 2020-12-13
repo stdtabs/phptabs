@@ -149,7 +149,7 @@ You may handle :ref:`tracks <api.music.track>`.
     $track = $song->getTrack(0);
 
     // Remove a track
-    $song->removetrack($track);
+    $song->removeTrack($track);
 
     // Add a track
     $song->addTrack($track);
