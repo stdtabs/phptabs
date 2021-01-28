@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.5 - 2021-01-28 ##################################################
+
+- Music/Stroke - Fix increment time type
+- MIDI writer  - Fix apply static duration from tempo
+- JSON exporter: Fix some malformed UTF-8
+
 ## 1.0.4 - 2020-11-30 ##################################################
 
 - Music/Measure: refactor some methods
