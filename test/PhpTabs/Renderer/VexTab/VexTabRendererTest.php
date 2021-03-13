@@ -22,7 +22,7 @@ use PhpTabs\Music\Track;
  */
 class VexTabRendererTest extends TestCase
 {
-    public function setUp() : void
+    protected function setUp() : void
     {
         $this->filename = 'testSimpleTab.gp3';
         $this->tablature = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/' . $this->filename);
@@ -153,7 +153,7 @@ notes :q 5/2 5d/2 5/2 (5b7b9v/2)u 5/2 5/2 |:q 5/2 :8 5v/2 ## :q 5/2 5/2 5/2 5/2 
             ->render(0);
     }
 
-    public function tearDown() : void
+    protected function tearDown() : void
     {
         unset($this->tablature);
     }

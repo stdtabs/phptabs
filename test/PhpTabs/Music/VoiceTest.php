@@ -20,7 +20,7 @@ use PhpTabs\IOFactory;
  */
 class VoiceTest extends TestCase
 {
-    public function setUp() : void
+    protected function setUp() : void
     {
         $this->tablature = IOFactory::fromFile(
             PHPTABS_TEST_BASEDIR
@@ -56,7 +56,7 @@ class VoiceTest extends TestCase
         $this->assertEqualsWithDelta(2.0454, $duration, 0.0001);
     }
 
-    public function tearDown() : void
+    protected function tearDown() : void
     {
         unset($this->tablature);
     }
