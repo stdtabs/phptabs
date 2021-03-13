@@ -39,7 +39,7 @@ class GuitarPro5ReaderTest extends TestCase
             "Testing comments line 1\nTesting comments line 2",
             $this->tablature->getComments()
         );
-        $this->assertEquals('', $this->tablature->getDate());       // Not supported by Guitar Pro 5
+        $this->assertNull($this->tablature->getDate());       // Not supported by Guitar Pro 5
         $this->assertEquals('', $this->tablature->getTranscriber());// Not supported by Guitar Pro 5
 
         // Tracks

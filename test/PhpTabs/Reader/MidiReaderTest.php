@@ -29,15 +29,15 @@ class MidiReaderTest extends TestCase
     public function testReadModeWithSimpleMidiFile()
     {
         // Meta attributes
-        $this->assertEquals('', $this->tablature->getName());       // Not supported by Midi
-        $this->assertEquals('', $this->tablature->getArtist());     // Not supported by Midi
-        $this->assertEquals('', $this->tablature->getAlbum());      // Not supported by Midi
-        $this->assertEquals('', $this->tablature->getAuthor());     // Not supported by Midi
-        $this->assertEquals('', $this->tablature->getCopyright());  // Not supported by Midi
-        $this->assertEquals('', $this->tablature->getWriter());     // Not supported by Midi
-        $this->assertEquals('', $this->tablature->getComments());   // Not supported by Midi
-        $this->assertEquals('', $this->tablature->getDate());       // Not supported by Midi
-        $this->assertEquals('', $this->tablature->getTranscriber());// Not supported by Midi
+        $this->assertNull($this->tablature->getName());       // Not supported by Midi
+        $this->assertNull($this->tablature->getArtist());     // Not supported by Midi
+        $this->assertNull($this->tablature->getAlbum());      // Not supported by Midi
+        $this->assertNull($this->tablature->getAuthor());     // Not supported by Midi
+        $this->assertNull($this->tablature->getCopyright());  // Not supported by Midi
+        $this->assertNull($this->tablature->getWriter());     // Not supported by Midi
+        $this->assertNull($this->tablature->getComments());   // Not supported by Midi
+        $this->assertNull($this->tablature->getDate());       // Not supported by Midi
+        $this->assertNull($this->tablature->getTranscriber());// Not supported by Midi
 
         // Tracks
         $this->assertEquals(2, $this->tablature->countTracks());
@@ -75,7 +75,7 @@ class MidiReaderTest extends TestCase
         }
 
         $this->assertSame($expected[0], $this->tablature->getInstrument(0));
-    
+
         $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $this->tablature->getTablature());
     }
 
