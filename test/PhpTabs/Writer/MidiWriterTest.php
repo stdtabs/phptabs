@@ -23,7 +23,7 @@ use PhpTabs\PhpTabs;
  */
 class MidiWriterTest extends TestCase
 {
-    public function setUp() : void
+    protected function setUp() : void
     {
         $this->path = '/files/midi/minimal.gp5';
         $this->midi = '/files/midi/minimal.mid';
@@ -44,7 +44,7 @@ class MidiWriterTest extends TestCase
         );
     }
 
-    public function tearDown() : void
+    protected function tearDown() : void
     {
         unset($this->tablature);
     }

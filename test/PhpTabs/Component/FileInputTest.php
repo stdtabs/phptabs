@@ -17,7 +17,7 @@ use PhpTabs\Component\FileInput;
 
 class FileInputTest extends TestCase
 {
-    public function setUp() : void
+    protected function setUp() : void
     {
         $this->filename = PHPTABS_TEST_BASEDIR . '/samples/testNotAllowedExtension.xxx';
     }

@@ -20,7 +20,7 @@ use PhpTabs\PhpTabs;
  */
 class GuitarPro3ReaderTest extends TestCase
 {
-    public function setUp() : void
+    protected function setUp() : void
     {
         $this->filename = 'testSimpleTab.gp3';
         $this->tablature = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/' . $this->filename);
@@ -85,7 +85,7 @@ class GuitarPro3ReaderTest extends TestCase
         $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $this->tablature->getTablature());
     }
 
-    public function tearDown() : void
+    protected function tearDown() : void
     {
         unset($this->tablature);
     }

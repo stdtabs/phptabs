@@ -21,7 +21,7 @@ use PhpTabs\IOFactory;
  */
 class AsciiRendererTest extends TestCase
 {
-    public function setUp() : void
+    protected function setUp() : void
     {
         $this->filename = 'testSimpleTab.gp5';
         $this->tablature = IOFactory::fromFile(
@@ -192,7 +192,7 @@ E|------------------------|-----------------------------------------------------
             ->render(10);
     }
 
-    public function tearDown() : void
+    protected function tearDown() : void
     {
         unset($this->tablature);
     }
