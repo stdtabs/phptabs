@@ -40,7 +40,7 @@ class GuitarPro4ReaderTest extends TestCase
             $this->tablature->getComments()
         );
         $this->assertEquals('', $this->tablature->getDate());       // Not supported by Guitar Pro 4
-        $this->assertEquals('', $this->tablature->getTranscriber());// Not supported by Guitar Pro 4
+        $this->assertNull($this->tablature->getTranscriber());// Not supported by Guitar Pro 4
 
         // Tracks
         $this->assertEquals(2, $this->tablature->countTracks());

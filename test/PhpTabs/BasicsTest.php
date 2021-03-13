@@ -25,15 +25,15 @@ class BasicsTest extends TestCase
         $tablature = new PhpTabs();
 
         // Meta attributes
-        $this->assertEquals('', $tablature->getName());
-        $this->assertEquals('', $tablature->getArtist());
-        $this->assertEquals('', $tablature->getAlbum());
-        $this->assertEquals('', $tablature->getAuthor());
-        $this->assertEquals('', $tablature->getCopyright());
-        $this->assertEquals('', $tablature->getWriter());
-        $this->assertEquals('', $tablature->getComments());
-        $this->assertEquals('', $tablature->getDate());
-        $this->assertEquals('', $tablature->getTranscriber());
+        $this->assertNull($tablature->getName());
+        $this->assertNull($tablature->getArtist());
+        $this->assertNull($tablature->getAlbum());
+        $this->assertNull($tablature->getAuthor());
+        $this->assertNull($tablature->getCopyright());
+        $this->assertNull($tablature->getWriter());
+        $this->assertNull($tablature->getComments());
+        $this->assertNull($tablature->getDate());
+        $this->assertNull($tablature->getTranscriber());
 
         // Tracks
         $this->assertEquals(0, $tablature->countTracks());
@@ -50,7 +50,7 @@ class BasicsTest extends TestCase
         // Instruments
         $this->assertEquals(0, $tablature->countInstruments());
         $this->assertEquals(array(), $tablature->getInstruments());
-    
+
         $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $tablature->getTablature());
     }
 
@@ -70,7 +70,7 @@ class BasicsTest extends TestCase
         $this->expectException(Exception::class);
 
         $tablature = new PhpTabs();
-    
+
         $tablature->getTrack(0);
     }
 
@@ -79,7 +79,7 @@ class BasicsTest extends TestCase
         $this->expectException(Exception::class);
 
         $tablature = new PhpTabs();
-    
+
         $tablature->getChannel(0);
     }
 
@@ -88,7 +88,7 @@ class BasicsTest extends TestCase
         $this->expectException(Exception::class);
 
         $tablature = new PhpTabs();
-    
+
         $tablature->getMeasureHeader(0);
     }
 }
