@@ -829,7 +829,7 @@ class MidiReader extends MidiReaderBase
 
         $type = $this->getType($statusByte);
 
-        if ($type == MidiReader::STATUS_ONE_BYTE) {
+        if ($type === MidiReader::STATUS_ONE_BYTE) {
             $data = 0;
 
             if ($runningStatusApplies) {
@@ -842,7 +842,7 @@ class MidiReader extends MidiReaderBase
 
             return new MidiEvent(MidiMessage::shortMessage(($statusByte & 0xf0), ($statusByte & 0x0f), $data), $helper->ticks);
 
-        } elseif ($type == MidiReader::STATUS_TWO_BYTES) {
+        } elseif ($type === MidiReader::STATUS_TWO_BYTES) {
             $data1 = 0;
 
             if ($runningStatusApplies) {
@@ -857,7 +857,7 @@ class MidiReader extends MidiReaderBase
 
             return new MidiEvent(MidiMessage::shortMessage(($statusByte & 0xf0), ($statusByte & 0x0f), $data1, $this->readUnsignedByte()), $helper->ticks);
 
-        } elseif ($type == MidiReader::STATUS_SYSEX) {
+        } elseif ($type === MidiReader::STATUS_SYSEX) {
             $helper->runningStatusByte = -1;
 
             $dataLength = $this->readVariableLengthQuantity($helper);
@@ -868,7 +868,7 @@ class MidiReader extends MidiReaderBase
                 $helper->remainingBytes--;
             }
 
-        } elseif ($type == MidiReader::STATUS_META) {
+        } elseif ($type === MidiReader::STATUS_META) {
             $helper->runningStatusByte = -1;
 
             $typeByte = $this->readUnsignedByte();
@@ -890,7 +890,7 @@ class MidiReader extends MidiReaderBase
     private function readTrack(MidiTrack $track): void
     {
         while (true) {
-            if ($this->readInt() == MidiReaderInterface::TRACK_MAGIC) {
+            if ($this->readInt() === MidiReaderInterface::TRACK_MAGIC) {
                 break;
             }
 
