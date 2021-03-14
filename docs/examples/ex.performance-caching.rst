@@ -45,7 +45,7 @@ Let's parse it !
     $stop = microtime(true);
 
     // Display parsing time
-    echo "round($stop - $start, 2) . 's';
+    echo round($stop - $start, 2) . 's';
 
 And the result is:
 
