@@ -409,7 +409,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         }
 
         $this->writeStringByteSizeOfInteger('');
-        $this->writeInt($tempo !== null ? $tempo->getValue() : -1);
+        $this->writeInt($tempo->getValue());
 
         if ($tempo !== null) {
             $this->skipBytes(1);

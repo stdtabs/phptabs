@@ -58,10 +58,9 @@ class AsciiRenderer extends RendererHelper
      */
     public function render(int $trackIndex = null): string
     {
-        if (null !== $trackIndex && $this->song->getTrack($trackIndex) === null) {
-            throw new Exception(
-                sprintf("Track n°%d does not exist.", $trackIndex)
-            );
+        // Check if track exists for this index
+        if (!is_null($trackIndex)) {
+             $track = $this->song->getTrack($trackIndex);
         }
 
         if ($this->getOption('songHeader')) {

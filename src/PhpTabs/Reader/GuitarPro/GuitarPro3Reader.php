@@ -67,11 +67,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
         $this->keySignature = $this->factory('GuitarProKeySignature')->readKeySignature();
         $this->skip(3);
 
-        // Meta only
-        if (Config::get('type') == 'meta') {
-            return $this->closeStream();
-        }
-
         $channels = $this->factory('GuitarProChannels')->readChannels();
 
         $measures = $this->readInt();
@@ -79,11 +74,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
         $this->readMeasureHeaders($song, $measures);
         $this->readTracks($song, $tracks, $channels);
-
-        // Meta+channels+tracks+measure headers only
-        if (Config::get('type') == 'channels') {
-            return $this->closeStream();
-        }
 
         $this->factory('GuitarPro3Measures')->readMeasures($song, $measures, $tracks, $tempoValue);
 

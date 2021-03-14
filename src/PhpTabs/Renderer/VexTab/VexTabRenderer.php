@@ -44,12 +44,6 @@ class VexTabRenderer extends RendererHelper
     {
         $track = $this->song->getTrack($index);
 
-        if (null === $track) {
-            throw new Exception(
-                'Track has not been found. Given:' . $index
-            );
-        }
-
         return $this->writeTrack($track);
     }
 

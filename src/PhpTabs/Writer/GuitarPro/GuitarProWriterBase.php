@@ -26,6 +26,11 @@ abstract class GuitarProWriterBase implements WriterInterface
     private $name;
     private $writers = [];
 
+    /**
+     * @var ChannelRouter
+     */
+    protected $channelRouter;
+
     public function __construct()
     {
         $this->name = str_replace(

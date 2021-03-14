@@ -22,6 +22,11 @@ use PhpTabs\IOFactory;
 
 class SerializedReader implements ReaderInterface
 {
+    /**
+     * @var Tablature
+     */
+    protected $tablature;
+
     public function __construct(InputStream $file)
     {
         $song = new Song();

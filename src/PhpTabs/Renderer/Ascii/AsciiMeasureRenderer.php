@@ -98,6 +98,8 @@ class AsciiMeasureRenderer
 
     /**
      * Get following beat
+     *
+     * @todo FIXME $next is always null
      */
     public function getNextBeat(array $beats, Beat $beat): ?Beat
     {

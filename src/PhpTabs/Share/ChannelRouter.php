@@ -18,6 +18,9 @@ class ChannelRouter
     const MAX_CHANNELS = 16;
     const PERCUSSION_CHANNEL = 9;
 
+    /**
+     * @var array
+     */
     private $midiChannels;
 
     public function __construct()
