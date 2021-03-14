@@ -273,7 +273,7 @@ class MidiReader extends MidiReaderBase
      */
     private function createPercussionStrings(int $stringCount): array
     {
-        $strings = array();
+        $strings = [];
 
         for ($i = 1; $i <= $stringCount; $i++) {
             $strings[] = new TabString($i, 0);
@@ -533,7 +533,6 @@ class MidiReader extends MidiReaderBase
                 break;
             default:
                 throw new Exception('Corrupted MIDI file: illegal frame division type');
-              break;
             }
 
             $resolution = $division & 0xff;
@@ -607,12 +606,12 @@ class MidiReader extends MidiReaderBase
     private function initFields(MidiSequence $sequence): void
     {
         $this->resolution = $sequence->getResolution();
-        $this->channels = array();
-        $this->headers = array();
-        $this->tracks = array();
-        $this->tempNotes = array();
-        $this->tempChannels = array();
-        $this->trackTuningHelpers = array();
+        $this->channels = [];
+        $this->headers = [];
+        $this->tracks = [];
+        $this->tempNotes = [];
+        $this->tempChannels = [];
+        $this->trackTuningHelpers = [];
         $this->channelRouter = new ChannelRouter();
     }
 
@@ -650,7 +649,7 @@ class MidiReader extends MidiReaderBase
 
     private function makeNoteEffect(Note $note, array $pitchBends): void
     {
-        $tmp = array();
+        $tmp = [];
 
         foreach ($pitchBends as $pitchBend) {
             if (!in_array($pitchBend, $tmp)) {
@@ -859,12 +858,10 @@ class MidiReader extends MidiReaderBase
             return new MidiEvent(MidiMessage::shortMessage(($statusByte & 0xf0), ($statusByte & 0x0f), $data1, $this->readUnsignedByte()), $helper->ticks);
 
         } elseif ($type == MidiReader::STATUS_SYSEX) {
-            if (MidiReader::CANCEL_RUNNING_STATUS_ON_META_AND_SYSEX) {
-                $helper->runningStatusByte = -1;
-            }
+            $helper->runningStatusByte = -1;
 
             $dataLength = $this->readVariableLengthQuantity($helper);
-            $data = array();
+            $data = [];
 
             for ($i = 0; $i < $dataLength; $i++) {
                 $data[$i] = $this->readUnsignedByte();
@@ -872,14 +869,12 @@ class MidiReader extends MidiReaderBase
             }
 
         } elseif ($type == MidiReader::STATUS_META) {
-            if (MidiReader::CANCEL_RUNNING_STATUS_ON_META_AND_SYSEX) {
-                $helper->runningStatusByte = -1;
-            }
+            $helper->runningStatusByte = -1;
 
             $typeByte = $this->readUnsignedByte();
             $helper->remainingBytes--;
             $dataLength = $this->readVariableLengthQuantity($helper);
-            $data = array();
+            $data = [];
 
             for ($i = 0; $i < $dataLength; $i++) {
                 $data[$i] = $this->readUnsignedByte();
