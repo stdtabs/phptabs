@@ -29,7 +29,7 @@ before_script:
     - chmod +x ./cc-test-reporter 
     - ./cc-test-reporter before-build
 
-script: ./vendor/bin/phpunit -c phpunit.xml.dist
+script: XDEBUG_MODE=coverage ./vendor/bin/phpunit -c phpunit.xml.dist
 
 after_script:
     ## Code climate
