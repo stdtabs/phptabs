@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -133,7 +135,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
     /**
      * Loops on tracks to read
      */
-    private function readTracks(Song $song, $count, array $channels): void
+    private function readTracks(Song $song, int $count, array $channels): void
     {
         for ($number = 0; $number < $count; $number++) {
             $song->addTrack(

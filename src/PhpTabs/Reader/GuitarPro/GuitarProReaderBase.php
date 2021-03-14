@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -121,7 +123,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     /**
      * Read a byte
      */
-    public function readByte(): string
+    public function readByte(): int
     {
         return unpack('c', $this->file->getStream())[1];
     }
@@ -166,13 +168,13 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
         $size = $size > 0 ? $size : $length;
         $bytes = $this->file->getStream($size);
 
-        if ($length >= 0 && $length <= $size) {
+        if (!is_null($bytes) && $length >= 0 && $length <= $size) {
             // returns a subset
             return substr($bytes, 0, $length);
         }
 
         // returns all
-        return $bytes;
+        return (string)$bytes;
     }
 
     /**
@@ -202,9 +204,9 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     /**
      * Reads an unsigned byte
      *
-     * @return string|false
+     * @return int|false
      */
-    public function readUnsignedByte()
+    public function readUnsignedByte(): int
     {
         return unpack('C', $this->file->getStream())[1];
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -53,8 +55,8 @@ class GuitarPro3Effects extends AbstractReader
             $bendValue = $this->reader->readInt();
             $this->reader->readByte(); //vibrato
 
-            $pointPosition = round($bendPosition * EffectBend::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
-            $pointValue = round($bendValue * EffectBend::SEMITONE_LENGTH / GuitarProReaderInterface::GP_BEND_SEMITONE);
+            $pointPosition = intval($bendPosition * EffectBend::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
+            $pointValue = intval($bendValue * EffectBend::SEMITONE_LENGTH / GuitarProReaderInterface::GP_BEND_SEMITONE);
             $bend->addPoint($pointPosition, $pointValue);
         }
 
@@ -99,8 +101,8 @@ class GuitarPro3Effects extends AbstractReader
         $effect = new EffectTremoloBar();
         $effect->addPoint(0, 0);
         $effect->addPoint(
-            round(EffectTremoloBar::MAX_POSITION_LENGTH / 2),
-            round(-($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2)))
+            intval(EffectTremoloBar::MAX_POSITION_LENGTH / 2),
+            intval(-($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2)))
         );
         $effect->addPoint(EffectTremoloBar::MAX_POSITION_LENGTH, 0);
         $noteEffect->setTremoloBar($effect);

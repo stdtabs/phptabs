@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -28,7 +30,7 @@ class GuitarPro3MeasureHeader extends AbstractReader
         $header->setStart(0);
         $header->getTempo()->setValue($tempoValue);
         $header->setTripletFeel($this->reader->getTripletFeel());
-        $header->setRepeatOpen((($flags & 0x04) != 0));
+        $header->setRepeatOpen(intval(($flags & 0x04) != 0));
 
         if (($flags & 0x01) != 0) {
             $timeSignature->setNumerator($this->reader->readByte());

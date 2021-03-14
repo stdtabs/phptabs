@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -35,8 +37,8 @@ class GuitarPro4Effects extends AbstractReader
             $value = $this->reader->readInt();
             $this->reader->readByte();
 
-            $pointPosition = round($position * EffectTremoloBar::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
-            $pointValue = round($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2));
+            $pointPosition = intval($position * EffectTremoloBar::MAX_POSITION_LENGTH / GuitarProReaderInterface::GP_BEND_POSITION);
+            $pointValue = intval($value / (GuitarProReaderInterface::GP_BEND_SEMITONE * 2));
             $tremoloBar->addPoint($pointPosition, $pointValue);
         }
 
