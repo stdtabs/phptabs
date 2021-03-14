@@ -137,7 +137,7 @@ class Channel
         return $this->volume;
     }
 
-    public function setVolume($volume): void
+    public function setVolume(int $volume): void
     {
         $this->volume = $volume;
     }
