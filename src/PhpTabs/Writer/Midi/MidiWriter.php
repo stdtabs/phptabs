@@ -90,8 +90,10 @@ class MidiWriter extends MidiWriterBase
 
     /**
      * Write a track
+     *
+     * @param null|string $out
      */
-    private function writeTrack(MidiTrack $track, $out): int
+    private function writeTrack(MidiTrack $track, ?string $out): int
     {
         $length = 0;
         if ($out !== null) {
@@ -116,8 +118,10 @@ class MidiWriter extends MidiWriterBase
 
     /**
      * Write a MIDI event
+     *
+     * @param null|string $out
      */
-    private function writeEvent(MidiEvent $event, MidiEvent $previous = null, $out = null): int
+    private function writeEvent(MidiEvent $event, MidiEvent $previous = null, ?string $out = null): int
     {
         // @todo Remove this lines when timing will be patched
         // time should not be < 0
@@ -148,8 +152,9 @@ class MidiWriter extends MidiWriterBase
      * Writes a short MIDI message
      *
      * @param \PhpTabs\Reader\Midi\MidiMessage $message
+     * @param null|string $out
      */
-    private function writeShortMessage(MidiMessage $message, $out): int
+    private function writeShortMessage(MidiMessage $message, ?string $out): int
     {
         $data = $message->getData();
 
@@ -165,8 +170,9 @@ class MidiWriter extends MidiWriterBase
      * Writes a meta MIDI message
      *
      * @param \PhpTabs\Reader\Midi\MidiMessage $message
+     * @param null|string $out
      */
-    protected function writeMetaMessage(MidiMessage $message, $out): int
+    protected function writeMetaMessage(MidiMessage $message, ?string $out): int
     {
         $length = 0;
         $data = $message->getData();

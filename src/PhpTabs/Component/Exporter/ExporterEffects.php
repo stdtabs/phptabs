@@ -74,6 +74,8 @@ abstract class ExporterEffects
 
     /**
      * Export a tremolo bar as an array
+     *
+     * @param EffectBend|\PhpTabs\Music\EffectTremoloBar|null $effect
      */
     protected function exportTremoloBar($effect = null): ?array
     {

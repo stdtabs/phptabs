@@ -120,9 +120,11 @@ class GuitarPro5Reader extends GuitarProReaderBase
      */
     public function getTablature(): Tablature
     {
-        return isset($this->tablature)
-            ? $this->tablature
-            : new Tablature();
+        if (!isset($this->tablature)) {
+            $this->tablature = new Tablature();
+        }
+
+        return $this->tablature;
     }
 
     /**
@@ -130,12 +132,8 @@ class GuitarPro5Reader extends GuitarProReaderBase
      */
     private function setTablature(Song $song): void
     {
-        if (is_null($this->tablature)) {
-            $this->tablature = new Tablature();
-        }
-
-        $this->tablature->setSong($song);
-        $this->tablature->setFormat('gp5');
+        $this->getTablature()->setSong($song);
+        $this->getTablature()->setFormat('gp5');
     }
 
     /*-------------------------------------------------------------------

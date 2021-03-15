@@ -56,7 +56,7 @@ class BeatContext
 
         $voice = $this->beat->getVoice(0);
 
-        if (null === $voice || !$voice->countNotes()) {
+        if (!$voice->countNotes()) {
             return ($this->isChordBeat = false);
         }
 

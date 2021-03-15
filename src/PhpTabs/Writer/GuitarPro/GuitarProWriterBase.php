@@ -153,7 +153,7 @@ abstract class GuitarProWriterBase implements WriterInterface
         $this->writeByte($boolean ? 1 : 0);
     }
 
-    public function writeByte($byte): void
+    public function writeByte(int $byte): void
     {
         $this->content .= pack('c', $byte);
     }

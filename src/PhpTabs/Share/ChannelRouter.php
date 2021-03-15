@@ -21,19 +21,11 @@ class ChannelRouter
     /**
      * @var array
      */
-    private $midiChannels;
-
-    public function __construct()
-    {
-        $this->midiChannels = [];
-    }
+    private $midiChannels = [];
 
     public function resetRoutes(): void
     {
         $this->midiChannels = [];
-        for ($i = 0; $i < count($this->midiChannels); $i++) {
-            $this->midiChannels[$i]->clear();
-        }
     }
 
     public function removeRoute(ChannelRoute $route): void

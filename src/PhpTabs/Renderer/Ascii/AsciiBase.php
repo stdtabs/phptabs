@@ -15,8 +15,19 @@ use Exception;
 
 class AsciiBase
 {
+    /**
+     * @var array
+     */
     private $content = [];
+
+    /**
+     * @var int
+     */
     private $x = 0;
+
+    /**
+     * @var int
+     */
     private $y = 0;
 
     /**

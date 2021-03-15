@@ -20,8 +20,19 @@ class ChannelRoute
 
     const NULL_VALUE = -1;
 
+    /**
+     * @var int
+     */
     private $channelId;
+
+    /**
+     * @var int
+     */
     private $channel1;
+
+    /**
+     * @var int
+     */
     private $channel2;
 
     public function __construct(int $channelId)
@@ -41,7 +52,7 @@ class ChannelRoute
         return $this->channel1;
     }
 
-    public function setChannel1(int $channel1)
+    public function setChannel1(int $channel1): void
     {
         $this->channel1 = $channel1;
     }
@@ -51,7 +62,7 @@ class ChannelRoute
         return $this->channel2;
     }
 
-    public function setChannel2(int $channel2)
+    public function setChannel2(int $channel2): void
     {
         $this->channel2 = $channel2;
     }

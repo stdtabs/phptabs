@@ -118,22 +118,20 @@ class GuitarPro4Reader extends GuitarProReaderBase
      */
     public function getTablature(): Tablature
     {
-        return !is_null($this->tablature)
-            ? $this->tablature
-            : new Tablature();
-    }
-
-    /**
-     * Initialize Tablature with read Song
-     */
-    private function setTablature(Song $song): void
-    {
-        if (is_null($this->tablature)) {
+        if (!isset($this->tablature)) {
             $this->tablature = new Tablature();
         }
 
-        $this->tablature->setSong($song);
-        $this->tablature->setFormat('gp4');
+        return $this->tablature;
+    }
+
+    /**
+     * Initialize Tablature with a Song
+     */
+    private function setTablature(Song $song): void
+    {
+        $this->getTablature()->setSong($song);
+        $this->getTablature()->setFormat('gp4');
     }
 
     /*-------------------------------------------------------------------

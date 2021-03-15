@@ -20,18 +20,12 @@ class Lyric
     /**
      * @var int
      */
-    private $from;
+    private $from = 1;
 
     /**
      * @var string
      */
-    private $lyrics;
-
-    public function __construct()
-    {
-        $this->from   = 1;
-        $this->lyrics = '';
-    }
+    private $lyrics = '';
 
     public function getFrom(): int
     {
@@ -57,11 +51,7 @@ class Lyric
     {
         $lyrics = $this->getLyrics();
 
-        $str = '';
-
-        foreach ($lyrics as $value) {
-            $str .= str_replace(array("\n", "\r"), Lyric::REGEX, $value) . Lyric::REGEX;
-        }
+        $str = str_replace(["\n", "\r"], Lyric::REGEX, $lyrics) . Lyric::REGEX;
 
         return explode(Lyric::REGEX, $str);
     }

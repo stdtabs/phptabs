@@ -772,7 +772,7 @@ class MidiReader extends MidiReaderBase
 
     private function parseTick(int $tick): int
     {
-        return abs(Duration::QUARTER_TIME * $tick / $this->resolution);
+        return intval(abs(Duration::QUARTER_TIME * $tick / $this->resolution));
     }
 
     private function parseTimeSignature(int $tick, array $data): void
