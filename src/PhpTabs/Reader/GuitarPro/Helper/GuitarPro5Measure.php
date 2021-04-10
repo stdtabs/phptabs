@@ -33,7 +33,7 @@ class GuitarPro5Measure extends AbstractReader
             }
         }
 
-        $emptyBeats = array();
+        $emptyBeats = [];
 
         for ($i = 0; $i < $measure->countBeats(); $i++) {
             $beat = $measure->getBeat($i);

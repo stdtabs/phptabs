@@ -18,7 +18,7 @@ abstract class Autoloader
 {
     static public function register()
     {
-        spl_autoload_register(array(__CLASS__, 'autoload'), true, true);
+        spl_autoload_register([__CLASS__, 'autoload'], true, true);
     }
 
     static public function autoload($class)

@@ -165,7 +165,7 @@ class MidiAdjuster
     {
         $track = $beat->getMeasure()->getTrack();
         $freeStrings = $track->getStrings();
-        $notesToRemove = array();
+        $notesToRemove = [];
 
         $notes = $beat->getVoice(0)->getNotes();
 

@@ -71,19 +71,28 @@ class MidiMessageUtils
     public static function tempoInUSQ(int $usq): MidiMessage
     {
         $message = new MidiMessage(MidiMessage::TYPE_META, MidiMessage::TEMPO_CHANGE);
-        $message->setData(array( (($usq >> 16) & 0xff), (($usq >> 8) & 0xff),(($usq) & 0xff) ));
+        $message->setData([
+            (($usq >> 16) & 0xff),
+            (($usq >> 8) & 0xff),
+            (($usq) & 0xff)
+        ]);
         return $message;
     }
 
     public static function timeSignature(TimeSignature $timeSignature): MidiMessage
     {
         $message = new MidiMessage(MidiMessage::TYPE_META, MidiMessage::TIME_SIGNATURE_CHANGE);
-        $message->setData(array( $timeSignature->getNumerator(), $timeSignature->getDenominator()->getIndex(), (96 / $timeSignature->getDenominator()->getValue()), 8));
+        $message->setData([
+            $timeSignature->getNumerator(),
+            $timeSignature->getDenominator()->getIndex(),
+            (96 / $timeSignature->getDenominator()->getValue()),
+            8
+        ]);
         return $message;
     }
 
     public static function endOfTrack(): MidiMessage
     {
-        return MidiMessage::metaMessage(47, array());
+        return MidiMessage::metaMessage(47, []);
     }
 }

@@ -110,7 +110,7 @@ class GuitarPro4Writer extends GuitarProWriterBase
 
     private function toCommentLines(string $comments): array
     {
-        $lines = array();
+        $lines = [];
         $line  = $comments;
 
         while (strlen($line) > 127) {

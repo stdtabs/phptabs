@@ -200,8 +200,8 @@ class Track
             $measure->clear();
         }
 
-        $this->strings = array();
-        $this->measures = array();
+        $this->strings  = [];
+        $this->measures = [];
     }
 
     public function __clone()

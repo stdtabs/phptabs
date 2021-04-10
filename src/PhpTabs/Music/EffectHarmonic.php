@@ -31,12 +31,12 @@ class EffectHarmonic
     const MAX_TAPPED_OFFSET     = 24;
 
     public static $naturalFrequencies = [
-        array(12, 12), //AH12 (+12 frets)
-        array(9, 28), //AH9 (+28 frets)
-        array(5, 24), //AH5 (+24 frets)
-        array(7, 19), //AH7 (+19 frets)
-        array(4, 28), //AH4 (+28 frets)
-        array(3, 31)  //AH3 (+31 frets)
+        [12, 12], //AH12 (+12 frets)
+        [ 9, 28], //AH9 (+28 frets)
+        [ 5, 24], //AH5 (+24 frets)
+        [ 7, 19], //AH7 (+19 frets)
+        [ 4, 28], //AH4 (+28 frets)
+        [ 3, 31]  //AH3 (+31 frets)
     ];
 
     private $type = 0;

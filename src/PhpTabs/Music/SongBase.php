@@ -24,9 +24,9 @@ abstract class SongBase
     protected $writer;
     protected $transcriber;
     protected $comments;
-    protected $tracks         = array();
-    protected $measureHeaders = array();
-    protected $channels       = array();
+    protected $tracks         = [];
+    protected $measureHeaders = [];
+    protected $channels       = [];
 
     public function getName(): ?string
     {
@@ -141,9 +141,9 @@ abstract class SongBase
             $track->clear();
         }
 
-        $this->tracks = array();
-        $this->channels = array();
-        $this->measureHeaders = array();
+        $this->tracks = [];
+        $this->channels = [];
+        $this->measureHeaders = [];
     }
 
     public function isEmpty(): bool

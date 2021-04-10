@@ -23,7 +23,7 @@ class Chord
     /**
      * @var array $strings list of strings ids
      */
-    private $strings = array();
+    private $strings = [];
 
     /**
      * @var string $name of the chord

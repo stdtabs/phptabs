@@ -15,7 +15,7 @@ namespace PhpTabs\Music;
 
 class Marker
 {
-    public static $defaultColor = array(255, 0, 0);
+    public static $defaultColor = [255, 0, 0];
     public static $defaultTitle = "Untitled";
 
     private $measure;

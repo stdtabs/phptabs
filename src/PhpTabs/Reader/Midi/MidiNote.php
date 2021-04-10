@@ -29,7 +29,7 @@ class MidiNote
         $this->tick = $tick;
         $this->value = $value;
         $this->velocity = $velocity;
-        $this->pitchBends = array();
+        $this->pitchBends = [];
     }
 
     public function getChannel(): int

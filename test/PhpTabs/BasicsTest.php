@@ -37,19 +37,19 @@ class BasicsTest extends TestCase
 
         // Tracks
         $this->assertEquals(0, $tablature->countTracks());
-        $this->assertEquals(array(), $tablature->getTracks());
+        $this->assertEquals([], $tablature->getTracks());
 
         // Channels
         $this->assertEquals(0, $tablature->countChannels());
-        $this->assertEquals(array(), $tablature->getChannels());
+        $this->assertEquals([], $tablature->getChannels());
 
         // MeasureHeaders
         $this->assertEquals(0, $tablature->countMeasureHeaders());
-        $this->assertEquals(array(), $tablature->getMeasureHeaders());
+        $this->assertEquals([], $tablature->getMeasureHeaders());
 
         // Instruments
         $this->assertEquals(0, $tablature->countInstruments());
-        $this->assertEquals(array(), $tablature->getInstruments());
+        $this->assertEquals([], $tablature->getInstruments());
 
         $this->assertInstanceOf('PhpTabs\\Component\\Tablature', $tablature->getTablature());
     }

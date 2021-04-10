@@ -62,11 +62,18 @@ class MidiMessage
         $message = new MidiMessage(self::TYPE_SHORT, $command);
 
         if ($channel === null && $data1 === null && $data2 === null) {
-            $message->setData(array($command));
+            $message->setData([$command]);
         } elseif ($data2 === null) {
-            $message->setData(array(($command & 0xF0) | ($channel & 0x0F), $data1));
+            $message->setData([
+                ($command & 0xF0) | ($channel & 0x0F),
+                $data1
+            ]);
         } else {
-            $message->setData(array(($command & 0xF0) | ($channel & 0x0F), $data1, $data2));
+            $message->setData([
+                ($command & 0xF0) | ($channel & 0x0F),
+                $data1,
+                $data2
+            ]);
         }
 
         return $message;

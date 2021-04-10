@@ -133,7 +133,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
      */
     public function readInt(): int
     {
-        $bytes = array();
+        $bytes = [];
 
         for ($i = 0; $i <= 3; $i++) {
             $bytes[$i] = unpack('C', $this->file->getStream())[1];

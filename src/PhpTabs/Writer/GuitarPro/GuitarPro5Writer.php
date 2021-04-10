@@ -181,12 +181,10 @@ class GuitarPro5Writer extends GuitarProWriterBase
 
     private function writeChord(Chord $chord): void
     {
-        $this->writeBytes(
-            array(
-            1,  1,  0,  0, 0, 12, 0, 0,
+        $this->writeBytes([
+             1,  1,  0,  0, 0, 12, 0, 0,
             -1, -1, -1, -1, 0,  0, 0, 0, 0
-            )
-        );
+        ]);
 
         $this->writeStringByte($chord->getName(), 21);
         $this->skipBytes(4);
@@ -421,7 +419,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
 
     private function makeEighthNoteBytes(TimeSignature $timeSignature): array
     {
-        $bytes = array(0, 0, 0, 0);
+        $bytes = [0, 0, 0, 0];
 
         if ($timeSignature->getDenominator()->getValue() <= Duration::EIGHTH) {
             $eighthsInDenominator = intval(Duration::EIGHTH / $timeSignature->getDenominator()->getValue());

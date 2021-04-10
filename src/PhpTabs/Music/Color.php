@@ -24,40 +24,40 @@ class Color
      *
      * @var array $red
      */
-    public static $red = array(255,0,0);
+    public static $red = [255,0,0];
 
     /**
      *  RGB green value
      *
      * @var array $green
      */
-    public static $green = array(0,255,0);
+    public static $green = [0,255,0];
 
     /**
      * RGB blue value
      *
      * @var array $blue
      */
-    public static $blue = array(0,0,255);
+    public static $blue = [0,0,255];
 
     /**
      * RGB white value
      *
      * @var array $white
      */
-    public static $white = array(255,255,255);
+    public static $white = [255,255,255];
 
     /**
      * RGB black value
      *
      * @var array $black
      */
-    public static $black = array(0,0,0);
+    public static $black = [0,0,0];
 
     /**
      * @var array
      */
-    private $value = array();
+    private $value = [];
 
     /**
      * Constructor sets black color by default

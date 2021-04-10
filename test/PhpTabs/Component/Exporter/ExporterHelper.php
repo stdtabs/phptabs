@@ -59,71 +59,71 @@ class ExporterHelper extends XmlTestCaseHelper
     public function testExporterXml()
     {
         // expected, xpath, message
-        $tests = array(
-        [1, 'count(/song)', 'Incorrect number of Song elements.'],
-      
-        // Meta attributes
-        [ self::$tablature->getName()
-        , 'string(/song/name)'
-        , 'Incorrect or missing Name element.'],
-        [ self::$tablature->getArtist()
-        , 'string(/song/artist)'
-        , 'Incorrect or missing Artist element.'],
-        [ self::$tablature->getAlbum()
-        , 'string(/song/album)'
-        , 'Incorrect or missing Album element.'],
-        [ self::$tablature->getAuthor()
-        , 'string(/song/author)'
-        , 'Incorrect or missing Author element.'],
-        [ self::$tablature->getCopyright()
-        , 'string(/song/copyright)'
-        , 'Incorrect or missing Copyright element.'],
-        [ self::$tablature->getWriter()
-        , 'string(/song/writer)'
-        , 'Incorrect or missing Writer element.'],
-        [ self::$tablature->getComments()
-        , 'string(/song/comments)'
-        , 'Incorrect or missing Comments element.'],
-        [ self::$tablature->getDate()
-        , 'string(/song/date)'
-        , 'Incorrect or missing Date element.'],
-        [ self::$tablature->getTranscriber()
-        , 'string(/song/transcriber)'
-        , 'Incorrect or missing Transcriber element.'],
-        
-        // Tracks
-        [ self::$tablature->countTracks()
-        , 'count(/song/tracks/track)'
-        , 'Incorrect number of Track elements.'],
-        [ 0
-        , 'count(/song/tracks/track[42])'
-        , 'Track element should NOT exist.'],
-        [ 1
-        , 'count(/song/tracks/track[1])'
-        , 'Track element should exist.'],
+        $tests = [
+            [1, 'count(/song)', 'Incorrect number of Song elements.'],
+          
+            // Meta attributes
+            [ self::$tablature->getName()
+            , 'string(/song/name)'
+            , 'Incorrect or missing Name element.'],
+            [ self::$tablature->getArtist()
+            , 'string(/song/artist)'
+            , 'Incorrect or missing Artist element.'],
+            [ self::$tablature->getAlbum()
+            , 'string(/song/album)'
+            , 'Incorrect or missing Album element.'],
+            [ self::$tablature->getAuthor()
+            , 'string(/song/author)'
+            , 'Incorrect or missing Author element.'],
+            [ self::$tablature->getCopyright()
+            , 'string(/song/copyright)'
+            , 'Incorrect or missing Copyright element.'],
+            [ self::$tablature->getWriter()
+            , 'string(/song/writer)'
+            , 'Incorrect or missing Writer element.'],
+            [ self::$tablature->getComments()
+            , 'string(/song/comments)'
+            , 'Incorrect or missing Comments element.'],
+            [ self::$tablature->getDate()
+            , 'string(/song/date)'
+            , 'Incorrect or missing Date element.'],
+            [ self::$tablature->getTranscriber()
+            , 'string(/song/transcriber)'
+            , 'Incorrect or missing Transcriber element.'],
+            
+            // Tracks
+            [ self::$tablature->countTracks()
+            , 'count(/song/tracks/track)'
+            , 'Incorrect number of Track elements.'],
+            [ 0
+            , 'count(/song/tracks/track[42])'
+            , 'Track element should NOT exist.'],
+            [ 1
+            , 'count(/song/tracks/track[1])'
+            , 'Track element should exist.'],
 
-        // Channels
-        [ self::$tablature->countChannels()
-        , 'count(/song/channels/channel)'
-        , 'Incorrect number of Channel elements.'],
-        [ 0
-        , 'count(/song/channels/channel[42])'
-        , 'Channel element should NOT exist.'],
-        [ 1
-        , 'count(/song/channels/channel[1])'
-        , 'Channel element should exist.'],
+            // Channels
+            [ self::$tablature->countChannels()
+            , 'count(/song/channels/channel)'
+            , 'Incorrect number of Channel elements.'],
+            [ 0
+            , 'count(/song/channels/channel[42])'
+            , 'Channel element should NOT exist.'],
+            [ 1
+            , 'count(/song/channels/channel[1])'
+            , 'Channel element should exist.'],
 
-        // MeasureHeaders
-        [ self::$tablature->countMeasureHeaders()
-        , 'count(/song/measureHeaders/header)'
-        , 'Incorrect number of MeasureHeader elements.'],
-        [ 0
-        , 'count(/song/measureHeaders/header[42])'
-        , 'MeasureHeader element should NOT exist.'],
-        [ 1
-        , 'count(/song/measureHeaders/header[1])'
-        , 'MeasureHeader element should exist.']
-        );
+            // MeasureHeaders
+            [ self::$tablature->countMeasureHeaders()
+            , 'count(/song/measureHeaders/header)'
+            , 'Incorrect number of MeasureHeader elements.'],
+            [ 0
+            , 'count(/song/measureHeaders/header[42])'
+            , 'MeasureHeader element should NOT exist.'],
+            [ 1
+            , 'count(/song/measureHeaders/header[1])'
+            , 'MeasureHeader element should exist.']
+        ];
 
         foreach ($tests as $test) {
             $this->assertXpathMatch($test[0], $test[1], $test[2]);

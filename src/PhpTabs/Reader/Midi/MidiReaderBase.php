@@ -107,7 +107,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
      */
     protected function readBytesBigEndian(int $num = 1): array
     {
-        $bytes = array();
+        $bytes = [];
 
         for ($i = 0; $i < $num; $i++) {
             $bytes[$i] = ord($this->file->getStream());

@@ -25,7 +25,7 @@ abstract class ExporterEffects
      */
     protected function exportEffect(NoteEffect $effect): array
     {
-        return array(
+        return [
             'bend'            => $this->exportBend($effect->getBend()),
             'tremoloBar'      => $this->exportTremoloBar($effect->getTremoloBar()),
             'harmonic'        => $this->exportHarmonic($effect->getHarmonic()),
@@ -46,7 +46,7 @@ abstract class ExporterEffects
             'popping'         => $effect->isPopping(),
             'fadeIn'          => $effect->isFadeIn(),
             'letRing'         => $effect->isLetRing()
-        );
+        ];
     }
 
     /**
@@ -62,14 +62,14 @@ abstract class ExporterEffects
      */
     protected function exportGrace(EffectGrace $effect= null): ?array
     {
-        return is_object($effect) ? array(
+        return is_object($effect) ? [
             'fret'       => $effect->getFret(),
             'duration'   => $effect->getDuration(),
             'dynamic'    => $effect->getDynamic(),
             'transition' => $effect->getTransition(),
             'onBeat'     => $effect->isOnBeat(),
             'dead'       => $effect->isDead()
-        ) : null;
+        ] : null;
     }
 
     /**
@@ -81,7 +81,9 @@ abstract class ExporterEffects
     {
         return !is_object($effect)
             ? null
-            : ['points' => $this->exportPoints($effect->getPoints())];
+            : [
+                'points' => $this->exportPoints($effect->getPoints())
+            ];
     }
 
     /**
@@ -89,7 +91,7 @@ abstract class ExporterEffects
      */
     protected function exportHarmonic(EffectHarmonic $effect = null): ?array
     {
-        return is_object($effect) ? array(
+        return is_object($effect) ? [
             'type'         => $effect->getType(),
             'data'         => $effect->getData(),
             'isNatural'    => $effect->isNatural(),
@@ -97,7 +99,7 @@ abstract class ExporterEffects
             'isTapped'     => $effect->isTapped(),
             'isPinch'      => $effect->isPinch(),
             'isSemi'       => $effect->isSemi()
-        ) : null;
+        ] : null;
     }
 
     /**
@@ -105,10 +107,10 @@ abstract class ExporterEffects
      */
     protected function exportTrill(EffectTrill $effect = null): ?array
     {
-        return is_object($effect) ? array(
+        return is_object($effect) ? [
             'fret'      => $effect->getFret(),
             'duration'  => $this->exportDuration($effect->getDuration())
-        ) : null;
+        ] : null;
     }
 
     /**
@@ -116,9 +118,9 @@ abstract class ExporterEffects
      */
     protected function exportTremoloPicking(EffectTremoloPicking $effect = null): ?array
     {
-        return is_object($effect) ? array(
+        return is_object($effect) ? [
             'duration'  => $this->exportDuration($effect->getDuration())
-        ) : null;
+        ] : null;
     }
 
     /**
@@ -129,10 +131,10 @@ abstract class ExporterEffects
         return array_reduce(
             $points,
             function ($carry, $point) {
-                $carry[] = array(
-                'position'  => $point->getPosition(),
-                'value'     => $point->getValue()
-                );
+                $carry[] = [
+                    'position'  => $point->getPosition(),
+                    'value'     => $point->getValue()
+                ];
                 return $carry;
             },
             []

@@ -209,7 +209,7 @@ class Channel
         $this->setTremolo($channel->getTremolo());
         $this->setName($channel->getName());
 
-        $this->parameters = array();
+        $this->parameters = [];
 
         for ($i = 0; $i < $channel->countParameters(); $i++) {
             $this->addParameter(clone $channel->getParameter($i));

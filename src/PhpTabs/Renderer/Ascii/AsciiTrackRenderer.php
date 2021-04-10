@@ -77,7 +77,7 @@ class AsciiTrackRenderer
             );
         }
 
-        list($tuning, $maxTuningLength) = $this->getTuning();
+        [$tuning, $maxTuningLength] = $this->getTuning();
 
         $nextMeasure  = 0;
         $measureCount = $this->track->countMeasures();
@@ -100,7 +100,7 @@ class AsciiTrackRenderer
                     $nextMeasure = $j + 1;
 
                     // Last measure
-                    $eof = $measureCount === $j+1; // $measure->getNumber();
+                    $eof = $measureCount === $j + 1; // $measure->getNumber();
 
                     // Break line
                     if ($this->writer->getPosX() > $this->parent->getOption('maxLineLength')) {

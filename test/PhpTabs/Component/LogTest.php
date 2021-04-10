@@ -28,7 +28,7 @@ class LogTest extends TestCase
 
       # Empty log
         $this->assertEquals(0, Log::countLogs());
-        $this->assertEquals(array(), Log::tail(4));
+        $this->assertEquals([], Log::tail(4));
 
       # Adds a default type message
         $lineBreaks = "/\r?\n/"; // take care of newline-encodings
@@ -36,12 +36,12 @@ class LogTest extends TestCase
         $this->expectOutputString($expected);
         Log::add('Log with default type');
 
-        $expected = array(
-            0 => array(
+        $expected = [
+            0 => [
                 'type'    =>'NOTICE',
                 'message' => 'Log with default type'
-            )
-        );
+            ]
+        ];
         $this->assertEquals($expected, Log::tail(42));
         $this->assertEquals($expected, Log::tail(1));
 

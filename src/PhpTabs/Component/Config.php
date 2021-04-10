@@ -18,7 +18,7 @@ abstract class Config
     /**
      * @var array config options
      */
-    private static $data = array();
+    private static $data = [];
 
     /**
      * Gets a defined option
@@ -61,6 +61,6 @@ abstract class Config
      */
     public static function clear(): void
     {
-        self::$data = array();
+        self::$data = [];
     }
 }

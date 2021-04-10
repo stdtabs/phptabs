@@ -21,7 +21,7 @@ abstract class Log
     /**
      * @var array config options
      */
-    private static $data = array();
+    private static $data = [];
 
     /**
      * Adds a log event
@@ -35,7 +35,10 @@ abstract class Log
             echo PHP_EOL . "[$type] $message";
         }
 
-        self::$data[] = array('type' => $type, 'message' => $message);
+        self::$data[] = [
+            'type'    => $type,
+            'message' => $message
+        ];
     }
 
     /**
@@ -69,7 +72,7 @@ abstract class Log
      */
     public static function tail(int $count = 50, string $type = null): array
     {
-        $messages = array();
+        $messages = [];
 
         $ptrLogs = self::countLogs() - 1;
 
@@ -91,6 +94,6 @@ abstract class Log
      */
     public static function clear(): void
     {
-        self::$data = array();
+        self::$data = [];
     }
 }

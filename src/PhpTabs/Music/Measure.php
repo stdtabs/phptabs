@@ -82,7 +82,7 @@ class Measure
     {
         $this->removeBeat($beat);
 
-        array_splice($this->beats, $index, 0, array($beat));
+        array_splice($this->beats, $index, 0, [$beat]);
     }
 
     public function removeBeat(Beat $beat): void

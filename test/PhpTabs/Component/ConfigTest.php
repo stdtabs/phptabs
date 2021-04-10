@@ -28,9 +28,9 @@ class ConfigTest extends TestCase
         $this->assertEquals(42, Config::get('Sense'));
 
         // Gets all configs
-        $expected = array(
+        $expected = [
             'Sense' => 42
-        );
+        ];
 
         $this->assertEquals($expected, Config::getAll());
     }

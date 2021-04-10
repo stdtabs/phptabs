@@ -37,7 +37,7 @@ class ChannelWriter
                 $this->writer->writeByte($this->toChannelByte($channel->getReverb()));
                 $this->writer->writeByte($this->toChannelByte($channel->getPhaser()));
                 $this->writer->writeByte($this->toChannelByte($channel->getTremolo()));
-                $this->writer->writeBytes(array(0, 0));
+                $this->writer->writeBytes([0, 0]);
             }
         );
     }

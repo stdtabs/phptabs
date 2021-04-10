@@ -41,7 +41,7 @@ class MidiTrackTuningHelper
 
     public function getStrings(): array
     {
-        $strings = array();
+        $strings = [];
 
         $maxFret = 24;
 
