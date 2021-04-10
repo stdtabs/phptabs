@@ -76,7 +76,7 @@ class GuitarProChannel extends AbstractReader
      */
     protected function createChannelNameFromProgram(Song $song, Channel $channel): string
     {
-        $names = ChannelNames::$defaultNames;
+        $names = ChannelNames::DEFAULT_NAMES;
 
         if ($channel->getProgram() >= 0 && isset($names[$channel->getProgram()])) {
             return $this->createChannelName($song, $names[$channel->getProgram()]);

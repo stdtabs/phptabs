@@ -18,7 +18,10 @@ namespace PhpTabs\Music;
  */
 class ChannelNames
 {
-    public static $defaultNames = [
+    /**
+     * @const array
+     */
+    public const DEFAULT_NAMES = [
         "Piano",
         "Bright Piano",
         "Electric Grand",
