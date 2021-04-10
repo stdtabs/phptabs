@@ -62,7 +62,7 @@ It will ouput something like:
 Write song informations
 =======================
 
-For each getter method, a setter is available.
+For each getter method, a setter one is available.
 
 .. code-block:: php
 
@@ -72,8 +72,9 @@ For each getter method, a setter is available.
     $song->setAuthor('Song author');
     $song->setWriter('Song writer');
     $song->setDate('Song date');
-    $song->setComments('Song comments');
     $song->setCopyright('Song copyright');
+    $song->setTranscriber('Song transcriber');
+    $song->setComments('Song comments');
 
 
 ------------------------------------------------------------------------

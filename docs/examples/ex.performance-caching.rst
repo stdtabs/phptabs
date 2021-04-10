@@ -4,7 +4,7 @@
 Performance & caching
 =====================
 
-There are some cases where it's useful to increase performance.
+There are some cases when it's useful to improve performances.
 
 It largely depends on the context but it may be good to know that
 PhpTabs provides some tools for this purpose.
@@ -21,9 +21,7 @@ But, first, let's look at what we will cache.
 Context
 =======
 
-For this example, we'll take a real-life Guitar Pro file.
-
-Characteristics:
+For this example, we'll take a real-life Guitar Pro file which contains:
 
 - 6 tracks
 - 849 measures (Oh!)
@@ -191,7 +189,7 @@ best parts.
 Best parts are:
 
 - Parsing only once the whole song
-- Splitting tracks into smaller units for later use
+- Splitting a song into smaller units (tracks) for later use
 
 What we're introducing here is:
 
