@@ -4,9 +4,10 @@ Contribution Guidelines
 Issues
 ------
 
-Before creating an issue, please read the [Phptabs Manual](https://stdtabs.github.io/).
+Before creating an issue, please read the
+[Phptabs Manual](https://phptabs.readthedocs.io).
 
-Sometimes, answers are no as fast as you/we expect. This is why there 
+Sometimes, answers are not as fast as you/we expected. This is why there 
 is a __maximum delay__ between 2 comments.
 
 ### 10-day delay
@@ -26,8 +27,8 @@ In this case, a raise can be made with a simple ping comment.
 
 ### Timeout comment
 
-- If there is no return after a ping comment, the team can close the ticket 
-with a __[Timeout comment]__.
+- If there is no return after a ping comment, the team can close the
+ticket with a __[Timeout comment]__.
 - This type of comment is restricted to the PhpTabs team.
 
 ### Notes
