@@ -14,6 +14,12 @@ declare(strict_types = 1);
 namespace PhpTabs\Component;
 
 use Exception;
+use PhpTabs\Reader\GuitarPro\GuitarPro3Reader;
+use PhpTabs\Reader\GuitarPro\GuitarPro4Reader;
+use PhpTabs\Reader\GuitarPro\GuitarPro5Reader;
+use PhpTabs\Reader\Json\JsonReader;
+use PhpTabs\Reader\Midi\MidiReader;
+use PhpTabs\Reader\Serialized\SerializedReader;
 
 class Reader
 {
@@ -28,16 +34,16 @@ class Reader
     private $bridge;
 
     /**
-     * @var array List of extensions
+     * @var array List of available extensions and their bridge
      */
     private $extensions = [
-        'gp3'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro3Reader',
-        'gp4'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro4Reader',
-        'gp5'   => 'PhpTabs\\Reader\\GuitarPro\\GuitarPro5Reader',
-        'json'  => 'PhpTabs\\Reader\\Json\\JsonReader',
-        'mid'   => 'PhpTabs\\Reader\\Midi\\MidiReader',
-        'midi'  => 'PhpTabs\\Reader\\Midi\\MidiReader',
-        'ser'   => 'PhpTabs\\Reader\\Serialized\\SerializedReader',
+        'gp3'   => GuitarPro3Reader::class,
+        'gp4'   => GuitarPro4Reader::class,
+        'gp5'   => GuitarPro5Reader::class,
+        'json'  => JsonReader::class,
+        'mid'   => MidiReader::class,
+        'midi'  => MidiReader::class,
+        'ser'   => SerializedReader::class,
     ];
 
     /**

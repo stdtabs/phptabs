@@ -15,7 +15,16 @@ namespace PhpTabs\Component;
 
 use Exception;
 use PhpTabs\Component\Tablature;
-
+use PhpTabs\Writer\GuitarPro\GuitarPro3Writer;
+use PhpTabs\Writer\GuitarPro\GuitarPro4Writer;
+use PhpTabs\Writer\GuitarPro\GuitarPro5Writer;
+use PhpTabs\Writer\Json\JsonWriter;
+use PhpTabs\Writer\Midi\MidiWriter;
+use PhpTabs\Writer\Serialized\SerializedWriter;
+use PhpTabs\Writer\Text\TextWriter;
+use PhpTabs\Writer\Xml\XmlWriter;
+use PhpTabs\Writer\Yaml\YamlWriter;
+        
 class Writer
 {
     /**
@@ -29,21 +38,21 @@ class Writer
     private $tablature;
 
     /**
-     * @var array A list of supported writers
+     * @var array A list of available writers and their bridges
      */
     private $writers = [
-        'gp3' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro3Writer',
-        'gp4' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro4Writer',
-        'gp5' => 'PhpTabs\\Writer\\GuitarPro\\GuitarPro5Writer',
-        'mid' => 'PhpTabs\\Writer\\Midi\\MidiWriter',
-        'midi'=> 'PhpTabs\\Writer\\Midi\\MidiWriter',
-        'json'=> 'PhpTabs\\Writer\\Json\\JsonWriter',
-        'ser' => 'PhpTabs\\Writer\\Serialized\\SerializedWriter',
-        'txt' => 'PhpTabs\\Writer\\Text\\TextWriter',
-        'text'=> 'PhpTabs\\Writer\\Text\\TextWriter',
-        'xml' => 'PhpTabs\\Writer\\Xml\\XmlWriter',
-        'yaml'=> 'PhpTabs\\Writer\\Yaml\\YamlWriter',
-        'yml' => 'PhpTabs\\Writer\\Yaml\\YamlWriter',
+        'gp3' => GuitarPro3Writer::class,
+        'gp4' => GuitarPro4Writer::class,
+        'gp5' => GuitarPro5Writer::class,
+        'json'=> JsonWriter::class,
+        'mid' => MidiWriter::class,
+        'midi'=> MidiWriter::class,
+        'ser' => SerializedWriter::class,
+        'text'=> TextWriter::class,
+        'txt' => TextWriter::class,
+        'xml' => XmlWriter::class,
+        'yaml'=> YamlWriter::class,
+        'yml' => YamlWriter::class,
     ];
 
     public function __construct(Tablature $tablature)
