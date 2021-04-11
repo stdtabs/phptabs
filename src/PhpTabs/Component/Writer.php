@@ -74,6 +74,7 @@ class Writer
         }
 
         $writer = new $this->writers[$format]($this->tablature->getSong());
+
         return $writer->getContent();
     }
 

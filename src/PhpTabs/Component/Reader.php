@@ -24,11 +24,6 @@ use PhpTabs\Reader\Serialized\SerializedReader;
 class Reader
 {
     /**
-     * @var Tablature object
-     */
-    private $tablature;
-
-    /**
      * @var ReaderInterface bridge
      */
     private $bridge;
@@ -47,8 +42,7 @@ class Reader
     ];
 
     /**
-     * Instanciates tablature container and try to load the dedicated
-     * parser.
+     * Try to load the dedicated parser.
      *
      * @throws \Exception If file format is not supported
      */
@@ -64,11 +58,7 @@ class Reader
             throw new Exception($message);
         }
 
-        $this->tablature = new Tablature();
-
-        $name = $this->extensions[$extension];
-
-        $this->bridge = new $name($input);
+        $this->bridge = new $this->extensions[$extension]($input);
 
         $this->bridge->getTablature()->setFormat($extension);
     }

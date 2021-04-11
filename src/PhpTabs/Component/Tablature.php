@@ -235,7 +235,7 @@ class Tablature
             if (!in_array($measureHeader->getNumber(), $keepMeasures)) {
                 $tabs->removeMeasureHeader($measureHeader);
 
-                // Clean measure for each track
+                // Clean measures for each track
                 foreach ($tabs->getTracks() as $track) {
                     $track->removeMeasure($measureHeader->getNumber());
                 }
