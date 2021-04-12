@@ -14,8 +14,8 @@ declare(strict_types = 1);
 namespace PhpTabs\Component;
 
 use Exception;
-use PhpTabs\Music\Song;
 use PhpTabs\Component\Importer\ParserBase;
+use PhpTabs\Music\Song;
 
 class Importer extends ParserBase
 {

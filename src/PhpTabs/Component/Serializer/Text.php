@@ -20,10 +20,13 @@ class Text extends SerializerBase
     const INDENT_CHAR = ' ';
 
     /**
-     * @var integer $depth
-     * @var string $content
+     * @var int
      */
     protected $depth;
+
+    /**
+     * @var string
+     */
     protected $content;
 
     /**
@@ -49,7 +52,7 @@ class Text extends SerializerBase
     }
 
     /**
-     * @param int $index
+     * @param string $index
      * @param bool|int|float|string $value
      */
     protected function appendText(string $index, $value): void

@@ -85,7 +85,7 @@ class MeasureHeader
     }
 
     /**
-     * @param bool|int $repeatOpen
+     * @param int $repeatOpen
      */
     public function setRepeatOpen(int $repeatOpen): void
     {

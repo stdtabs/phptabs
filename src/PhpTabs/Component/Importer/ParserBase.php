@@ -21,22 +21,27 @@ abstract class ParserBase
 
     /**
      * Check that a key is set in a data array
-     * 
+     *
      * @throws \Exception if a key is not defined
+     *
+     * @return void
      */
-    protected function checkKeys(array $data, array $keys)
+    protected function checkKeys(array $data, array $keys): void
     {
         $this->hasKeys($data, $keys);
     }
 
     /**
      * Require that a key must be set
-     * 
-     * @param  array $data
-     * @param  array $keys
+     *
+     * @param array $data
+     * @param array $keys
+     *
      * @throws \Exception if key is not set
+     *
+     * @return void
      */
-    private function hasKeys(array $data, array $keys)
+    private function hasKeys(array $data, array $keys): void
     {
         foreach ($keys as $key) {
             if (!isset($data[$key]) && !array_key_exists($key, $data)) {

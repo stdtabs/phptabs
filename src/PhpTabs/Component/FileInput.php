@@ -44,7 +44,7 @@ class FileInput
     /**
      * @var InputStream file content
      */
-    private $content = '';
+    private $content;
 
     /**
      * @param string $path Path to the file

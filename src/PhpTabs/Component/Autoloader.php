@@ -16,11 +16,14 @@ namespace PhpTabs\Component;
  */
 abstract class Autoloader
 {
-    static public function register()
+    static public function register(): void
     {
         spl_autoload_register([__CLASS__, 'autoload'], true, true);
     }
 
+    /**
+     * @return void
+     */
     static public function autoload($class)
     {
         $prefix = 'PhpTabs\\';

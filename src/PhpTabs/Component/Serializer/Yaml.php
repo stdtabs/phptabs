@@ -20,10 +20,13 @@ class Yaml extends SerializerBase
     const INDENT_CHAR = ' ';
 
     /**
-     * @var integer $depth
-     * @var string $content
+     * @var int
      */
     protected $depth;
+
+    /**
+     * @var string
+     */
     protected $content;
 
     /**

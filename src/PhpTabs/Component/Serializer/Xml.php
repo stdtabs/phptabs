@@ -47,7 +47,7 @@ class Xml extends SerializerBase
     }
 
     /**
-     * @param int $index
+     * @param string $index
      * @param int|bool|float|string $value
      */
     protected function appendText(string $index, $value): void

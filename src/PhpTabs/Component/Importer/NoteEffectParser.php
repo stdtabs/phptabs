@@ -84,8 +84,10 @@ class NoteEffectParser extends ParserBase
      * Create bend and tremolo bar values
      *
      * @param array $data
+     *
+     * @return void
      */
-    private function createBendAndTremolo(array $data)
+    private function createBendAndTremolo(array $data): void
     {
         if ($data['bend'] !== null) {
             $this->item->setBend(
@@ -104,8 +106,10 @@ class NoteEffectParser extends ParserBase
      * Create attributes
      *
      * @param array $data
+     *
+     * @return void
      */
-    private function createAttributes(array $data)
+    private function createAttributes(array $data): void
     {
         foreach ($this->parsers as $name => $parser) {
             if ($data[$name] !== null) {

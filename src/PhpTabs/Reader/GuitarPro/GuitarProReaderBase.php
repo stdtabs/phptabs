@@ -204,7 +204,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     /**
      * Reads an unsigned byte
      *
-     * @return int|false
+     * @return int
      */
     public function readUnsignedByte(): int
     {

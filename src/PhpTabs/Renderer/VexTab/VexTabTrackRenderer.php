@@ -85,6 +85,27 @@ class VexTabTrackRenderer
     private $track;
 
     /**
+     * Current beat
+     *
+     * @var \PhpTabs\Music\Beat
+     */
+    private $beat;
+
+    /**
+     * Current duration (VexTab formatted)
+     *
+     * @var string
+     */
+    private $tmpDuration;
+
+    /**
+     * Previous duration (VexTab formatted)
+     *
+     * @var string
+     */
+    private $lastDuration;
+
+    /**
      * Options
      *
      * @var \PhpTabs\Renderer\VexTab\VexTabOptions
@@ -97,6 +118,35 @@ class VexTabTrackRenderer
      * @var \PhpTabs\Music\Channel
      */
     private $channel;
+
+    /**
+     * Current beat context
+     *
+     * @var \PhpTabs\Renderer\VexTab\BeatContext
+     */
+    private $beatContext;
+
+    /**
+     * Previous beat context
+     *
+     * @var \PhpTabs\Renderer\VexTab\BeatContext
+     */
+    private $lastBeatContext;
+
+    /**
+     * @var bool
+     */
+    private $repeatOpen       = false;
+
+    /**
+     * @var bool
+     */
+    private $doubleRepeatOpen = false;
+
+    /**
+     * @var int
+     */
+    private $line             = 0;
 
     public function __construct(RendererInterface $renderer, Track $track)
     {
@@ -122,10 +172,7 @@ class VexTabTrackRenderer
         );
 
         // Start to write measures
-        $this->repeatOpen       = false;
-        $this->doubleRepeatOpen = false;
         $this->lastBeatContext  = new BeatContext(new Beat());
-        $this->line             = 0;
 
         foreach ($track->getMeasures() as $measure) {
             $this->renderMeasure($measure);

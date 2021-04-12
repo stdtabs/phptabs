@@ -57,7 +57,7 @@ class MidiNote
         return $this->velocity;
     }
 
-    public function addPitchBend(int $value)
+    public function addPitchBend(int $value): void
     {
         $this->pitchBends[] = $value;
     }

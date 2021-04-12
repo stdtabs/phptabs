@@ -13,8 +13,10 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Component;
 
-use PhpTabs\Component\Renderer\RendererInterface;
 use Exception;
+use PhpTabs\Component\Renderer\RendererInterface;
+use PhpTabs\Renderer\Ascii\AsciiRenderer;
+use PhpTabs\Renderer\VexTab\VexTabRenderer;
 
 class Renderer
 {
@@ -34,8 +36,8 @@ class Renderer
      * @var array
      */
     private $formats = [
-        'vextab'  => 'PhpTabs\\Renderer\\VexTab\\VexTabRenderer',
-        'ascii'   => 'PhpTabs\\Renderer\\Ascii\\AsciiRenderer',
+        'vextab'  => VexTabRenderer::class,
+        'ascii'   => AsciiRenderer::class,
     ];
 
     /**
