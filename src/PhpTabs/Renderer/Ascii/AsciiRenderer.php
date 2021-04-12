@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -56,11 +58,11 @@ class AsciiRenderer extends RendererHelper
      * @api
      * @since 0.6.0
      */
-    public function render(int $trackIndex = null): string
+    public function render(int $index = null): string
     {
         // Check if track exists for this index
-        if (!is_null($trackIndex)) {
-             $track = $this->song->getTrack($trackIndex);
+        if (!is_null($index)) {
+             $track = $this->song->getTrack($index);
         }
 
         if ($this->getOption('songHeader')) {
@@ -70,8 +72,8 @@ class AsciiRenderer extends RendererHelper
             $this->writer->drawStringLine("Author: "  . $this->song->getAuthor());
         }
 
-        foreach ($this->song->getTracks() as $index => $track) {
-            if ($trackIndex === null || $trackIndex === $index) {
+        foreach ($this->song->getTracks() as $currentIndex => $track) {
+            if ($index === null || $index === $currentIndex) {
                 $this->writer->nextLine();
                 $this->writeTrack($track);
                 $this->writer->nextLine();
