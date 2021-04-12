@@ -81,7 +81,7 @@ class Tablature
     {
         return $this->getRenderer('ascii')
                     ->setOptions($options)
-                    ->render();
+                    ->render(null);
     }
 
     /**
