@@ -19,6 +19,7 @@ use PhpTabs\Component\Exporter\ExporterBase;
 use PhpTabs\Component\Serializer\Text;
 use PhpTabs\Component\Serializer\Xml;
 use PhpTabs\Component\Serializer\Yaml;
+use PhpTabs\Music\Song;
 
 class Exporter extends ExporterBase
 {
@@ -33,6 +34,14 @@ class Exporter extends ExporterBase
     public function __construct(Tablature $tablature)
     {
         $this->song = $tablature->getSong();
+    }
+
+    /**
+     * Give access to the song property
+     */
+    protected function getSong(): Song
+    {
+        return $this->song;
     }
 
     /**

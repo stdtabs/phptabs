@@ -58,7 +58,7 @@ class AsciiRenderer extends RendererHelper
      * @api
      * @since 0.6.0
      */
-    public function render(int $index = null): string
+    public function render(?int $index = null): string
     {
         // Check if track exists for this index
         if (!is_null($index)) {

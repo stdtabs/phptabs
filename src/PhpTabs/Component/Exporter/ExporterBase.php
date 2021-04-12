@@ -14,10 +14,10 @@ declare(strict_types = 1);
 namespace PhpTabs\Component\Exporter;
 
 use PhpTabs\Music\{
-    Beat, Chord, Duration, Marker,
-    Measure, MeasureHeader, Note,
-    TabString, Text, TimeSignature,
-    Voice
+    Beat, Chord, Duration,
+    Marker, Measure, MeasureHeader,
+    Note, Song, TabString,
+    Text, TimeSignature, Voice
 };
 
 abstract class ExporterBase extends ExporterEffects
@@ -28,33 +28,33 @@ abstract class ExporterBase extends ExporterEffects
     protected function exportSong(): array
     {
         $content = [
-            'name'          => $this->song->getName(),
-            'artist'        => $this->song->getArtist(),
-            'album'         => $this->song->getAlbum(),
-            'author'        => $this->song->getAuthor(),
-            'copyright'     => $this->song->getCopyright(),
-            'writer'        => $this->song->getWriter(),
-            'comments'      => $this->song->getComments(),
+            'name'          => $this->getSong()->getName(),
+            'artist'        => $this->getSong()->getArtist(),
+            'album'         => $this->getSong()->getAlbum(),
+            'author'        => $this->getSong()->getAuthor(),
+            'copyright'     => $this->getSong()->getCopyright(),
+            'writer'        => $this->getSong()->getWriter(),
+            'comments'      => $this->getSong()->getComments(),
             'channels'      => [],
             'measureHeaders'=> [],
             'tracks'        => []
         ];
 
-        $countChannels = $this->song->countChannels();
+        $countChannels = $this->getSong()->countChannels();
 
         for ($i = 0; $i < $countChannels; $i++) {
             $content['channels'][$i] = $this->exportChannel($i);
         }
 
-        $countMeasureHeaders = $this->song->countMeasureHeaders();
+        $countMeasureHeaders = $this->getSong()->countMeasureHeaders();
 
         for ($i = 0; $i < $countMeasureHeaders; $i++) {
             $content['measureHeaders'][$i] = $this->exportMeasureHeader(
-                $this->song->getMeasureHeader($i)
+                $this->getSong()->getMeasureHeader($i)
             );
         }
 
-        $countTracks = $this->song->countTracks();
+        $countTracks = $this->getSong()->countTracks();
 
         for ($i = 0; $i < $countTracks; $i++) {
             $content['tracks'][] = $this->exportTrack($i);
@@ -68,7 +68,7 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportTrack(int $index): array
     {
-        $track = $this->song->getTrack($index);
+        $track = $this->getSong()->getTrack($index);
 
         $content = [
             'number'    => $track->getNumber(),
@@ -95,7 +95,7 @@ abstract class ExporterBase extends ExporterEffects
         for ($i = 0; $i < $countMeasures; $i++) {
             $content['measures'][$i] = $this->exportMeasure(
                 $track->getMeasure($i),
-                $this->song->getMeasureHeader($i)
+                $this->getSong()->getMeasureHeader($i)
             );
         }
 
@@ -113,7 +113,7 @@ abstract class ExporterBase extends ExporterEffects
      */
     protected function exportChannel(int $index): array
     {
-        $channel = $this->song->getChannel($index);
+        $channel = $this->getSong()->getChannel($index);
 
         $content = [
             'id'        => $channel->getId(),
@@ -341,4 +341,6 @@ abstract class ExporterBase extends ExporterEffects
             ? ['value' => $text->getValue()]
             : null;
     }
+
+    abstract protected function getSong(): Song;
 }

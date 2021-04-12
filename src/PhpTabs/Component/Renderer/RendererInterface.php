@@ -18,7 +18,7 @@ interface RendererInterface
     /**
      * Render a track stored at the given index
      */
-    public function render(int $index): string;
+    public function render(?int $index = null): string;
 
     /**
      * @param  string     $name

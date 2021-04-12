@@ -53,22 +53,22 @@ class Text extends SerializerBase
 
     /**
      * @param string $index
-     * @param bool|int|float|string $value
+     * @param bool|int|float|string $element
      */
-    protected function appendText(string $index, $value): void
+    protected function appendText(string $index, $element): void
     {
         $this->content .= sprintf('%s%s:', $this->indent(), $index);
 
-        if ($value === false) {
+        if ($element === false) {
             $this->content .= 'false';
-        } elseif ($value === true) {
+        } elseif ($element === true) {
             $this->content .= 'true';
-        } elseif (strpos($value, PHP_EOL) !== false) {
-            $this->writeMultilineString($value);
-        } elseif (is_string($value)) {
-            $this->content .= sprintf('"%s"', $value);
-        } elseif (is_numeric($value)) {
-            $this->content .= $value;
+        } elseif (strpos($element, PHP_EOL) !== false) {
+            $this->writeMultilineString($element);
+        } elseif (is_string($element)) {
+            $this->content .= sprintf('"%s"', $element);
+        } elseif (is_numeric($element)) {
+            $this->content .= $element;
         }
 
         $this->content .= PHP_EOL;

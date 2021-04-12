@@ -39,29 +39,32 @@ class Xml extends SerializerBase
         return $this->writer->outputMemory();
     }
 
-    protected function appendNode(string $index, array $node): void
+    /**
+     * @param array $element A node
+     */
+    protected function appendNode(string $index, array $element): void
     {
         $this->writer->startElement($index);
-        $this->appendNodes($node);
+        $this->appendNodes($element);
         $this->writer->endElement();
     }
 
     /**
      * @param string $index
-     * @param int|bool|float|string $value
+     * @param int|bool|float|string $element
      */
-    protected function appendText(string $index, $value): void
+    protected function appendText(string $index, $element): void
     {
         $this->writer->startElement($index);
 
-        if ($value === false) {
-            $value = 'false';
-        } elseif ($value === true) {
-            $value = 'true';
+        if ($element === false) {
+            $element = 'false';
+        } elseif ($element === true) {
+            $element = 'true';
         }
 
-        if (is_scalar($value)) {
-            $this->writer->text($value);
+        if (is_scalar($element)) {
+            $this->writer->text($element);
         }
 
         $this->writer->endElement();

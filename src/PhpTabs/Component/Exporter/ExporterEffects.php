@@ -14,7 +14,7 @@ declare(strict_types = 1);
 namespace PhpTabs\Component\Exporter;
 
 use PhpTabs\Music\{
-    EffectBend, EffectGrace, EffectHarmonic,
+    Duration, EffectBend, EffectGrace, EffectHarmonic,
     EffectTremoloPicking, EffectTrill, NoteEffect
 };
 
@@ -140,4 +140,6 @@ abstract class ExporterEffects
             []
         );
     }
+
+    abstract protected function exportDuration(Duration $duration): array;
 }

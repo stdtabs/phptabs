@@ -56,15 +56,15 @@ class Yaml extends SerializerBase
 
     /**
      * @param string          $index
-     * @param string|int|bool $value
+     * @param string|int|bool $element
      */
-    protected function appendText(string $index, $value): void
+    protected function appendText(string $index, $element): void
     {
         $this->content .= sprintf(
             '%s%s: %s%s',
             $this->indent(),
             $index,
-            $this->formatValue($value),
+            $this->formatValue($element),
             PHP_EOL
         );
     }

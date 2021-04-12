@@ -42,8 +42,12 @@ class VexTabRenderer extends RendererHelper
      * @api
      * @since  0.5.0
      */
-    public function render(int $index): string
+    public function render(?int $index = null): string
     {
+        if (is_null($index)) {
+            $index = 0;
+        }
+
         $track = $this->song->getTrack($index);
 
         return $this->writeTrack($track);
