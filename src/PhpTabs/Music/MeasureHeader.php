@@ -84,12 +84,9 @@ class MeasureHeader
         return $this->repeatOpen;
     }
 
-    /**
-     * @param int $repeatOpen
-     */
     public function setRepeatOpen(int $repeatOpen): void
     {
-        $this->repeatOpen = (boolean)$repeatOpen;
+        $this->repeatOpen = boolval($repeatOpen);
     }
 
     public function getStart(): int
@@ -174,7 +171,7 @@ class MeasureHeader
     {
         $this->setNumber($header->getNumber());
         $this->setStart($header->getStart());
-        $this->setRepeatOpen($header->isRepeatOpen());
+        $this->setRepeatOpen(intval($header->isRepeatOpen()));
         $this->setRepeatAlternative($header->getRepeatAlternative());
         $this->setRepeatClose($header->getRepeatClose());
         $this->setTripletFeel($header->getTripletFeel());
