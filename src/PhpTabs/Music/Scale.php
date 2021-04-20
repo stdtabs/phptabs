@@ -33,10 +33,6 @@ class Scale
         return $this->key;
     }
 
-    /**
-     * @param int         $note
-     * @param boolean $on
-     */
     public function setNote(int $note, bool $on): void
     {
         $this->notes[$note] = $on;

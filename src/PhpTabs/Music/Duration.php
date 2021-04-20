@@ -52,17 +52,17 @@ class Duration
 
     public function setDotted(bool $dotted): void
     {
-        $this->dotted = (boolean)$dotted;
+        $this->dotted = $dotted;
     }
 
     public function isDoubleDotted(): bool
     {
-        return (boolean)$this->doubleDotted;
+        return $this->doubleDotted;
     }
 
     public function setDoubleDotted(bool $doubleDotted): void
     {
-        $this->doubleDotted = (boolean)$doubleDotted;
+        $this->doubleDotted = $doubleDotted;
     }
 
     public function getDivision(): DivisionType

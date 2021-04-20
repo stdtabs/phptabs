@@ -29,15 +29,19 @@ class GuitarPro3Reader extends GuitarProReaderBase
     protected $tablature;
 
     /**
-     * @var array $supportedVersions
+     * @var array
      */
     private static $supportedVersions = ['FICHIER GUITAR PRO v3.00'];
 
     /**
-     * @var boolean $tripletFeel
-     * @var integer $keySignature
+     * @var bool
      */
-    protected $tripletFeel, $keySignature;
+    protected $tripletFeel;
+
+    /**
+     * @var int
+     */
+    protected $keySignature;
 
     /**
      * @param \PhpTabs\Component\InputStream $file An input file to read
