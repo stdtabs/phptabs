@@ -30,7 +30,7 @@ class ChannelRouterConfigurator
         $this->router->resetRoutes();
 
         array_walk(
-            $channels, function ($channel) {
+            $channels, function ($channel): void {
                 $channelRoute = new ChannelRoute($channel->getId());
 
                 $channelRoute->setChannel1(

@@ -177,7 +177,7 @@ class Measure
     {
         $beat = array_reduce(
             $this->beats,
-            function ($carry, $beat) use ($start) {
+            static function ($carry, $beat) use ($start) {
                 return $beat->getStart() == $start
                     ? $beat : $carry;
             }

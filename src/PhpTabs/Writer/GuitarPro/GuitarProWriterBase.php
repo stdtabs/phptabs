@@ -161,7 +161,7 @@ abstract class GuitarProWriterBase implements WriterInterface
     public function writeBytes(array $bytes): void
     {
         array_walk(
-            $bytes, function ($byte) {
+            $bytes, function ($byte): void {
                 $this->writeByte($byte);
             }
         );

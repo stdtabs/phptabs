@@ -71,7 +71,7 @@ class Track
     {
         $this->measures = array_filter(
             $this->measures,
-            function ($item) use ($number) {
+            static function ($item) use ($number) {
                 return $item->getNumber() != $number;
             }
         );

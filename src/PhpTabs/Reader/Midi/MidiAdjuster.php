@@ -35,7 +35,7 @@ class MidiAdjuster
         $tracks = $this->song->getTracks();
 
         array_walk(
-            $tracks, function ($track) {
+            $tracks, function ($track): void {
                 $this->adjustTrack($track);
             }
         );
@@ -48,7 +48,7 @@ class MidiAdjuster
         $measures = $track->getMeasures();
 
         array_walk(
-            $measures, function ($measure) {
+            $measures, function ($measure): void {
                 $this->process($measure);
             }
         );
@@ -170,7 +170,7 @@ class MidiAdjuster
         $notes = $beat->getVoice(0)->getNotes();
 
         array_walk(
-            $notes, function ($note) use (&$freeStrings, &$notesToRemove) {
+            $notes, function ($note) use (&$freeStrings, &$notesToRemove): void {
                 $string = $this->getStringForValue($freeStrings, $note->getValue());
 
                 for ($j = 0; $j < count($freeStrings); $j++) {
@@ -206,7 +206,7 @@ class MidiAdjuster
         $stringForValue = 0;
 
         array_walk(
-            $strings, function ($string) use (& $minFret, & $stringForValue, $value) {
+            $strings, function ($string) use (& $minFret, & $stringForValue, $value): void {
                 $fret = $value - $string->getValue();
 
                 if ($minFret < 0 || ($fret >= 0 && $fret < $minFret)) {

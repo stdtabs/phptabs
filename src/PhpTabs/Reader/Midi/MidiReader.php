@@ -44,7 +44,7 @@ class MidiReader extends MidiReaderBase
     const STATUS_META = 4;
 
     /**
-     * @var integer resolution
+     * @var int resolution
      */
     private $resolution;
     private $channels;
@@ -88,19 +88,19 @@ class MidiReader extends MidiReaderBase
         $this->checkAll();
 
         array_walk(
-            $this->channels, function ($channel) use (&$song) {
+            $this->channels, function ($channel) use (&$song): void {
                 $song->addChannel($channel);
             }
         );
 
         array_walk(
-            $this->headers, function ($header) use (&$song) {
+            $this->headers, function ($header) use (&$song): void {
                 $song->addMeasureHeader($header);
             }
         );
 
         array_walk(
-            $this->tracks, function ($track) use (&$song) {
+            $this->tracks, static function ($track) use (&$song): void {
                 $song->addTrack($track);
             }
         );
@@ -236,14 +236,14 @@ class MidiReader extends MidiReaderBase
     private function checkTracks(): void
     {
         array_walk(
-            $this->tracks, function ($track) {
+            $this->tracks, function ($track): void {
                 $trackChannel = null;
 
                 array_walk(
-                    $this->tempChannels, function ($tempChannel) use (&$trackChannel, $track) {
+                    $this->tempChannels, function ($tempChannel) use (&$trackChannel, $track): void {
                         if ($tempChannel->getTrack() == $track->getNumber()) {
                             array_walk(
-                                $this->channels, function ($channel) use (&$tempChannel, &$trackChannel) {
+                                $this->channels, function ($channel) use (&$tempChannel, &$trackChannel): void {
                                     $channelRoute = $this->channelRouter->getRoute($channel->getId());
 
                                     if ($channelRoute !== null && $tempChannel->getChannel() == $channelRoute->getChannel1()) {
@@ -695,9 +695,9 @@ class MidiReader extends MidiReaderBase
     private function parseControlChange(array $data): void
     {
         $length = count($data);
-        $channel = ($length > 0)?(($data[0] & 0xff) & 0x0f):-1;
-        $control = ($length > 1)?($data[1] & 0xff):-1;
-        $value = ($length > 2)?($data[2] & 0xff):-1;
+        $channel = $length > 0 ? (($data[0] & 0xff) & 0x0f) : -1;
+        $control = $length > 1 ? ($data[1] & 0xff) : -1;
+        $value = $length > 2 ? ($data[2] & 0xff) : -1;
 
         if ($channel != -1 && $control != -1 && $value != -1) {
             if ($control == MidiSettings::VOLUME) {
@@ -754,7 +754,7 @@ class MidiReader extends MidiReaderBase
     {
         $length = count($data);
         $channel = $length > 0 ? (($data[0] & 0xff) & 0x0f) : -1;
-        $instrument = $length > 1 ? ($data[1] & 0xff):-1;
+        $instrument = $length > 1 ? ($data[1] & 0xff) : -1;
 
         if ($channel != -1 && $instrument != -1) {
             $this->getTempChannel($channel)->setInstrument($instrument);

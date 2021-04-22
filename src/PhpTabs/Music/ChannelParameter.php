@@ -24,7 +24,7 @@ class ChannelParameter
     private $key;
 
     /**
-     * @var null|int|string
+     * @var int|string|null
      */
     private $value;
 
@@ -39,7 +39,7 @@ class ChannelParameter
     }
 
     /**
-     * @return null|int|string
+     * @return int|string|null
      */
     public function getValue()
     {
@@ -47,16 +47,13 @@ class ChannelParameter
     }
 
     /**
-     * @param null|int|string $value
+     * @param int|string|null $value
      */
     public function setValue($value): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @param \PhpTabs\Music\ChannelParameter $channelParameter
-     */
     public function copyFrom(ChannelParameter $channelParameter): void
     {
         $this->setKey($channelParameter->getKey());

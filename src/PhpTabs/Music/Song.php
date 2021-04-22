@@ -68,7 +68,7 @@ class Song extends SongBase
     {
         $this->measureHeaders = array_filter(
             $this->measureHeaders,
-            function ($item) use ($measureHeader) {
+            static function ($item) use ($measureHeader) {
                 return $item->getNumber() != $measureHeader->getNumber();
             }
         );
@@ -115,7 +115,7 @@ class Song extends SongBase
     {
         $this->tracks = array_filter(
             $this->tracks,
-            function ($item) use ($track) {
+            static function ($item) use ($track) {
                 return $item->getNumber() != $track->getNumber();
             }
         );
@@ -144,9 +144,8 @@ class Song extends SongBase
 
     /**
      * @param int|\PhpTabs\Music\Channel $index
-     * @param \PhpTabs\Music\Channel     $channel
      */
-    public function addChannel($index, Channel $channel = null): void
+    public function addChannel($index, ?Channel $channel = null): void
     {
         if ($index instanceof Channel) {
             $this->channels[] = $index;
@@ -164,7 +163,7 @@ class Song extends SongBase
     {
         $this->channels = array_filter(
             $this->channels,
-            function ($item) use ($channel) {
+            static function ($item) use ($channel) {
                 return $item->getId() != $channel->getId();
             }
         );

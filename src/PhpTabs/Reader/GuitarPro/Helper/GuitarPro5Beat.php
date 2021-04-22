@@ -24,7 +24,7 @@ class GuitarPro5Beat extends AbstractReader
     /**
      * Reads some Beat informations
      *
-     * @return integer $time A duration time
+     * @return int $time A duration time
      */
     public function readBeat(int $start, Measure $measure, Track $track, Tempo $tempo, int $voiceIndex): int
     {

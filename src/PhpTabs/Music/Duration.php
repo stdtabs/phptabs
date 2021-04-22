@@ -86,7 +86,7 @@ class Duration
     /**
      * Get a Duration object from time
      */
-    public static function fromTime(int $time, Duration $minDuration = null, int $diff = null): Duration
+    public static function fromTime(int $time, ?Duration $minDuration = null, ?int $diff = null): Duration
     {
         if (is_null($minDuration)) {
             $duration = new Duration();
@@ -97,7 +97,9 @@ class Duration
             $duration->getDivision()->setTimes(2);
 
             return self::fromTime($time, $duration);
-        } elseif (is_null($diff)) {
+        }
+
+        if (is_null($diff)) {
             return self::fromTime($time, $minDuration, 10);
         }
 

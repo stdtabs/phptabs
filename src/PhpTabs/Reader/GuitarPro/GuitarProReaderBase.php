@@ -152,8 +152,8 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     /**
      * Read a string
      *
-     * @param integer        $size    Size to read in stream
-     * @param integer|string $length  Length to return or charset
+     * @param int        $size    Size to read in stream
+     * @param int|string $length  Length to return or charset
      * @param string         $charset
      */
     protected function readString(int $size, $length = null, $charset = null): string
@@ -214,7 +214,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     /**
      * Skips a sequence
      *
-     * @param integer $num
+     * @param int $num
      */
     public function skip(int $num = 1): void
     {

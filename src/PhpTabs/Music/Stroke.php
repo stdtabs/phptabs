@@ -46,7 +46,7 @@ class Stroke
         return $this->value;
     }
 
-    public function setValue(int $value = null): void
+    public function setValue(?int $value = null): void
     {
         $this->value = $value;
     }

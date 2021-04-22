@@ -24,18 +24,16 @@ class MidiMessageUtils
     {
         $fixedValue = $value;
         $fixedValue = min($fixedValue, 127);
-        $fixedValue = max($fixedValue, 0);
 
-        return $fixedValue;
+        return max($fixedValue, 0);
     }
 
     private static function fixChannel(int $channel): int
     {
         $fixedChannel = $channel;
         $fixedChannel = min($fixedChannel, 15);
-        $fixedChannel = max($fixedChannel, 0);
 
-        return $fixedChannel;
+        return max($fixedChannel, 0);
     }
 
     public static function noteOn(int $channel, int $note, int $velocity): MidiMessage

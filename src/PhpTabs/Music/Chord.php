@@ -115,7 +115,7 @@ class Chord
         return count(
             array_filter(
                 $this->strings,
-                function ($value) {
+                static function ($value) {
                     return $value >= 0;
                 }
             )

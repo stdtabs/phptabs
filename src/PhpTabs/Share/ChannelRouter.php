@@ -32,7 +32,7 @@ class ChannelRouter
     {
         array_walk(
             $this->midiChannels,
-            function ($channel, $key) use ($route) {
+            function ($channel, $key) use ($route): void {
                 if ($channel->getRoute() == $route) {
                     array_splice($this->midiChannels, $key, 1);
                 }

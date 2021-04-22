@@ -29,7 +29,7 @@ class ChannelWriter
         $channels = $this->makeChannels($song);
 
         array_walk(
-            $channels, function ($channel) {
+            $channels, function ($channel): void {
                 $this->writer->writeInt($channel->getProgram());
                 $this->writer->writeByte($this->toChannelByte($channel->getVolume()));
                 $this->writer->writeByte($this->toChannelByte($channel->getBalance()));
