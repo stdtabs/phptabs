@@ -290,9 +290,9 @@ class MidiSequenceParser
 
                         //Natural
                         if ($note->getEffect()->getHarmonic()->isNatural()) {
-                            for ($i = 0; $i < count(EffectHarmonic::$naturalFrequencies); $i++) {
-                                if (($note->getValue() % 12) ==  (EffectHarmonic::$naturalFrequencies[$i][0] % 12)) {
-                                    $key = $orig + EffectHarmonic::$naturalFrequencies[$i][1] - $note->getValue();
+                            for ($i = 0; $i < count(EffectHarmonic::NATURAL_FREQUENCIES); $i++) {
+                                if (($note->getValue() % 12) ==  (EffectHarmonic::NATURAL_FREQUENCIES[$i][0] % 12)) {
+                                    $key = $orig + EffectHarmonic::NATURAL_FREQUENCIES[$i][1] - $note->getValue();
                                     break;
                                 }
                             }
@@ -302,7 +302,7 @@ class MidiSequenceParser
                             if ($note->getEffect()->getHarmonic()->isSemi() && !$percussionChannel) {
                                 $this->makeNote($sHelper, $track->getNumber(), min(127, $orig), $start, $duration, max(Velocities::MIN_VELOCITY, $velocity - (Velocities::VELOCITY_INCREMENT * 3)), $channelId, $bendMode);
                             }
-                            $key = ($orig + EffectHarmonic::$naturalFrequencies[$note->getEffect()->getHarmonic()->getData()][1]);
+                            $key = ($orig + EffectHarmonic::NATURAL_FREQUENCIES[$note->getEffect()->getHarmonic()->getData()][1]);
 
                         }
                         if (($key - 12) > 0) {

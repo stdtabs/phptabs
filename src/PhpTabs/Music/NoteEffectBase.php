@@ -133,8 +133,7 @@ abstract class NoteEffectBase
 
     public function hasAnyEffect(): bool
     {
-        return
-            $this->isBend()                 ||
+        return $this->isBend()              ||
             $this->isTremoloBar()           ||
             $this->isHarmonic()             ||
             $this->isGrace()                ||

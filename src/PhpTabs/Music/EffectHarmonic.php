@@ -30,7 +30,7 @@ class EffectHarmonic
     const MAX_ARTIFICIAL_OFFSET = 24;
     const MAX_TAPPED_OFFSET     = 24;
 
-    public static $naturalFrequencies = [
+    const NATURAL_FREQUENCIES = [
         [12, 12], //AH12 (+12 frets)
         [ 9, 28], //AH9 (+28 frets)
         [ 5, 24], //AH5 (+24 frets)

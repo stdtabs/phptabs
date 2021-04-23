@@ -20,9 +20,9 @@ namespace PhpTabs\Music;
  */
 class Voice
 {
-    const DIRECTION_NONE = 0;
-    const DIRECTION_UP   = 1;
-    const DIRECTION_DOWN = 2;
+    public const DIRECTION_NONE = 0;
+    public const DIRECTION_UP   = 1;
+    public const DIRECTION_DOWN = 2;
 
     /**
      * @var Beat

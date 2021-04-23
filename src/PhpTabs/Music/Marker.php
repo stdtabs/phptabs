@@ -15,8 +15,8 @@ namespace PhpTabs\Music;
 
 class Marker
 {
-    public static $defaultColor = [255, 0, 0];
-    public static $defaultTitle = "Untitled";
+    public const DEFAULT_COLOR = [255, 0, 0];
+    public const DEFAULT_TITLE = "Untitled";
 
     private $measure;
     private $title;
@@ -25,12 +25,12 @@ class Marker
     public function __construct()
     {
         $this->measure = 0;
-        $this->title = Marker::$defaultTitle;
+        $this->title = Marker::DEFAULT_TITLE;
 
         $color = new Color();
-        $color->setR(Marker::$defaultColor[0]);
-        $color->setG(Marker::$defaultColor[1]);
-        $color->setB(Marker::$defaultColor[2]);
+        $color->setR(Marker::DEFAULT_COLOR[0]);
+        $color->setG(Marker::DEFAULT_COLOR[1]);
+        $color->setB(Marker::DEFAULT_COLOR[2]);
         $this->color = $color;
     }
 
