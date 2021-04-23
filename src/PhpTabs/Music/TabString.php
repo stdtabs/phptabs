@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class TabString
+final class TabString
 {
     /**
      * String number
@@ -60,8 +60,8 @@ class TabString
      */
     public function isEqual(TabString $string): bool
     {
-        return $this->getNumber() == $string->getNumber()
-            && $this->getValue()  == $string->getValue();
+        return $this->getNumber() === $string->getNumber()
+            && $this->getValue()  === $string->getValue();
     }
 
     /**

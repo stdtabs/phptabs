@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class Track
+final class Track
 {
     const MAX_OFFSET = 24;
     const MIN_OFFSET = -24;
@@ -59,9 +59,7 @@ class Track
 
     public function getMeasure(int $index): ?Measure
     {
-        return isset($this->measures[$index])
-            ? $this->measures[$index]
-            : null;
+        return $this->measures[$index] ?? null;
     }
 
     /**
@@ -72,7 +70,7 @@ class Track
         $this->measures = array_filter(
             $this->measures,
             static function ($item) use ($number) {
-                return $item->getNumber() != $number;
+                return $item->getNumber() !== $number;
             }
         );
 
@@ -235,11 +233,13 @@ class Track
         $this->getColor()->copyFrom(clone $track->getColor());
         $this->getLyrics()->copyFrom(clone $track->getLyrics());
 
-        for ($i = 0; $i < $track->countStrings(); $i++) {
+        $count = $track->countStrings();
+        for ($i = 0; $i < $count; $i++) {
             $this->strings[$i] = clone $track->getString($i + 1);
         }
 
-        for ($i = 0; $i < $track->countMeasures(); $i++) {
+        $count = $track->countMeasures();
+        for ($i = 0; $i < $count; $i++) {
             $measure = clone $track->getMeasure($i);
             $this->addMeasure(clone $measure);
         }

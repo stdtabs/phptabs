@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class Text
+final class Text
 {
     private $value;
     private $beat;
@@ -40,8 +40,8 @@ class Text
 
     public function isEmpty(): bool
     {
-        return $this->value === null
-            || strlen($this->value) == 0;
+        return is_null($this->value)
+            || strlen($this->value) === 0;
     }
 
     public function copyFrom(Text $text): void

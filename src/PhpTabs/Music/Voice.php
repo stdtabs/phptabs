@@ -18,7 +18,7 @@ namespace PhpTabs\Music;
  * @uses Duration
  * @uses Note
  */
-class Voice
+final class Voice
 {
     public const DIRECTION_NONE = 0;
     public const DIRECTION_UP   = 1;
@@ -136,7 +136,7 @@ class Voice
     public function removeNote(Note $note): void
     {
         foreach ($this->notes as $k => $v) {
-            if ($v == $note) {
+            if ($v === $note) {
                 array_splice($this->notes, $k, 1);
 
                 if (!$this->countNotes()) {
@@ -150,9 +150,7 @@ class Voice
 
     public function getNote(int $index): ?Note
     {
-        return isset($this->notes[$index])
-            ? $this->notes[$index]
-            : null;
+        return $this->notes[$index] ?? null;
     }
 
     public function countNotes(): int
@@ -162,7 +160,7 @@ class Voice
 
     public function isRestVoice(): bool
     {
-        return count($this->notes) == 0;
+        return $this->countNotes() === 0;
     }
 
     /**

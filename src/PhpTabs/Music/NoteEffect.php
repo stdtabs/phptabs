@@ -21,7 +21,7 @@ namespace PhpTabs\Music;
  * @uses EffectTrill
  * @uses EffectTremoloPicking
  */
-class NoteEffect extends NoteEffectBase
+final class NoteEffect extends NoteEffectBase
 {
     protected $bend           = null;
     protected $harmonic       = null;

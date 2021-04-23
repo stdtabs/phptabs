@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class Chord
+final class Chord
 {
     /**
      * @var int $firstFret first fret id

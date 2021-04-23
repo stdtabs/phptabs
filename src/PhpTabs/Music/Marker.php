@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class Marker
+final class Marker
 {
     public const DEFAULT_COLOR = [255, 0, 0];
     public const DEFAULT_TITLE = "Untitled";

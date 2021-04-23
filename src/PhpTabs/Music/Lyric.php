@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class Lyric
+final class Lyric
 {
     const REGEX = " ";
 

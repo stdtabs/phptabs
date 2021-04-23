@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class Scale
+final class Scale
 {
     private $notes = []; // 12
     private $key;
@@ -47,7 +47,8 @@ class Scale
     {
         $this->setKey(0);
 
-        for ($i = 0; $i < count($this->notes); $i++) {
+        $count = count($this->notes);
+        for ($i = 0; $i < $count; $i++) {
             $this->setNote($i, false);
         }
     }

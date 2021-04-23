@@ -16,7 +16,7 @@ namespace PhpTabs\Music;
 /**
  * Tempo representations with some helpers
  */
-class Tempo
+final class Tempo
 {
     /**
      * @const SECOND_IN_MILLIS

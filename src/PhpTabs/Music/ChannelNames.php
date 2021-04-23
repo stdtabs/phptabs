@@ -13,10 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-/**
- * ChannelNames
- */
-class ChannelNames
+abstract class ChannelNames
 {
     /**
      * @const array

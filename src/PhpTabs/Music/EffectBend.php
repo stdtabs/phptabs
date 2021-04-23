@@ -16,7 +16,7 @@ namespace PhpTabs\Music;
 /**
  * @uses BendPoint
  */
-class EffectBend
+final class EffectBend
 {
     const SEMITONE_LENGTH     = 1;
     const MAX_POSITION_LENGTH = 12;

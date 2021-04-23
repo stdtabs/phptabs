@@ -16,7 +16,7 @@ namespace PhpTabs\Music;
 /**
  * @uses Duration
  */
-class EffectTrill
+final class EffectTrill
 {
     private $fret = 0;
     private $duration;

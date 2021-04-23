@@ -17,40 +17,40 @@ namespace PhpTabs\Music;
  * Color styling of tracks & markers
  * RGB
  */
-class Color
+final class Color
 {
     /**
      * RGB red value
      *
-     * @var array $red
+     * @var array
      */
     public static $red = [255,0,0];
 
     /**
      *  RGB green value
      *
-     * @var array $green
+     * @var array
      */
     public static $green = [0,255,0];
 
     /**
      * RGB blue value
      *
-     * @var array $blue
+     * @var array
      */
     public static $blue = [0,0,255];
 
     /**
      * RGB white value
      *
-     * @var array $white
+     * @var array
      */
     public static $white = [255,255,255];
 
     /**
      * RGB black value
      *
-     * @var array $black
+     * @var array
      */
     public static $black = [0,0,0];
 

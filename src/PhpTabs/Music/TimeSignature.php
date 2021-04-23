@@ -16,7 +16,7 @@ namespace PhpTabs\Music;
 /**
  * @uses Duration
  */
-class TimeSignature
+final class TimeSignature
 {
     /**
      * @var int
@@ -61,7 +61,7 @@ class TimeSignature
 
     public function isEqual(TimeSignature $timeSignature): bool
     {
-        return $this->getNumerator() == $timeSignature->getNumerator()
+        return $this->getNumerator() === $timeSignature->getNumerator()
             && $this->getDenominator()->isEqual(
                 $timeSignature->getDenominator()
             );

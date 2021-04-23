@@ -17,7 +17,7 @@ namespace PhpTabs\Music;
  * @uses Velocities
  * @uses Duration
  */
-class EffectGrace
+final class EffectGrace
 {
     const TRANSITION_NONE   = 0;
     const TRANSITION_SLIDE  = 1;

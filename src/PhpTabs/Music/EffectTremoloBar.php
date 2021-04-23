@@ -16,7 +16,7 @@ namespace PhpTabs\Music;
 /**
  * @uses TremoloBarPoint
  */
-class EffectTremoloBar
+final class EffectTremoloBar
 {
     const MAX_POSITION_LENGTH = 12;
     const MAX_VALUE_LENGTH    = 12;
@@ -25,7 +25,7 @@ class EffectTremoloBar
 
     public function addPoint(int $position, int $value): void
     {
-        $this->points[] = new TremoloBarPoint($position, $value);
+        $this->points[] = new EffectTremoloBarPoint($position, $value);
     }
 
     public function getPoints(): array
@@ -38,19 +38,5 @@ class EffectTremoloBar
         foreach ($this->points as $index => $item) {
             $this->points[$index] = clone $item;
         }
-    }
-}
-
-/**
- * @uses EffectTremoloBar
- */
-class TremoloBarPoint extends EffectPointsBase
-{
-    public function getTime(int $duration): int
-    {
-        return intval(
-            $duration * $this->getPosition()
-            / EffectTremoloBar::MAX_POSITION_LENGTH
-        );
     }
 }

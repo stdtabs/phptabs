@@ -13,10 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-/**
- * ChannelParameter
- */
-class ChannelParameter
+final class ChannelParameter
 {
     /**
      * @var string

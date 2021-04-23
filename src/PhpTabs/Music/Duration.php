@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class Duration
+final class Duration
 {
     const QUARTER_TIME = 960;
     const WHOLE = 1;
@@ -150,9 +150,9 @@ class Duration
 
     public function isEqual(Duration $duration): bool
     {
-        return $this->getValue() == $duration->getValue()
-            && $this->isDotted() == $duration->isDotted()
-            && $this->isDoubleDotted() == $duration->isDoubleDotted()
+        return $this->getValue() === $duration->getValue()
+            && $this->isDotted() === $duration->isDotted()
+            && $this->isDoubleDotted() === $duration->isDoubleDotted()
             && $this->getDivision()->isEqual($duration->getDivision());
     }
 
@@ -162,7 +162,7 @@ class Duration
      */
     public function __clone()
     {
-        // $this->divisionType = clone $this->divisionType;
+        //$this->divisionType = clone $this->divisionType;
     }
 
     public function copyFrom(Duration $duration): void

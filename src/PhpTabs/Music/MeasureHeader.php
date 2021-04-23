@@ -18,7 +18,7 @@ namespace PhpTabs\Music;
  * @uses Tempo
  * @uses TimeSignature
  */
-class MeasureHeader
+final class MeasureHeader
 {
     const TRIPLET_FEEL_NONE      = 1;
     const TRIPLET_FEEL_EIGHTH    = 2;

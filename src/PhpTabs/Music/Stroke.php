@@ -17,7 +17,7 @@ namespace PhpTabs\Music;
  * @uses Beat
  * @uses Duration
  */
-class Stroke
+final class Stroke
 {
     const STROKE_NONE = 0;
     const STROKE_UP   = 1;

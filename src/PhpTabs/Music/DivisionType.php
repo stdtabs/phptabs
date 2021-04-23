@@ -16,7 +16,7 @@ namespace PhpTabs\Music;
 /**
  * Modelizes division between 2 notes
  */
-class DivisionType
+final class DivisionType
 {
     private $enters = 1;
     private $times  = 1;

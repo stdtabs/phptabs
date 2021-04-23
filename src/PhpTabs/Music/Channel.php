@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class Channel
+final class Channel
 {
     const DEFAULT_PERCUSSION_CHANNEL = 9;
     const DEFAULT_PERCUSSION_PROGRAM = 0;
@@ -169,9 +169,7 @@ class Channel
 
     public function getParameter(int $index): ?ChannelParameter
     {
-        return isset($this->parameters[$index])
-            ? $this->parameters[$index]
-            : null;
+        return $this->parameters[$index] ?? null;
     }
 
     public function removeParameter(int $index): void

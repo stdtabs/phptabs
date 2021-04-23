@@ -15,7 +15,7 @@ namespace PhpTabs\Music;
 
 use Exception;
 
-class Song extends SongBase
+final class Song extends SongBase
 {
     /**
      * Get the list of instruments

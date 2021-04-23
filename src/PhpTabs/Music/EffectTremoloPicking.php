@@ -16,7 +16,7 @@ namespace PhpTabs\Music;
 /**
  * @uses \PhpTabs\Music\Duration
  */
-class EffectTremoloPicking
+final class EffectTremoloPicking
 {
     private $duration;
 

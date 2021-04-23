@@ -18,7 +18,7 @@ namespace PhpTabs\Music;
  * @uses Velocities
  * @uses Voice
  */
-class Note
+final class Note
 {
     private $value    = 0;
     private $string   = 1;

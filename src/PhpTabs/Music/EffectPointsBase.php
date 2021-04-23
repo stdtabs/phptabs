@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class EffectPointsBase
+abstract class EffectPointsBase
 {
     protected $position;
     protected $value;

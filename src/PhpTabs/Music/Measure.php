@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class Measure
+final class Measure
 {
     const CLEF_TREBLE = 1;
     const CLEF_BASS   = 2;
@@ -98,9 +98,7 @@ class Measure
 
     public function getBeat(int $index): ?Beat
     {
-        return isset($this->beats[$index])
-            ? $this->beats[$index]
-            : null;
+        return $this->beats[$index] ?? null;
     }
 
     public function countBeats(): int

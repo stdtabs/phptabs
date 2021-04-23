@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace PhpTabs\Music;
 
-class EffectHarmonic
+final class EffectHarmonic
 {
     const KEY_NATURAL     = "N.H";
     const KEY_ARTIFICIAL  = "A.H";

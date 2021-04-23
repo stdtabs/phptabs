@@ -23,7 +23,7 @@ use Exception;
  * @uses Text
  * @uses Voice
  */
-class Beat
+final class Beat
 {
     /**
      * Number of voices to set
