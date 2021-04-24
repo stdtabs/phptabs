@@ -16,8 +16,8 @@ namespace PhpTabs\Component\Serializer;
  */
 class Yaml extends SerializerBase
 {
-    const INDENT_STEP = 2;
-    const INDENT_CHAR = ' ';
+    public const INDENT_STEP = 2;
+    public const INDENT_CHAR = ' ';
 
     /**
      * @var int

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -15,14 +15,14 @@ namespace PhpTabs\Music;
 
 final class Duration
 {
-    const QUARTER_TIME = 960;
-    const WHOLE = 1;
-    const HALF = 2;
-    const QUARTER = 4;
-    const EIGHTH = 8;
-    const SIXTEENTH = 16;
-    const THIRTY_SECOND = 32;
-    const SIXTY_FOURTH = 64;
+    public const QUARTER_TIME = 960;
+    public const WHOLE = 1;
+    public const HALF = 2;
+    public const QUARTER = 4;
+    public const EIGHTH = 8;
+    public const SIXTEENTH = 16;
+    public const THIRTY_SECOND = 32;
+    public const SIXTY_FOURTH = 64;
 
     private $value;
     private $divisionType;
@@ -72,12 +72,12 @@ final class Duration
 
     public function getTime(): int
     {
-        $time = (int)(Duration::QUARTER_TIME * (4.0 / $this->value));
+        $time = (int)(Duration::QUARTER_TIME * 4.0 / $this->value);
 
         if ($this->dotted) {
             $time += $time / 2;
         } elseif ($this->doubleDotted) {
-            $time += ($time / 4) * 3;
+            $time += $time / 4 * 3;
         }
 
         return $this->getDivision()->convertTime((int)$time);

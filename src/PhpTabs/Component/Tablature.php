@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -20,7 +20,7 @@ use PhpTabs\Music\Song;
 
 class Tablature
 {
-    const DEFAULT_FILE_FORMAT = 'gp3';
+    public const DEFAULT_FILE_FORMAT = 'gp3';
 
     /**
      * Entry point of the music model

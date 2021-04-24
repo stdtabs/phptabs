@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -148,8 +148,8 @@ abstract class SongBase
 
     public function isEmpty(): bool
     {
-        return $this->countMeasureHeaders() == 0
-            || $this->countTracks() == 0;
+        return $this->countMeasureHeaders() === 0
+            || $this->countTracks() === 0;
     }
 
     public function copyFrom(Song $song): void

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -15,7 +15,7 @@ namespace PhpTabs\Music;
 
 final class Lyric
 {
-    const REGEX = " ";
+    public const REGEX = " ";
 
     /**
      * @var int
@@ -47,6 +47,9 @@ final class Lyric
         $this->lyrics = $lyrics;
     }
 
+    /**
+     * @return array<string>
+     */
     public function getLyricBeats(): array
     {
         $lyrics = $this->getLyrics();

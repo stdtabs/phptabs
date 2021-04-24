@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -19,9 +19,9 @@ namespace PhpTabs\Music;
  */
 final class Stroke
 {
-    const STROKE_NONE = 0;
-    const STROKE_UP   = 1;
-    const STROKE_DOWN = -1;
+    public const STROKE_NONE = 0;
+    public const STROKE_UP   = 1;
+    public const STROKE_DOWN = -1;
 
     private $direction;
     private $value;
@@ -64,7 +64,7 @@ final class Stroke
             if (!$voice->isEmpty()) {
                 $currentDuration = $voice->getDuration()->getTime();
 
-                if ($duration == 0 || $currentDuration < $duration) {
+                if ($duration === 0 || $currentDuration < $duration) {
                     $duration = $currentDuration <= Duration::QUARTER_TIME
                         ? $currentDuration
                         : Duration::QUARTER_TIME;
@@ -73,7 +73,7 @@ final class Stroke
         }
 
         return $duration > 0
-            ? intval(round(($duration / 8.0) * (4.0 / $this->value)))
+            ? intval(round($duration / 8.0 * 4.0 / $this->value))
             : 0;
     }
 

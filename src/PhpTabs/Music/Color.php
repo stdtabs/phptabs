@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -22,37 +22,37 @@ final class Color
     /**
      * RGB red value
      *
-     * @var array
+     * @const array
      */
-    public static $red = [255,0,0];
+    public const RED = [255,0,0];
 
     /**
      *  RGB green value
      *
-     * @var array
+     * @const array
      */
-    public static $green = [0,255,0];
+    public const GREEN = [0,255,0];
 
     /**
      * RGB blue value
      *
-     * @var array
+     * @const array
      */
-    public static $blue = [0,0,255];
+    public const BLUE = [0,0,255];
 
     /**
      * RGB white value
      *
-     * @var array
+     * @const array
      */
-    public static $white = [255,255,255];
+    public const WHITE = [255,255,255];
 
     /**
      * RGB black value
      *
-     * @var array
+     * @const array
      */
-    public static $black = [0,0,0];
+    public const BLACK = [0,0,0];
 
     /**
      * @var array
@@ -64,7 +64,7 @@ final class Color
      */
     public function __construct()
     {
-        $this->value = Color::$black;
+        $this->value = Color::BLACK;
     }
 
     /**
@@ -120,9 +120,9 @@ final class Color
      */
     public function isEqual(Color $color): bool
     {
-        return $this->getR() == $color->getR()
-            && $this->getG() == $color->getG()
-            && $this->getB() == $color->getB();
+        return $this->getR() === $color->getR()
+            && $this->getG() === $color->getG()
+            && $this->getB() === $color->getB();
     }
 
     /**
@@ -137,6 +137,8 @@ final class Color
 
     /**
      * Transforms a list of RGB codes into an array
+     *
+     * @return array<int>
      */
     public static function toArray(int $red, int $green, int $blue): array
     {

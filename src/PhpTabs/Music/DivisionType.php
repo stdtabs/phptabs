@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -48,8 +48,8 @@ final class DivisionType
 
     public function isEqual(DivisionType $divisionType): bool
     {
-        return $divisionType->getEnters() == $this->getEnters()
-            && $divisionType->getTimes()  == $this->getTimes();
+        return $divisionType->getEnters() === $this->getEnters()
+            && $divisionType->getTimes()  === $this->getTimes();
     }
 
     public function copyFrom(DivisionType $divisionType): void
@@ -68,6 +68,9 @@ final class DivisionType
         return self::newDivisionType(3, 2);
     }
 
+    /**
+     * @return array<DivisionType>
+     */
     public static function alteredDivisionTypes(): array
     {
         return [

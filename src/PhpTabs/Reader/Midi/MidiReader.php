@@ -36,12 +36,12 @@ use PhpTabs\Share\ChannelRouter;
 
 class MidiReader extends MidiReaderBase
 {
-    const CANCEL_RUNNING_STATUS_ON_META_AND_SYSEX = true;
-    const STATUS_NONE = 0;
-    const STATUS_ONE_BYTE = 1;
-    const STATUS_TWO_BYTES = 2;
-    const STATUS_SYSEX = 3;
-    const STATUS_META = 4;
+    public const CANCEL_RUNNING_STATUS_ON_META_AND_SYSEX = true;
+    public const STATUS_NONE = 0;
+    public const STATUS_ONE_BYTE = 1;
+    public const STATUS_TWO_BYTES = 2;
+    public const STATUS_SYSEX = 3;
+    public const STATUS_META = 4;
 
     /**
      * @var int resolution
@@ -565,9 +565,9 @@ class MidiReader extends MidiReaderBase
         $track = new Track();
         $track->setNumber($number);
         $track->setChannelId(-1);
-        $track->getColor()->setR(Color::$red[0]);
-        $track->getColor()->setG(Color::$red[1]);
-        $track->getColor()->setB(Color::$red[2]);
+        $track->getColor()->setR(Color::RED[0]);
+        $track->getColor()->setG(Color::RED[1]);
+        $track->getColor()->setB(Color::RED[2]);
 
         $this->tracks[] = $track;
 

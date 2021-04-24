@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -15,8 +15,8 @@ namespace PhpTabs\Share;
 
 class ChannelRouter
 {
-    const MAX_CHANNELS = 16;
-    const PERCUSSION_CHANNEL = 9;
+    public const MAX_CHANNELS = 16;
+    public const PERCUSSION_CHANNEL = 9;
 
     /**
      * @var array

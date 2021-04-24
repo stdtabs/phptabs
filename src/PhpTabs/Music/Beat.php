@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -30,7 +30,7 @@ final class Beat
      *
      * @const MAX_VOICES
      */
-    const MAX_VOICES = 2;
+    public const MAX_VOICES = 2;
 
     private $start = Duration::QUARTER_TIME;
     private $measure;
@@ -96,6 +96,9 @@ final class Beat
         );
     }
 
+    /**
+     * @return array<Voice>
+     */
     public function getVoices(): array
     {
         return $this->voices;
@@ -155,7 +158,8 @@ final class Beat
 
     public function isRestBeat(): bool
     {
-        for ($v = 0; $v < $this->countVoices(); $v++) {
+        $count = $this->countVoices();
+        for ($v = 0; $v < $count; $v++) {
             $voice = $this->getVoice($v);
 
             if (!$voice->isEmpty() && !$voice->isRestVoice()) {

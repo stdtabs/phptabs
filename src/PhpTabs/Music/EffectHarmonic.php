@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -15,22 +15,22 @@ namespace PhpTabs\Music;
 
 final class EffectHarmonic
 {
-    const KEY_NATURAL     = "N.H";
-    const KEY_ARTIFICIAL  = "A.H";
-    const KEY_TAPPED      = "T.H";
-    const KEY_PINCH       = "P.H";
-    const KEY_SEMI        = "S.H";
+    public const KEY_NATURAL     = "N.H";
+    public const KEY_ARTIFICIAL  = "A.H";
+    public const KEY_TAPPED      = "T.H";
+    public const KEY_PINCH       = "P.H";
+    public const KEY_SEMI        = "S.H";
 
-    const TYPE_NATURAL    = 1;
-    const TYPE_ARTIFICIAL = 2;
-    const TYPE_TAPPED     = 3;
-    const TYPE_PINCH      = 4;
-    const TYPE_SEMI       = 5;
-    const MIN_ARTIFICIAL_OFFSET = -24;
-    const MAX_ARTIFICIAL_OFFSET = 24;
-    const MAX_TAPPED_OFFSET     = 24;
+    public const TYPE_NATURAL    = 1;
+    public const TYPE_ARTIFICIAL = 2;
+    public const TYPE_TAPPED     = 3;
+    public const TYPE_PINCH      = 4;
+    public const TYPE_SEMI       = 5;
+    public const MIN_ARTIFICIAL_OFFSET = -24;
+    public const MAX_ARTIFICIAL_OFFSET = 24;
+    public const MAX_TAPPED_OFFSET     = 24;
 
-    const NATURAL_FREQUENCIES = [
+    public const NATURAL_FREQUENCIES = [
         [12, 12], //AH12 (+12 frets)
         [ 9, 28], //AH9 (+28 frets)
         [ 5, 24], //AH5 (+24 frets)
@@ -64,26 +64,26 @@ final class EffectHarmonic
 
     public function isNatural(): bool
     {
-        return $this->type == EffectHarmonic::TYPE_NATURAL;
+        return $this->type === EffectHarmonic::TYPE_NATURAL;
     }
 
     public function isArtificial(): bool
     {
-        return $this->type == EffectHarmonic::TYPE_ARTIFICIAL;
+        return $this->type === EffectHarmonic::TYPE_ARTIFICIAL;
     }
 
     public function isTapped(): bool
     {
-        return $this->type == EffectHarmonic::TYPE_TAPPED;
+        return $this->type === EffectHarmonic::TYPE_TAPPED;
     }
 
     public function isPinch(): bool
     {
-        return $this->type == EffectHarmonic::TYPE_PINCH;
+        return $this->type === EffectHarmonic::TYPE_PINCH;
     }
 
     public function isSemi(): bool
     {
-        return $this->type == EffectHarmonic::TYPE_SEMI;
+        return $this->type === EffectHarmonic::TYPE_SEMI;
     }
 }

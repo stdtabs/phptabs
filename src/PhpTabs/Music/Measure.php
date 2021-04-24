@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -15,18 +15,22 @@ namespace PhpTabs\Music;
 
 final class Measure
 {
-    const CLEF_TREBLE = 1;
-    const CLEF_BASS   = 2;
-    const CLEF_TENOR  = 3;
-    const CLEF_ALTO   = 4;
+    public const CLEF_TREBLE = 1;
+    public const CLEF_BASS   = 2;
+    public const CLEF_TENOR  = 3;
+    public const CLEF_ALTO   = 4;
 
-    const DEFAULT_CLEF = 1;
-    const DEFAULT_KEY_SIGNATURE = 0;
+    public const DEFAULT_CLEF = 1;
+    public const DEFAULT_KEY_SIGNATURE = 0;
 
     private $header;
     private $track;
     private $clef;
     private $keySignature;
+
+    /**
+     * @var array<Beat>
+     */
     private $beats = [];
 
     public function __construct(MeasureHeader $header)
@@ -66,6 +70,9 @@ final class Measure
         $this->keySignature = $keySignature;
     }
 
+    /**
+     * @return array<Beat>
+     */
     public function getBeats(): array
     {
         return $this->beats;
@@ -88,9 +95,8 @@ final class Measure
     public function removeBeat(Beat $beat): void
     {
         foreach ($this->beats as $k => $v) {
-            if ($v == $beat) {
+            if ($v === $beat) {
                 array_splice($this->beats, $k, 1);
-
                 break;
             }
         }
@@ -176,7 +182,7 @@ final class Measure
         $beat = array_reduce(
             $this->beats,
             static function ($carry, $beat) use ($start) {
-                return $beat->getStart() == $start
+                return $beat->getStart() === $start
                     ? $beat : $carry;
             }
         );

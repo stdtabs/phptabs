@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -21,7 +21,7 @@ final class Tempo
     /**
      * @const SECOND_IN_MILLIS
      */
-    const SECOND_IN_MILLIS = 1000;
+    public const SECOND_IN_MILLIS = 1000;
 
     /**
      * Current value of the tempo
@@ -67,7 +67,7 @@ final class Tempo
      */
     public static function fromTPQ(int $tpq): Tempo
     {
-        $value = intval((60 * Tempo::SECOND_IN_MILLIS) / ($tpq / 1000));
+        $value = intval(60 * Tempo::SECOND_IN_MILLIS / ($tpq / 1000));
         $tempo = new Tempo();
         $tempo->setValue($value);
         return $tempo;

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -93,6 +93,8 @@ final class Chord
 
     /**
      * Gets list of strings ids
+     *
+     * @return array<int>
      */
     public function getStrings(): array
     {

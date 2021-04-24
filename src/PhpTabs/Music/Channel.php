@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -15,18 +15,18 @@ namespace PhpTabs\Music;
 
 final class Channel
 {
-    const DEFAULT_PERCUSSION_CHANNEL = 9;
-    const DEFAULT_PERCUSSION_PROGRAM = 0;
-    const DEFAULT_PERCUSSION_BANK    = 128;
+    public const DEFAULT_PERCUSSION_CHANNEL = 9;
+    public const DEFAULT_PERCUSSION_PROGRAM = 0;
+    public const DEFAULT_PERCUSSION_BANK    = 128;
 
-    const DEFAULT_BANK    = 0;
-    const DEFAULT_PROGRAM = 25;
-    const DEFAULT_VOLUME  = 127;
-    const DEFAULT_BALANCE = 64;
-    const DEFAULT_CHORUS  = 0;
-    const DEFAULT_REVERB  = 0;
-    const DEFAULT_PHASER  = 0;
-    const DEFAULT_TREMOLO = 0;
+    public const DEFAULT_BANK    = 0;
+    public const DEFAULT_PROGRAM = 25;
+    public const DEFAULT_VOLUME  = 127;
+    public const DEFAULT_BALANCE = 64;
+    public const DEFAULT_CHORUS  = 0;
+    public const DEFAULT_REVERB  = 0;
+    public const DEFAULT_PHASER  = 0;
+    public const DEFAULT_TREMOLO = 0;
 
     private $id  = 0;
     private $name       = '';
@@ -152,6 +152,9 @@ final class Channel
         $this->name = $name;
     }
 
+    /**
+     * @return array<ChannelParameter>
+     */
     public function getParameters(): array
     {
         return $this->parameters;
@@ -209,7 +212,8 @@ final class Channel
 
         $this->parameters = [];
 
-        for ($i = 0; $i < $channel->countParameters(); $i++) {
+        $count = $channel->countParameters();
+        for ($i = 0; $i < $count; $i++) {
             $this->addParameter(clone $channel->getParameter($i));
         }
     }

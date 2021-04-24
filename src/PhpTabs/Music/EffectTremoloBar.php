@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -18,8 +18,8 @@ namespace PhpTabs\Music;
  */
 final class EffectTremoloBar
 {
-    const MAX_POSITION_LENGTH = 12;
-    const MAX_VALUE_LENGTH    = 12;
+    public const MAX_POSITION_LENGTH = 12;
+    public const MAX_VALUE_LENGTH    = 12;
 
     private $points = [];
 
@@ -28,6 +28,9 @@ final class EffectTremoloBar
         $this->points[] = new EffectTremoloBarPoint($position, $value);
     }
 
+    /**
+     * @return array<EffectTremoloBarPoint>
+     */
     public function getPoints(): array
     {
         return $this->points;

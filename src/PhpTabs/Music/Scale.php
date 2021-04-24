@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -40,7 +40,7 @@ final class Scale
 
     public function getNote(int $note): int
     {
-        return $this->notes[(($note + (12 - $this->key)) % 12)];
+        return $this->notes[($note + 12 - $this->key) % 12];
     }
 
     public function clear(): void

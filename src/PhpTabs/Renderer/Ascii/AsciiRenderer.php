@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -24,10 +24,10 @@ class AsciiRenderer extends RendererHelper
     /**
      * Characters
      */
-    const DEADNOTE_CHR       = 'X';
-    const RESTBEAT_CHR       = '%';
-    const BAR_SEGMENT_CHR    = '|';
-    const STRING_SEGMENT_CHR = '-';
+    public const DEADNOTE_CHR       = 'X';
+    public const RESTBEAT_CHR       = '%';
+    public const BAR_SEGMENT_CHR    = '|';
+    public const STRING_SEGMENT_CHR = '-';
 
     /**
      * Song container

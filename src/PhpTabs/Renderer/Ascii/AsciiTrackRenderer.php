@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -23,7 +23,7 @@ class AsciiTrackRenderer
 {
     private static $TONIC_NAMES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
 
-    const MAX_LINE_LENGTH = 80;
+    public const MAX_LINE_LENGTH = 80;
 
     /**
      * Global track container

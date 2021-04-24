@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -15,8 +15,8 @@ namespace PhpTabs\Music;
 
 final class Track
 {
-    const MAX_OFFSET = 24;
-    const MIN_OFFSET = -24;
+    public const MAX_OFFSET = 24;
+    public const MIN_OFFSET = -24;
 
     private $number     = 0;
     private $offset     = 0;
@@ -46,6 +46,9 @@ final class Track
         $this->number = $number;
     }
 
+    /**
+     * @return array<Measure>
+     */
     public function getMeasures(): array
     {
         return $this->measures;
@@ -82,6 +85,9 @@ final class Track
         return count($this->measures);
     }
 
+    /**
+     * @return array<TabString>
+     */
     public function getStrings(): array
     {
         return $this->strings;
@@ -92,6 +98,9 @@ final class Track
         $this->strings[] = $string;
     }
 
+    /**
+     * @param array<TabString> $strings
+     */
     public function setStrings(array $strings): void
     {
         foreach ($strings as $string) {

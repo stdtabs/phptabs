@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace PhpTabs\Music;
 
-final class EffectTremoloBarPoint extends EffectPointsBase
+final class EffectBendPoint extends EffectPointsBase
 {
     public function getTime(int $duration): int
     {
         return intval(
             $duration * $this->getPosition()
-            / EffectTremoloBar::MAX_POSITION_LENGTH
+            / EffectBend::MAX_POSITION_LENGTH
         );
     }
 }

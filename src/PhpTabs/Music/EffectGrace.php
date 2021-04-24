@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -19,10 +19,10 @@ namespace PhpTabs\Music;
  */
 final class EffectGrace
 {
-    const TRANSITION_NONE   = 0;
-    const TRANSITION_SLIDE  = 1;
-    const TRANSITION_BEND   = 2;
-    const TRANSITION_HAMMER = 3;
+    public const TRANSITION_NONE   = 0;
+    public const TRANSITION_SLIDE  = 1;
+    public const TRANSITION_BEND   = 2;
+    public const TRANSITION_HAMMER = 3;
 
     private $fret     = 0;
     private $duration = 1;
@@ -100,7 +100,7 @@ final class EffectGrace
     public function getDurationTime(): int
     {
         return intval(
-            (Duration::QUARTER_TIME / 16.00 ) * $this->getDuration()
+            Duration::QUARTER_TIME / 16.00  * $this->getDuration()
         );
     }
 }

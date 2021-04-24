@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -20,9 +20,9 @@ namespace PhpTabs\Music;
  */
 final class MeasureHeader
 {
-    const TRIPLET_FEEL_NONE      = 1;
-    const TRIPLET_FEEL_EIGHTH    = 2;
-    const TRIPLET_FEEL_SIXTEENTH = 3;
+    public const TRIPLET_FEEL_NONE      = 1;
+    public const TRIPLET_FEEL_EIGHTH    = 2;
+    public const TRIPLET_FEEL_SIXTEENTH = 3;
 
     private $number            = 1;
     private $marker            = null;

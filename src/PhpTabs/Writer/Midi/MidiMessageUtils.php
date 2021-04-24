@@ -18,7 +18,7 @@ use PhpTabs\Reader\Midi\MidiMessage;
 
 class MidiMessageUtils
 {
-    const TICK_MOVE = 0x01;
+    public const TICK_MOVE = 0x01;
 
     private static function fixValue(int $value): int
     {

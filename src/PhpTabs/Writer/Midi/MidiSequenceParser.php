@@ -31,11 +31,11 @@ use PhpTabs\Music\Voice;
 
 class MidiSequenceParser
 {
-    const DEFAULT_METRONOME_KEY = 37;
-    const DEFAULT_DURATION_PM = 60;
-    const DEFAULT_DURATION_DEAD = 30;
-    const DEFAULT_BEND = 64;
-    const DEFAULT_BEND_SEMI_TONE = 2.75;
+    public const DEFAULT_METRONOME_KEY = 37;
+    public const DEFAULT_DURATION_PM = 60;
+    public const DEFAULT_DURATION_DEAD = 30;
+    public const DEFAULT_BEND = 64;
+    public const DEFAULT_BEND_SEMI_TONE = 2.75;
 
     private $song;
     private $flags;

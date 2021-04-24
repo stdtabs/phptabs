@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -19,10 +19,13 @@ final class Song extends SongBase
 {
     /**
      * Get the list of instruments
+     *
+     * @return array<key,array<int,string>>
      */
     public function getInstruments(): array
     {
-        if (!($count = $this->countChannels())) {
+        $count = $this->countChannels();
+        if (!$count) {
             return [];
         }
 
@@ -48,6 +51,8 @@ final class Song extends SongBase
 
     /**
      * Gets an instrument by channelId
+     *
+     * @return array<int,array<int,string>>
      */
     public function getInstrument(int $index): ?array
     {
@@ -69,7 +74,7 @@ final class Song extends SongBase
         $this->measureHeaders = array_filter(
             $this->measureHeaders,
             static function ($item) use ($measureHeader) {
-                return $item->getNumber() != $measureHeader->getNumber();
+                return $item->getNumber() !== $measureHeader->getNumber();
             }
         );
 
@@ -90,6 +95,9 @@ final class Song extends SongBase
         );
     }
 
+    /**
+     * @return array<MeasureHeader>
+     */
     public function getMeasureHeaders(): array
     {
         return $this->measureHeaders;
@@ -100,7 +108,7 @@ final class Song extends SongBase
         $track->setSong($this);
         $this->tracks[] = $track;
         // Track number has default value
-        if ($track->getNumber() == 0) {
+        if ($track->getNumber() === 0) {
             $track->setNumber($this->countTracks());
         }
     }
@@ -116,7 +124,7 @@ final class Song extends SongBase
         $this->tracks = array_filter(
             $this->tracks,
             static function ($item) use ($track) {
-                return $item->getNumber() != $track->getNumber();
+                return $item->getNumber() !== $track->getNumber();
             }
         );
 
@@ -137,6 +145,9 @@ final class Song extends SongBase
         );
     }
 
+    /**
+     * @return array<Track>
+     */
     public function getTracks(): array
     {
         return $this->tracks;
@@ -164,7 +175,7 @@ final class Song extends SongBase
         $this->channels = array_filter(
             $this->channels,
             static function ($item) use ($channel) {
-                return $item->getId() != $channel->getId();
+                return $item->getId() !== $channel->getId();
             }
         );
 
@@ -190,7 +201,7 @@ final class Song extends SongBase
         $channels = $this->getChannels();
 
         foreach ($channels as $channel) {
-            if ($channel->getId() == $channelId) {
+            if ($channel->getId() === $channelId) {
                 return $channel;
             }
         }
@@ -198,6 +209,9 @@ final class Song extends SongBase
         return null;
     }
 
+    /**
+     * @return array<Channel>
+     */
     public function getChannels(): array
     {
         return $this->channels;

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -15,14 +15,14 @@ namespace PhpTabs\Music;
 
 abstract class Velocities
 {
-    const MIN_VELOCITY       = 15;
-    const VELOCITY_INCREMENT = 16;
-    const PIANO_PIANISSIMO   = 15;
-    const PIANISSIMO         = 31;
-    const PIANO              = 47;
-    const MEZZO_PIANO        = 63;
-    const MEZZO_FORTE        = 79;
-    const FORTE              = 95;
-    const FORTE_FORTISSIMO   = 127;
-    const _DEFAULT           = 95; // FORTE
+    public const MIN_VELOCITY       = 15;
+    public const VELOCITY_INCREMENT = 16;
+    public const PIANO_PIANISSIMO   = 15;
+    public const PIANISSIMO         = 31;
+    public const PIANO              = 47;
+    public const MEZZO_PIANO        = 63;
+    public const MEZZO_FORTE        = 79;
+    public const FORTE              = 95;
+    public const FORTE_FORTISSIMO   = 127;
+    public const _DEFAULT           = 95; // FORTE
 }
