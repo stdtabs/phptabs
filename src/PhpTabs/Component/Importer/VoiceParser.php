@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -13,7 +15,7 @@ namespace PhpTabs\Component\Importer;
 
 use PhpTabs\Music\Voice;
 
-class VoiceParser extends ParserBase
+final class VoiceParser extends ParserBase
 {
     protected $required = ['duration', 'index', 'empty', 'direction', 'notes'];
 

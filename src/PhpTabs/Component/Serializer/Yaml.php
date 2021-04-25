@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -14,7 +16,7 @@ namespace PhpTabs\Component\Serializer;
 /**
  * Yaml serializer
  */
-class Yaml extends SerializerBase
+final class Yaml extends SerializerBase
 {
     public const INDENT_STEP = 2;
     public const INDENT_CHAR = ' ';
@@ -55,7 +57,6 @@ class Yaml extends SerializerBase
     }
 
     /**
-     * @param string          $index
      * @param string|int|bool $element
      */
     protected function appendText(string $index, $element): void
@@ -77,15 +78,17 @@ class Yaml extends SerializerBase
     private function formatValue($value): string
     {
         switch (true) {
-            case ($value === false):
+            case $value === false:
                 return 'false';
-            case ($value === true):
+            case $value === true:
                 return 'true';
             case is_string($value):
                 return sprintf('"%s"', $value);
+            case is_null($value):
+                return sprintf('%s', $value);
             case is_numeric($value):
                 return "{$value}";
-            case (strpos($value, PHP_EOL) !== false):
+            case strpos($value, PHP_EOL) !== false:
                 return $this->getMultilineString($value);
         }
 

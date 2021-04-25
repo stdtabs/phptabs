@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -13,7 +15,7 @@ namespace PhpTabs\Component\Importer;
 
 use PhpTabs\Music\Tempo;
 
-class TempoParser extends ParserBase
+final class TempoParser extends ParserBase
 {
     /**
      * Parse a tempo array

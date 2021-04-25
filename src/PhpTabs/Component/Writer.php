@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace PhpTabs\Component;
 
 use Exception;
-use PhpTabs\Component\Tablature;
 use PhpTabs\Writer\GuitarPro\GuitarPro3Writer;
 use PhpTabs\Writer\GuitarPro\GuitarPro4Writer;
 use PhpTabs\Writer\GuitarPro\GuitarPro5Writer;
@@ -24,8 +23,8 @@ use PhpTabs\Writer\Serialized\SerializedWriter;
 use PhpTabs\Writer\Text\TextWriter;
 use PhpTabs\Writer\Xml\XmlWriter;
 use PhpTabs\Writer\Yaml\YamlWriter;
-        
-class Writer
+
+final class Writer
 {
     /**
      * @var string $path
@@ -83,7 +82,7 @@ class Writer
      *
      * @throws \Exception if an incorrect destination path is supplied
      */
-    public function save(string $path, string $format = null): bool
+    public function save(string $path, ?string $format = null): bool
     {
         $parts = pathinfo($path);
 
@@ -118,7 +117,9 @@ class Writer
 
         if (!is_dir($dir) || !is_writable($dir)) {
             throw new Exception('Save directory error');
-        } elseif (is_file($this->path) && !is_writable($this->path)) {
+        }
+
+        if (is_file($this->path) && !is_writable($this->path)) {
             // @codeCoverageIgnoreStart
             $message = sprintf(
                 'File "%s" already exists and is not writable',

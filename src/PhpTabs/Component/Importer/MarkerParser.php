@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -13,7 +15,7 @@ namespace PhpTabs\Component\Importer;
 
 use PhpTabs\Music\Marker;
 
-class MarkerParser extends ParserBase
+final class MarkerParser extends ParserBase
 {
     protected $required = ['measure', 'title', 'color'];
 

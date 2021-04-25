@@ -14,14 +14,13 @@ declare(strict_types=1);
 namespace PhpTabs\Component;
 
 use Exception;
-use PhpTabs\Component\Tablature;
 use PhpTabs\Component\Exporter\ExporterBase;
 use PhpTabs\Component\Serializer\Text;
 use PhpTabs\Component\Serializer\Xml;
 use PhpTabs\Component\Serializer\Yaml;
 use PhpTabs\Music\Song;
 
-class Exporter extends ExporterBase
+final class Exporter extends ExporterBase
 {
     /**
      * @var \PhpTabs\Music\Song
@@ -29,7 +28,7 @@ class Exporter extends ExporterBase
     protected $song;
 
     /**
-     * @param \PhpTabs\Component\Tablature $tablature The tablature to export
+     * @param Tablature $tablature The tablature to export
      */
     public function __construct(Tablature $tablature)
     {

@@ -19,7 +19,7 @@ use PhpTabs\IOFactory;
 /**
  * File wrapper class
  */
-class FileInput
+final class FileInput
 {
     /**
      * @var string Path to the file
@@ -56,9 +56,9 @@ class FileInput
         $this->setPath($path);
         $informations = pathinfo($path);
 
-        $this->setDirname(isset($informations['dirname']) ? $informations['dirname'] : '');
-        $this->setBasename(isset($informations['basename']) ? $informations['basename'] : '');
-        $this->setExtension(isset($informations['extension']) ? $informations['extension'] : '');
+        $this->setDirname($informations['dirname'] ?? '');
+        $this->setBasename($informations['basename'] ?? '');
+        $this->setExtension($informations['extension'] ?? '');
         $this->content = new InputStream(file_get_contents($path));
     }
 

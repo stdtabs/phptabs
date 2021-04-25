@@ -17,7 +17,7 @@ use Exception;
 use PhpTabs\Component\Importer\ParserBase;
 use PhpTabs\Music\Song;
 
-class Importer extends ParserBase
+final class Importer extends ParserBase
 {
     /**
      * @var \PhpTabs\Music\Song

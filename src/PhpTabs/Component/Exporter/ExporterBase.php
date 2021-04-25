@@ -13,12 +13,18 @@ declare(strict_types=1);
 
 namespace PhpTabs\Component\Exporter;
 
-use PhpTabs\Music\{
-    Beat, Chord, Duration,
-    Marker, Measure, MeasureHeader,
-    Note, Song, TabString,
-    Text, TimeSignature, Voice
-};
+use PhpTabs\Music\Beat;
+use PhpTabs\Music\Chord;
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\Marker;
+use PhpTabs\Music\Measure;
+use PhpTabs\Music\MeasureHeader;
+use PhpTabs\Music\Note;
+use PhpTabs\Music\Song;
+use PhpTabs\Music\TabString;
+use PhpTabs\Music\Text;
+use PhpTabs\Music\TimeSignature;
+use PhpTabs\Music\Voice;
 
 abstract class ExporterBase extends ExporterEffects
 {
@@ -63,9 +69,6 @@ abstract class ExporterBase extends ExporterEffects
         return ['song' => $content];
     }
 
-    /**
-     * @param int $index
-     */
     protected function exportTrack(int $index): array
     {
         $track = $this->getSong()->getTrack($index);

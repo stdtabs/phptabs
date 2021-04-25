@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -14,7 +16,7 @@ namespace PhpTabs\Component\Importer;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\MeasureHeader;
 
-class MeasureParser extends ParserBase
+final class MeasureParser extends ParserBase
 {
     protected $required = ['clef', 'keySignature', 'beats'];
 

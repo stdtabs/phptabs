@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -16,13 +18,16 @@ use XMLWriter;
 /**
  * XML serializer
  */
-class Xml extends SerializerBase
+final class Xml extends SerializerBase
 {
+    /**
+     * @var XMLWriter
+     */
     protected $writer;
 
     public function __construct()
     {
-        $this->writer = new XMLWriter;
+        $this->writer = new XMLWriter();
         $this->writer->openMemory();
         $this->writer->setIndent(true);
     }
@@ -61,6 +66,8 @@ class Xml extends SerializerBase
             $element = 'false';
         } elseif ($element === true) {
             $element = 'true';
+        } elseif (is_numeric($element)) {
+            $element = "{$element}";
         }
 
         if (is_scalar($element)) {

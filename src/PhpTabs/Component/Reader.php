@@ -21,7 +21,7 @@ use PhpTabs\Reader\Json\JsonReader;
 use PhpTabs\Reader\Midi\MidiReader;
 use PhpTabs\Reader\Serialized\SerializedReader;
 
-class Reader
+final class Reader
 {
     /**
      * @var ReaderInterface bridge

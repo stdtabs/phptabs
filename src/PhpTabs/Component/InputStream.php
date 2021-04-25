@@ -18,7 +18,7 @@ use Exception;
 /**
  * A stream content
  */
-class InputStream
+final class InputStream
 {
     /**
      * @var int File size in bytes
@@ -68,10 +68,7 @@ class InputStream
     /**
      * Streams a binary file
      *
-     * @param int $bytes
-     * @param int $offset
-     *
-     * @return null|string A file segment
+     * @return string[null A file segment
      *
      * @throws Exception If asked position is larger than the file size
      */

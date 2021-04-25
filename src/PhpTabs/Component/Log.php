@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -46,15 +46,14 @@ abstract class Log
      *
      * @param string $type An optional string to filter by type
      *
-     * @return integer Number of messages
+     * @return int Number of messages
      */
-    public static function countLogs(string $type = null): int
+    public static function countLogs(?string $type = null): int
     {
         $count = 0;
 
-        foreach (self::$data as $log)
-        {
-            if (null === $type || $type == $log['type']) {
+        foreach (self::$data as $log) {
+            if (is_null($type) || $type === $log['type']) {
                 $count++;
             }
         }
@@ -65,22 +64,22 @@ abstract class Log
     /**
      * Gets last logged messages
      *
-     * @param integer $count Number of messages to get
-     * @param string  $type  Used to filter messages
+     * @param int    $count Number of messages to get
+     * @param string $type  Used to filter messages
      *
      * @return array A list of messages
      */
-    public static function tail(int $count = 50, string $type = null): array
+    public static function tail(int $count = 50, ?string $type = null): array
     {
         $messages = [];
 
         $ptrLogs = self::countLogs() - 1;
 
         for ($i = $ptrLogs; $i >= 0; $i--) {
-            if (null === $type || $type == self::$data[$i]['type']) {
+            if (is_null($type) || $type === self::$data[$i]['type']) {
                 array_push($messages, self::$data[$i]);
 
-                if (count($messages) == $count) {
+                if (count($messages) === $count) {
                     return $messages;
                 }
             }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -16,15 +18,12 @@ namespace PhpTabs\Component;
  */
 abstract class Autoloader
 {
-    static public function register(): void
+    public static function register(): void
     {
-        spl_autoload_register([__CLASS__, 'autoload'], true, true);
+        spl_autoload_register([self::class, 'autoload'], true, true);
     }
 
-    /**
-     * @return void
-     */
-    static public function autoload($class)
+    public static function autoload(string $class): void
     {
         $prefix = 'PhpTabs\\';
 

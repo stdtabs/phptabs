@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -11,7 +13,7 @@
 
 namespace PhpTabs\Component\Importer;
 
-class EffectPointsParser extends ParserBase
+final class EffectPointsParser extends ParserBase
 {
     protected $required = ['points'];
 

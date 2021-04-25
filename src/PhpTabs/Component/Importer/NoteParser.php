@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -13,7 +15,7 @@ namespace PhpTabs\Component\Importer;
 
 use PhpTabs\Music\Note;
 
-class NoteParser extends ParserBase
+final class NoteParser extends ParserBase
 {
     protected $required = ['value', 'velocity', 'string', 'tiedNote', 'effect'];
 

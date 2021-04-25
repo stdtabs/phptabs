@@ -25,15 +25,13 @@ abstract class RendererHelper implements RendererInterface
      *
      * @param  string     $name
      * @param  int|string $default
-     * @return null|int|string
+     * @return int|string|null
      * @api
      * @since  0.5.0
      */
     public function getOption(string $name, $default = null)
     {
-        return isset($this->options[$name])
-            ? $this->options[$name]
-            : $default;
+        return $this->options[$name] ?? $default;
     }
 
     /**

@@ -18,7 +18,7 @@ use PhpTabs\Component\Renderer\RendererInterface;
 use PhpTabs\Renderer\Ascii\AsciiRenderer;
 use PhpTabs\Renderer\VexTab\VexTabRenderer;
 
-class Renderer
+final class Renderer
 {
     /**
      * @var \PhpTabs\Component\Tablature
@@ -33,7 +33,7 @@ class Renderer
     /**
      * List of supported types of renders
      *
-     * @var array
+     * @var array<string,string>
      */
     private $formats = [
         'vextab'  => VexTabRenderer::class,
@@ -51,7 +51,7 @@ class Renderer
     /**
      * Set renderer format
      */
-    public function setFormat(string $format = null): RendererInterface
+    public function setFormat(?string $format = null): RendererInterface
     {
         if (!isset($this->formats[$format])) {
 

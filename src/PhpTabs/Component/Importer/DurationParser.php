@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -13,7 +15,7 @@ namespace PhpTabs\Component\Importer;
 
 use PhpTabs\Music\Duration;
 
-class DurationParser extends ParserBase
+final class DurationParser extends ParserBase
 {
     protected $required = ['value', 'dotted', 'doubleDotted', 'divisionType'];
 

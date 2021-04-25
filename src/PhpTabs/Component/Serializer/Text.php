@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -14,7 +16,7 @@ namespace PhpTabs\Component\Serializer;
 /**
  * Text serializer
  */
-class Text extends SerializerBase
+final class Text extends SerializerBase
 {
     public const INDENT_STEP = 2;
     public const INDENT_CHAR = ' ';
@@ -63,10 +65,12 @@ class Text extends SerializerBase
             $this->content .= 'false';
         } elseif ($element === true) {
             $this->content .= 'true';
-        } elseif (strpos($element, PHP_EOL) !== false) {
-            $this->writeMultilineString($element);
         } elseif (is_string($element)) {
-            $this->content .= sprintf('"%s"', $element);
+            if (strpos($element, PHP_EOL) !== false) {
+                $this->writeMultilineString($element);
+            } else {
+                $this->content .= sprintf('"%s"', $element);
+            }
         } elseif (is_numeric($element)) {
             $this->content .= $element;
         }

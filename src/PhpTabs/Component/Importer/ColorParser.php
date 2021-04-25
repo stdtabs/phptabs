@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -13,7 +15,7 @@ namespace PhpTabs\Component\Importer;
 
 use PhpTabs\Music\Color;
 
-class ColorParser extends ParserBase
+final class ColorParser extends ParserBase
 {
     protected $required = ['R', 'G', 'B'];
 

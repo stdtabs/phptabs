@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -20,7 +22,7 @@ abstract class SerializerBase
     {
         array_walk(
             $nodes,
-            function ($node, $index) {
+            function ($node, $index): void {
                 // List
                 if (is_array($node) && is_int($index)) {
 
@@ -40,6 +42,6 @@ abstract class SerializerBase
         );
     }
 
-    protected abstract function appendNode(string $index, array $element): void;
-    protected abstract function appendText(string $index, array $element): void;
+    abstract protected function appendNode(string $index, array $element): void;
+    abstract protected function appendText(string $index, array $element): void;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -13,7 +15,7 @@ namespace PhpTabs\Component\Importer;
 
 use PhpTabs\Music\MeasureHeader;
 
-class MeasureHeaderParser extends ParserBase
+final class MeasureHeaderParser extends ParserBase
 {
     protected $required = [
       'number',
@@ -53,7 +55,7 @@ class MeasureHeaderParser extends ParserBase
             );
         }
 
-        $header->setRepeatOpen($data['repeatOpen']);
+        $header->setRepeatOpen((int)$data['repeatOpen']);
         $header->setRepeatAlternative($data['repeatAlternative']);
         $header->setRepeatClose($data['repeatClose']);
         $header->setTripletFeel($data['tripletFeel']);

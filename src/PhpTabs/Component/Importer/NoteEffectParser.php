@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -15,7 +17,7 @@ use PhpTabs\Music\EffectBend;
 use PhpTabs\Music\EffectTremoloBar;
 use PhpTabs\Music\NoteEffect;
 
-class NoteEffectParser extends ParserBase
+final class NoteEffectParser extends ParserBase
 {
     protected $required = [
         'bend',

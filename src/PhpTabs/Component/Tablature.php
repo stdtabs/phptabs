@@ -18,7 +18,7 @@ use PhpTabs\Component\Renderer\RendererInterface;
 use PhpTabs\PhpTabs;
 use PhpTabs\Music\Song;
 
-class Tablature
+final class Tablature
 {
     public const DEFAULT_FILE_FORMAT = 'gp3';
 
@@ -180,7 +180,8 @@ class Tablature
         $keepTracks   = [];
         $keepChannels = [];
 
-        for ($i = 0; $i < $tabs->countTracks(); $i++) {
+        $count = $tabs->countTracks();
+        for ($i = 0; $i < $count; $i++) {
             if ($i >= $fromTrackIndex && $i <= $toTrackIndex) {
                 array_push($keepTracks, $tabs->getTrack($i)->getNumber());
                 array_push($keepChannels, $tabs->getTrack($i)->getChannelId());
@@ -223,7 +224,8 @@ class Tablature
         $keepMeasures = [];
 
         // Get the measures to keep
-        for ($i = 0; $i < $tabs->countMeasureHeaders(); $i++) {
+        $count = $tabs->countMeasureHeaders();
+        for ($i = 0; $i < $count; $i++) {
             if ($i >= $fromMeasureIndex && $i <= $toMeasureIndex) {
                 array_push($keepMeasures, $tabs->getMeasureHeader($i)->getNumber());
             }
@@ -257,7 +259,7 @@ class Tablature
     /**
      * Prepare a renderer
      */
-    public function getRenderer(string $format = null): RendererInterface
+    public function getRenderer(?string $format = null): RendererInterface
     {
         return (new Renderer($this))->setFormat($format);
     }
@@ -273,7 +275,7 @@ class Tablature
     /**
      * Write a song into a file
      */
-    public function save(string $filename, string $format = null): bool
+    public function save(string $filename, ?string $format = null): bool
     {
         return $this->writer()->save($filename, $format);
     }
@@ -281,9 +283,9 @@ class Tablature
     /**
      * Build a binary starting from Music model
      */
-    public function convert(string $format = null): string
+    public function convert(?string $format = null): string
     {
-        if (null === $format) {
+        if (is_null($format)) {
             $format = $this->getFormat();
         }
 

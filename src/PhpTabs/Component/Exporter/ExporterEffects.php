@@ -130,7 +130,7 @@ abstract class ExporterEffects
     {
         return array_reduce(
             $points,
-            function ($carry, $point) {
+            static function ($carry, $point): array {
                 $carry[] = [
                     'position'  => $point->getPosition(),
                     'value'     => $point->getValue()
