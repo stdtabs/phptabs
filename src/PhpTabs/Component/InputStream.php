@@ -50,14 +50,6 @@ final class InputStream
     }
 
     /**
-     * @param int $size size of the stream (bytes)
-     */
-    private function setSize(int $size): void
-    {
-        $this->size = $size;
-    }
-
-    /**
      * @return int size of the file (bytes)
      */
     public function getSize(): int
@@ -72,7 +64,7 @@ final class InputStream
      *
      * @throws Exception If asked position is larger than the file size
      */
-    public function getStream(int $bytes = 1, int $offset = null): ?string
+    public function getStream(int $bytes = 1, ?int $offset = null): ?string
     {
         if ($this->handle + $bytes > $this->getSize()) {
             throw new Exception('Pointer');
@@ -84,8 +76,7 @@ final class InputStream
         }
 
         // Read $bytes with no offset
-        if (null === $offset) {
-
+        if (is_null($offset)) {
             $this->stream = substr($this->content, $this->handle, $bytes);
             $this->handle += $bytes;
 
@@ -114,5 +105,13 @@ final class InputStream
     public function closeStream(): void
     {
         $this->handle = 0;
+    }
+
+    /**
+     * @param int $size size of the stream (bytes)
+     */
+    private function setSize(int $size): void
+    {
+        $this->size = $size;
     }
 }

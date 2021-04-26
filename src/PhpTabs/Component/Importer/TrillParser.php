@@ -21,7 +21,7 @@ final class TrillParser extends ParserBase
 
     /**
      * Parse a trill effect array
-     * 
+     *
      * @param array $data
      */
     public function __construct(array $data)

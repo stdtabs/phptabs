@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace PhpTabs\Share;
 
-class ChannelRoute
+final class ChannelRoute
 {
-    const PARAMETER_CHANNEL_1 = "channel-1";
-    const PARAMETER_CHANNEL_2 = "channel-2";
-
-    const NULL_VALUE = -1;
+    public const PARAMETER_CHANNEL_1 = 'channel-1';
+    public const PARAMETER_CHANNEL_2 = 'channel-2';
+    public const NULL_VALUE = -1;
 
     /**
      * @var int
@@ -72,8 +71,8 @@ class ChannelRoute
      */
     public function equals(ChannelRoute $route): bool
     {
-        return $this->channelId == $route->getChannelId()
-            && $this->channel1  == $route->getChannel1()
-            && $this->channel2  == $route->getChannel2();
+        return $this->channelId === $route->getChannelId()
+            && $this->channel1  === $route->getChannel1()
+            && $this->channel2  === $route->getChannel2();
     }
 }

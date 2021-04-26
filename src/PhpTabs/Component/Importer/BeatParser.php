@@ -30,7 +30,7 @@ final class BeatParser extends ParserBase
 
         $beat = new Beat();
         $beat->setStart($data['start']);
-    
+
         if (isset($data['chord'])) {
             $beat->setChord(
                 $this->parseChord($data['chord'])

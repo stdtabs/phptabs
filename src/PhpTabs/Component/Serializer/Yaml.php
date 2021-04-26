@@ -70,6 +70,11 @@ final class Yaml extends SerializerBase
         );
     }
 
+    protected function indent(): string
+    {
+        return str_repeat(Text::INDENT_CHAR, $this->depth * Text::INDENT_STEP);
+    }
+
     /**
      * Format a string value
      *
@@ -115,10 +120,5 @@ final class Yaml extends SerializerBase
         $this->depth--;
 
         return $content;
-    }
-
-    protected function indent(): string
-    {
-        return str_repeat(Text::INDENT_CHAR, $this->depth * Text::INDENT_STEP);
     }
 }

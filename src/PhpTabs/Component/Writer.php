@@ -40,18 +40,18 @@ final class Writer
      * @var array A list of available writers and their bridges
      */
     private $writers = [
-        'gp3' => GuitarPro3Writer::class,
-        'gp4' => GuitarPro4Writer::class,
-        'gp5' => GuitarPro5Writer::class,
-        'json'=> JsonWriter::class,
-        'mid' => MidiWriter::class,
-        'midi'=> MidiWriter::class,
-        'ser' => SerializedWriter::class,
-        'text'=> TextWriter::class,
-        'txt' => TextWriter::class,
-        'xml' => XmlWriter::class,
-        'yaml'=> YamlWriter::class,
-        'yml' => YamlWriter::class,
+        'gp3'  => GuitarPro3Writer::class,
+        'gp4'  => GuitarPro4Writer::class,
+        'gp5'  => GuitarPro5Writer::class,
+        'json' => JsonWriter::class,
+        'mid'  => MidiWriter::class,
+        'midi' => MidiWriter::class,
+        'ser'  => SerializedWriter::class,
+        'text' => TextWriter::class,
+        'txt'  => TextWriter::class,
+        'xml'  => XmlWriter::class,
+        'yaml' => YamlWriter::class,
+        'yml'  => YamlWriter::class,
     ];
 
     public function __construct(Tablature $tablature)
@@ -115,11 +115,11 @@ final class Writer
     {
         $dir = pathinfo($this->path, PATHINFO_DIRNAME);
 
-        if (!is_dir($dir) || !is_writable($dir)) {
+        if (! is_dir($dir) || ! is_writable($dir)) {
             throw new Exception('Save directory error');
         }
 
-        if (is_file($this->path) && !is_writable($this->path)) {
+        if (is_file($this->path) && ! is_writable($this->path)) {
             // @codeCoverageIgnoreStart
             $message = sprintf(
                 'File "%s" already exists and is not writable',

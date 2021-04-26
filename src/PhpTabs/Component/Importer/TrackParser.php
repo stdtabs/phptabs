@@ -19,16 +19,16 @@ use PhpTabs\Music\Track;
 final class TrackParser extends ParserBase
 {
     protected $required = [
-      'number',
-      'offset',
-      'channelId',
-      'solo',
-      'mute',
-      'name',
-      'color',
-      'lyrics',
-      'measures',
-      'strings'
+        'number',
+        'offset',
+        'channelId',
+        'solo',
+        'mute',
+        'name',
+        'color',
+        'lyrics',
+        'measures',
+        'strings'
     ];
 
     /**
@@ -47,7 +47,7 @@ final class TrackParser extends ParserBase
         $track->setChannelId($data['channelId']);
         $track->setSolo($data['solo']);
         $track->setMute($data['mute']);
-        $track->setName((string)$data['name']);
+        $track->setName(strval($data['name']));
 
         $track->setColor(
             $this->parseColor($data['color'])

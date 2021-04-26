@@ -16,8 +16,11 @@ namespace PhpTabs\Share;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\Measure;
 
-class MeasureVoiceJoiner
+final class MeasureVoiceJoiner
 {
+    /**
+     * @var Measure
+     */
     private $measure;
 
     public function __construct(Measure $measure)
@@ -42,15 +45,18 @@ class MeasureVoiceJoiner
         $measureStart = $this->measure->getStart();
         $measureEnd = $measureStart + $this->measure->getLength();
 
-        for ($i = 0; $i < $this->measure->countBeats(); $i++) {
+        $countBeats = $this->measure->countBeats();
+        for ($i = 0; $i <  $countBeats; $i++) {
             $beat = $this->measure->getBeat($i);
             $voice = $beat->getVoice(0);
 
-            for ($v = 1; $v < $beat->countVoices(); $v++) {
+            $countVoices = $beat->countVoices();
+            for ($v = 1; $v < $countVoices; $v++) {
                 $currentVoice = $beat->getVoice($v);
 
                 if (!$currentVoice->isEmpty()) {
-                    for ($n = 0; $n < $currentVoice->countNotes(); $n++) {
+                    $countNotes = $currentVoice->countNotes();
+                    for ($n = 0; $n < $countNotes; $n++) {
                         $note = $currentVoice->getNote($n);
                         $voice->addNote($note);
                     }
@@ -69,7 +75,8 @@ class MeasureVoiceJoiner
                 $previousStart = $previous->getStart();
 
                 $previousBestDuration = null;
-                for ($v = 0; $v < $previous->countVoices(); $v++) {
+                $countVoices = $previous->countVoices();
+                for ($v = 0; $v < $countVoices; $v++) {
                     $previousVoice = $previous->getVoice($v);
 
                     if (!$previousVoice->isEmpty()) {
@@ -97,21 +104,22 @@ class MeasureVoiceJoiner
             }
 
             $beatBestDuration = null;
-            for ($v = 0; $v < $beat->countVoices(); $v++) {
+            $count = $beat->countVoices();
+            for ($v = 0; $v < $count; $v++) {
                 $currentVoice = $beat->getVoice($v);
 
                 if (!$currentVoice->isEmpty()) {
                     $length = $currentVoice->getDuration()->getTime();
 
                     if ($beatStart + $length <= $measureEnd) {
-                        if ($beatBestDuration === null || $length > $beatBestDuration->getTime()) {
+                        if (is_null($beatBestDuration) || $length > $beatBestDuration->getTime()) {
                             $beatBestDuration = $currentVoice->getDuration();
                         }
                     }
                 }
             }
 
-            if ($beatBestDuration === null) {
+            if (is_null($beatBestDuration)) {
                 if ($voice->isRestVoice()) {
                     $this->measure->removeBeat($beat);
                     $finish = false;
@@ -130,13 +138,14 @@ class MeasureVoiceJoiner
 
     public function orderBeats(): void
     {
-        for ($i = 0; $i < $this->measure->countBeats(); $i++) {
+        $count =  $this->measure->countBeats();
+        for ($i = 0; $i < $count; $i++) {
             $minBeat = null;
 
-            for ($j = $i; $j < $this->measure->countBeats(); $j++) {
+            for ($j = $i; $j < $count; $j++) {
                 $beat = $this->measure->getBeat($j);
 
-                if ($minBeat === null || $beat->getStart() < $minBeat->getStart()) {
+                if (is_null($minBeat) || $beat->getStart() < $minBeat->getStart()) {
                     $minBeat = $beat;
                 }
             }

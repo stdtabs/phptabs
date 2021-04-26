@@ -54,7 +54,6 @@ final class Renderer
     public function setFormat(?string $format = null): RendererInterface
     {
         if (!isset($this->formats[$format])) {
-
             $message = sprintf(
                 'Output format "%s" is not supported',
                 $format

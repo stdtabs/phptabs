@@ -38,7 +38,7 @@ abstract class ParserBase
     {
         foreach ($keys as $key) {
             if (!\array_key_exists($key, $data)) {
-                throw new Exception("Invalid data: '$key' key must be set");
+                throw new Exception("Invalid data: '{$key}' key must be set");
             }
         }
     }
@@ -60,12 +60,12 @@ abstract class ParserBase
      * @param  array  $arguments Some arguments for the method
      * @return mixed
      */
-    public function __call($name, array $arguments = [])
+    public function __call(string $name, array $arguments = [])
     {
-        $parserName = 
+        $parserName =
             __NAMESPACE__
             . '\\'
-            . str_replace('parse', '', $name) 
+            . str_replace('parse', '', $name)
             . 'Parser';
 
         return (new $parserName(...$arguments))->parse();

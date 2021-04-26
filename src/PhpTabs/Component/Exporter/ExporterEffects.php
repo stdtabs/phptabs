@@ -13,10 +13,13 @@ declare(strict_types=1);
 
 namespace PhpTabs\Component\Exporter;
 
-use PhpTabs\Music\{
-    Duration, EffectBend, EffectGrace, EffectHarmonic,
-    EffectTremoloPicking, EffectTrill, NoteEffect
-};
+use PhpTabs\Music\Duration;
+use PhpTabs\Music\EffectBend;
+use PhpTabs\Music\EffectGrace;
+use PhpTabs\Music\EffectHarmonic;
+use PhpTabs\Music\EffectTremoloPicking;
+use PhpTabs\Music\EffectTrill;
+use PhpTabs\Music\NoteEffect;
 
 abstract class ExporterEffects
 {
@@ -89,7 +92,7 @@ abstract class ExporterEffects
     /**
      * Export an harmonic effect as an array
      */
-    protected function exportHarmonic(EffectHarmonic $effect = null): ?array
+    protected function exportHarmonic(?EffectHarmonic $effect = null): ?array
     {
         return is_object($effect) ? [
             'type'         => $effect->getType(),
@@ -105,7 +108,7 @@ abstract class ExporterEffects
     /**
      * Export a trill as an array
      */
-    protected function exportTrill(EffectTrill $effect = null): ?array
+    protected function exportTrill(?EffectTrill $effect = null): ?array
     {
         return is_object($effect) ? [
             'fret'      => $effect->getFret(),
@@ -116,7 +119,7 @@ abstract class ExporterEffects
     /**
      * Export a tremolo pocking as an array
      */
-    protected function exportTremoloPicking(EffectTremoloPicking $effect = null): ?array
+    protected function exportTremoloPicking(?EffectTremoloPicking $effect = null): ?array
     {
         return is_object($effect) ? [
             'duration'  => $this->exportDuration($effect->getDuration())

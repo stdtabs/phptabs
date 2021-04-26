@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace PhpTabs\Share;
 
-class ChannelRouter
+final class ChannelRouter
 {
     public const MAX_CHANNELS = 16;
     public const PERCUSSION_CHANNEL = 9;
 
     /**
-     * @var array
+     * @var array<ChannelRoute>
      */
     private $midiChannels = [];
 
@@ -33,7 +33,7 @@ class ChannelRouter
         array_walk(
             $this->midiChannels,
             function ($channel, $key) use ($route): void {
-                if ($channel->getRoute() == $route) {
+                if ($channel->getRoute() === $route) {
                     array_splice($this->midiChannels, $key, 1);
                 }
             }
@@ -47,8 +47,8 @@ class ChannelRouter
 
     private function reducer(int $channelId): callable
     {
-        return function ($carry, $item) use ($channelId) {
-            if ($item->getChannelId() == $channelId) {
+        return static function ($carry, $item) use ($channelId) {
+            if ($item->getChannelId() === $channelId) {
                 $carry = $item;
             }
 
@@ -61,7 +61,7 @@ class ChannelRouter
         $conflictingRoutes = null;
 
         foreach ($this->midiChannels as $key => $channel) {
-            if ($this->getRoute($key) == $route) {
+            if ($this->getRoute($key) === $route) {
                 array_splice($this->midiChannels, $key, 1);
             }
         }
@@ -103,11 +103,11 @@ class ChannelRouter
         $routes = [];
 
         foreach ($this->midiChannels as $route) {
-            if ($route != $channelRoute) {
-                if ($route->getChannel1() == $channelRoute->getChannel1()
-                    || $route->getChannel1() == $channelRoute->getChannel2()
-                    || $route->getChannel2() == $channelRoute->getChannel1()
-                    || $route->getChannel2() == $channelRoute->getChannel2()
+            if ($route !== $channelRoute) {
+                if ($route->getChannel1() === $channelRoute->getChannel1()
+                    || $route->getChannel1() === $channelRoute->getChannel2()
+                    || $route->getChannel2() === $channelRoute->getChannel1()
+                    || $route->getChannel2() === $channelRoute->getChannel2()
                 ) {
                     $routes[] = $route;
                 }
@@ -117,17 +117,17 @@ class ChannelRouter
         return $routes;
     }
 
-    public function getFreeChannels(ChannelRoute $forRoute = null): array
+    public function getFreeChannels(?ChannelRoute $forRoute = null): array
     {
         $freeChannels = [];
 
         for ($ch = 0; $ch < ChannelRouter::MAX_CHANNELS; $ch++) {
-            if ($ch != ChannelRouter::PERCUSSION_CHANNEL) {
+            if ($ch !== ChannelRouter::PERCUSSION_CHANNEL) {
                 $isFreeChannel = true;
 
                 foreach ($this->midiChannels as $route) {
-                    if ($forRoute === null || !$forRoute->equals($route)) {
-                        if ($route->getChannel1() == $ch || $route->getChannel2() == $ch) {
+                    if (is_null($forRoute) || !$forRoute->equals($route)) {
+                        if ($route->getChannel1() === $ch || $route->getChannel2() === $ch) {
                             $isFreeChannel = false;
                         }
                     }

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace PhpTabs\Component;
 
-use Exception;
 use PhpTabs\Component\Exporter\ExporterBase;
 use PhpTabs\Component\Serializer\Text;
 use PhpTabs\Component\Serializer\Xml;
@@ -60,7 +59,7 @@ final class Exporter extends ExporterBase
         // characters, possibly incorrectly encoded
         return json_encode(
             $this->exportSong(),
-            $flags | JSON_INVALID_UTF8_SUBSTITUTE | JSON_UNESCAPED_UNICODE 
+            $flags | JSON_INVALID_UTF8_SUBSTITUTE | JSON_UNESCAPED_UNICODE
         );
     }
 

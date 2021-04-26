@@ -21,7 +21,7 @@ final class TremoloPickingParser extends ParserBase
 
     /**
      * Parse a tremolo picking effect array
-     * 
+     *
      * @param array $data
      */
     public function __construct(array $data)

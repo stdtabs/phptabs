@@ -18,14 +18,14 @@ use PhpTabs\Music\MeasureHeader;
 final class MeasureHeaderParser extends ParserBase
 {
     protected $required = [
-      'number',
-      'start',
-      'timeSignature',
-      'tempo',
-      'repeatOpen',
-      'repeatAlternative',
-      'repeatClose',
-      'tripletFeel'
+        'number',
+        'start',
+        'timeSignature',
+        'tempo',
+        'repeatOpen',
+        'repeatAlternative',
+        'repeatClose',
+        'tripletFeel'
     ];
 
     /**
@@ -55,7 +55,7 @@ final class MeasureHeaderParser extends ParserBase
             );
         }
 
-        $header->setRepeatOpen((int)$data['repeatOpen']);
+        $header->setRepeatOpen(intval($data['repeatOpen']));
         $header->setRepeatAlternative($data['repeatAlternative']);
         $header->setRepeatClose($data['repeatClose']);
         $header->setTripletFeel($data['tripletFeel']);

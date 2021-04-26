@@ -43,10 +43,10 @@ final class NoteEffectParser extends ParserBase
     ];
 
     private $parsers = [
-    'harmonic'        => 'Harmonic',
-    'grace'           => 'Grace',
-    'trill'           => 'Trill',
-    'tremoloPicking'  => 'TremoloPicking'
+        'harmonic'        => 'Harmonic',
+        'grace'           => 'Grace',
+        'trill'           => 'Trill',
+        'tremoloPicking'  => 'TremoloPicking'
     ];
 
     private $autoset = [
@@ -86,8 +86,6 @@ final class NoteEffectParser extends ParserBase
      * Create bend and tremolo bar values
      *
      * @param array $data
-     *
-     * @return void
      */
     private function createBendAndTremolo(array $data): void
     {
@@ -108,8 +106,6 @@ final class NoteEffectParser extends ParserBase
      * Create attributes
      *
      * @param array $data
-     *
-     * @return void
      */
     private function createAttributes(array $data): void
     {
@@ -117,7 +113,7 @@ final class NoteEffectParser extends ParserBase
             if ($data[$name] !== null) {
                 $setter = 'set' . $parser;
                 $getter = 'parse' . $parser;
-        
+
                 $this->item->$setter(
                     $this->$getter($data[$name])
                 );

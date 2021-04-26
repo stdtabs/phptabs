@@ -13,10 +13,9 @@ declare(strict_types=1);
 
 namespace PhpTabs\Component;
 
-use Exception;
 use PhpTabs\Component\Renderer\RendererInterface;
-use PhpTabs\PhpTabs;
 use PhpTabs\Music\Song;
+use PhpTabs\PhpTabs;
 
 final class Tablature
 {

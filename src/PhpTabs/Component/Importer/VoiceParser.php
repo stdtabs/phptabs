@@ -21,11 +21,11 @@ final class VoiceParser extends ParserBase
 
     /**
      * Parse a voice array
-     * 
+     *
      * @param int   $index
      * @param array $data
      */
-    public function __construct($index, array $data)
+    public function __construct(int $index, array $data)
     {
         $this->checkKeys($data, $this->required);
 

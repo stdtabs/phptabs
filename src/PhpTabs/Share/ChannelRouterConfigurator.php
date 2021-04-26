@@ -16,8 +16,11 @@ namespace PhpTabs\Share;
 use PhpTabs\Music\Channel;
 use PhpTabs\Music\ChannelParameter;
 
-class ChannelRouterConfigurator
+final class ChannelRouterConfigurator
 {
+    /**
+     * @var ChannelRouter
+     */
     private $router;
 
     public function __construct(ChannelRouter $router)
@@ -62,7 +65,7 @@ class ChannelRouterConfigurator
         $parameters = $channel->getParameters();
 
         foreach ($parameters as $parameter) {
-            if ($parameter->getKey() == $key) {
+            if ($parameter->getKey() === $key) {
                 return $parameter;
             }
         }
