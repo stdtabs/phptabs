@@ -22,7 +22,7 @@ use PhpTabs\Music\Measure;
 use PhpTabs\Music\Note;
 use PhpTabs\Music\Track;
 
-class VexTabTrackRenderer
+final class VexTabTrackRenderer
 {
     /**
      * A basic stave template
@@ -238,7 +238,7 @@ class VexTabTrackRenderer
 
     private function isLastMeasure(Measure $measure): bool
     {
-        return $measure->getNumber() == $this->track->countMeasures();
+        return $measure->getNumber() === $this->track->countMeasures();
     }
 
     /**
@@ -250,7 +250,7 @@ class VexTabTrackRenderer
         $denominator  = $measure->getTimeSignature()->getDenominator()->getValue();
 
         $this->options->add('tempo', $measure->getTempo()->getValue());
-        $this->options->add('clef',  $this->getClefName($measure));
+        $this->options->add('clef', $this->getClefName($measure));
 
         $this->staves = sprintf(
             $this->optionsTpl,
@@ -263,7 +263,7 @@ class VexTabTrackRenderer
             $this->options->render('stave')
         );
 
-        $this->staves .= " time=$numerator/$denominator\n";
+        $this->staves .= " time={$numerator}/{$denominator}\n";
     }
 
     /**
@@ -321,7 +321,7 @@ class VexTabTrackRenderer
      */
     private function renderDuration(): void
     {
-        if ($this->lastDuration == ''
+        if ($this->lastDuration === ''
             || $this->lastDuration !== $this->tmpDuration
         ) {
             $this->staves    .= $this->tmpDuration;
@@ -365,9 +365,9 @@ class VexTabTrackRenderer
         return sprintf(
             '%s%s%s%s/%s%s%s',
             $this->lastBeatContext->getPrevPrefix($note),
-            $this->lastBeatContext->getPrevPrefix($note) == ''
-            ? $this->beatContext->getPrefix($note) : '',
-            $note->getEffect()->isDeadNote()? 'X' : $note->getValue(),
+            $this->lastBeatContext->getPrevPrefix($note) === ''
+                ? $this->beatContext->getPrefix($note) : '',
+            $note->getEffect()->isDeadNote() ? 'X' : $note->getValue(),
             $this->beatContext->getSuffix($note),
             $note->getString(),
             !$this->beatContext->isChordBeat() ? ' ' : '',
@@ -412,7 +412,7 @@ class VexTabTrackRenderer
         return sprintf(
             ':%s%s%s ',
             $this->defDuration[
-            $duration->getValue()
+                $duration->getValue()
             ],
             $duration->isDotted()       ? 'd'  : '',
             $duration->isDoubleDotted() ? 'dd' : ''

@@ -15,7 +15,7 @@ namespace PhpTabs\Renderer\VexTab;
 
 use PhpTabs\Component\Renderer\RendererInterface;
 
-class VexTabOptions
+final class VexTabOptions
 {
     /**
      * Global options

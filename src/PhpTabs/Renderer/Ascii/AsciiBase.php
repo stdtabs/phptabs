@@ -15,7 +15,7 @@ namespace PhpTabs\Renderer\Ascii;
 
 use Exception;
 
-class AsciiBase
+abstract class AsciiBase
 {
     /**
      * @var array
@@ -160,7 +160,8 @@ class AsciiBase
 
         $this->movePoint($x + 1, $this->getPosY());
 
-        for ($i = 0; $i < mb_strlen($data); $i++) {
+        $length = mb_strlen($data);
+        for ($i = 0; $i < $length; $i++) {
             $this->write(
                 $this->getPosX() + $i,
                 $this->getPosY(),
@@ -220,8 +221,12 @@ class AsciiBase
      */
     private function findMaxValue(): int
     {
-        return array_reduce($this->content, function ($carry, $item) {
-            return max($carry, max(array_keys($item)));
-        }, 0);
+        return array_reduce(
+            $this->content,
+            static function ($carry, $item) {
+                return max($carry, max(array_keys($item)));
+            },
+            0
+        );
     }
 }

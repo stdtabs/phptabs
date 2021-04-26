@@ -21,7 +21,7 @@ use PhpTabs\Music\Note;
 use PhpTabs\Music\TabString;
 use PhpTabs\Music\Voice;
 
-class AsciiMeasureRenderer
+final class AsciiMeasureRenderer
 {
     /**
      * Measure container
@@ -111,7 +111,9 @@ class AsciiMeasureRenderer
             if ($current->getStart() > $beat->getStart()) {
                 if ($next === null) {
                     return $current;
-                } elseif ($current->getStart() < $next->getStart()) {
+                }
+
+                if ($current->getStart() < $next->getStart()) {
                     return $current;
                 }
             }
@@ -170,15 +172,15 @@ class AsciiMeasureRenderer
     private function getDurationScaping(int $length): int
     {
         switch (true) {
-            case $length <= (Duration::QUARTER_TIME / 8):
+            case $length <= Duration::QUARTER_TIME / 8:
                 return 2;
-            case $length <= (Duration::QUARTER_TIME / 4):
+            case $length <= Duration::QUARTER_TIME / 4:
                 return 3;
-            case $length <= (Duration::QUARTER_TIME / 2):
+            case $length <= Duration::QUARTER_TIME / 2:
                 return 4;
             case $length <= Duration::QUARTER_TIME:
                 return 5;
-            case $length <= (Duration::QUARTER_TIME * 2):
+            case $length <= Duration::QUARTER_TIME * 2:
                 return 6;
         }
 

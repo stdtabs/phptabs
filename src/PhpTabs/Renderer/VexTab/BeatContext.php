@@ -17,7 +17,7 @@ use PhpTabs\Music\Beat;
 use PhpTabs\Music\Note;
 use PhpTabs\Music\Stroke;
 
-class BeatContext
+final class BeatContext
 {
     /**
      * Referenced Beat
@@ -34,7 +34,7 @@ class BeatContext
     private $tupletCounter = 0;
 
     /**
-     * @var null|bool
+     * @var bool|null
      */
     private $isChordBeat;
 
@@ -59,20 +59,20 @@ class BeatContext
         $voice = $this->beat->getVoice(0);
 
         if (!$voice->countNotes()) {
-            return ($this->isChordBeat = false);
+            return $this->isChordBeat = false;
         }
 
         if ($voice->countNotes() > 1) {
-            return ($this->isChordBeat = true);
+            return $this->isChordBeat = true;
         }
 
         if ($voice->getNote(0)->getEffect()->isVibrato()
             && $this->beat->getStroke()->getDirection() !== Stroke::STROKE_NONE
         ) {
-            return ($this->isChordBeat = true);
+            return $this->isChordBeat = true;
         }
 
-        return ($this->isChordBeat = false);
+        return $this->isChordBeat = false;
     }
 
     /**
@@ -141,8 +141,9 @@ class BeatContext
         }
 
         $lastCounter = $lastBeatContext->getTupletCounter();
-
-        if (++$lastCounter == $enters) {
+        $lastCounter++;
+        
+        if ($lastCounter === $enters) {
             return sprintf(
                 '^%d^ ',
                 $enters

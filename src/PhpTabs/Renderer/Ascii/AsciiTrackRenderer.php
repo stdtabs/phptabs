@@ -19,7 +19,7 @@ use PhpTabs\Music\TabString;
 use PhpTabs\Music\Track;
 use PhpTabs\Music\Song;
 
-class AsciiTrackRenderer
+final class AsciiTrackRenderer
 {
     private static $TONIC_NAMES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
 

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the PhpTabs package.
@@ -21,7 +21,7 @@ abstract class IOFactory
     /**
      * Create a PhpTabs instance
      */
-    public static function create(string $pathname = null): PhpTabs
+    public static function create(?string $pathname = null): PhpTabs
     {
         return new PhpTabs($pathname);
     }
@@ -40,7 +40,7 @@ abstract class IOFactory
      * @param  string $pathname A complete pathname
      * @param  string $type     Force a file type read
      */
-    public static function fromFile(string $pathname, string $type = null): PhpTabs
+    public static function fromFile(string $pathname, ?string $type = null): PhpTabs
     {
         self::checkFile($pathname);
 
@@ -118,16 +118,16 @@ abstract class IOFactory
     public static function checkFile(string $filename): void
     {
         // Must be readable
-        if (!is_readable($filename)) {
+        if (! is_readable($filename)) {
             throw new Exception(
-                "FILE_ERROR Filename '$filename' is not readable"
+                "FILE_ERROR Filename '{$filename}' is not readable"
             );
         }
 
         // Must be a file
-        if (!is_file($filename)) {
+        if (! is_file($filename)) {
             throw new Exception(
-                "FILE_ERROR Filename '$filename' must be a file"
+                "FILE_ERROR Filename '{$filename}' must be a file"
             );
         }
     }

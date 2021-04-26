@@ -20,7 +20,7 @@ use PhpTabs\Component\InputStream;
 use PhpTabs\Component\Reader;
 use PhpTabs\Component\Tablature;
 
-class PhpTabs
+final class PhpTabs
 {
     /**
      * @var \PhpTabs\Component\Tablature A tablature container
@@ -30,7 +30,7 @@ class PhpTabs
     /**
      * @param string $pathname A complete pathname
      */
-    public function __construct(string $pathname = null)
+    public function __construct(?string $pathname = null)
     {
         // Create an emty tabs
         if (is_null($pathname)) {
@@ -49,7 +49,7 @@ class PhpTabs
     /**
      * Instanciate from string
      */
-    public function fromString(string $string, string $extension = null): self
+    public function fromString(string $string, ?string $extension = null): self
     {
         $reader = new Reader(
             new InputStream($string),
@@ -86,8 +86,8 @@ class PhpTabs
     {
         $importer = new Importer($data);
 
-        $this ->setTablature(new Tablature())
-              ->setSong($importer->getSong());
+        $this->setTablature(new Tablature())
+             ->setSong($importer->getSong());
 
         return $this;
     }
@@ -117,11 +117,9 @@ class PhpTabs
     /**
      * Overloads with $tablature methods
      *
-     * @param  string $name      A method name
-     * @param  array  $arguments Optional arguments for the method
      * @return mixed
      */
-    public function __call($name, array $arguments = [])
+    public function __call(string $name, array $arguments = [])
     {
         if (count($arguments) > 2) {
             $message = sprintf(

@@ -19,7 +19,7 @@ use PhpTabs\Component\Renderer\RendererInterface;
 use PhpTabs\Music\Track;
 use PhpTabs\Music\Song;
 
-class AsciiRenderer extends RendererHelper
+final class AsciiRenderer extends RendererHelper
 {
     /**
      * Characters
