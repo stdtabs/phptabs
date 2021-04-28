@@ -15,7 +15,7 @@ namespace PhpTabs\Renderer\Ascii;
 
 use Exception;
 
-abstract class AsciiBase
+final class AsciiBase
 {
     /**
      * @var array
@@ -143,9 +143,9 @@ abstract class AsciiBase
         return $this->y;
     }
 
-     /**
-      * Write a string
-      */
+    /**
+     * Write a string
+     */
     public function append(string $data): void
     {
         // Try to find a better X (min)

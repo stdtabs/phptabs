@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -18,8 +20,8 @@ use PhpTabs\Component\ReaderInterface;
  */
 interface GuitarProReaderInterface extends ReaderInterface
 {
-    const GP_BEND_SEMITONE = 25;
-    const GP_BEND_POSITION = 60;
+    public const GP_BEND_SEMITONE = 25;
+    public const GP_BEND_POSITION = 60;
 
     /**
      * An array of supported versions

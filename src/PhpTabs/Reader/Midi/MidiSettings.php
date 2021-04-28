@@ -15,18 +15,18 @@ namespace PhpTabs\Reader\Midi;
 
 class MidiSettings
 {
-    const VOLUME = 0x07;
-    const BALANCE = 0x0A;
-    const EXPRESSION = 0x0B;
-    const REVERB = 0x5B;
-    const TREMOLO = 0x5C;
-    const CHORUS = 0x5D;
-    const PHASER = 0x5F;
-    const DATA_ENTRY_MSB = 0x06;
-    const DATA_ENTRY_LSB = 0x26;
-    const RPN_LSB = 0x64;
-    const RPN_MSB = 0x65;
-    const ALL_NOTES_OFF = 0x7B;
+    public const VOLUME = 0x07;
+    public const BALANCE = 0x0A;
+    public const EXPRESSION = 0x0B;
+    public const REVERB = 0x5B;
+    public const TREMOLO = 0x5C;
+    public const CHORUS = 0x5D;
+    public const PHASER = 0x5F;
+    public const DATA_ENTRY_MSB = 0x06;
+    public const DATA_ENTRY_LSB = 0x26;
+    public const RPN_LSB = 0x64;
+    public const RPN_MSB = 0x65;
+    public const ALL_NOTES_OFF = 0x7B;
 
     private $transpose;
 

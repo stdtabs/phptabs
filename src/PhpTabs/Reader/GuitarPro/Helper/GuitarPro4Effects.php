@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\EffectTremoloBar;
 use PhpTabs\Music\EffectTremoloPicking;
 use PhpTabs\Music\NoteEffect;
+use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 
 class GuitarPro4Effects extends AbstractReader
 {

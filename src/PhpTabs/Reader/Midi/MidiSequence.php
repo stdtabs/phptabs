@@ -18,11 +18,11 @@ class MidiSequence
     /**
      * Sequence
      */
-    const PPQ = 0.0;
-    const SMPTE_24 = 24.0;
-    const SMPTE_25 = 25.0;
-    const SMPTE_30DROP = 29.97;
-    const SMPTE_30 = 30.0;
+    public const PPQ = 0.0;
+    public const SMPTE_24 = 24.0;
+    public const SMPTE_25 = 25.0;
+    public const SMPTE_30DROP = 29.97;
+    public const SMPTE_30 = 30.0;
 
     protected $divisionType;
     protected $resolution;
@@ -42,9 +42,7 @@ class MidiSequence
 
     public function getTrack(int $index): ?MidiTrack
     {
-        return isset($this->tracks[$index])
-            ? $this->tracks[$index]
-            : null;
+        return $this->tracks[$index] ?? null;
     }
 
     /**

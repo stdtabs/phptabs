@@ -15,13 +15,13 @@ namespace PhpTabs\Renderer\Ascii;
 
 use Exception;
 use PhpTabs\Music\Measure;
+use PhpTabs\Music\Song;
 use PhpTabs\Music\TabString;
 use PhpTabs\Music\Track;
-use PhpTabs\Music\Song;
 
 final class AsciiTrackRenderer
 {
-    private static $TONIC_NAMES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+    private const TONIC_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 
     public const MAX_LINE_LENGTH = 80;
 
@@ -131,8 +131,8 @@ final class AsciiTrackRenderer
         $maxTuningLength = 1;
 
         foreach ($this->track->getStrings() as $index => $string) {
-            $tuning[$index] = self::$TONIC_NAMES[
-                ($string->getValue() % count(self::$TONIC_NAMES))
+            $tuning[$index] = self::TONIC_NAMES[
+                $string->getValue() % count(self::TONIC_NAMES)
             ];
             $maxTuningLength = max($maxTuningLength, strlen($tuning[$index]));
         }

@@ -46,7 +46,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
     {
         $this->file = $file;
 
-        $xpt = explode('\\', get_class($this));
+        $xpt = explode('\\', static::class);
 
         $this->parserName = str_replace('Reader', '', $xpt[count($xpt)-1]);
     }
@@ -158,9 +158,11 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
      */
     protected function readString(int $size, $length = null, $charset = null): string
     {
-        if (null === $length && null === $charset) {
+        if (is_null($length) && is_null($charset)) {
             return $this->readString($size, $size);
-        } else if (is_string($length)) {
+        }
+
+        if (is_string($length)) {
             return $this->readString($size, $size, $length); // $length is charset
         }
 

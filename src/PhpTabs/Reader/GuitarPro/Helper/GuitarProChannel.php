@@ -34,12 +34,13 @@ class GuitarProChannel extends AbstractReader
             $gChannel1Param = new ChannelParameter();
             $gChannel2Param = new ChannelParameter();
 
-            $gChannel1Param->setKey("channel-1");
-            $gChannel1Param->setValue("$gChannel1");
-            $gChannel2Param->setKey("channel-2");
+            $gChannel1Param->setKey('channel-1');
+            $gChannel1Param->setValue("{$gChannel1}");
+            $gChannel2Param->setKey('channel-2');
             $gChannel2Param->setValue(
-                $gChannel1 != 9
-                ? "$gChannel2" : "$gChannel1"
+                $gChannel1 !== 9
+                    ? "{$gChannel2}"
+                    : "{$gChannel1}"
             );
 
             $channel->copyFrom($channels[$gChannel1]);
@@ -50,7 +51,7 @@ class GuitarProChannel extends AbstractReader
                 for ($n = 0; $n < $channelAux->countParameters(); $n++) {
                     $channelParameter = $channelAux->getParameter($n);
 
-                    if ($channelParameter->getKey() == "$gChannel1") {
+                    if ($channelParameter->getKey() === "{$gChannel1}") {
                         if ("$gChannel1" == $channelParameter->getValue()) {
                             $channel->setId($channelAux->getId());
                         }

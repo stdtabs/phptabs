@@ -17,8 +17,8 @@ use Exception;
 use PhpTabs\Component\InputStream;
 use PhpTabs\Component\ReaderInterface;
 use PhpTabs\Component\Tablature;
-use PhpTabs\Music\Song;
 use PhpTabs\IOFactory;
+use PhpTabs\Music\Song;
 
 class JsonReader implements ReaderInterface
 {
@@ -29,8 +29,6 @@ class JsonReader implements ReaderInterface
 
     public function __construct(InputStream $file)
     {
-        $song = new Song();
-
         $data = json_decode(
             $file->getStream($file->getSize()),
             true
@@ -50,9 +48,6 @@ class JsonReader implements ReaderInterface
         $this->setTablature(IOFactory::fromArray($data)->getSong());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTablature(): Tablature
     {
         return isset($this->tablature)

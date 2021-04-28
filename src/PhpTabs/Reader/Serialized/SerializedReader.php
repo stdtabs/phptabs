@@ -17,8 +17,8 @@ use Exception;
 use PhpTabs\Component\InputStream;
 use PhpTabs\Component\ReaderInterface;
 use PhpTabs\Component\Tablature;
-use PhpTabs\Music\Song;
 use PhpTabs\IOFactory;
+use PhpTabs\Music\Song;
 
 class SerializedReader implements ReaderInterface
 {
@@ -29,8 +29,6 @@ class SerializedReader implements ReaderInterface
 
     public function __construct(InputStream $file)
     {
-        $song = new Song();
-
         $data = @unserialize( // Skip warning
             $file->getStream($file->getSize()),
             ['allowed_classes' => false]
@@ -46,14 +44,9 @@ class SerializedReader implements ReaderInterface
         $this->setTablature(IOFactory::fromArray($data)->getSong());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTablature(): Tablature
     {
-        return isset($this->tablature)
-            ? $this->tablature
-            : new Tablature();
+        return $this->tablature ?? new Tablature();
     }
 
     /**

@@ -89,7 +89,7 @@ final class AsciiMeasureRenderer
 
             $length = ($nextBeat !== null
                 ? $nextBeat->getStart() - $beat->getStart()
-                : ($this->measure->getStart() + $this->measure->getLength()) - $beat->getStart()
+                : $this->measure->getStart() + $this->measure->getLength() - $beat->getStart()
             );
 
             $this->writer->drawStringSegments($this->getDurationScaping($length) - $outLength);

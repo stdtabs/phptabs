@@ -57,7 +57,7 @@ class MidiMessage
         return $this->command;
     }
 
-    public static function shortMessage(int $command, int $channel = null, int $data1 = null, int $data2 = null): MidiMessage
+    public static function shortMessage(int $command, ?int $channel = null, ?int $data1 = null, ?int $data2 = null): MidiMessage
     {
         $message = new MidiMessage(self::TYPE_SHORT, $command);
 

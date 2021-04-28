@@ -15,8 +15,8 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Music\Lyric;
 use PhpTabs\Music\Song;
-use PhpTabs\Music\Track;
 use PhpTabs\Music\TabString;
+use PhpTabs\Music\Track;
 
 class GuitarPro4Track extends AbstractReader
 {

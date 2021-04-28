@@ -29,7 +29,7 @@ final class VexTabTrackRenderer
      *
      * @var string
      */
-    private $staveTpl = "tabstave%s";
+    private $staveTpl = 'tabstave%s';
 
     /**
      * Global options template
@@ -50,7 +50,7 @@ final class VexTabTrackRenderer
         8   => '8',
         16  => '16',
         32  => '32',
-        64  => '64'
+        64  => '64',
     ];
 
     /**
@@ -62,7 +62,7 @@ final class VexTabTrackRenderer
         1   => 'treble',
         2   => 'bass',
         3   => 'tenor',
-        4   => 'alto'
+        4   => 'alto',
     ];
 
     /**
@@ -138,7 +138,7 @@ final class VexTabTrackRenderer
     /**
      * @var bool
      */
-    private $repeatOpen       = false;
+    private $repeatOpen = false;
 
     /**
      * @var bool
@@ -148,7 +148,7 @@ final class VexTabTrackRenderer
     /**
      * @var int
      */
-    private $line             = 0;
+    private $line = 0;
 
     public function __construct(RendererInterface $renderer, Track $track)
     {
@@ -194,7 +194,7 @@ final class VexTabTrackRenderer
      */
     private function renderMeasure(Measure $measure): void
     {
-        if (($measure->getNumber() - 1) % $this->renderer->getOption('measures_per_stave', 1) == 0) {
+        if (($measure->getNumber() - 1) % $this->renderer->getOption('measures_per_stave', 1) === 0) {
 
             $this->line++;
             $this->staves .= $measure->getNumber() > 1
@@ -333,7 +333,7 @@ final class VexTabTrackRenderer
     /**
      * Render a rest beat
      */
-    protected function renderRestBeat(): string
+    private function renderRestBeat(): string
     {
         return '## ';
     }

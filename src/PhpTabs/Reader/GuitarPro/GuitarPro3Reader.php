@@ -94,9 +94,6 @@ class GuitarPro3Reader extends GuitarProReaderBase
         return self::$supportedVersions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTablature(): Tablature
     {
         return isset($this->tablature)

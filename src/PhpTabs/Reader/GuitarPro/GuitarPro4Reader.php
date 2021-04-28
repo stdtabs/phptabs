@@ -30,15 +30,19 @@ use PhpTabs\Music\Velocities;
 class GuitarPro4Reader extends GuitarProReaderBase
 {
     /**
-     * @var array $supportedVersions
+     * @var array
      */
     private static $supportedVersions = ['FICHIER GUITAR PRO v4.00', 'FICHIER GUITAR PRO v4.06', 'FICHIER GUITAR PRO L4.06'];
 
     /**
-     * @var int $tripletFeel
-     * @var int $keySignature
+     * @var int
      */
-    protected $tripletFeel, $keySignature;
+    protected $tripletFeel;
+
+    /**
+     * @var int
+     */
+    protected $keySignature;
 
     /**
      * @var \PhpTabs\Component\Tablature
@@ -113,9 +117,6 @@ class GuitarPro4Reader extends GuitarProReaderBase
         return self::$supportedVersions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTablature(): Tablature
     {
         if (!isset($this->tablature)) {

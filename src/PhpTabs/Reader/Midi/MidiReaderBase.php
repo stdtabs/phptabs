@@ -74,7 +74,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
 
         while ($count < 4) {
             $data = $this->readUnsignedByte();
-            $helper->remainingBytes--;
+            $helper->decrementRemainingBytes();
             $count++;
             $value <<= 7;
             $value |= ($data & 0x7f);

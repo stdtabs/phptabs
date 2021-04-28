@@ -97,7 +97,7 @@ class MidiAdjuster
 
                     // set the best duration
                     if ($beatLength > $previousLength && ($beatStart + $beatLength) <= $measureEnd) {
-                              $previous->getVoice(0)->getDuration()->copyFrom($beat->getVoice(0)->getDuration());
+                        $previous->getVoice(0)->getDuration()->copyFrom($beat->getVoice(0)->getDuration());
                     }
 
                     $measure->removeBeat($beat);
@@ -206,7 +206,8 @@ class MidiAdjuster
         $stringForValue = 0;
 
         array_walk(
-            $strings, function ($string) use (& $minFret, & $stringForValue, $value): void {
+            $strings,
+            static function ($string) use (& $minFret, & $stringForValue, $value): void {
                 $fret = $value - $string->getValue();
 
                 if ($minFret < 0 || ($fret >= 0 && $fret < $minFret)) {

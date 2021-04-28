@@ -82,7 +82,7 @@ final class VexTabOptions
     /**
      * @var \PhpTabs\Component\Renderer\RendererInterface
      */
-    protected $renderer;
+    private $renderer;
 
     /**
      * Constructor
@@ -132,7 +132,6 @@ final class VexTabOptions
     /**
      * Add a new option
      *
-     * @param string     $name
      * @param string|int $value
      */
     public function add(string $name, $value): void
@@ -143,7 +142,6 @@ final class VexTabOptions
     /**
      * Parse options scope
      *
-     * @param string          $name
      * @param string|int|bool $value
      */
     private function parseOption(string $name, $value): void

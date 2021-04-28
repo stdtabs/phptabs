@@ -136,7 +136,7 @@ final class BeatContext
             ->getDivision()
             ->getEnters();
 
-        if ($enters == 1) {
+        if ($enters === 1) {
             return '';
         }
 
@@ -169,7 +169,7 @@ final class BeatContext
     private function getSlide(Note $note): string
     {
         foreach ($this->beat->getVoice(0)->getNotes() as $prevNote) {
-            if ($prevNote->getString() == $note->getString()) {
+            if ($prevNote->getString() === $note->getString()) {
                 return $prevNote->getEffect()->isSlide()
                     ? 's'
                     : '';
@@ -186,7 +186,7 @@ final class BeatContext
     private function getHammer(Note $note): string
     {
         foreach ($this->beat->getVoice(0)->getNotes() as $prevNote) {
-            if ($prevNote->getString() == $note->getString()
+            if ($prevNote->getString() === $note->getString()
                 && $prevNote->getEffect()->isHammer()
             ) {
                 return $prevNote->getValue() >= $note->getValue()
@@ -237,7 +237,7 @@ final class BeatContext
             //  must skip if;
             // - first bend is the same note as starting note
             // - bend is standing on the same point
-            if ($bendValue != $lastBendValue) {
+            if ($bendValue !== $lastBendValue) {
                 $lastBendValue = $bendValue;
 
                 $value .= sprintf(
@@ -275,11 +275,11 @@ final class BeatContext
      */
     private function getStroke(): string
     {
-        if ($this->beat->getStroke()->getDirection() == Stroke::STROKE_NONE) {
+        if ($this->beat->getStroke()->getDirection() === Stroke::STROKE_NONE) {
             return '';
         }
 
-        return $this->beat->getStroke()->getDirection() == Stroke::STROKE_UP
+        return $this->beat->getStroke()->getDirection() === Stroke::STROKE_UP
             ? 'u'
             : 'd';
     }

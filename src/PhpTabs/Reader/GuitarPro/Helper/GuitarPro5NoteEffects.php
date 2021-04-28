@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Music\Duration;
-use PhpTabs\Music\EffectHarmonic;
 use PhpTabs\Music\EffectGrace;
+use PhpTabs\Music\EffectHarmonic;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Velocities;
 

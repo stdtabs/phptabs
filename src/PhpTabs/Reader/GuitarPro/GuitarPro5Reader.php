@@ -32,7 +32,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
     ];
 
     /**
-     * @var integer $keySignature
+     * @var int
      */
     protected $keySignature;
 
@@ -63,7 +63,7 @@ class GuitarPro5Reader extends GuitarProReaderBase
         $this->factory('GuitarPro5Informations')->readInformations($song);
 
         // Meta only
-        if (Config::get('type') == 'meta') {
+        if (Config::get('type') === 'meta') {
             $this->closeStream();
             return;
         }
@@ -108,16 +108,13 @@ class GuitarPro5Reader extends GuitarProReaderBase
     }
 
     /**
-     * @Get an array of supported versions
+     * Get an array of supported versions
      */
     public function getSupportedVersions(): array
     {
         return self::$supportedVersions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTablature(): Tablature
     {
         if (!isset($this->tablature)) {

@@ -18,14 +18,55 @@ namespace PhpTabs\Reader\Midi;
  */
 class MidiTrackReaderHelper
 {
-    public $ticks = 0;
-    public $remainingBytes;
-    public $runningStatusByte;
+    /**
+     * @var int
+     */
+    private $ticks = 0;
+
+    /**
+     * @var int
+     */
+    private $remainingBytes;
+
+    /**
+     * @var int
+     */
+    private $runningStatusByte;
 
     public function __construct(int $ticks, int $remainingBytes, int $runningStatusByte)
     {
         $this->ticks = $ticks;
         $this->remainingBytes = $remainingBytes;
         $this->runningStatusByte = $runningStatusByte;
+    }
+
+    public function getRemainingBytes(): int
+    {
+        return $this->remainingBytes;
+    }
+
+    public function decrementRemainingBytes(): void
+    {
+        $this->remainingBytes--;
+    }
+
+    public function addTicks(int $ticks): void
+    {
+        $this->ticks += $ticks;
+    }
+
+    public function getTicks(): int
+    {
+        return $this->ticks;
+    }
+
+    public function setRunningStatusByte(int $statusByte): void
+    {
+        $this->runningStatusByte = $statusByte;
+    }
+
+    public function getRunningStatusByte(): int
+    {
+        return $this->runningStatusByte;
     }
 }

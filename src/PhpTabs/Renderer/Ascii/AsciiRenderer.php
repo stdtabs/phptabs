@@ -16,8 +16,8 @@ namespace PhpTabs\Renderer\Ascii;
 use Exception;
 use PhpTabs\Component\Renderer\RendererHelper;
 use PhpTabs\Component\Renderer\RendererInterface;
-use PhpTabs\Music\Track;
 use PhpTabs\Music\Song;
+use PhpTabs\Music\Track;
 
 final class AsciiRenderer extends RendererHelper
 {

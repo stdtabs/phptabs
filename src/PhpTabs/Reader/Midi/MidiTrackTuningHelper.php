@@ -17,8 +17,19 @@ use PhpTabs\Music\TabString;
 
 class MidiTrackTuningHelper
 {
+    /**
+     * @var int
+     */
     private $track;
+
+    /**
+     * @var int
+     */
     private $maxValue;
+
+    /**
+     * @var int
+     */
     private $minValue;
 
     public function __construct(int $track)
