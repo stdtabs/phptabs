@@ -16,7 +16,7 @@ namespace PhpTabs\Reader\Midi;
 /**
  * Midi track helper
  */
-class MidiTrackReaderHelper
+final class MidiTrackReaderHelper
 {
     /**
      * @var int

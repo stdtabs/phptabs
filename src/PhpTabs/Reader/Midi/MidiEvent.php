@@ -16,9 +16,16 @@ namespace PhpTabs\Reader\Midi;
 /**
  * Midi event
  */
-class MidiEvent
+final class MidiEvent
 {
+    /**
+     * @var int
+     */
     private $tick;
+
+    /**
+     * @var MidiMessage
+     */
     private $message;
 
     public function __construct(MidiMessage $message, int $tick)

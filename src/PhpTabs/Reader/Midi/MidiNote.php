@@ -13,14 +13,37 @@ declare(strict_types=1);
 
 namespace PhpTabs\Reader\Midi;
 
-class MidiNote
+final class MidiNote
 {
+    /**
+     * @var int
+     */
     private $track;
+
+    /**
+     * @var int
+     */
     private $channel;
+
+    /**
+     * @var int
+     */
     private $tick;
+
+    /**
+     * @var int
+     */
     private $value;
+
+    /**
+     * @var int
+     */
     private $velocity;
-    private $pitchBends;
+
+    /**
+     * @var array<int>
+     */
+    private $pitchBends = [];
 
     public function __construct(int $track, int $channel, int $tick, int $value, int $velocity)
     {
@@ -29,7 +52,6 @@ class MidiNote
         $this->tick = $tick;
         $this->value = $value;
         $this->velocity = $velocity;
-        $this->pitchBends = [];
     }
 
     public function getChannel(): int
@@ -62,6 +84,9 @@ class MidiNote
         $this->pitchBends[] = $value;
     }
 
+    /**
+     * @return array<int>
+     */
     public function getPitchBends(): array
     {
         return $this->pitchBends;

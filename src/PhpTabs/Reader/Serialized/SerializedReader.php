@@ -20,7 +20,7 @@ use PhpTabs\Component\Tablature;
 use PhpTabs\IOFactory;
 use PhpTabs\Music\Song;
 
-class SerializedReader implements ReaderInterface
+final class SerializedReader implements ReaderInterface
 {
     /**
      * @var Tablature
@@ -54,7 +54,7 @@ class SerializedReader implements ReaderInterface
      */
     private function setTablature(Song $song): void
     {
-        if (!isset($this->tablature)) {
+        if (! isset($this->tablature)) {
             $this->tablature = new Tablature();
         }
 

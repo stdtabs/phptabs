@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace PhpTabs\Reader\GuitarPro;
 
-use PhpTabs\Reader\GuitarPro\Helper\Factory;
 use PhpTabs\Component\InputStream;
 use PhpTabs\Component\Log;
+use PhpTabs\Reader\GuitarPro\Helper\Factory;
 
 abstract class GuitarProReaderBase implements GuitarProReaderInterface
 {

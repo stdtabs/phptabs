@@ -15,7 +15,7 @@ namespace PhpTabs\Reader\Midi;
 
 use PhpTabs\Music\TabString;
 
-class MidiTrackTuningHelper
+final class MidiTrackTuningHelper
 {
     /**
      * @var int
@@ -25,18 +25,16 @@ class MidiTrackTuningHelper
     /**
      * @var int
      */
-    private $maxValue;
+    private $maxValue = -1;
 
     /**
      * @var int
      */
-    private $minValue;
+    private $minValue = -1;
 
     public function __construct(int $track)
     {
         $this->track = $track;
-        $this->maxValue = -1;
-        $this->minValue = -1;
     }
 
     public function checkValue(int $value): void
@@ -50,6 +48,9 @@ class MidiTrackTuningHelper
         }
     }
 
+    /**
+     * @return array<TabString>
+     */
     public function getStrings(): array
     {
         $strings = [];

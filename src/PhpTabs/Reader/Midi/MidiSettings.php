@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace PhpTabs\Reader\Midi;
 
-class MidiSettings
+final class MidiSettings
 {
     public const VOLUME = 0x07;
     public const BALANCE = 0x0A;
@@ -28,12 +28,7 @@ class MidiSettings
     public const RPN_MSB = 0x65;
     public const ALL_NOTES_OFF = 0x7B;
 
-    private $transpose;
-
-    public function __construct()
-    {
-        $this->transpose = 0;
-    }
+    private $transpose = 0;
 
     public function getTranspose(): int
     {

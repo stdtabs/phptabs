@@ -13,22 +13,33 @@ declare(strict_types=1);
 
 namespace PhpTabs\Reader\Midi;
 
-class MidiMessage
+final class MidiMessage
 {
-    const TYPE_SHORT = 1;
-    const TYPE_META = 2;
+    public const TYPE_SHORT = 1;
+    public const TYPE_META = 2;
 
-    const NOTE_OFF = 0x80;
-    const NOTE_ON = 0x90;
-    const CONTROL_CHANGE = 0xB0;
-    const PROGRAM_CHANGE = 0xC0;
-    const PITCH_BEND = 0xE0;
-    const SYSTEM_RESET = 0xFF;
-    const TEMPO_CHANGE = 0x51;
-    const TIME_SIGNATURE_CHANGE = 0x58;
+    public const NOTE_OFF = 0x80;
+    public const NOTE_ON = 0x90;
+    public const CONTROL_CHANGE = 0xB0;
+    public const PROGRAM_CHANGE = 0xC0;
+    public const PITCH_BEND = 0xE0;
+    public const SYSTEM_RESET = 0xFF;
+    public const TEMPO_CHANGE = 0x51;
+    public const TIME_SIGNATURE_CHANGE = 0x58;
 
+    /**
+     * @var int
+     */
     private $message;
+
+    /**
+     * @var int
+     */
     private $command;
+
+    /**
+     * @var array<int>
+     */
     private $data;
 
     public function __construct(int $message, int $command)
@@ -37,11 +48,17 @@ class MidiMessage
         $this->command = $command;
     }
 
+    /**
+     * @param array<int> $data
+     */
     public function setData(array $data): void
     {
         $this->data = $data;
     }
 
+    /**
+     * @return array<int>
+     */
     public function getData(): array
     {
         return $this->data;
@@ -66,19 +83,22 @@ class MidiMessage
         } elseif ($data2 === null) {
             $message->setData([
                 ($command & 0xF0) | ($channel & 0x0F),
-                $data1
+                $data1,
             ]);
         } else {
             $message->setData([
                 ($command & 0xF0) | ($channel & 0x0F),
                 $data1,
-                $data2
+                $data2,
             ]);
         }
 
         return $message;
     }
 
+    /**
+     * @param array<int> $data
+     */
     public static function metaMessage(int $command, array $data): MidiMessage
     {
         $message = new MidiMessage(self::TYPE_META, $command);

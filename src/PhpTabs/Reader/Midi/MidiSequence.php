@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace PhpTabs\Reader\Midi;
 
-class MidiSequence
+final class MidiSequence
 {
     /**
      * Sequence
@@ -24,15 +24,25 @@ class MidiSequence
     public const SMPTE_30DROP = 29.97;
     public const SMPTE_30 = 30.0;
 
-    protected $divisionType;
-    protected $resolution;
-    private $tracks;
+    /**
+     * @var float
+     */
+    private $divisionType;
+
+    /**
+     * @var int
+     */
+    private $resolution;
+
+    /**
+     * @var array<MidiTrack>
+     */
+    private $tracks = [];
 
     public function __construct(float $divisionType, int $resolution)
     {
         $this->divisionType = $divisionType;
         $this->resolution = $resolution;
-        $this->tracks = [];
     }
 
     public function addTrack(MidiTrack $track): void
@@ -65,7 +75,8 @@ class MidiSequence
 
     public function finish(): void
     {
-        for ($i = 0; $i < count($this->tracks); $i++) {
+        $countTracks = count($this->tracks);
+        for ($i = 0; $i < $countTracks; $i++) {
             $track = $this->tracks[$i];
 
             $track->add(new MidiEvent(MidiMessage::metaMessage(47, [1]), $track->ticks()));

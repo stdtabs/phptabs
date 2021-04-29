@@ -83,7 +83,7 @@ abstract class MidiReaderBase implements MidiReaderInterface
             }
         }
 
-        throw new Exception("Not a MIDI file: unterminated variable-length quantity");
+        throw new Exception('Not a MIDI file: unterminated variable-length quantity');
     }
 
     /**
@@ -104,6 +104,8 @@ abstract class MidiReaderBase implements MidiReaderInterface
 
     /**
      * Read and return an array of bytes
+     *
+     * @return array<int>
      */
     protected function readBytesBigEndian(int $num = 1): array
     {

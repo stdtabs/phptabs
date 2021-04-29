@@ -13,21 +13,36 @@ declare(strict_types=1);
 
 namespace PhpTabs\Reader\Midi;
 
-class MidiChannel
+final class MidiChannel
 {
+    /**
+     * @var int
+     */
     private $channel;
-    private $instrument;
-    private $volume;
-    private $balance;
-    private $track;
+
+    /**
+     * @var int
+     */
+    private $instrument = 0;
+
+    /**
+     * @var int
+     */
+    private $volume = 127;
+
+    /**
+     * @var int
+     */
+    private $balance = 64;
+
+    /**
+     * @var int
+     */
+    private $track = -1;
 
     public function __construct(int $channel)
     {
         $this->channel = $channel;
-        $this->instrument = 0;
-        $this->volume = 127;
-        $this->balance = 64;
-        $this->track = -1;
     }
 
     public function getBalance(): int

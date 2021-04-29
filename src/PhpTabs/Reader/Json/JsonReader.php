@@ -20,7 +20,7 @@ use PhpTabs\Component\Tablature;
 use PhpTabs\IOFactory;
 use PhpTabs\Music\Song;
 
-class JsonReader implements ReaderInterface
+final class JsonReader implements ReaderInterface
 {
     /**
      * @var Tablature
@@ -50,9 +50,7 @@ class JsonReader implements ReaderInterface
 
     public function getTablature(): Tablature
     {
-        return isset($this->tablature)
-            ? $this->tablature
-            : new Tablature();
+        return $this->tablature ?? new Tablature();
     }
 
     /**
@@ -60,7 +58,7 @@ class JsonReader implements ReaderInterface
      */
     private function setTablature(Song $song): void
     {
-        if (!isset($this->tablature)) {
+        if (! isset($this->tablature)) {
             $this->tablature = new Tablature();
         }
 

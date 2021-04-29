@@ -16,9 +16,16 @@ namespace PhpTabs\Reader\Midi;
 /**
  * Midi track
  */
-class MidiTrack
+final class MidiTrack
 {
+    /**
+     * @var int
+     */
     private $ticks = 0;
+
+    /**
+     * @var array<MidiEvent>
+     */
     private $events = [];
 
     public function add(MidiEvent $event): void
