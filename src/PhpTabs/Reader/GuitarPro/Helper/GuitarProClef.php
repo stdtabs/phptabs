@@ -16,7 +16,7 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\Track;
 
-class GuitarProClef extends AbstractReader
+final class GuitarProClef extends AbstractReader
 {
     /**
      * Get the Clef for $track
@@ -24,7 +24,6 @@ class GuitarProClef extends AbstractReader
     public function getClef(Track $track): int
     {
         if (!$track->getSong()->getChannelById($track->getChannelId())->isPercussionChannel()) {
-
             $strings = $track->getStrings();
 
             foreach ($strings as $string) {

@@ -17,7 +17,7 @@ use PhpTabs\Music\Beat;
 use PhpTabs\Music\EffectHarmonic;
 use PhpTabs\Music\NoteEffect;
 
-class GuitarPro3BeatEffects extends AbstractReader
+final class GuitarPro3BeatEffects extends AbstractReader
 {
     /**
      * Reads beat effects
@@ -26,34 +26,34 @@ class GuitarPro3BeatEffects extends AbstractReader
     {
         $flags = $this->reader->readUnsignedByte();
         $effect->setVibrato(
-            (($flags & 0x01) != 0) || (($flags & 0x02) != 0)
+            (($flags & 0x01) !== 0) || (($flags & 0x02) !== 0)
         );
 
-        $effect->setFadeIn((($flags & 0x10) != 0));
+        $effect->setFadeIn((($flags & 0x10) !== 0));
 
-        if (($flags & 0x20) != 0) {
+        if (($flags & 0x20) !== 0) {
             $type = $this->reader->readUnsignedByte();
-            if ($type == 0) {
+            if ($type === 0) {
                 $this->reader->factory('GuitarPro3Effects')->readTremoloBar($effect);
             } else {
-                $effect->setTapping($type == 1);
-                $effect->setSlapping($type == 2);
-                $effect->setPopping($type == 3);
+                $effect->setTapping($type === 1);
+                $effect->setSlapping($type === 2);
+                $effect->setPopping($type === 3);
                 $this->reader->readInt();
             }
         }
 
-        if (($flags & 0x40) != 0) {
+        if (($flags & 0x40) !== 0) {
             $this->reader->factory('GuitarPro3Stroke')->readStroke($beat);
         }
 
-        if (($flags & 0x04) != 0) {
+        if (($flags & 0x04) !== 0) {
             $harmonic = new EffectHarmonic();
             $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
             $effect->setHarmonic($harmonic);
         }
 
-        if (($flags & 0x08) != 0) {
+        if (($flags & 0x08) !== 0) {
             $harmonic = new EffectHarmonic();
             $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
             $harmonic->setData(0);

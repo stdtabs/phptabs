@@ -16,7 +16,7 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\Text;
 
-class GuitarProText extends AbstractReader
+final class GuitarProText extends AbstractReader
 {
     /**
      * Read some text

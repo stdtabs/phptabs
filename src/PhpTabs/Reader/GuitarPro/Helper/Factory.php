@@ -15,8 +15,11 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 
-class Factory
+final class Factory
 {
+    /**
+     * @var GuitarProReaderInterface
+     */
     private $reader;
 
     public function __construct(GuitarProReaderInterface $reader)
@@ -24,10 +27,7 @@ class Factory
         $this->reader = $reader;
     }
 
-    /**
-     * @return mixed
-     */
-    public function get(string $name, string $parserName)
+    public function get(string $name, string $parserName): AbstractReader
     {
         $name = __NAMESPACE__ . '\\' . $name;
 

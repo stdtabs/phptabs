@@ -19,10 +19,12 @@ use PhpTabs\Music\ChannelParameter;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\Track;
 
-class GuitarProChannel extends AbstractReader
+final class GuitarProChannel extends AbstractReader
 {
     /**
      * Read Channel informations
+     *
+     * @param array<Channel> $channels
      */
     public function readChannel(Song $song, Track $track, array $channels): void
     {
@@ -45,14 +47,16 @@ class GuitarProChannel extends AbstractReader
 
             $channel->copyFrom($channels[$gChannel1]);
 
-            for ($i = 0; $i < $song->countChannels(); $i++) {
-                  $channelAux = $song->getChannel($i);
+            $countChannels = $song->countChannels();
+            for ($i = 0; $i < $countChannels; $i++) {
+                $channelAux = $song->getChannel($i);
 
-                for ($n = 0; $n < $channelAux->countParameters(); $n++) {
+                $countParameters = $channelAux->countParameters();
+                for ($n = 0; $n < $countParameters; $n++) {
                     $channelParameter = $channelAux->getParameter($n);
 
                     if ($channelParameter->getKey() === "{$gChannel1}") {
-                        if ("$gChannel1" == $channelParameter->getValue()) {
+                        if ("{$gChannel1}" === $channelParameter->getValue()) {
                             $channel->setId($channelAux->getId());
                         }
                     }
@@ -103,7 +107,7 @@ class GuitarProChannel extends AbstractReader
         $unusedName = null;
 
         while ($unusedName === null) {
-            $number ++;
+            $number++;
             $name = $prefix . ' ' . $number;
 
             if (!$this->findChannelsByName($song, $name)) {
@@ -122,7 +126,7 @@ class GuitarProChannel extends AbstractReader
         $channels = $song->getChannels();
 
         foreach ($channels as $v) {
-            if ($v->getName() == $name) {
+            if ($v->getName() === $name) {
                 return true;
             }
         }

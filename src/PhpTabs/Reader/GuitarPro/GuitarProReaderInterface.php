@@ -25,6 +25,8 @@ interface GuitarProReaderInterface extends ReaderInterface
 
     /**
      * An array of supported versions
+     *
+     * @return array<string>
      */
     public function getSupportedVersions(): array;
 }

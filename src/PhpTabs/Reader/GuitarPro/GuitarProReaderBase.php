@@ -15,6 +15,7 @@ namespace PhpTabs\Reader\GuitarPro;
 
 use PhpTabs\Component\InputStream;
 use PhpTabs\Component\Log;
+use PhpTabs\Reader\GuitarPro\Helper\AbstractReader;
 use PhpTabs\Reader\GuitarPro\Helper\Factory;
 
 abstract class GuitarProReaderBase implements GuitarProReaderInterface
@@ -48,7 +49,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
 
         $xpt = explode('\\', static::class);
 
-        $this->parserName = str_replace('Reader', '', $xpt[count($xpt)-1]);
+        $this->parserName = str_replace('Reader', '', $xpt[count($xpt) - 1]);
     }
 
     public function getKeySignature(): int
@@ -102,7 +103,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
         $versions = $this->getSupportedVersions();
 
         foreach ($versions as $k => $v) {
-            if ($version == $v) {
+            if ($version === $v) {
                 $this->versionIndex = $k;
 
                 return true;
@@ -117,7 +118,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
      */
     protected function readBoolean(): bool
     {
-        return ord($this->file->getStream()) == 1;
+        return ord($this->file->getStream()) === 1;
     }
 
     /**
@@ -143,7 +144,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
         $ord24 = ($or24 & 127) << 24;
         if ($or24 >= 128) {
             // negative number
-            $ord24 = -abs((256 - $or24) << 24);
+            $ord24 = -abs(256 - $or24 << 24);
         }
 
         return $ord24 | (($bytes[2] & 0xff) << 16) | (($bytes[1] & 0xff) << 8) | ($bytes[0] & 0xff);
@@ -154,9 +155,8 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
      *
      * @param int        $size    Size to read in stream
      * @param int|string $length  Length to return or charset
-     * @param string         $charset
      */
-    protected function readString(int $size, $length = null, $charset = null): string
+    protected function readString(int $size, $length = null, ?string $charset = null): string
     {
         if (is_null($length) && is_null($charset)) {
             return $this->readString($size, $size);
@@ -176,7 +176,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
         }
 
         // returns all
-        return (string)$bytes;
+        return (string) $bytes;
     }
 
     /**
@@ -192,7 +192,7 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
      */
     public function readStringByteSizeOfInteger(string $charset = 'UTF-8'): string
     {
-        return $this->readStringByte(($this->readInt() - 1), $charset);
+        return $this->readStringByte($this->readInt() - 1, $charset);
     }
 
     /**
@@ -205,8 +205,6 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
 
     /**
      * Reads an unsigned byte
-     *
-     * @return int
      */
     public function readUnsignedByte(): int
     {
@@ -215,8 +213,6 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
 
     /**
      * Skips a sequence
-     *
-     * @param int $num
      */
     public function skip(int $num = 1): void
     {
@@ -233,10 +229,8 @@ abstract class GuitarProReaderBase implements GuitarProReaderInterface
 
     /**
      * Get a subparser
-     *
-     * @return mixed
      */
-    public function factory(string $name)
+    public function factory(string $name): AbstractReader
     {
         return (new Factory($this))->get($name, $this->parserName);
     }

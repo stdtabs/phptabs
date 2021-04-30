@@ -15,7 +15,7 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Music\Duration;
 
-class GuitarProDuration extends AbstractReader
+final class GuitarProDuration extends AbstractReader
 {
     /**
      * Read Duration from unsigned bytes
@@ -29,11 +29,11 @@ class GuitarProDuration extends AbstractReader
         // @todo Fix this
         // Sometimes, it overrides PHP_INT_SIZE resulting to 0
         // when casting to int
-        $tempValue = pow(2, ($value + 4)) / 4;
+        $tempValue = pow(2, $value + 4) / 4;
         $duration->setValue(intval($tempValue));
-        $duration->setDotted(($flags & 0x01) != 0);
+        $duration->setDotted(($flags & 0x01) !== 0);
 
-        if (($flags & 0x20) != 0) {
+        if (($flags & 0x20) !== 0) {
             $divisionType = $this->reader->readInt();
 
             switch ($divisionType) {

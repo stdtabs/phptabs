@@ -17,7 +17,7 @@ use PhpTabs\Music\Measure;
 use PhpTabs\Music\Tempo;
 use PhpTabs\Music\Track;
 
-class GuitarPro3Measure extends AbstractReader
+final class GuitarPro3Measure extends AbstractReader
 {
     /**
      * Reads a Measure

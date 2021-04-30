@@ -15,7 +15,7 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Music\Song;
 
-class GuitarPro5Informations extends AbstractReader
+final class GuitarPro5Informations extends AbstractReader
 {
     /**
      * Read meta informations about tablature

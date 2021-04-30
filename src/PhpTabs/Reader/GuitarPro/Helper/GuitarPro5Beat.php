@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-use PhpTabs\Music\Beat;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Tempo;
@@ -33,35 +32,35 @@ class GuitarPro5Beat extends AbstractReader
         $beat = $measure->getBeatByStart($start);
         $voice = $beat->getVoice($voiceIndex);
 
-        if (($flags & 0x40) != 0) {
+        if (($flags & 0x40) !== 0) {
             $beatType = $this->reader->readUnsignedByte();
-            $voice->setEmpty(($beatType & 0x02) == 0);
+            $voice->setEmpty(($beatType & 0x02) === 0);
         }
 
         $duration = $this->reader->factory('GuitarProDuration')->readDuration($flags);
         $effect = new NoteEffect();
 
-        if (($flags & 0x02) != 0) {
+        if (($flags & 0x02) !== 0) {
             $this->reader->factory('GuitarPro5Chord')->readChord($track->countStrings(), $beat);
         }
 
-        if (($flags & 0x04) != 0) {
+        if (($flags & 0x04) !== 0) {
             $this->reader->factory('GuitarProText')->readText($beat);
         }
 
-        if (($flags & 0x08) != 0) {
+        if (($flags & 0x08) !== 0) {
             $this->reader->factory('GuitarPro4BeatEffects')->readBeatEffects($beat, $effect);
         }
 
-        if (($flags & 0x10) != 0) {
+        if (($flags & 0x10) !== 0) {
             $this->reader->factory('GuitarPro5MixChange')->readMixChange($tempo);
         }
 
         $stringFlags = $this->reader->readUnsignedByte();
 
         for ($i = 6; $i >= 0; $i--) {
-            if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->countStrings()) {
-                $string = clone $track->getString((6 - $i) + 1);
+            if (($stringFlags & (1 << $i)) !== 0 && (6 - $i) < $track->countStrings()) {
+                $string = clone $track->getString(6 - $i + 1);
                 $note = $this->reader->factory('GuitarPro5Note')->readNote($string, $track, clone $effect);
                 $voice->addNote($note);
             }
@@ -71,7 +70,7 @@ class GuitarPro5Beat extends AbstractReader
 
         $this->reader->skip();
 
-        if (($this->reader->readByte() & 0x08) != 0) {
+        if (($this->reader->readByte() & 0x08) !== 0) {
             $this->reader->skip();
         }
 

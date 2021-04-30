@@ -15,7 +15,7 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Music\Color;
 
-class GuitarProColor extends AbstractReader
+final class GuitarProColor extends AbstractReader
 {
     /**
      * Read color informations

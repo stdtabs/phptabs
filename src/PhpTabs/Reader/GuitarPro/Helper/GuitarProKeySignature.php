@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace PhpTabs\Reader\GuitarPro\Helper;
 
-class GuitarProKeySignature extends AbstractReader
+final class GuitarProKeySignature extends AbstractReader
 {
     /**
      * Read the key signature as an integer

@@ -15,7 +15,7 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Music\Lyric;
 
-class GuitarProLyric extends AbstractReader
+final class GuitarProLyric extends AbstractReader
 {
     /**
      * Read lyrics informations

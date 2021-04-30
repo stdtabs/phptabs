@@ -25,7 +25,7 @@ final class SerializedReader implements ReaderInterface
     /**
      * @var Tablature
      */
-    protected $tablature;
+    private $tablature;
 
     public function __construct(InputStream $file)
     {

@@ -24,11 +24,11 @@ use PhpTabs\Music\TimeSignature;
 class GuitarPro5Reader extends GuitarProReaderBase
 {
     /**
-     * @var array $supportedVersions
+     * @var array<string>
      */
     private static $supportedVersions = [
         'FICHIER GUITAR PRO v5.00',
-        'FICHIER GUITAR PRO v5.10'
+        'FICHIER GUITAR PRO v5.10',
     ];
 
     /**
@@ -94,10 +94,10 @@ class GuitarPro5Reader extends GuitarProReaderBase
         $this->readMeasureHeaders($song, $measures);
         $this->readTracks($song, $tracks, $channels, $lyric, $lyricTrack);
 
-        $this->skip($this->getVersionIndex() == 0 ? 2 : 1);
+        $this->skip($this->getVersionIndex() === 0 ? 2 : 1);
 
         // Meta+channels+tracks+measure headers only
-        if (Config::get('type') == 'channels') {
+        if (Config::get('type') === 'channels') {
             $this->closeStream();
             return;
         }
@@ -109,6 +109,8 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     /**
      * Get an array of supported versions
+     *
+     * @return array<string>
      */
     public function getSupportedVersions(): array
     {
@@ -169,13 +171,16 @@ class GuitarPro5Reader extends GuitarProReaderBase
 
     /**
      * Loop on tracks to read
+     *
+     * @param array<hpTabs\Music\Channel> $channels
      */
     private function readTracks(Song $song, int $count, array $channels, Lyric $lyric, int $lyricTrack): void
     {
         for ($number = 0; $number < $count; $number++) {
             $track = $this->factory('GuitarPro5Track')->readTrack(
-                $song, $channels,
-                $number + 1 == $lyricTrack ? $lyric : new Lyric()
+                $song,
+                $channels,
+                $number + 1 === $lyricTrack ? $lyric : new Lyric()
             );
 
             $song->addTrack($track);

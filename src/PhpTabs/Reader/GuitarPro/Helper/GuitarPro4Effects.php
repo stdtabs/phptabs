@@ -19,7 +19,7 @@ use PhpTabs\Music\EffectTremoloPicking;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 
-class GuitarPro4Effects extends AbstractReader
+final class GuitarPro4Effects extends AbstractReader
 {
     /**
      * Reads tremolo bar
@@ -56,13 +56,13 @@ class GuitarPro4Effects extends AbstractReader
 
         $tremoloPicking = new EffectTremoloPicking();
 
-        if ($value == 1) {
+        if ($value === 1) {
             $tremoloPicking->getDuration()->setValue(Duration::EIGHTH);
             $noteEffect->setTremoloPicking($tremoloPicking);
-        } elseif ($value == 2) {
+        } elseif ($value === 2) {
             $tremoloPicking->getDuration()->setValue(Duration::SIXTEENTH);
             $noteEffect->setTremoloPicking($tremoloPicking);
-        } elseif ($value == 3) {
+        } elseif ($value === 3) {
             $tremoloPicking->getDuration()->setValue(Duration::THIRTY_SECOND);
             $noteEffect->setTremoloPicking($tremoloPicking);
         }

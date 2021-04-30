@@ -15,10 +15,12 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Music\Channel;
 
-class GuitarProChannels extends AbstractReader
+final class GuitarProChannels extends AbstractReader
 {
     /**
      * Read channels informations
+     *
+     * @return array<Channel>
      */
     public function readChannels(): array
     {
@@ -34,13 +36,13 @@ class GuitarProChannels extends AbstractReader
             $channel->setPhaser($this->toChannelShort($this->reader->readByte()));
             $channel->setTremolo($this->toChannelShort($this->reader->readByte()));
             $channel->setBank(
-                $i == 9
+                $i === 9
                     ? Channel::DEFAULT_PERCUSSION_BANK
                     : Channel::DEFAULT_BANK
             );
 
             if ($channel->getProgram() < 0) {
-                  $channel->setProgram(0);
+                $channel->setProgram(0);
             }
 
             $channels[] = $channel;

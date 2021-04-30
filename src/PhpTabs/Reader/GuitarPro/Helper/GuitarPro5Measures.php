@@ -18,7 +18,7 @@ use PhpTabs\Music\Measure;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\Tempo;
 
-class GuitarPro5Measures extends AbstractReader
+final class GuitarPro5Measures extends AbstractReader
 {
     /**
      * Loop on mesures to read
@@ -40,7 +40,7 @@ class GuitarPro5Measures extends AbstractReader
                 $track->addMeasure($measure);
                 $this->reader->factory('GuitarPro5Measure')->readMeasure($measure, $track, $tempo);
 
-                if ($i != $measures - 1 || $j != $tracks - 1) {
+                if ($i !== $measures - 1 || $j !== $tracks - 1) {
                     $this->reader->skip();
                 }
             }

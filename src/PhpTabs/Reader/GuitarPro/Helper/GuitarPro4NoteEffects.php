@@ -18,7 +18,7 @@ use PhpTabs\Music\EffectHarmonic;
 use PhpTabs\Music\EffectTrill;
 use PhpTabs\Music\NoteEffect;
 
-class GuitarPro4NoteEffects extends AbstractReader
+final class GuitarPro4NoteEffects extends AbstractReader
 {
     /**
      * Reads NoteEffect
@@ -27,34 +27,34 @@ class GuitarPro4NoteEffects extends AbstractReader
     {
         $flags1 = intval($this->reader->readUnsignedByte());
         $flags2 = intval($this->reader->readUnsignedByte());
-        $noteEffect->setHammer((($flags1 & 0x02) != 0));
-        $noteEffect->setLetRing((($flags1 & 0x08) != 0));
-        $noteEffect->setVibrato((($flags2 & 0x40) != 0) || $noteEffect->isVibrato());
-        $noteEffect->setPalmMute((($flags2 & 0x02) != 0));
-        $noteEffect->setStaccato((($flags2 & 0x01) != 0));
+        $noteEffect->setHammer((($flags1 & 0x02) !== 0));
+        $noteEffect->setLetRing((($flags1 & 0x08) !== 0));
+        $noteEffect->setVibrato((($flags2 & 0x40) !== 0) || $noteEffect->isVibrato());
+        $noteEffect->setPalmMute((($flags2 & 0x02) !== 0));
+        $noteEffect->setStaccato((($flags2 & 0x01) !== 0));
 
-        if (($flags1 & 0x01) != 0) {
+        if (($flags1 & 0x01) !== 0) {
             $this->reader->factory('GuitarPro3Effects')->readBend($noteEffect);
         }
 
-        if (($flags1 & 0x10) != 0) {
+        if (($flags1 & 0x10) !== 0) {
             $this->reader->readGrace($noteEffect);
         }
 
-        if (($flags2 & 0x04) != 0) {
+        if (($flags2 & 0x04) !== 0) {
             $this->reader->factory('GuitarPro4Effects')->readTremoloPicking($noteEffect);
         }
 
-        if (($flags2 & 0x08) != 0) {
+        if (($flags2 & 0x08) !== 0) {
             $noteEffect->setSlide(true);
             $this->reader->readByte();
         }
 
-        if (($flags2 & 0x10) != 0) {
+        if (($flags2 & 0x10) !== 0) {
             $this->readHarmonic($noteEffect);
         }
 
-        if (($flags2 & 0x20) != 0) {
+        if (($flags2 & 0x20) !== 0) {
             $this->readTrill($noteEffect);
         }
     }
@@ -67,13 +67,13 @@ class GuitarPro4NoteEffects extends AbstractReader
         $trill = new EffectTrill();
         $trill->setFret($fret);
 
-        if ($period == 1) {
+        if ($period === 1) {
             $trill->getDuration()->setValue(Duration::SIXTEENTH);
             $noteEffect->setTrill($trill);
-        } elseif ($period == 2) {
+        } elseif ($period === 2) {
             $trill->getDuration()->setValue(Duration::THIRTY_SECOND);
             $noteEffect->setTrill($trill);
-        } elseif ($period == 3) {
+        } elseif ($period === 3) {
             $trill->getDuration()->setValue(Duration::SIXTY_FOURTH);
             $noteEffect->setTrill($trill);
         }
@@ -84,21 +84,21 @@ class GuitarPro4NoteEffects extends AbstractReader
         $harmonic = new EffectHarmonic();
         $type = intval($this->reader->readByte());
 
-        if ($type == 1) {
+        if ($type === 1) {
             $harmonic->setType(EffectHarmonic::TYPE_NATURAL);
-        } elseif ($type == 3) {
+        } elseif ($type === 3) {
             $harmonic->setType(EffectHarmonic::TYPE_TAPPED);
-        } elseif ($type == 4) {
+        } elseif ($type === 4) {
             $harmonic->setType(EffectHarmonic::TYPE_PINCH);
-        } elseif ($type == 5) {
+        } elseif ($type === 5) {
             $harmonic->setType(EffectHarmonic::TYPE_SEMI);
-        } elseif ($type == 15) {
+        } elseif ($type === 15) {
             $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
             $harmonic->setData(2);
-        } elseif ($type == 17) {
+        } elseif ($type === 17) {
             $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
             $harmonic->setData(3);
-        } elseif ($type == 22) {
+        } elseif ($type === 22) {
             $harmonic->setType(EffectHarmonic::TYPE_ARTIFICIAL);
             $harmonic->setData(0);
         }

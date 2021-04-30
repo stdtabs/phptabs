@@ -17,10 +17,8 @@ use Exception;
 use PhpTabs\Component\Config;
 use PhpTabs\Component\InputStream;
 use PhpTabs\Component\Tablature;
-use PhpTabs\Music\Duration;
 use PhpTabs\Music\EffectGrace;
 use PhpTabs\Music\Lyric;
-use PhpTabs\Music\Measure;
 use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Song;
@@ -30,9 +28,13 @@ use PhpTabs\Music\Velocities;
 class GuitarPro4Reader extends GuitarProReaderBase
 {
     /**
-     * @var array
+     * @var array<string>
      */
-    private static $supportedVersions = ['FICHIER GUITAR PRO v4.00', 'FICHIER GUITAR PRO v4.06', 'FICHIER GUITAR PRO L4.06'];
+    private static $supportedVersions = [
+        'FICHIER GUITAR PRO v4.00',
+        'FICHIER GUITAR PRO v4.06',
+        'FICHIER GUITAR PRO L4.06',
+    ];
 
     /**
      * @var int
@@ -75,7 +77,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
             : MeasureHeader::TRIPLET_FEEL_NONE;
 
         // Meta only
-        if (Config::get('type') == 'meta') {
+        if (Config::get('type') === 'meta') {
             $this->closeStream();
             return;
         }
@@ -99,7 +101,7 @@ class GuitarPro4Reader extends GuitarProReaderBase
         $this->readTracks($song, $tracks, $channels, $lyric, $lyricTrack);
 
         // Meta+channels+tracks+measure headers only
-        if (Config::get('type') == 'channels') {
+        if (Config::get('type') === 'channels') {
             $this->closeStream();
             return;
         }
@@ -111,6 +113,8 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     /**
      * Get an array of supported versions
+     *
+     * @return array<string>
      */
     public function getSupportedVersions(): array
     {
@@ -141,26 +145,24 @@ class GuitarPro4Reader extends GuitarProReaderBase
 
     /**
      * Reads GraceEffect
-     *
-     * @param \PhpTabs\Music\NoteEffect $effect
      */
     public function readGrace(NoteEffect $effect): void
     {
         $fret = $this->readUnsignedByte();
         $grace = new EffectGrace();
         $grace->setOnBeat(false);
-        $grace->setDead(($fret == 255));
+        $grace->setDead($fret === 255);
         $grace->setFret(!$grace->isDead() ? $fret : 0);
-        $grace->setDynamic((Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->readUnsignedByte())) - Velocities::VELOCITY_INCREMENT);
+        $grace->setDynamic(Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->readUnsignedByte()) - Velocities::VELOCITY_INCREMENT);
         $transition = $this->readUnsignedByte();
 
-        if ($transition == 0) {
+        if ($transition === 0) {
             $grace->setTransition(EffectGrace::TRANSITION_NONE);
-        } elseif ($transition == 1) {
+        } elseif ($transition === 1) {
             $grace->setTransition(EffectGrace::TRANSITION_SLIDE);
-        } elseif ($transition == 2) {
+        } elseif ($transition === 2) {
             $grace->setTransition(EffectGrace::TRANSITION_BEND);
-        } elseif ($transition == 3) {
+        } elseif ($transition === 3) {
             $grace->setTransition(EffectGrace::TRANSITION_HAMMER);
         }
 
@@ -176,19 +178,21 @@ class GuitarPro4Reader extends GuitarProReaderBase
         $timeSignature = new TimeSignature();
 
         for ($i = 0; $i < $count; $i++) {
-            $song->addMeasureHeader($this->factory('GuitarPro3MeasureHeader')->readMeasureHeader(($i + 1), $song, $timeSignature));
+            $song->addMeasureHeader($this->factory('GuitarPro3MeasureHeader')->readMeasureHeader($i + 1, $song, $timeSignature));
         }
     }
 
     /**
      * Loop on tracks to read
+     *
+     * @param array<PhpTabs\Music\Channel> $channels
      */
     private function readTracks(Song $song, int $count, array $channels, Lyric $lyric, int $lyricTrack): void
     {
         for ($number = 0; $number < $count; $number++) {
             $track = $this->factory('GuitarPro4Track')->readTrack(
                 $song, $channels,
-                $number + 1 == $lyricTrack ? $lyric : new Lyric()
+                $number + 1 === $lyricTrack ? $lyric : new Lyric()
             );
 
             $song->addTrack($track);

@@ -15,7 +15,7 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Music\Tempo;
 
-class GuitarPro4MixChange extends AbstractReader
+final class GuitarPro4MixChange extends AbstractReader
 {
     /**
      * Reads mix change informations

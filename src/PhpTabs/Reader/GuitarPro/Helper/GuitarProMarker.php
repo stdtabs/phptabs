@@ -15,7 +15,7 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Music\Marker;
 
-class GuitarProMarker extends AbstractReader
+final class GuitarProMarker extends AbstractReader
 {
     /**
      * Read a measure marker

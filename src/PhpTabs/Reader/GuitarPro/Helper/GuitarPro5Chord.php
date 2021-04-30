@@ -16,7 +16,7 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\Chord;
 
-class GuitarPro5Chord extends AbstractReader
+final class GuitarPro5Chord extends AbstractReader
 {
     /**
      * Reads Chord informations

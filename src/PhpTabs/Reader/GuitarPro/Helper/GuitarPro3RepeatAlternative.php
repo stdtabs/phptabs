@@ -15,11 +15,11 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Music\Song;
 
-class GuitarPro3RepeatAlternative extends AbstractReader
+final class GuitarPro3RepeatAlternative extends AbstractReader
 {
     /**
      * Parses repeat alternative
-
+     * 
      * @return int Number of repeat alternatives
      */
     public function parseRepeatAlternative(Song $song, int $measure): int
@@ -31,7 +31,7 @@ class GuitarPro3RepeatAlternative extends AbstractReader
         $headers = $song->getMeasureHeaders();
 
         foreach ($headers as $header) {
-            if ($header->getNumber() == $measure) {
+            if ($header->getNumber() === $measure) {
                 break;
             }
 
@@ -43,7 +43,7 @@ class GuitarPro3RepeatAlternative extends AbstractReader
         }
 
         for ($i = 0; $i < 8; $i++) {
-            if ($value > $i && ($existentAlternatives & (1 << $i)) == 0) {
+            if ($value > $i && ($existentAlternatives & (1 << $i)) === 0) {
                 $repeatAlternative |= (1 << $i);
             }
         }

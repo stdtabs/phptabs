@@ -18,10 +18,12 @@ use PhpTabs\Music\Song;
 use PhpTabs\Music\TabString;
 use PhpTabs\Music\Track;
 
-class GuitarPro4Track extends AbstractReader
+final class GuitarPro4Track extends AbstractReader
 {
     /**
      * Reads track informations
+     *
+     * @param array<PhpTabs\Music\Channel> $channels
      */
     public function readTrack(Song $song, array $channels, Lyric $lyrics): Track
     {

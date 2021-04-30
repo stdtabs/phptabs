@@ -19,7 +19,7 @@ use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Tempo;
 use PhpTabs\Music\Track;
 
-class GuitarPro3Beat extends AbstractReader
+final class GuitarPro3Beat extends AbstractReader
 {
     /**
      * Reads some Beat informations
@@ -30,7 +30,7 @@ class GuitarPro3Beat extends AbstractReader
     {
         $flags = $this->reader->readUnsignedByte();
 
-        if (($flags & 0x40) != 0) {
+        if (($flags & 0x40) !== 0) {
             $this->reader->readUnsignedByte();
         }
 
@@ -40,28 +40,27 @@ class GuitarPro3Beat extends AbstractReader
 
         $effect = new NoteEffect();
 
-        if (($flags & 0x02) != 0) {
+        if (($flags & 0x02) !== 0) {
             $this->reader->factory($this->getParserName() . 'Chord')->readChord($track->countStrings(), $beat);
         }
 
-        if (($flags & 0x04) != 0) {
+        if (($flags & 0x04) !== 0) {
             $this->reader->factory('GuitarProText')->readText($beat);
         }
 
-        if (($flags & 0x08) != 0) {
+        if (($flags & 0x08) !== 0) {
             $this->reader->factory($this->getParserName() . 'BeatEffects')->readBeatEffects($beat, $effect);
         }
 
-        if (($flags & 0x10) != 0) {
+        if (($flags & 0x10) !== 0) {
             $this->reader->factory($this->getParserName() . 'MixChange')->readMixChange($tempo);
         }
 
         $stringFlags = $this->reader->readUnsignedByte();
 
-        for ($i = 6; $i >= 0; $i--)
-        {
-            if (($stringFlags & (1 << $i)) != 0 && (6 - $i) < $track->countStrings()) {
-                $string = clone $track->getString((6 - $i) + 1);
+        for ($i = 6; $i >= 0; $i--) {
+            if (($stringFlags & (1 << $i)) !== 0 && (6 - $i) < $track->countStrings()) {
+                $string = clone $track->getString(6 - $i + 1);
                 $note = $this->reader->factory($this->getParserName() . 'Note')->readNote($string, $track, clone $effect);
                 $voice->addNote($note);
             }

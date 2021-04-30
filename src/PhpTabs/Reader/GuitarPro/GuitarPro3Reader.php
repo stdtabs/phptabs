@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace PhpTabs\Reader\GuitarPro;
 
 use Exception;
-use PhpTabs\Component\Config;
 use PhpTabs\Component\InputStream;
 use PhpTabs\Component\Tablature;
 use PhpTabs\Music\MeasureHeader;
@@ -88,6 +87,8 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     /**
      * Get an array of supported versions
+     *
+     * @return array<string>
      */
     public function getSupportedVersions(): array
     {
@@ -96,9 +97,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
 
     public function getTablature(): Tablature
     {
-        return isset($this->tablature)
-            ? $this->tablature
-            : new Tablature();
+        return $this->tablature ?? new Tablature();
     }
 
     /**
@@ -128,13 +127,15 @@ class GuitarPro3Reader extends GuitarProReaderBase
         for ($i = 0; $i < $count; $i++) {
             $song->addMeasureHeader(
                 $this->factory('GuitarPro3MeasureHeader')
-                     ->readMeasureHeader(($i + 1), $song, $timeSignature)
+                     ->readMeasureHeader($i + 1, $song, $timeSignature)
             );
         }
     }
 
     /**
      * Loops on tracks to read
+     *
+     * @param array<PhpTabs\Music\Channel> $channels
      */
     private function readTracks(Song $song, int $count, array $channels): void
     {

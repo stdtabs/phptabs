@@ -15,11 +15,10 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 
 use PhpTabs\Music\Track;
 
-class GuitarPro3TiedNote extends AbstractReader
+final class GuitarPro3TiedNote extends AbstractReader
 {
     /**
-     * @param int              $string String on which note has started
-     * @param \PhpTabs\Music\Track $track
+     * @param int $string String on which note has started
      *
      * @return int tied note value
      */
@@ -31,14 +30,16 @@ class GuitarPro3TiedNote extends AbstractReader
             for ($m = $measureCount - 1; $m >= 0; $m--) {
                 $measure = $track->getMeasure($m);
 
-                for ($b = $measure->countBeats() - 1; $b >= 0; $b--) {
+                $countBeats = $measure->countBeats();
+                for ($b = $countBeats - 1; $b >= 0; $b--) {
                     $beat = $measure->getBeat($b);
                     $voice = $beat->getVoice(0);
 
-                    for ($n = 0; $n < $voice->countNotes(); $n++) {
+                    $countNotes = $voice->countNotes();
+                    for ($n = 0; $n < $countNotes; $n++) {
                         $note = $voice->getNote($n);
 
-                        if ($note->getString() == $string) {
+                        if ($note->getString() === $string) {
                             return $note->getValue();
                         }
                     }

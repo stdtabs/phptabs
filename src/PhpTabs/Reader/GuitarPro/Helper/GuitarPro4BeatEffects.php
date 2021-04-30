@@ -16,7 +16,7 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\NoteEffect;
 
-class GuitarPro4BeatEffects extends AbstractReader
+final class GuitarPro4BeatEffects extends AbstractReader
 {
     /**
      * Reads some beat effects
@@ -25,27 +25,27 @@ class GuitarPro4BeatEffects extends AbstractReader
     {
         $flags1 = $this->reader->readUnsignedByte();
         $flags2 = $this->reader->readUnsignedByte();
-        $noteEffect->setFadeIn((($flags1 & 0x10) != 0));
-        $noteEffect->setVibrato((($flags1 & 0x02) != 0));
+        $noteEffect->setFadeIn((($flags1 & 0x10) !== 0));
+        $noteEffect->setVibrato((($flags1 & 0x02) !== 0));
 
-        if (($flags1 & 0x20) != 0) {
+        if (($flags1 & 0x20) !== 0) {
             $effect = $this->reader->readUnsignedByte();
-            $noteEffect->setTapping($effect == 1);
-            $noteEffect->setSlapping($effect == 2);
-            $noteEffect->setPopping($effect == 3);
+            $noteEffect->setTapping($effect === 1);
+            $noteEffect->setSlapping($effect === 2);
+            $noteEffect->setPopping($effect === 3);
         }
 
-        if (($flags2 & 0x04) != 0) {
+        if (($flags2 & 0x04) !== 0) {
             $this->reader->factory('GuitarPro4Effects')->readTremoloBar($noteEffect);
         }
 
-        if (($flags1 & 0x40) != 0) {
-            $factory = $this->getParserName() == 'GuitarPro5'
+        if (($flags1 & 0x40) !== 0) {
+            $factory = $this->getParserName() === 'GuitarPro5'
             ? 'GuitarPro5' : 'GuitarPro3';
             $this->reader->factory($factory . 'Stroke')->readStroke($beat);
         }
 
-        if (($flags2 & 0x02) != 0) {
+        if (($flags2 & 0x02) !== 0) {
             $this->reader->readByte();
         }
     }

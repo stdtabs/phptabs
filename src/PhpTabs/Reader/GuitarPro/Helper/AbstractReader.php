@@ -17,7 +17,14 @@ use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 
 abstract class AbstractReader
 {
+    /**
+     * @var GuitarProReaderInterface
+     */
     protected $reader;
+
+    /**
+     * @var string
+     */
     protected $parserName;
 
     public function setReader(GuitarProReaderInterface $reader): void

@@ -16,20 +16,20 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\Chord;
 
-class GuitarPro4Chord extends AbstractReader
+final class GuitarPro4Chord extends AbstractReader
 {
     /**
      * Reads Chord informations
      */
-    public function readChord($strings, Beat $beat): void
+    public function readChord(int $strings, Beat $beat): void
     {
         $chord = new Chord($strings);
 
-        if (($this->reader->readUnsignedByte() & 0x01) == 0) {
+        if (($this->reader->readUnsignedByte() & 0x01) === 0) {
             $chord->setName($this->reader->readStringByteSizeOfInteger());
             $chord->setFirstFret($this->reader->readInt());
 
-            if ($chord->getFirstFret() != 0) {
+            if ($chord->getFirstFret() !== 0) {
                 for ($i = 0; $i < 6; $i++) {
                     $this->readFret($chord, $i);
                 }

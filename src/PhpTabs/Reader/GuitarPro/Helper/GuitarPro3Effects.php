@@ -20,7 +20,7 @@ use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Velocities;
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface;
 
-class GuitarPro3Effects extends AbstractReader
+final class GuitarPro3Effects extends AbstractReader
 {
     /**
      * Reads a note effect
@@ -28,15 +28,15 @@ class GuitarPro3Effects extends AbstractReader
     public function readNoteEffects(NoteEffect $effect): void
     {
         $flags = $this->reader->readUnsignedByte();
-        $effect->setHammer((($flags & 0x02) != 0));
-        $effect->setSlide((($flags & 0x04) != 0));
-        $effect->setLetRing((($flags & 0x08) != 0));
+        $effect->setHammer((($flags & 0x02) !== 0));
+        $effect->setSlide((($flags & 0x04) !== 0));
+        $effect->setLetRing((($flags & 0x08) !== 0));
 
-        if (($flags & 0x01) != 0) {
+        if (($flags & 0x01) !== 0) {
             $this->readBend($effect);
         }
 
-        if (($flags & 0x10) != 0) {
+        if (($flags & 0x10) !== 0) {
             $this->readGrace($effect);
         }
     }
@@ -73,18 +73,18 @@ class GuitarPro3Effects extends AbstractReader
         $fret = $this->reader->readUnsignedByte();
         $grace = new EffectGrace();
         $grace->setOnBeat(false);
-        $grace->setDead(($fret == 255));
-        $grace->setFret(((!$grace->isDead()) ? $fret : 0));
-        $grace->setDynamic((Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->reader->readUnsignedByte())) - Velocities::VELOCITY_INCREMENT);
+        $grace->setDead($fret === 255);
+        $grace->setFret(!$grace->isDead() ? $fret : 0);
+        $grace->setDynamic(Velocities::MIN_VELOCITY + (Velocities::VELOCITY_INCREMENT * $this->reader->readUnsignedByte()) - Velocities::VELOCITY_INCREMENT);
         $transition = $this->reader->readUnsignedByte();
 
-        if ($transition == 0) {
+        if ($transition === 0) {
             $grace->setTransition(EffectGrace::TRANSITION_NONE);
-        } elseif ($transition == 1) {
+        } elseif ($transition === 1) {
             $grace->setTransition(EffectGrace::TRANSITION_SLIDE);
-        } elseif ($transition == 2) {
+        } elseif ($transition === 2) {
             $grace->setTransition(EffectGrace::TRANSITION_BEND);
-        } elseif ($transition == 3) {
+        } elseif ($transition === 3) {
             $grace->setTransition(EffectGrace::TRANSITION_HAMMER);
         }
 

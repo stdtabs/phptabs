@@ -17,7 +17,7 @@ use PhpTabs\Music\Measure;
 use PhpTabs\Music\Tempo;
 use PhpTabs\Music\Track;
 
-class GuitarPro5Measure extends AbstractReader
+final class GuitarPro5Measure extends AbstractReader
 {
     /**
      * Read a Measure
@@ -29,17 +29,20 @@ class GuitarPro5Measure extends AbstractReader
             $numberOfBeats = $this->reader->readInt();
 
             for ($i = 0; $i < $numberOfBeats; $i++) {
-                $nextNoteStart += $this->reader->factory('GuitarPro5Beat')->readBeat($nextNoteStart, $measure, $track, $tempo, $voice);
+                $nextNoteStart += $this->reader->factory('GuitarPro5Beat')
+                                       ->readBeat($nextNoteStart, $measure, $track, $tempo, $voice);
             }
         }
 
         $emptyBeats = [];
 
-        for ($i = 0; $i < $measure->countBeats(); $i++) {
+        $countBeats = $measure->countBeats();
+        for ($i = 0; $i < $countBeats; $i++) {
             $beat = $measure->getBeat($i);
             $empty = true;
 
-            for ($v = 0; $v < $beat->countVoices(); $v++) {
+            $countVoices = $beat->countVoices();
+            for ($v = 0; $v < $countVoices; $v++) {
                 if (!$beat->getVoice($v)->isEmpty()) {
                     $empty = false;
                 }

@@ -16,7 +16,7 @@ namespace PhpTabs\Reader\GuitarPro\Helper;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\Stroke;
 
-class GuitarPro5Stroke extends AbstractReader
+final class GuitarPro5Stroke extends AbstractReader
 {
     public function readStroke(Beat $beat): void
     {

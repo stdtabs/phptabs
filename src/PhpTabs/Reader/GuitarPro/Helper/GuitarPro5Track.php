@@ -18,16 +18,18 @@ use PhpTabs\Music\Song;
 use PhpTabs\Music\TabString;
 use PhpTabs\Music\Track;
 
-class GuitarPro5Track extends AbstractReader
+final class GuitarPro5Track extends AbstractReader
 {
     /**
      * Read track informations
+     *
+     * @param array<PhpTabs\Music\Channel> $channels
      */
     public function readTrack(Song $song, array $channels, Lyric $lyrics): Track
     {
         $this->reader->readUnsignedByte();
 
-        if ($song->countTracks() == 0 || $this->reader->getVersionIndex() == 0) {
+        if ($song->countTracks() === 0 || $this->reader->getVersionIndex() === 0) {
             $this->reader->skip();
         }
 
