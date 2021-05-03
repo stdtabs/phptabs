@@ -15,7 +15,7 @@ namespace PhpTabs\Writer\Midi;
 
 use PhpTabs\Music\Note;
 
-class MidiNoteHelper
+final class MidiNoteHelper
 {
     /**
      * @var \PhpTabs\Writer\Midi\MidiMeasureHelper

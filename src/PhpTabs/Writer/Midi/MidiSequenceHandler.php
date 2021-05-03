@@ -13,19 +13,34 @@ declare(strict_types=1);
 
 namespace PhpTabs\Writer\Midi;
 
-use PhpTabs\Share\ChannelRoute;
-use PhpTabs\Share\ChannelRouter;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\TimeSignature;
 use PhpTabs\Reader\Midi\MidiEvent;
 use PhpTabs\Reader\Midi\MidiSequence;
 use PhpTabs\Reader\Midi\MidiTrack;
+use PhpTabs\Share\ChannelRoute;
+use PhpTabs\Share\ChannelRouter;
 
-class MidiSequenceHandler
+final class MidiSequenceHandler
 {
+    /**
+     * @var MidiSequence
+     */
     private $sequence;
+
+    /**
+     * @var ChannelRouter
+     */
     private $router;
+
+    /**
+     * @var int
+     */
     private $tracks;
+
+    /**
+     * @var MidiWriter
+     */
     private $writer;
 
     public function __construct(int $tracks, ChannelRouter $router, MidiWriter $writer)
@@ -40,7 +55,8 @@ class MidiSequenceHandler
     {
         $this->sequence = new MidiSequence(MidiSequence::PPQ, Duration::QUARTER_TIME);
 
-        for ($i = 0; $i < $this->getTracks(); $i++) {
+        $countTracks = $this->getTracks();
+        for ($i = 0; $i < $countTracks; $i++) {
             $this->sequence->addTrack(new MidiTrack());
         }
     }
@@ -103,7 +119,7 @@ class MidiSequenceHandler
         if ($channel !== null) {
             $this->addEvent($track, new MidiEvent(MidiMessageUtils::controlChange($channel->getChannel1(), $controller, $value), $tick));
 
-            if ($channel->getChannel1() != $channel->getChannel2()) {
+            if ($channel->getChannel1() !== $channel->getChannel2()) {
                 $this->addEvent($track, new MidiEvent(MidiMessageUtils::controlChange($channel->getChannel2(), $controller, $value), $tick));
             }
         }
@@ -116,7 +132,7 @@ class MidiSequenceHandler
         if ($channel !== null) {
             $this->addEvent($track, new MidiEvent(MidiMessageUtils::programChange($channel->getChannel1(), $instrument), $tick));
 
-            if ($channel->getChannel1() != $channel->getChannel2()) {
+            if ($channel->getChannel1() !== $channel->getChannel2()) {
                 $this->addEvent($track, new MidiEvent(MidiMessageUtils::programChange($channel->getChannel2(), $instrument), $tick));
             }
         }

@@ -13,9 +13,16 @@ declare(strict_types=1);
 
 namespace PhpTabs\Writer\Midi;
 
-class MidiMeasureHelper
+final class MidiMeasureHelper
 {
+    /**
+     * @var int
+     */
     private $index;
+
+    /**
+     * @var int
+     */
     private $move;
 
     public function __construct(int $index, int $move)

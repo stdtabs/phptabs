@@ -13,9 +13,16 @@ declare(strict_types=1);
 
 namespace PhpTabs\Writer\Midi;
 
-class MidiTickHelper
+final class MidiTickHelper
 {
+    /**
+     * @var int
+     */
     private $start;
+
+    /**
+     * @var int
+     */
     private $duration;
 
     public function __construct(int $start, int $duration)

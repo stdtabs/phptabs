@@ -13,15 +13,21 @@ declare(strict_types=1);
 
 namespace PhpTabs\Writer\Midi;
 
-class MidiSequenceHelper
+final class MidiSequenceHelper
 {
-    private $measureHeaderHelpers;
+    /**
+     * @var array<MidiMeasureHelper>
+     */
+    private $measureHeaderHelpers = [];
+
+    /**
+     * @var MidiSequenceHandler
+     */
     private $sequence;
 
     public function __construct(MidiSequenceHandler $sequence)
     {
         $this->sequence = $sequence;
-        $this->measureHeaderHelpers = [];
     }
 
     public function getSequence(): MidiSequenceHandler
@@ -34,6 +40,9 @@ class MidiSequenceHelper
         $this->measureHeaderHelpers[] = $helper;
     }
 
+    /**
+     * @return array<MidiMeasureHelper>
+     */
     public function getMeasureHelpers(): array
     {
         return $this->measureHeaderHelpers;

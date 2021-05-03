@@ -16,7 +16,7 @@ namespace PhpTabs\Writer\Midi;
 use PhpTabs\Music\TimeSignature;
 use PhpTabs\Reader\Midi\MidiMessage;
 
-class MidiMessageUtils
+final class MidiMessageUtils
 {
     public const TICK_MOVE = 0x01;
 
@@ -70,9 +70,9 @@ class MidiMessageUtils
     {
         $message = new MidiMessage(MidiMessage::TYPE_META, MidiMessage::TEMPO_CHANGE);
         $message->setData([
-            (($usq >> 16) & 0xff),
-            (($usq >> 8) & 0xff),
-            (($usq) & 0xff)
+            ($usq >> 16) & 0xff,
+            ($usq >> 8) & 0xff,
+            $usq & 0xff,
         ]);
         return $message;
     }
@@ -83,8 +83,8 @@ class MidiMessageUtils
         $message->setData([
             $timeSignature->getNumerator(),
             $timeSignature->getDenominator()->getIndex(),
-            (96 / $timeSignature->getDenominator()->getValue()),
-            8
+            96 / $timeSignature->getDenominator()->getValue(),
+            8,
         ]);
         return $message;
     }

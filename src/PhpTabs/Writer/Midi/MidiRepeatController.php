@@ -16,44 +16,85 @@ namespace PhpTabs\Writer\Midi;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\Song;
 
-class MidiRepeatController
+final class MidiRepeatController
 {
+    /**
+     * @var Song
+     */
     private $song;
-    private $count;
-    private $index;
-    private $lastIndex;
-    private $shouldPlay;
-    private $repeatOpen;
-    private $repeatStart;
-    private $repeatEnd;
-    private $repeatMove;
-    private $repeatStartIndex;
-    private $repeatNumber;
-    private $repeatAlternative;
-    private $sHeader;
-    private $eHeader;
 
     /**
-     * @param \PhpTabs\Music\Song $song
-     * @param mixed               $sHeader
-     * @param mixed               $eHeader
+     * @var int
      */
+    private $count;
+
+    /**
+     * @var int
+     */
+    private $index = 0;
+
+    /**
+     * @var int
+     */
+    private $lastIndex = -1;
+
+    /**
+     * @var bool
+     */
+    private $shouldPlay = true;
+
+    /**
+     * @var bool
+     */
+    private $repeatOpen = true;
+
+    /**
+     * @var int
+     */
+    private $repeatStart;
+
+    /**
+     * @var int
+     */
+    private $repeatEnd = 0;
+
+    /**
+     * @var int
+     */
+    private $repeatMove = 0;
+
+    /**
+     * @var int
+     */
+    private $repeatStartIndex = 0;
+
+    /**
+     * @var int
+     */
+    private $repeatNumber = 0;
+
+    /**
+     * @var int
+     */
+    private $repeatAlternative = 0;
+
+    /**
+     * @var int
+     */
+    private $sHeader;
+
+    /**
+     * @var int
+     */
+    private $eHeader;
+
     public function __construct(Song $song, int $sHeader, int $eHeader)
     {
         $this->song = $song;
         $this->sHeader = $sHeader;
         $this->eHeader = $eHeader;
         $this->count = $song->countMeasureHeaders();
-        $this->index = 0;
-        $this->lastIndex = -1;
-        $this->shouldPlay = true;
-        $this->repeatOpen = true;
-        $this->repeatAlternative = 0;
         $this->repeatStart = Duration::QUARTER_TIME;
-        $this->repeatEnd = 0;
-        $this->repeatMove = 0;
-        $this->repeatStartIndex = 0;
-        $this->repeatNumber = 0;
     }
 
     public function process(): void
@@ -61,14 +102,14 @@ class MidiRepeatController
         $header = $this->song->getMeasureHeader($this->index);
 
         // Checks pointer is in range
-        if (($this->sHeader != -1 && $header->getNumber() < $this->sHeader) || ($this->eHeader != -1 && $header->getNumber() > $this->eHeader)) {
+        if (($this->sHeader !== -1 && $header->getNumber() < $this->sHeader) || ($this->eHeader !== -1 && $header->getNumber() > $this->eHeader)) {
             $this->shouldPlay = false;
             $this->index ++;
             return;
         }
 
         // always repeat open first
-        if (($this->sHeader != -1 && $header->getNumber() == $this->sHeader ) || $header->getNumber() == 1) {
+        if (($this->sHeader !== -1 && $header->getNumber() === $this->sHeader) || $header->getNumber() === 1) {
             $this->repeatStartIndex = $this->index;
             $this->repeatStart = $header->getStart();
             $this->repeatOpen = true;
@@ -90,11 +131,11 @@ class MidiRepeatController
             }
         } else {
             // Checks if an alternative has been opened
-            if ($this->repeatAlternative == 0) {
+            if ($this->repeatAlternative === 0) {
                 $this->repeatAlternative = $header->getRepeatAlternative();
             }
             // Final alternative
-            if ($this->repeatOpen && ($this->repeatAlternative > 0) && (($this->repeatAlternative & (1 << ($this->repeatNumber))) == 0)) {
+            if ($this->repeatOpen && $this->repeatAlternative > 0 && ($this->repeatAlternative & (1 << $this->repeatNumber)) === 0) {
                 $this->repeatMove -= $header->getLength();
 
                 if ($header->getRepeatClose() > 0) {
@@ -102,7 +143,7 @@ class MidiRepeatController
                 }
 
                 $this->shouldPlay = false;
-                $this->index ++;
+                $this->index++;
                 return;
             }
         }

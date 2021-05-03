@@ -15,14 +15,12 @@ namespace PhpTabs\Writer\Midi;
 
 use PhpTabs\Component\WriterInterface;
 
-class MidiWriterBase implements WriterInterface
+abstract class MidiWriterBase implements WriterInterface
 {
-    private $content;
-
-    public function __construct()
-    {
-        $this->content = '';
-    }
+    /**
+     * @var string
+     */
+    private $content = '';
 
     public function getContent(): string
     {
@@ -39,6 +37,9 @@ class MidiWriterBase implements WriterInterface
         $this->content .= pack('n', $integer);
     }
 
+    /**
+     * @param array<int> $bytes
+     */
     protected function writeBytes(array $bytes): void
     {
         foreach ($bytes as $byte) {
@@ -46,6 +47,9 @@ class MidiWriterBase implements WriterInterface
         }
     }
 
+    /**
+     * @param array<int> $bytes
+     */
     protected function writeUnsignedBytes(array $bytes): void
     {
         foreach ($bytes as $byte) {
@@ -53,13 +57,13 @@ class MidiWriterBase implements WriterInterface
         }
     }
 
-    protected function writeVariableLengthQuantity(int $value, string $out = null): int
+    protected function writeVariableLengthQuantity(int $value, ?string $out = null): int
     {
         $started = false;
         $length = 0;
-        $data = (($value >> 21) & 0x7f);
+        $data = ($value >> 21) & 0x7f;
 
-        if ($data != 0) {
+        if ($data !== 0) {
             if ($out !== null) {
                 $this->writeUnsignedBytes([$data | 0x80]);
             }
@@ -69,7 +73,7 @@ class MidiWriterBase implements WriterInterface
 
         $data = (($value >> 14) & 0x7f);
 
-        if ($data != 0 || $started) {
+        if ($data !== 0 || $started) {
             if ($out !== null) {
                 $this->writeUnsignedBytes([$data | 0x80]);
             }
@@ -77,16 +81,16 @@ class MidiWriterBase implements WriterInterface
             $started = true;
         }
 
-        $data = (($value >> 7) & 0x7f);
+        $data = ($value >> 7) & 0x7f;
 
-        if ($data != 0 || $started) {
+        if ($data !== 0 || $started) {
             if ($out !== null) {
                 $this->writeUnsignedBytes([$data | 0x80]);
             }
             $length++;
         }
 
-        $data = ($value & 0x7f);
+        $data = $value & 0x7f;
         if ($out !== null) {
             $this->writeUnsignedBytes([$data]);
         }
