@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -17,8 +19,11 @@ use PhpTabs\Music\Song;
 use PhpTabs\Music\Tempo;
 use PhpTabs\Share\MeasureVoiceJoiner;
 
-class MeasureWriter
+final class MeasureWriter
 {
+    /**
+     * @var WriterInterface
+     */
     private $writer;
 
     public function __construct(WriterInterface $writer)
@@ -29,11 +34,10 @@ class MeasureWriter
     public function writeMeasures(Song $song, Tempo $tempo): void
     {
         foreach ($song->getMeasureHeaders() as $index => $header) {
-
             foreach ($song->getTracks() as $track) {
                 $this->writeMeasure(
                     $track->getMeasure($index),
-                    $header->getTempo()->getValue() != $tempo->getValue()
+                    $header->getTempo()->getValue() !== $tempo->getValue()
                 );
             }
 
@@ -51,7 +55,7 @@ class MeasureWriter
             $this->writer->getWriter('BeatWriter')->writeBeat(
                 $beat,
                 $measure,
-                ($changeTempo && $index == 0)
+                ($changeTempo && $index === 0)
             );
         }
     }

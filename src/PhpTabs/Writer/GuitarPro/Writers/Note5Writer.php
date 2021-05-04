@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -16,8 +18,11 @@ use PhpTabs\Music\Note;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Velocities;
 
-class Note5Writer
+final class Note5Writer
 {
+    /**
+     * @var WriterInterface
+     */
     private $writer;
 
     public function __construct(WriterInterface $writer)
@@ -33,7 +38,7 @@ class Note5Writer
 
         $this->writer->writeUnsignedByte($flags);
 
-        if (($flags & 0x20) != 0) {
+        if (($flags & 0x20) !== 0) {
             $typeHeader = 0x01;
 
             if ($note->isTiedNote()) {
@@ -45,17 +50,17 @@ class Note5Writer
             $this->writer->writeUnsignedByte($typeHeader);
         }
 
-        if (($flags & 0x10) != 0) {
+        if (($flags & 0x10) !== 0) {
             $this->writer->writeByte(intval((($note->getVelocity() - Velocities::MIN_VELOCITY) / Velocities::VELOCITY_INCREMENT) + 1));
         }
 
-        if (($flags & 0x20) != 0) {
+        if (($flags & 0x20) !== 0) {
             $this->writer->writeByte($note->getValue());
         }
 
         $this->writer->skipBytes(1);
 
-        if (($flags & 0x08) != 0) {
+        if (($flags & 0x08) !== 0) {
             $this->writer->getWriter('NoteEffect5Writer')->writeNoteEffects($effect);
         }
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -21,11 +23,13 @@ use PhpTabs\Music\EffectTremoloPicking;
 use PhpTabs\Music\EffectTrill;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Velocities;
-use PhpTabs\Writer\GuitarProWriterBase;
 use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface as GprInterface;
 
-class NoteEffectWriter
+final class NoteEffectWriter
 {
+    /**
+     * @var WriterInterface
+     */
     private $writer;
 
     public function __construct(WriterInterface $writer)
@@ -41,24 +45,23 @@ class NoteEffectWriter
         $this->writer->writeUnsignedByte($flags1);
         $this->writer->writeUnsignedByte($flags2);
 
-        if (($flags1 & 0x01) != 0) {
+        if (($flags1 & 0x01) !== 0) {
             $this->writeBend($effect->getBend());
         }
 
-        if (($flags1 & 0x10) != 0) {
+        if (($flags1 & 0x10) !== 0) {
             $this->writeGrace($effect->getGrace());
         }
 
-        if (($flags2 & 0x04) != 0) {
+        if (($flags2 & 0x04) !== 0) {
             $this->writeTremoloPicking($effect->getTremoloPicking());
         }
 
-        if (($flags2 & 0x08) != 0) {
+        if (($flags2 & 0x08) !== 0) {
             $this->writer->writeByte(1);
         }
 
-        if (($flags2 & 0x10) != 0) {
-
+        if (($flags2 & 0x10) !== 0) {
             switch ($effect->getHarmonic()->getType()) {
                 case EffectHarmonic::TYPE_NATURAL:
                     $this->writer->writeByte(1);
@@ -78,8 +81,7 @@ class NoteEffectWriter
             }
         }
 
-        if (($flags2 & 0x20) != 0) {
-
+        if (($flags2 & 0x20) !== 0) {
             $this->writer->writeByte($effect->getTrill()->getFret());
 
             switch ($effect->getTrill()->getDuration()->getValue()) {
@@ -223,7 +225,7 @@ class NoteEffectWriter
     {
         $points = $effect->getPoints();
 
-        switch(str_replace('PhpTabs\\Writer\\GuitarPro\\', '', get_class($this->writer))) {
+        switch (str_replace('PhpTabs\\Writer\\GuitarPro\\', '', get_class($this->writer))) {
             case 'GuitarPro5Writer':
                 $this->writer->writeByte(1);
                 break;

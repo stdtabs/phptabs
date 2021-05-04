@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -16,8 +18,11 @@ use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\TimeSignature;
 
-class MeasureHeaderWriter
+final class MeasureHeaderWriter
 {
+    /**
+     * @var WriterInterface
+     */
     private $writer;
 
     public function __construct(WriterInterface $writer)
@@ -44,11 +49,11 @@ class MeasureHeaderWriter
     {
         $flags = 0;
 
-        if ($measure->getNumber() == 1 || $measure->getTimeSignature()->getNumerator() != $timeSignature->getNumerator()) {
+        if ($measure->getNumber() === 1 || $measure->getTimeSignature()->getNumerator() !== $timeSignature->getNumerator()) {
             $flags |= 0x01;
         }
 
-        if ($measure->getNumber() == 1 || $measure->getTimeSignature()->getDenominator()->getValue() != $timeSignature->getDenominator()->getValue()) {
+        if ($measure->getNumber() === 1 || $measure->getTimeSignature()->getDenominator()->getValue() !== $timeSignature->getDenominator()->getValue()) {
             $flags |= 0x02;
         }
 
@@ -66,19 +71,19 @@ class MeasureHeaderWriter
 
         $this->writer->writeUnsignedByte($flags);
 
-        if (($flags & 0x01) != 0) {
+        if (($flags & 0x01) !== 0) {
             $this->writer->writeByte($measure->getTimeSignature()->getNumerator());
         }
 
-        if (($flags & 0x02) != 0) {
+        if (($flags & 0x02) !== 0) {
             $this->writer->writeByte($measure->getTimeSignature()->getDenominator()->getValue());
         }
 
-        if (($flags & 0x08) != 0) {
+        if (($flags & 0x08) !== 0) {
             $this->writer->writeByte($measure->getRepeatClose());
         }
 
-        if (($flags & 0x20) != 0) {
+        if (($flags & 0x20) !== 0) {
             $this->writer->writeMarker($measure->getMarker());
         }
     }

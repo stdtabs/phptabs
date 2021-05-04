@@ -19,7 +19,7 @@ namespace PhpTabs\Component;
 abstract class Log
 {
     /**
-     * @var array config options
+     * @var array<int,array<string,string>> config options
      */
     private static $data = [];
 
@@ -32,7 +32,7 @@ abstract class Log
     public static function add(string $message, string $type = 'NOTICE'): void
     {
         if (Config::get('verbose')) {
-            echo PHP_EOL . "[{$type}] $message";
+            echo PHP_EOL . "[{$type}] {$message}";
         }
 
         self::$data[] = [

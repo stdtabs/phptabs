@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -16,8 +18,11 @@ use PhpTabs\Music\EffectGrace;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Velocities;
 
-class NoteEffect5Writer
+final class NoteEffect5Writer
 {
+    /**
+     * @var WriterInterface
+     */
     private $writer;
 
     public function __construct(WriterInterface $writer)
@@ -33,27 +38,27 @@ class NoteEffect5Writer
         $this->writer->writeUnsignedByte($flags1);
         $this->writer->writeUnsignedByte($flags2);
 
-        if (($flags1 & 0x01) != 0) {
+        if (($flags1 & 0x01) !== 0) {
             $this->writer->getWriter('NoteEffectWriter')->writeBend($effect->getBend());
         }
 
-        if (($flags1 & 0x10) != 0) {
+        if (($flags1 & 0x10) !== 0) {
             $this->writeGrace($effect->getGrace());
         }
 
-        if (($flags2 & 0x04) != 0) {
+        if (($flags2 & 0x04) !== 0) {
             $this->writer->getWriter('NoteEffectWriter')->writeTremoloPicking($effect->getTremoloPicking());
         }
 
-        if (($flags2 & 0x08) != 0) {
+        if (($flags2 & 0x08) !== 0) {
             $this->writer->writeByte(1);
         }
 
-        if (($flags2 & 0x10) != 0) {
+        if (($flags2 & 0x10) !== 0) {
             $this->writer->writeByte(1);
         }
 
-        if (($flags2 & 0x20) != 0) {
+        if (($flags2 & 0x20) !== 0) {
             $this->writer->getWriter('NoteEffectWriter')->writeTrill($effect->getTrill());
         }
     }

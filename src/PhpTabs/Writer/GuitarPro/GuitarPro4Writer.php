@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -13,22 +15,15 @@ namespace PhpTabs\Writer\GuitarPro;
 
 use Exception;
 use PhpTabs\Music\Chord;
-use PhpTabs\Music\Color;
-use PhpTabs\Music\Duration;
 use PhpTabs\Music\Marker;
 use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\Song;
-use PhpTabs\Music\Stroke;
 use PhpTabs\Music\Tempo;
 use PhpTabs\Music\Text;
-use PhpTabs\Music\Track;
 
-class GuitarPro4Writer extends GuitarProWriterBase
+final class GuitarPro4Writer extends GuitarProWriterBase
 {
-    /**
-     * @constant version
-     */
-    const VERSION = 'FICHIER GUITAR PRO v4.00';
+    private const VERSION = 'FICHIER GUITAR PRO v4.00';
 
     public function __construct(Song $song)
     {
@@ -43,7 +38,7 @@ class GuitarPro4Writer extends GuitarProWriterBase
         $this->writeStringByte(self::VERSION, 30);
         $this->writeInformations($song);
         $this->writeBoolean(
-            $header->getTripletFeel() == MeasureHeader::TRIPLET_FEEL_EIGHTH
+            $header->getTripletFeel() === MeasureHeader::TRIPLET_FEEL_EIGHTH
         );
         $this->getWriter('LyricsWriter')->writeLyrics($song);
         $this->writeInt($header->getTempo()->getValue());
@@ -74,19 +69,21 @@ class GuitarPro4Writer extends GuitarProWriterBase
 
     private function writeInformations(Song $song): void
     {
-        $this->writeStringByteSizeOfInteger((string)$song->getName());
-        $this->writeStringByteSizeOfInteger("");
-        $this->writeStringByteSizeOfInteger((string)$song->getArtist());
-        $this->writeStringByteSizeOfInteger((string)$song->getAlbum());
-        $this->writeStringByteSizeOfInteger((string)$song->getAuthor());
-        $this->writeStringByteSizeOfInteger((string)$song->getCopyright());
-        $this->writeStringByteSizeOfInteger((string)$song->getWriter());
-        $this->writeStringByteSizeOfInteger("");
+        $this->writeStringByteSizeOfInteger((string) $song->getName());
+        $this->writeStringByteSizeOfInteger('');
+        $this->writeStringByteSizeOfInteger((string) $song->getArtist());
+        $this->writeStringByteSizeOfInteger((string) $song->getAlbum());
+        $this->writeStringByteSizeOfInteger((string) $song->getAuthor());
+        $this->writeStringByteSizeOfInteger((string) $song->getCopyright());
+        $this->writeStringByteSizeOfInteger((string) $song->getWriter());
+        $this->writeStringByteSizeOfInteger('');
 
-        $comments = $this->toCommentLines((string)$song->getComments());
-        $this->writeInt(count($comments));
+        $comments = $this->toCommentLines((string) $song->getComments());
 
-        for ($i = 0; $i < count($comments); $i++) {
+        $countComments = count($comments);
+        $this->writeInt($countComments);
+
+        for ($i = 0; $i < $countComments; $i++) {
             $this->writeStringByteSizeOfInteger($comments[$i]);
         }
     }
@@ -108,14 +105,17 @@ class GuitarPro4Writer extends GuitarProWriterBase
         $this->writeUnsignedByte(1);
     }
 
+    /**
+     * @return array<string>
+     */
     private function toCommentLines(string $comments): array
     {
         $lines = [];
-        $line  = $comments;
+        $line = $comments;
 
         while (strlen($line) > 127) {
             $lines[] = substr($line, 0, 127);
-            $line    = substr($line, 127);
+            $line = substr($line, 127);
         }
 
         $lines[] = $line;

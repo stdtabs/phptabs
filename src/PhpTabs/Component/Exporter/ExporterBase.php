@@ -320,7 +320,7 @@ abstract class ExporterBase extends ExporterEffects
     /**
      * Export a marker as an array
      */
-    protected function exportMarker(Marker $marker = null): ?array
+    protected function exportMarker(?Marker $marker = null): ?array
     {
         return is_object($marker)
             ? [
@@ -338,7 +338,7 @@ abstract class ExporterBase extends ExporterEffects
     /**
      * Export a text as an array
      */
-    protected function exportText(Text $text = null): ?array
+    protected function exportText(?Text $text = null): ?array
     {
         return is_object($text)
             ? ['value' => $text->getValue()]

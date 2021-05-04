@@ -402,7 +402,7 @@ final class VexTabTrackRenderer
      */
     private function getDuration(Duration $duration): string
     {
-        if (!isset($this->defDuration[$duration->getValue()])) {
+        if (! isset($this->defDuration[$duration->getValue()])) {
             throw new Exception(
                 'Duration value is not defined. Given:'
                 . $duration->getValue()
@@ -414,7 +414,7 @@ final class VexTabTrackRenderer
             $this->defDuration[
                 $duration->getValue()
             ],
-            $duration->isDotted()       ? 'd'  : '',
+            $duration->isDotted() ? 'd' : '',
             $duration->isDoubleDotted() ? 'dd' : ''
         );
     }

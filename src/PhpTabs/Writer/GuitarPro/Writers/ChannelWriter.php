@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -15,8 +17,11 @@ use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\Channel;
 use PhpTabs\Music\Song;
 
-class ChannelWriter
+final class ChannelWriter
 {
+    /**
+     * @var WriterInterface
+     */
     private $writer;
 
     public function __construct(WriterInterface $writer)
@@ -42,6 +47,9 @@ class ChannelWriter
         );
     }
 
+    /**
+     * @return array<Channel>
+     */
     private function makeChannels(Song $song): array
     {
         $channels = [];
@@ -49,8 +57,9 @@ class ChannelWriter
         for ($i = 0; $i < 64; $i++) {
             $channels[$i] = new Channel();
             $channels[$i]->setProgram(
-                $i == Channel::DEFAULT_PERCUSSION_CHANNEL
-                ? Channel::DEFAULT_PERCUSSION_PROGRAM : 24
+                $i === Channel::DEFAULT_PERCUSSION_CHANNEL
+                    ? Channel::DEFAULT_PERCUSSION_PROGRAM
+                    : 24
             );
             $channels[$i]->setVolume(13);
             $channels[$i]->setBalance(8);

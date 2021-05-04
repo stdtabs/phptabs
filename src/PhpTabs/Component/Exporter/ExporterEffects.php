@@ -55,7 +55,7 @@ abstract class ExporterEffects
     /**
      * Export a bend effect as an array
      */
-    protected function exportBend(EffectBend $effect = null): ?array
+    protected function exportBend(?EffectBend $effect = null): ?array
     {
         return $this->exportTremoloBar($effect);
     }
@@ -63,7 +63,7 @@ abstract class ExporterEffects
     /**
      * Export a grace effect as an array
      */
-    protected function exportGrace(EffectGrace $effect= null): ?array
+    protected function exportGrace(?EffectGrace $effect= null): ?array
     {
         return is_object($effect) ? [
             'fret'       => $effect->getFret(),

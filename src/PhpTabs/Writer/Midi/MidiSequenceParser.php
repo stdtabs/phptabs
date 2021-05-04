@@ -241,7 +241,7 @@ final class MidiSequenceParser
                 if (! $note->isTiedNote()) {
                     $key = $this->transpose + $track->getOffset() + $note->getValue() + $track->getStrings()[$note->getString() - 1]->getValue();
 
-                    $start = $this->applyStrokeStart($note, ($tickHelper->getStart() + $startMove), $stroke);
+                    $start = $this->applyStrokeStart($note, $tickHelper->getStart() + $startMove, $stroke);
                     $duration = $this->applyStrokeDuration($note, $this->getRealNoteDuration($sHelper, $track, $note, $tempo, $tickHelper->getDuration(), $mIndex, $bIndex), $stroke);
 
                     $velocity = $this->getRealVelocity($sHelper, $note, $track, $channel, $mIndex, $bIndex);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -17,8 +19,11 @@ use PhpTabs\Component\Tablature;
 use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\Song;
 
-class TextWriter implements WriterInterface
+final class TextWriter implements WriterInterface
 {
+    /**
+     * @var string
+     */
     private $content = '';
 
     public function __construct(Song $song)

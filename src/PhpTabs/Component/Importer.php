@@ -31,7 +31,7 @@ final class Importer extends ParserBase
     {
         $this->song = new Song();
 
-        if (!isset($data['song'])) {
+        if (! isset($data['song'])) {
             throw new Exception('Invalid data: song key must be set');
         }
 

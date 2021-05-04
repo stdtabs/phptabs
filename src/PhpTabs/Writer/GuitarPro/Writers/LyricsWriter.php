@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -14,8 +16,11 @@ namespace PhpTabs\Writer\GuitarPro\Writers;
 use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\Song;
 
-class LyricsWriter
+final class LyricsWriter
 {
+    /**
+     * @var WriterInterface
+     */
     private $writer;
 
     public function __construct(WriterInterface $writer)
@@ -29,7 +34,7 @@ class LyricsWriter
         $tracks = $song->getTracks();
 
         foreach ($tracks as $track) {
-            if (!$track->getLyrics()->isEmpty()) {
+            if (! $track->getLyrics()->isEmpty()) {
                 $lyricTrack = $track;
                 break;
             }

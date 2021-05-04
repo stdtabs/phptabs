@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -18,10 +20,12 @@ use PhpTabs\Music\Measure;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Stroke;
 use PhpTabs\Music\Voice;
-use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface as GprInterface;
 
-class BeatWriter
+final class BeatWriter
 {
+    /**
+     * @var WriterInterface
+     */
     private $writer;
 
     public function __construct(WriterInterface $writer)
@@ -50,10 +54,9 @@ class BeatWriter
             $flags |= 0x04;
         }
 
-        if ($beat->getStroke()->getDirection() != Stroke::STROKE_NONE) {
+        if ($beat->getStroke()->getDirection() !== Stroke::STROKE_NONE) {
             $flags |= 0x08;
-        }
-        elseif ($effect->isTremoloBar()
+        } elseif ($effect->isTremoloBar()
             || $effect->isTapping()
             || $effect->isSlapping()
             || $effect->isPopping()
@@ -62,7 +65,7 @@ class BeatWriter
             $flags |= 0x08;
         }
 
-        if (!$duration->getDivision()->isEqual(DivisionType::normal())) {
+        if (! $duration->getDivision()->isEqual(DivisionType::normal())) {
             $flags |= 0x20;
         }
 
@@ -76,49 +79,51 @@ class BeatWriter
 
         $this->writer->writeUnsignedByte($flags);
 
-        if (($flags & 0x40) != 0) {
+        if (($flags & 0x40) !== 0) {
             $this->writer->writeUnsignedByte(2);
         }
 
         $this->writer->writeByte($this->writer->parseDuration($duration));
 
-        if (($flags & 0x20) != 0) {
+        if (($flags & 0x20) !== 0) {
             $this->writer->writeInt($duration->getDivision()->getEnters());
         }
 
-        if (($flags & 0x02) != 0) {
+        if (($flags & 0x02) !== 0) {
             $this->writer->writeChord($beat->getChord());
         }
 
-        if (($flags & 0x04) != 0) {
+        if (($flags & 0x04) !== 0) {
             $this->writer->writeText($beat->getText());
         }
 
-        if (($flags & 0x08) != 0) {
+        if (($flags & 0x08) !== 0) {
             $this->writer->getWriter('BeatEffectWriter')->writeBeatEffects($beat, $effect);
         }
 
-        if (($flags & 0x10) != 0) {
+        if (($flags & 0x10) !== 0) {
             $this->writer->writeMixChange($measure->getTempo());
         }
 
         $stringFlags = 0;
 
-        if (!$voice->isRestVoice()) {
-            for ($i = 0; $i < $voice->countNotes(); $i++) {
+        if (! $voice->isRestVoice()) {
+            $countNotes = $voice->countNotes();
+            for ($i = 0; $i < $countNotes; $i++) {
                 $playedNote = $voice->getNote($i);
-                $string = (7 - $playedNote->getString());
-                $stringFlags |= (1 << $string);
+                $string = 7 - $playedNote->getString();
+                $stringFlags |= 1 << $string;
             }
         }
 
         $this->writer->writeUnsignedByte($stringFlags);
 
         for ($i = 6; $i >= 0; $i--) {
-            if (($stringFlags & (1 << $i)) != 0) {
-                for ($n = 0; $n < $voice->countNotes(); $n++) {
+            if (($stringFlags & (1 << $i)) !== 0) {
+                $countNotes = $voice->countNotes();
+                for ($n = 0; $n < $countNotes; $n++) {
                     $playedNote = $voice->getNote($n);
-                    if ($playedNote->getString() == (6 - $i + 1)) {
+                    if ($playedNote->getString() === 6 - $i + 1) {
                         $this->writer->getWriter('NoteWriter')->writeNote($playedNote);
                         break;
                     }
@@ -134,7 +139,8 @@ class BeatWriter
     {
         $effect = new NoteEffect();
 
-        for ($i = 0; $i < $voice->countNotes(); $i++) {
+        $countNotes = $voice->countNotes();
+        for ($i = 0; $i < $countNotes; $i++) {
             $playedNote = $voice->getNote($i);
 
             if ($playedNote->getEffect()->isFadeIn()) {

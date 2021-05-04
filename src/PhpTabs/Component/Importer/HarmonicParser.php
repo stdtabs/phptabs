@@ -18,19 +18,19 @@ use PhpTabs\Music\EffectHarmonic;
 final class HarmonicParser extends ParserBase
 {
     protected $required = [
-      'type',
-      'data',
-      'isNatural',
-      'isArtificial',
-      'isTapped',
-      'isPinch',
-      'isSemi'
+        'type',
+        'data',
+        'isNatural',
+        'isArtificial',
+        'isTapped',
+        'isPinch',
+        'isSemi',
     ];
 
     /**
      * Parse an harmonic array
      * 
-     * @param array $data
+     * @param array<string,mixed> $data
      */
     public function __construct(array $data)
     {

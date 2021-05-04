@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -15,10 +17,12 @@ use PhpTabs\Component\WriterInterface;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Stroke;
-use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface as GprInterface;
 
-class BeatEffectWriter
+final class BeatEffectWriter
 {
+    /**
+     * @var WriterInterface
+     */
     private $writer;
 
     public function __construct(WriterInterface $writer)
@@ -34,7 +38,7 @@ class BeatEffectWriter
         $this->writer->writeUnsignedByte($flags1);
         $this->writer->writeUnsignedByte($flags2);
 
-        if (($flags1 & 0x20) != 0) {
+        if (($flags1 & 0x20) !== 0) {
             if ($noteEffect->isTapping()) {
                 $this->writer->writeUnsignedByte(1);
             } elseif ($noteEffect->isSlapping()) {
@@ -44,16 +48,16 @@ class BeatEffectWriter
             }
         }
 
-        if (($flags2 & 0x04) != 0) {
+        if (($flags2 & 0x04) !== 0) {
             $this->writer->getWriter('NoteEffectWriter')
                 ->writeTremoloBar($noteEffect->getTremoloBar());
         }
 
-        if (($flags1 & 0x40) != 0) {
+        if (($flags1 & 0x40) !== 0) {
             $this->writeStroke(
                 $beat,
-                ($this->writer->getName() == 'GuitarPro5Writer' ? Stroke::STROKE_UP : Stroke::STROKE_DOWN),
-                ($this->writer->getName() == 'GuitarPro5Writer' ? Stroke::STROKE_DOWN : Stroke::STROKE_UP)
+                ($this->writer->getName() === 'GuitarPro5Writer' ? Stroke::STROKE_UP : Stroke::STROKE_DOWN),
+                ($this->writer->getName() === 'GuitarPro5Writer' ? Stroke::STROKE_DOWN : Stroke::STROKE_UP)
             );
         }
     }
@@ -100,13 +104,13 @@ class BeatEffectWriter
     public function writeStroke(Beat $beat, int $firstTest, int $secondTest): void
     {
         $this->writer->writeUnsignedByte(
-            $beat->getStroke()->getDirection() == $firstTest
+            $beat->getStroke()->getDirection() === $firstTest
                 ? $this->writer->toStrokeValue($beat->getStroke())
                 : 0
         );
 
         $this->writer->writeUnsignedByte(
-            $beat->getStroke()->getDirection() == $secondTest
+            $beat->getStroke()->getDirection() === $secondTest
                 ? $this->writer->toStrokeValue($beat->getStroke())
                 : 0
         );

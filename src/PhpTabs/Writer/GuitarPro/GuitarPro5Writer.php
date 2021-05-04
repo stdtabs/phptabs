@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the PhpTabs package.
  *
@@ -13,7 +15,6 @@ namespace PhpTabs\Writer\GuitarPro;
 
 use Exception;
 use PhpTabs\Music\Beat;
-use PhpTabs\Music\Channel;
 use PhpTabs\Music\Chord;
 use PhpTabs\Music\DivisionType;
 use PhpTabs\Music\Duration;
@@ -26,16 +27,11 @@ use PhpTabs\Music\Tempo;
 use PhpTabs\Music\Text;
 use PhpTabs\Music\TimeSignature;
 use PhpTabs\Music\Track;
-use PhpTabs\Music\Velocities;
 use PhpTabs\Music\Voice;
-use PhpTabs\Reader\GuitarPro\GuitarProReaderInterface as GprInterface;
 
-class GuitarPro5Writer extends GuitarProWriterBase
+final class GuitarPro5Writer extends GuitarProWriterBase
 {
-    /**
-     * @constant version
-     */
-    const VERSION = 'FICHIER GUITAR PRO v5.00';
+    private const VERSION = 'FICHIER GUITAR PRO v5.00';
 
     private $setUpLines = [
         '%TITLE%',
@@ -48,7 +44,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         'Copyright %COPYRIGHT%',
         'All Rights Reserved - International Copyright Secured',
         'Page %N%/%P%',
-        'Moderate'
+        'Moderate',
     ];
 
     public function __construct(Song $song)
@@ -94,15 +90,15 @@ class GuitarPro5Writer extends GuitarProWriterBase
             $flags |= 0x01;
         }
 
-        if ($voice->getIndex() == 0 && $beat->isChordBeat()) {
+        if ($voice->getIndex() === 0 && $beat->isChordBeat()) {
             $flags |= 0x02;
         }
 
-        if ($voice->getIndex() == 0 && $beat->isTextBeat()) {
+        if ($voice->getIndex() === 0 && $beat->isTextBeat()) {
             $flags |= 0x04;
         }
 
-        if ($beat->getStroke()->getDirection() != Stroke::STROKE_NONE) {
+        if ($beat->getStroke()->getDirection() !== Stroke::STROKE_NONE) {
             $flags |= 0x08;
         } elseif ($effect->isTremoloBar()
             || $effect->isTapping()
@@ -117,7 +113,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
             $flags |= 0x10;
         }
 
-        if (!$duration->getDivision()->isEqual(DivisionType::normal())) {
+        if (! $duration->getDivision()->isEqual(DivisionType::normal())) {
             $flags |= 0x20;
         }
 
@@ -127,48 +123,48 @@ class GuitarPro5Writer extends GuitarProWriterBase
 
         $this->writeUnsignedByte($flags);
 
-        if (($flags & 0x40) != 0) {
+        if (($flags & 0x40) !== 0) {
             $this->writeUnsignedByte($voice->isEmpty() ? 0 : 0x02);
         }
 
         $this->writeByte($this->parseDuration($duration));
 
-        if (($flags & 0x20) != 0) {
+        if (($flags & 0x20) !== 0) {
             $this->writeInt($duration->getDivision()->getEnters());
         }
 
-        if (($flags & 0x02) != 0) {
+        if (($flags & 0x02) !== 0) {
             $this->writeChord($beat->getChord());
         }
 
-        if (($flags & 0x04) != 0) {
+        if (($flags & 0x04) !== 0) {
             $this->writeText($beat->getText());
         }
 
-        if (($flags & 0x08) != 0) {
+        if (($flags & 0x08) !== 0) {
             $this->getWriter('BeatEffectWriter')
                 ->writeBeatEffects($beat, $effect);
         }
 
-        if (($flags & 0x10) != 0) {
+        if (($flags & 0x10) !== 0) {
             $this->writeMixChange($measure->getTempo());
         }
 
         $stringFlags = 0;
 
-        if (!$voice->isRestVoice()) {
+        if (! $voice->isRestVoice()) {
             foreach ($voice->getNotes() as $playedNote) {
-                $string       = (7 - $playedNote->getString());
-                $stringFlags |= (1 << $string);
+                $string = 7 - $playedNote->getString();
+                $stringFlags |= 1 << $string;
             }
         }
 
         $this->writeUnsignedByte($stringFlags);
 
         for ($i = 6; $i >= 0; $i--) {
-            if (($stringFlags & (1 << $i)) != 0) {
+            if (($stringFlags & (1 << $i)) !== 0) {
                 foreach ($voice->getNotes() as $playedNote) {
-                    if ($playedNote->getString() == (6 - $i + 1)) {
+                    if ($playedNote->getString() === 6 - $i + 1) {
                         $this->getWriter('Note5Writer')->writeNote($playedNote);
                         break;
                     }
@@ -182,8 +178,9 @@ class GuitarPro5Writer extends GuitarProWriterBase
     private function writeChord(Chord $chord): void
     {
         $this->writeBytes([
-             1,  1,  0,  0, 0, 12, 0, 0,
-            -1, -1, -1, -1, 0,  0, 0, 0, 0
+            1,  1,  0,  0, 0, 12, 0,
+            0, -1, -1, -1, -1, 0, 0,
+            0, 0, 0,
         ]);
 
         $this->writeStringByte($chord->getName(), 21);
@@ -199,19 +196,20 @@ class GuitarPro5Writer extends GuitarProWriterBase
 
     private function writeInformations(Song $song): void
     {
-        $this->writeStringByteSizeOfInteger((string)$song->getName());
+        $this->writeStringByteSizeOfInteger((string) $song->getName());
         $this->writeStringByteSizeOfInteger('');
-        $this->writeStringByteSizeOfInteger((string)$song->getArtist());
-        $this->writeStringByteSizeOfInteger((string)$song->getAlbum());
-        $this->writeStringByteSizeOfInteger((string)$song->getAuthor());
+        $this->writeStringByteSizeOfInteger((string) $song->getArtist());
+        $this->writeStringByteSizeOfInteger((string) $song->getAlbum());
+        $this->writeStringByteSizeOfInteger((string) $song->getAuthor());
         $this->writeStringByteSizeOfInteger('');
-        $this->writeStringByteSizeOfInteger((string)$song->getCopyright());
-        $this->writeStringByteSizeOfInteger((string)$song->getWriter());
+        $this->writeStringByteSizeOfInteger((string) $song->getCopyright());
+        $this->writeStringByteSizeOfInteger((string) $song->getWriter());
         $this->writeStringByteSizeOfInteger('');
 
-        $comments = $this->toCommentLines((string)$song->getComments());
-        $this->writeInt(count($comments));
-        for ($i = 0; $i < count($comments); $i++) {
+        $comments = $this->toCommentLines((string) $song->getComments());
+        $countComments = count($comments);
+        $this->writeInt($countComments);
+        for ($i = 0; $i < $countComments; $i++) {
             $this->writeStringByteSizeOfInteger($comments[$i]);
         }
     }
@@ -222,7 +220,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
         $tracks = $song->getTracks();
 
         foreach ($tracks as $track) {
-            if (!$track->getLyrics()->isEmpty()) {
+            if (! $track->getLyrics()->isEmpty()) {
                 $lyricTrack = $track;
                 break;
             }
@@ -254,7 +252,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
             foreach ($measure->getBeats() as $beat) {
                 if ($v < $beat->countVoices()) {
                     $voice = $beat->getVoice($v);
-                    if (!$voice->isEmpty()) {
+                    if (! $voice->isEmpty()) {
                         $voices[] = $voice;
                     }
                 }
@@ -267,12 +265,12 @@ class GuitarPro5Writer extends GuitarProWriterBase
                         $voice,
                         $voice->getBeat(),
                         $measure,
-                        $changeTempo && $index == 0
+                        $changeTempo && $index === 0
                     );
                 }
             } else {
                 $count = $measure->getTimeSignature()->getNumerator();
-                $beat  = new Beat();
+                $beat = new Beat();
 
                 if ($v < $beat->countVoices()) {
                     $voice = $beat->getVoice($v);
@@ -281,7 +279,7 @@ class GuitarPro5Writer extends GuitarProWriterBase
 
                     $this->writeInt($count);
                     for ($i = 0; $i < $count; $i++) {
-                        $this->writeBeat($voice, $voice->getBeat(), $measure, $changeTempo && $i == 0);
+                        $this->writeBeat($voice, $voice->getBeat(), $measure, $changeTempo && $i === 0);
                     }
                 }
             }
@@ -292,11 +290,11 @@ class GuitarPro5Writer extends GuitarProWriterBase
     {
         $flags = 0;
 
-        if ($measure->getNumber() == 1) {
+        if ($measure->getNumber() === 1) {
             $flags |= 0x40;
         }
 
-        if ($measure->getNumber() == 1 || !$measure->getTimeSignature()->isEqual($timeSignature)) {
+        if ($measure->getNumber() === 1 || ! $measure->getTimeSignature()->isEqual($timeSignature)) {
             $flags |= 0x01;
             $flags |= 0x02;
         }
@@ -319,35 +317,35 @@ class GuitarPro5Writer extends GuitarProWriterBase
 
         $this->writeUnsignedByte($flags);
 
-        if (($flags & 0x01) != 0) {
+        if (($flags & 0x01) !== 0) {
             $this->writeByte($measure->getTimeSignature()->getNumerator());
         }
 
-        if (($flags & 0x02) != 0) {
+        if (($flags & 0x02) !== 0) {
             $this->writeByte($measure->getTimeSignature()->getDenominator()->getValue());
         }
 
-        if (($flags & 0x08) != 0) {
+        if (($flags & 0x08) !== 0) {
             $this->writeByte($measure->getRepeatClose() + 1);
         }
 
-        if (($flags & 0x20) != 0) {
+        if (($flags & 0x20) !== 0) {
             $this->writeMarker($measure->getMarker());
         }
 
-        if (($flags & 0x10) != 0) {
+        if (($flags & 0x10) !== 0) {
             $this->writeByte($measure->getRepeatAlternative());
         }
 
-        if (($flags & 0x40) != 0) {
+        if (($flags & 0x40) !== 0) {
             $this->skipBytes(2);
         }
 
-        if (($flags & 0x01) != 0) {
+        if (($flags & 0x01) !== 0) {
             $this->writeBytes($this->makeEighthNoteBytes($measure->getTimeSignature()));
         }
 
-        if (($flags & 0x10) == 0) {
+        if (($flags & 0x10) === 0) {
             $this->writeByte(0);
         }
 
@@ -385,13 +383,11 @@ class GuitarPro5Writer extends GuitarProWriterBase
     private function writeMeasures(Song $song, Tempo $tempo): void
     {
         foreach ($song->getMeasureHeaders() as $index => $header) {
-
             foreach ($song->getTracks() as $track) {
-
                 $measure = $track->getMeasure($index);
                 $this->writeMeasure(
                     $measure,
-                    $header->getTempo()->getValue() != $tempo->getValue()
+                    $header->getTempo()->getValue() !== $tempo->getValue()
                 );
                 $this->skipBytes(1);
             }
@@ -417,17 +413,21 @@ class GuitarPro5Writer extends GuitarProWriterBase
         $this->writeByte(0xff);
     }
 
+    /**
+     * @return array<int>
+     */
     private function makeEighthNoteBytes(TimeSignature $timeSignature): array
     {
         $bytes = [0, 0, 0, 0];
 
         if ($timeSignature->getDenominator()->getValue() <= Duration::EIGHTH) {
             $eighthsInDenominator = intval(Duration::EIGHTH / $timeSignature->getDenominator()->getValue());
-            $total = ($eighthsInDenominator * $timeSignature->getNumerator());
+            $total = $eighthsInDenominator * $timeSignature->getNumerator();
             $byteValue = intval($total / 4);
             $missingValue = $total - (4 * $byteValue);
 
-            for ($i = 0 ; $i < count($bytes); $i++) {
+            $countBytes = count($bytes);
+            for ($i = 0; $i < $countBytes; $i++) {
                 $bytes[$i] = $byteValue;
             }
 
@@ -439,13 +439,16 @@ class GuitarPro5Writer extends GuitarProWriterBase
         return $bytes;
     }
 
+    /**
+     * @return array<string>
+     */
     private function toCommentLines(string $comments): array
     {
         $lines = [];
 
         while (strlen($comments) > 127) {
-            $subline  = substr($comments, 0, 127);
-            $lines[]  = $subline;
+            $subline = substr($comments, 0, 127);
+            $lines[] = $subline;
             $comments = substr($comments, 127);
         }
 
@@ -507,21 +510,19 @@ class GuitarPro5Writer extends GuitarProWriterBase
         $this->writeInt(24);
         $this->writeInt($track->getOffset());
         $this->writeColor($track->getColor());
-        $this->writeBytes(
-            [
-                67, 1, 0, 0,
-                0, 0, 0, 0,
-                0, 0, 0, 0,
-                0, 100, 0, 0,
-                0, 1, 2, 3,
-                4, 5, 6, 7,
-                8, 9, 10, -1,
-                3, -1, -1, -1,
-                -1, -1, -1, -1,
-                -1, -1, -1, -1,
-                -1, -1, -1, -1
-            ]
-        );
+        $this->writeBytes([
+            67, 1, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 100, 0, 0,
+            0, 1, 2, 3,
+            4, 5, 6, 7,
+            8, 9, 10, -1,
+            3, -1, -1, -1,
+            -1, -1, -1, -1,
+            -1, -1, -1, -1,
+            -1, -1, -1, -1,
+        ]);
     }
 
     private function writeTracks(Song $song): void

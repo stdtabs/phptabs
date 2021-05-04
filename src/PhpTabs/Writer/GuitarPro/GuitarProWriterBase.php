@@ -24,8 +24,19 @@ use PhpTabs\Share\ChannelRouterConfigurator;
 
 abstract class GuitarProWriterBase implements WriterInterface
 {
+    /**
+     * @var string
+     */
     private $content = '';
+
+    /**
+     * @var string
+     */
     private $name;
+
+    /**
+     * @var array
+     */
     private $writers = [];
 
     /**
@@ -38,7 +49,7 @@ abstract class GuitarProWriterBase implements WriterInterface
         $this->name = str_replace(
             __NAMESPACE__ . '\\',
             '',
-            get_class($this)
+            static::class
         );
 
         $this->channelRouter = new ChannelRouter();
@@ -99,7 +110,7 @@ abstract class GuitarProWriterBase implements WriterInterface
      */
     public function getWriter(string $name)
     {
-        if (!isset($this->writers[$name])) {
+        if (! isset($this->writers[$name])) {
             $classname = __NAMESPACE__ . '\\Writers\\' . ucfirst($name);
             $this->writers[$name] = new $classname($this);
         }
@@ -124,7 +135,7 @@ abstract class GuitarProWriterBase implements WriterInterface
     {
         $channelRoute = $this->channelRouter->getRoute($channelId);
 
-        if (null === $channelRoute) {
+        if (is_null($channelRoute)) {
             $channelRoute = new ChannelRoute(ChannelRoute::NULL_VALUE);
             $channelRoute->setChannel1(15);
             $channelRoute->setChannel2(15);
@@ -158,10 +169,14 @@ abstract class GuitarProWriterBase implements WriterInterface
         $this->content .= pack('c', $byte);
     }
 
+    /**
+     * @param array<int> $bytes
+     */
     public function writeBytes(array $bytes): void
     {
         array_walk(
-            $bytes, function ($byte): void {
+            $bytes,
+            function ($byte): void {
                 $this->writeByte($byte);
             }
         );
@@ -180,11 +195,11 @@ abstract class GuitarProWriterBase implements WriterInterface
 
     public function writeString(string $bytes, int $maximumLength): void
     {
-        $length = $maximumLength == 0 || $maximumLength > strlen($bytes)
+        $length = $maximumLength === 0 || $maximumLength > strlen($bytes)
             ? strlen($bytes)
             : $maximumLength;
 
-        for ($i = 0 ; $i < $length; $i++) {
+        for ($i = 0; $i < $length; $i++) {
             $this->content .= $bytes[$i];
         }
     }
@@ -198,7 +213,7 @@ abstract class GuitarProWriterBase implements WriterInterface
     public function writeStringByte(string $string, int $size): void
     {
         $this->writeByte(
-            $size == 0 || $size > strlen($string)
+            $size === 0 || $size > strlen($string)
                 ? strlen($string)
                 : $size
         );
