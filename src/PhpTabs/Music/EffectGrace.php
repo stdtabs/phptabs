@@ -19,23 +19,40 @@ namespace PhpTabs\Music;
  */
 final class EffectGrace
 {
-    public const TRANSITION_NONE   = 0;
-    public const TRANSITION_SLIDE  = 1;
-    public const TRANSITION_BEND   = 2;
+    public const TRANSITION_NONE = 0;
+    public const TRANSITION_SLIDE = 1;
+    public const TRANSITION_BEND = 2;
     public const TRANSITION_HAMMER = 3;
 
-    private $fret     = 0;
-    private $duration = 1;
-    private $onBeat   = false;
-    private $dead     = false;
-    private $dynamic;
-    private $transition;
+    /**
+     * @var int
+     */
+    private $fret = 0;
 
-    public function __construct()
-    {
-        $this->dynamic    = Velocities::_DEFAULT;
-        $this->transition = EffectGrace::TRANSITION_NONE;
-    }
+    /**
+     * @var int
+     */
+    private $duration = 1;
+
+    /**
+     * @var bool
+     */
+    private $onBeat = false;
+
+    /**
+     * @var bool
+     */
+    private $dead = false;
+
+    /**
+     * @var int
+     */
+    private $dynamic = Velocities::_DEFAULT;
+
+    /**
+     * @var int
+     */
+    private $transition = EffectGrace::TRANSITION_NONE;
 
     public function isDead(): bool
     {

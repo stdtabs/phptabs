@@ -17,13 +17,16 @@ use PhpTabs\Music\EffectGrace;
 
 final class GraceParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = [
-      'fret',
-      'duration',
-      'dynamic',
-      'transition',
-      'onBeat',
-      'dead'
+        'fret',
+        'duration',
+        'dynamic',
+        'transition',
+        'onBeat',
+        'dead',
     ];
 
     /**

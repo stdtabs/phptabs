@@ -19,6 +19,9 @@ use PhpTabs\Music\NoteEffect;
 
 final class NoteEffectParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = [
         'bend',
         'tremoloBar',
@@ -39,16 +42,22 @@ final class NoteEffectParser extends ParserBase
         'slapping',
         'popping',
         'fadeIn',
-        'letRing'
+        'letRing',
     ];
 
+    /**
+     * @var array<string,string>
+     */
     private $parsers = [
         'harmonic'        => 'Harmonic',
         'grace'           => 'Grace',
         'trill'           => 'Trill',
-        'tremoloPicking'  => 'TremoloPicking'
+        'tremoloPicking'  => 'TremoloPicking',
     ];
 
+    /**
+     * @var array<string>
+     */
     private $autoset = [
         'vibrato',
         'deadNote',
@@ -63,7 +72,7 @@ final class NoteEffectParser extends ParserBase
         'slapping',
         'popping',
         'fadeIn',
-        'letRing'
+        'letRing',
     ];
 
     /**

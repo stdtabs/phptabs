@@ -16,7 +16,6 @@ namespace PhpTabs\Renderer\VexTab;
 use Exception;
 use PhpTabs\Component\Renderer\RendererInterface;
 use PhpTabs\Music\Beat;
-use PhpTabs\Music\Channel;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\Note;

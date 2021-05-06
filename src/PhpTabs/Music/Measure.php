@@ -23,10 +23,25 @@ final class Measure
     public const DEFAULT_CLEF = 1;
     public const DEFAULT_KEY_SIGNATURE = 0;
 
+    /**
+     * @var MeasureHeader
+     */
     private $header;
+
+    /**
+     * @var Track
+     */
     private $track;
-    private $clef;
-    private $keySignature;
+
+    /**
+     * @var int
+     */
+    private $clef = self::DEFAULT_CLEF;
+
+    /**
+     * @var int
+     */
+    private $keySignature = self::DEFAULT_KEY_SIGNATURE;
 
     /**
      * @var array<Beat>
@@ -36,8 +51,6 @@ final class Measure
     public function __construct(MeasureHeader $header)
     {
         $this->setHeader($header);
-        $this->clef = self::DEFAULT_CLEF;
-        $this->keySignature = self::DEFAULT_KEY_SIGNATURE;
     }
 
     public function getTrack(): Track

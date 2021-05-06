@@ -22,6 +22,9 @@ final class EffectBend
     public const MAX_POSITION_LENGTH = 12;
     public const MAX_VALUE_LENGTH    = 12;
 
+    /**
+     * @var array<EffectBendPoint>
+     */
     private $points = [];
 
     public function addPoint(int $position, int $value): void

@@ -75,6 +75,8 @@ final class Tablature
 
     /**
      * Render a song as an ASCII tabs
+     *
+     * @param array<string,int|string|null> $options
      */
     public function toAscii(array $options = []): string
     {
@@ -88,6 +90,8 @@ final class Tablature
      *
      * Only one track is supported by this format.
      * Default rendered track is #0.
+     *
+     * @param array<string,int|string|null> $options
      */
     public function toVextab(array $options = []): string
     {

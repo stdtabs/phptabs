@@ -17,6 +17,9 @@ use PhpTabs\Music\Song;
 
 final class SongParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = [
         'name',
         'artist',
@@ -27,7 +30,7 @@ final class SongParser extends ParserBase
         'comments',
         'channels',
         'measureHeaders',
-        'tracks'
+        'tracks',
     ];
 
     /**

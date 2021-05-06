@@ -17,6 +17,9 @@ use PhpTabs\Music\MeasureHeader;
 
 final class MeasureHeaderParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = [
         'number',
         'start',
@@ -25,7 +28,7 @@ final class MeasureHeaderParser extends ParserBase
         'repeatOpen',
         'repeatAlternative',
         'repeatClose',
-        'tripletFeel'
+        'tripletFeel',
     ];
 
     /**

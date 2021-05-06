@@ -128,6 +128,10 @@ abstract class ExporterEffects
 
     /**
      * Export an array of points as an array (Formatted for export)
+     *
+     * @param array<PhpTabs\Music\EffectPointsBase> $points
+     *
+     * @return array<string,int>
      */
     protected function exportPoints(array $points): array
     {

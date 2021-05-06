@@ -17,40 +17,71 @@ final class Channel
 {
     public const DEFAULT_PERCUSSION_CHANNEL = 9;
     public const DEFAULT_PERCUSSION_PROGRAM = 0;
-    public const DEFAULT_PERCUSSION_BANK    = 128;
+    public const DEFAULT_PERCUSSION_BANK = 128;
 
-    public const DEFAULT_BANK    = 0;
+    public const DEFAULT_BANK = 0;
     public const DEFAULT_PROGRAM = 25;
-    public const DEFAULT_VOLUME  = 127;
+    public const DEFAULT_VOLUME = 127;
     public const DEFAULT_BALANCE = 64;
-    public const DEFAULT_CHORUS  = 0;
-    public const DEFAULT_REVERB  = 0;
-    public const DEFAULT_PHASER  = 0;
+    public const DEFAULT_CHORUS = 0;
+    public const DEFAULT_REVERB = 0;
+    public const DEFAULT_PHASER = 0;
     public const DEFAULT_TREMOLO = 0;
 
+    /**
+     * @var int
+     */
     private $id  = 0;
-    private $name       = '';
-    private $parameters = [];
-    private $bank;
-    private $program;
-    private $volume;
-    private $balance;
-    private $chorus;
-    private $reverb;
-    private $phaser;
-    private $tremolo;
 
-    public function __construct()
-    {
-        $this->bank    = Channel::DEFAULT_BANK;
-        $this->program = Channel::DEFAULT_PROGRAM;
-        $this->volume  = Channel::DEFAULT_VOLUME;
-        $this->balance = Channel::DEFAULT_BALANCE;
-        $this->chorus  = Channel::DEFAULT_CHORUS;
-        $this->reverb  = Channel::DEFAULT_REVERB;
-        $this->phaser  = Channel::DEFAULT_PHASER;
-        $this->tremolo = Channel::DEFAULT_TREMOLO;
-    }
+    /**
+     * @var string
+     */
+    private $name = '';
+
+    /**
+     * @var int
+     */
+    private $parameters = [];
+
+    /**
+     * @var int
+     */
+    private $bank = Channel::DEFAULT_BANK;
+
+    /**
+     * @var int
+     */
+    private $program = Channel::DEFAULT_PROGRAM;
+
+    /**
+     * @var int
+     */
+    private $volume = Channel::DEFAULT_VOLUME;
+
+    /**
+     * @var int
+     */
+    private $balance = Channel::DEFAULT_BALANCE;
+
+    /**
+     * @var int
+     */
+    private $chorus = Channel::DEFAULT_CHORUS;
+
+    /**
+     * @var int
+     */
+    private $reverb = Channel::DEFAULT_REVERB;
+
+    /**
+     * @var int
+     */
+    private $phaser = Channel::DEFAULT_PHASER;
+
+    /**
+     * @var int
+     */
+    private $tremolo = Channel::DEFAULT_TREMOLO;
 
     public function getId(): int
     {

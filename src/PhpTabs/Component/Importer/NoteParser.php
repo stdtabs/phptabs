@@ -17,6 +17,9 @@ use PhpTabs\Music\Note;
 
 final class NoteParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['value', 'velocity', 'string', 'tiedNote', 'effect'];
 
     /**

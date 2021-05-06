@@ -17,6 +17,9 @@ use PhpTabs\Music\EffectHarmonic;
 
 final class HarmonicParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = [
         'type',
         'data',

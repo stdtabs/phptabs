@@ -25,7 +25,7 @@ use PhpTabs\Music\Song;
 use PhpTabs\Music\TimeSignature;
 use PhpTabs\Music\Velocities;
 
-class GuitarPro4Reader extends GuitarProReaderBase
+final class GuitarPro4Reader extends GuitarProReaderBase
 {
     /**
      * @var array<string>

@@ -17,6 +17,9 @@ use PhpTabs\Music\Beat;
 
 final class BeatParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['start', 'voices', 'stroke'];
 
     /**

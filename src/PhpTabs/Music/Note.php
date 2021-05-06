@@ -13,24 +13,41 @@ declare(strict_types=1);
 
 namespace PhpTabs\Music;
 
-/**
- * @uses NoteEffect
- * @uses Velocities
- * @uses Voice
- */
 final class Note
 {
-    private $value    = 0;
-    private $string   = 1;
+    /**
+     * @var int
+     */
+    private $value = 0;
+
+    /**
+     * @var int
+     */
+    private $string = 1;
+
+    /**
+     * @var bool
+     */
     private $tiedNote = false;
-    private $velocity;
+
+    /**
+     * @var int
+     */
+    private $velocity = Velocities::FORTE;
+
+    /**
+     * @var NoteEffect
+     */
     private $effect;
+
+    /**
+     * @var Voice
+     */
     private $voice;
 
     public function __construct()
     {
-        $this->velocity = Velocities::FORTE;
-        $this->effect   = new NoteEffect();
+        $this->effect = new NoteEffect();
     }
 
     public function getValue(): int

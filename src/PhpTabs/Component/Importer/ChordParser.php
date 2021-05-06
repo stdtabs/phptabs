@@ -17,6 +17,9 @@ use PhpTabs\Music\Chord;
 
 final class ChordParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['firstFret', 'name', 'strings'];
 
     /**

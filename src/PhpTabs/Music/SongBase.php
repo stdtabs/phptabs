@@ -15,18 +15,65 @@ namespace PhpTabs\Music;
 
 abstract class SongBase
 {
+    /**
+     * @var ?string
+     */
     protected $name;
+
+    /**
+     * @var ?string
+     */
     protected $artist;
+
+    /**
+     * @var ?string
+     */
     protected $album;
+
+    /**
+     * @var ?string
+     */
     protected $author;
+
+    /**
+     * @var ?string
+     */
     protected $date;
+
+    /**
+     * @var ?string
+     */
     protected $copyright;
+
+    /**
+     * @var ?string
+     */
     protected $writer;
+
+    /**
+     * @var ?string
+     */
     protected $transcriber;
+
+    /**
+     * @var ?string
+     */
     protected $comments;
-    protected $tracks         = [];
+
+    /**
+     * @var array<Track>
+     */
+    protected $tracks = [];
+
+    /**
+     * @var array<MeasureHeader>
+     */
     protected $measureHeaders = [];
-    protected $channels       = [];
+
+    /**
+     * @var array<Channel>
+     */
+    protected $channels = [];
 
     public function getName(): ?string
     {

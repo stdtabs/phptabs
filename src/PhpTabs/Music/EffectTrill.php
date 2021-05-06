@@ -18,7 +18,14 @@ namespace PhpTabs\Music;
  */
 final class EffectTrill
 {
+    /**
+     * @var int
+     */
     private $fret = 0;
+
+    /**
+     * @var Duration
+     */
     private $duration;
 
     public function __construct()

@@ -17,6 +17,9 @@ use PhpTabs\Music\Lyric;
 
 final class LyricsParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['from', 'lyrics'];
 
     /**

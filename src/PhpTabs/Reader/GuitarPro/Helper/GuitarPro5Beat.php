@@ -18,7 +18,7 @@ use PhpTabs\Music\NoteEffect;
 use PhpTabs\Music\Tempo;
 use PhpTabs\Music\Track;
 
-class GuitarPro5Beat extends AbstractReader
+final class GuitarPro5Beat extends AbstractReader
 {
     /**
      * Reads some Beat informations

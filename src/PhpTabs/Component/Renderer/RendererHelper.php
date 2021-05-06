@@ -23,7 +23,6 @@ abstract class RendererHelper implements RendererInterface
     /**
      * Get an option
      *
-     * @param  string     $name
      * @param  int|string $default
      * @return int|string|null
      * @api
@@ -37,7 +36,6 @@ abstract class RendererHelper implements RendererInterface
     /**
      * Set an option
      *
-     * @param  string     $name
      * @param  int|string $value
      * @api
      * @since  0.5.0

@@ -17,6 +17,9 @@ use PhpTabs\Music\EffectTremoloPicking;
 
 final class TremoloPickingParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['duration'];
 
     /**

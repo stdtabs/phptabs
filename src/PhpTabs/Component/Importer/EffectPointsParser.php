@@ -15,6 +15,9 @@ namespace PhpTabs\Component\Importer;
 
 final class EffectPointsParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['points'];
 
     /**

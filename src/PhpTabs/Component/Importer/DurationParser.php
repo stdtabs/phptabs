@@ -17,6 +17,9 @@ use PhpTabs\Music\Duration;
 
 final class DurationParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['value', 'dotted', 'doubleDotted', 'divisionType'];
 
     /**

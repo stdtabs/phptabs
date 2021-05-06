@@ -30,7 +30,7 @@ final class GuitarPro5Measure extends AbstractReader
 
             for ($i = 0; $i < $numberOfBeats; $i++) {
                 $nextNoteStart += $this->reader->factory('GuitarPro5Beat')
-                                       ->readBeat($nextNoteStart, $measure, $track, $tempo, $voice);
+                    ->readBeat($nextNoteStart, $measure, $track, $tempo, $voice);
             }
         }
 

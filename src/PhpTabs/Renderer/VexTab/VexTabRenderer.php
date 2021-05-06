@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace PhpTabs\Renderer\VexTab;
 
-use Exception;
 use PhpTabs\Component\Renderer\RendererHelper;
-use PhpTabs\Component\Renderer\RendererInterface;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\Track;
 

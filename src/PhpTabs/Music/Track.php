@@ -18,16 +18,59 @@ final class Track
     public const MAX_OFFSET = 24;
     public const MIN_OFFSET = -24;
 
-    private $number     = 0;
-    private $offset     = 0;
-    private $channelId  = -1;
-    private $solo       = false;
-    private $mute       = false;
-    private $name       = '';
-    private $measures   = [];
-    private $strings    = [];
+    /**
+     * @var int
+     */
+    private $number = 0;
+
+    /**
+     * @var int
+     */
+    private $offset = 0;
+
+    /**
+     * @var int
+     */
+    private $channelId = -1;
+
+    /**
+     * @var bool
+     */
+    private $solo = false;
+
+    /**
+     * @var bool
+     */
+    private $mute = false;
+
+    /**
+     * @var string
+     */
+    private $name = '';
+
+    /**
+     * @var array<Measure>
+     */
+    private $measures = [];
+
+    /**
+     * @var array<TabString>
+     */
+    private $strings = [];
+
+    /**
+     * @var ?Color
+     */
     private $color;
+
+    /**
+     * @var ?Lyric
+     */
     private $lyrics;
+
+    /**
+     * @var Song
+     */
     private $song;
 
     public function __construct()

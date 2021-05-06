@@ -15,28 +15,41 @@ namespace PhpTabs\Music;
 
 use Exception;
 
-/**
- * @uses Chord
- * @uses Duration
- * @uses Measure
- * @uses Stroke
- * @uses Text
- * @uses Voice
- */
 final class Beat
 {
     /**
      * Number of voices to set
-     *
-     * @const MAX_VOICES
      */
     public const MAX_VOICES = 2;
 
+    /**
+     * @var int
+     */
     private $start = Duration::QUARTER_TIME;
+
+    /**
+     * @var Measure
+     */
     private $measure;
+
+    /**
+     * @var Chord
+     */
     private $chord;
+
+    /**
+     * @var Text
+     */
     private $text;
+
+    /**
+     * @var array<Voice>
+     */
     private $voices = [];
+
+    /**
+     * @var Stroke
+     */
     private $stroke;
 
     public function __construct()

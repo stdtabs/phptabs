@@ -17,6 +17,9 @@ use Exception;
 
 abstract class ParserBase
 {
+    /**
+     * @var mixed
+     */
     protected $item;
 
     /**

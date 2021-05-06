@@ -19,8 +19,6 @@ final class TempoParser extends ParserBase
 {
     /**
      * Parse a tempo array
-     *
-     * @param int $data
      */
     public function __construct(int $data)
     {

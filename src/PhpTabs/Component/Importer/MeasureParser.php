@@ -18,13 +18,15 @@ use PhpTabs\Music\MeasureHeader;
 
 final class MeasureParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['clef', 'keySignature', 'beats'];
 
     /**
      * Parse a color array
      * 
      * @param array                        $data
-     * @param \PhpTabs\Music\MeasureHeader $header
      */
     public function __construct(array $data, MeasureHeader $header)
     {

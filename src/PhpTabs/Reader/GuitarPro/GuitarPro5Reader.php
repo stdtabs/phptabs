@@ -21,7 +21,7 @@ use PhpTabs\Music\Lyric;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\TimeSignature;
 
-class GuitarPro5Reader extends GuitarProReaderBase
+final class GuitarPro5Reader extends GuitarProReaderBase
 {
     /**
      * @var array<string>

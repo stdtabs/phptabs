@@ -15,13 +15,15 @@ namespace PhpTabs\Music;
 
 final class Scale
 {
+    /**
+     * @var array<int,bool>
+     */
     private $notes = []; // 12
-    private $key;
 
-    public function __construct()
-    {
-        $this->clear();
-    }
+    /**
+     * @var int
+     */
+    private $key = 0;
 
     public function setKey(int $key): void
     {

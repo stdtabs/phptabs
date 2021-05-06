@@ -17,12 +17,14 @@ use PhpTabs\Music\Voice;
 
 final class VoiceParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['duration', 'index', 'empty', 'direction', 'notes'];
 
     /**
      * Parse a voice array
      *
-     * @param int   $index
      * @param array $data
      */
     public function __construct(int $index, array $data)

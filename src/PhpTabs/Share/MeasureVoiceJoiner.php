@@ -54,7 +54,7 @@ final class MeasureVoiceJoiner
             for ($v = 1; $v < $countVoices; $v++) {
                 $currentVoice = $beat->getVoice($v);
 
-                if (!$currentVoice->isEmpty()) {
+                if (! $currentVoice->isEmpty()) {
                     $countNotes = $currentVoice->countNotes();
                     for ($n = 0; $n < $countNotes; $n++) {
                         $note = $currentVoice->getNote($n);
@@ -79,7 +79,7 @@ final class MeasureVoiceJoiner
                 for ($v = 0; $v < $countVoices; $v++) {
                     $previousVoice = $previous->getVoice($v);
 
-                    if (!$previousVoice->isEmpty()) {
+                    if (! $previousVoice->isEmpty()) {
                         $length = $previousVoice->getDuration()->getTime();
 
                         if ($previousStart + $length <= $beatStart) {
@@ -108,7 +108,7 @@ final class MeasureVoiceJoiner
             for ($v = 0; $v < $count; $v++) {
                 $currentVoice = $beat->getVoice($v);
 
-                if (!$currentVoice->isEmpty()) {
+                if (! $currentVoice->isEmpty()) {
                     $length = $currentVoice->getDuration()->getTime();
 
                     if ($beatStart + $length <= $measureEnd) {
@@ -131,7 +131,7 @@ final class MeasureVoiceJoiner
             $previous = $beat;
         }
 
-        if (!$finish) {
+        if (! $finish) {
             $this->joinBeats();
         }
     }

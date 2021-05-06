@@ -223,8 +223,8 @@ abstract class ExporterBase extends ExporterEffects
             'dotted'       => $duration->isDotted(),
             'doubleDotted' => $duration->isDoubleDotted(),
             'divisionType' => [
-              'enters'  => $duration->getDivision()->getEnters(),
-              'times'   => $duration->getDivision()->getTimes()
+                'enters'  => $duration->getDivision()->getEnters(),
+                'times'   => $duration->getDivision()->getTimes()
             ]
         ];
     }
@@ -284,16 +284,16 @@ abstract class ExporterBase extends ExporterEffects
     /**
      * Export a Chord as an array
      */
-    protected function exportChord(Chord $chord = null): ?array
+    protected function exportChord(?Chord $chord = null): ?array
     {
-        if (!is_object($chord)) {
+        if (! is_object($chord)) {
             return null;
         }
 
         $content = [
             'firstFret'  => $chord->getFirstFret(),
             'name'       => $chord->getName(),
-            'strings'    => []
+            'strings'    => [],
         ];
 
         $countStrings = $chord->countStrings();

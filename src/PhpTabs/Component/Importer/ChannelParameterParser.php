@@ -17,6 +17,9 @@ use PhpTabs\Music\ChannelParameter;
 
 final class ChannelParameterParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['key', 'value'];
 
     /**

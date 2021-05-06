@@ -18,6 +18,9 @@ namespace PhpTabs\Music;
  */
 final class EffectTremoloPicking
 {
+    /**
+     * @var Duration
+     */
     private $duration;
 
     public function __construct()

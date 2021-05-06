@@ -17,6 +17,9 @@ use PhpTabs\Music\Text;
 
 final class TextParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['value'];
 
     /**

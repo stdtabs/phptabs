@@ -54,7 +54,6 @@ final class Text extends SerializerBase
     }
 
     /**
-     * @param string $index
      * @param bool|int|float|string $element
      */
     protected function appendText(string $index, $element): void

@@ -15,19 +15,74 @@ namespace PhpTabs\Music;
 
 abstract class NoteEffectBase
 {
-    protected $vibrato              = false;
-    protected $deadNote             = false;
-    protected $slide                = false;
-    protected $hammer               = false;
-    protected $ghostNote            = false;
-    protected $palmMute             = false;
-    protected $staccato             = false;
-    protected $tapping              = false;
-    protected $slapping             = false;
-    protected $popping              = false;
-    protected $fadeIn               = false;
-    protected $letRing              = false;
-    protected $accentuatedNote      = false;
+    /**
+     * @var bool
+     */
+    protected $vibrato = false;
+
+    /**
+     * @var bool
+     */
+    protected $deadNote = false;
+
+    /**
+     * @var bool
+     */
+    protected $slide = false;
+
+    /**
+     * @var bool
+     */
+    protected $hammer = false;
+
+    /**
+     * @var bool
+     */
+    protected $ghostNote = false;
+
+    /**
+     * @var bool
+     */
+    protected $palmMute = false;
+
+    /**
+     * @var bool
+     */
+    protected $staccato = false;
+
+    /**
+     * @var bool
+     */
+    protected $tapping = false;
+
+    /**
+     * @var bool
+     */
+    protected $slapping = false;
+
+    /**
+     * @var bool
+     */
+    protected $popping = false;
+
+    /**
+     * @var bool
+     */
+    protected $fadeIn = false;
+
+    /**
+     * @var bool
+     */
+    protected $letRing = false;
+
+    /**
+     * @var bool
+     */
+    protected $accentuatedNote = false;
+
+    /**
+     * @var bool
+     */
     protected $heavyAccentuatedNote = false;
 
     public function isDeadNote(): bool

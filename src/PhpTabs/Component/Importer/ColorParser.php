@@ -17,6 +17,9 @@ use PhpTabs\Music\Color;
 
 final class ColorParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['R', 'G', 'B'];
 
     /**

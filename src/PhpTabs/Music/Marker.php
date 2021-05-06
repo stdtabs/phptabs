@@ -18,15 +18,23 @@ final class Marker
     public const DEFAULT_COLOR = [255, 0, 0];
     public const DEFAULT_TITLE = "Untitled";
 
-    private $measure;
-    private $title;
+    /**
+     * @var int
+     */
+    private $measure = 0;
+
+    /**
+     * @var string
+     */
+    private $title = Marker::DEFAULT_TITLE;
+
+    /**
+     * @var Color
+     */
     private $color;
 
     public function __construct()
     {
-        $this->measure = 0;
-        $this->title = Marker::DEFAULT_TITLE;
-
         $color = new Color();
         $color->setR(Marker::DEFAULT_COLOR[0]);
         $color->setG(Marker::DEFAULT_COLOR[1]);

@@ -17,18 +17,21 @@ use PhpTabs\Music\Channel;
 
 final class ChannelParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = [
-      'id',
-      'name',
-      'bank',
-      'program',
-      'volume',
-      'balance',
-      'chorus',
-      'reverb',
-      'phaser',
-      'tremolo',
-      'parameters'
+        'id',
+        'name',
+        'bank',
+        'program',
+        'volume',
+        'balance',
+        'chorus',
+        'reverb',
+        'phaser',
+        'tremolo',
+        'parameters',
     ];
 
     /**

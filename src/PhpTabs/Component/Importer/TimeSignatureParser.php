@@ -17,6 +17,9 @@ use PhpTabs\Music\TimeSignature;
 
 final class TimeSignatureParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['numerator', 'denominator'];
 
     /**

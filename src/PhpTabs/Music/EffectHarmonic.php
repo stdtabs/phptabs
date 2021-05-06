@@ -39,7 +39,14 @@ final class EffectHarmonic
         [ 3, 31]  //AH3 (+31 frets)
     ];
 
+    /**
+     * @var int
+     */
     private $type = 0;
+
+    /**
+     * @var int
+     */
     private $data = 0;
 
     public function getData(): int

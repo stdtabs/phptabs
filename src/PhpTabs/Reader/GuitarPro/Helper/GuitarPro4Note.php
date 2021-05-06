@@ -19,7 +19,7 @@ use PhpTabs\Music\TabString;
 use PhpTabs\Music\Track;
 use PhpTabs\Music\Velocities;
 
-class GuitarPro4Note extends AbstractReader
+final class GuitarPro4Note extends AbstractReader
 {
     /**
      * Reads a note

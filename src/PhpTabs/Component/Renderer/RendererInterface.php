@@ -21,13 +21,11 @@ interface RendererInterface
     public function render(?int $index = null): string;
 
     /**
-     * @param  string     $name
      * @param  int|string $value
      */
     public function setOption(string $name, $value): self;
 
     /**
-     * @param  string     $name
      * @param  int|string $default
      * @return int|string
      */

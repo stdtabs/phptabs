@@ -13,21 +13,36 @@ declare(strict_types=1);
 
 namespace PhpTabs\Music;
 
-/**
- * @uses EffectBend
- * @uses EffectTremoloBar
- * @uses EffectHarmonic
- * @uses EffectGrace
- * @uses EffectTrill
- * @uses EffectTremoloPicking
- */
 final class NoteEffect extends NoteEffectBase
 {
-    protected $bend           = null;
-    protected $harmonic       = null;
-    protected $grace          = null;
-    protected $trill          = null;
-    protected $tremoloBar     = null;
+    /**
+     * @var ?EffectBend
+     */
+    protected $bend = null;
+
+    /**
+     * @var ?EffectHarmonic
+     */
+    protected $harmonic = null;
+
+    /**
+     * @var ?EffectGrace
+     */
+    protected $grace = null;
+
+    /**
+     * @var ?EffectTrill
+     */
+    protected $trill = null;
+
+    /**
+     * @var ?EffectTremoloBar
+     */
+    protected $tremoloBar = null;
+
+    /**
+     * @var ?EffectTremoloPicking
+     */
     protected $tremoloPicking = null;
 
     public function setDeadNote(bool $deadNote): void

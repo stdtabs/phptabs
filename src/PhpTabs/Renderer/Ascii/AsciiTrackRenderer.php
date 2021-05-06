@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace PhpTabs\Renderer\Ascii;
 
-use Exception;
 use PhpTabs\Music\Measure;
-use PhpTabs\Music\Song;
 use PhpTabs\Music\TabString;
 use PhpTabs\Music\Track;
 

@@ -17,6 +17,9 @@ use PhpTabs\Music\EffectTrill;
 
 final class TrillParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['fret', 'duration'];
 
     /**

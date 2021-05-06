@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace PhpTabs\Renderer\Ascii;
 
-use Exception;
 use PhpTabs\Music\Beat;
 use PhpTabs\Music\Duration;
 use PhpTabs\Music\Measure;
@@ -87,10 +86,9 @@ final class AsciiMeasureRenderer
 
             $nextBeat = $this->getNextBeat($this->measure->getBeats(), $beat);
 
-            $length = ($nextBeat !== null
+            $length = $nextBeat !== null
                 ? $nextBeat->getStart() - $beat->getStart()
-                : $this->measure->getStart() + $this->measure->getLength() - $beat->getStart()
-            );
+                : $this->measure->getStart() + $this->measure->getLength() - $beat->getStart();
 
             $this->writer->drawStringSegments($this->getDurationScaping($length) - $outLength);
 
@@ -101,6 +99,8 @@ final class AsciiMeasureRenderer
     /**
      * Get following beat
      *
+     * @param array<Beat> $beats
+     * 
      * @todo FIXME $next is always null
      */
     public function getNextBeat(array $beats, Beat $beat): ?Beat

@@ -50,6 +50,8 @@ abstract class Config
 
     /**
      * Gets all defined options
+     *
+     * @return array<string,string|int|array<string|int>|null>
      */
     public static function getAll(): array
     {

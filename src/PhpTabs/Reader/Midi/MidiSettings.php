@@ -28,6 +28,9 @@ final class MidiSettings
     public const RPN_MSB = 0x65;
     public const ALL_NOTES_OFF = 0x7B;
 
+    /**
+     * @var int
+     */
     private $transpose = 0;
 
     public function getTranspose(): int

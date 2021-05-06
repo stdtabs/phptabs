@@ -13,23 +13,21 @@ declare(strict_types=1);
 
 namespace PhpTabs\Music;
 
-/**
- * @uses Beat
- * @uses Duration
- */
 final class Stroke
 {
     public const STROKE_NONE = 0;
-    public const STROKE_UP   = 1;
+    public const STROKE_UP = 1;
     public const STROKE_DOWN = -1;
 
-    private $direction;
-    private $value;
+    /**
+     * @var int
+     */
+    private $direction = Stroke::STROKE_NONE;
 
-    public function __construct()
-    {
-        $this->direction = Stroke::STROKE_NONE;
-    }
+    /**
+     * @var ?int
+     */
+    private $value;
 
     public function getDirection(): int
     {

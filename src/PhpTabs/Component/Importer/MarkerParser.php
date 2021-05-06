@@ -17,6 +17,9 @@ use PhpTabs\Music\Marker;
 
 final class MarkerParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = ['measure', 'title', 'color'];
 
     /**

@@ -24,14 +24,29 @@ final class Duration
     public const THIRTY_SECOND = 32;
     public const SIXTY_FOURTH = 64;
 
+    /**
+     * @var int
+     */
     private $value;
+
+    /**
+     * @var DivisionType
+     */
     private $divisionType;
-    private $dotted       = false;
+
+    /**
+     * @var bool
+     */
+    private $dotted = false;
+
+    /**
+     * @var bool
+     */
     private $doubleDotted = false;
 
     public function __construct()
     {
-        $this->value        = Duration::QUARTER;
+        $this->value = Duration::QUARTER;
         $this->divisionType = new DivisionType();
     }
 
@@ -72,7 +87,7 @@ final class Duration
 
     public function getTime(): int
     {
-        $time = (int)(Duration::QUARTER_TIME * 4.0 / $this->value);
+        $time = (int) (Duration::QUARTER_TIME * 4.0 / $this->value);
 
         if ($this->dotted) {
             $time += $time / 2;
@@ -80,7 +95,7 @@ final class Duration
             $time += $time / 4 * 3;
         }
 
-        return $this->getDivision()->convertTime((int)$time);
+        return $this->getDivision()->convertTime((int) $time);
     }
 
     /**
@@ -141,7 +156,7 @@ final class Duration
     {
         $index = 0;
         $value = $this->value;
-        while (($value = ($value >> 1) ) > 0) {
+        while (($value = ($value >> 1)) > 0) {
             $index++;
         }
 

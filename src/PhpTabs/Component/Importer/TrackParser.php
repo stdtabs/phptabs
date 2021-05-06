@@ -18,6 +18,9 @@ use PhpTabs\Music\Track;
 
 final class TrackParser extends ParserBase
 {
+    /**
+     * @var array<string>
+     */
     protected $required = [
         'number',
         'offset',
@@ -28,14 +31,13 @@ final class TrackParser extends ParserBase
         'color',
         'lyrics',
         'measures',
-        'strings'
+        'strings',
     ];
 
     /**
      * Parse a track array
      * 
-     * @param array               $data
-     * @param \PhpTabs\Music\Song $song
+     * @param array $data
      */
     public function __construct(array $data, Song $song)
     {

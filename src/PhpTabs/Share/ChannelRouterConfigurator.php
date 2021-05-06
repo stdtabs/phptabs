@@ -28,6 +28,9 @@ final class ChannelRouterConfigurator
         $this->router = $router;
     }
 
+    /**
+     * @param array<Channel> $channels
+     */
     public function configureRouter(array $channels): void
     {
         $this->router->resetRoutes();

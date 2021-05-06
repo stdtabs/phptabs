@@ -15,7 +15,14 @@ namespace PhpTabs\Music;
 
 final class Text
 {
+    /**
+     * @var ?string
+     */
     private $value;
+
+    /**
+     * @var ?Beat
+     */
     private $beat;
 
     public function getBeat(): ?Beat

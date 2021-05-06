@@ -15,7 +15,14 @@ namespace PhpTabs\Music;
 
 abstract class EffectPointsBase
 {
+    /**
+     * @var int
+     */
     protected $position;
+
+    /**
+     * @var int
+     */
     protected $value;
 
     public function __construct(int $position, int $value)

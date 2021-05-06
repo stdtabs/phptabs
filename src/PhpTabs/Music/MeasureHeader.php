@@ -20,27 +20,64 @@ namespace PhpTabs\Music;
  */
 final class MeasureHeader
 {
-    public const TRIPLET_FEEL_NONE      = 1;
-    public const TRIPLET_FEEL_EIGHTH    = 2;
+    public const TRIPLET_FEEL_NONE = 1;
+    public const TRIPLET_FEEL_EIGHTH = 2;
     public const TRIPLET_FEEL_SIXTEENTH = 3;
 
-    private $number            = 1;
-    private $marker            = null;
-    private $repeatOpen        = false;
+    /**
+     * @var int
+     */
+    private $number = 1;
+
+    /**
+     * @var ?Marker
+     */
+    private $marker = null;
+
+    /**
+     * @var bool
+     */
+    private $repeatOpen = false;
+
+    /**
+     * @var int
+     */
     private $repeatAlternative = 0;
-    private $repeatClose       = 0;
-    private $start;
+
+    /**
+     * @var int
+     */
+    private $repeatClose = 0;
+
+    /**
+     * @var int
+     */
+    private $start = Duration::QUARTER_TIME;
+
+    /**
+     * @var TimeSignature
+     */
     private $timeSignature;
+
+    /**
+     * @var Tempo
+     */
     private $tempo;
-    private $tripletFeel;
+
+    /**
+     * @var int
+     */
+    private $tripletFeel = MeasureHeader::TRIPLET_FEEL_NONE;
+
+    /**
+     * @var Song
+     */
     private $song;
 
     public function __construct()
     {
-        $this->start         = Duration::QUARTER_TIME;
         $this->timeSignature = new TimeSignature();
         $this->tempo         = new Tempo();
-        $this->tripletFeel   = MeasureHeader::TRIPLET_FEEL_NONE;
         $this->checkMarker();
     }
 

@@ -33,6 +33,9 @@ final class GuitarPro5Writer extends GuitarProWriterBase
 {
     private const VERSION = 'FICHIER GUITAR PRO v5.00';
 
+    /**
+     * @var array<string>
+     */
     private $setUpLines = [
         '%TITLE%',
         '%SUBTITLE%',

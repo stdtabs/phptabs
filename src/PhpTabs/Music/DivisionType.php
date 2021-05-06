@@ -18,8 +18,15 @@ namespace PhpTabs\Music;
  */
 final class DivisionType
 {
+    /**
+     * @var int
+     */
     private $enters = 1;
-    private $times  = 1;
+
+    /**
+     * @var int
+     */
+    private $times = 1;
 
     public function getEnters(): int
     {

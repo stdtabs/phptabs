@@ -20,7 +20,7 @@ use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\Song;
 use PhpTabs\Music\TimeSignature;
 
-class GuitarPro3Reader extends GuitarProReaderBase
+final class GuitarPro3Reader extends GuitarProReaderBase
 {
     /**
      * @var \PhpTabs\Component\Tablature
@@ -127,7 +127,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
         for ($i = 0; $i < $count; $i++) {
             $song->addMeasureHeader(
                 $this->factory('GuitarPro3MeasureHeader')
-                     ->readMeasureHeader($i + 1, $song, $timeSignature)
+                    ->readMeasureHeader($i + 1, $song, $timeSignature)
             );
         }
     }
@@ -142,7 +142,7 @@ class GuitarPro3Reader extends GuitarProReaderBase
         for ($number = 0; $number < $count; $number++) {
             $song->addTrack(
                 $this->factory('GuitarPro3Track')
-                     ->readTrack($song, $channels)
+                    ->readTrack($song, $channels)
             );
         }
     }
