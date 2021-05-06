@@ -100,26 +100,16 @@ final class AsciiMeasureRenderer
      * Get following beat
      *
      * @param array<Beat> $beats
-     * 
-     * @todo FIXME $next is always null
      */
     public function getNextBeat(array $beats, Beat $beat): ?Beat
     {
-        $next = null;
-
         foreach ($beats as $current) {
             if ($current->getStart() > $beat->getStart()) {
-                if ($next === null) {
-                    return $current;
-                }
-
-                if ($current->getStart() < $next->getStart()) {
-                    return $current;
-                }
+                return $current;
             }
         }
 
-        return $next;
+        return null;
     }
 
     /**

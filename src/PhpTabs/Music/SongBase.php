@@ -227,4 +227,9 @@ abstract class SongBase
             $this->addTrack(clone $track);
         }
     }
+
+    abstract public function getTracks(): array;
+    abstract public function addMeasureHeader(MeasureHeader $measureHeader): void;
+    abstract public function addChannel($index, ?Channel $channel = null): void;
+    abstract public function addTrack(Track $track): void;
 }
