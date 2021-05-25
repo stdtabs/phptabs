@@ -36,7 +36,7 @@ Read track informations
         $track->getOffset(),// int between -24 and 24
         $track->isSolo(),   // bool
         $track->isMute()   // bool
-        
+
     );
 
 It will ouput something like:
@@ -134,8 +134,8 @@ You may handle :ref:`strings <api.music.string>`.
 
 .. warning::
 
-    As ``string`` is a reserved key in PHP, the class name for guitar
-    strings is ``TabString``.
+    As ``String`` is a reserved keyword in PHP, the class name for
+    guitar strings is ``TabString``.
 
 
 .. code-block:: php
