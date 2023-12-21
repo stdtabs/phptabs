@@ -25,8 +25,8 @@ Any questions?
 Table of contents
 =================
 
-__The documentation below contains only basic examples. If you want to 
-see more examples and the complete API behind the library, read the 
+__The documentation below contains only basic examples. If you want to
+see more examples and the complete API behind the library, read the
 [PhpTabs Manual](https://phptabs.readthedocs.io/).__
 
 Before version 1.0.0, the old manual [PhpTabs Manual](https://stdtabs.github.io/)
@@ -74,7 +74,9 @@ ________________________________________________________________________
 Requirements
 ------------
 
-PhpTabs requires PHP 7.2+ and 8.0.
+PhpTabs requires PHP 7.4+ and 8.0+.
+
+Until PhpTabs 1.0.5, it was maintained for PHP versions 7.2 and 7.3.
 
 Until PhpTabs 0.6.1, it was maintained for PHP versions 7.0 and 7.1.
 
@@ -219,7 +221,7 @@ ________________________________________________________________________
 
 __Type__ *string*
 
-The tablature comments. They are compounded of several lines 
+The tablature comments. They are compounded of several lines
 separated by a line break (```PHP_EOL```).
 
 __Example__
@@ -235,7 +237,7 @@ __Type__ *string*
 
 Person who has transcribed tablature
 
-__Support__ 
+__Support__
 
 Guitar Pro >= 4
 
@@ -251,7 +253,7 @@ __Type__ *string*
 
 Date when tablature has been transcribed
 
-__Support__ 
+__Support__
 
 Guitar Pro >= 4
 
@@ -269,7 +271,7 @@ ________________________________________________________________________
 
 __Type__ *integer*
 
-The number of tracks 
+The number of tracks
 
 __Example__
 
@@ -295,7 +297,7 @@ ________________________________________________________________________
 
 __Type__ *object*
 
-__Parameter__ *integer* $index 
+__Parameter__ *integer* $index
 
 The music sheet for one instrument.
 
@@ -314,7 +316,7 @@ ________________________________________________________________________
 
 __Type__ *integer*
 
-The number of channels 
+The number of channels
 
 __Example__
 
@@ -340,7 +342,7 @@ ________________________________________________________________________
 
 __Type__ *object*
 
-__Parameter__ *integer* $index 
+__Parameter__ *integer* $index
 
 The instrument and sound parameters for one track.
 
@@ -375,7 +377,7 @@ A list of instrument arrays
 
 ```php
 array(
-  'id' => <integer InstrumentId>, 
+  'id' => <integer InstrumentId>,
   'name' => <string InstrumentName>
 )
 ```
@@ -390,13 +392,13 @@ ________________________________________________________________________
 
 __Type__ *array*
 
-__Parameter__ *integer* $index 
+__Parameter__ *integer* $index
 
 An instrument array
 
 ```php
 array(
-  'id' => <integer InstrumentId>, 
+  'id' => <integer InstrumentId>,
   'name' => <string InstrumentName>
 )
 ```
@@ -416,7 +418,7 @@ ________________________________________________________________________
 
 __Type__ *integer*
 
-The number of measure headers 
+The number of measure headers
 
 __Example__
 
@@ -440,7 +442,7 @@ ________________________________________________________________________
 
 __Type__ *object*
 
-__Parameter__ *integer* $index 
+__Parameter__ *integer* $index
 
 Measure header contains global informations about the measure.
 
@@ -460,7 +462,7 @@ ________________________________________________________________________
 
 __Type__ *bool*
 
-__Parameter__ *string* $filename 
+__Parameter__ *string* $filename
 
 This method records data as binary to the disk or buffer.
 It implicitly converts filetype if the specified file extension is
@@ -492,7 +494,7 @@ ________________________________________________________________________
 
 __Type__ *string*
 
-__Parameter__ *string* $type 
+__Parameter__ *string* $type
 
 This method returns data as a binary string into a specified format.
 
