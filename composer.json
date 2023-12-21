@@ -7,7 +7,7 @@
     "homepage": "https://phptabs.readthedocs.io/",
     "license": "LGPL-2.1+",
     "require": {
-        "php": ">=7.2"
+        "php": ">=7.4"
     },
     "autoload": {
         "psr-4": {
@@ -16,6 +16,8 @@
         }
     },
     "require-dev": {
-        "symfony/thanks": "^1.2"
+        "phpunit/phpunit": "*"
+    },
+    "config": {
     }
 }
