@@ -23,7 +23,7 @@ class PhpTabsFromJsonFileTest extends TestCase
     /**
      * Provide all JSON & source files
      */
-    public function getAllSampleTabs()
+    public static function getAllSampleTabs()
     {
         $files = glob(
             PHPTABS_TEST_BASEDIR

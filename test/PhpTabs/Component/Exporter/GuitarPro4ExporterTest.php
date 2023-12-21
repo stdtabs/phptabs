@@ -25,7 +25,7 @@ class GuitarPro4ExporterTest extends ExporterHelper
     /**
      * Provider for text scenarios
      */
-    public function getTextScenarios()
+    public static function getTextScenarios()
     {
         // regex string
         return [

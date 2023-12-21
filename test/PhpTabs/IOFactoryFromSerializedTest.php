@@ -23,7 +23,7 @@ class IOFactoryFromSerializedTest extends TestCase
     /**
      * A provider for various scenarios that throw \Exception
      */
-    public function getExceptionScenarios()
+    public static function getExceptionScenarios()
     {
         return [
         [1.25],   // Float as data

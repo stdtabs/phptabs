@@ -18,7 +18,7 @@ use PhpTabs\PhpTabs;
  * Helpers for testing exports of a simple tablature
  * Guitar Pro 3, 4, 5 & MIDI
  */
-class ExporterHelper extends XmlTestCaseHelper
+abstract class ExporterHelper extends XmlTestCaseHelper
 {
     private static $tablature;
     private static $plainText;
@@ -61,7 +61,7 @@ class ExporterHelper extends XmlTestCaseHelper
         // expected, xpath, message
         $tests = [
             [1, 'count(/song)', 'Incorrect number of Song elements.'],
-          
+
             // Meta attributes
             [ self::$tablature->getName()
             , 'string(/song/name)'
@@ -90,7 +90,7 @@ class ExporterHelper extends XmlTestCaseHelper
             [ self::$tablature->getTranscriber()
             , 'string(/song/transcriber)'
             , 'Incorrect or missing Transcriber element.'],
-            
+
             // Tracks
             [ self::$tablature->countTracks()
             , 'count(/song/tracks/track)'
@@ -126,7 +126,7 @@ class ExporterHelper extends XmlTestCaseHelper
         ];
 
         foreach ($tests as $test) {
-            $this->assertXpathMatch($test[0], $test[1], $test[2]);
+            self::assertXpathMatch($test[0], $test[1], $test[2]);
         }
     }
 
@@ -141,10 +141,10 @@ class ExporterHelper extends XmlTestCaseHelper
 
         // PHPUnit >= 9
         if (method_exists($this, 'assertMatchesRegularExpression')) {
-            $this->assertMatchesRegularExpression($pattern, self::$plainText);
+            self::assertMatchesRegularExpression($pattern, self::$plainText);
         // PHPUnit < 9
         } else {
-            $this->assertRegExp($pattern, self::$plainText);
+            self::assertRegExp($pattern, self::$plainText);
         }
     }
 
@@ -159,15 +159,15 @@ class ExporterHelper extends XmlTestCaseHelper
 
         // PHPUnit >= 9
         if (method_exists($this, 'assertMatchesRegularExpression')) {
-            $this->assertMatchesRegularExpression($pattern, self::$plainText);
+            self::assertMatchesRegularExpression($pattern, self::$plainText);
         // PHPUnit < 9
         } else {
-            $this->assertRegExp($pattern, self::$plainText);
+            self::assertRegExp($pattern, self::$plainText);
         }
     }
 
-    public function getYamlScenarios()
+    public static function getYamlScenarios()
     {
-        return $this->getTextScenarios();
+        return static::getTextScenarios();
     }
 }

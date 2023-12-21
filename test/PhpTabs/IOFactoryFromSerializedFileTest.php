@@ -23,7 +23,7 @@ class IOFactoryFromSerializedFileTest extends TestCase
     /**
      * A provider for various scenarios that throw \Exception
      */
-    public function getExceptionScenarios()
+    public static function getExceptionScenarios()
     {
         return [
             [1.25],   // Float as filename
@@ -45,7 +45,7 @@ class IOFactoryFromSerializedFileTest extends TestCase
     /**
      * Provide all serialized & source files
      */
-    public function getAllSampleTabs()
+    public static function getAllSampleTabs()
     {
         $files = glob(
             PHPTABS_TEST_BASEDIR

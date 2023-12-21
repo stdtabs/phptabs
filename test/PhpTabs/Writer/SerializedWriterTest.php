@@ -16,7 +16,7 @@ use PhpTabs\PhpTabs;
 
 class SerializedWriterTest extends TestCase
 {
-    public function getWriterScenario() : array
+    public static function getWriterScenario() : array
     {
         return [
             'midi->ser' => ['testSimpleTab.mid'],

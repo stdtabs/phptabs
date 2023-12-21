@@ -31,7 +31,7 @@ class AsciiRendererTest extends TestCase
         );
     }
 
-    public function getScenarios()
+    public static function getScenarios()
     {
         $scenarios = [
         #0 Test track index 1

@@ -47,7 +47,7 @@ class ImporterTest extends TestCase
     /**
      * Provider
      */
-    public function getAllSampleTabs()
+    public static function getAllSampleTabs()
     {
         $files = glob(
             PHPTABS_TEST_BASEDIR

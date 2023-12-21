@@ -16,7 +16,7 @@ use PhpTabs\PhpTabs;
 
 class JsonWriterTest extends TestCase
 {
-    public function getWriterScenario() : array
+    public static function getWriterScenario() : array
     {
         return [
             'midi->json' => ['testSimpleTab.mid'],

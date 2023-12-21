@@ -24,7 +24,7 @@ class PhpTabsFromSerializedFileTest extends TestCase
     /**
      * Provide all serialized & source files
      */
-    public function getAllSampleTabs()
+    public static function getAllSampleTabs()
     {
         $files = glob(
             PHPTABS_TEST_BASEDIR

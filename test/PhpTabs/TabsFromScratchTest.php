@@ -29,7 +29,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TabsFromScratchTest extends TestCase
 {
-    public function getScenarios()
+    public static function getScenarios()
     {
         $song = new PhpTabs();
 

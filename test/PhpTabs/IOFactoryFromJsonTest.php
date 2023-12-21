@@ -23,7 +23,7 @@ class IOFactoryFromJsonTest extends TestCase
     /**
      * A provider for various scenarios that throw \Exception
      */
-    public function getExceptionScenarios()
+    public static function getExceptionScenarios()
     {
         return [
         [PHPTABS_TEST_BASEDIR . '/sample'],   // Unreadable filename

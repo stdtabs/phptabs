@@ -33,7 +33,7 @@ class PhpTabsSliceMeasuresTest extends TestCase
      * Create a 5 tracks / 5 measures song that will be dispatched
      * in all tests
      */
-    public function getScenarios()
+    public static function getScenarios()
     {
         $song = new PhpTabs();
 
@@ -76,7 +76,7 @@ class PhpTabsSliceMeasuresTest extends TestCase
                     // Attach measure header to the song
                     $song->addMeasureHeader($mh);
                 }
-                
+
                 // One specific measure for the first track,
                 // with a MeasureHeader as only parameter
                 $measure = new Measure($song->getMeasureHeader($j));

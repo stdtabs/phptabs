@@ -16,7 +16,7 @@ use PhpTabs\PhpTabs;
 
 class YamlWriterTest extends TestCase
 {
-    public function getWriterScenario() : array
+    public static function getWriterScenario() : array
     {
         return [
             'midi->yml' => ['testSimpleTab.mid'],
@@ -35,7 +35,7 @@ class YamlWriterTest extends TestCase
     {
         $song = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/' . $orgFilename);
         $expectedXml = file_get_contents(PHPTABS_TEST_BASEDIR . '/files/yaml/' . $orgFilename . '.yml');
-        
+
         // Converts to original format gives a specific JSON
         $this->assertEquals(
             $expectedXml,

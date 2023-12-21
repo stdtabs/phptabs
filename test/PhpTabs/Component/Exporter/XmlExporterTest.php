@@ -19,7 +19,7 @@ use PhpTabs\PhpTabs;
  */
 class XmlExporterTest extends TestCase
 {
-    public function getSimpleFiles()
+    public static function getSimpleFiles()
     {
         $files = glob(PHPTABS_TEST_BASEDIR . '/samples/testS*');
 

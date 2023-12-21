@@ -16,7 +16,7 @@ use PhpTabs\PhpTabs;
 
 class XmlWriterTest extends TestCase
 {
-    public function getWriterScenario() : array
+    public static function getWriterScenario() : array
     {
         return [
             'midi->xml' => ['testSimpleTab.mid'],
@@ -35,7 +35,7 @@ class XmlWriterTest extends TestCase
     {
         $song = new PhpTabs(PHPTABS_TEST_BASEDIR . '/samples/' . $orgFilename);
         $expectedXml = file_get_contents(PHPTABS_TEST_BASEDIR . '/files/xml/' . $orgFilename . '.xml');
-        
+
         // Converts to original format gives a specific JSON
         $this->assertEquals(
             $expectedXml,

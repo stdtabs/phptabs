@@ -25,7 +25,7 @@ class ImporterExceptionTest extends TestCase
     /**
      * Provider
      */
-    public function getAllParsers()
+    public static function getAllParsers()
     {
         $names = [
         'Beat',
