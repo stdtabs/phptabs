@@ -11,7 +11,6 @@
 
 namespace PhpTabsTest;
 
-use Exception;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\IOFactory;
 use PhpTabs\PhpTabs;

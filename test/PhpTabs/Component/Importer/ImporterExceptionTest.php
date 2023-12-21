@@ -13,7 +13,6 @@ namespace PhpTabsTest\Component\Importer;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
-use PhpTabs\PhpTabs;
 use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\Song;
 

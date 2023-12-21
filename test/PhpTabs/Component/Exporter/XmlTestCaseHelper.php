@@ -11,6 +11,7 @@
 
 namespace PhpTabsTest\Component\Exporter;
 
+use DOMNode;
 use DOMXPath;
 use PHPUnit\Framework\TestCase;
 
@@ -27,7 +28,7 @@ abstract class XmlTestCaseHelper extends TestCase
         $context = $context === null
             ? $dom->documentElement
             : $context;
-    
+
         $result = $xpathDom->evaluate($xpath, $context);
 
         $this->assertEquals($expected, $result, $message);

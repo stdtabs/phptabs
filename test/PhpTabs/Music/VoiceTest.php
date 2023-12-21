@@ -11,7 +11,6 @@
 
 namespace PhpTabsTest\Music;
 
-use Exception;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\IOFactory;
 

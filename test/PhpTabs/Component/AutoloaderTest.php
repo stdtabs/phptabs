@@ -11,8 +11,6 @@
 
 namespace PhpTabsTest\Component;
 
-use Exception;
-
 use PHPUnit\Framework\TestCase;
 use PhpTabs\Component\Autoloader;
 use PhpTabs\Music\MeasureHeader;
@@ -26,7 +24,7 @@ class AutoloaderTest extends TestCase
     public function testExistingClass()
     {
         Autoloader::register();
-    
+
         $this->assertInstanceOf('PhpTabs\\Music\\MeasureHeader', new MeasureHeader());
     }
 }

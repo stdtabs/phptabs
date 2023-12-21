@@ -11,7 +11,6 @@
 
 namespace PhpTabsTest\Component;
 
-use Exception;
 use PHPUnit\Framework\TestCase;
 use PhpTabs\PhpTabs;
 
@@ -39,7 +38,7 @@ class ExporterTest extends TestCase
             $this->tablature->convert('text'),
             $this->tablature->toText()
         );
-    
+
         $this->assertSame(
             $this->tablature->convert('yaml'),
             $this->tablature->toYaml()

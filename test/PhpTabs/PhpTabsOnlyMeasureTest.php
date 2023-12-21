@@ -12,8 +12,6 @@
 namespace PhpTabsTest;
 
 use PhpTabs\Music\Channel;
-use PhpTabs\Music\Duration;
-use PhpTabs\Music\Marker;
 use PhpTabs\Music\Measure;
 use PhpTabs\Music\MeasureHeader;
 use PhpTabs\Music\TabString;

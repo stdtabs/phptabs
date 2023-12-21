@@ -13,7 +13,6 @@ namespace PhpTabsTest;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Error\Error;
 use PhpTabs\IOFactory;
 
 /**
